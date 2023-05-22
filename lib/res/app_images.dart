@@ -5,6 +5,8 @@ class AppImages {
 
   static const icon = '${_baseUrl}icon.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
+  static const OnBoardingBg = '${_baseUrl}onboard_curve.jpg';
+  
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';

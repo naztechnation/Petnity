@@ -6,6 +6,7 @@ import '../../res/app_images.dart';
 import '../res/app_routes.dart';
 import '../utils/navigator/page_navigator.dart';
 import 'res/app_colors.dart';
+import 'res/app_constants.dart';
 import 'res/app_strings.dart';
 import 'ui/widgets/custom_text.dart';
 import 'ui/widgets/image_view.dart';
@@ -18,7 +19,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   startTimeout() {
-    return Timer(const Duration(seconds: 1), handleTimeout);
+    return Timer(const Duration(seconds: 5), handleTimeout);
   }
 
   void handleTimeout() {
@@ -37,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-  //  startTimeout();
+    startTimeout();
   }
 
   @override
@@ -47,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.4,),
+          SizedBox(height: screenSize(context).height * 0.4,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -58,7 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   width: 50),
                   const SizedBox(width: 6,),
                 const CustomText(text: AppStrings.appName,
-                weight: FontWeight.w700,size: 22,fontFamily: AppStrings.montserrat, color: AppColors.lightPrimary,),
+                weight: FontWeight.w700,size: 22,
+                fontFamily: AppStrings.montserrat, color: AppColors.lightPrimary,),
                   
             ],
           ),
