@@ -48,6 +48,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   nextPage() {
     setState(() {
       if (pageIndex == 4) {
+          AppNavigator.pushAndReplaceName(context, name: AppRoutes.signUpScreen);
+
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
             overlays: SystemUiOverlay.values);
 

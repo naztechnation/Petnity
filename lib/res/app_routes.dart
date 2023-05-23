@@ -1,8 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/auth/sign_up.dart';
 
+import '../ui/auth/sign_in.dart';
 import '../ui/on_boarding/welcome_screen.dart';
 import '../splash_screen.dart';
 
@@ -21,6 +23,8 @@ class AppRoutes {
     splashScreen: (context) => const SplashScreen(),
     welcomeScreen: (context) => const WelcomeScreen(),
     signUpScreen: (context) => const SignUpScreen(),
+    signInScreen: (context) => const SignInScreen(),
+    otpScreen: (context) => const OtpScreen(),
     
   };
 
@@ -35,9 +39,17 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => const WelcomeScreen(),
         );
-         case welcomeScreen:
+         case signUpScreen:
         return MaterialPageRoute(
           builder: (context) => const SignUpScreen(),
+        );
+         case signInScreen:
+        return MaterialPageRoute(
+          builder: (context) => const SignInScreen(),
+        );
+        case otpScreen:
+        return MaterialPageRoute(
+          builder: (context) => const OtpScreen(),
         );
       //Default Route is error route
       default:

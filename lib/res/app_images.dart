@@ -5,10 +5,23 @@ class AppImages {
 
   static const icon = '${_baseUrl}icon.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
+  static const line = '${_baseUrl}line.png';
+  static const facebookIcon = '${_baseUrl}facebook_icon.png';
+  static const appleIcon = '${_baseUrl}apple_icon.png';
+  static const goggleIcon = '${_baseUrl}google_icon.png';
+
   
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';
+  static const searchIcon = '${_svgBaseUrl}search.svg';
+  static const filterIcon = '${_svgBaseUrl}filter.svg';
+  static const messageIcon = '${_svgBaseUrl}message_icon.svg';
+  static const personIcon = '${_svgBaseUrl}person_icon.svg';
+  static const visibleIcon = '${_svgBaseUrl}visible_icon.svg';
+
+  static const celebIcon = '${_svgBaseUrl}celeb_icon.svg';
+
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';

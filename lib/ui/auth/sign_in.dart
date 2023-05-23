@@ -1,5 +1,6 @@
 
 
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
@@ -14,8 +15,8 @@ import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/text_edit_view.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class SignInScreen extends StatelessWidget {
+  const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,13 +38,22 @@ class SignUpScreen extends StatelessWidget {
               CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: 'Create an account',
+                                text: 'Sign in',
                                 weight: FontWeight.w700,
                                 size: 24,
                                 fontFamily: AppStrings.interSans,
                                 color: Colors.black,
                               ),
-                             
+                              SizedBox(height: 5,),
+              CustomText(
+                                textAlign: TextAlign.left,
+                                maxLines: 2,
+                                text: 'Hey welcome back',
+                                weight: FontWeight.w400,
+                                size: 16,
+                                fontFamily: AppStrings.interSans,
+                                color: Colors.black,
+                              ),
                               SizedBox(height: 24,),
       
                               TextEditView(controller: TextEditingController(), 
@@ -104,7 +114,7 @@ class SignUpScreen extends StatelessWidget {
                                 child:  CustomText(
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
-                                      text: 'Create account',
+                                      text: 'Sign In',
                                       weight: FontWeight.w400,
                                       size: 16,
                                       fontFamily: AppStrings.interSans,
@@ -119,23 +129,23 @@ class SignUpScreen extends StatelessWidget {
           text: TextSpan(
         children: [
           TextSpan(
-            text: 'Have an account already?',
+            text: 'Don\'t Have an account?',
             style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
             recognizer: TapGestureRecognizer()..onTap = () {
               // Single tapped.
             },
           ),
           TextSpan(
-            text: '  Sign In',
-            style: TextStyle(color: AppColors.lightSecondary, fontSize: 16, fontWeight: FontWeight.w500),
+            text: '  Create Account',
+            style: TextStyle(color: AppColors.lightSecondary),
             recognizer:  TapGestureRecognizer()..onTap = () {
-              AppNavigator.pushAndReplaceName(context,
-                  name: AppRoutes.signInScreen);
+               AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.signUpScreen);
             }
           ),
           TextSpan(
             text: '  in here',
-            style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),
+            style: TextStyle(color: Colors.black),
             recognizer: TapGestureRecognizer()..onTap = () {
               // Long Pressed.
             },

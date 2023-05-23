@@ -41,9 +41,9 @@ class FilterSearchView extends StatelessWidget {
             onChanged: onChanged,
             prefixIcon: const Padding(
               padding: EdgeInsets.all(15.0),
-              // child: ImageView.svg(
-              //   AppImages.icSearch,
-              // ),
+              child: ImageView.svg(
+                AppImages.searchIcon,
+              ),
             ),
             hintText: hintText,
           ),
@@ -63,7 +63,7 @@ class FilterSearchView extends StatelessWidget {
                 ),
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
-                  // child: ImageView.svg(AppImages.icFilter, height: 35),
+                   child: ImageView.svg(AppImages.filterIcon, height: 35),
                 ),
               ),
             ),

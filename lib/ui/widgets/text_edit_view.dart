@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../res/app_strings.dart';
+import 'custom_text.dart';
+
 class TextEditView extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController controller;
@@ -10,6 +13,7 @@ class TextEditView extends StatelessWidget {
   final Color? fillColor;
   final GestureTapCallback? onTap;
   final String? labelText;
+  final String? textViewTitle;
   final String? hintText;
   final bool readOnly;
   final bool autofocus;
@@ -60,7 +64,7 @@ class TextEditView extends StatelessWidget {
       this.focusNode,
       this.helperText,
       this.maxLength,
-      this.maxLines = 1})
+      this.maxLines = 1, this.textViewTitle = ''})
       : super(key: key);
 
   OutlineInputBorder _border(BuildContext context) => OutlineInputBorder(
@@ -76,101 +80,75 @@ class TextEditView extends StatelessWidget {
       data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(
               primary: Theme.of(context).colorScheme.secondary)),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        textInputAction: textInputAction,
-        validator: validator,
-        onChanged: onChanged,
-        onTap: onTap,
-        autocorrect: autocorrect,
-        readOnly: readOnly,
-        autofocus: autofocus,
-        obscureText: obscureText,
-        maxLines: maxLines,
-        maxLength: maxLength,
-        autofillHints: autofillHints,
-        onFieldSubmitted: onFieldSubmitted,
-        focusNode: focusNode,
-        style: TextStyle(color: textColor),
-        decoration: InputDecoration(
-            border: _border(context),
-            enabledBorder: _border(context),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide(
-                    width: borderWidth,
-                    color: Theme.of(context).colorScheme.secondary,
-                    style: BorderStyle.solid)),
-            focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide(
-                    width: borderWidth,
-                    color:
-                        borderColor ?? Theme.of(context).colorScheme.secondary,
-                    style: BorderStyle.solid)),
-            errorBorder: _border(context),
-            disabledBorder: _border(context),
-            hintText: hintText,
-            hintStyle: TextStyle(color: textColor),
-            labelText: labelText,
-            labelStyle: TextStyle(color: textColor),
-            filled: filled,
-            isDense: isDense,
-            fillColor:
-                fillColor ?? Theme.of(context).shadowColor.withOpacity(0.05),
-            helperText: helperText,
-            helperMaxLines: 2,
-            helperStyle: const TextStyle(fontSize: 10),
-            prefixText: prefixText,
-            prefixIcon: prefixIcon,
-            iconColor: iconColor,
-            prefixIconColor: iconColor,
-            suffixIcon: suffixIcon,
-            suffixIconColor: iconColor),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomText(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              text: textViewTitle,
+                              weight: FontWeight.w500,
+                              size: 13,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.black,
+                            ),
+                            SizedBox(height: 5,),
+          TextFormField(
+            controller: controller,
+            keyboardType: keyboardType,
+            textInputAction: textInputAction,
+            validator: validator,
+            onChanged: onChanged,
+            onTap: onTap,
+            autocorrect: autocorrect,
+            readOnly: readOnly,
+            autofocus: autofocus,
+            obscureText: obscureText,
+            maxLines: maxLines,
+            maxLength: maxLength,
+            autofillHints: autofillHints,
+            onFieldSubmitted: onFieldSubmitted,
+            focusNode: focusNode,
+            style: TextStyle(color: textColor),
+            decoration: InputDecoration(
+                border: _border(context),
+                enabledBorder: _border(context),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    borderSide: BorderSide(
+                        width: borderWidth,
+                        color: Theme.of(context).colorScheme.secondary,
+                        style: BorderStyle.solid)),
+                focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    borderSide: BorderSide(
+                        width: borderWidth,
+                        color:
+                            borderColor ?? Theme.of(context).colorScheme.secondary,
+                        style: BorderStyle.solid)),
+                errorBorder: _border(context),
+                disabledBorder: _border(context),
+                hintText: hintText,
+                hintStyle: TextStyle(color: textColor),
+                labelText: labelText,
+                labelStyle: TextStyle(color: textColor),
+                filled: filled,
+                isDense: isDense,
+                fillColor:
+                    fillColor ?? Theme.of(context).shadowColor.withOpacity(0.05),
+                helperText: helperText,
+                helperMaxLines: 2,
+                helperStyle: const TextStyle(fontSize: 10),
+                prefixText: prefixText,
+                prefixIcon: prefixIcon,
+                iconColor: iconColor,
+                prefixIconColor: iconColor,
+                suffixIcon: suffixIcon,
+                suffixIconColor: iconColor),
+          ),
+        ],
       ),
     );
   }
 }
 
-class BorderlessField extends StatelessWidget {
-  final ValueChanged<String>? onChanged;
-  final TextEditingController controller;
-  final String? hintText;
-  final FocusNode? focusNode;
-  final bool autofocus;
-  final FormFieldValidator<String>? validator;
-  final TextInputType? keyboardType;
-
-  const BorderlessField(
-      {Key? key,
-      this.onChanged,
-      required this.controller,
-      this.hintText,
-      this.autofocus = false,
-      this.focusNode,
-      this.validator,
-      this.keyboardType})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      focusNode: focusNode,
-      autofocus: autofocus,
-      textAlign: TextAlign.center,
-      keyboardType: keyboardType,
-      validator: validator,
-      style: const TextStyle(
-        fontSize: 38,
-        textBaseline: TextBaseline.alphabetic,
-        fontWeight: FontWeight.w300,
-      ),
-      decoration: const InputDecoration(
-        labelText: '',
-        border: InputBorder.none,
-      ),
-    );
-  }
-}
