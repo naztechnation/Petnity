@@ -8,6 +8,7 @@ import '../utils/navigator/page_navigator.dart';
 import 'res/app_colors.dart';
 import 'res/app_constants.dart';
 import 'res/app_strings.dart';
+import 'ui/on_boarding/widgets/fading_sliding_in.dart';
 import 'ui/widgets/custom_text.dart';
 import 'ui/widgets/image_view.dart';
 
@@ -17,10 +18,13 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderStateMixin{
   startTimeout() {
     return Timer(const Duration(seconds: 5), handleTimeout);
   }
+
+  late AnimationController _animationController;
+
 
   void handleTimeout() {
     changeScreen();
@@ -37,10 +41,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+     _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1700),
+    )..forward();
     super.initState();
     startTimeout();
   }
 
+@override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +66,14 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ImageView.asset(AppImages.splashIcon,
-                  color: AppColors.lightPrimary,
-                  fit: BoxFit.fitWidth,
-                  width: 50),
+              FadingSlidingWidget(
+                      animationController: _animationController,
+                      interval: const Interval(0.5, 0.9),
+                child: ImageView.asset(AppImages.splashIcon,
+                    color: AppColors.lightPrimary,
+                    fit: BoxFit.fitWidth,
+                    width: 50),
+              ),
                   const SizedBox(width: 6,),
                 const CustomText(text: AppStrings.appName,
                 weight: FontWeight.w700,size: 22,
@@ -65,10 +82,26 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
           const SizedBox(height: 15),
-                const CustomText(text: 'For service providers',weight: FontWeight.w700,size: 16,
-                 color: AppColors.lightPrimary,fontFamily: AppStrings.interSans),
+               ScaleTransition(
+              scale: _animationController.drive(
+                Tween<double>(begin: 1.3, end: 1.0).chain(
+                  CurveTween(
+                    curve: Interval(0.2, 0.4, curve: Curves.elasticInOut),
+                  ),
+                ),
+              ),
+                  child: const CustomText(text: 'For service providers',weight: FontWeight.w700,size: 16,
+                   color: AppColors.lightPrimary,fontFamily: AppStrings.interSans),
+                ),
           Spacer(),
-                const CustomText(text: 'From mejortech',weight: FontWeight.w700,size: 14, color: AppColors.lightPrimary,fontFamily: AppStrings.montserrat),
+                ScaleTransition(
+              scale: _animationController.drive(
+                Tween<double>(begin: 1.3, end: 1.0).chain(
+                  CurveTween(
+                    curve: Interval(0.2, 0.4, curve: Curves.elasticInOut),
+                  ),
+                ),
+              ),child: const CustomText(text: 'From mejortech',weight: FontWeight.w700,size: 14, color: AppColors.lightPrimary,fontFamily: AppStrings.montserrat)),
           const SizedBox(height: 38),
 
         ],
@@ -76,8 +109,5 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  
 }

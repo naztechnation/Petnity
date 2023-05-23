@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/on_boarding/widgets/page_indicator.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -11,6 +12,7 @@ import '../../utils/navigator/page_navigator.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_view.dart';
 import 'widgets/fading_sliding_in.dart';
+import 'package:rect_getter/rect_getter.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -22,12 +24,15 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  var globalKey = RectGetter.createGlobalKey();
+  Rect? rect;
 
   int pageIndex = 0;
   static List<OnboardPageItem> onboardPageItems = [];
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1700),
@@ -37,11 +42,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.initState();
   }
 
+  
+  
+
   nextPage() {
     setState(() {
       if (pageIndex == 4) {
-
-                  AppNavigator.pushAndReplaceName(context, name: AppRoutes.signUpScreen);
+        SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+            overlays: SystemUiOverlay.values);
 
         return;
       } else {
@@ -64,9 +72,25 @@ class _WelcomeScreenState extends State<WelcomeScreen>
           Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [AppColors.scaffoldColor, Colors.red.shade200],
+                    colors: [AppColors.scaffoldColor, Colors.red.shade100],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter)),
+          ),
+          Positioned(
+            top: screenSize(context).height * 0.04,
+            right: 20,
+            child: GestureDetector(
+              onTap: () => AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.signUpScreen),
+              child: CustomText(
+                maxLines: 1,
+                text: 'SKIP',
+                weight: FontWeight.w900,
+                size: 14,
+                fontFamily: AppStrings.interSans,
+                color: Colors.black,
+              ),
+            ),
           ),
           Positioned(
             top: screenSize(context).height * 0.16,
@@ -143,34 +167,47 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     FadingSlidingWidget(
                       animationController: _animationController,
                       interval: const Interval(0.5, 0.9),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 14.0, horizontal: 20),
-                        child: ButtonView(
-                          onPressed: () {
-                            nextPage();
-                          },
-                        color: AppColors.lightSecondary,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              CustomText(
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                text: (pageIndex == 4) ? 'Lets\'s go':'Continue',
-                                weight: FontWeight.w400,
-                                size: 16,
-                                fontFamily: AppStrings.interSans,
-                                color: Colors.white,
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 400),
+              curve: Interval(
+                0,
+                0.5,
+                curve: Curves.easeInOut,
+              ),
+                        child: RectGetter(
+                          key: globalKey,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 14.0, horizontal: 20),
+                            child: ButtonView(
+                              onPressed: () {
+                                nextPage();
+                              },
+                              color: AppColors.lightSecondary,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomText(
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    text: (pageIndex == 4)
+                                        ? 'Lets\'s go'
+                                        : 'Continue',
+                                    weight: FontWeight.w400,
+                                    size: 16,
+                                    fontFamily: AppStrings.interSans,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(
+                                    width: 6,
+                                  ),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                  )
+                                ],
                               ),
-                              const SizedBox(
-                                width: 6,
-                              ),
-                              Icon(
-                                Icons.arrow_forward,
-                                color: Colors.white,
-                              )
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -211,12 +248,18 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ),
                         ],
                       ),
-                    )
+                    ),
+
                   ],
                 ),
               )),
+
         ],
       ),
     );
   }
+
+
+  
+
 }
