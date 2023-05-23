@@ -13,7 +13,7 @@ class PinCodeView extends StatelessWidget {
   const PinCodeView({
     required this.controller,
     this.validator,
-    this.length=4,
+    this.length=6,
     this.obscureText=false,
     this.autoFocus=false,
     this.onCompleted,
@@ -40,22 +40,28 @@ class PinCodeView extends StatelessWidget {
           length: length,
           obscureText: obscureText,
           autoFocus: autoFocus,
+          
           keyboardType: TextInputType.number,
           animationType: AnimationType.fade,
           autoDismissKeyboard: true,
           validator: validator,
           enablePinAutofill: true,
+          
           pinTheme: PinTheme(
+            
             shape: PinCodeFieldShape.box,
             borderRadius: BorderRadius.circular(10.0),
-            borderWidth: 1.0,
-            fieldHeight: 60,
-            fieldWidth: 60,
+            borderWidth: 0.5,
+            fieldHeight: 45,
+            fieldWidth: 45,
+            
             activeFillColor: Theme.of(context).canvasColor,
             selectedFillColor: Theme.of(context).canvasColor,
-            inactiveFillColor: Theme.of(context).canvasColor,
-            inactiveColor: Theme.of(context).canvasColor
+            inactiveFillColor: Colors.white.withOpacity(0.3),
+            inactiveColor: Colors.black,
+            activeColor: Colors.black
           ),
+          
           enableActiveFill: true,
           animationDuration: const Duration(milliseconds: 300),
           onCompleted: onCompleted,
@@ -64,7 +70,9 @@ class PinCodeView extends StatelessWidget {
             return true;
           },
           appContext: context,
-        )
+        ),
+
+        
       ],
     );
   }

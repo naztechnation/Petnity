@@ -99,6 +99,8 @@ class SignUpScreen extends StatelessWidget {
                                   vertical: 0.0, horizontal: 20),
                               child: ButtonView(
                                 onPressed: () {
+                                    AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.otpScreen);
                                 },
                                 color: AppColors.lightSecondary,
                                 child:  CustomText(
