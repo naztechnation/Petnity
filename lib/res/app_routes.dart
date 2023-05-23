@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/auth/sign_up.dart';
 
+import '../ui/auth/reg_successful_screen.dart';
 import '../ui/auth/sign_in.dart';
 import '../ui/on_boarding/welcome_screen.dart';
 import '../splash_screen.dart';
@@ -16,6 +17,7 @@ class AppRoutes {
   static const String signInScreen = 'signInScreen';
   static const String signUpScreen = 'signUpScreen';
   static const String otpScreen = 'otpScreen';
+  static const String successScreen = 'successScreen';
   
 
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -25,6 +27,7 @@ class AppRoutes {
     signUpScreen: (context) => const SignUpScreen(),
     signInScreen: (context) => const SignInScreen(),
     otpScreen: (context) => const OtpScreen(),
+    successScreen: (context) => const RegSuccessful(),
     
   };
 
@@ -50,6 +53,10 @@ class AppRoutes {
         case otpScreen:
         return MaterialPageRoute(
           builder: (context) => const OtpScreen(),
+        );
+        case otpScreen:
+        return MaterialPageRoute(
+          builder: (context) => const RegSuccessful(),
         );
       //Default Route is error route
       default:

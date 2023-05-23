@@ -9,6 +9,8 @@ class AppImages {
   static const facebookIcon = '${_baseUrl}facebook_icon.png';
   static const appleIcon = '${_baseUrl}apple_icon.png';
   static const goggleIcon = '${_baseUrl}google_icon.png';
+  static const celebIcon = '${_baseUrl}celeb_icon.png';
+
 
   
 
@@ -20,7 +22,6 @@ class AppImages {
   static const personIcon = '${_svgBaseUrl}person_icon.svg';
   static const visibleIcon = '${_svgBaseUrl}visible_icon.svg';
 
-  static const celebIcon = '${_svgBaseUrl}celeb_icon.svg';
 
 
   ///Gif images

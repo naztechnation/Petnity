@@ -79,7 +79,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                     ),textAlign: TextAlign.start),
                                   ),
                                 ),
-                                   const SizedBox(height: 90,),
+                                   const SizedBox(height: 50,),
 
                                  Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -87,7 +87,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 child: ButtonView(
                                   onPressed: () {
                                       AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.otpScreen);
+                    name: AppRoutes.successScreen);
                                   },
                                   color: AppColors.lightSecondary,
                                   child:  CustomText(
