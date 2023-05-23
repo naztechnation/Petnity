@@ -34,7 +34,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 CustomText(
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
-                                  text: 'Confirm the  code sent to\nyour Email',
+                                  text: 'Confirm the code sent to\nyour Email',
                                   weight: FontWeight.w700,
                                   size: 24,
                                   fontFamily: AppStrings.interSans,

@@ -69,8 +69,8 @@ class RegSuccessful extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                  AppNavigator.pushAndReplaceName(context,
-                      name: AppRoutes.successScreen);
+                  AppNavigator.pushAndStackNamed(context,
+                      name: AppRoutes.kycScreenOne);
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
