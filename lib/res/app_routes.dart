@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/auth/sign_up.dart';
 
 import '../ui/on_boarding/welcome_screen.dart';
 import '../splash_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
     ///Named routes to be added here in this format
     splashScreen: (context) => const SplashScreen(),
     welcomeScreen: (context) => const WelcomeScreen(),
+    signUpScreen: (context) => const SignUpScreen(),
     
   };
 
@@ -32,6 +34,10 @@ class AppRoutes {
      case welcomeScreen:
         return MaterialPageRoute(
           builder: (context) => const WelcomeScreen(),
+        );
+         case welcomeScreen:
+        return MaterialPageRoute(
+          builder: (context) => const SignUpScreen(),
         );
       //Default Route is error route
       default:
