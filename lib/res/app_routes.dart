@@ -7,6 +7,7 @@ import 'package:petnity/ui/kyc/kyc_screen_one.dart';
 
 import '../ui/auth/reg_successful_screen.dart';
 import '../ui/auth/sign_in.dart';
+import '../ui/kyc/kyc_screen_two.dart';
 import '../ui/on_boarding/welcome_screen.dart';
 import '../splash_screen.dart';
 
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String otpScreen = 'otpScreen';
   static const String successScreen = 'successScreen';
   static const String kycScreenOne = 'kycScreenOne';
+  static const String kycScreenTwo = 'kycScreenTwo';
   
 
   static Map<String, Widget Function(BuildContext)> routes = {
@@ -30,7 +32,8 @@ class AppRoutes {
     signInScreen: (context) => const SignInScreen(),
     otpScreen: (context) => const OtpScreen(),
     successScreen: (context) => const RegSuccessful(),
-    kycScreenOne: (context) => const KycScreenOne(),
+    kycScreenOne: (context) =>   KycScreenOne(),
+    kycScreenTwo: (context) =>   KycScreenTwo(),
     
   };
 
@@ -63,7 +66,11 @@ class AppRoutes {
         );
          case kycScreenOne:
         return MaterialPageRoute(
-          builder: (context) => const KycScreenOne(),
+          builder: (context) =>   KycScreenOne(),
+        );
+         case kycScreenTwo:
+        return MaterialPageRoute(
+          builder: (context) =>   KycScreenTwo(),
         );
       //Default Route is error route
       default:

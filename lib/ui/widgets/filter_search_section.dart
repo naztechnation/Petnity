@@ -34,7 +34,7 @@ class FilterSearchView extends StatelessWidget {
         Expanded(
           flex: 5,
           child: TextEditView(
-            borderColor: Theme.of(context).primaryColor,
+            borderColor: Colors.white,
             fillColor: fillColor,
             controller: controller ?? TextEditingController(text: ''),
             onTap: onSearchTap,
@@ -54,17 +54,16 @@ class FilterSearchView extends StatelessWidget {
             flex: 1,
             child: InkWell(
               onTap: onFilterTap ,
-              child: Material(
-                color: Theme.of(context).primaryColor,
-                elevation: 6,
-                type: MaterialType.card,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+              child:   Column(
+                children: [
+          const SizedBox(height: 22),
+
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Center(child: ImageView.svg(AppImages.filterIcon, height: 45)),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(12.0),
-                   child: ImageView.svg(AppImages.filterIcon, height: 35),
-                ),
+
+                ],
               ),
             ),
           )

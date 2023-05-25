@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
                   ),
                 ),
               ),
-                  child: const CustomText(text: 'For service providers',weight: FontWeight.w700,size: 16,
+                  child: const CustomText(text: '',weight: FontWeight.w700,size: 16,
                    color: AppColors.lightPrimary,fontFamily: AppStrings.interSans),
                 ),
           Spacer(),

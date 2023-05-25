@@ -8,6 +8,8 @@ class AppColors {
   static const Color lightShadowColor = Colors.black12;
   static const Color lightCanvas = Color(0xffffffff);
   static const Color scaffoldColor = Color(0xFFE7E7E7);
+  static const Color cardColor = Color(0xFFFCFCFC);
+
 
   static const MaterialColor lightSecondaryAccent =
       MaterialColor(0xFF356EFF, blue);
