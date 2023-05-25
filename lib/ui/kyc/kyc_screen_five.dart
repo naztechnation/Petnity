@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/enum.dart';
+import 'package:petnity/ui/kyc/kyc_screen_six.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
@@ -11,8 +12,6 @@ import '../widgets/button_view.dart';
 import '../widgets/custom_multi_toogle.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_view.dart';
-import 'widgets/choice_card.dart';
-import 'kyc_screen_four.dart';
 
 class KycScreenFive extends StatefulWidget {
   final String selectedPet;
@@ -38,7 +37,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
         child: Container(
           height: screenSize(context).height,
           width: screenSize(context).width,
-          decoration: BoxDecoration(),
+          
           child: Column(children: [
             SafeArea(
                 child: const SizedBox(
@@ -98,7 +97,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
                 child: ButtonView(
                   onPressed: () {
                     AppNavigator.pushAndStackPage(context,
-                        page: KycScreenFour(
+                        page: KycScreenSix(
                           selectedPet: widget.selectedPet,
                         ));
                   },

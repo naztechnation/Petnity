@@ -17,6 +17,7 @@ class AppImages {
   static const parrotPic = '${_baseUrl}parrot_pics.png';
   static const birdsPic = '${_baseUrl}birds_pics.png';
   static const rabbitPic = '${_baseUrl}rabbit_pics.png';
+  static const defaultImage = '${_baseUrl}default_image.png';
 
 
   
