@@ -30,6 +30,11 @@ class AppImages {
   static const personIcon = '${_svgBaseUrl}person_icon.svg';
   static const visibleIcon = '${_svgBaseUrl}visible_icon.svg';
   static const backButton = '${_svgBaseUrl}arrow_back.svg';
+  static const menuIcon = '${_svgBaseUrl}menu_icon.svg';
+  static const homeIcon = '${_svgBaseUrl}home_icon.svg';
+  static const userIcon = '${_svgBaseUrl}user_icon.svg';
+  static const bagIcon = '${_svgBaseUrl}bag_icon.svg';
+  static const trackIcon = '${_svgBaseUrl}track_icon.svg';
 
 
 

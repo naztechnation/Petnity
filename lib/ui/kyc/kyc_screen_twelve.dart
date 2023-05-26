@@ -74,7 +74,7 @@ class KycScreenTwelve extends StatelessWidget {
               child: ButtonView(
                 onPressed: () {
                   AppNavigator.pushAndStackNamed(context,
-                      name: AppRoutes.kycScreenOne);
+                      name: AppRoutes.landingPage);
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
