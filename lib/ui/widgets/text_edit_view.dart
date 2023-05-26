@@ -92,7 +92,7 @@ class TextEditView extends StatelessWidget {
                               fontFamily: AppStrings.interSans,
                               color: Colors.black,
                             ),
-                            SizedBox(height: 5,),
+                            SizedBox(height: 10,),
           TextFormField(
             controller: controller,
             keyboardType: keyboardType,

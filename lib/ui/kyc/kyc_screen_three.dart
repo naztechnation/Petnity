@@ -1,6 +1,8 @@
 
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:petnity/res/enum.dart';
 
@@ -41,7 +43,8 @@ class _KycScreenThreeState extends State<KycScreenThree> {
              
                   ),
           child: Column(children: [
-            SafeArea(child: const SizedBox(height: 44,)),
+                       SafeArea(child:   SizedBox(height: (Platform.isAndroid) ?44 : 0)),
+
             backButton(context),
             SizedBox(height: screenSize(context).height * 0.13,),
             ImageView.asset(AppImages.dogWalking),

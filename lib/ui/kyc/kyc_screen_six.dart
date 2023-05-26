@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 
@@ -33,10 +35,8 @@ class KycScreenSix extends StatelessWidget {
                   end: Alignment.topLeft)),
                   child: SingleChildScrollView(child: Column(children: [
 
-                     SafeArea(
-                child: const SizedBox(
-              height: 44,
-            )),
+                                SafeArea(child:   SizedBox(height: (Platform.isAndroid) ?44 : 0)),
+
             backButton(context),
             SizedBox(
               height: screenSize(context).height * 0.13,

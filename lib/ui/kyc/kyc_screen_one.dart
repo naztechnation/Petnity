@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/ui/kyc/widgets/pet_type_container.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';

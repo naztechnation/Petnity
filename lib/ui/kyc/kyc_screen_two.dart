@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
@@ -35,7 +37,7 @@ class KycScreenTwo extends StatelessWidget {
              
                   ),
           child: Column(children: [
-            SafeArea(child: const SizedBox(height: 44,)),
+            SafeArea(child:   SizedBox(height: (Platform.isAndroid) ?44 : 0)),
             backButton(context),
             SizedBox(height: screenSize(context).height * 0.2,),
             ImageView.asset(AppImages.dogWalking),

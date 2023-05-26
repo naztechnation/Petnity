@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/kyc/widgets/pet_type_container.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -31,12 +33,10 @@ class KycScreenFour extends StatelessWidget {
           child: ListView(
             shrinkWrap: true,
             children: [
-              SafeArea(
-                  child: const SizedBox(
-                height: 30,
-              )),
+                          SafeArea(child:   SizedBox(height: (Platform.isAndroid) ?30 : 0)),
+
               backButton(context),
-              SizedBox(height: 20),
+              SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Column(
