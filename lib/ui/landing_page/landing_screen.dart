@@ -36,38 +36,41 @@ class _LandingScreenState extends State<LandingScreen> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: ImageView.svg(AppImages.homeIcon, height: 22,width: 22,),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-                        icon: ImageView.svg(AppImages.userIcon, height: 22,width: 22,),
-
-            label: 'Services',
-          ),
-          BottomNavigationBarItem(
-                        icon: ImageView.svg(AppImages.bagIcon, height: 22,width: 22,),
-
-            label: 'Shop',
-          ),
-          BottomNavigationBarItem(
-                        icon: ImageView.svg(AppImages.trackIcon, height: 22,width: 22,),
-
-            label: 'Track',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.black,
-        unselectedFontSize: 15,
-        selectedFontSize: 15,
-        iconSize: 16,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
-        selectedItemColor: AppColors.lightSecondary,
-        onTap: _onItemTapped,
+      bottomNavigationBar: SizedBox(
+        height: 68,
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: ImageView.svg(AppImages.homeIcon, height: 22,width: 22,),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+                          icon: ImageView.svg(AppImages.userIcon, height: 22,width: 22,),
+      
+              label: 'Services',
+            ),
+            BottomNavigationBarItem(
+                          icon: ImageView.svg(AppImages.bagIcon, height: 22,width: 22,),
+      
+              label: 'Shop',
+            ),
+            BottomNavigationBarItem(
+                          icon: ImageView.svg(AppImages.trackIcon, height: 22,width: 22,),
+      
+              label: 'Track',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          unselectedItemColor: Colors.black,
+          unselectedFontSize: 15,
+          selectedFontSize: 15,
+          iconSize: 16,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
+          selectedItemColor: AppColors.lightSecondary,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
