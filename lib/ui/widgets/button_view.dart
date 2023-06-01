@@ -72,7 +72,7 @@ class ButtonView extends StatelessWidget {
           onPressed: disabled ? null : onPressed,
           child: child,
           style: ElevatedButton.styleFrom(
-            elevation: 1,
+            elevation: 0,
             primary: disabled
                 ? Theme.of(context).backgroundColor
                 : (color ?? Theme.of(context).colorScheme.secondary),

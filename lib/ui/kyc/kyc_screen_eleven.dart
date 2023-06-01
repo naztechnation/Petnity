@@ -14,7 +14,6 @@ import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/text_edit_view.dart';
-import 'kyc_screen_ten.dart';
 import 'kyc_screen_twelve.dart';
 
 class KycScreenEleven extends StatelessWidget {

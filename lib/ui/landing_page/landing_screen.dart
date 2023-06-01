@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../res/app_images.dart';
+import '../../utils/navigator/page_navigator.dart';
 
 
 
@@ -42,33 +44,42 @@ class _LandingScreenState extends State<LandingScreen> {
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: ImageView.svg(AppImages.homeIcon, height: 22,width: 22,),
+              icon: ImageView.svg(AppImages.homeIcon, height: 20,width: 20,),
+                          activeIcon: ImageView.svg(AppImages.homeIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
+
               label: 'Home',
             ),
             BottomNavigationBarItem(
-                          icon: ImageView.svg(AppImages.userIcon, height: 22,width: 22,),
+                          icon: ImageView.svg(AppImages.userIcon, height: 20,width: 20,),
+                          activeIcon: ImageView.svg(AppImages.userIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
+
       
               label: 'Services',
             ),
             BottomNavigationBarItem(
-                          icon: ImageView.svg(AppImages.bagIcon, height: 22,width: 22,),
+                          icon: ImageView.svg(AppImages.bagIcon, height: 20,width: 20,),
+                          activeIcon: ImageView.svg(AppImages.bagIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
+
       
               label: 'Shop',
             ),
             BottomNavigationBarItem(
-                          icon: ImageView.svg(AppImages.trackIcon, height: 22,width: 22,),
+                          icon: ImageView.svg(AppImages.trackIcon, height: 20,width: 20,),
+                          activeIcon: ImageView.svg(AppImages.trackIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
+                          
       
               label: 'Track',
             ),
           ],
           currentIndex: _selectedIndex,
           unselectedItemColor: Colors.black,
+          selectedItemColor: AppColors.lightSecondary,
           unselectedFontSize: 15,
           selectedFontSize: 15,
           iconSize: 16,
           selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
-          selectedItemColor: AppColors.lightSecondary,
+          
           onTap: _onItemTapped,
         ),
       ),
@@ -93,11 +104,14 @@ class Page1 extends StatelessWidget {
 class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          'Services',
-          style: TextStyle(fontSize: 20),
+    return GestureDetector(
+      onTap: ()=> AppNavigator.pushAndStackPage(context, page: NotificationsScreen()),
+      child: Container(
+        child: Center(
+          child: Text(
+            'Services',
+            style: TextStyle(fontSize: 20),
+          ),
         ),
       ),
     );
