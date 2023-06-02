@@ -15,6 +15,7 @@ class ButtonView extends StatelessWidget {
   final bool processing;
   final bool expanded;
   final EdgeInsets padding;
+
   const ButtonView(
       {required this.onPressed,
       required this.child,

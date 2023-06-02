@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/res/app_colors.dart';
+import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/landing_page/widgets/custom_drawer.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/ui/widgets/notification_icon.dart';
+import 'servicesScreen.dart';
+import 'shop_screen/shop_screen.dart';
 
 import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';
 
-
+import '../../res/app_images.dart';
+import 'homepage.dart';
+import 'track_purchase/track_purchase.dart';
 
 class LandingScreen extends StatefulWidget {
   @override
@@ -17,13 +25,11 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   int _selectedIndex = 0;
 
-  
-
   List<Widget> _widgetOptions = <Widget>[
-    Page1(),
-    Page2(),
-    Page3(),
-    Page4(),
+    HomePage(),
+    ServicesScreen(),
+    ShopScreen(),
+    TrackPurchase(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,6 +41,39 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: customDrawer(),
+      backgroundColor: AppColors.lightBackground,
+      appBar: PreferredSize(
+        preferredSize: screenSize(context) * .1,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: _selectedIndex == 0
+              ? HomepageAppbar()
+              : _selectedIndex == 1
+                  ? simpleAppbar('Services', Container())
+                  : _selectedIndex == 2
+                      ? simpleAppbar(
+                          'Shop Products',
+                          NotificationIcon(
+                            icon: Icon(
+                              Icons.shopping_cart,
+                            ),
+                            nun_of_notifications: 5,
+                          ))
+                      : _selectedIndex == 3
+                          ? simpleAppbar(
+                              'Track Purchase',
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  'History',
+                                  style: TextStyle(
+                                      fontSize: 12, color: Colors.blue),
+                                ),
+                              ))
+                          : Container(),
+        ),
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -44,30 +83,59 @@ class _LandingScreenState extends State<LandingScreen> {
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: ImageView.svg(AppImages.homeIcon, height: 20,width: 20,),
-                          activeIcon: ImageView.svg(AppImages.homeIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
-
+              icon: ImageView.svg(
+                AppImages.homeIcon,
+                height: 20,
+                width: 20,
+              ),
+              activeIcon: ImageView.svg(
+                AppImages.homeIcon,
+                height: 20,
+                width: 20,
+                color: AppColors.lightSecondary,
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-                          icon: ImageView.svg(AppImages.userIcon, height: 20,width: 20,),
-                          activeIcon: ImageView.svg(AppImages.userIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
-
-      
+              icon: ImageView.svg(
+                AppImages.userIcon,
+                height: 20,
+                width: 20,
+              ),
+              activeIcon: ImageView.svg(
+                AppImages.userIcon,
+                height: 20,
+                width: 20,
+                color: AppColors.lightSecondary,
+              ),
               label: 'Services',
             ),
             BottomNavigationBarItem(
-                          icon: ImageView.svg(AppImages.bagIcon, height: 20,width: 20,),
-                          activeIcon: ImageView.svg(AppImages.bagIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
-
-      
+              icon: ImageView.svg(
+                AppImages.bagIcon,
+                height: 20,
+                width: 20,
+              ),
+              activeIcon: ImageView.svg(
+                AppImages.bagIcon,
+                height: 20,
+                width: 20,
+                color: AppColors.lightSecondary,
+              ),
               label: 'Shop',
             ),
             BottomNavigationBarItem(
-                          icon: ImageView.svg(AppImages.trackIcon, height: 20,width: 20,),
-                          activeIcon: ImageView.svg(AppImages.trackIcon, height: 20,width: 20, color: AppColors.lightSecondary,),
-                          
-      
+              icon: ImageView.svg(
+                AppImages.trackIcon,
+                height: 20,
+                width: 20,
+              ),
+              activeIcon: ImageView.svg(
+                AppImages.trackIcon,
+                height: 20,
+                width: 20,
+                color: AppColors.lightSecondary,
+              ),
               label: 'Track',
             ),
           ],
@@ -77,26 +145,17 @@ class _LandingScreenState extends State<LandingScreen> {
           unselectedFontSize: 15,
           selectedFontSize: 15,
           iconSize: 16,
-          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
-          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
-          
+          selectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
+          unselectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w500, fontFamily: AppStrings.interSans),
           onTap: _onItemTapped,
         ),
       ),
     );
-  }
-}
-
-class Page1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          'Home Page',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+    body:
+    Center(
+      child: _widgetOptions.elementAt(_selectedIndex),
     );
   }
 }
@@ -105,7 +164,8 @@ class Page2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> AppNavigator.pushAndStackPage(context, page: NotificationsScreen()),
+      onTap: () =>
+          AppNavigator.pushAndStackPage(context, page: NotificationsScreen()),
       child: Container(
         child: Center(
           child: Text(
@@ -118,30 +178,47 @@ class Page2 extends StatelessWidget {
   }
 }
 
-class Page3 extends StatelessWidget {
+class HomepageAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          'Shop',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+    return AppBar(
+      elevation: 0,
+      backgroundColor: AppColors.lightBackground,
+      iconTheme: IconThemeData(color: Colors.black),
+      actions: [
+        NotificationIcon(
+            icon: Icon(Icons.notifications_outlined), nun_of_notifications: 5),
+        CircleAvatar(
+          radius: 50,
+          child: ImageView.asset(AppImages.catPic),
+        )
+      ],
     );
   }
 }
 
-class Page4 extends StatelessWidget {
+class simpleAppbar extends StatelessWidget {
+  final Widget action;
+  final String title;
+  simpleAppbar(this.title, this.action);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          'Track',
-          style: TextStyle(fontSize: 20),
-        ),
+    return AppBar(
+      elevation: 0,
+      backgroundColor: AppColors.lightBackground,
+      iconTheme: IconThemeData(color: Colors.black),
+      title: Text(
+        title,
+        style:
+            TextStyle(fontFamily: AppStrings.montserrat, color: Colors.black),
       ),
+      centerTitle: true,
+      actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: action,
+        )
+      ],
     );
   }
 }
