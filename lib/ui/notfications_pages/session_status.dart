@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
@@ -10,6 +11,7 @@ import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../widgets/back_button.dart';
 import '../widgets/custom_text.dart';
+import 'chat_pages/chat_page.dart';
 import 'widgets/requests_content.dart';
 
 class SessionStatusScreen extends StatelessWidget {
@@ -133,7 +135,10 @@ class SessionStatusScreen extends StatelessWidget {
 
                   Padding(
               padding: const EdgeInsets.symmetric(horizontal:12.0),
-              child: ButtonView(onPressed: (){},
+              child: ButtonView(
+              onPressed: (){
+                AppNavigator.pushAndStackPage(context, page: ChatPage());
+              },
               expanded: true,
               borderRadius: 41,
               

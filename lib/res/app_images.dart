@@ -18,7 +18,7 @@ class AppImages {
   static const birdsPic = '${_baseUrl}birds_pics.png';
   static const rabbitPic = '${_baseUrl}rabbit_pics.png';
   static const defaultImage = '${_baseUrl}default_image.png';
-  static const person = '${_baseUrl}person.png';
+  static const person = '${_baseUrl}person.jpeg';
   static const important = '${_baseUrl}important.png';
 
 
@@ -37,6 +37,8 @@ class AppImages {
   static const userIcon = '${_svgBaseUrl}user_icon.svg';
   static const bagIcon = '${_svgBaseUrl}bag_icon.svg';
   static const trackIcon = '${_svgBaseUrl}track_icon.svg';
+  static const videoIcon = '${_svgBaseUrl}video_icon.svg';
+  static const phoneIcon = '${_svgBaseUrl}call_icon.svg';
 
 
 
