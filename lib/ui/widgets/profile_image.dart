@@ -60,15 +60,11 @@ class ProfileImage extends StatelessWidget {
                         width: width,
                         scale: scale,
                         imageErrorBuilder: (context, error, stackTrace) =>
-                            (isFood)
-                                ? ImageView.asset(placeHolder,
+                             ImageView.asset(placeHolder,
                                     fit: BoxFit.cover,
                                     height: height,
                                     width: width)
-                                : ImageView.svg(AppImages.icon,
-                                    fit: BoxFit.contain,
-                                    height: height,
-                                    width: width)))),
+                               ))),
           )),
     );
   }
