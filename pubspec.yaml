@@ -43,12 +43,9 @@ dependencies:
   rect_getter: ^1.1.0
   image_picker: ^0.8.7+5
   image_cropper: ^4.0.1
-<<<<<<< HEAD
   cached_network_image: ^3.2.3
   flutter_parsed_text: ^2.2.1
-=======
   flutter_staggered_grid_view: ^0.4.0
->>>>>>> 3705ee602e6be150d13d6016380e19b39683eb64
 
 dev_dependencies:
   flutter_test:
