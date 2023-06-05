@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/notfications_pages/session_details.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 
@@ -66,7 +67,7 @@ class SessionStatusScreen extends StatelessWidget {
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(41),
-                  color: Colors.green.shade100,
+                  color: Colors.green.shade50,
                 ),
                 child: Center(
                   child: Text(
@@ -135,14 +136,20 @@ class SessionStatusScreen extends StatelessWidget {
                 end: Alignment.topLeft)),
         height: 200,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          CustomText(
-            textAlign: TextAlign.center,
-            maxLines: 4,
-            text: 'Go to session',
-            weight: FontWeight.w700,
-            size: 20,
-            fontFamily: AppStrings.interSans,
-            color: AppColors.lightSecondary,
+          GestureDetector(
+            onTap: () {
+                AppNavigator.pushAndStackPage(context, page: SessionDetailsScreen());
+              
+            },
+            child: CustomText(
+              textAlign: TextAlign.center,
+              maxLines: 4,
+              text: 'Go to session',
+              weight: FontWeight.w700,
+              size: 20,
+              fontFamily: AppStrings.interSans,
+              color: AppColors.lightSecondary,
+            ),
           ),
           SizedBox(
             height: 30,

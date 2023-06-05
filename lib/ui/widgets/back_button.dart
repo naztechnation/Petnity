@@ -15,7 +15,7 @@ Widget backButton(BuildContext context){
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 22.0),
-                  child: ImageView.svg(AppImages.backButton),
+                  child: ImageView.svg(AppImages.backButton, height: 30,width: 30,),
                 )),
             );
 
