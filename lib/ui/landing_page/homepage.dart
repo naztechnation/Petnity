@@ -6,8 +6,6 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/landing_page/widgets/search_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
-import './widgets/custom_drawer.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -80,7 +78,10 @@ class HomePage extends StatelessWidget {
                 Container(
                     height: screenSize(context).height * .5,
                     child: ListOfServices()),
+        const SizedBox(height: 40,)
+
               ],
+
             ),
           ),
         ),
