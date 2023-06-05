@@ -3,7 +3,7 @@ class AppImages {
 
   /// General image res
 
-  static const icon = '${_baseUrl}icon.png';
+  // static const icon = '${_baseUrl}icon.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
   static const line = '${_baseUrl}line.png';
   static const facebookIcon = '${_baseUrl}facebook_icon.png';
@@ -21,9 +21,6 @@ class AppImages {
   static const person = '${_baseUrl}person.jpeg';
   static const important = '${_baseUrl}important.png';
 
-
-  
-
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';
   static const searchIcon = '${_svgBaseUrl}search.svg';
@@ -40,8 +37,6 @@ class AppImages {
   static const videoIcon = '${_svgBaseUrl}video_icon.svg';
   static const phoneIcon = '${_svgBaseUrl}call_icon.svg';
 
-
-
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';
 
@@ -51,6 +46,4 @@ class AppImages {
   static const lovePet = '${_gifBaseUrl}love_pet.gif';
   static const petDoctor = '${_gifBaseUrl}doctor_pet.gif';
   static const dogWalking = '${_gifBaseUrl}dog_walking.gif';
-
-
 }

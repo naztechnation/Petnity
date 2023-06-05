@@ -21,55 +21,63 @@ class ImageView extends StatelessWidget {
 
   const ImageView.svg(this.url,
       {this.color,
-        this.semanticsLabel,
-        this.height,
-        this.scale,
-        this.fit,
-        this.width, Key? key}) :
-        type=ImageType.svg,
-        placeholder=null,
-        imageErrorBuilder=null,
-        imageFile=null, super(key: key);
+      this.semanticsLabel,
+      this.height,
+      this.scale,
+      this.fit,
+      this.width,
+      Key? key})
+      : type = ImageType.svg,
+        placeholder = null,
+        imageErrorBuilder = null,
+        imageFile = null,
+        super(key: key);
 
   const ImageView.network(this.url,
       {this.color,
-        this.semanticsLabel,
-        this.height,
-        this.scale,
-        this.fit,
-        this.width,
-        this.imageErrorBuilder,
-        this.placeholder, Key? key}) :
-        type=ImageType.network,
-        imageFile=null, super(key: key);
+      this.semanticsLabel,
+      this.height,
+      this.scale,
+      this.fit,
+      this.width,
+      this.imageErrorBuilder,
+      this.placeholder,
+      Key? key})
+      : type = ImageType.network,
+        imageFile = null,
+        super(key: key);
 
   const ImageView.asset(this.url,
       {this.color,
-        this.semanticsLabel,
-        this.height,
-        this.scale,
-        this.fit,
-        this.width, Key? key}) :
-        type=ImageType.asset,
-        placeholder=null,
-        imageErrorBuilder=null,
-        imageFile=null, super(key: key);
+      this.semanticsLabel,
+      this.height,
+      this.scale,
+      this.fit,
+      this.width,
+      Key? key})
+      : type = ImageType.asset,
+        placeholder = null,
+        imageErrorBuilder = null,
+        imageFile = null,
+        super(key: key);
 
   const ImageView.file(this.imageFile,
       {this.color,
-        this.semanticsLabel,
-        this.height,
-        this.scale=1,
-        this.fit,
-        this.width, Key? key}) :
-        type=ImageType.file,
-        placeholder=null,
-        imageErrorBuilder=null,
-        url=null, super(key: key);
+      this.semanticsLabel,
+      this.height,
+      this.scale = 1,
+      this.fit,
+      this.width,
+      Key? key})
+      : type = ImageType.file,
+        placeholder = null,
+        imageErrorBuilder = null,
+        url = null,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if(type==ImageType.svg){
+    if (type == ImageType.svg) {
       return SvgPicture.asset(
         url!,
         color: color,
@@ -78,7 +86,7 @@ class ImageView extends StatelessWidget {
         width: width,
         fit: fit ?? BoxFit.contain,
       );
-    }else if(type==ImageType.network){
+    } else if (type == ImageType.network) {
       return FadeInImage.assetNetwork(
         placeholderScale: scale,
         fit: fit,
@@ -86,17 +94,16 @@ class ImageView extends StatelessWidget {
         width: width,
         fadeInDuration: const Duration(seconds: 1),
         fadeInCurve: Curves.easeInCirc,
-        placeholder: placeholder ?? AppImages.icon,
+        placeholder: placeholder ?? AppImages.person,
         image: url!,
-        imageErrorBuilder: imageErrorBuilder
-            ?? (context, error, stackTrace) =>
-            Container(
-              height: height,
-              width: width,
-              color: Theme.of(context).shadowColor,
-            ),
+        imageErrorBuilder: imageErrorBuilder ??
+            (context, error, stackTrace) => Container(
+                  height: height,
+                  width: width,
+                  color: Theme.of(context).shadowColor,
+                ),
       );
-    }else if(type==ImageType.asset){
+    } else if (type == ImageType.asset) {
       return Image.asset(
         url!,
         height: height,
@@ -106,7 +113,7 @@ class ImageView extends StatelessWidget {
         scale: scale,
         semanticLabel: semanticsLabel,
       );
-    }else if(type==ImageType.file){
+    } else if (type == ImageType.file) {
       return Image.file(
         imageFile!,
         height: height,

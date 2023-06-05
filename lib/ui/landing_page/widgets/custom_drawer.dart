@@ -5,6 +5,9 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
+import '../../../utils/navigator/page_navigator.dart';
+import '../../notfications_pages/notifications_session.dart';
+
 class customDrawer extends StatelessWidget {
   const customDrawer({super.key});
 
@@ -44,6 +47,10 @@ class customDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
+                    onTap: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: NotificationsScreen());
+                    },
                     leading: ImageView.svg(
                       AppImages.messageIcon,
                       width: 25,
