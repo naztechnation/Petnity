@@ -60,4 +60,5 @@ class AppImages {
   static const petDoctor = '${_gifBaseUrl}doctor_pet.gif';
   static const dogWalking = '${_gifBaseUrl}dog_walking.gif';
   static const loading = '${_gifBaseUrl}loader.gif';
+  static const playingCat = '${_gifBaseUrl}playing_cat.gif';
 }

@@ -11,91 +11,94 @@ class ListOfServices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      physics: const NeverScrollableScrollPhysics(),
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Item(context, Colors.lightBlueAccent, 'Dog \nwalkers', AppImages.dogWalk, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Walkers',));
-              }),
-              Item(context, Colors.brown, 'Pet \ndate', AppImages.petDate, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Date',));
-
-              }),
-            ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Column(
+        // shrinkWrap: true,
+        // padding: const EdgeInsets.symmetric(horizontal: 20),
+        // physics: const NeverScrollableScrollPhysics(),
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10,),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Item(context, Colors.lightBlueAccent, 'Dog \nwalkers', AppImages.dogWalk, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Walkers',));
+                }),
+                Item(context, Colors.brown, 'Pet \ndate', AppImages.petDate, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Date',));
+    
+                }),
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Item(context, Color.fromARGB(255, 179, 120, 10), 'Dog \nsitters',AppImages.dogSitter, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Sitters',));
-
-              }),
-              Item(context, Color.fromARGB(255, 52, 139, 170), 'Trainer', AppImages.dogTrainer, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Trainers',));
-
-              }),
-            ],
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Item(context, Color.fromARGB(255, 179, 120, 10), 'Dog \nsitters',AppImages.dogSitter, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Sitters',));
+    
+                }),
+                Item(context, Color.fromARGB(255, 52, 139, 170), 'Trainer', AppImages.dogTrainer, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Trainers',));
+    
+                }),
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Item(context, Colors.purpleAccent, 'Vets', AppImages.dogVets, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Vets',));
-
-              }),
-              Item(context, Color.fromARGB(255, 185, 15, 72), 'Grooming', AppImages.dogGrooming, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Grooming',));
-
-              }),
-            ],
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Item(context, Colors.purpleAccent, 'Vets', AppImages.dogVets, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Vets',));
+    
+                }),
+                Item(context, Color.fromARGB(255, 185, 15, 72), 'Grooming', AppImages.dogGrooming, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Grooming',));
+    
+                }),
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Item(context, Colors.orangeAccent, 'Boarding',AppImages.dogBoarding, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Boarding',));
-
-              }),
-              Item(context, Colors.lightGreen, 'Breeders', AppImages.dogBreeders, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Breeders',));
-
-              }),
-            ],
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Item(context, Colors.orangeAccent, 'Boarding',AppImages.dogBoarding, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Boarding',));
+    
+                }),
+                Item(context, Colors.lightGreen, 'Breeders', AppImages.dogBreeders, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Breeders',));
+    
+                }),
+              ],
+            ),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Item(context, Colors.blue, 'Dog \nsellers', AppImages.dogSellers, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Sellers',));
-
-              }),
-              Item(context, Colors.pink, 'Pet care \ngivers', AppImages.petCarers, (){
-                AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Care GIvers',));
-
-              }),
-            ],
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Item(context, Colors.blue, 'Dog \nsellers', AppImages.dogSellers, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Sellers',));
+    
+                }),
+                Item(context, Colors.pink, 'Pet care \ngivers', AppImages.petCarers, (){
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Care GIvers',));
+    
+                }),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

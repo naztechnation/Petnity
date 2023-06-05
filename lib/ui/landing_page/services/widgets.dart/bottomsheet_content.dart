@@ -26,7 +26,7 @@ Widget bottomSheetContent(BuildContext context){
             ),
             GestureDetector(
               onTap: (){
-                Navigator.of(context);
+                Navigator.pop(context);
               },
               child: CustomText(
                 textAlign: TextAlign.right,

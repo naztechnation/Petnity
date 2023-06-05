@@ -6,6 +6,7 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/landing_page/widgets/search_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -69,15 +70,13 @@ class HomePage extends StatelessWidget {
                 ),
                 Search('Search'),
                 SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
                 card(context),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                Container(
-                    height: screenSize(context).height * .5,
-                    child: ListOfServices()),
+                ListOfServices(),
         const SizedBox(height: 40,)
 
               ],
@@ -92,52 +91,57 @@ class HomePage extends StatelessWidget {
   // Widget search() {}
 
   Widget card(BuildContext context) {
-    return ClipRRect(
+    return Container(
+      decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(20),
-      child: Card(
-        color: Colors.lime[400],
-        elevation: 2,
-        child: Container(
-          child: Row(
-            children: [
-              Container(
-                width: screenSize(context).width * .65,
-                height: screenSize(context).height * .22,
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Register pets to get full access to products and services',
-                      maxLines: 4,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 17,
-                          fontFamily: AppStrings.interSans),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Center(
-                      child: ButtonView(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                        onPressed: () {},
-                        child: Text('Begin Now'),
-                        expanded: false,
-                      ),
-                    ),
-                  ],
+
+        boxShadow: [
+                BoxShadow(
+                  color: Colors.white,
+                  offset: Offset(0.0, 1.0), //(x,y)
+                  blurRadius: 6.0,
                 ),
-              ),
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage(AppImages.catPic),
-              )
-            ],
+              ],
+          gradient: LinearGradient(
+              colors: [AppColors.scaffoldColor, Colors.red.shade50],
+              begin: Alignment.topRight,
+              end: Alignment.topLeft)),
+      child: Row(
+        children: [
+          Container(
+            width: screenSize(context).width * .60,
+            height: screenSize(context).height * .22,
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Register pets to get full access to products \nand services.',
+                  maxLines: 3,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 17,
+                      fontFamily: AppStrings.interSans),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ButtonView(
+                  borderRadius: 30,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  onPressed: () {},
+                  child: Text('Begin Now'),
+                  expanded: false,
+                ),
+              ],
+            ),
           ),
-        ),
+          SizedBox(
+            width: 130,
+            child: ImageView.asset(AppImages.playingCat))
+        ],
       ),
     );
   }
