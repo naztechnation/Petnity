@@ -7,8 +7,8 @@ import '../../../res/app_strings.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/filter_search_section.dart';
-import 'widgets.dart/bottomsheet_content.dart';
-import 'widgets.dart/providers_card.dart';
+import 'widgets/bottomsheet_content.dart';
+import 'widgets/providers_card.dart';
 
 class ServiceProvidersDetails extends StatelessWidget {
     ServiceProvidersDetails({super.key, required this.petProvider});

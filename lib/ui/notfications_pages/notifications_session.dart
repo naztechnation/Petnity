@@ -81,7 +81,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         padding: EdgeInsets.only(
                             left: status == FilterStatus.request ? 10 : 0,
                             right: status == FilterStatus.chats ? 10 : 0),
-                        child: tabContent(FilterStatus.request,
+                        child: tabHeader(FilterStatus.request,
                             status == FilterStatus.request, false),
                       ),
                     ),
@@ -97,7 +97,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         padding: EdgeInsets.only(
                             left: status == FilterStatus.request ? 10 : 0,
                             right: status == FilterStatus.chats ? 10 : 0),
-                        child: tabContent(
+                        child: tabHeader(
                             FilterStatus.chats,
                             status == FilterStatus.chats,
                             status == FilterStatus.chats),

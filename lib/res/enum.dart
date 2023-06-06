@@ -10,6 +10,7 @@ enum PetGenderType { none, male, female }
 enum PetTypes { none, dog, squirrels, cats, monkeys, parrot, birds, rabbits}
 
 enum FilterStatus { request, chats }
+enum GallaryRating { gallary,  ratings }
 
 
 

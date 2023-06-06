@@ -8,6 +8,7 @@ import '../../../../res/app_strings.dart';
 import '../../../widgets/custom_multi_toogle.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/ratings_views.dart';
+import 'contact_info.dart';
 
 class ProviderProfileBody extends StatefulWidget {
     ProviderProfileBody({super.key});
@@ -165,18 +166,9 @@ class _ProviderProfileBodyState extends State<ProviderProfileBody> {
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomText(
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    text: 'Contact info',
-                    weight: FontWeight.w600,
-                    size: 14,
-                    fontFamily: AppStrings.interSans,
-                    color: Colors.black,
-                  ),
+             
+contactInfo(),
+const SizedBox(height: 30,),
                 ]));
   }
 }
