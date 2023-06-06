@@ -91,7 +91,7 @@ class ListOfServices extends StatelessWidget {
     
                 }),
                 Item(context, Colors.pink, 'Pet care \ngivers', AppImages.petCarers, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Care GIvers',));
+                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Care Givers',));
     
                 }),
               ],
