@@ -5,11 +5,13 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_images.dart';
 import '../../../../res/app_strings.dart';
+import '../../../../utils/navigator/page_navigator.dart';
 import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_multi_toogle.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/profile_image.dart';
 import '../../../widgets/ratings_views.dart';
+import '../service_provider_profile.dart';
 
 class ProvidersCard extends StatefulWidget {
   ProvidersCard({super.key});
@@ -237,7 +239,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: ButtonView(
                   onPressed: () {
-                    //  AppNavigator.pushAndStackPage(context, page: PaymentDetailsScreen());
+                      AppNavigator.pushAndStackPage(context, page: ServiceProviderProfile());
                   },
                   expanded: true,
                   borderRadius: 41,

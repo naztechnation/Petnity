@@ -7,7 +7,7 @@ import 'package:petnity/ui/landing_page/widgets/custom_drawer.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/notification_icon.dart';
-import 'services/servicesScreen.dart';
+import 'services/services_screen.dart';
 import 'shop_screen/shop_screen.dart';
 
 import '../../res/app_images.dart';
