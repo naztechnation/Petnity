@@ -1,16 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/services/widgets/contact_bottom.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../widgets/back_button.dart';
-import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
-import '../../widgets/image_view.dart';
 import 'widgets/contact_top.dart';
 
 class ContactProvider extends StatelessWidget {
