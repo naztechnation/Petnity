@@ -3,11 +3,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/landing_page/services/payment_success_screen.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
+import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
@@ -55,7 +57,7 @@ class ReviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    TextEditView(controller: TextEditingController(text: '', ),
+                    TextEditView(controller: TextEditingController(text: '20 01 2023', ),
                     borderRadius: 30,
                     readOnly: true,
                     borderColor: Colors.white,
@@ -63,7 +65,7 @@ class ReviewScreen extends StatelessWidget {
                       const SizedBox(
                     height: 20,
                   ),
-                     TextEditView(controller: TextEditingController(text: '', ),
+                     TextEditView(controller: TextEditingController(text: '04 pm', ),
                     borderRadius: 30,
                     readOnly: true,
                     borderColor: Colors.white,
@@ -71,7 +73,7 @@ class ReviewScreen extends StatelessWidget {
                       const SizedBox(
                     height: 20,
                   ),
-                     TextEditView(controller: TextEditingController(text: '', ),
+                     TextEditView(controller: TextEditingController(text: 'Emmanuel lodge', ),
                     borderRadius: 30,
                     readOnly: true,
                     borderColor: Colors.white,
@@ -118,7 +120,7 @@ class ReviewScreen extends StatelessWidget {
                               borderColor: Colors.white,
                               borderRadius: 40,
                               onPressed: () {
-                                // AppNavigator.pushAndStackPage(context, page: ReviewScreen());
+                                 AppNavigator.pushAndStackPage(context, page: PaymentSuccessScreen());
                               },
                               child: CustomText(
                                 textAlign: TextAlign.left,
@@ -128,7 +130,7 @@ class ReviewScreen extends StatelessWidget {
                                 size: 16,
                                 color: Colors.white,
                               ),
-                            )
+                            ),
   ],),
   ),
     );

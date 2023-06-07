@@ -53,6 +53,7 @@ class AppImages {
   static const messageArrow = '${_svgBaseUrl}message_arrow.svg';
   static const calender = '${_svgBaseUrl}calender.svg';
   static const time = '${_svgBaseUrl}time.svg';
+  static const bell = '${_svgBaseUrl}bell.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';
@@ -65,4 +66,5 @@ class AppImages {
   static const dogWalking = '${_gifBaseUrl}dog_walking.gif';
   static const loading = '${_gifBaseUrl}loader.gif';
   static const playingCat = '${_gifBaseUrl}playing_cat.gif';
+  static const check = '${_gifBaseUrl}check.gif';
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NotificationIcon extends StatelessWidget {
-  final Icon icon;
+  final Widget icon;
   final int nun_of_notifications;
   NotificationIcon({required this.icon, required this.nun_of_notifications});
 

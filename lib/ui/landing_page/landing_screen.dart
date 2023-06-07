@@ -54,9 +54,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       ? simpleAppbar(
                           'Shop Products',
                           NotificationIcon(
-                            icon: Icon(
-                              Icons.shopping_cart,
-                            ),
+                            icon: ImageView.svg(AppImages.bell,),
                             nun_of_notifications: 5,
                           ))
                       : _selectedIndex == 3

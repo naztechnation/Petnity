@@ -4,9 +4,10 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
-import 'package:petnity/ui/landing_page/widgets/search_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+
+import '../widgets/filter_search_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -68,7 +69,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Search('Search'),
+                FilterSearchView(showFilter: false,),
                 SizedBox(
                   height: 30,
                 ),
