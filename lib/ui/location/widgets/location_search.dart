@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/location/location.dart';
 import '../../../model/data_models/location/location_prediction.dart';
 import '../../../res/app_images.dart';
+import '../../../utils/navigator/page_navigator.dart';
+import '../../landing_page/services/contact_provider.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
@@ -20,6 +22,8 @@ class LocationSearch extends StatefulWidget {
 
 class _LocationSearchState extends State<LocationSearch> {
   late LocationCubit _locationCubit;
+
+  bool showNextBtn = false;
 
   @override
   void initState() {
@@ -57,15 +61,22 @@ Text(_locationCubit.userViewModel.address,
                             style: const TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w400)),
                               ],),
-                      ButtonView(
-                          onPressed: () {},
-                          
-                          processing: false,
-                          expanded: false,
-                          child: const Text('Use current location',
-                              textAlign: TextAlign.center,
-                              style:
-                              TextStyle(fontSize: 12, fontWeight: FontWeight.w400))),
+                      Visibility(
+                        visible: !showNextBtn,
+                        child: ButtonView(
+                            onPressed: () {
+                              setState(() {
+                                showNextBtn = true;
+                              });
+                            },
+                            
+                            processing: false,
+                            expanded: false,
+                            child: const Text('Use current location',
+                                textAlign: TextAlign.center,
+                                style:
+                                TextStyle(fontSize: 12, fontWeight: FontWeight.w400))),
+                      ),
                               
                     ],
                   ),
@@ -154,6 +165,20 @@ Text(_locationCubit.userViewModel.address,
                       );
                     },
                   ),
+                  const SizedBox(height: 25.0),
+
+                 if(showNextBtn)  ButtonView(
+                            onPressed: () {
+                                                            AppNavigator.pushAndStackPage(context, page: ContactProvider());
+
+                            },
+                            
+                            processing: false,
+                            child: const Text('Next',
+                                textAlign: TextAlign.center,
+                                style:
+                                TextStyle(fontSize: 14, fontWeight: FontWeight.w500))),
+                
                 ],
               ),
             );

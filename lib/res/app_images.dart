@@ -51,6 +51,8 @@ class AppImages {
   static const verified = '${_svgBaseUrl}verified.svg';
   static const star = '${_svgBaseUrl}star_icon.svg';
   static const messageArrow = '${_svgBaseUrl}message_arrow.svg';
+  static const calender = '${_svgBaseUrl}calender.svg';
+  static const time = '${_svgBaseUrl}time.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';

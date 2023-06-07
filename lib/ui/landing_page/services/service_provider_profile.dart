@@ -26,7 +26,8 @@ class ServiceProviderProfile extends StatelessWidget {
     return   Scaffold(
       body: Stack(
         children: [
-          Container(height: screenSize(context).height,
+          Container(
+            height: screenSize(context).height,
             width: screenSize(context).width,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
