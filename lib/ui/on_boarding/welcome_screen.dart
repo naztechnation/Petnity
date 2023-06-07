@@ -12,7 +12,6 @@ import '../../utils/navigator/page_navigator.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_view.dart';
 import 'widgets/fading_sliding_in.dart';
-import 'package:rect_getter/rect_getter.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -24,7 +23,6 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  var globalKey = RectGetter.createGlobalKey();
   Rect? rect;
 
   int pageIndex = 0;
@@ -176,9 +174,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 0.5,
                 curve: Curves.easeInOut,
               ),
-                        child: RectGetter(
-                          key: globalKey,
-                          child: Padding(
+                        child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 14.0, horizontal: 20),
                             child: ButtonView(
@@ -213,7 +209,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           ),
                         ),
                       ),
-                    ),
+                  
                     const SizedBox(height: 15),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -252,13 +248,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ),
 
-                  ],
+        ]),
                 ),
-              )),
+        )]));
 
-        ],
-      ),
-    );
+        
   }
 
 

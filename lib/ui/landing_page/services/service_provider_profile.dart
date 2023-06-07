@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
+import '../../location/set_location_screen.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
@@ -146,7 +148,9 @@ class ServiceProviderProfile extends StatelessWidget {
                         child: Row(children: [
                           Expanded(
                             flex: 6,
-                            child: ButtonView(onPressed: (){}, child:  CustomText(
+                            child: ButtonView(onPressed: (){
+                              AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
+                            }, child:  CustomText(
                             textAlign: TextAlign.start,
                             maxLines: 2,
                             text: 'Book session',
