@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
+
+import '../../res/app_colors.dart';
+import '../../res/app_constants.dart';
 
 class LoadingPage extends StatelessWidget {
   final int length;
@@ -7,59 +11,22 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
-      enabled: true,
-      child: ListView.builder(
-          itemCount: length,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(15),
-          itemBuilder: (_, __) => Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: 48.0,
-                      height: 48.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return Scaffold(
+      body: Container(
+        height: screenSize(context).height,
+        width: screenSize(context).width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                begin: Alignment.topRight,
+                end: Alignment.topLeft)),
+        child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                            height: 8.0,
-                            color: Colors.white,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2.0),
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 8.0,
-                            color: Colors.white,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2.0),
-                          ),
-                          Container(
-                            width: 40.0,
-                            height: 8.0,
-                            color: Colors.white,
-                          ),
+                         ImageView.asset(AppImages.loading)
                         ],
                       ),
-                    )
-                  ],
-                ),
-              )),
+      ),
     );
-  }
-}
+    
+    }}

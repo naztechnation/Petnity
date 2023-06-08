@@ -3,7 +3,7 @@ class AppImages {
 
   /// General image res
 
-  static const icon = '${_baseUrl}icon.png';
+  // static const icon = '${_baseUrl}icon.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
   static const line = '${_baseUrl}line.png';
   static const facebookIcon = '${_baseUrl}facebook_icon.png';
@@ -18,11 +18,19 @@ class AppImages {
   static const birdsPic = '${_baseUrl}birds_pics.png';
   static const rabbitPic = '${_baseUrl}rabbit_pics.png';
   static const defaultImage = '${_baseUrl}default_image.png';
-  static const person = '${_baseUrl}person.png';
+  static const person = '${_baseUrl}person.jpeg';
   static const important = '${_baseUrl}important.png';
-
-
-  
+  static const dogWalk = '${_baseUrl}dog_walk.png';
+  static const petDate = '${_baseUrl}pet_date.png';
+  static const dogSitter = '${_baseUrl}dog_sitter.png';
+  static const dogTrainer = '${_baseUrl}dog_trainer.png';
+  static const dogVets = '${_baseUrl}dog_vets.png';
+  static const dogGrooming = '${_baseUrl}dog_grooming.png';
+  static const dogBoarding = '${_baseUrl}dog_boarding.png';
+  static const dogBreeders = '${_baseUrl}dog_breeders.png';
+  static const dogSellers = '${_baseUrl}dog_sellers.png';
+  static const petCarers = '${_baseUrl}pet_carers.png';
+  static const playing = '${_baseUrl}playing.jpeg';
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';
@@ -37,8 +45,16 @@ class AppImages {
   static const userIcon = '${_svgBaseUrl}user_icon.svg';
   static const bagIcon = '${_svgBaseUrl}bag_icon.svg';
   static const trackIcon = '${_svgBaseUrl}track_icon.svg';
-
-
+  static const videoIcon = '${_svgBaseUrl}video_icon.svg';
+  static const phoneIcon = '${_svgBaseUrl}call_icon.svg';
+  static const location = '${_svgBaseUrl}location.svg';
+  static const verified = '${_svgBaseUrl}verified.svg';
+  static const star = '${_svgBaseUrl}star_icon.svg';
+  static const messageArrow = '${_svgBaseUrl}message_arrow.svg';
+  static const calender = '${_svgBaseUrl}calender.svg';
+  static const time = '${_svgBaseUrl}time.svg';
+  static const bell = '${_svgBaseUrl}bell.svg';
+  static const note = '${_svgBaseUrl}note.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';
@@ -49,6 +65,7 @@ class AppImages {
   static const lovePet = '${_gifBaseUrl}love_pet.gif';
   static const petDoctor = '${_gifBaseUrl}doctor_pet.gif';
   static const dogWalking = '${_gifBaseUrl}dog_walking.gif';
-
-
+  static const loading = '${_gifBaseUrl}loader.gif';
+  static const playingCat = '${_gifBaseUrl}playing_cat.gif';
+  static const check = '${_gifBaseUrl}check.gif';
 }

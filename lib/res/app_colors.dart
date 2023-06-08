@@ -9,6 +9,7 @@ class AppColors {
   static const Color lightCanvas = Color(0xffffffff);
   static const Color scaffoldColor = Color(0xFFE7E7E7);
   static const Color cardColor = Color(0xFFFCFCFC);
+  static const Color yellow = Color.fromARGB(246, 249, 205, 7);
 
 
   static const MaterialColor lightSecondaryAccent =

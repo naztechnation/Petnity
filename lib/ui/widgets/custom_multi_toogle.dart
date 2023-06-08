@@ -1,6 +1,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:petnity/res/app_colors.dart';
+
+import '../../res/app_strings.dart';
 
 class CustomMultiToggle extends StatefulWidget {
   final Color? color;
@@ -13,6 +16,7 @@ class CustomMultiToggle extends StatefulWidget {
   final List<int>? selectedIndex;
   final double elevation;
   final double height;
+  final double fontSize;
   final EdgeInsetsGeometry? contentPadding;
   final EdgeInsetsGeometry? contentMargin;
   final void Function(int index)? onSelected;
@@ -31,6 +35,7 @@ class CustomMultiToggle extends StatefulWidget {
         this.contentPadding=const EdgeInsets
             .symmetric(horizontal: 15.0, vertical: 8),
         this.contentMargin=const EdgeInsets.all(12.0),
+        this.fontSize = 16,
         this.elevation = 0})
       : super(key: key);
 
@@ -58,7 +63,7 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
           decoration: BoxDecoration(
             color: selected
                 ? (widget.selectedColor ??
-                    Theme.of(context).colorScheme.secondary)
+                    AppColors.lightSecondary)
                 : (widget.color ?? Theme.of(context).backgroundColor),
             borderRadius: const BorderRadius.all(
               Radius.circular(12.0),
@@ -87,7 +92,9 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
                               Theme.of(context).primaryColor)
                           : (widget.textColor ??
                               Theme.of(context).textTheme.caption!.color),
-                      fontSize: 16,
+                      fontSize: widget.fontSize,
+                            fontFamily: AppStrings.interSans,
+
                       fontWeight: FontWeight.w500)),
              
             ],

@@ -51,20 +51,15 @@ class ProfileImage extends StatelessWidget {
             child: CircleAvatar(
                 radius: radius,
                 backgroundColor: Theme.of(context).canvasColor,
-                child: Hero(
-                    tag: hero,
-                    child: ImageView.network(url,
-                        placeholder: AppImages.icon,
-                        fit: fit,
-                        height: height,
-                        width: width,
-                        scale: scale,
-                        imageErrorBuilder: (context, error, stackTrace) =>
-                             ImageView.asset(placeHolder,
-                                    fit: BoxFit.cover,
-                                    height: height,
-                                    width: width)
-                               ))),
+                child: ImageView.network(url,
+                    placeholder: placeHolder,
+                    fit: fit,
+                    height: height,
+                    width: width,
+                    scale: scale,
+                    imageErrorBuilder: (context, error, stackTrace) =>
+                        ImageView.asset(placeHolder,
+                            fit: BoxFit.cover, height: height, width: width))),
           )),
     );
   }

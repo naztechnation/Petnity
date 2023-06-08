@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/widgets/filter_search_section.dart';
 
 class Search extends StatelessWidget {
   final String label;
@@ -26,12 +27,7 @@ class Search extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: label,
-                border: InputBorder.none,
-              ),
-            ),
+            child: FilterSearchView(),
           ),
         ],
       ),

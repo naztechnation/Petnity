@@ -10,6 +10,7 @@ import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../widgets/back_button.dart';
 import '../widgets/custom_text.dart';
+import 'chat_pages/chat_page.dart';
 import 'tabs_header.dart';
 import 'widgets/requests_content.dart';
 
@@ -80,7 +81,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         padding: EdgeInsets.only(
                             left: status == FilterStatus.request ? 10 : 0,
                             right: status == FilterStatus.chats ? 10 : 0),
-                        child: tabContent(FilterStatus.request,
+                        child: tabHeader(FilterStatus.request,
                             status == FilterStatus.request, false),
                       ),
                     ),
@@ -96,7 +97,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         padding: EdgeInsets.only(
                             left: status == FilterStatus.request ? 10 : 0,
                             right: status == FilterStatus.chats ? 10 : 0),
-                        child: tabContent(
+                        child: tabHeader(
                             FilterStatus.chats,
                             status == FilterStatus.chats,
                             status == FilterStatus.chats),
@@ -109,34 +110,44 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             SizedBox(
               height: 20,
             ),
-         if(status == FilterStatus.request)...[
-          Expanded(
+            if (status == FilterStatus.request) ...[
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 6,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                        onTap: () => AppNavigator.pushAndStackPage(context,
+                            page: SessionStatusScreen()),
+                        child: RequestsContent(
+                          isChat: false,
+                          isRequestAccepted: true,
+                        ));
+                  },
+                ),
+              )
+            ] else ...[
+              Expanded(
                 // height: screenSize(context).height * 0.6,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: ()=> AppNavigator.pushAndStackPage(context, page: SessionStatusScreen()),
-                  child: RequestsContent(isChat: false, isRequestAccepted: true,));
-              },),
-            )
-         ] else...[
-          Expanded(
-                // height: screenSize(context).height * 0.6,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 6,
-                itemBuilder: (context, index) {
-                return RequestsContent(isChat: true, isRequestAccepted: false,);
-              },),
-            )
-         ]  
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 6,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => AppNavigator.pushAndStackPage(context,
+                          page: ChatPage()),
+                      child: RequestsContent(
+                        isChat: true,
+                        isRequestAccepted: false,
+                      ),
+                    );
+                  },
+                ),
+              )
+            ]
           ],
         ),
       ),
     );
   }
-
- 
 }

@@ -5,7 +5,7 @@
 import '../../res/app_colors.dart';
 import '../../res/enum.dart';
 
-Widget tabContent(FilterStatus filterStatus, bool isTapped, bool showBadge) {
+Widget tabHeader(FilterStatus filterStatus, bool isTapped, bool showBadge) {
     return Stack(
       children: [
         Container(
