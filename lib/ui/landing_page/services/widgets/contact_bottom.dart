@@ -39,6 +39,8 @@ class _ContactBottomState extends State<ContactBottom> {
                     color: Colors.black,
                   ),
                   Switch.adaptive(
+                    activeColor: AppColors.lightSecondary,
+            
       value: _value,
       onChanged: (newValue) => setState(() => _value = newValue),
     ),

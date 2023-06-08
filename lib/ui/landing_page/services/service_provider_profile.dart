@@ -41,7 +41,7 @@ class ServiceProviderProfile extends StatelessWidget {
                   height: (Platform.isAndroid) ? 30 : 0)),
                 Container(
                   color: AppColors.cardColor ,
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 20, top: 30),
                   child: Row(
                     children: [
                       backButton(context),

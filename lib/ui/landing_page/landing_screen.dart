@@ -75,7 +75,7 @@ class _LandingScreenState extends State<LandingScreen> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: SizedBox(
-        height: 68,
+        height: 88,
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[

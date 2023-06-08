@@ -50,25 +50,27 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
             const MapViews(),
             Container(height: screenSize(context).height,width: screenSize(context).width,color: Colors.black12,),
             Positioned(
-              top: 30,
+              top: 10,
               left: 10,
-              child: Row(
-                      children: [
-              backButton(context),
-              const SizedBox(
-                width: 40,
+              child: SafeArea(
+                child: Row(
+                        children: [
+                backButton(context),
+                const SizedBox(
+                  width: 40,
+                ),
+                CustomText(
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  text: 'Pick up location',
+                  weight: FontWeight.w600,
+                  size: 22,
+                  fontFamily: AppStrings.interSans,
+                  color: Colors.black,
+                ),
+                        ],
+                      ),
               ),
-              CustomText(
-                textAlign: TextAlign.center,
-                maxLines: 2,
-                text: 'Pick up location',
-                weight: FontWeight.w600,
-                size: 22,
-                fontFamily: AppStrings.interSans,
-                color: Colors.black,
-              ),
-                      ],
-                    ),
             ),
           ],
         ),

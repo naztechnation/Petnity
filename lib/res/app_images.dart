@@ -55,6 +55,7 @@ class AppImages {
   static const time = '${_svgBaseUrl}time.svg';
   static const bell = '${_svgBaseUrl}bell.svg';
   static const note = '${_svgBaseUrl}note.svg';
+  static const cartIcon = '${_svgBaseUrl}cart_icon.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';
