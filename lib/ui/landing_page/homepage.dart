@@ -8,9 +8,12 @@ import 'package:petnity/ui/landing_page/widgets/search_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import './widgets/custom_drawer.dart';
+import '../widgets/filter_search_section.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +72,10 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                Search('Search'),
+                FilterSearchView(
+                  showFilter: false,
+                  controller: search,
+                ),
                 SizedBox(
                   height: 10,
                 ),

@@ -45,9 +45,7 @@ class ShopScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return ProductDetailScreen();
-                        }));
+                        Navigator.pushNamed(context, 'productDetailScreen');
                       },
                       child: Container(
                         height: screenSize(context).height * .23,
