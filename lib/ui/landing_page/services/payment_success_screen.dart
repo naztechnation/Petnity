@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/landing_page/services/track_services/track_services.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
+import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
@@ -111,48 +113,55 @@ class PaymentSuccessScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Icon(Icons.info, color: Color(0xFFFFE3E3),),
-                        const SizedBox(width: 5,),
+                        Icon(
+                          Icons.info,
+                          color: Color(0xFFFFE3E3),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
                         CustomText(
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              text: 'NOTE',
-                              weight: FontWeight.w600,
-                              size: 14,
-                              color: Colors.black,
-                            ),
-                    ],),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          text: 'NOTE',
+                          weight: FontWeight.w600,
+                          size: 14,
+                          color: Colors.black,
+                        ),
+                      ],
+                    ),
                     const SizedBox(
                       height: 10,
                     ),
                     CustomText(
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                              text: 'If session is rejected, funds would be refunded back to your card',
-                              weight: FontWeight.w500,
-                              size: 14,
-                              color: Colors.black,
-                            ),
-
-                             const SizedBox(height: 45,),
-    ButtonView(
-                              color: AppColors.lightSecondary,
-                              
-                              borderColor: Colors.white,
-                              borderRadius: 40,
-                              onPressed: () {
-                                //  AppNavigator.pushAndStackPage(context, page: PaymentSuccessScreen());
-                              },
-                              child: CustomText(
-                                textAlign: TextAlign.left,
-                                maxLines: 2,
-                                text: 'Track',
-                                weight: FontWeight.w600,
-                                size: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      text:
+                          'If session is rejected, funds would be refunded back to your card',
+                      weight: FontWeight.w500,
+                      size: 14,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      height: 45,
+                    ),
+                    ButtonView(
+                      color: AppColors.lightSecondary,
+                      borderColor: Colors.white,
+                      borderRadius: 40,
+                      onPressed: () {
+                        AppNavigator.pushAndStackPage(context,
+                            page: TrackServicesScreen());
+                      },
+                      child: CustomText(
+                        textAlign: TextAlign.left,
+                        maxLines: 2,
+                        text: 'Track',
+                        weight: FontWeight.w600,
+                        size: 16,
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),

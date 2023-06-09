@@ -69,19 +69,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
           iconTheme: IconThemeData(color: Colors.black),
-          actions: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: NotificationIcon(
-                  icon: Icon(Icons.shopping_cart), nun_of_notifications: 3),
-            ),
-            Container(
-              width: 20,
-            )
-          ],
-        ),
-<<<<<<< HEAD
-        iconTheme: IconThemeData(color: Colors.black),
         actions: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -91,9 +78,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           Container(
             width: 20,
           )
-        ],
-=======
->>>>>>> 38114423ba7a55a54214191a49c188741dbc0356
+          ],
+        ),
+        
+        
       ),
       body: Container(
         height: screenSize(context).height * .9,

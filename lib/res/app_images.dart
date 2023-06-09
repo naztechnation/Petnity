@@ -56,6 +56,9 @@ class AppImages {
   static const bell = '${_svgBaseUrl}bell.svg';
   static const note = '${_svgBaseUrl}note.svg';
   static const cartIcon = '${_svgBaseUrl}cart_icon.svg';
+  static const callBorder = '${_svgBaseUrl}call_border.svg';
+  static const videoBorder = '${_svgBaseUrl}video_border.svg';
+  static const messageBorder = '${_svgBaseUrl}message_border.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';

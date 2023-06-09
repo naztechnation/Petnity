@@ -6,11 +6,8 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-<<<<<<< HEAD
 import './widgets/custom_drawer.dart';
-=======
 
->>>>>>> 8b21851982daf8294188e325f54629e99b837e3e
 import '../widgets/filter_search_section.dart';
 
 class HomePage extends StatelessWidget {
@@ -75,14 +72,10 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-<<<<<<< HEAD
                 FilterSearchView(
                   showFilter: false,
                   controller: search,
                 ),
-=======
-                FilterSearchView(showFilter: false,),
->>>>>>> 8b21851982daf8294188e325f54629e99b837e3e
                 SizedBox(
                   height: 30,
                 ),

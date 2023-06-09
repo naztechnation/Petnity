@@ -38,7 +38,7 @@ class ServiceProviderProfile extends StatelessWidget {
               children: [
                 SafeArea(child: Container(
                   color: AppColors.cardColor ,
-                  height: (Platform.isAndroid) ? 30 : 0)),
+                  height: (Platform.isAndroid) ? 0 : 0)),
                 Container(
                   color: AppColors.cardColor ,
                   padding: const EdgeInsets.only(bottom: 20, top: 30),
