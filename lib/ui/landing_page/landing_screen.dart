@@ -43,9 +43,11 @@ class _LandingScreenState extends State<LandingScreen> {
       drawer: customDrawer(),
       backgroundColor: AppColors.lightBackground,
       appBar: PreferredSize(
-        preferredSize: screenSize(context) * .1,
+        preferredSize: _selectedIndex == 0
+            ? screenSize(context) * .09
+            : screenSize(context) * .09,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.only(top: 5),
           child: _selectedIndex == 0
               ? HomepageAppbar()
               : _selectedIndex == 1
@@ -62,10 +64,14 @@ class _LandingScreenState extends State<LandingScreen> {
                               'Track Purchase',
                               InkWell(
                                 onTap: () {},
-                                child: Text(
-                                  'History',
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.blue),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 15.0, top: 25),
+                                  child: Text(
+                                    'History',
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.blue),
+                                  ),
                                 ),
                               ))
                           : Container(),

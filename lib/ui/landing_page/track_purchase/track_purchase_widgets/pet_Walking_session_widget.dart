@@ -14,7 +14,7 @@ class PetWalkingSessionWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(30),
       child: Card(
         child: Container(
-          height: screenSize(context).height * .2,
+          height: screenSize(context).height * .22,
           width: screenSize(context).width * .9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

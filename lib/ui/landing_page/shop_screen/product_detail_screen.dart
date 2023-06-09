@@ -24,8 +24,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       backgroundColor: Color(0xFFF2F6FF),
       bottomNavigationBar: Container(
         color: Colors.white,
-        height: screenSize(context).height * .1,
-        padding: EdgeInsets.all(10),
+        height: screenSize(context).height * .08,
+        padding: EdgeInsets.all(5),
         child: Row(
           children: [
             Container(
@@ -54,18 +54,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ],
         ),
       ),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: InkWell(
-            child: ImageView.svg(AppImages.backButton),
-            onTap: () {
-              Navigator.pop(context);
-            },
+      appBar: PreferredSize(
+        preferredSize: screenSize(context) * .08,
+        child: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          leading: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: InkWell(
+              child: ImageView.svg(AppImages.backButton),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
+          iconTheme: IconThemeData(color: Colors.black),
+          actions: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: NotificationIcon(
+                  icon: Icon(Icons.shopping_cart), nun_of_notifications: 3),
+            ),
+            Container(
+              width: 20,
+            )
+          ],
         ),
+<<<<<<< HEAD
         iconTheme: IconThemeData(color: Colors.black),
         actions: [
           Container(
@@ -77,6 +92,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             width: 20,
           )
         ],
+=======
+>>>>>>> 38114423ba7a55a54214191a49c188741dbc0356
       ),
       body: Container(
         height: screenSize(context).height * .9,

@@ -11,7 +11,7 @@ class VideoCallSessionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: screenSize(context).height * .27,
+        height: screenSize(context).height * .3,
         width: screenSize(context).width * .9,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(

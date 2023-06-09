@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/Profile/profile.dart';
+import 'package:petnity/ui/settings/settings.dart';
+import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
@@ -34,6 +37,10 @@ class customDrawer extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ListTile(
+                    onTap: () =>
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return Profile();
+                    })),
                     leading: ImageView.svg(
                       AppImages.personIcon,
                       width: 25,
@@ -77,6 +84,10 @@ class customDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
+                    onTap: () =>
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return Support();
+                    })),
                     leading: ImageView.svg(
                       AppImages.trackIcon,
                       width: 25,
@@ -95,6 +106,10 @@ class customDrawer extends StatelessWidget {
                       width: 25,
                       height: 25,
                     ),
+                    onTap: () =>
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return SettingsScreen();
+                    })),
                     title: Text(
                       'Settings',
                       style: TextStyle(
