@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/res/app_strings.dart';
 
 import 'package:petnity/ui/widgets/button_view.dart';
 
@@ -67,13 +68,18 @@ class VideoCallSessionWidget extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
-                  'Session time: 2hrs',
-                  style: TextStyle(fontSize: 12),
+                Container(
+                  child: Text(
+                    'Session time: 2hrs',
+                    style: TextStyle(
+                        fontSize: 12, fontFamily: AppStrings.interSans),
+                  ),
                 ),
-                SizedBox(width: 25),
-                Text('Session type', style: TextStyle(fontSize: 12)),
-                SizedBox(width: 8),
+                SizedBox(width: 5),
+                Text('Session type',
+                    style: TextStyle(
+                        fontSize: 12, fontFamily: AppStrings.interSans)),
+                SizedBox(width: 5),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.blue.withOpacity(0.3),
@@ -82,11 +88,18 @@ class VideoCallSessionWidget extends StatelessWidget {
                   padding: EdgeInsets.all(5.0),
                   child: Row(
                     children: [
-                      Text('Video call',
-                          style: TextStyle(fontSize: 12, color: Colors.blue)),
-                      Icon(
-                        Icons.video_call,
-                        color: Colors.blue,
+                      FittedBox(
+                        child: Text('Video call',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.blue,
+                                fontFamily: AppStrings.interSans)),
+                      ),
+                      FittedBox(
+                        child: Icon(
+                          Icons.video_call,
+                          color: Colors.blue,
+                        ),
                       ),
                     ],
                   ),

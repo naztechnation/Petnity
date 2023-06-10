@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/Profile/profile.dart';
+import 'package:petnity/ui/profile/profile.dart';
 import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/button_view.dart';

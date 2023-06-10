@@ -5,15 +5,27 @@ enum ImageType { svg, network, asset, file }
 enum MessageType { success, error, progress }
 
 enum DropdownType { form, button, menu }
+
 enum PetGenderType { none, male, female }
 
-enum PetTypes { none, dog, squirrels, cats, monkeys, parrot, birds, rabbits}
+enum PetTypes { none, dog, squirrels, cats, monkeys, parrot, birds, rabbits }
 
 enum FilterStatus { request, chats }
-enum GallaryRating { gallary,  ratings }
+
+enum GallaryRating { gallary, ratings }
+
 enum ViewState { idle, loading, processing, success, failed }
 
-
-
-
-
+enum Services {
+  none,
+  dogwalkers,
+  petdate,
+  dogsitters,
+  trainer,
+  vets,
+  grooming,
+  beeders,
+  dogsellers,
+  boarding,
+  ptcaregivers
+}

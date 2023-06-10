@@ -4,8 +4,6 @@ import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/al
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/awaiting_sessions.dart';
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/ongoing_purchase.dart';
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/ongoing_services.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/pet_Walking_session_widget.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
 
 class TrackPurchase extends StatelessWidget {
   @override
