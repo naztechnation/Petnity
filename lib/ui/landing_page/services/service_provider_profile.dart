@@ -213,13 +213,14 @@ class ServiceProviderProfile extends StatelessWidget {
         // TODO: Handle this case.
         break;
       case Services.dogwalkers:
-        // TODO: Handle this case.
+        AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
+
         break;
       case Services.petdate:
         // TODO: Handle this case.
         break;
       case Services.dogsitters:
-        // TODO: Handle this case.
+        AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
         break;
       case Services.trainer:
         AppNavigator.pushAndStackPage(context, page: TrainingScreen());
@@ -230,7 +231,7 @@ class ServiceProviderProfile extends StatelessWidget {
       case Services.grooming:
         // TODO: Handle this case.
         break;
-      case Services.beeders:
+      case Services.breeders:
         // TODO: Handle this case.
         break;
       case Services.dogsellers:

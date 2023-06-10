@@ -32,6 +32,10 @@ class AppImages {
   static const petCarers = '${_baseUrl}pet_carers.png';
   static const supportPic = '${_baseUrl}support.png';
   static const playing = '${_baseUrl}playing.jpeg';
+  static const beginnerPet = '${_baseUrl}beginner_pet.png';
+  static const intermidiatePet = '${_baseUrl}intermidiate_pet.png';
+  static const proPet = '${_baseUrl}pro_pet.png';
+  static const lovedPet = '${_baseUrl}love_pet.png';
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';

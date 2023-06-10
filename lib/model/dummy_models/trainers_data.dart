@@ -1,3 +1,5 @@
+import '../../res/app_images.dart';
+
 class TrainersData {
   final String image;
   final String title;
@@ -7,5 +9,12 @@ class TrainersData {
 }
 
 List<TrainersData> trainersData = [
-  //TrainersData(, title, subtitles)
+  TrainersData(AppImages.beginnerPet, 'Training for beginner pets',
+      'Lorem ipsum dolor sit amet consectetur. Sit nisi eget sit urna tortor ve'),
+  TrainersData(AppImages.intermidiatePet, 'Training for intermediate pets',
+      'Lorem ipsum dolor sit amet consectetur. Sit nisi eget sit urna tortor ve'),
+  TrainersData(AppImages.proPet, 'Training for pro pets',
+      'Lorem ipsum dolor sit amet consectetur. Sit nisi eget sit urna tortor ve'),
+  TrainersData(AppImages.lovedPet, 'Training for tough love pets',
+      'Lorem ipsum dolor sit amet consectetur. Sit nisi eget sit urna tortor ve')
 ];

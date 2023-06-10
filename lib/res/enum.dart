@@ -24,7 +24,7 @@ enum Services {
   trainer,
   vets,
   grooming,
-  beeders,
+  breeders,
   dogsellers,
   boarding,
   petcaregivers
