@@ -27,5 +27,5 @@ enum Services {
   beeders,
   dogsellers,
   boarding,
-  ptcaregivers
+  petcaregivers
 }

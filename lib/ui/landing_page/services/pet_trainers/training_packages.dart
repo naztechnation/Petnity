@@ -8,8 +8,8 @@ import '../../../../res/app_strings.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/custom_text.dart';
 
-class TrackServicesScreen extends StatelessWidget {
-  const TrackServicesScreen({super.key});
+class TrainingScreen extends StatelessWidget {
+  const TrainingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,7 @@ class TrackServicesScreen extends StatelessWidget {
                 colors: [AppColors.scaffoldColor, Colors.red.shade50],
                 begin: Alignment.topRight,
                 end: Alignment.topLeft)),
-        child: SingleChildScrollView(
-            child: Column(
+        child: Column(
           children: [
             SafeArea(
                 child: Container(
@@ -40,7 +39,7 @@ class TrackServicesScreen extends StatelessWidget {
                   CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    text: 'Track service',
+                    text: 'Training packages',
                     weight: FontWeight.w700,
                     size: 20,
                     fontFamily: AppStrings.interSans,
@@ -49,8 +48,32 @@ class TrackServicesScreen extends StatelessWidget {
                 ],
               ),
             ),
+            SingleChildScrollView(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: CustomText(
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      text: 'Select package',
+                      weight: FontWeight.w500,
+                      size: 16,
+                      fontFamily: AppStrings.interSans,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            )),
           ],
-        )),
+        ),
       ),
     );
   }

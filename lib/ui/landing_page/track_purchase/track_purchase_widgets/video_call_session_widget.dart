@@ -112,6 +112,7 @@ class VideoCallSessionWidget extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: ButtonView(
+                borderRadius: 30,
                 child: Text('Details'),
                 onPressed: () {},
               ),
