@@ -64,6 +64,7 @@ class AppImages {
   static const callBorder = '${_svgBaseUrl}call_border.svg';
   static const videoBorder = '${_svgBaseUrl}video_border.svg';
   static const messageBorder = '${_svgBaseUrl}message_border.svg';
+  static const arrowDown = '${_svgBaseUrl}arrow_down.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';

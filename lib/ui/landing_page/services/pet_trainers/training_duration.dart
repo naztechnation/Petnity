@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/landing_page/services/pet_trainers/date_selection.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
@@ -101,7 +103,9 @@ class TrainingDuraion extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 50, left: 20, right: 20),
         child: ButtonView(
           borderRadius: 30,
-          onPressed: () {},
+          onPressed: () {
+            AppNavigator.pushAndStackPage(context, page: DateSelection());
+          },
           child: CustomText(
             textAlign: TextAlign.center,
             maxLines: 2,
