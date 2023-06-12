@@ -12,7 +12,9 @@ import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/location_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
+import '../../../../res/enum.dart';
 import '../../../widgets/custom_text.dart';
+import '../../../widgets/text_edit_view.dart';
 import 'widget/profile.dart';
 
 class TrackServicesBody extends StatelessWidget {
@@ -59,6 +61,44 @@ class TrackServicesBody extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              Provider.of<UserViewModel>(context, listen: false)
+                          .selectedService ==
+                      Services.trainer
+                  ? Column(
+                      children: [
+                        TextEditView(
+                          controller: TextEditingController(
+                            text: '1 month',
+                          ),
+                          borderRadius: 30,
+                          readOnly: true,
+                          borderColor: Colors.white,
+                          filled: true,
+                          fillColor: Colors.white,
+                          isDense: true,
+                          textViewTitle: 'Boarding Duration',
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextEditView(
+                          controller: TextEditingController(
+                            text: 'Basic',
+                          ),
+                          borderRadius: 30,
+                          readOnly: true,
+                          borderColor: Colors.white,
+                          filled: true,
+                          fillColor: Colors.white,
+                          isDense: true,
+                          textViewTitle: 'Boarding Package',
+                        ),
+                      ],
+                    )
+                  : SizedBox.shrink(),
               const SizedBox(
                 height: 20,
               ),

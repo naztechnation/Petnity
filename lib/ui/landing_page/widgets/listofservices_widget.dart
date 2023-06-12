@@ -110,7 +110,7 @@ class ListOfServices extends StatelessWidget {
                       .setSelectedService(Services.boarding);
                   AppNavigator.pushAndStackPage(context,
                       page: ServiceProvidersDetails(
-                        petProvider: 'Boarding',
+                        petProvider: 'Pet boarder',
                       ));
                 }),
                 Item(context, Colors.lightGreen, 'Breeders',
@@ -146,7 +146,7 @@ class ListOfServices extends StatelessWidget {
                       .setSelectedService(Services.petcaregivers);
                   AppNavigator.pushAndStackPage(context,
                       page: ServiceProvidersDetails(
-                        petProvider: 'Pet Care Givers',
+                        petProvider: 'Pet care giving',
                       ));
                 }),
               ],

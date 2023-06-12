@@ -90,6 +90,22 @@ class ReviewScreen extends StatelessWidget {
                                 fillColor: Colors.white,
                                 isDense: true,
                                 textViewTitle: 'Duration',
+                                suffixIcon: Container(
+                                  width: 80,
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 12.0),
+                                    child: CustomText(
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      text: '\$450',
+                                      weight: FontWeight.w500,
+                                      size: 14,
+                                      fontFamily: AppStrings.montserrat,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           )
