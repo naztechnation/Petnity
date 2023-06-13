@@ -1,5 +1,3 @@
-
- 
 import 'package:flutter/material.dart';
 
 import '../../handlers/location_handler.dart';
@@ -10,7 +8,6 @@ class UserViewModel extends BaseViewModel {
   UserViewModel() {
     _intData();
   }
- 
 
   late String _address = '';
 
@@ -18,10 +15,11 @@ class UserViewModel extends BaseViewModel {
 
   late double _longitude = 7.496529864154287;
 
-  double _walletBalance =0;
+  double _walletBalance = 0;
+
+  Services _selectedService = Services.none;
 
   Future<void> _intData() async {
-   
     /// Get current location
     final position = await LocationHandler.determinePosition();
     await setLongLat(
@@ -33,7 +31,13 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+  Future<void> setSelectedService(Services selectedService) async {
+    _selectedService = selectedService;
+    setViewState(ViewState.success);
+  }
+
   String get address => _address;
+  Services get selectedService => _selectedService;
 
   Future<void> setLongLat(
       {required double latitude, required double longitude}) async {
@@ -46,10 +50,4 @@ class UserViewModel extends BaseViewModel {
   double get longitude => _longitude;
 
   double get latitude => _latitude;
-
- 
-  }
-
- 
-
-
+}

@@ -2,33 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:provider/provider.dart';
 
+import '../../../model/view_models/user_view_model.dart';
+import '../../../res/enum.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../services/services_providers_details.dart';
 
 class ListOfServices extends StatelessWidget {
-  const ListOfServices({super.key});
+  ListOfServices({super.key});
 
+  UserViewModel userViewModel = UserViewModel();
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
-        // shrinkWrap: true,
-        // padding: const EdgeInsets.symmetric(horizontal: 20),
-        // physics: const NeverScrollableScrollPhysics(),
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10,),
+            margin: EdgeInsets.symmetric(
+              vertical: 10,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Item(context, Colors.lightBlueAccent, 'Dog \nwalkers', AppImages.dogWalk, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Walkers',));
+                Item(context, Colors.lightBlueAccent, 'Dog \nwalkers',
+                    AppImages.dogWalk, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.dogwalkers);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Dog Walkers',
+                      ));
                 }),
-                Item(context, Colors.brown, 'Pet \ndate', AppImages.petDate, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Date',));
-    
+                Item(context, Colors.brown, 'Pet \ndate', AppImages.petDate,
+                    () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.petdate);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Pet Date',
+                      ));
                 }),
               ],
             ),
@@ -38,29 +52,23 @@ class ListOfServices extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Item(context, Color.fromARGB(255, 179, 120, 10), 'Dog \nsitters',AppImages.dogSitter, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Sitters',));
-    
+                Item(context, Color.fromARGB(255, 179, 120, 10),
+                    'Dog \nsitters', AppImages.dogSitter, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.dogsitters);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Dog Sitters',
+                      ));
                 }),
-                Item(context, Color.fromARGB(255, 52, 139, 170), 'Trainer', AppImages.dogTrainer, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Trainers',));
-    
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Item(context, Colors.purpleAccent, 'Vets', AppImages.dogVets, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Vets',));
-    
-                }),
-                Item(context, Color.fromARGB(255, 185, 15, 72), 'Grooming', AppImages.dogGrooming, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Grooming',));
-    
+                Item(context, Color.fromARGB(255, 52, 139, 170), 'Trainer',
+                    AppImages.dogTrainer, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.trainer);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Trainers',
+                      ));
                 }),
               ],
             ),
@@ -70,13 +78,23 @@ class ListOfServices extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Item(context, Colors.orangeAccent, 'Boarding',AppImages.dogBoarding, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Boarding',));
-    
+                Item(context, Colors.purpleAccent, 'Vets', AppImages.dogVets,
+                    () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.vets);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Vets',
+                      ));
                 }),
-                Item(context, Colors.lightGreen, 'Breeders', AppImages.dogBreeders, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Breeders',));
-    
+                Item(context, Color.fromARGB(255, 185, 15, 72), 'Grooming',
+                    AppImages.dogGrooming, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.grooming);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Grooming',
+                      ));
                 }),
               ],
             ),
@@ -86,13 +104,50 @@ class ListOfServices extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Item(context, Colors.blue, 'Dog \nsellers', AppImages.dogSellers, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Dog Sellers',));
-    
+                Item(context, Colors.orangeAccent, 'Boarding',
+                    AppImages.dogBoarding, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.boarding);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Pet boarder',
+                      ));
                 }),
-                Item(context, Colors.pink, 'Pet care \ngivers', AppImages.petCarers, (){
-                  AppNavigator.pushAndStackPage(context, page: ServiceProvidersDetails(petProvider: 'Pet Care Givers',));
-    
+                Item(context, Colors.lightGreen, 'Breeders',
+                    AppImages.dogBreeders, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.breeders);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Breeders',
+                      ));
+                }),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Item(
+                    context, Colors.blue, 'Dog \nsellers', AppImages.dogSellers,
+                    () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.dogsellers);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Dog Sellers',
+                      ));
+                }),
+                Item(context, Colors.pink, 'Pet care \ngivers',
+                    AppImages.petCarers, () {
+                  Provider.of<UserViewModel>(context, listen: false)
+                      .setSelectedService(Services.petcaregivers);
+                  AppNavigator.pushAndStackPage(context,
+                      page: ServiceProvidersDetails(
+                        petProvider: 'Pet care giving',
+                      ));
                 }),
               ],
             ),
@@ -103,7 +158,8 @@ class ListOfServices extends StatelessWidget {
   }
 }
 
-Widget Item(BuildContext context, Color color, String title, String image, VoidCallback onPressed) {
+Widget Item(BuildContext context, Color color, String title, String image,
+    VoidCallback onPressed) {
   return GestureDetector(
     onTap: onPressed,
     child: Container(
@@ -111,7 +167,8 @@ Widget Item(BuildContext context, Color color, String title, String image, VoidC
       height: screenSize(context).height * .08,
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
-          color: color.withOpacity(0.2), borderRadius: BorderRadius.circular(20)),
+          color: color.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

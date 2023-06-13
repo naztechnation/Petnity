@@ -49,13 +49,14 @@ class ContactProvider extends StatelessWidget {
               const SizedBox(
                 height: 28,
               ),
-              contactTop (),
-
+              contactTop(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: ContactBottom(),
+      bottomNavigationBar: ContactBottom(
+        buttonText: 'Finish up and review',
+      ),
     );
   }
 }

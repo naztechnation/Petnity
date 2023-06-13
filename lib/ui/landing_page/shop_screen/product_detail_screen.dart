@@ -21,7 +21,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Color(0xFFF2F6FF),
       bottomNavigationBar: Container(
         color: Colors.white,
         height: screenSize(context).height * .08,
@@ -67,124 +67,129 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
           iconTheme: IconThemeData(color: Colors.black),
-          actions: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: NotificationIcon(
-                  icon: Icon(Icons.shopping_cart), nun_of_notifications: 3),
-            ),
-            Container(
-              width: 20,
-            )
+        actions: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: NotificationIcon(
+                icon: ImageView.svg(AppImages.cartIcon, width: 30,), nun_of_notifications: 3),
+          ),
+          Container(
+            width: 20,
+          )
           ],
         ),
+        
+        
       ),
       body: Container(
         height: screenSize(context).height * .9,
-        child: Column(
-          children: [
-            Container(
-              height: screenSize(context).height * .15,
-              width: screenSize(context).width * .4,
-              margin: EdgeInsets.symmetric(
-                  horizontal: screenSize(context).width * .3),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(AppImages.petDoctor),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: screenSize(context).height * .15,
+                width: screenSize(context).width * .4,
+                margin: EdgeInsets.symmetric(
+                    horizontal: screenSize(context).width * .3),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(AppImages.petDoctor),
+                  ),
                 ),
               ),
-            ),
-            Container(
-              width: screenSize(context).width * .2,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              padding: EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        count += 1;
-                      });
-                    },
-                    child: Icon(Icons.add),
-                  ),
-                  Text('$count'),
-                  InkWell(
-                    onTap: () {
-                      if (count > 0) {
-                        count -= 1;
-                        setState(() {
-                          count;
-                        });
-                      }
-                    },
-                    child: Icon(Icons.remove),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              height: screenSize(context).height * .618,
-              color: Colors.yellow.withOpacity(0.3),
-              padding: EdgeInsets.all(10),
-              child: Column(children: [
-                Row(
+              Container(
+                width: screenSize(context).width * .2,
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                padding: EdgeInsets.all(5),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Smart Adult Feed',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          count += 1;
+                        });
+                      },
+                      child: Icon(Icons.add),
                     ),
-                    Text(
-                      'in stock',
-                      style: TextStyle(fontSize: 12),
-                    )
+                    Text('$count'),
+                    InkWell(
+                      onTap: () {
+                        if (count > 0) {
+                          count -= 1;
+                          setState(() {
+                            count;
+                          });
+                        }
+                      },
+                      child: Icon(Icons.remove),
+                    ),
                   ],
                 ),
-                RatingWidget(
-                  coloredStars: 4,
-                  size: 20,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 15),
-                  width: screenSize(context).width,
-                  child: Text(
-                    'About Product',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: screenSize(context).height * .618,
+                color: Colors.yellow.shade50,
+                padding: EdgeInsets.all(10),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Smart Adult Feed',
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                      ),
+                      Text(
+                        'in stock',
+                        style: TextStyle(fontSize: 12),
+                      )
+                    ],
                   ),
-                ),
-                Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                  textAlign: TextAlign.justify,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  width: screenSize(context).width,
-                  child: Text(
-                    'Review',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  RatingWidget(
+                    coloredStars: 4,
+                    size: 20,
                   ),
-                ),
-                Container(
-                  height: screenSize(context).height * .31,
-                  child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return ReviewWidget();
-                      }),
-                )
-              ]),
-            )
-          ],
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    width: screenSize(context).width,
+                    child: Text(
+                      'About Product',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+                    textAlign: TextAlign.justify,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    width: screenSize(context).width,
+                    child: Text(
+                      'Review',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    height: screenSize(context).height * .31,
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return ReviewWidget();
+                        }),
+                  )
+                ]),
+              )
+            ],
+          ),
         ),
       ),
     );

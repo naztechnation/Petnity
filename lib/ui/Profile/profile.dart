@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/settings/card_details.dart';
-import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:petnity/ui/widgets/text_edit_view.dart';
+
+import '../../res/app_strings.dart';
+import '../widgets/custom_text.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -63,11 +63,11 @@ class _ProfileState extends State<Profile> {
             children: [
               Container(
                 height: screenSize(context).height * .4,
-                width: screenSize(context).width * .8,
+                width: screenSize(context).width * .9,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage(AppImages.dogCar),
+                      image: AssetImage(AppImages.playing),
                       fit: BoxFit.fill,
                     )),
               ),
@@ -158,12 +158,11 @@ class _ProfileState extends State<Profile> {
                       height: 10,
                     ),
                     Container(
-                      height: screenSize(context).height * .2,
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.blue),
-                          color: Colors.blue.withOpacity(0.2),
+                          color: Color(0xFF8DADFF),
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -179,7 +178,11 @@ class _ProfileState extends State<Profile> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Text('The Dogs Age')
+                                  Text('47kg',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: AppStrings.interSans,
+                                          fontSize: 13))
                                 ],
                               ),
                               Column(
@@ -190,7 +193,10 @@ class _ProfileState extends State<Profile> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Text('The Dogs Age')
+                                  Text('0 - 12',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 13))
                                 ],
                               )
                             ],
@@ -206,10 +212,16 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   Text(
                                     'Breed',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: AppStrings.interSans,
+                                        fontSize: 14),
                                   ),
-                                  Text('The Dogs Age')
+                                  Text('Bull Dog',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: AppStrings.interSans,
+                                          fontSize: 13))
                                 ],
                               ),
                               Column(
@@ -217,10 +229,16 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   Text(
                                     'Weight',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: AppStrings.interSans,
+                                        fontSize: 14),
                                   ),
-                                  Text('The Dogs Age')
+                                  Text('The Dogs Age',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: AppStrings.interSans,
+                                          fontSize: 13))
                                 ],
                               )
                             ],
@@ -240,20 +258,20 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Health Status',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+                    Text('Health Status',
+                        style: TextStyle(
+                            fontFamily: AppStrings.interSans,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14)),
                     SizedBox(
                       height: 10,
                     ),
                     Container(
-                      height: screenSize(context).height * .2,
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.green),
-                          color: Colors.green.withOpacity(0.2),
+                          color: Color(0xFF96FF8D),
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -264,12 +282,16 @@ class _ProfileState extends State<Profile> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    'Dog Illness',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Text('The Dogs Age')
+                                  Text('Dog Illness',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: AppStrings.interSans,
+                                          fontSize: 14)),
+                                  Text('6 Months 3 Weeks old',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: AppStrings.interSans,
+                                          fontSize: 13))
                                 ],
                               ),
                               Column(
@@ -277,10 +299,16 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   Text(
                                     'Medication',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: AppStrings.interSans,
+                                        fontSize: 14),
                                   ),
-                                  Text('The Dogs Age')
+                                  Text('6-10',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: AppStrings.montserrat,
+                                          fontSize: 13))
                                 ],
                               )
                             ],
@@ -296,10 +324,17 @@ class _ProfileState extends State<Profile> {
                                 children: [
                                   Text(
                                     'Dog Allergies',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                      fontFamily: AppStrings.interSans,
+                                    ),
                                   ),
-                                  Text('The Dogs Age')
+                                  CustomText(
+                                    text: 'Milk',
+                                    fontFamily: AppStrings.interSans,
+                                    size: 13,
+                                  )
                                 ],
                               ),
                               Column(
@@ -310,7 +345,11 @@ class _ProfileState extends State<Profile> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
-                                  Text('The Dogs Age')
+                                  CustomText(
+                                    text: 'None',
+                                    fontFamily: AppStrings.interSans,
+                                    size: 13,
+                                  )
                                 ],
                               )
                             ],
@@ -356,17 +395,29 @@ class _ProfileState extends State<Profile> {
                                   Container(
                                     width: screenSize(context).width * .295,
                                     height: screenSize(context).height * .125,
+                                    child: ImageView.asset(
+                                      AppImages.playing,
+                                      fit: BoxFit.cover,
+                                    ),
                                     color: Colors.pink,
                                   ),
                                   Container(
                                     width: screenSize(context).width * .295,
                                     height: screenSize(context).height * .125,
                                     color: Colors.red,
+                                    child: ImageView.asset(
+                                      AppImages.playing,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                   Container(
                                     width: screenSize(context).width * .295,
                                     height: screenSize(context).height * .125,
                                     color: Colors.blue,
+                                    child: ImageView.asset(
+                                      AppImages.playing,
+                                      fit: BoxFit.cover,
+                                    ),
                                   )
                                 ],
                               ),
@@ -381,16 +432,28 @@ class _ProfileState extends State<Profile> {
                                     width: screenSize(context).width * .295,
                                     height: screenSize(context).height * .125,
                                     color: Colors.green,
+                                    child: ImageView.asset(
+                                      AppImages.playing,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                   Container(
                                     width: screenSize(context).width * .295,
                                     height: screenSize(context).height * .125,
                                     color: Colors.brown,
+                                    child: ImageView.asset(
+                                      AppImages.playing,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                   Container(
                                     width: screenSize(context).width * .295,
                                     height: screenSize(context).height * .125,
                                     color: Colors.purple,
+                                    child: ImageView.asset(
+                                      AppImages.playing,
+                                      fit: BoxFit.cover,
+                                    ),
                                   )
                                 ],
                               ),
