@@ -42,9 +42,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               width: screenSize(context).width * .6,
               child: ButtonView(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return CartScreen();
-                    }));
+                    Navigator.pushNamed(context, 'cartScreen');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
