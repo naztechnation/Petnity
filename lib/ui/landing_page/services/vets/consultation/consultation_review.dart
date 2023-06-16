@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/landing_page/services/vets/consultation/track_consulting_service.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -44,7 +45,25 @@ class ConsultationReview extends StatelessWidget {
         height: screenSize(context).height * .13,
         padding: EdgeInsets.symmetric(vertical: 23, horizontal: 20),
         child: ButtonView(
-            borderRadius: 50, onPressed: () {}, child: Text('Make Payment')),
+            borderRadius: 50,
+            onPressed: () {
+              AppNavigator.pushAndStackPage(
+                context,
+                page: UpdateSuccessfulScreen(
+                  purchaseID: true,
+                  buttonText: 'Track',
+                  notetext:
+                      'If session is rejected, funds would be refunded back to your card',
+                  id: '123445',
+                  successMessage: 'successMessage',
+                  onPressed: () {
+                    AppNavigator.pushAndStackPage(context,
+                        page: TrackConsultingService());
+                  },
+                ),
+              );
+            },
+            child: Text('Make Payment')),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),

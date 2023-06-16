@@ -135,7 +135,7 @@ class _SessionDurationState extends State<SessionDuration> {
                     ),
                     child: Center(
                         child: Text(
-                            '${(50 * (_selectedValue / 5)).toStringAsFixed(2)}')),
+                            '\$${(50 * (_selectedValue / 5)).toStringAsFixed(2)}')),
                   )
                 ],
               ),
