@@ -6,6 +6,7 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/landing_page/services/service_provider_profile.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -229,6 +230,7 @@ class _TrackConsultingServiceState extends State<TrackConsultingService> {
                       ),
                       Container(
                         width: screenSize(context).width * .7,
+                        padding: EdgeInsets.only(right: 20),
                         child: Column(
                           children: [
                             Row(
@@ -273,7 +275,10 @@ class _TrackConsultingServiceState extends State<TrackConsultingService> {
                   width: screenSize(context).width,
                   child: ButtonView(
                     expanded: false,
-                    onPressed: () {},
+                    onPressed: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: ServiceProviderProfile());
+                    },
                     borderRadius: 50,
                     child: CustomText(
                       text: 'View profile',
