@@ -24,6 +24,9 @@ class ChangePassword extends StatelessWidget {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return UpdateSuccessfulScreen(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   successMessage: 'Your Password has been changed');
             }));
           },

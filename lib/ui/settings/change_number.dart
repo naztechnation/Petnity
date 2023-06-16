@@ -26,6 +26,9 @@ class ChangeNumber extends StatelessWidget {
               builder: (BuildContext context) {
                 return ConfirmOTP(
                   route: UpdateSuccessfulScreen(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       successMessage: 'Your number has been updated'),
                   type: 'number',
                 );

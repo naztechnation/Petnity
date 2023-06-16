@@ -8,7 +8,14 @@ import 'package:petnity/ui/widgets/image_view.dart';
 
 class UpdateSuccessfulScreen extends StatelessWidget {
   final String successMessage;
-  const UpdateSuccessfulScreen({required this.successMessage});
+  VoidCallback onPressed;
+  final String buttonText;
+
+  UpdateSuccessfulScreen({
+    required this.successMessage,
+    required this.onPressed,
+    this.buttonText = 'back',
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +26,8 @@ class UpdateSuccessfulScreen extends StatelessWidget {
         margin:
             EdgeInsets.symmetric(horizontal: screenSize(context).width * .15),
         child: ButtonView(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Back'),
+          onPressed: onPressed,
+          child: Text(buttonText),
         ),
       ),
       appBar: PreferredSize(
@@ -56,6 +61,7 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                     child: Container(
                       height: screenSize(context).height * .15,
                       width: screenSize(context).width * .9,
+                      padding: EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
