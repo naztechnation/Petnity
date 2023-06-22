@@ -27,7 +27,7 @@ enum Services {
   vets,
   grooming,
   breeders,
-  dogsellers,
+  petsellers,
   boarding,
   petcaregivers
 }

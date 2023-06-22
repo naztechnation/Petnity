@@ -56,7 +56,9 @@ class _LandingScreenState extends State<LandingScreen> {
                       ? simpleAppbar(
                           'Shop Products',
                           NotificationIcon(
-                            icon: ImageView.svg(AppImages.bell,),
+                            icon: ImageView.svg(
+                              AppImages.bell,
+                            ),
                             nun_of_notifications: 5,
                           ))
                       : _selectedIndex == 3
@@ -155,10 +157,6 @@ class _LandingScreenState extends State<LandingScreen> {
           onTap: _onItemTapped,
         ),
       ),
-    );
-    body:
-    Center(
-      child: _widgetOptions.elementAt(_selectedIndex),
     );
   }
 }

@@ -31,8 +31,7 @@ class TrackServicesScreen extends StatelessWidget {
                     colors: [AppColors.scaffoldColor, Colors.red.shade50],
                     begin: Alignment.topRight,
                     end: Alignment.topLeft)),
-            child: SingleChildScrollView(
-                child: Column(
+            child: Column(
               children: [
                 SafeArea(
                     child: Container(
@@ -62,57 +61,64 @@ class TrackServicesScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
                     children: [
-                      CustomText(
-                        textAlign: TextAlign.left,
-                        maxLines: 2,
-                        text: 'Service provider details',
-                        weight: FontWeight.w700,
-                        size: 12,
-                        fontFamily: AppStrings.interSans,
-                        color: Colors.black,
+                      const SizedBox(
+                        height: 30,
                       ),
-                      Row(
-                        children: [
-                          CustomText(
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            text: 'Service',
-                            weight: FontWeight.w400,
-                            size: 12,
-                            fontFamily: AppStrings.interSans,
-                            color: Colors.black,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          CustomText(
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            text: 'Dog sitting',
-                            weight: FontWeight.w700,
-                            size: 12,
-                            fontFamily: AppStrings.interSans,
-                            color: Colors.black,
-                          ),
-                        ],
-                      )
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              text: 'Service provider details',
+                              weight: FontWeight.w700,
+                              size: 12,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.black,
+                            ),
+                            Row(
+                              children: [
+                                CustomText(
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  text: 'Service',
+                                  weight: FontWeight.w400,
+                                  size: 12,
+                                  fontFamily: AppStrings.interSans,
+                                  color: Colors.black,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                CustomText(
+                                  textAlign: TextAlign.left,
+                                  maxLines: 2,
+                                  text: 'Dog sitting',
+                                  weight: FontWeight.w700,
+                                  size: 12,
+                                  fontFamily: AppStrings.interSans,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TrackServicesBody()
                     ],
-                  ),
+                  )),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TrackServicesBody()
               ],
-            )),
+            ),
           ),
           Positioned(
             bottom: 30,

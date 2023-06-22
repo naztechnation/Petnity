@@ -17,6 +17,7 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
+import 'pet_sellers.dart/pet_on_sale.dart';
 import 'pet_trainers/training_packages.dart';
 import 'widgets/gallary_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
@@ -40,9 +41,7 @@ class ServiceProviderProfile extends StatelessWidget {
                     colors: [AppColors.scaffoldColor, Colors.red.shade50],
                     begin: Alignment.topRight,
                     end: Alignment.topLeft)),
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
               children: [
                 SafeArea(
                     child: Container(
@@ -50,7 +49,7 @@ class ServiceProviderProfile extends StatelessWidget {
                         height: (Platform.isAndroid) ? 0 : 0)),
                 Container(
                   color: AppColors.cardColor,
-                  padding: const EdgeInsets.only(bottom: 20, top: 30),
+                  padding: const EdgeInsets.only(bottom: 20, top: 10),
                   child: Row(
                     children: [
                       backButton(context),
@@ -69,94 +68,102 @@ class ServiceProviderProfile extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 12,
-                ),
-                SizedBox(
-                  width: 130,
-                  child: Row(
+                Expanded(
+                  child: SingleChildScrollView(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ImageView.svg(AppImages.location),
+                      const SizedBox(
+                        height: 12,
+                      ),
                       SizedBox(
-                        width: 5,
+                        width: 130,
+                        child: Row(
+                          children: [
+                            ImageView.svg(AppImages.location),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            CustomText(
+                              textAlign: TextAlign.start,
+                              maxLines: 2,
+                              text: 'Ikeja, Lagos',
+                              weight: FontWeight.w300,
+                              size: 14,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      ProfileImage(
+                        AppImages.person,
+                        placeHolder: AppImages.person,
+                        radius: 55,
+                        height: 120,
+                        width: 120,
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            text: 'Dera Jessica',
+                            weight: FontWeight.w700,
+                            size: 14,
+                            fontFamily: AppStrings.interSans,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          ImageView.svg(AppImages.verified),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 12,
                       ),
                       CustomText(
                         textAlign: TextAlign.start,
                         maxLines: 2,
-                        text: 'Ikeja, Lagos',
+                        text: 'Verified',
                         weight: FontWeight.w300,
-                        size: 14,
+                        size: 11,
                         fontFamily: AppStrings.interSans,
                         color: Colors.black,
                       ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      CustomText(
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        text: '322 Completed walks',
+                        weight: FontWeight.w400,
+                        size: 12,
+                        fontFamily: AppStrings.interSans,
+                        color: Colors.black,
+                      ),
+                      const SizedBox(
+                        height: 12,
+                      ),
+                      ProviderProfileBody(),
+                      GallaryRatingSection(),
+                      const SizedBox(
+                        height: 150,
+                      ),
                     ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                ProfileImage(
-                  AppImages.person,
-                  placeHolder: AppImages.person,
-                  radius: 55,
-                  height: 120,
-                  width: 120,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomText(
-                      textAlign: TextAlign.start,
-                      maxLines: 2,
-                      text: 'Dera Jessica',
-                      weight: FontWeight.w700,
-                      size: 14,
-                      fontFamily: AppStrings.interSans,
-                      color: Colors.black,
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    ImageView.svg(AppImages.verified),
-                  ],
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                CustomText(
-                  textAlign: TextAlign.start,
-                  maxLines: 2,
-                  text: 'Verified',
-                  weight: FontWeight.w300,
-                  size: 11,
-                  fontFamily: AppStrings.interSans,
-                  color: Colors.black,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                CustomText(
-                  textAlign: TextAlign.start,
-                  maxLines: 2,
-                  text: '322 Completed walks',
-                  weight: FontWeight.w400,
-                  size: 12,
-                  fontFamily: AppStrings.interSans,
-                  color: Colors.black,
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                ProviderProfileBody(),
-                GallaryRatingSection(),
-                const SizedBox(
-                  height: 150,
+                  )),
                 ),
               ],
-            )),
+            ),
           ),
           Positioned(
             bottom: 30,
@@ -235,8 +242,9 @@ class ServiceProviderProfile extends StatelessWidget {
       case Services.breeders:
         // TODO: Handle this case.
         break;
-      case Services.dogsellers:
-        // TODO: Handle this case.
+      case Services.petsellers:
+        AppNavigator.pushAndStackPage(context, page: PetsOnSale());
+
         break;
       case Services.boarding:
         // TODO: Handle this case.
