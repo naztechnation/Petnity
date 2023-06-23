@@ -3,6 +3,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/landing_page/services/pet_profile/locate_pet.dart';
+import 'package:petnity/ui/landing_page/services/pet_profile/pet_profile.dart';
 import 'package:petnity/ui/landing_page/widgets/custom_drawer.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -56,7 +58,9 @@ class _LandingScreenState extends State<LandingScreen> {
                       ? simpleAppbar(
                           'Shop Products',
                           NotificationIcon(
-                            icon: ImageView.svg(AppImages.bell,),
+                            icon: ImageView.svg(
+                              AppImages.bell,
+                            ),
                             nun_of_notifications: 5,
                           ))
                       : _selectedIndex == 3
@@ -191,10 +195,16 @@ class HomepageAppbar extends StatelessWidget {
       actions: [
         NotificationIcon(
             icon: Icon(Icons.notifications_outlined), nun_of_notifications: 5),
-        CircleAvatar(
-          radius: 50,
-          child: ImageView.asset(AppImages.catPic),
-        )
+        GestureDetector(
+          child: CircleAvatar(
+            radius: 50,
+            child: ImageView.asset(AppImages.catPic),
+          ),
+          onTap: () => AppNavigator.pushAndStackPage(
+            context,
+            page: PetProfile(),
+          ),
+        ),
       ],
     );
   }

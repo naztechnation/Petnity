@@ -36,6 +36,7 @@ class AppImages {
   static const intermidiatePet = '${_baseUrl}intermidiate_pet.png';
   static const proPet = '${_baseUrl}pro_pet.png';
   static const lovedPet = '${_baseUrl}love_pet.png';
+  static const dogPet = '${_baseUrl}pet1.jpg';
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';
@@ -78,4 +79,6 @@ class AppImages {
   static const loading = '${_gifBaseUrl}loader.gif';
   static const playingCat = '${_gifBaseUrl}playing_cat.gif';
   static const check = '${_gifBaseUrl}check.gif';
+
+  static const business = '${_gifBaseUrl}check.gif';
 }
