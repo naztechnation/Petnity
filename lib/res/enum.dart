@@ -16,6 +16,8 @@ enum GallaryRating { gallary, ratings }
 
 enum ViewState { idle, loading, processing, success, failed }
 
+enum sessionMedium { chat, call, video }
+
 enum Services {
   none,
   dogwalkers,

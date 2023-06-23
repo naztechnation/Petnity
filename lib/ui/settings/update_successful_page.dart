@@ -2,27 +2,81 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
 class UpdateSuccessfulScreen extends StatelessWidget {
   final String successMessage;
-  const UpdateSuccessfulScreen({required this.successMessage});
+  VoidCallback onPressed;
+  final String buttonText;
+  final bool purchaseID;
+  final String id;
+  final String notetext;
+
+  UpdateSuccessfulScreen(
+      {required this.successMessage,
+      required this.onPressed,
+      this.buttonText = 'back',
+      this.purchaseID = false,
+      this.notetext = '',
+      this.id = ''});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       bottomNavigationBar: Container(
+        height: purchaseID
+            ? screenSize(context).height * .3
+            : screenSize(context).height * .12,
         padding: EdgeInsets.all(10),
-        margin:
-            EdgeInsets.symmetric(horizontal: screenSize(context).width * .15),
-        child: ButtonView(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Back'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (purchaseID)
+              Container(
+                padding: EdgeInsets.all(20),
+                height: screenSize(context).height * .15,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(children: [
+                      Icon(
+                        Icons.warning_amber_outlined,
+                        color: Colors.red,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      CustomText(
+                        text: 'NOTE',
+                        weight: FontWeight.bold,
+                        size: 14,
+                      )
+                    ]),
+                    Flexible(
+                      child: CustomText(
+                        maxLines: 3,
+                        text: notetext,
+                        weight: FontWeight.bold,
+                        size: 14,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                  horizontal: screenSize(context).width * .15),
+              child: ButtonView(
+                onPressed: onPressed,
+                child: Text(buttonText),
+              ),
+            ),
+          ],
         ),
       ),
       appBar: PreferredSize(
@@ -42,10 +96,8 @@ class UpdateSuccessfulScreen extends StatelessWidget {
       body: Container(
         height: screenSize(context).height,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: screenSize(context).height * .4,
-            ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               color: Colors.transparent,
@@ -56,6 +108,7 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                     child: Container(
                       height: screenSize(context).height * .15,
                       width: screenSize(context).width * .9,
+                      padding: EdgeInsets.all(10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -73,6 +126,32 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                     )),
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
+            if (purchaseID)
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                width: screenSize(context).width * .9,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                      text: 'Purchase ID',
+                      weight: FontWeight.bold,
+                      fontFamily: AppStrings.interSans,
+                    ),
+                    CustomText(
+                      text: id,
+                      weight: FontWeight.bold,
+                      fontFamily: AppStrings.montserrat,
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       ),

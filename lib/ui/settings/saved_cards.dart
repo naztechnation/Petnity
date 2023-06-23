@@ -22,6 +22,9 @@ class SavedCards extends StatelessWidget {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return UpdateSuccessfulScreen(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   successMessage: 'Your card has been added successfully');
             }));
           },

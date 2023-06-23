@@ -26,6 +26,9 @@ class ChangeEmail extends StatelessWidget {
               builder: (BuildContext context) {
                 return ConfirmOTP(
                   route: UpdateSuccessfulScreen(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       successMessage: 'Your email has been updated'),
                   type: 'email',
                 );

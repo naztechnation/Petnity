@@ -20,6 +20,7 @@ import '../../widgets/profile_image.dart';
 import 'pet_trainers/training_packages.dart';
 import 'widgets/gallary_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
+import './vets/vet_service.dart';
 
 class ServiceProviderProfile extends StatelessWidget {
   ServiceProviderProfile({super.key});
@@ -226,7 +227,7 @@ class ServiceProviderProfile extends StatelessWidget {
         AppNavigator.pushAndStackPage(context, page: TrainingScreen());
         break;
       case Services.vets:
-        // TODO: Handle this case.
+        AppNavigator.pushAndStackPage(context, page: VetService());
         break;
       case Services.grooming:
         // TODO: Handle this case.
