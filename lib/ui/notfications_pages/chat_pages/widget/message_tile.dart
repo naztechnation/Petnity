@@ -1,7 +1,4 @@
-
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_strings.dart';
 
@@ -13,9 +10,10 @@ class MessageTile extends StatefulWidget {
 
   const MessageTile(
       {Key? key,
-        required this.message,
-        required this.sender,
-        required this.sentByMe, required this.timeStamp})
+      required this.message,
+      required this.sender,
+      required this.sentByMe,
+      required this.timeStamp})
       : super(key: key);
 
   @override
@@ -36,30 +34,25 @@ class _MessageTileState extends State<MessageTile> {
         margin: widget.sentByMe
             ? const EdgeInsets.only(left: 30)
             : const EdgeInsets.only(right: 30),
-        padding:
-        const EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
+        padding: const EdgeInsets.only(top: 8, bottom: 8, left: 12, right: 12),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40),
-            color: widget.sentByMe
-                ? AppColors.lightSecondary
-                : Colors.white),
+            color: widget.sentByMe ? AppColors.lightSecondary : Colors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             const SizedBox(
               height: 8,
             ),
             Text(widget.message,
                 textAlign: TextAlign.start,
-                style:  TextStyle(fontSize: 16, color: widget.sentByMe
-                    ? Colors.white
-                    : Colors.black, fontFamily: AppStrings.interSans  )),
+                style: TextStyle(
+                    fontSize: 16,
+                    color: widget.sentByMe ? Colors.white : Colors.black,
+                    fontFamily: AppStrings.interSans)),
             const SizedBox(
               height: 8,
             ),
-            
-
           ],
         ),
       ),

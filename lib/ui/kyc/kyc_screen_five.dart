@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/res/enum.dart';
 import 'package:petnity/ui/kyc/kyc_screen_six.dart';
 
 import '../../res/app_colors.dart';
@@ -23,7 +22,7 @@ class KycScreenFive extends StatefulWidget {
 }
 
 class _KycScreenFiveState extends State<KycScreenFive> {
-  PetGenderType _petGenderType = PetGenderType.none;
+  // PetGenderType _petGenderType = PetGenderType.none;
 
   List<String> dogSizes = ['0-7', '8-18', '19-45', '45-100'];
 

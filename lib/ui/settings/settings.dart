@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/settings/Acount_Deleted.dart';
-import 'package:petnity/ui/settings/change_email_&_number_option.dart';
-import 'package:petnity/ui/settings/change_number.dart';
-import 'package:petnity/ui/settings/change_password.dart';
-import 'package:petnity/ui/settings/payment_and_card.dart';
-import 'package:petnity/ui/settings/privacy_policy.dart';
+import 'package:petnity/res/app_images.dart'; 
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import '../support/faq.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

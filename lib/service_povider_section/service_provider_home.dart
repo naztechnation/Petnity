@@ -3,17 +3,14 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
-import '';
-
 class ServiceProviderHomePage extends StatelessWidget {
   ServiceProviderHomePage({super.key});
 
-  TextEditingController search = TextEditingController();
+  final TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

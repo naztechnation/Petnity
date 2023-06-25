@@ -4,7 +4,6 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/landing_page/shop_screen/product_detail_screen.dart';
 
-import 'package:petnity/ui/landing_page/widgets/search_widget.dart';
 
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 

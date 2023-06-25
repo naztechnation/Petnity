@@ -15,8 +15,6 @@ class UserViewModel extends BaseViewModel {
 
   late double _longitude = 7.496529864154287;
 
-  double _walletBalance = 0;
-
   Services _selectedService = Services.none;
 
   Future<void> _intData() async {

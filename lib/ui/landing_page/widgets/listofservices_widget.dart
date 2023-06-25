@@ -12,7 +12,7 @@ import '../services/services_providers_details.dart';
 class ListOfServices extends StatelessWidget {
   ListOfServices({super.key});
 
-  UserViewModel userViewModel = UserViewModel();
+  final UserViewModel userViewModel = UserViewModel();
   @override
   Widget build(BuildContext context) {
     return Padding(

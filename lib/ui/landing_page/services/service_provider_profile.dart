@@ -15,7 +15,6 @@ import '../../location/set_location_screen.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
-import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 import 'pet_sellers.dart/pet_on_sale.dart';
 import 'pet_trainers/training_packages.dart';
@@ -26,7 +25,7 @@ import './vets/vet_service.dart';
 class ServiceProviderProfile extends StatelessWidget {
   ServiceProviderProfile({super.key});
 
-  UserViewModel userViewModel = UserViewModel();
+  final UserViewModel userViewModel = UserViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -218,14 +217,12 @@ class ServiceProviderProfile extends StatelessWidget {
   openServices(Services services, BuildContext context) {
     switch (services) {
       case Services.none:
-        // TODO: Handle this case.
         break;
       case Services.dogwalkers:
         AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
 
         break;
       case Services.petdate:
-        // TODO: Handle this case.
         break;
       case Services.dogsitters:
         AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
@@ -237,20 +234,16 @@ class ServiceProviderProfile extends StatelessWidget {
         AppNavigator.pushAndStackPage(context, page: VetService());
         break;
       case Services.grooming:
-        // TODO: Handle this case.
         break;
       case Services.breeders:
-        // TODO: Handle this case.
         break;
       case Services.petsellers:
         AppNavigator.pushAndStackPage(context, page: PetsOnSale());
 
         break;
       case Services.boarding:
-        // TODO: Handle this case.
         break;
       case Services.petcaregivers:
-        // TODO: Handle this case.
         break;
 
       default:

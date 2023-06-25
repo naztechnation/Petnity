@@ -7,7 +7,6 @@ import '../../../../res/app_constants.dart';
 import '../../../../res/app_images.dart';
 import '../../../../res/app_strings.dart';
 import '../../../widgets/back_button.dart';
-import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/image_view.dart';
 import '../widgets/contact_bottom.dart';

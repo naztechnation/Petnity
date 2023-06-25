@@ -10,7 +10,7 @@ class AppColors {
   static const Color scaffoldColor = Color(0xFFE7E7E7);
   static const Color cardColor = Color(0xFFFCFCFC);
   static const Color yellow = Color.fromARGB(246, 249, 205, 7);
-
+  static const Color lightGreen = Color(0xFFEFFFEC);
 
   static const MaterialColor lightSecondaryAccent =
       MaterialColor(0xFF356EFF, blue);
@@ -27,8 +27,7 @@ class AppColors {
     900: Color.fromRGBO(53, 110, 255, 1),
   };
 
-  static const MaterialColor lightPrimaryAccent =
-       MaterialColor(0xFF356EFF, b);
+  static const MaterialColor lightPrimaryAccent = MaterialColor(0xFF356EFF, b);
   static const Map<int, Color> b = {
     50: Color.fromRGBO(0, 0, 0, .1),
     100: Color.fromRGBO(5, 11, 25, .2),
@@ -41,5 +40,4 @@ class AppColors {
     800: Color.fromRGBO(48, 99, 230, .9),
     900: Color.fromRGBO(53, 110, 255, 1),
   };
-
 }

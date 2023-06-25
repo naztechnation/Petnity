@@ -21,9 +21,9 @@ class KycScreenEleven extends StatelessWidget {
 
   KycScreenEleven({super.key, this.selectedPet = ''});
 
-  TextEditingController _illnessNameController = TextEditingController();
-  TextEditingController _drugNameController = TextEditingController();
-  TextEditingController _prescribeNameController = TextEditingController();
+ final TextEditingController _illnessNameController = TextEditingController();
+ final TextEditingController _drugNameController = TextEditingController();
+ final TextEditingController _prescribeNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

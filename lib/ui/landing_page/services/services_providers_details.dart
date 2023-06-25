@@ -11,13 +11,29 @@ import 'widgets/bottomsheet_content.dart';
 import 'widgets/providers_card.dart';
 
 class ServiceProvidersDetails extends StatelessWidget {
-    ServiceProvidersDetails({super.key, required this.petProvider});
+  ServiceProvidersDetails({super.key, required this.petProvider});
 
   final String petProvider;
-  List<String> addressSpinnerItems = ['State', 'Enugu', 'Ebonyi', 'Lagos', 'Kano', 'Kastina', 'Anambra'];
-  List<String> age = ['18-25', '27-35', '36-45', '46-100'];
-  List<String> gender = ['Male', 'Female'];
-  List<String> animals = ['Dogs', 'Cat', 'Monkeys', 'Rabbits', 'Squirrels', 'Parrots','Birds'];
+  final List<String> addressSpinnerItems = [
+    'State',
+    'Enugu',
+    'Ebonyi',
+    'Lagos',
+    'Kano',
+    'Kastina',
+    'Anambra'
+  ];
+  final List<String> age = ['18-25', '27-35', '36-45', '46-100'];
+  final List<String> gender = ['Male', 'Female'];
+  final List<String> animals = [
+    'Dogs',
+    'Cat',
+    'Monkeys',
+    'Rabbits',
+    'Squirrels',
+    'Parrots',
+    'Birds'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +66,11 @@ class ServiceProvidersDetails extends StatelessWidget {
             onFilterTap: () {
               Modals.showBottomSheetModal(
                 context,
-                
-                page: BottomSheetContent(addressSpinnerItems: addressSpinnerItems,age: age,gender: gender,animals: animals),
+                page: BottomSheetContent(
+                    addressSpinnerItems: addressSpinnerItems,
+                    age: age,
+                    gender: gender,
+                    animals: animals),
                 borderRadius: 30,
                 heightFactor: 1.5,
               );

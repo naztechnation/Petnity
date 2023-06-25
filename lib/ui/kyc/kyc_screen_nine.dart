@@ -17,9 +17,10 @@ class KycScreenNine extends StatelessWidget {
 
   KycScreenNine({super.key, this.selectedPet = ''});
 
-  TextEditingController _illnessNameController = TextEditingController();
-  TextEditingController _drugNameController = TextEditingController();
-  TextEditingController _prescribeNameController = TextEditingController();
+  final TextEditingController _illnessNameController = TextEditingController();
+  final TextEditingController _drugNameController = TextEditingController();
+  final TextEditingController _prescribeNameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +37,12 @@ class KycScreenNine extends StatelessWidget {
           child: Column(
             children: [
               SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
-              
               Row(
                 children: [
                   backButton(context),
                   const SizedBox(
-                width: 40,
-              ),
+                    width: 40,
+                  ),
                   CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 2,
@@ -103,32 +103,33 @@ class KycScreenNine extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 150,),
+              const SizedBox(
+                height: 150,
+              ),
               Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 0.0, horizontal: 20),
-                              child: ButtonView(
-                                onPressed: () {
-                                  AppNavigator.pushAndStackPage(context,
-                                page: KycScreenTen(
-                                  selectedPet: selectedPet,
-                                ));
-                                },
-                                color: AppColors.lightSecondary,
-                                borderRadius: 30,
-                                borderColor: Colors.white,
-                                child:  CustomText(
-                                      textAlign: TextAlign.center,
-                                      maxLines: 1,
-                                      
-                                      text: 'Next',
-                                      weight: FontWeight.w700,
-                                      size: 20,
-                                      fontFamily: AppStrings.interSans,
-                                      color: Colors.white,
-                                    ),
-                              ),
-                            ),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
+                child: ButtonView(
+                  onPressed: () {
+                    AppNavigator.pushAndStackPage(context,
+                        page: KycScreenTen(
+                          selectedPet: selectedPet,
+                        ));
+                  },
+                  color: AppColors.lightSecondary,
+                  borderRadius: 30,
+                  borderColor: Colors.white,
+                  child: CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'Next',
+                    weight: FontWeight.w700,
+                    size: 20,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ],
           ),
         ),

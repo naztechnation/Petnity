@@ -3,14 +3,13 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
 class UpdateSuccessfulScreen extends StatelessWidget {
   final String successMessage;
-  VoidCallback onPressed;
+  final VoidCallback onPressed;
   final String buttonText;
   final bool purchaseID;
   final String id;

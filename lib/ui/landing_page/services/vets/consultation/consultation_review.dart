@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/services/vets/consultation/track_consulting_service.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
@@ -12,11 +10,11 @@ import 'package:petnity/utils/navigator/page_navigator.dart';
 
 class ConsultationReview extends StatelessWidget {
   // CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _selectedDate = DateTime.now();
-  DateTime _selectedDate2 = DateTime.now();
+  // DateTime _selectedDate = DateTime.now();
+  // DateTime _selectedDate2 = DateTime.now();
 
-  bool val = false;
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  final bool val = false;
+  // TimeOfDay _selectedTime = TimeOfDay.now();
 
   @override
   Widget build(BuildContext context) {

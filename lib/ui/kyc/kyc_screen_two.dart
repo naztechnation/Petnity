@@ -23,7 +23,7 @@ class KycScreenTwo extends StatelessWidget {
 
     KycScreenTwo({super.key,  this.selectedPet = ''});
 
-  TextEditingController _petNameController = TextEditingController(); 
+  final TextEditingController _petNameController = TextEditingController(); 
 
   @override
   Widget build(BuildContext context) {

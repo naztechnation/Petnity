@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 

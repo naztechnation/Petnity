@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/ui/settings/Acount_Deleted.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 
 class PrivacyPolicy extends StatelessWidget {

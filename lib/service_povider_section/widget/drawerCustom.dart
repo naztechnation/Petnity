@@ -7,7 +7,6 @@ import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/profile/profile.dart';
 import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/support/support.dart';
-import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 

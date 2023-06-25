@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -17,7 +16,7 @@ class Review extends StatefulWidget {
 class _ReviewState extends State<Review> {
   // CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _selectedDate = DateTime.now();
-  DateTime _selectedDate2 = DateTime.now();
+  // DateTime _selectedDate2 = DateTime.now();
 
   bool val = false;
   TimeOfDay _selectedTime = TimeOfDay.now();
