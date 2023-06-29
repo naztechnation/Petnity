@@ -1,18 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/settings/saved_cards.dart';
-import 'package:petnity/ui/settings/transactions.dart';
-import 'package:petnity/ui/settings/update_successful_page.dart';
-import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import './widgets/confirm_OTP.dart';
 
 class PaymentAndCard extends StatelessWidget {
-  TextEditingController number = TextEditingController();
+  final TextEditingController number = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

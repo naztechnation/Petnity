@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 
@@ -12,24 +10,23 @@ class SingleImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Stack(
+    return Stack(
       children: [
         Container(
+          height: screenSize(context).height,
+          width: screenSize(context).width,
+          child: ImageView.asset(
+            AppImages.dogPet,
             height: screenSize(context).height,
-            width: screenSize(context).width,
-            child: ImageView.asset(AppImages.playing, height: screenSize(context).height, fit: BoxFit.cover,),
-            ),
-            Container(
- height: screenSize(context).height,
-            width: screenSize(context).width,
-            color: Colors.black26,
-            ),
-
-                Positioned(
-                  top: 30,
-                  left: 0,
-                  child: backButton(context)),
-
+            fit: BoxFit.cover,
+          ),
+        ),
+        Container(
+          height: screenSize(context).height,
+          width: screenSize(context).width,
+          color: Colors.black26,
+        ),
+        Positioned(top: 30, left: 0, child: backButton(context)),
       ],
     );
   }

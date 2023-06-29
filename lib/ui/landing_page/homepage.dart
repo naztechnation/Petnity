@@ -6,14 +6,11 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import './widgets/custom_drawer.dart';
 
 import '../widgets/filter_search_section.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  TextEditingController search = TextEditingController();
+  final TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

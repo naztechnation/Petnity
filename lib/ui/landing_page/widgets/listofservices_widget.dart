@@ -12,7 +12,7 @@ import '../services/services_providers_details.dart';
 class ListOfServices extends StatelessWidget {
   ListOfServices({super.key});
 
-  UserViewModel userViewModel = UserViewModel();
+  final UserViewModel userViewModel = UserViewModel();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,13 +26,13 @@ class ListOfServices extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Item(context, Colors.lightBlueAccent, 'Dog \nwalkers',
+                Item(context, Colors.lightBlueAccent, 'Pet \nwalkers',
                     AppImages.dogWalk, () {
                   Provider.of<UserViewModel>(context, listen: false)
                       .setSelectedService(Services.dogwalkers);
                   AppNavigator.pushAndStackPage(context,
                       page: ServiceProvidersDetails(
-                        petProvider: 'Dog Walkers',
+                        petProvider: 'Pet Walkers',
                       ));
                 }),
                 Item(context, Colors.brown, 'Pet \ndate', AppImages.petDate,
@@ -53,12 +53,12 @@ class ListOfServices extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Item(context, Color.fromARGB(255, 179, 120, 10),
-                    'Dog \nsitters', AppImages.dogSitter, () {
+                    'Pet \nsitters', AppImages.dogSitter, () {
                   Provider.of<UserViewModel>(context, listen: false)
                       .setSelectedService(Services.dogsitters);
                   AppNavigator.pushAndStackPage(context,
                       page: ServiceProvidersDetails(
-                        petProvider: 'Dog Sitters',
+                        petProvider: 'Pet Sitters',
                       ));
                 }),
                 Item(context, Color.fromARGB(255, 52, 139, 170), 'Trainer',
@@ -131,13 +131,13 @@ class ListOfServices extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Item(
-                    context, Colors.blue, 'Dog \nsellers', AppImages.dogSellers,
+                    context, Colors.blue, 'Pet \nsellers', AppImages.dogSellers,
                     () {
                   Provider.of<UserViewModel>(context, listen: false)
-                      .setSelectedService(Services.dogsellers);
+                      .setSelectedService(Services.petsellers);
                   AppNavigator.pushAndStackPage(context,
                       page: ServiceProvidersDetails(
-                        petProvider: 'Dog Sellers',
+                        petProvider: 'Pet Sellers',
                       ));
                 }),
                 Item(context, Colors.pink, 'Pet care \ngivers',

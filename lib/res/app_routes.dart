@@ -99,7 +99,7 @@ class AppRoutes {
     reportBug: (context) => ReportBug(),
     reportIssue: (context) => ReportIssue(),
     reportVendor: (context) => ReportVendor(),
-    productDetailScreen: (context) => ProductDetailScreen(),
+    // productDetailScreen: (context) => ProductDetailScreen(),
   };
 
   static Route<dynamic> generateRoute(RouteSettings settings) {

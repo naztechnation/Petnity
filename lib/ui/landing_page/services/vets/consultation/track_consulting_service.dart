@@ -1,17 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/services/service_provider_profile.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 
 class TrackConsultingService extends StatefulWidget {

@@ -11,7 +11,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 
 class UpdateSuccessfulScreen extends StatelessWidget {
   final String successMessage;
-  VoidCallback onPressed;
+  final VoidCallback onPressed;
   final String buttonText;
   final bool purchaseID;
   final String id;

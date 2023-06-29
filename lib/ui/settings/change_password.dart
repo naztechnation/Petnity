@@ -9,9 +9,9 @@ import 'package:petnity/ui/widgets/image_view.dart';
 class ChangePassword extends StatelessWidget {
   ChangePassword({super.key});
 
-  TextEditingController oldPassword = TextEditingController();
-  TextEditingController newPassword = TextEditingController();
-  TextEditingController newPassword2 = TextEditingController();
+  final TextEditingController oldPassword = TextEditingController();
+  final TextEditingController newPassword = TextEditingController();
+  final TextEditingController newPassword2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

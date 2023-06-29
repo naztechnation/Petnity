@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
@@ -10,7 +9,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import './widgets/confirm_OTP.dart';
 
 class ChangeEmail extends StatelessWidget {
-  TextEditingController number = TextEditingController();
+  final TextEditingController number = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

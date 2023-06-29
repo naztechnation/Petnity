@@ -11,12 +11,10 @@ import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
-import '';
-
 class ServiceProviderHomePage extends StatelessWidget {
   ServiceProviderHomePage({super.key});
 
-  TextEditingController search = TextEditingController();
+  final TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

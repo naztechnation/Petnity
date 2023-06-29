@@ -5,7 +5,7 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/service_povider_section/service_provider_home/track_session.dart';
-import 'package:petnity/ui/Profile/profile.dart';
+// import 'package:petnity/ui/Profile/profile.dart';
 import 'package:petnity/ui/location/widgets/map_view.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../../blocs/location/location_cubit.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/location_repository_impl.dart';
+import '../../ui/landing_page/services/pet_profile/pet_profile.dart';
 
 class ServiceRequest extends StatelessWidget {
   const ServiceRequest({super.key});
@@ -177,7 +178,7 @@ class ServiceRequest extends StatelessWidget {
                       expanded: false,
                       onPressed: () => Navigator.push(context,
                               MaterialPageRoute(builder: (_) {
-                            return Profile();
+                            return PetProfile();
                           })),
                       color: Colors.white,
                       borderColor: Colors.white,

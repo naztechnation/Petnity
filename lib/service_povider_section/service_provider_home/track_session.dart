@@ -22,6 +22,7 @@ import 'package:provider/provider.dart';
 import '../../blocs/location/location_cubit.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/location_repository_impl.dart';
+import '../../ui/landing_page/services/pet_profile/pet_profile.dart';
 
 class TrackService extends StatefulWidget {
   @override
@@ -248,7 +249,7 @@ class _TrackServiceState extends State<TrackService> {
                             expanded: false,
                             onPressed: () => Navigator.push(context,
                                     MaterialPageRoute(builder: (_) {
-                                  return Profile();
+                                  return PetProfile();
                                 })),
                             color: Colors.white,
                             borderColor: Colors.white,

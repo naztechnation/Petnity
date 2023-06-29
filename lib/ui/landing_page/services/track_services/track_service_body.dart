@@ -194,7 +194,7 @@ class TrackServicesBody extends StatelessWidget {
                     CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 2,
-                      text: '20Th October 2023',
+                      text: '20th October 2023',
                       weight: FontWeight.w600,
                       size: 12,
                       fontFamily: AppStrings.interSans,
@@ -226,13 +226,17 @@ class TrackServicesBody extends StatelessWidget {
               ),
               Stack(
                 children: [
-                  Container(
-                    height: 224,
-                    width: screenSize(context).width,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(30)),
-                    child: MapViews(
-                      zoom: 11,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      height: 224,
+                      width: screenSize(context).width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: MapViews(
+                        zoom: 11,
+                      ),
                     ),
                   ),
                   Positioned(

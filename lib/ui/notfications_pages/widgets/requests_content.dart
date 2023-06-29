@@ -11,7 +11,7 @@ import '../../widgets/profile_image.dart';
 class RequestsContent extends StatelessWidget {
   final bool isChat;
   final bool isRequestAccepted;
-    var dontShow;
+    final dontShow;
     RequestsContent({super.key, required this.isChat, required this.isRequestAccepted, this.dontShow = false});
 
   @override
