@@ -3,15 +3,13 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/service_povider_section/service_provider_home/service_provider_home.dart';
-import 'package:petnity/ui/landing_page/widgets/custom_drawer.dart';
-// import 'package:petnity/service_povider_section/service_provider_home.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/notification_icon.dart';
 
 import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';
-import './widget/drawerCustom.dart';
+import 'widget/drawer_custom.dart';
 
 class ServiceProviderLandingPage extends StatefulWidget {
   @override
@@ -37,7 +35,7 @@ class _ServiceProviderLandingPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: SPcustomDrawer(),
+      drawer: SPCustomDrawer(),
       backgroundColor: AppColors.lightBackground,
       appBar: PreferredSize(
         preferredSize: _selectedIndex == 0

@@ -44,8 +44,13 @@ class AppImages {
   static const searchIcon = '${_svgBaseUrl}search.svg';
   static const filterIcon = '${_svgBaseUrl}filter.svg';
   static const messageIcon = '${_svgBaseUrl}message_icon.svg';
+  static const supportIcon = '${_svgBaseUrl}support_icon.svg';
+  static const walletIcon = '${_svgBaseUrl}wallet_icon.png';
+  static const settingsIcon = '${_svgBaseUrl}settings_icon.svg';
+  static const awaitingIcon = '${_svgBaseUrl}awaiting_icon.svg';
   static const personIcon = '${_svgBaseUrl}person_icon.svg';
   static const visibleIcon = '${_svgBaseUrl}visible_icon.svg';
+  static const logoutIcon = '${_svgBaseUrl}logout.svg';
   static const backButton = '${_svgBaseUrl}arrow_back.svg';
   static const menuIcon = '${_svgBaseUrl}menu_icon.svg';
   static const homeIcon = '${_svgBaseUrl}home_icon.svg';

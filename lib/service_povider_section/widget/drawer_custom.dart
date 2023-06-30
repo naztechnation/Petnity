@@ -12,8 +12,8 @@ import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../../utils/navigator/page_navigator.dart';
 
-class SPcustomDrawer extends StatelessWidget {
-  const SPcustomDrawer({super.key});
+class SPCustomDrawer extends StatelessWidget {
+  const SPCustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,7 @@ class SPcustomDrawer extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ListTile(
+                    minLeadingWidth: 0,
                     onTap: () =>
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return Profile();
@@ -47,14 +48,20 @@ class SPcustomDrawer extends StatelessWidget {
                       width: 25,
                       height: 25,
                     ),
-                    title: Text(
-                      'Profile',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                       alignment: Alignment(-1.19, 0),
+                      
+                      child: Text(
+                        'Profile            ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontFamily: AppStrings.interSans),
+                      ),
                     ),
                   ),
                   ListTile(
+                    minLeadingWidth: 0,
                     onTap: () {
                       AppNavigator.pushAndStackPage(context,
                           page: NotificationsScreen());
@@ -64,59 +71,78 @@ class SPcustomDrawer extends StatelessWidget {
                       width: 25,
                       height: 25,
                     ),
-                    title: Text(
-                      'Notifications and chats',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                       alignment: Alignment(-2.99, 0),
+
+                      child: Text(
+                        'Notifications & chats',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            ),
+                      ),
                     ),
                   ),
                   ListTile(
+                    minLeadingWidth: 0,
                     leading: ImageView.svg(
-                      AppImages.bagIcon,
+                      AppImages.awaitingIcon,
                       width: 25,
                       height: 25,
                     ),
-                    title: Text(
-                      'Awaiting Sessions',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                       alignment: Alignment(-1.4, 0),
+
+                      child: Text(
+                        'Awaiting Sessions',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontFamily: AppStrings.interSans),
+                      ),
                     ),
                   ),
                   ListTile(
+                    minLeadingWidth: 0,
                     onTap: () =>
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return Support();
                     })),
                     leading: ImageView.svg(
-                      AppImages.trackIcon,
+                      AppImages.supportIcon,
                       width: 25,
                       height: 25,
                     ),
-                    title: Text(
-                      'Support',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                      alignment: Alignment(-1.19, 0),
+                      child: Text(
+                        'Support',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontFamily: AppStrings.interSans),
+                      ),
                     ),
                   ),
-                  ListTile(
-                    leading: ImageView.svg(
-                      AppImages.bagIcon,
+                  ListTile(minLeadingWidth: 0,
+                    leading: ImageView.asset(
+                      AppImages.walletIcon,
                       width: 25,
                       height: 25,
                     ),
-                    title: Text(
-                      'Balance and Withdrawal',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                       alignment: Alignment(-10, 0),
+
+                      child: Text(
+                        'Balance and Withdrawal',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontFamily: AppStrings.interSans),
+                      ),
                     ),
                   ),
                   ListTile(
+                    minLeadingWidth: 0,
                     leading: ImageView.svg(
-                      AppImages.filterIcon,
+                      AppImages.settingsIcon,
                       width: 25,
                       height: 25,
                     ),
@@ -124,11 +150,14 @@ class SPcustomDrawer extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (_) {
                       return SettingsScreen();
                     })),
-                    title: Text(
-                      'Settings',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                       alignment: Alignment(-1.13, 0),
+                      child: Text(
+                        'Settings',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontFamily: AppStrings.interSans),
+                      ),
                     ),
                   ),
                   ListTile(
@@ -176,13 +205,15 @@ class SPcustomDrawer extends StatelessWidget {
                             );
                           });
                     },
+               minLeadingWidth : 0,
+
                     leading: Container(
                       width: screenSize(context).width * .1,
                       child: Stack(
                         children: [
                           CircleAvatar(
-                            backgroundColor: Colors.grey,
-                            radius: 15,
+                            backgroundColor: Color(0xFFD9D9D9),
+                            radius: 14,
                           ),
                           Positioned(
                               left: 8,
@@ -190,19 +221,23 @@ class SPcustomDrawer extends StatelessWidget {
                                 width: screenSize(context).width * .069,
                                 height: screenSize(context).height * .035,
                                 decoration: BoxDecoration(
-                                    color: Colors.grey.shade600,
+                                    color: Color(0xFFD9D9D9),
                                     borderRadius: BorderRadius.circular(100),
                                     border: Border.all(
-                                        color: Colors.grey.shade600)),
+                                        color: Colors.white)),
                               ))
                         ],
                       ),
                     ),
-                    title: Text(
-                      'Add other Services',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                    title: Align(
+                alignment: Alignment(-2, 0),
+
+                      child: Text(
+                        'Add other Services',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontFamily: AppStrings.interSans),
+                      ),
                     ),
                   ),
                 ],
@@ -215,16 +250,20 @@ class SPcustomDrawer extends StatelessWidget {
               height: screenSize(context).height * .1,
             ),
             ListTile(
+               minLeadingWidth : 0,
               leading: ImageView.svg(
-                AppImages.visibleIcon,
+                AppImages.logoutIcon,
                 width: 25,
                 height: 25,
               ),
-              title: Text(
-                'Log out',
-                style: TextStyle(
-                    fontWeight: FontWeight.w800,
-                    fontFamily: AppStrings.interSans),
+              title: Align(
+                alignment: Alignment(-1.1, 0),
+                child: Text(
+                  'Log out',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontFamily: AppStrings.interSans),
+                ),
               ),
             ),
           ],
