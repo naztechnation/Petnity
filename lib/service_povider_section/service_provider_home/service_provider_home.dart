@@ -3,7 +3,11 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/service_povider_section/service_provider_home/home.dart';
+import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
+import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
@@ -25,9 +29,6 @@ class ServiceProviderHomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(
-                  height: 20,
-                ),
                 Container(
                   width: screenSize(context).width,
                   child: Row(
@@ -50,36 +51,15 @@ class ServiceProviderHomePage extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                       fontSize: 24),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
                 FilterSearchView(
                   showFilter: false,
                   controller: search,
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
-                card(context),
-                SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: screenSize(context).width * .04),
-                  height: screenSize(context).height * .2,
-                  width: screenSize(context).width * .9,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Card(
-                      child: Center(
-                          child:
-                              Text('Your ongoing sessions would appear here')),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
+                ServiceProviderHomeBody(
+                  activity: 'Pet grooming',
                 )
               ],
             ),
@@ -138,6 +118,36 @@ class ServiceProviderHomePage extends StatelessWidget {
             ),
           ),
           SizedBox(width: 130, child: ImageView.asset(AppImages.playingCat))
+        ],
+      ),
+    );
+  }
+
+  Widget emptyBody(BuildContext context) {
+    return Container(
+      height: screenSize(context).height * .6,
+      child: Column(
+        children: [
+          card(context),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(
+                horizontal: screenSize(context).width * .04),
+            height: screenSize(context).height * .2,
+            width: screenSize(context).width * .9,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Card(
+                child: Center(
+                    child: Text('Your ongoing sessions would appear here')),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 40,
+          )
         ],
       ),
     );

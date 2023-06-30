@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
@@ -31,12 +32,7 @@ class _ProfileState extends State<Profile> {
             iconTheme: IconThemeData(color: Colors.black),
             elevation: 0,
             backgroundColor: AppColors.lightBackground,
-            leading: InkWell(
-              child: ImageView.svg(AppImages.backButton),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            leading: backButton(context),
             title: Text(
               'Your Profile',
               style:

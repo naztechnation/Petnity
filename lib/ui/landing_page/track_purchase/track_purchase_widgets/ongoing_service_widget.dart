@@ -6,13 +6,15 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 
 class OngoinServiceWidget extends StatelessWidget {
-  const OngoinServiceWidget({super.key});
+  final String label;
+  OngoinServiceWidget({this.label = 'Details'});
 
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       child: Container(
-        height: screenSize(context).height * .32,
+        height: screenSize(context).height * .3,
         width: screenSize(context).width * .9,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
@@ -142,7 +144,7 @@ class OngoinServiceWidget extends StatelessWidget {
                   child: ButtonView(
                     color: Colors.blue,
                     onPressed: () {},
-                    child: Text('Details'),
+                    child: Text(label),
                     borderRadius: 30,
                   ),
                 ),

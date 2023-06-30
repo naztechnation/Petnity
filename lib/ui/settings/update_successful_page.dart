@@ -3,6 +3,8 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/settings/settings.dart';
+import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -82,11 +84,7 @@ class UpdateSuccessfulScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: AppBar(
-              leading: InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: ImageView.svg(AppImages.backButton)),
+              leading: backButton(context),
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
@@ -119,7 +117,10 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                           SizedBox(
                             height: 10,
                           ),
-                          Text(successMessage),
+                          Text(
+                            successMessage,
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                     )),
