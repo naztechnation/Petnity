@@ -35,8 +35,13 @@ class _ProfileState extends State<Profile> {
             leading: backButton(context),
             title: Text(
               'Your Profile',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        fontFamily: AppStrings.interSans
+                        
+                        ),
             ),
             centerTitle: true,
             actions: [
@@ -63,7 +68,7 @@ class _ProfileState extends State<Profile> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     image: DecorationImage(
-                      image: AssetImage(AppImages.playing),
+                      image: AssetImage(AppImages.dogPet),
                       fit: BoxFit.fill,
                     )),
               ),
@@ -74,11 +79,23 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Text(
                       'Thanos',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                       style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w600,
+                        
+                        fontFamily: AppStrings.interSans
+                        
+                        ),
                     ),
                     Text(
                       'Sex: Semale',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                       style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w600,
+                        
+                        fontFamily: AppStrings.interSans
+                        
+                        ),
                     ),
                   ],
                 ),
@@ -97,16 +114,34 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sandra Jhay',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            'Sandra Jhay',style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: AppStrings.interSans
+                        
+                        ),
                           ),
-                          Text('You'),
+                          Text('You',
+                          textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        
+                        fontFamily: AppStrings.interSans
+                      )
+                          ),
                         ],
                       ),
                     ),
                     Row(
                       children: [
-                        Text('Reachability'),
+                        Text('Reachability',
+                        textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        
+                        fontFamily: AppStrings.interSans
+                        
+                        )),
                         Switch(
                             value: reachability,
                             onChanged: (value) {
@@ -130,8 +165,11 @@ class _ProfileState extends State<Profile> {
                     decoration: BoxDecoration(),
                     child: Text(
                       'Lorem ipsum dolor sit amet consectetur. At sed accumsan ac vitae semper nunc aliquam semper eget. Vel arcu sollicitudin magna elit pellentesque egestas id. Nisl vulputate tristique amet mollis ut luctus integer ultrices accumsan. In mi aliquet consectetur id phasellus. Eu amet nulla tortor ut elementum enim. In sed tristique',
+                      textAlign: TextAlign.justify,
                       style: TextStyle(
                         fontSize: 14.0,
+                        
+                        fontFamily: AppStrings.interSans
                       ),
                     ),
                   ),
@@ -158,8 +196,8 @@ class _ProfileState extends State<Profile> {
                           EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.blue),
-                          color: Color(0xFF8DADFF),
-                          borderRadius: BorderRadius.circular(20)),
+                          color: Color(0xff8DADFF).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(30)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -177,7 +215,6 @@ class _ProfileState extends State<Profile> {
                                   Text('47kg',
                                       style: TextStyle(
                                           fontWeight: FontWeight.w400,
-                                          fontFamily: AppStrings.interSans,
                                           fontSize: 13))
                                 ],
                               ),
@@ -267,7 +304,7 @@ class _ProfileState extends State<Profile> {
                           EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.green),
-                          color: Color(0xFF96FF8D),
+                          color: Color(0xFF96FF8D).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -468,7 +505,13 @@ class _ProfileState extends State<Profile> {
                 height: screenSize(context).height * .08,
                 width: screenSize(context).width * .8,
                 child:
-                    ButtonView(onPressed: () {}, child: Text('Edit profile')),
+                    ButtonView(onPressed: () {}, child: Text('Edit profile',  style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w600,
+                        
+                        fontFamily: AppStrings.interSans
+                        
+                        ),)),
               ),
               SizedBox(
                 height: 15,

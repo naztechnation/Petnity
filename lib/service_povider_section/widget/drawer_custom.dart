@@ -49,10 +49,10 @@ class SPCustomDrawer extends StatelessWidget {
                       height: 25,
                     ),
                     title: Align(
-                       alignment: Alignment(-1.19, 0),
+                       alignment: Alignment(-1.15, 0),
                       
                       child: Text(
-                        'Profile            ',
+                        'Profile',
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 14,

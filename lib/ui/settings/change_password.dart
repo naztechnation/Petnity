@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
+
+import '../widgets/back_button.dart';
 
 class ChangePassword extends StatelessWidget {
   ChangePassword({super.key});
@@ -41,12 +41,7 @@ class ChangePassword extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             backgroundColor: AppColors.lightBackground,
-            leading: InkWell(
-              child: ImageView.svg(AppImages.backButton),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            leading: backButton(context),
             title: Text(
               'Change Password',
               style:
