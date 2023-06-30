@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -14,29 +13,27 @@ import '../widgets/custom_text.dart';
 import 'kyc_screen_seven.dart';
 
 class KycScreenSix extends StatelessWidget {
-
-   final String selectedPet;
+  final String selectedPet;
 
   KycScreenSix({super.key, this.selectedPet = ''});
 
-  TextEditingController commentController = TextEditingController();
-
+  final TextEditingController commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         height: screenSize(context).height,
-          width: screenSize(context).width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                  begin: Alignment.topRight,
-                  end: Alignment.topLeft)),
-                  child: SingleChildScrollView(child: Column(children: [
-
-                                SafeArea(child:   SizedBox(height: (Platform.isAndroid) ?44 : 0)),
-
+        width: screenSize(context).width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                begin: Alignment.topRight,
+                end: Alignment.topLeft)),
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
+            SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
             backButton(context),
             SizedBox(
               height: screenSize(context).height * 0.13,
@@ -50,18 +47,21 @@ class KycScreenSix extends StatelessWidget {
               fontFamily: AppStrings.montserrat,
               color: Colors.black,
             ),
-             SizedBox(
+            SizedBox(
               height: 20,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 22.0),
-              child: TextEditView(controller: commentController, fillColor: AppColors.cardColor,
-              maxLines: 10, borderRadius: 22,
-              textInputAction: TextInputAction.done,
-              maxLength: 2000,
+              child: TextEditView(
+                controller: commentController,
+                fillColor: AppColors.cardColor,
+                maxLines: 10,
+                borderRadius: 22,
+                textInputAction: TextInputAction.done,
+                maxLength: 2000,
               ),
             ),
-              SizedBox(
+            SizedBox(
               height: screenSize(context).height * 0.10,
             ),
             if (commentController.text != '')
@@ -92,7 +92,8 @@ class KycScreenSix extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-                  ],)),
+          ],
+        )),
       ),
     );
   }

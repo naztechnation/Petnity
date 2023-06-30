@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/settings/card_details.dart';
-import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 
 class ReportBug extends StatelessWidget {
-  TextEditingController bug = TextEditingController();
+  final TextEditingController bug = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

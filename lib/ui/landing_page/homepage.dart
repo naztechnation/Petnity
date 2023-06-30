@@ -6,14 +6,11 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import './widgets/custom_drawer.dart';
 
 import '../widgets/filter_search_section.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  TextEditingController search = TextEditingController();
+  final TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +81,10 @@ class HomePage extends StatelessWidget {
                   height: 20,
                 ),
                 ListOfServices(),
-        const SizedBox(height: 40,)
-
+                const SizedBox(
+                  height: 40,
+                )
               ],
-
             ),
           ),
         ),
@@ -100,15 +97,14 @@ class HomePage extends StatelessWidget {
   Widget card(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-
-        boxShadow: [
-                BoxShadow(
-                  color: Colors.white,
-                  offset: Offset(0.0, 1.0), //(x,y)
-                  blurRadius: 6.0,
-                ),
-              ],
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
           gradient: LinearGradient(
               colors: [AppColors.scaffoldColor, Colors.red.shade50],
               begin: Alignment.topRight,
@@ -136,8 +132,7 @@ class HomePage extends StatelessWidget {
                 ),
                 ButtonView(
                   borderRadius: 30,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   onPressed: () {},
                   child: Text('Begin Now'),
                   expanded: false,
@@ -145,9 +140,7 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            width: 130,
-            child: ImageView.asset(AppImages.playingCat))
+          SizedBox(width: 130, child: ImageView.asset(AppImages.playingCat))
         ],
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/service_povider_section/landingPage.dart';
+import 'package:petnity/service_povider_section/service_provider_home.dart';
 import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/auth/sign_up.dart';
 import 'package:petnity/ui/kyc/kyc_screen_one.dart';
@@ -39,6 +41,7 @@ class AppRoutes {
   static const String kycScreenOne = 'kycScreenOne';
   static const String kycScreenTwo = 'kycScreenTwo';
   static const String landingPage = 'landingPage';
+  static const String serviceProviderHomePage = 'serviceProviderHomePage';
   static const String productDetailScreen = 'productDetailScreen';
 
   static const String cartScreen = 'cartScreen';
@@ -62,6 +65,7 @@ class AppRoutes {
   static const String reportIssue = 'reportIssue';
   static const String reportVendor = 'reportVendor';
   static const String reportBug = 'reportBug';
+  static const String serviceProviderLandingPage = 'serviceProviderLandingPage';
 
   static Map<String, Widget Function(BuildContext)> routes = {
     ///Named routes to be added here in this format
@@ -70,10 +74,12 @@ class AppRoutes {
     signUpScreen: (context) => const SignUpScreen(),
     signInScreen: (context) => const SignInScreen(),
     otpScreen: (context) => const OtpScreen(),
+    serviceProviderHomePage: (context) => ServiceProviderHomePage(),
     successScreen: (context) => const RegSuccessful(),
     kycScreenOne: (context) => KycScreenOne(),
     kycScreenTwo: (context) => KycScreenTwo(),
     landingPage: (context) => LandingScreen(),
+    serviceProviderLandingPage: (context) => ServiceProviderLandingPage(),
     productDetailScreen: (context) => ProductDetailScreen(),
 
     cartScreen: (context) => CartScreen(),
@@ -93,7 +99,7 @@ class AppRoutes {
     reportBug: (context) => ReportBug(),
     reportIssue: (context) => ReportIssue(),
     reportVendor: (context) => ReportVendor(),
-    productDetailScreen: (context) => ProductDetailScreen(),
+    // productDetailScreen: (context) => ProductDetailScreen(),
   };
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -111,7 +117,15 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => ProductDetailScreen(),
         );
+      case serviceProviderHomePage:
+        return MaterialPageRoute(
+          builder: (context) => ServiceProviderHomePage(),
+        );
 
+      case serviceProviderLandingPage:
+        return MaterialPageRoute(
+          builder: (context) => ServiceProviderLandingPage(),
+        );
       case cartScreen:
         return MaterialPageRoute(
           builder: (context) => CartScreen(),

@@ -1,14 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/settings/card_details.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import './widgets/confirm_OTP.dart';
 
 class SavedCards extends StatelessWidget {
   @override
@@ -22,6 +18,9 @@ class SavedCards extends StatelessWidget {
           onPressed: () {
             Navigator.push(context, MaterialPageRoute(builder: (_) {
               return UpdateSuccessfulScreen(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   successMessage: 'Your card has been added successfully');
             }));
           },

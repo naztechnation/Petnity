@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/settings/card_details.dart';
-import 'package:petnity/ui/settings/update_successful_page.dart';
-import 'package:petnity/ui/support/live_support_chat.dart';
-import 'package:petnity/ui/support/report_a_vendor.dart';
-import 'package:petnity/ui/support/report_an_issue.dart';
+import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import 'report_a_bug.dart';
+
+import '../widgets/custom_text.dart';
 
 class Support extends StatelessWidget {
   @override
@@ -27,11 +24,15 @@ class Support extends StatelessWidget {
               width: screenSize(context).width * .5,
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.email),
-                title: Text('Email'),
-                subtitle: Text(
-                  'myexampleemail@sample.com',
-                  style: TextStyle(fontSize: 13),
+                leading: Icon(Icons.email_outlined),
+                title: CustomText(
+                  text: 'Email',
+                  fontFamily: AppStrings.interSans,
+                ),
+                subtitle: CustomText(
+                  text: 'myexampleemail@sample.com',
+                  fontFamily: AppStrings.interSans,
+                  size: 13,
                 ),
               ),
             ),
@@ -45,10 +46,14 @@ class Support extends StatelessWidget {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: Icon(Icons.call),
-                title: Text('Number'),
-                subtitle: Text(
-                  '09150515270',
-                  style: TextStyle(fontSize: 13),
+                title: CustomText(
+                  text: 'Number',
+                  fontFamily: AppStrings.interSans,
+                ),
+                subtitle: CustomText(
+                  text: '09150515270',
+                  fontFamily: AppStrings.interSans,
+                  size: 13,
                 ),
               ),
             )
@@ -91,13 +96,14 @@ class Support extends StatelessWidget {
               Container(
                 width: screenSize(context).width * .5,
                 height: screenSize(context).height * .2,
-                color: Colors.red,
+                child: ImageView.asset(AppImages.supportPic),
               ),
               Container(
                 margin: EdgeInsets.all(10),
                 width: screenSize(context).width * .6,
                 child: ButtonView(
                     expanded: false,
+                    borderRadius: 30,
                     borderColor: Colors.transparent,
                     color: Colors.blue.withOpacity(0.2),
                     onPressed: () {
@@ -211,9 +217,13 @@ class Support extends StatelessWidget {
                     ListTile(
                       leading: Icon(
                         Icons.circle,
+                        size: 16,
                         color: Colors.blue,
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                      ),
                       title: Text(
                         'Lorem Ipsum dolor cedit something',
                         style: TextStyle(fontSize: 14),
@@ -222,9 +232,13 @@ class Support extends StatelessWidget {
                     ListTile(
                       leading: Icon(
                         Icons.circle,
+                        size: 16,
                         color: Colors.yellow,
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                      ),
                       title: Text(
                         'Lorem Ipsum dolor cedit something',
                         style: TextStyle(fontSize: 14),
@@ -234,8 +248,12 @@ class Support extends StatelessWidget {
                       leading: Icon(
                         Icons.circle,
                         color: Colors.red,
+                        size: 16,
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                      ),
                       title: Text(
                         'Lorem Ipsum dolor cedit something',
                         style: TextStyle(fontSize: 14),
@@ -245,8 +263,12 @@ class Support extends StatelessWidget {
                       leading: Icon(
                         Icons.circle,
                         color: Colors.green,
+                        size: 16,
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 18,
+                      ),
                       title: Text(
                         'Lorem Ipsum dolor cedit something',
                         style: TextStyle(fontSize: 14),

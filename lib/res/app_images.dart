@@ -30,7 +30,14 @@ class AppImages {
   static const dogBreeders = '${_baseUrl}dog_breeders.png';
   static const dogSellers = '${_baseUrl}dog_sellers.png';
   static const petCarers = '${_baseUrl}pet_carers.png';
+  static const supportPic = '${_baseUrl}support.png';
   static const playing = '${_baseUrl}playing.jpeg';
+  static const beginnerPet = '${_baseUrl}beginner_pet.png';
+  static const intermidiatePet = '${_baseUrl}intermidiate_pet.png';
+  static const proPet = '${_baseUrl}pro_pet.png';
+  static const lovedPet = '${_baseUrl}love_pet.png';
+  static const dogg = '${_baseUrl}dog.png';
+  static const dogPet = '${_baseUrl}pet1.jpg';
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';
@@ -59,6 +66,7 @@ class AppImages {
   static const callBorder = '${_svgBaseUrl}call_border.svg';
   static const videoBorder = '${_svgBaseUrl}video_border.svg';
   static const messageBorder = '${_svgBaseUrl}message_border.svg';
+  static const arrowDown = '${_svgBaseUrl}arrow_down.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';
@@ -72,4 +80,6 @@ class AppImages {
   static const loading = '${_gifBaseUrl}loader.gif';
   static const playingCat = '${_gifBaseUrl}playing_cat.gif';
   static const check = '${_gifBaseUrl}check.gif';
+
+  static const business = '${_gifBaseUrl}check.gif';
 }

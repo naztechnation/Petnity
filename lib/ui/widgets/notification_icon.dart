@@ -8,8 +8,8 @@ class NotificationIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 28.0,
-      height: 35.0,
+      width: 30.0,
+      height: 37.0,
       margin: EdgeInsets.only(top: 10),
       child: Stack(
         children: [

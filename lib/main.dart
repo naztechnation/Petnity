@@ -9,11 +9,9 @@ Future<void> main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
-     
     ],
     child: const Petnity(),
   ));
-
 }
 
 class Petnity extends StatelessWidget {
@@ -30,6 +28,7 @@ class Petnity extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: ThemeData(fontFamily: AppStrings.montserrat),
       routes: AppRoutes.routes,
+      // initialRoute: AppRoutes.serviceProviderLandingPage,
       initialRoute: AppRoutes.landingPage,
       onGenerateRoute: AppRoutes.generateRoute,
     );

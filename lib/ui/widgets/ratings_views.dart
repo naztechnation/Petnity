@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../res/app_colors.dart';
@@ -13,32 +11,35 @@ class RatingView extends StatelessWidget {
   final Color selectedColor;
   final double space;
   final double size;
-  const RatingView({required this.rating,
-    this.onSelected, this.color=Colors.yellow,
-    this.selectedColor=AppColors.lightBackground,
-    this.space=5,
-    this.size=18,
-    Key? key}) : super(key: key);
+  const RatingView(
+      {required this.rating,
+      this.onSelected,
+      this.color = Colors.yellow,
+      this.selectedColor = AppColors.lightBackground,
+      this.space = 5,
+      this.size = 18,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-        children: List.generate(5, (index) => InkWell(
-          onTap: (){
-            if(onSelected!=null)onSelected!(index);},
-          child: Padding(
-            padding: EdgeInsets.only(left: _isLast(index)? 0 : space),
-            child: ImageView.svg(AppImages.star,
-            height: size, width: size,
-            color:  index+1<=rating
-                ? color : selectedColor),
-          )
-        ))
-    );
+        children: List.generate(
+            5,
+            (index) => InkWell(
+                onTap: () {
+                  if (onSelected != null) onSelected!(index);
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(left: _isLast(index) ? 0 : space),
+                  child: ImageView.svg(AppImages.star,
+                      height: size,
+                      width: size,
+                      color: index + 1 <= rating ? color : selectedColor),
+                ))));
   }
 
   bool _isLast(int index) {
-    return index==5;
+    return index == 5;
   }
-
 }

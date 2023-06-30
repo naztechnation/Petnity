@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/landing_page/shop_screen/cart.dart';
 import 'package:petnity/ui/landing_page/shop_screen/widgets/review_widget.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -42,9 +40,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               width: screenSize(context).width * .6,
               child: ButtonView(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return CartScreen();
-                    }));
+                    Navigator.pushNamed(context, 'cartScreen');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -69,19 +65,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
           ),
           iconTheme: IconThemeData(color: Colors.black),
-        actions: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-            child: NotificationIcon(
-                icon: ImageView.svg(AppImages.cartIcon, width: 30,), nun_of_notifications: 3),
-          ),
-          Container(
-            width: 20,
-          )
+          actions: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: NotificationIcon(
+                  icon: ImageView.svg(
+                    AppImages.cartIcon,
+                    width: 30,
+                  ),
+                  nun_of_notifications: 3),
+            ),
+            Container(
+              width: 20,
+            )
           ],
         ),
-        
-        
       ),
       body: Container(
         height: screenSize(context).height * .9,
@@ -102,7 +100,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Container(
                 width: screenSize(context).width * .2,
                 decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30)),
                 padding: EdgeInsets.all(5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,8 +142,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     children: [
                       Text(
                         'Smart Adult Feed',
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                       Text(
                         'in stock',
@@ -161,7 +160,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     width: screenSize(context).width,
                     child: Text(
                       'About Product',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Text(
@@ -176,7 +176,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     width: screenSize(context).width,
                     child: Text(
                       'Review',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
