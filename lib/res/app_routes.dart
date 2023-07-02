@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petnity/service_povider_section/landingPage.dart';
+import 'package:petnity/service_povider_section/landing_page.dart';
 import 'package:petnity/service_povider_section/service_provider_home/service_provider_home.dart';
 import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/auth/sign_up.dart';
 import 'package:petnity/ui/kyc/kyc_screen_one.dart';
 import 'package:petnity/ui/landing_page/shop_screen/cart.dart';
 import 'package:petnity/ui/landing_page/shop_screen/product_detail_screen.dart';
-import 'package:petnity/ui/settings/Acount_Deleted.dart';
+import 'package:petnity/ui/settings/acount_deleted.dart';
 import 'package:petnity/ui/settings/change_email.dart';
 import 'package:petnity/ui/settings/change_email_&_number_option.dart';
 import 'package:petnity/ui/settings/change_number.dart';

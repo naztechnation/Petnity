@@ -5,6 +5,8 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 
+import '../widgets/back_button.dart';
+
 class LiveSupport extends StatefulWidget {
   @override
   State<LiveSupport> createState() => _LiveSupportState();
@@ -60,12 +62,7 @@ class _LiveSupportState extends State<LiveSupport> {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             children: [
-              InkWell(
-                child: ImageView.svg(AppImages.backButton),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              backButton(context),
               Container(
                 width: screenSize(context).width * .8,
                 child: ListTile(
