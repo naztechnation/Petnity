@@ -89,7 +89,7 @@ class customDrawer extends StatelessWidget {
                       return Support();
                     })),
                     leading: ImageView.svg(
-                      AppImages.trackIcon,
+                      AppImages.supportIcon,
                       width: 25,
                       height: 25,
                     ),
@@ -102,7 +102,7 @@ class customDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: ImageView.svg(
-                      AppImages.filterIcon,
+                      AppImages.settingsIcon,
                       width: 25,
                       height: 25,
                     ),
@@ -139,7 +139,7 @@ class customDrawer extends StatelessWidget {
                     name: 'signInScreen');
               },
               leading: ImageView.svg(
-                AppImages.visibleIcon,
+                AppImages.logoutIcon,
                 width: 25,
                 height: 25,
               ),

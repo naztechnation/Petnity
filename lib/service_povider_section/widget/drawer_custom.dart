@@ -71,7 +71,7 @@ class SPCustomDrawer extends StatelessWidget {
                       height: 25,
                     ),
                     title: Align(
-                      alignment: Alignment(-2.99, 0),
+                      alignment: Alignment(-2.0, 0),
                       child: Text(
                         'Notifications & chats',
                         style: TextStyle(
@@ -126,7 +126,7 @@ class SPCustomDrawer extends StatelessWidget {
                       height: 25,
                     ),
                     title: Align(
-                      alignment: Alignment(-10, 0),
+                      alignment: Alignment(-2.1, 0),
                       child: Text(
                         'Balance and Withdrawal',
                         style: TextStyle(
