@@ -215,6 +215,10 @@ class SPcustomDrawer extends StatelessWidget {
               height: screenSize(context).height * .1,
             ),
             ListTile(
+              onTap: () {
+                AppNavigator.pushNamedAndRemoveUntil(context,
+                    name: 'signInScreen');
+              },
               leading: ImageView.svg(
                 AppImages.visibleIcon,
                 width: 25,
