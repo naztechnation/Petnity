@@ -72,9 +72,10 @@ class _ServiceProviderLandingPageState
                       AppImages.activities,
                       height: 20,
                       width: 20,
+                      color: Colors.black,
                     ),
                     activeIcon: ImageView.svg(
-                      AppImages.homeIcon,
+                      AppImages.activities,
                       height: 20,
                       width: 20,
                       color: AppColors.lightSecondary,
@@ -88,7 +89,7 @@ class _ServiceProviderLandingPageState
                       width: 20,
                     ),
                     activeIcon: ImageView.svg(
-                      AppImages.userIcon,
+                      AppImages.creditcard,
                       height: 20,
                       width: 20,
                       color: AppColors.lightSecondary,
