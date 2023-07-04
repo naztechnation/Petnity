@@ -28,8 +28,8 @@ class Petnity extends StatelessWidget {
       themeMode: ThemeMode.light,
       theme: ThemeData(fontFamily: AppStrings.montserrat),
       routes: AppRoutes.routes,
-      // initialRoute: AppRoutes.serviceProviderLandingPage,
-      initialRoute: AppRoutes.welcomeScreen,
+      initialRoute: AppRoutes.serviceProviderLandingPage,
+      // initialRoute: AppRoutes.welcomeScreen,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

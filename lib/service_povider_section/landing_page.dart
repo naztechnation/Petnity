@@ -69,7 +69,7 @@ class _ServiceProviderLandingPageState
                 items: const <BottomNavigationBarItem>[
                   BottomNavigationBarItem(
                     icon: ImageView.svg(
-                      AppImages.homeIcon,
+                      AppImages.activities,
                       height: 20,
                       width: 20,
                     ),
@@ -83,7 +83,7 @@ class _ServiceProviderLandingPageState
                   ),
                   BottomNavigationBarItem(
                     icon: ImageView.svg(
-                      AppImages.userIcon,
+                      AppImages.creditcard,
                       height: 20,
                       width: 20,
                     ),
