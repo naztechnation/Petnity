@@ -85,14 +85,20 @@ class RegSuccessful extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            CustomText(
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              text: 'Skip and go to home',
-              weight: FontWeight.w400,
-              size: 14,
-              fontFamily: AppStrings.interSans,
-              color: AppColors.lightSecondary,
+            InkWell(
+              onTap: () {
+                AppNavigator.pushNamedAndRemoveUntil(context,
+                    name: 'landingPage');
+              },
+              child: CustomText(
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                text: 'Skip and go to home',
+                weight: FontWeight.w400,
+                size: 14,
+                fontFamily: AppStrings.interSans,
+                color: AppColors.lightSecondary,
+              ),
             ),
           ],
         ),

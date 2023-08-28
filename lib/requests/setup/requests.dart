@@ -71,9 +71,9 @@ class Requests {
         final client = RetryClient(http.Client());
         await client
             .post(Uri.parse(route),
-                body: json.encode(body),
-                headers: headers ?? await rawDataHeader(),
-                encoding: encoding)
+                body: body,
+                headers: headers ?? await formDataHeader(),
+                )
             .then((response) {
           map = json.decode(RequestHandler.handleServerError(response));
           client.close();

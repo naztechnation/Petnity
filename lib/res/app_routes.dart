@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/service_povider_section/landing_page.dart';
 import 'package:petnity/service_povider_section/service_provider_home/service_provider_home.dart';
 import 'package:petnity/ui/auth/otp_screen.dart';
-import 'package:petnity/ui/auth/sign_up.dart';
+import 'package:petnity/ui/auth/sign_up_screen.dart';
 import 'package:petnity/ui/kyc/kyc_screen_one.dart';
 import 'package:petnity/ui/landing_page/shop_screen/cart.dart';
 import 'package:petnity/ui/landing_page/shop_screen/product_detail_screen.dart';
@@ -24,7 +24,7 @@ import 'package:petnity/ui/support/report_a_vendor.dart';
 import 'package:petnity/ui/support/report_an_issue.dart';
 
 import '../ui/auth/reg_successful_screen.dart';
-import '../ui/auth/sign_in.dart';
+import '../ui/auth/sign_in_screen.dart';
 import '../ui/kyc/kyc_screen_two.dart';
 import '../ui/landing_page/landing_screen.dart';
 import '../ui/on_boarding/welcome_screen.dart';
@@ -71,8 +71,8 @@ class AppRoutes {
     ///Named routes to be added here in this format
     splashScreen: (context) => const SplashScreen(),
     welcomeScreen: (context) => const WelcomeScreen(),
-    signUpScreen: (context) => const SignUpScreen(),
-    signInScreen: (context) => const SignInScreen(),
+    signUpScreen: (context) =>   SignUpScreen(),
+    signInScreen: (context) =>   SignInScreen(),
     otpScreen: (context) => const OtpScreen(),
     serviceProviderHomePage: (context) => ServiceProviderHomePage(),
     successScreen: (context) => const RegSuccessful(),
@@ -194,11 +194,11 @@ class AppRoutes {
 
       case signUpScreen:
         return MaterialPageRoute(
-          builder: (context) => const SignUpScreen(),
+          builder: (context) =>   SignUpScreen(),
         );
       case signInScreen:
         return MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
+          builder: (context) =>   SignInScreen(),
         );
       case otpScreen:
         return MaterialPageRoute(

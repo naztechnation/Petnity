@@ -49,8 +49,7 @@ class SPCustomDrawer extends StatelessWidget {
                       height: 25,
                     ),
                     title: Align(
-                       alignment: Alignment(-1.15, 0),
-                      
+                      alignment: Alignment(-1.15, 0),
                       child: Text(
                         'Profile',
                         style: TextStyle(
@@ -72,13 +71,12 @@ class SPCustomDrawer extends StatelessWidget {
                       height: 25,
                     ),
                     title: Align(
-                       alignment: Alignment(-2.99, 0),
-
+                      alignment: Alignment(-2.0, 0),
                       child: Text(
                         'Notifications & chats',
                         style: TextStyle(
-                            fontWeight: FontWeight.w800,
-                            ),
+                          fontWeight: FontWeight.w800,
+                        ),
                       ),
                     ),
                   ),
@@ -90,8 +88,7 @@ class SPCustomDrawer extends StatelessWidget {
                       height: 25,
                     ),
                     title: Align(
-                       alignment: Alignment(-1.4, 0),
-
+                      alignment: Alignment(-1.4, 0),
                       child: Text(
                         'Awaiting Sessions',
                         style: TextStyle(
@@ -121,15 +118,15 @@ class SPCustomDrawer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListTile(minLeadingWidth: 0,
+                  ListTile(
+                    minLeadingWidth: 0,
                     leading: ImageView.asset(
                       AppImages.walletIcon,
                       width: 25,
                       height: 25,
                     ),
                     title: Align(
-                       alignment: Alignment(-10, 0),
-
+                      alignment: Alignment(-2.1, 0),
                       child: Text(
                         'Balance and Withdrawal',
                         style: TextStyle(
@@ -151,7 +148,7 @@ class SPCustomDrawer extends StatelessWidget {
                       return SettingsScreen();
                     })),
                     title: Align(
-                       alignment: Alignment(-1.13, 0),
+                      alignment: Alignment(-1.13, 0),
                       child: Text(
                         'Settings',
                         style: TextStyle(
@@ -205,8 +202,7 @@ class SPCustomDrawer extends StatelessWidget {
                             );
                           });
                     },
-               minLeadingWidth : 0,
-
+                    minLeadingWidth: 0,
                     leading: Container(
                       width: screenSize(context).width * .1,
                       child: Stack(
@@ -223,15 +219,13 @@ class SPCustomDrawer extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Color(0xFFD9D9D9),
                                     borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                        color: Colors.white)),
+                                    border: Border.all(color: Colors.white)),
                               ))
                         ],
                       ),
                     ),
                     title: Align(
-                alignment: Alignment(-2, 0),
-
+                      alignment: Alignment(-2, 0),
                       child: Text(
                         'Add other Services',
                         style: TextStyle(
@@ -250,7 +244,11 @@ class SPCustomDrawer extends StatelessWidget {
               height: screenSize(context).height * .1,
             ),
             ListTile(
-               minLeadingWidth : 0,
+              onTap: () {
+                AppNavigator.pushNamedAndRemoveUntil(context,
+                    name: 'signInScreen');
+              },
+              minLeadingWidth: 0,
               leading: ImageView.svg(
                 AppImages.logoutIcon,
                 width: 25,

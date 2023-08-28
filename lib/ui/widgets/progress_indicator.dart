@@ -7,8 +7,8 @@ class ProgressIndicators{
     return CircularProgressIndicator(
         value: value,
         strokeWidth: strokeWidth,
-        valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.secondary),
-        backgroundColor: Theme.of(context).colorScheme.primary);
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        backgroundColor: (Colors.blue));
   }
 
   static Widget linearProgressBar(BuildContext context,

@@ -1,0 +1,265 @@
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/res/app_colors.dart';
+import 'package:petnity/res/app_constants.dart';
+import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/utils/validator.dart';
+import 'package:provider/provider.dart';
+
+import '../../blocs/accounts/account.dart';
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/account_repository_impl.dart';
+import '../../res/app_routes.dart';
+import '../../res/app_strings.dart';
+import '../../res/enum.dart';
+import '../../utils/navigator/page_navigator.dart';
+import '../widgets/button_view.dart';
+import '../widgets/custom_text.dart';
+import '../widgets/modals.dart';
+import '../widgets/text_edit_view.dart';
+
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+  final _phoneController = TextEditingController();
+
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    // _emailController.text = 'agbo.raph@gmail.com';
+    // _phoneController.text = '090746453728';
+    // _passwordController.text = 'Scarface@306166';
+    final user = Provider.of<UserViewModel>(context, listen: true);
+    return Scaffold(
+        body: Container(
+      height: double.infinity,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [AppColors.scaffoldColor, Colors.red.shade50],
+              begin: Alignment.topRight,
+              end: Alignment.topLeft)),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 25.0, right: 25),
+        child: BlocProvider<AccountCubit>(
+          lazy: false,
+          create: (_) => AccountCubit(
+              accountRepository: AccountRepositoryImpl(),
+              viewModel: Provider.of<UserViewModel>(context, listen: false)),
+          child: BlocConsumer<AccountCubit, AccountStates>(
+            listener: (context, state) {
+              if (state is AccountLoaded) {
+                // AppNavigator.pushAndReplaceName(context,
+                //     name: AppRoutes.otpScreen);
+                 Modals.showToast(state.userData.message!,
+                      messageType: MessageType.success);
+              } else if (state is AccountApiErr) {
+                if (state.message != null) {
+                  Modals.showToast(state.message!,
+                      messageType: MessageType.error);
+                }
+              } else if (state is AccountNetworkErr) {
+                if (state.message != null) {
+                  Modals.showToast(state.message!,
+                      messageType: MessageType.error);
+                }
+              }
+            },
+            builder: (context, state) => SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: screenSize(context).height * 0.13,
+                    ),
+                    CustomText(
+                      textAlign: TextAlign.left,
+                      maxLines: 2,
+                      text: 'Create an account',
+                      weight: FontWeight.w700,
+                      size: 24,
+                      fontFamily: AppStrings.interSans,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                    TextEditView(
+                      controller: _emailController,
+                       validator: (value){
+                       return Validator.validateEmail(value, 'Email');
+                      },
+                      isDense: true,
+                      textViewTitle: 'Your  Email',
+                      hintText: 'Enter email',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ImageView.svg(
+                          AppImages.messageIcon,
+                        ),
+                      ),
+                      fillColor: AppColors.lightPrimary,
+                      borderColor: AppColors.lightPrimary,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextEditView(
+                      controller: _phoneController,
+                      validator: (value){
+                       return Validator.validate(value, 'Phone Number');
+                      },
+                      isDense: true,
+                      textViewTitle: 'Your Number',
+                      hintText: 'Enter Number',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ImageView.svg(
+                          AppImages.personIcon,
+                          height: 10,
+                        ),
+                      ),
+                      fillColor: AppColors.lightPrimary,
+                      borderColor: AppColors.lightPrimary,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextEditView(
+                      controller: _passwordController,
+                      validator: (value){
+                       return Validator.validate(value, 'Password');
+                      },
+                      isDense: true,
+                      textViewTitle: 'Password',
+                      hintText: 'Enter your password',
+                      obscureText: user.showPasswordStatus,
+                      suffixIcon: GestureDetector(
+                        onTap: (){
+                          user.showPassword();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ImageView.svg(
+                            AppImages.visibleIcon,
+                            height: 13,
+                          ),
+                        ),
+                      ),
+                      fillColor: AppColors.lightPrimary,
+                      borderColor: AppColors.lightPrimary,
+                    ),
+                    SizedBox(
+                      height: 35,
+                    ),
+                    ImageView.asset(AppImages.line),
+                    SizedBox(
+                      height: 45,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImageView.asset(AppImages.facebookIcon),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        ImageView.asset(AppImages.appleIcon),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        ImageView.asset(AppImages.goggleIcon),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 20),
+                      child: ButtonView(
+                        processing: state is AccountProcessing,
+                        onPressed: () {
+                          _submit(context);
+                        },
+                        color: AppColors.lightSecondary,
+                        child: CustomText(
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          text: 'Create account',
+                          weight: FontWeight.w400,
+                          size: 16,
+                          fontFamily: AppStrings.interSans,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Have an account already?',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Single tapped.
+                                },
+                            ),
+                            TextSpan(
+                                text: '  Sign In',
+                                style: TextStyle(
+                                    color: AppColors.lightSecondary,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    AppNavigator.pushAndReplaceName(context,
+                                        name: AppRoutes.signInScreen);
+                                  }),
+                            TextSpan(
+                              text: '  in here',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  // Long Pressed.
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ));
+  }
+
+  _submit(BuildContext ctx) {
+    if (_formKey.currentState!.validate()) {
+      ctx.read<AccountCubit>().registerUser(
+          phoneNumber: _phoneController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      FocusScope.of(ctx).unfocus();
+    }
+  }
+}

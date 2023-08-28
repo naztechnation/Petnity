@@ -36,12 +36,39 @@ class ButtonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (processing) {
-      return Align(
+      return 
+      SizedBox(
+          width: double.maxFinite,
+          child: ElevatedButton(
+            onPressed: (){},
+            child: Align(
         alignment: Alignment.bottomCenter,
-        child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ProgressIndicators.circularProgressBar(context)),
-      );
+        child: ProgressIndicators.circularProgressBar(context),
+      ),
+            style: ElevatedButton.styleFrom(
+              primary: disabled
+                  ? Theme.of(context).backgroundColor
+                  : (color ?? Theme.of(context).colorScheme.secondary),
+              padding: EdgeInsets.symmetric(vertical: 12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  side: BorderSide(
+                      color: disabled
+                          ? Theme.of(context).textTheme.caption!.color!
+                          : (borderColor ??
+                              Theme.of(context).colorScheme.secondary),
+                      width: borderWidth)),
+              textStyle: TextStyle(
+                color: Theme.of(context).textTheme.bodyText1!.color,
+              ),
+            ),
+          ),
+        );
+      
+      
+      
+      
+      
     } else {
       if (expanded) {
         return SizedBox(

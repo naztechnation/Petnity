@@ -1,7 +1,10 @@
 class AppImages {
-  static const String _baseUrl = 'assets/images/';
-
+  
+  
   /// General image res
+  
+  static const String _baseUrl = 'assets/images/';
+  
 
   // static const icon = '${_baseUrl}icon.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
@@ -72,6 +75,14 @@ class AppImages {
   static const videoBorder = '${_svgBaseUrl}video_border.svg';
   static const messageBorder = '${_svgBaseUrl}message_border.svg';
   static const arrowDown = '${_svgBaseUrl}arrow_down.svg';
+  static const tag = '${_svgBaseUrl}Tag.svg';
+  static const ticket = '${_svgBaseUrl}Ticket.svg';
+  static const gift = '${_svgBaseUrl}Gift.svg';
+  static const checked = '${_svgBaseUrl}Checked.svg';
+
+  static const activities = '${_svgBaseUrl}Activities_1.svg';
+
+  static const creditcard = '${_svgBaseUrl}Credit_Card.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';

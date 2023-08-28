@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/service_povider_section/service_provider_home/service_request.dart';
 
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/custom_text.dart';
 
 class VideoCallSessionWidget extends StatelessWidget {
-  const VideoCallSessionWidget({super.key});
+  final String buttonText;
+  const VideoCallSessionWidget({super.key, this.buttonText = 'Details'});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: screenSize(context).height * .3,
+        height: screenSize(context).height * .28,
         width: screenSize(context).width * .9,
+        margin:
+            EdgeInsets.symmetric(horizontal: screenSize(context).width * .04),
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -23,13 +28,23 @@ class VideoCallSessionWidget extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage(AppImages.dogsPic),
-                  radius: 40,
+                  radius: 30,
                 ),
                 Container(
                   width: screenSize(context).width * .2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text('John Doe'), Text('Vet')],
+                    children: [
+                      CustomText(
+                        text: 'John Doe',
+                        size: 14,
+                        weight: FontWeight.bold,
+                      ),
+                      CustomText(
+                        text: 'Vet',
+                        size: 13,
+                      )
+                    ],
                   ),
                 ),
                 Container(
@@ -37,9 +52,9 @@ class VideoCallSessionWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Session time',
-                        style: TextStyle(fontSize: 10),
+                      CustomText(
+                        text: 'Session time',
+                        size: 10,
                       ),
                       Row(
                         children: [
@@ -67,6 +82,7 @@ class VideoCallSessionWidget extends StatelessWidget {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   child: Text(
@@ -85,7 +101,7 @@ class VideoCallSessionWidget extends StatelessWidget {
                     color: Colors.blue.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  padding: EdgeInsets.all(5.0),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   child: Row(
                     children: [
                       FittedBox(
@@ -110,10 +126,13 @@ class VideoCallSessionWidget extends StatelessWidget {
               height: 20,
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.symmetric(horizontal: 0),
               child: ButtonView(
                 borderRadius: 30,
-                child: Text('Details'),
+                child: CustomText(
+                  text: buttonText,
+                  color: Colors.white,
+                ),
                 onPressed: () {},
               ),
             )

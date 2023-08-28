@@ -9,13 +9,23 @@ class UserViewModel extends BaseViewModel {
     _intData();
   }
 
-  late String _address = '';
+    String _address = '';
 
-  late double _latitude = 6.424676142638944;
+    bool _showPassword = false;
 
-  late double _longitude = 7.496529864154287;
+    double _latitude = 6.424676142638944;
+
+    double _longitude = 7.496529864154287;
 
   Services _selectedService = Services.none;
+
+  showPassword(){
+    _showPassword = !_showPassword;
+    setViewState(ViewState.success);
+
+    
+
+  }
 
   Future<void> _intData() async {
     /// Get current location
@@ -48,4 +58,5 @@ class UserViewModel extends BaseViewModel {
   double get longitude => _longitude;
 
   double get latitude => _latitude;
+  bool get showPasswordStatus => _showPassword;
 }
