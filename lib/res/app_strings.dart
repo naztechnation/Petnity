@@ -34,6 +34,9 @@ class AppStrings {
 
   static const String registerUrl = '${_baseUrl}auth/register';
   static const String loginUrl = '${_baseUrl}auth/login';
+   static String registerUserPetProfileUrl({required username}) =>
+      '${_baseUrl}pets/add-pet/$username';
+  
  
 }
 

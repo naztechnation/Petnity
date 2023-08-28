@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +25,7 @@ class AccountCubit extends Cubit<AccountStates> {
       final user = await accountRepository.registerUser(
           email: email, password: password, phone: phoneNumber);
 
-      // await viewModel.updateUser(user);
+       await viewModel.setUserData(username:email);
       emit(AccountLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -67,6 +68,33 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
  
+
+  Future<void> registerUserPetProfile(
+   {required String username,required String type,required String petname,required String gender,required String breed,required String size,required String about,required File picture}) async {
+    try {
+      emit(AccountProcessing());
+
+      final user = await accountRepository.registerUserPetProfile(
+        username: username,
+        type: type, petname: petname, size: size, breed: breed, gender: gender, picture: picture, about: about
+          
+      );
+      //  await viewModel.setUserData(username:email);
+      emit(AccountLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
   // Future<void> verifyOTP(String otp) async {
   //   try {
   //     emit(AccountProcessing());
