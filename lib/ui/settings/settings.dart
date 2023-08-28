@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/ui/widgets/back_button.dart'; 
+import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 
 import '../../res/app_strings.dart';
@@ -41,13 +41,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               centerTitle: true,
               title: Text(
                 'Settings',
-               style: TextStyle(
-                                fontSize: 19.0,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.black,
-                                fontFamily: AppStrings.interSans
-                                
-                                ),
+                style: TextStyle(
+                    fontSize: 19.0,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black,
+                    fontFamily: AppStrings.interSans),
               ),
               leading: backButton(context),
               elevation: 0,
@@ -139,14 +137,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         color: Colors.white,
       ),
       child: ListTile(
-        title: Text(title, 
-        style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                                fontFamily: AppStrings.interSans
-                                
-                                ),
+        title: Text(
+          title,
+          style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+              fontFamily: AppStrings.interSans),
         ),
         leading: icon,
         onTap: onpressed,
@@ -167,17 +164,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         color: Colors.white,
       ),
       child: ListTile(
-          title: Text(title,
-          style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                                fontFamily: AppStrings.interSans
-                                
-                                ),
+          title: Text(
+            title,
+            style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+                fontFamily: AppStrings.interSans),
           ),
-          
-          
           leading: icon,
           onTap: () => onpressed,
           trailing: switchh),
