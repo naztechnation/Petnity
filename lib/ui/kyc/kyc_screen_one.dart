@@ -1,20 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
+import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../utils/navigator/page_navigator.dart';
+import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import 'kyc_screen_two.dart';
-import 'widgets/pet_type_body.dart';
+import 'widgets/pet_type_container.dart';
 
-class KycScreenOne extends StatelessWidget {
-    KycScreenOne({super.key});
-
-   
+class KycScreenOne extends StatefulWidget {
+  KycScreenOne({super.key});
 
   @override
+  State<KycScreenOne> createState() => _KycScreenOneState();
+}
+
+class _KycScreenOneState extends State<KycScreenOne> {
+
+
+  int _index = -1;
+    List<String> pets = [
+      'Monkey',
+      'Dog',
+      'Rabbit',
+      'Cat',
+      'Squirell',
+      'Snake',
+    ];
+  @override
   Widget build(BuildContext context) {
+
+    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -45,15 +67,69 @@ class KycScreenOne extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-               PetTypeBody(onPressed: (petType){
-                {
-                AppNavigator.pushAndStackPage(context,
-                    page: KycScreenTwo(
-                      selectedPet: petType
-                    ));
-              }
-               },),
-                
+                 Container(
+                    margin: EdgeInsets.all(1),
+                    child: Expanded(
+                      child: StaggeredGridView.countBuilder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 14,
+                          mainAxisSpacing: 12,
+                          itemCount: pets.length,
+                          itemBuilder: (context, index) {
+                            return PetType(
+                              imageUrl: AppImages.squirrelPic,
+                              petName: pets[index],
+                              isPetType: _index == index,
+                              onPressed: () {
+                                setState(() {
+                                  _index = index;
+                                  
+                                  petProfile.setPetType(pets[index]);
+                                  petProfile.setPetTypeIndex('${index + 1}');
+                                });
+                              },
+                            );
+                          },
+                          staggeredTileBuilder: (index) {
+                            return StaggeredTile.count(1, 0.45);
+                          }),
+                    ),
+                  ),
+                  SizedBox(height: 40,),
+                   if (_index != -1)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 0),
+                      child: ButtonView(
+                        onPressed: () {
+                          AppNavigator.pushAndStackPage(context,
+                              page: KycScreenTwo());
+                        },
+                        color: AppColors.lightSecondary,
+                        borderRadius: 22,
+                        child: CustomText(
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          text: 'Select',
+                          weight: FontWeight.w700,
+                          size: 20,
+                          fontFamily: AppStrings.interSans,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                // PetTypeBody(
+                //   onPressed: (petType, index) {
+                //     {
+                //       petProfile.setPetType(petType.capitalizeFirstOfEach);
+                //       petProfile.setPetTypeIndex(index.toString());
+                //       AppNavigator.pushAndStackPage(context,
+                //           page: KycScreenTwo());
+                //     }
+                //   },
+                // ),
               ],
             ),
           ),

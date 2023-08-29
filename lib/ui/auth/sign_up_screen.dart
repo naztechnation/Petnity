@@ -31,9 +31,9 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // _emailController.text = 'agbo.raph@gmail.com';
-    // _phoneController.text = '090746453728';
-    // _passwordController.text = 'Scarface@306166';
+    _emailController.text = 'agbo.raph@gmail.com';
+    _phoneController.text = '090746453728';
+    _passwordController.text = 'Scarface@306166';
     final user = Provider.of<UserViewModel>(context, listen: true);
     return Scaffold(
         body: Container(
@@ -54,10 +54,13 @@ class SignUpScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                // AppNavigator.pushAndReplaceName(context,
-                //     name: AppRoutes.otpScreen);
-                 Modals.showToast(state.userData.message!,
+                if(state.userData.status!){
+                   AppNavigator.pushAndReplaceName(context,
+                    name: AppRoutes.otpScreen);
+                 Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
+                }
+               
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
@@ -116,6 +119,7 @@ class SignUpScreen extends StatelessWidget {
                        return Validator.validate(value, 'Phone Number');
                       },
                       isDense: true,
+                      keyboardType: TextInputType.phone,
                       textViewTitle: 'Your Number',
                       hintText: 'Enter Number',
                       suffixIcon: Padding(
@@ -185,7 +189,11 @@ class SignUpScreen extends StatelessWidget {
                       child: ButtonView(
                         processing: state is AccountProcessing,
                         onPressed: () {
-                          _submit(context);
+                          if (_formKey.currentState!.validate()) {
+                    //         AppNavigator.pushAndReplaceName(context,
+                    // name: AppRoutes.otpScreen);
+                          RegistrationOptions( context, user);
+                          }
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(
@@ -262,4 +270,121 @@ class SignUpScreen extends StatelessWidget {
       FocusScope.of(ctx).unfocus();
     }
   }
+
+  RegistrationOptions(BuildContext context, final user) {
+    return Modals.showBottomSheetModal(context,
+        isDissmissible: true,
+        isScrollControlled: false,
+        page: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Continue as...',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w900),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 30,
+                          child: Icon(
+                            Icons.arrow_downward,
+                            color: Colors.white,
+                          ),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.orange),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  userTypes('User', () {
+                    Navigator.pop(context);
+                    user.setUserType(UserType.user);
+                    
+                   _submit(context);
+                  }, context),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  userTypes('Service Provider', () {
+                    Navigator.pop(context);
+
+                    user.setUserType(UserType.serviceProvider);
+
+                 
+                   _submit(context);
+                  }, context),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                 
+                   
+                
+                  Divider(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                ],
+              ),
+            )));
+  }
+
+   userTypes(String title, Function onTap, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        color: Colors.white,
+        width: MediaQuery.sizeOf(context).width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400),
+            ),
+            Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.black,
+              size: 16,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
 }

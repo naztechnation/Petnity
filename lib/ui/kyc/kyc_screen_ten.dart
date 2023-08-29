@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_strings.dart';
@@ -19,6 +21,9 @@ class KycScreenTen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       body: Container(
         height: screenSize(context).height,
@@ -55,7 +60,7 @@ class KycScreenTen extends StatelessWidget {
                     CustomText(
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      text: 'Does your $selectedPet have any allergies?',
+                      text: 'Does your ${petProfile.petType} have any allergies?',
                       weight: FontWeight.w500,
                       size: 16,
                       fontFamily: AppStrings.interSans,
@@ -75,10 +80,9 @@ class KycScreenTen extends StatelessWidget {
                               onPressed: () {
                                 AppNavigator.pushAndStackPage(context,
                                     page: KycScreenEleven(
-                                      selectedPet: selectedPet,
                                     ));
                               },
-                              color: Colors.redAccent.shade100,
+                              color: Colors.red.shade100,
                               borderRadius: 32,
                               expanded: false,
                               borderColor: Colors.white,

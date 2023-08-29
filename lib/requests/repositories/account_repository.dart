@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:petnity/model/account_models/register.dart';
+import 'package:petnity/model/account_models/user_data.dart';
 
 abstract class AccountRepository {
   Future<UserData> registerUser({required String email,required String password,required String phone});
+  Future<UserData> sendPetHealth({required String name,required String drug,required String prescription,required String url});
   Future<UserData> loginUser({required String email,required String password,});
   Future<UserData> registerUserPetProfile({
     required String username,

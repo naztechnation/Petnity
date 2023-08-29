@@ -12,34 +12,31 @@ class UserViewModel extends BaseViewModel {
     _intData();
   }
 
-    String _address = '';
-    String _username = '';
-    String _petType= '';
-    String _petName = '';
-    String _petGender = '';
-    String _petBreed = '';
-    String _petSize = '';
-    String _aboutPet = '';
-    File? _imageURl;
-
+  String _address = '';
+  String _username = '';
+  String _petType = '';
+  String _petTypeIndex = '';
+  String _petName = '';
+  String _petGender = '';
+  String _petBreed = '';
+  String _petSize = '';
+  String _aboutPet = '';
+  File? _imageURl;
+  UserType _userType = UserType.none;
 
   ImagePicker picker = ImagePicker();
 
-    
-    bool _showPassword = false;
+  bool _showPassword = false;
 
-    double _latitude = 6.424676142638944;
+  double _latitude = 6.424676142638944;
 
-    double _longitude = 7.496529864154287;
+  double _longitude = 7.496529864154287;
 
   Services _selectedService = Services.none;
 
-  showPassword(){
+  showPassword() {
     _showPassword = !_showPassword;
     setViewState(ViewState.success);
-
-    
-
   }
 
   Future<void> _intData() async {
@@ -49,12 +46,52 @@ class UserViewModel extends BaseViewModel {
         latitude: position.latitude, longitude: position.longitude);
   }
 
-   Future<void> setUserData({required String username}) async {
+  setPetType(String petType) {
+    _petType = petType;
+    setViewState(ViewState.success);
+  }
+
+   setPetTypeIndex(String petTypeIndex) {
+    _petTypeIndex = petTypeIndex;
+    setViewState(ViewState.success);
+  }
+
+  setPetName(String petName) {
+    _petName = petName;
+    setViewState(ViewState.success);
+  }
+
+  setPetGender(String petGender) {
+    _petGender = petGender;
+    setViewState(ViewState.success);
+  }
+
+  setPetSize(String petSize) {
+    _petSize = petSize;
+    setViewState(ViewState.success);
+  }
+
+  setAboutPet(String aboutPet) {
+    _aboutPet = aboutPet;
+    setViewState(ViewState.success);
+  }
+
+  setPetBreed(String petBreed) {
+    _petBreed = petBreed;
+    setViewState(ViewState.success);
+  }
+
+  setUserType(UserType userType) {
+    _userType = userType;
+    setViewState(ViewState.success);
+  }
+
+  Future<void> setUserData({required String username}) async {
     _username = username;
     setViewState(ViewState.success);
   }
 
-   loadImage(BuildContext context) async {
+  loadImage(BuildContext context) async {
     await showModalBottomSheet<dynamic>(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -91,8 +128,7 @@ class UserViewModel extends BaseViewModel {
                       maxHeight: 1000,
                       maxWidth: 1000);
                   _imageURl = File(image!.path);
-                      setViewState(ViewState.success);
-
+                  setViewState(ViewState.success);
                 },
               ),
               ListTile(
@@ -110,15 +146,13 @@ class UserViewModel extends BaseViewModel {
                       maxHeight: 1000,
                       maxWidth: 1000);
                   _imageURl = File(image!.path);
-                     setViewState(ViewState.success);
-
+                  setViewState(ViewState.success);
                 },
               ),
             ],
           );
         });
   }
-
 
   Future<void> setAddress(String address) async {
     _address = address;
@@ -147,12 +181,12 @@ class UserViewModel extends BaseViewModel {
   bool get showPasswordStatus => _showPassword;
   String get username => _username;
   String get petType => _petType;
+  String get petTypeIndex=> _petTypeIndex;
   String get petName => _petName;
   String get petGender => _petGender;
   String get petBreed => _petBreed;
   String get petSize => _petSize;
   String get aboutPet => _aboutPet;
   File? get imageURl => _imageURl;
-  
+  UserType get userType => _userType;
 }
-

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
@@ -30,7 +31,7 @@ class KycScreenSeven extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
       body: Container(
@@ -48,19 +49,25 @@ class KycScreenSeven extends StatelessWidget {
               viewModel: Provider.of<UserViewModel>(context, listen: false)),
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
-              if (state is AccountLoaded) {
-                AppNavigator.pushAndStackPage(context,
+              if (state is PetProfileLoaded) {
+                if(state.userData.status!){
+                  AppNavigator.pushAndStackPage(context,
                           page: KycScreenEight(
-                            selectedPet: user.petName,
+                           
                           ));
-                 Modals.showToast(state.userData.message!,
+                 Modals.showToast(state.userData.message,
                       messageType: MessageType.success);
+                }else{
+                   Modals.showToast(state.userData.message,
+                      messageType: MessageType.success);
+                }
+                
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
                       messageType: MessageType.error);
                 }
-              } else if (state is AccountNetworkErr) {
+              }else if (state is AccountNetworkErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
                       messageType: MessageType.error);
@@ -113,7 +120,7 @@ class KycScreenSeven extends StatelessWidget {
                 SizedBox(
                   height: 40,
                 ),
-                TextButton(
+             (state is PetProfileLoading) ? SizedBox.shrink():  TextButton(
                   onPressed: () async {
                   user.loadImage(context);
                   },
@@ -131,16 +138,19 @@ class KycScreenSeven extends StatelessWidget {
                 const SizedBox(
                   height: 70,
                 ),
-                Padding(
+             if(user.imageURl != null)   Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                   child: ButtonView(
                     onPressed: () {
                       if(user.imageURl != null){
-                        _submit(username: user.username, ctx: context, type: user.petType, 
-                        petname: user.petName, breed: user.petBreed, size: user.petSize, gender: user.petGender, about: user.aboutPet, picture: user.imageURl!, );
+
+                        _submit(username: user.username, ctx: context, type: user.petTypeIndex, 
+                        petname: user.petName, breed: user.petBreed, size: user.petSize, 
+                        gender: user.petGender, about: user.aboutPet, picture: user.imageURl!, );
                       }
                     },
+                    processing: state is PetProfileLoading,
                     color: AppColors.lightSecondary,
                     borderRadius: 32,
                     borderColor: Colors.white,

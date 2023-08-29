@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/kyc/kyc_screen_six.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
@@ -22,7 +24,6 @@ class KycScreenFive extends StatefulWidget {
 }
 
 class _KycScreenFiveState extends State<KycScreenFive> {
-  // PetGenderType _petGenderType = PetGenderType.none;
 
   List<String> dogSizes = ['0-7', '8-18', '19-45', '45-100'];
 
@@ -30,6 +31,9 @@ class _KycScreenFiveState extends State<KycScreenFive> {
 
   @override
   Widget build(BuildContext context) {
+
+    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
       body: SingleChildScrollView(
@@ -65,7 +69,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
                 child: CustomText(
                   textAlign: TextAlign.left,
                   maxLines: 1,
-                  text: 'Select your dogs size',
+                  text: 'Select your ${petProfile.petType} size',
                   weight: FontWeight.w500,
                   size: 16,
                   fontFamily: AppStrings.interSans,
@@ -84,6 +88,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
 
                setState(() {
                   selectedItem = dogSizes[index];
+                  petProfile.setPetSize(selectedItem);
                });
                
               },
@@ -95,6 +100,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
+                    petProfile.setPetSize(selectedItem);
                     AppNavigator.pushAndStackPage(context,
                         page: KycScreenSix(
                           selectedPet: widget.selectedPet,

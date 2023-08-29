@@ -89,10 +89,9 @@ class TextEditView extends StatelessWidget {
                               text: textViewTitle,
                               weight: FontWeight.w500,
                               size: 13,
-                              fontFamily: AppStrings.interSans,
                               color: Colors.black,
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(height: 5,),
           TextFormField(
             controller: controller,
             keyboardType: keyboardType,

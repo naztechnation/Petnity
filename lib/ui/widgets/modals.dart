@@ -73,6 +73,8 @@ class Modals {
   static Future<dynamic> showBottomSheetModal(BuildContext context,
       {required Widget page,
       double? heightFactor = 0.5,
+        bool isDissmissible = false,
+
       bool isScrollControlled = false,
       double borderRadius = 20.0}) async {
     final data = await showModalBottomSheet<dynamic>(
@@ -81,6 +83,9 @@ class Modals {
             borderRadius:
                 BorderRadius.vertical(top: Radius.circular(borderRadius))),
         backgroundColor: AppColors.cardColor,
+        isDismissible: isDissmissible,
+        useSafeArea: true,
+
         isScrollControlled: isScrollControlled,
         builder: (BuildContext bc) {
           return FractionallySizedBox(heightFactor: heightFactor, child: page);

@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_strings.dart';
@@ -21,6 +23,9 @@ class KycScreenSix extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       body: Container(
         height: screenSize(context).height,
@@ -41,7 +46,7 @@ class KycScreenSix extends StatelessWidget {
             CustomText(
               textAlign: TextAlign.center,
               maxLines: 2,
-              text: 'Tell us about \nyour $selectedPet',
+              text: 'Tell us about \nyour ${petProfile.petType}',
               weight: FontWeight.w700,
               size: 28,
               fontFamily: AppStrings.montserrat,
@@ -70,6 +75,7 @@ class KycScreenSix extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
+                    petProfile.setAboutPet(commentController.text);
                     AppNavigator.pushAndStackPage(context,
                         page: KycScreenSeven(
                           selectedPet: selectedPet,

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +8,8 @@ import '../../utils/exceptions.dart';
 import 'account_states.dart';
 
 class AccountCubit extends Cubit<AccountStates> {
+
+
   AccountCubit({required this.accountRepository, required this.viewModel})
       : super(const InitialState());
   final AccountRepository accountRepository;
@@ -26,6 +27,35 @@ class AccountCubit extends Cubit<AccountStates> {
           email: email, password: password, phone: phoneNumber);
 
        await viewModel.setUserData(username:email);
+      emit(AccountLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> sendPetHealth({
+    required String name,
+    required String drug,
+    required String prescription,
+    required String url
+  }) async {
+    try {
+      emit(AccountProcessing());
+
+      final user = await accountRepository.sendPetHealth(
+          name: name, drug: drug, prescription: prescription, url: url);
+
+      //  await viewModel.setUserData(username:email);
       emit(AccountLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -72,7 +102,7 @@ class AccountCubit extends Cubit<AccountStates> {
   Future<void> registerUserPetProfile(
    {required String username,required String type,required String petname,required String gender,required String breed,required String size,required String about,required File picture}) async {
     try {
-      emit(AccountProcessing());
+      emit(PetProfileLoading());
 
       final user = await accountRepository.registerUserPetProfile(
         username: username,
@@ -80,7 +110,7 @@ class AccountCubit extends Cubit<AccountStates> {
           
       );
       //  await viewModel.setUserData(username:email);
-      emit(AccountLoaded(user));
+      emit(PetProfileLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
     } catch (e) {

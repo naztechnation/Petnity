@@ -93,7 +93,6 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
                           : (widget.textColor ??
                               Theme.of(context).textTheme.caption!.color),
                       fontSize: widget.fontSize,
-                            fontFamily: AppStrings.interSans,
 
                       fontWeight: FontWeight.w500)),
              

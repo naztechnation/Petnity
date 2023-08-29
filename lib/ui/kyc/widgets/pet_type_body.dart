@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_images.dart';
@@ -9,7 +10,7 @@ import '../../widgets/custom_text.dart';
 import 'pet_type_container.dart';
 
 class PetTypeBody extends StatefulWidget {
-  final Function(String petType) onPressed;
+  final Function(String petType, int index) onPressed;
   PetTypeBody({
     super.key, required this.onPressed,
   });
@@ -152,24 +153,7 @@ class _PetTypeBodyState extends State<PetTypeBody> {
         SizedBox(
           height: 80,
         ),
-        if (_petTypes != PetTypes.none)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
-            child: ButtonView(
-              onPressed: () => widget.onPressed(_petTypes.name),
-              color: AppColors.lightSecondary,
-              borderRadius: 22,
-              child: CustomText(
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                text: 'Select',
-                weight: FontWeight.w700,
-                size: 20,
-                fontFamily: AppStrings.interSans,
-                color: Colors.white,
-              ),
-            ),
-          ),
+       
         SizedBox(
           height: 50,
         ),

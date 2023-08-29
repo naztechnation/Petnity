@@ -52,11 +52,10 @@ class Requests {
       if (files != null) {
         final request = http.MultipartRequest('POST', Uri.parse(route));
         request.headers.addAll(headers ?? await formDataHeader());
-        if (body != null && body.values is String)
+      //  if (body != null && body.values is String)
           request.fields.addAll(body as Map<String, String>);
         files.forEach((key, value) async {
-          request.files.add(await http.MultipartFile.fromPath(key, value.path,
-              filename: basename(value.path)));
+          request.files.add(await http.MultipartFile.fromPath(key, value.path,));
         });
 
         final response = retryOption != null

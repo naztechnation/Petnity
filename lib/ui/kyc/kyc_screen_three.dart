@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:petnity/res/enum.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
@@ -16,9 +18,9 @@ import 'widgets/choice_card.dart';
 import 'kyc_screen_four.dart';
 
 class KycScreenThree extends StatefulWidget {
-  final String selectedPet;
+  
 
-  KycScreenThree({super.key, this.selectedPet = ''});
+  KycScreenThree({super.key, });
 
   @override
   State<KycScreenThree> createState() => _KycScreenThreeState();
@@ -27,8 +29,13 @@ class KycScreenThree extends StatefulWidget {
 class _KycScreenThreeState extends State<KycScreenThree> {
   PetGenderType _petGenderType = PetGenderType.none;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
       body: SingleChildScrollView(
@@ -47,7 +54,7 @@ class _KycScreenThreeState extends State<KycScreenThree> {
             CustomText(
               textAlign: TextAlign.center,
               maxLines: 1,
-              text: '${widget.selectedPet} gender',
+              text: '${petProfile.petType } gender',
               weight: FontWeight.w700,
               size: 32,
               fontFamily: AppStrings.interSans,
@@ -93,9 +100,10 @@ class _KycScreenThreeState extends State<KycScreenThree> {
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
+                    petProfile.setPetGender(_petGenderType.name);
                     AppNavigator.pushAndStackPage(context,
                         page: KycScreenFour(
-                          selectedPet: widget.selectedPet,
+                          
                         ));
                   },
                   color: AppColors.lightSecondary,

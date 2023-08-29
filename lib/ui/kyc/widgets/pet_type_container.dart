@@ -38,17 +38,19 @@ class PetType extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                          CustomText(
-                                            textAlign: TextAlign.left,
-                                            maxLines: 1,
-                                            text: petName,
-                                            weight: FontWeight.w700,
-                                            size: 16,
-                                            fontFamily: AppStrings.interSans,
-                                            color: isPetType ? AppColors.lightPrimary :  Colors.black,
-                                          ),
-                                        SizedBox(width: spacing,),
-                                          ImageView.asset(imageUrl)
+                          Expanded(
+                            child: CustomText(
+                                              textAlign: TextAlign.left,
+                                              maxLines: 1,
+                                              text: petName,
+                                              weight: FontWeight.w600,
+                                              size: 16,
+                                              fontFamily: AppStrings.interSans,
+                                              color: isPetType ? AppColors.lightPrimary :  Colors.black,
+                                            ),
+                          ),
+                                        SizedBox(width: 5,),
+                                          ImageView.asset(imageUrl, )
                         ],),
                       )),
       ),
