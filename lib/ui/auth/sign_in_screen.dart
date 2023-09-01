@@ -171,7 +171,7 @@ class SignInScreen extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
+                          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
                       child: ButtonView(
                         processing: state is AccountLoading,
                         onPressed: () {
