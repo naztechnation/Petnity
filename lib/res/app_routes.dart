@@ -25,6 +25,7 @@ import 'package:petnity/ui/support/report_an_issue.dart';
 
 import '../ui/auth/reg_successful_screen.dart';
 import '../ui/auth/sign_in_screen.dart';
+import '../ui/service_provider_kyc/service_kyc_one.dart';
 import '../ui/user_kyc/kyc_screen_two.dart';
 import '../ui/landing_page/landing_screen.dart';
 import '../ui/on_boarding/welcome_screen.dart';
@@ -43,6 +44,7 @@ class AppRoutes {
   static const String landingPage = 'landingPage';
   static const String serviceProviderHomePage = 'serviceProviderHomePage';
   static const String productDetailScreen = 'productDetailScreen';
+  static const String serviceProviderKycOneScreen = 'serviceProviderKycOneScreen';
 
   static const String cartScreen = 'cartScreen';
 
@@ -81,6 +83,7 @@ class AppRoutes {
     landingPage: (context) => LandingScreen(),
     serviceProviderLandingPage: (context) => ServiceProviderLandingPage(),
     productDetailScreen: (context) => ProductDetailScreen(),
+    serviceProviderKycOneScreen: (context) => KycServiceScreenOne(),
 
     cartScreen: (context) => CartScreen(),
 
@@ -219,6 +222,10 @@ class AppRoutes {
       case landingPage:
         return MaterialPageRoute(
           builder: (context) => LandingScreen(),
+        );
+        case serviceProviderKycOneScreen:
+        return MaterialPageRoute(
+          builder: (context) => KycServiceScreenOne(),
         );
       //Default Route is error route
       default:

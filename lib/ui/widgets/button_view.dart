@@ -29,7 +29,7 @@ class ButtonView extends StatelessWidget {
       this.expanded = true,
       this.borderRadius = 16.0,
       this.padding =
-          const EdgeInsets.symmetric(vertical: 18.0, horizontal: 8.0),
+          const EdgeInsets.symmetric(vertical: 14.0, horizontal: 8.0),
       Key? key})
       : super(key: key);
 

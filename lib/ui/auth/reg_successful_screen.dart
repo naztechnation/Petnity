@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/res/enum.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_routes.dart';
@@ -15,6 +18,9 @@ class RegSuccessful extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<UserViewModel>(context, listen: true);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -49,7 +55,7 @@ class RegSuccessful extends StatelessWidget {
                           textAlign: TextAlign.center,
                           maxLines: 3,
                           text:
-                              'Your account has been successfully created,\nnow you are ready to get access to a slue \nof pets and pets services',
+                        user.userType == UserType.user ?  'Your account has been successfully created,\nnow you are ready to get access to a slue \nof pets and pets services'   : 'Your account has been successfully created,\nnow you are ready to offer your services to users.',
                           weight: FontWeight.w600,
                           size: 13,
                           fontFamily: AppStrings.interSans,
@@ -69,14 +75,20 @@ class RegSuccessful extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                  AppNavigator.pushAndStackNamed(context,
+                  if(user.userType == UserType.user){
+                     AppNavigator.pushAndStackNamed(context,
                       name: AppRoutes.kycScreenOne);
+                  }else if(user.userType == UserType.serviceProvider){
+                    AppNavigator.pushAndStackNamed(context,
+                      name: AppRoutes.serviceProviderKycOneScreen);
+                  }
+                 
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text: 'Lets get to know your pet',
+                  text: user.userType == UserType.user ? 'Lets get to know your pet' : 'Lets get to know you more',
                   weight: FontWeight.w400,
                   size: 16,
                   fontFamily: AppStrings.interSans,
@@ -85,7 +97,7 @@ class RegSuccessful extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            InkWell(
+         if(user.userType == UserType.user)   InkWell(
               onTap: () {
                 AppNavigator.pushNamedAndRemoveUntil(context,
                     name: 'landingPage');
