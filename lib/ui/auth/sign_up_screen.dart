@@ -31,7 +31,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _emailController.text = 'agbo.raph@gmail.com';
+    _emailController.text = 'agbo.raph1@gmail.com';
     _phoneController.text = '090746453728';
     _passwordController.text = 'Scarface@306166';
     final user = Provider.of<UserViewModel>(context, listen: true);
@@ -190,8 +190,7 @@ class SignUpScreen extends StatelessWidget {
                         processing: state is AccountProcessing,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                    //         AppNavigator.pushAndReplaceName(context,
-                    // name: AppRoutes.otpScreen);
+                   
                           RegistrationOptions( context, user);
                           }
                         },
@@ -310,7 +309,7 @@ class SignUpScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.orange),
+                              shape: BoxShape.circle, color: AppColors.lightSecondary),
                         ),
                       )
                     ],

@@ -4,7 +4,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/user_view_model.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
@@ -27,6 +29,9 @@ class _OtpScreenState extends State<OtpScreen> {
     final _pinController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<UserViewModel>(context, listen: true);
+
     return   Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [

@@ -50,12 +50,21 @@ class SignInScreen extends StatelessWidget {
               viewModel: Provider.of<UserViewModel>(context, listen: false)),
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
-              if (state is AccountUpdated) {
-                // AppNavigator.pushAndReplaceName(context,
-                //     name: AppRoutes.otpScreen);
-                 Modals.showToast(state.user.message!,
+              if (state is AccountLoaded) {
+                
+                 Modals.showToast(state.userData.message!,
                       messageType: MessageType.success);
+
+                      if(state.userData.status!){
+                         AppNavigator.pushAndStackNamed(context,
+                      name: AppRoutes.landingPage);
+                      }else{
+                          AppNavigator.pushAndReplaceName(context,
+                    name: AppRoutes.serviceProviderLandingPage);
                  
+                      }
+                      
+                    
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
@@ -102,9 +111,9 @@ class SignInScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _emailController,
-                      validator: (value){
-                       return Validator.validateEmail(value, 'Email');
-                      },
+                      // validator: (value){
+                      //  return Validator.validateEmail(value, 'Email');
+                      // },
                       isDense: true,
                       textViewTitle: 'Your  Email',
                       hintText: 'Enter email',

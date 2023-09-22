@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/ui/kyc/kyc_screen_six.dart';
+import 'package:petnity/ui/user_kyc/kyc_screen_six.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/view_models/user_view_model.dart';

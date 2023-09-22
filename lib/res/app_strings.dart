@@ -34,6 +34,8 @@ class AppStrings {
 
   static const String registerUrl = '${_baseUrl}auth/register';
   static const String loginUrl = '${_baseUrl}auth/login';
+  static String petHealthStatusUrl({String? petId = '2'}) => '${_baseUrl}pets/add-allergies/$petId';
+  static String petAlergeyDataUrl({String? petId = '2'}) => '${_baseUrl}pets/add-allergies/$petId';
   static   String petHealthUrl({required url}) =>'${_baseUrl+url}';
    static String registerUserPetProfileUrl({required username}) =>
       '${_baseUrl}pets/add-pet/$username';
