@@ -106,10 +106,11 @@ class AccountCubit extends Cubit<AccountStates> {
 
       final user = await accountRepository.registerUserPetProfile(
         username: username,
-        type: type, petname: petname, size: size, breed: breed, gender: gender, picture: picture, about: about
+        type: type, petname: petname, size: size, breed: breed,
+         gender: gender, picture: picture, about: about
           
       );
-      //  await viewModel.setUserData(username:email);
+     
       emit(PetProfileLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));

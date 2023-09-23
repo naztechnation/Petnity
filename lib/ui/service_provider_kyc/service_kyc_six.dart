@@ -3,39 +3,42 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/view_models/service_provider_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
-
 import '../../res/app_strings.dart';
 import '../../utils/navigator/page_navigator.dart';
-
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/text_edit_view.dart';
-import 'service_kyc_five.dart';
+import 'service_kyc_seven.dart';
 
-class KycServiceScreenFour extends StatelessWidget {
+class KycServiceScreenSix extends StatelessWidget {
 
-  KycServiceScreenFour({super.key,});
+  KycServiceScreenSix({super.key, });
 
-  final TextEditingController _serviceProviderAgeController = TextEditingController();
+  final TextEditingController commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-            final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+
+    final serviceProfile = Provider.of<ServiceProviderViewModel>(context, listen: false);
 
     return Scaffold(
-      backgroundColor: AppColors.lightPrimary,
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenSize(context).height,
-          width: screenSize(context).width,
-          decoration: BoxDecoration(),
-          child: Column(children: [
+      body: Container(
+        height: screenSize(context).height,
+        width: screenSize(context).width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                begin: Alignment.topRight,
+                end: Alignment.topLeft)),
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
             SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
             Row(
               children: [
@@ -53,52 +56,47 @@ class KycServiceScreenFour extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: screenSize(context).height * 0.2,
+              height: screenSize(context).height * 0.13,
             ),
-            SizedBox(height: 55),
             CustomText(
               textAlign: TextAlign.center,
-              maxLines: 1,
-              text: 'Your age',
-               weight: FontWeight.w700,
-                  size: 32,
-              fontFamily: AppStrings.interSans,
+              maxLines: 2,
+              text: 'Tell us about you',
+              weight: FontWeight.w700,
+              size: 28,
+              fontFamily: AppStrings.montserrat,
               color: Colors.black,
             ),
-            SizedBox(height: 30),
+            SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 22.0),
               child: TextEditView(
-                controller: _serviceProviderAgeController,
-                isDense: true,
-                readOnly: true,
-                labelText: 'Year/Month/Day',
-                suffixIcon: Icon(Icons.arrow_drop_down, size: 32,),
-                onTap: ()async{
-                await  serviceProvider.showDatePickerDialog(context);
-
-                
-                _serviceProviderAgeController.text = serviceProvider.serviceProviderAge;
-                },
+                controller: commentController,
+                fillColor: AppColors.cardColor,
+                maxLines: 10,
+                borderRadius: 22,
+                textInputAction: TextInputAction.done,
+                maxLength: 2000,
               ),
             ),
-            const Spacer(),
-            if (serviceProvider.serviceProviderAge != '')
+            SizedBox(
+              height: screenSize(context).height * 0.10,
+            ),
+            if (commentController.text != '')
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
-                    serviceProvider.setServiceProviderAge(_serviceProviderAgeController.text);
-
+                    serviceProfile.setAboutServiceProvider(commentController.text);
                     AppNavigator.pushAndStackPage(context,
-
-                        page: KycServiceScreenFive(
-                           
-                        ));
+                        page: KycServiceScreenSeven(
+                       ));
                   },
                   color: AppColors.lightSecondary,
-                  borderRadius: 22,
+                  borderRadius: 32,
                   borderColor: Colors.white,
                   child: CustomText(
                     textAlign: TextAlign.center,
@@ -114,8 +112,8 @@ class KycServiceScreenFour extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-          ]),
-        ),
+          ],
+        )),
       ),
     );
   }

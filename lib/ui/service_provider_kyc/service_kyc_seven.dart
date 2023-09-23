@@ -1,3 +1,5 @@
+
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
   import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
+import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_colors.dart';
@@ -12,25 +15,22 @@ import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
-import '../../utils/navigator/page_navigator.dart';
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
-import 'kyc_screen_eight.dart';
 
-class KycScreenSeven extends StatelessWidget {
-  final String selectedPet;
-
-  KycScreenSeven({super.key, this.selectedPet = ''});
+class KycServiceScreenSeven extends StatelessWidget {
+   
+  KycServiceScreenSeven({super.key,});
 
 
   
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       body: Container(
@@ -50,10 +50,10 @@ class KycScreenSeven extends StatelessWidget {
             listener: (context, state) {
               if (state is PetProfileLoaded) {
                 if(state.userData.status!){
-                  AppNavigator.pushAndStackPage(context,
-                          page: KycScreenEight(
+                  // AppNavigator.pushAndStackPage(context,
+                  //         page: KycScreenEight(
                            
-                          ));
+                  //         ));
                  Modals.showToast(state.userData.message,
                       messageType: MessageType.success);
                 }else{
@@ -76,44 +76,64 @@ class KycScreenSeven extends StatelessWidget {
             builder: (context, state) => SingleChildScrollView(
             child: Column(
               children: [
-                SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
+                SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+                 Row(
+              children: [
                 backButton(context),
+                const SizedBox(width: 40,),
+                 CustomText(
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              text: 'KYC  Registration',
+              weight: FontWeight.w500,
+              size: 18,
+              fontFamily: AppStrings.interSans,
+              color: Colors.black,
+            ),
+              ],
+            ),
                 SizedBox(
                   height: screenSize(context).height * 0.11,
                 ),
                 CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text: 'Upload your ${user.petType} \npicture ',
+                  text: 'Upload your picture ',
                   weight: FontWeight.w700,
-                  size: 28,
+                  size: 24,
                   fontFamily: AppStrings.montserrat,
                   color: Colors.black,
                 ),
                 SizedBox(
                   height: 50,
                 ),
-             if(user.imageURl == null) ... [ClipOval(
-                    child: Container(
-                        padding: EdgeInsets.all(30),
-                        color: AppColors.cardColor,
-                        height: 160,
-                        width: 160,
-                        child: ImageView.asset(
-                          AppImages.defaultImage,
-                          fit: BoxFit.contain,
-                          height: 80,
-                          width: 80,
-                        ))),] ,
+             if(user.imageURl == null) ... [Container(
+                 padding: EdgeInsets.all(30),
+                 height: 294,
+                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+                 color: Color(0xFF424242),
+                 
+                 ),
+                 margin: EdgeInsets.symmetric(horizontal: 20),
+                 width: MediaQuery.sizeOf(context).width,
+                 ),] ,
                         if(user.imageURl != null)...[
         
-                          ClipOval(
-                    child: Container(
-                        padding: EdgeInsets.all(0),
-                        color: AppColors.cardColor,
-                        height: 160,
-                        width: 160,
-                        child: ImageView.file(File(user.imageURl!.path, ),fit: BoxFit.cover) )),
+                          Container(
+                              height: 294,
+                                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(30),
+                                         color: Color(0xFF424242),
+                                         
+                                         ),
+                                         margin: EdgeInsets.symmetric(horizontal: 20),
+                                         width: MediaQuery.sizeOf(context).width,
+                              child: ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+
+                                child: ImageView.file(
+                                  
+                                  File(user.imageURl!.path, ),fit: BoxFit.cover),
+                              ) ),
                             
                         ],
                 SizedBox(
@@ -125,7 +145,7 @@ class KycScreenSeven extends StatelessWidget {
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Text('Select Pet Image'),
+                    child: Text('Choose from gallery'),
                   ),
                   style: TextButton.styleFrom(
                     backgroundColor: Color(0xFFEBF0FF),
@@ -144,9 +164,9 @@ class KycScreenSeven extends StatelessWidget {
                     onPressed: () {
                       if(user.imageURl != null){
 
-                        _submit(username: user.username, ctx: context, type: user.petTypeIndex, 
-                        petname: user.petName, breed: user.petBreed, size: user.petSize, 
-                        gender: user.petGender, about: user.aboutPet, picture: user.imageURl!, );
+                        // _submit(username: user.username, ctx: context, type: user.petTypeIndex, 
+                        // petname: user.petName, breed: user.petBreed, size: user.petSize, 
+                        // gender: user.petGender, about: user.aboutPet, picture: user.imageURl!, );
                       }
                     },
                     processing: state is PetProfileLoading,

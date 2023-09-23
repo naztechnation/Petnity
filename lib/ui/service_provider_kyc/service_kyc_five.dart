@@ -1,87 +1,117 @@
-
-
 import 'dart:io';
 
+import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:petnity/ui/widgets/text_edit_view.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/view_models/user_view_model.dart';
+import '../../model/view_models/service_provider_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
+
 import '../../res/app_strings.dart';
+import '../../utils/navigator/page_navigator.dart';
+
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
+import 'service_kyc_six.dart';
 
 class KycServiceScreenFive extends StatelessWidget {
+  KycServiceScreenFive({
+    super.key,
+  });
 
-  KycServiceScreenFive({super.key, });
-
-  final TextEditingController commentController = TextEditingController();
+  String state = '';
+  String country= '';
+  String city = '';
 
   @override
   Widget build(BuildContext context) {
-
-    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: false);
 
     return Scaffold(
-      body: Container(
-        height: screenSize(context).height,
-        width: screenSize(context).width,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                begin: Alignment.topRight,
-                end: Alignment.topLeft)),
-        child: SingleChildScrollView(
-            child: Column(
-          children: [
-            SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
-            backButton(context),
-            SizedBox(
-              height: screenSize(context).height * 0.13,
+      backgroundColor: AppColors.lightPrimary,
+      body: SingleChildScrollView(
+        child: Container(
+          height: screenSize(context).height,
+          width: screenSize(context).width,
+          decoration: BoxDecoration(),
+          child: Column(children: [
+            SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+            Row(
+              children: [
+                backButton(context),
+                const SizedBox(
+                  width: 40,
+                ),
+                CustomText(
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  text: 'KYC  Registration',
+                  weight: FontWeight.w500,
+                  size: 18,
+                  fontFamily: AppStrings.interSans,
+                  color: Colors.black,
+                ),
+              ],
             ),
+            SizedBox(
+              height: screenSize(context).height * 0.2,
+            ),
+            SizedBox(height: 55),
             CustomText(
               textAlign: TextAlign.center,
-              maxLines: 2,
-              text: 'Tell us about you',
-              weight: FontWeight.w700,
-              size: 28,
-              fontFamily: AppStrings.montserrat,
+              maxLines: 1,
+              text: 'Your Location',
+              weight: FontWeight.w500,
+              size: 18,
+              fontFamily: AppStrings.interSans,
               color: Colors.black,
             ),
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 22.0),
-              child: TextEditView(
-                controller: commentController,
-                fillColor: AppColors.cardColor,
-                maxLines: 10,
-                borderRadius: 22,
-                textInputAction: TextInputAction.done,
-                maxLength: 2000,
+              child: CSCPicker(
+                onCountryChanged: (value) {
+                  serviceProvider.setCountryServiceProvider(value);
+                  country = value;
+                },
+                onStateChanged: (value) {
+                  serviceProvider.setStateServiceProvider(value ?? '');
+                  state = value ?? '';
+                },
+                onCityChanged: (value) {
+                  serviceProvider.setCityServiceProvider(value ?? '');
+                  city = value ?? '';
+                },
               ),
             ),
-            SizedBox(
-              height: screenSize(context).height * 0.10,
-            ),
-            if (commentController.text != '')
+            const Spacer(),
+            if (serviceProvider.serviceProviderAge != '')
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
-                    petProfile.setAboutPet(commentController.text);
-                    // AppNavigator.pushAndStackPage(context,
-                    //     page: KycScreenSeven(
-                    //       selectedPet: selectedPet,
-                     //   ));
+                     if (country == '') {
+                      Modals.showToast('please select a country');
+                    }else if (state == '') {
+                      Modals.showToast('please select a state');
+                    }
+                    
+                    else if (city == '') {
+                      Modals.showToast('please select a city');
+                    }
+                    
+                       else {
+                      AppNavigator.pushAndStackPage(context,
+                          page: KycServiceScreenSix());
+                    }
                   },
                   color: AppColors.lightSecondary,
-                  borderRadius: 32,
+                  borderRadius: 22,
                   borderColor: Colors.white,
                   child: CustomText(
                     textAlign: TextAlign.center,
@@ -97,8 +127,8 @@ class KycServiceScreenFive extends StatelessWidget {
             SizedBox(
               height: 50,
             ),
-          ],
-        )),
+          ]),
+        ),
       ),
     );
   }

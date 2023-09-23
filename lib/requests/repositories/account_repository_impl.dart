@@ -2,7 +2,6 @@
 
 
 import 'dart:io';
-import 'dart:math';
 
 import '../../model/account_models/user_data.dart';
 import '../../res/app_strings.dart';
@@ -47,7 +46,8 @@ class AccountRepositoryImpl implements AccountRepository {
           "breed": breed,
           "size": size,
           "about": about,
-          'picture': picture.path
+          'picture' : 'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
+          // 'picture': picture.path
          
         });
     return UserData.fromJson(map);
