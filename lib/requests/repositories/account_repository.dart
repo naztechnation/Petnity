@@ -9,4 +9,10 @@ abstract class AccountRepository {
   Future<UserData> registerUserPetProfile({
     required String username,
     required String type,required String petname,required String gender,required String breed,required String size,required String about,required File picture});
+
+
+Future<UserData> registerServiceProviderProfile({
+    required String username,
+    required String dob,required String name,required String gender,
+    required String country,required String city,required String about,required File picture});
 }

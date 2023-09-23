@@ -39,7 +39,8 @@ class AppStrings {
   static   String petHealthUrl({required url}) =>'${_baseUrl+url}';
    static String registerUserPetProfileUrl({required username}) =>
       '${_baseUrl}pets/add-pet/$username';
-  
+     static String registerServiceProviderProfileUrl({required username}) =>
+      '${_baseUrl}auth/create-agent/$username'; 
  
 }
 

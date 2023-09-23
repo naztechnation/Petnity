@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,9 +8,6 @@ import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
 class ServiceProviderViewModel extends BaseViewModel {
- 
-
-  String _address = '';
   String _username = '';
   String _serviceProviderCountry = '';
   String _serviceProviderState = '';
@@ -22,31 +17,21 @@ class ServiceProviderViewModel extends BaseViewModel {
   String _serviceProviderName = '';
   String _serviceProviderGender = '';
   String _serviceProviderAge = '';
-  String _petBreed = '';
-  String _petSize = '';
+
   String _aboutServiceProvider = '';
   File? _imageURl;
-  UserType _userType = UserType.none;
+  List<String> _selectedFoodItems = [];
 
   ImagePicker picker = ImagePicker();
 
-  bool _showPassword = false;
-
-  
-
   Services _selectedService = Services.none;
 
-  
-
-  
-
   setServiceProviderAge(String age) {
-    
     _serviceProviderAge = age;
     setViewState(ViewState.success);
   }
 
-   Future<String> showDatePickerDialog(BuildContext context) async {
+  Future<String> showDatePickerDialog(BuildContext context) async {
     String age = '';
     DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -75,16 +60,13 @@ class ServiceProviderViewModel extends BaseViewModel {
     if (selectedDate != null) {
       String formattedDate = "${selectedDate.toLocal()}".split(' ')[0];
 
-        setServiceProviderAge(formattedDate);
+      setServiceProviderAge(formattedDate);
 
-        age = serviceProviderAge;
-     
+      age = serviceProviderAge;
     }
 
     return age;
   }
-
-
 
   setServiceProviderName(String name) {
     _serviceProviderName = name;
@@ -96,13 +78,17 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-     setPetTypeIndex(String petTypeIndex) {
+  setPetTypeIndex(String petTypeIndex) {
     _petTypeIndex = petTypeIndex;
     setViewState(ViewState.success);
   }
 
-  setPetSize(String petSize) {
-    _petSize = petSize;
+  addService(String service) {
+    if (_selectedFoodItems.contains(service)) {
+      _selectedFoodItems.remove(service);
+    } else {
+      _selectedFoodItems.add(service);
+    }
     setViewState(ViewState.success);
   }
 
@@ -111,30 +97,22 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   setCityServiceProvider(String city) {
+  setCityServiceProvider(String city) {
     _serviceProviderCity = city;
     setViewState(ViewState.success);
   }
 
-    setCountryServiceProvider(String country) {
+  setCountryServiceProvider(String country) {
     _serviceProviderCountry = country;
     setViewState(ViewState.success);
   }
 
-   setStateServiceProvider(String state) {
+  setStateServiceProvider(String state) {
     _serviceProviderState = state;
     setViewState(ViewState.success);
   }
 
-  setPetBreed(String petBreed) {
-    _petBreed = petBreed;
-    setViewState(ViewState.success);
-  }
-
-  setUserType(UserType userType) {
-    _userType = userType;
-    setViewState(ViewState.success);
-  }
+ 
 
   Future<void> setUserData({required String username}) async {
     _username = username;
@@ -204,31 +182,24 @@ class ServiceProviderViewModel extends BaseViewModel {
         });
   }
 
-  
- 
-
   Future<void> setSelectedService(Services selectedService) async {
     _selectedService = selectedService;
     setViewState(ViewState.success);
   }
 
-  String get address => _address;
+
   Services get selectedService => _selectedService;
 
   
-
-  bool get showPasswordStatus => _showPassword;
   String get username => _username;
   String get serviceProviderCity => _serviceProviderCity;
   String get serviceProviderCountry => _serviceProviderCountry;
   String get serviceProviderState => _serviceProviderState;
-  String get petTypeIndex=> _petTypeIndex;
+  String get petTypeIndex => _petTypeIndex;
   String get serviceProviderName => _serviceProviderName;
   String get servicesProviderGender => _serviceProviderGender;
   String get serviceProviderAge => _serviceProviderAge;
-  String get petBreed => _petBreed;
-  String get petSize => _petSize;
+  List<String> get selectedFoodItems => _selectedFoodItems;
   String get aboutServiceProvider => _aboutServiceProvider;
   File? get imageURl => _imageURl;
-  UserType get userType => _userType;
 }

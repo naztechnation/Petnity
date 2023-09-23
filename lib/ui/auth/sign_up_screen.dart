@@ -325,7 +325,9 @@ class SignUpScreen extends StatelessWidget {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
                     
-                   _submit(context);
+                    AppNavigator.pushAndReplaceName(context,
+                    name: AppRoutes.otpScreen);
+                 //  _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,

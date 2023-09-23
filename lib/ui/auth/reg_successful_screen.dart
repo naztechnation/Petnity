@@ -76,10 +76,10 @@ class RegSuccessful extends StatelessWidget {
               child: ButtonView(
                 onPressed: () {
                   if(user.userType == UserType.user){
-                     AppNavigator.pushAndStackNamed(context,
+                     AppNavigator.pushAndReplaceName(context,
                       name: AppRoutes.kycScreenOne);
                   }else if(user.userType == UserType.serviceProvider){
-                    AppNavigator.pushAndStackNamed(context,
+                    AppNavigator.pushAndReplaceName (context,
                       name: AppRoutes.serviceProviderKycOneScreen);
                   }
                  

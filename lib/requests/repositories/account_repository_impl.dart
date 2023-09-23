@@ -38,7 +38,6 @@ class AccountRepositoryImpl implements AccountRepository {
   Future<UserData> registerUserPetProfile({required String username,required String type, required String petname, required String gender, 
   required String breed, required String size, required String about, required File picture}) async{
     final map= await Requests().post(AppStrings.registerUserPetProfileUrl(username: username),
-      // files: {'picture': picture},
         body: {
           "type": type,
           "name": petname,
@@ -60,6 +59,26 @@ class AccountRepositoryImpl implements AccountRepository {
           "name": name,
           "drug": drug,
           "prescription": prescription,
+         
+        });
+    return UserData.fromJson(map);
+  }
+  
+  @override
+  Future<UserData> registerServiceProviderProfile({required String username, 
+  required String dob, required String name, required String gender,
+   required String country, required String city, required String about,
+    required File picture}) async{
+   final map= await Requests().post(AppStrings.registerServiceProviderProfileUrl(username: username),
+        body: {
+          "date_of_birth": dob,
+          "name": name,
+          "gender": gender,
+          "about": about,
+          "country": country,
+          "city": city,
+          'picture' : 'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
+          // 'picture': picture.path
          
         });
     return UserData.fromJson(map);

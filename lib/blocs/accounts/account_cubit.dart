@@ -126,6 +126,31 @@ class AccountCubit extends Cubit<AccountStates> {
       }
     }
   }
+
+  Future<void> registerServiceProviderProfile(
+   { required String username,
+    required String dob,required String name,required String gender,
+    required String country,required String city,required String about,required File picture}) async {
+    try {
+      emit(PetProfileLoading());
+
+      final user = await accountRepository.registerServiceProviderProfile(username: username, dob: dob, name: name, gender: gender, country: country, city: city, about: about, picture: picture);
+     
+      emit(PetProfileLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
   // Future<void> verifyOTP(String otp) async {
   //   try {
   //     emit(AccountProcessing());

@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -19,102 +17,113 @@ import '../widgets/text_edit_view.dart';
 import 'service_kyc_five.dart';
 
 class KycServiceScreenFour extends StatelessWidget {
+  KycServiceScreenFour({
+    super.key,
+  });
 
-  KycServiceScreenFour({super.key,});
-
-  final TextEditingController _serviceProviderAgeController = TextEditingController();
+  final TextEditingController _serviceProviderAgeController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-            final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
-      body: SingleChildScrollView(
-        child: Container(
-          height: screenSize(context).height,
-          width: screenSize(context).width,
-          decoration: BoxDecoration(),
-          child: Column(children: [
-            SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-            Row(
-              children: [
-                backButton(context),
-                const SizedBox(width: 40,),
-                 CustomText(
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              text: 'KYC  Registration',
-              weight: FontWeight.w500,
-              size: 18,
-              fontFamily: AppStrings.interSans,
-              color: Colors.black,
-            ),
-              ],
-            ),
-            SizedBox(
-              height: screenSize(context).height * 0.2,
-            ),
-            SizedBox(height: 55),
-            CustomText(
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              text: 'Your age',
-               weight: FontWeight.w700,
-                  size: 32,
-              fontFamily: AppStrings.interSans,
-              color: Colors.black,
-            ),
-            SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.0),
-              child: TextEditView(
-                controller: _serviceProviderAgeController,
-                isDense: true,
-                readOnly: true,
-                labelText: 'Year/Month/Day',
-                suffixIcon: Icon(Icons.arrow_drop_down, size: 32,),
-                onTap: ()async{
-                await  serviceProvider.showDatePickerDialog(context);
-
-                
-                _serviceProviderAgeController.text = serviceProvider.serviceProviderAge;
-                },
-              ),
-            ),
-            const Spacer(),
-            if (serviceProvider.serviceProviderAge != '')
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
-                child: ButtonView(
-                  onPressed: () {
-                    serviceProvider.setServiceProviderAge(_serviceProviderAgeController.text);
-
-                    AppNavigator.pushAndStackPage(context,
-
-                        page: KycServiceScreenFive(
-                           
-                        ));
-                  },
-                  color: AppColors.lightSecondary,
-                  borderRadius: 22,
-                  borderColor: Colors.white,
-                  child: CustomText(
+      body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            height: screenSize(context).height,
+            width: screenSize(context).width,
+            decoration: BoxDecoration(),
+            child: Column(children: [
+              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+              Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 1,
-                    text: 'Next',
-                    weight: FontWeight.w700,
-                    size: 20,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w500,
+                    size: 18,
                     fontFamily: AppStrings.interSans,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
+                ],
+              ),
+              SizedBox(
+                height: screenSize(context).height * 0.2,
+              ),
+              SizedBox(height: 55),
+              CustomText(
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                text: 'Your age',
+                weight: FontWeight.w700,
+                size: 32,
+                fontFamily: AppStrings.interSans,
+                color: Colors.black,
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                child: TextEditView(
+                  controller: _serviceProviderAgeController,
+                  isDense: true,
+                  readOnly: true,
+                  labelText: 'Year/Month/Day',
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down,
+                    size: 32,
+                  ),
+                  onTap: () async {
+                    await serviceProvider.showDatePickerDialog(context);
+      
+                    _serviceProviderAgeController.text =
+                        serviceProvider.serviceProviderAge;
+                  },
                 ),
               ),
-            SizedBox(
-              height: 50,
-            ),
-          ]),
+              const Spacer(),
+              if (serviceProvider.serviceProviderAge != '')
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
+                  child: ButtonView(
+                    onPressed: () {
+                      serviceProvider.setServiceProviderAge(
+                          _serviceProviderAgeController.text);
+      
+                      AppNavigator.pushAndStackPage(context,
+                          page: KycServiceScreenFive());
+                    },
+                    color: AppColors.lightSecondary,
+                    borderRadius: 22,
+                    borderColor: Colors.white,
+                    child: CustomText(
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      text: 'Next',
+                      weight: FontWeight.w700,
+                      size: 20,
+                      fontFamily: AppStrings.interSans,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              SizedBox(
+                height: 50,
+              ),
+            ]),
+          ),
         ),
       ),
     );

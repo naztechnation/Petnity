@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
@@ -8,19 +10,18 @@ import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../utils/navigator/page_navigator.dart';
+import '../user_kyc/widgets/pet_type_container.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
-import 'kyc_screen_two.dart';
-import 'widgets/pet_type_container.dart';
 
-class KycScreenOne extends StatefulWidget {
-  KycScreenOne({super.key});
+class KycServiceScreenNine extends StatefulWidget {
+  KycServiceScreenNine({super.key});
 
   @override
-  State<KycScreenOne> createState() => _KycScreenOneState();
+  State<KycServiceScreenNine> createState() => _KycServiceScreenNineState();
 }
 
-class _KycScreenOneState extends State<KycScreenOne> {
+class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
 
 
   int _index = -1;
@@ -114,8 +115,8 @@ class _KycScreenOneState extends State<KycScreenOne> {
                           vertical: 0.0, horizontal: 0),
                       child: ButtonView(
                         onPressed: () {
-                          AppNavigator.pushAndStackPage(context,
-                              page: KycScreenTwo());
+                          // AppNavigator.pushAndStackPage(context,
+                          //     page: KycScreenTwo());
                         },
                         color: AppColors.lightSecondary,
                         borderRadius: 22,
@@ -130,16 +131,7 @@ class _KycScreenOneState extends State<KycScreenOne> {
                         ),
                       ),
                     ),
-                // PetTypeBody(
-                //   onPressed: (petType, index) {
-                //     {
-                //       petProfile.setPetType(petType.capitalizeFirstOfEach);
-                //       petProfile.setPetTypeIndex(index.toString());
-                //       AppNavigator.pushAndStackPage(context,
-                //           page: KycScreenTwo());
-                //     }
-                //   },
-                // ),
+                
               ],
             ),
           ),
