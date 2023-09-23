@@ -11,7 +11,7 @@ class ServiceProviderChoice extends StatelessWidget {
   final String imageUrl;
   final double spacing;
   final String serviceName;
-  final bool isPetType;
+  final bool isSelected;
   final VoidCallback onPressed;
 
   ServiceProviderChoice(
@@ -19,7 +19,7 @@ class ServiceProviderChoice extends StatelessWidget {
       required this.imageUrl,
       required this.serviceName,
       this.spacing = 0,
-      this.isPetType = false,
+      this.isSelected = false,
       required this.onPressed});
 
   @override
@@ -27,21 +27,18 @@ class ServiceProviderChoice extends StatelessWidget {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
     
     return InkWell(
-      onTap: (){
-        user.addService(serviceName);
-               onPressed();
-      } ,
+      onTap: onPressed ,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 1000),
         curve: Curves.fastOutSlowIn,
         height: 63,
         decoration: BoxDecoration(
-          color: user.selectedFoodItems.contains( serviceName) ? AppColors.lightSecondary : AppColors.cardColor,
+          color: isSelected ? AppColors.lightSecondary : AppColors.cardColor,
           borderRadius: BorderRadius.circular(40),
         ),
         child: Material(
             borderRadius: BorderRadius.circular(40),
-            color: user.selectedFoodItems.contains(serviceName) ? AppColors.lightSecondary : AppColors.cardColor,
+            color: isSelected ? AppColors.lightSecondary : AppColors.cardColor,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Row(
@@ -55,7 +52,7 @@ class ServiceProviderChoice extends StatelessWidget {
                       weight: FontWeight.w600,
                       size: 15,
                       fontFamily: AppStrings.interSans,
-                      color: user.selectedFoodItems.contains(serviceName) ? AppColors.lightPrimary : Colors.black,
+                      color: isSelected ? AppColors.lightPrimary : Colors.black,
                     ),
                   ),
                   SizedBox(

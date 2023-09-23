@@ -106,16 +106,18 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                         crossAxisSpacing: 14,
                         mainAxisSpacing: 12,
                         itemCount: services.length,
+                       
                         itemBuilder: (context, index) {
+                           String serviceName = services[index];
                           return ServiceProviderChoice(
                             imageUrl: servicesPics[index],
-                            serviceName: services[index],
-                            isPetType: _index == index,
+                            serviceName: serviceName,
+                            isSelected:user.selectedServiceItems.contains(serviceName),
                             onPressed: () {
                               setState(() {
                                 _index = index;
       
-                               
+                               user.addService(serviceName);
                                // petProfile.setPetTypeIndex('${index + 1}');
                               });
                             },
@@ -127,7 +129,7 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                   ),
                   Spacer(
                   ),
-                  if (user.selectedFoodItems.isNotEmpty)
+                  if (user.selectedServiceItems.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),

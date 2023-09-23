@@ -20,7 +20,8 @@ class ServiceProviderViewModel extends BaseViewModel {
 
   String _aboutServiceProvider = '';
   File? _imageURl;
-  List<String> _selectedFoodItems = [];
+  List<String> _selectedServiceItems = [];
+  List<String> _selectedPetType = [];
 
   ImagePicker picker = ImagePicker();
 
@@ -84,10 +85,19 @@ class ServiceProviderViewModel extends BaseViewModel {
   }
 
   addService(String service) {
-    if (_selectedFoodItems.contains(service)) {
-      _selectedFoodItems.remove(service);
+    if (_selectedServiceItems.contains(service)) {
+      _selectedServiceItems.remove(service);
     } else {
-      _selectedFoodItems.add(service);
+      _selectedServiceItems.add(service);
+    }
+    setViewState(ViewState.success);
+  }
+
+   addPetServiceType(String service) {
+    if (_selectedPetType.contains(service)) {
+      _selectedPetType.remove(service);
+    } else {
+      _selectedPetType.add(service);
     }
     setViewState(ViewState.success);
   }
@@ -199,7 +209,8 @@ class ServiceProviderViewModel extends BaseViewModel {
   String get serviceProviderName => _serviceProviderName;
   String get servicesProviderGender => _serviceProviderGender;
   String get serviceProviderAge => _serviceProviderAge;
-  List<String> get selectedFoodItems => _selectedFoodItems;
+  List<String> get selectedServiceItems => _selectedServiceItems;
+  List<String> get selectedPetType => _selectedPetType;
   String get aboutServiceProvider => _aboutServiceProvider;
   File? get imageURl => _imageURl;
 }

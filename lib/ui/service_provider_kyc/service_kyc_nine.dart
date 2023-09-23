@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
@@ -11,6 +12,7 @@ import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../user_kyc/widgets/pet_type_container.dart';
+import '../user_kyc/widgets/service_provider_choice_container.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 
@@ -46,7 +48,7 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
   @override
   Widget build(BuildContext context) {
 
-    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -89,16 +91,17 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                           mainAxisSpacing: 12,
                           itemCount: pets.length,
                           itemBuilder: (context, index) {
-                            return PetType(
+                            String petName = pets[index];
+                            return ServiceProviderChoice(
                               imageUrl: petsPics[index],
-                              petName: pets[index],
-                              isPetType: _index == index,
+                              serviceName: petName,
+                              isSelected: user.selectedPetType.contains(petName),
                               onPressed: () {
                                 setState(() {
                                   _index = index;
                                   
-                                  petProfile.setPetType(pets[index]);
-                                  petProfile.setPetTypeIndex('${index + 1}');
+                                  user.addPetServiceType(petName);
+                                 // user.setPetTypeIndex('${index + 1}');
                                 });
                               },
                             );
@@ -109,7 +112,7 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                     ),
                   ),
                   SizedBox(height: 40,),
-                   if (_index != -1)
+                   if (user.selectedPetType.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),
