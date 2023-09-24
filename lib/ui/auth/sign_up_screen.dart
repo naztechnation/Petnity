@@ -9,6 +9,7 @@ import 'package:petnity/utils/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
+import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_routes.dart';
@@ -35,6 +36,8 @@ class SignUpScreen extends StatelessWidget {
     _phoneController.text = '090746453728';
     _passwordController.text = 'Scarface@306166';
     final user = Provider.of<UserViewModel>(context, listen: true);
+    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+
     return Scaffold(
         body: Container(
       height: double.infinity,
@@ -54,13 +57,16 @@ class SignUpScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                if(state.userData.status!){
-                   AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.otpScreen);
-                 Modals.showToast(state.userData.message ?? '',
+                if (state.userData.status!) {
+                  AppNavigator.pushAndReplaceName(context,
+                      name: AppRoutes.otpScreen);
+                  Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
+
+                    user.setUserData(username: _emailController.text);
+                    serviceProvider.setUserData(username: _emailController.text);
+
                 }
-               
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
@@ -95,8 +101,8 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _emailController,
-                       validator: (value){
-                       return Validator.validateEmail(value, 'Email');
+                      validator: (value) {
+                        return Validator.validateEmail(value, 'Email');
                       },
                       isDense: true,
                       textViewTitle: 'Your  Email',
@@ -115,8 +121,8 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _phoneController,
-                      validator: (value){
-                       return Validator.validate(value, 'Phone Number');
+                      validator: (value) {
+                        return Validator.validate(value, 'Phone Number');
                       },
                       isDense: true,
                       keyboardType: TextInputType.phone,
@@ -137,15 +143,15 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _passwordController,
-                      validator: (value){
-                       return Validator.validate(value, 'Password');
+                      validator: (value) {
+                        return Validator.validate(value, 'Password');
                       },
                       isDense: true,
                       textViewTitle: 'Password',
                       hintText: 'Enter your password',
                       obscureText: user.showPasswordStatus,
                       suffixIcon: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           user.showPassword();
                         },
                         child: Padding(
@@ -190,8 +196,7 @@ class SignUpScreen extends StatelessWidget {
                         processing: state is AccountProcessing,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                   
-                          RegistrationOptions( context, user);
+                            RegistrationOptions(context, user, serviceProvider);
                           }
                         },
                         color: AppColors.lightSecondary,
@@ -270,7 +275,7 @@ class SignUpScreen extends StatelessWidget {
     }
   }
 
-  RegistrationOptions(BuildContext context, final user) {
+  RegistrationOptions(BuildContext context, final user, final serviceProvider) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
         isScrollControlled: false,
@@ -309,7 +314,8 @@ class SignUpScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: AppColors.lightSecondary),
+                              shape: BoxShape.circle,
+                              color: AppColors.lightSecondary),
                         ),
                       )
                     ],
@@ -324,10 +330,10 @@ class SignUpScreen extends StatelessWidget {
                   userTypes('User', () {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
-                    
+
                     AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.otpScreen);
-                 //  _submit(context);
+                        name: AppRoutes.otpScreen);
+                    //  _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,
@@ -341,16 +347,16 @@ class SignUpScreen extends StatelessWidget {
 
                     user.setUserType(UserType.serviceProvider);
 
-                 AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.otpScreen);
+                    serviceProvider.setUserData(username: _emailController.text);
+
+
+                    AppNavigator.pushAndReplaceName(context,
+                        name: AppRoutes.otpScreen);
                     // _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,
                   ),
-                 
-                   
-                
                   Divider(),
                   const SizedBox(
                     height: 10,
@@ -360,7 +366,7 @@ class SignUpScreen extends StatelessWidget {
             )));
   }
 
-   userTypes(String title, Function onTap, BuildContext context) {
+  userTypes(String title, Function onTap, BuildContext context) {
     return GestureDetector(
       onTap: () {
         onTap();
@@ -388,5 +394,4 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
-
 }

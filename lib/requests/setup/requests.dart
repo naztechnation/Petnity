@@ -79,10 +79,7 @@ class Requests {
         });
       }
 
-      /*if (!map["status"]) {
-        throw ApiException(
-            RequestHandler.handleApiError(map).first.msg!);
-      }*/
+     
 
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
@@ -133,6 +130,39 @@ class Requests {
           client.close();
         });
       }
+
+     
+
+    } on SocketException {
+      throw NetworkException(AppStrings.networkErrorMessage);
+    } on HandshakeException {
+      throw NetworkException(AppStrings.networkErrorMessage);
+    } on FormatException catch (e) {
+      throw NetworkException(e.toString());
+    }
+
+    return map;
+  }
+
+    Future<dynamic> patch(String route,
+      {Map<String, String>? headers,
+      Map<String, dynamic>? body,
+      Map<String, File>? files,
+      Encoding? encoding,
+      RetryOptions? retryOption}) async {
+    debugPrint(route);
+    late dynamic map;
+    try {
+        await http
+            .patch(Uri.parse(route),
+                body: json.encode(body),
+                 headers: headers ?? await rawDataHeader(),
+                
+                )
+            .then((response) {
+          map = json.decode(RequestHandler.handleServerError(response));
+          
+        });
 
      
 

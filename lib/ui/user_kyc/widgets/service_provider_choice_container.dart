@@ -24,7 +24,6 @@ class ServiceProviderChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
     
     return InkWell(
       onTap: onPressed ,

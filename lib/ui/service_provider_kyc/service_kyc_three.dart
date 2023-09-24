@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,9 +16,9 @@ import '../widgets/custom_text.dart';
 import 'service_kyc_four.dart';
 
 class KycServiceScreenThree extends StatefulWidget {
-  
-
-  KycServiceScreenThree({super.key, });
+  KycServiceScreenThree({
+    super.key,
+  });
 
   @override
   State<KycServiceScreenThree> createState() => _KycServiceScreenThreeState();
@@ -28,18 +27,15 @@ class KycServiceScreenThree extends StatefulWidget {
 class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
   PetGenderType _petGenderType = PetGenderType.none;
 
-
-
   @override
   Widget build(BuildContext context) {
-
-        final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: false);
-
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: false);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SingleChildScrollView(
@@ -49,23 +45,23 @@ class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
             decoration: BoxDecoration(),
             child: Column(children: [
               SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-               Row(
-                    children: [
-                      backButton(context),
-                      const SizedBox(
-                        width: 40,
-                      ),
-                      CustomText(
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        text: 'KYC  Registration',
-                        weight: FontWeight.w500,
-                        size: 18,
-                        fontFamily: AppStrings.interSans,
-                        color: Colors.black,
-                      ),
-                    ],
+              Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
                   ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w800,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
               SizedBox(
                 height: screenSize(context).height * 0.2,
               ),
@@ -105,7 +101,6 @@ class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
                     });
                   }),
                   ChoiceCard(_petGenderType == PetGenderType.female, 'Female',
-      
                       () {
                     setState(() {
                       _petGenderType = PetGenderType.female;
@@ -116,15 +111,14 @@ class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
               const Spacer(),
               if (_petGenderType != PetGenderType.none)
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 20.0, horizontal: 20),
                   child: ButtonView(
                     onPressed: () {
-                      serviceProvider.setServiceProviderGender(_petGenderType.name);
+                      serviceProvider
+                          .setServiceProviderGender(_petGenderType.name);
                       AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenFour(
-                            
-                          ));
+                          page: KycServiceScreenFour());
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 32,
@@ -133,8 +127,8 @@ class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       text: 'Next',
-                      weight: FontWeight.w700,
-                      size: 20,
+                      weight: FontWeight.w400,
+                    size: 16,
                       fontFamily: AppStrings.interSans,
                       color: Colors.white,
                     ),

@@ -15,4 +15,7 @@ Future<UserData> registerServiceProviderProfile({
     required String username,
     required String dob,required String name,required String gender,
     required String country,required String city,required String about,required File picture});
+
+ Future<UserData> serviceProvided({required List<String> services,required String username});   
+ Future<UserData> servicePetNames({required List<String> petnames,});   
 }

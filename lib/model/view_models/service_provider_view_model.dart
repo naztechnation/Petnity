@@ -20,6 +20,7 @@ class ServiceProviderViewModel extends BaseViewModel {
 
   String _aboutServiceProvider = '';
   File? _imageURl;
+  File? _imageURl2;
   List<String> _selectedServiceItems = [];
   List<String> _selectedPetType = [];
 
@@ -73,6 +74,8 @@ class ServiceProviderViewModel extends BaseViewModel {
     _serviceProviderName = name;
     setViewState(ViewState.success);
   }
+
+ 
 
   setServiceProviderGender(String serviceGender) {
     _serviceProviderGender = serviceGender;
@@ -129,7 +132,7 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  loadImage(BuildContext context) async {
+  loadImage(BuildContext context, bool isSecondUpload) async {
     await showModalBottomSheet<dynamic>(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -165,7 +168,13 @@ class ServiceProviderViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                  _imageURl = File(image!.path);
+
+                      if(isSecondUpload){
+                        _imageURl2 = File(image!.path);
+                      }else{
+                        _imageURl = File(image!.path);
+                      }
+                  
                   setViewState(ViewState.success);
                 },
               ),
@@ -183,7 +192,11 @@ class ServiceProviderViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                  _imageURl = File(image!.path);
+                   if(isSecondUpload){
+                        _imageURl2 = File(image!.path);
+                      }else{
+                        _imageURl = File(image!.path);
+                      }
                   setViewState(ViewState.success);
                 },
               ),
@@ -213,4 +226,5 @@ class ServiceProviderViewModel extends BaseViewModel {
   List<String> get selectedPetType => _selectedPetType;
   String get aboutServiceProvider => _aboutServiceProvider;
   File? get imageURl => _imageURl;
+  File? get imageURl2 => _imageURl2;
 }

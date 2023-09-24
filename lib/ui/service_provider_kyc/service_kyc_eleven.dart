@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/ui/service_provider_kyc/service_kyc_twelve.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
@@ -21,8 +22,8 @@ import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 import 'service_kyc_eight.dart';
 
-class KycServiceScreenSeven extends StatelessWidget {
-  KycServiceScreenSeven({
+class KycServiceScreenEleven extends StatelessWidget {
+  KycServiceScreenEleven({
     super.key,
   });
 
@@ -102,16 +103,16 @@ class KycServiceScreenSeven extends StatelessWidget {
                   CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    text: 'Upload your picture ',
+                    text: 'Upload ID picture ',
                     weight: FontWeight.w700,
                     size: 24,
                     fontFamily: AppStrings.montserrat,
                     color: Colors.black,
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 40,
                   ),
-                  if (user.imageURl == null) ...[
+                  if (user.imageURl2 == null) ...[
                     Container(
                       padding: EdgeInsets.all(30),
                       height: 294,
@@ -123,7 +124,7 @@ class KycServiceScreenSeven extends StatelessWidget {
                       width: MediaQuery.sizeOf(context).width,
                     ),
                   ],
-                  if (user.imageURl != null) ...[
+                  if (user.imageURl2 != null) ...[
                     Container(
                         height: 294,
                         decoration: BoxDecoration(
@@ -136,7 +137,7 @@ class KycServiceScreenSeven extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           child: ImageView.file(
                               File(
-                                user.imageURl!.path,
+                                user.imageURl2!.path,
                               ),
                               fit: BoxFit.cover),
                         )),
@@ -148,7 +149,7 @@ class KycServiceScreenSeven extends StatelessWidget {
                       ? SizedBox.shrink()
                       : TextButton(
                           onPressed: () async {
-                            user.loadImage(context, false);
+                            user.loadImage(context, true);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -164,15 +165,15 @@ class KycServiceScreenSeven extends StatelessWidget {
                   const SizedBox(
                     height: 70,
                   ),
-                  if (user.imageURl != null)
+                  if (user.imageURl2 != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
                         onPressed: () {
-                          if (user.imageURl != null) {
+                          if (user.imageURl2 != null) {
                                AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenEight(
+                          page: KycServiceScreenTwelve(
           
                           ));
                             // _submit(

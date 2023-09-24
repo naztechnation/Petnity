@@ -16,16 +16,8 @@ class LoadingPage extends StatelessWidget {
         height: screenSize(context).height,
         width: screenSize(context).width,
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                begin: Alignment.topRight,
-                end: Alignment.topLeft)),
-        child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                         ImageView.asset(AppImages.loading)
-                        ],
-                      ),
+            color:AppColors.lightPrimary,),
+        child: Align(child: ImageView.asset(AppImages.loading, height: 50,)),
       ),
     );
     
