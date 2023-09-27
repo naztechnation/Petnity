@@ -11,7 +11,6 @@ import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
-import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
@@ -53,10 +52,10 @@ class KycServiceScreenEleven extends StatelessWidget {
                 //         page: KycServiceScreenEight(
 
                 //         ));
-                Modals.showToast(state.userData.message,
+                Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
               } else {
-                Modals.showToast(state.userData.message,
+                Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
               }
             } else if (state is AccountApiErr) {

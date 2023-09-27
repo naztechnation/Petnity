@@ -54,10 +54,10 @@ class KycScreenSeven extends StatelessWidget {
                           page: KycScreenEight(
                            
                           ));
-                 Modals.showToast(state.userData.message,
+                 Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
                 }else{
-                   Modals.showToast(state.userData.message,
+                   Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
                 }
                 

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
@@ -48,14 +49,17 @@ class KycServiceScreenSeven extends StatelessWidget {
           listener: (context, state) {
             if (state is PetProfileLoaded) {
               if (state.userData.status!) {
+                    StorageHandler.saveAgentId(state.userData.agent!.id.toString());
+
                 AppNavigator.pushAndStackPage(context,
                         page: KycServiceScreenEight(
 
                         ));
-                Modals.showToast(state.userData.message,
+                Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
+
               } else {
-                Modals.showToast(state.userData.message,
+                Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
               }
             } else if (state is AccountApiErr) {

@@ -59,6 +59,7 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final userData = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
         body: BlocProvider<AccountCubit>(
@@ -165,9 +166,9 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                                 vertical: 0.0, horizontal: 0),
                             child: ButtonView(
                               onPressed: () {
-                                _submit(context, user);
-                                AppNavigator.pushAndStackPage(context,
-                                    page: KycServiceScreenNine());
+                                _submit(context,user, userData);
+                                // AppNavigator.pushAndStackPage(context,
+                                //     page: KycServiceScreenNine());
                               },
                               color: AppColors.lightSecondary,
                               borderRadius: 22,
@@ -194,8 +195,10 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
     ));
   }
 
-  _submit(BuildContext ctx, var user) {
+  _submit(BuildContext ctx, var user, var userData) {
+    // Modals.showToast(userData.username);
+    // Modals.showToast(userData.serviceProviderId);
     ctx.read<AccountCubit>().serviceProvided(
-        services: user.selectedServiceItems, username: user.username);
+        services: user.selectedServiceItems, username: userData.username, agentId: userData.serviceProviderId);
   }
 }

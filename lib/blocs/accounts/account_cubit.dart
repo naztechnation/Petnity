@@ -188,11 +188,11 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-   Future<void> serviceProvided({required List<String> services,required String username}) async {
+   Future<void> serviceProvided({required List<String> services,required String username, required String agentId}) async {
     try {
       emit(AccountProcessing());
 
-      final user = await accountRepository.serviceProvided(services: services, username: username
+      final user = await accountRepository.serviceProvided(services: services, username: username, agentId: agentId
           );
 
       // await viewModel.setUserData(username:email);

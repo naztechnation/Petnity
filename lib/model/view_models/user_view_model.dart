@@ -15,6 +15,7 @@ class UserViewModel extends BaseViewModel {
 
   String _address = '';
   String _username = '';
+  String _userid = '';
   String _petType = '';
   String _petTypeIndex = '';
   String _petName = '';
@@ -38,6 +39,13 @@ class UserViewModel extends BaseViewModel {
   getUsername() async{
 
    _username = await StorageHandler.getUserName();
+    setViewState(ViewState.success);
+
+  }
+
+  getUserId() async{
+
+   _userid = await StorageHandler.getAgentId();
     setViewState(ViewState.success);
 
   }
@@ -189,6 +197,7 @@ class UserViewModel extends BaseViewModel {
   bool get showPasswordStatus => _showPassword;
   String get username => _username;
   String get petType => _petType;
+  String get serviceProviderId => _userid;
   String get petTypeIndex=> _petTypeIndex;
   String get petName => _petName;
   String get petGender => _petGender;

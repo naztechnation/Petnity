@@ -22,7 +22,22 @@ class StorageHandler {
     return username;
   }
 
-  
+  static Future<void> saveAgentId([String? id]) async {
+    if (id != null)
+      await storage.write(key: 'ID', value: id);
+  }
+
+  static Future<String> getAgentId() async {
+   String? value = await storage.read(key: 'ID');
+    String? id;
+    String? data = value;
+    if (data != null) {
+      id = data;
+    }else{
+      id = '';
+    }
+    return id;
+  }
 
   static Future<void> clearUserDetails() async {
     await storage.delete(key: 'USER');

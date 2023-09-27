@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../../model/account_models/create_agent.dart';
 import '../../model/account_models/user_data.dart';
 import '../../res/app_strings.dart';
 import '../setup/requests.dart';
@@ -35,7 +36,7 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<UserData> registerUserPetProfile(
+  Future<CreateAgents> registerUserPetProfile(
       {required String username,
       required String type,
       required String petname,
@@ -56,7 +57,7 @@ class AccountRepositoryImpl implements AccountRepository {
           'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
       // 'picture': picture.path
     });
-    return UserData.fromJson(map);
+    return CreateAgents.fromJson(map);
   }
 
   Future<UserData> sendPetHealth(
@@ -73,7 +74,7 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<UserData> registerServiceProviderProfile(
+  Future<CreateAgents> registerServiceProviderProfile(
       {required String username,
       required String dob,
       required String name,
@@ -95,13 +96,13 @@ class AccountRepositoryImpl implements AccountRepository {
               'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
           // 'picture': picture.path
         });
-    return UserData.fromJson(map);
+    return CreateAgents.fromJson(map);
   }
 
   @override
   Future<UserData> serviceProvided(
-      {required List<String> services, required String username}) async {
-    final map = await Requests().patch(AppStrings.selectServiceTypeUrl, body: {
+      {required List<String> services, required String username, required String agentId}) async {
+    final map = await Requests().patch(AppStrings.selectServiceTypeUrl(agentId), body: {
       "service_types": services,
     }, headers: {
       'Authorization': AppStrings.token,
@@ -120,13 +121,13 @@ class AccountRepositoryImpl implements AccountRepository {
     return UserData.fromJson(map);
   }
 
-  Future<UserData> servicePetNames({required List<String> petnames}) async {
+  Future<CreateAgents> servicePetNames({required List<String> petnames}) async {
     final map = await Requests().patch(AppStrings.selectPetTypeUrl, body: {
       "pet_types": petnames,
     }, headers: {
       'Authorization': AppStrings.token,
     });
-    return UserData.fromJson(map);
+    return CreateAgents.fromJson(map);
   }
   
   @override

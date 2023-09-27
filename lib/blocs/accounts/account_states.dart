@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/account_models/create_agent.dart';
 import '../../model/account_models/user_data.dart';
 
 
@@ -36,7 +37,7 @@ class PetProfileLoading extends AccountStates {
 }
 
 class PetProfileLoaded extends AccountStates {
-  final   UserData userData;
+  final   CreateAgents userData;
   const PetProfileLoaded(this.userData);
   @override
   List<Object> get props => [userData];
