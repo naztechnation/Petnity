@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/utils/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_routes.dart';
@@ -27,11 +29,12 @@ class SignUpScreen extends StatelessWidget {
   final _phoneController = TextEditingController();
 
   final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    _emailController.text = 'agbo.raph1@gmail.com';
+    _emailController.text = 'agbo.raph123@gmail.com';
     _phoneController.text = '090746453728';
     _passwordController.text = 'Scarface@306166';
     final user = Provider.of<UserViewModel>(context, listen: true);
@@ -54,13 +57,18 @@ class SignUpScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                if(state.userData.status!){
-                   AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.otpScreen);
-                 Modals.showToast(state.userData.message ?? '',
+                if (state.userData.status!) {
+                  AppNavigator.pushAndReplacePage(context,
+                      page: OtpScreen(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        phone: _phoneController.text,
+                        username: _usernameController.text,
+                      ));
+                  Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
+                  StorageHandler.saveUserName(_usernameController.text.trim());
                 }
-               
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
@@ -94,9 +102,29 @@ class SignUpScreen extends StatelessWidget {
                       height: 24,
                     ),
                     TextEditView(
+                      controller: _usernameController,
+                      validator: (value) {
+                        return Validator.validate(value, 'Username');
+                      },
+                      isDense: true,
+                      textViewTitle: 'Your  Username',
+                      hintText: 'Enter username',
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: ImageView.svg(
+                          AppImages.personIcon,
+                        ),
+                      ),
+                      fillColor: AppColors.lightPrimary,
+                      borderColor: AppColors.lightPrimary,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    TextEditView(
                       controller: _emailController,
-                       validator: (value){
-                       return Validator.validateEmail(value, 'Email');
+                      validator: (value) {
+                        return Validator.validateEmail(value, 'Email');
                       },
                       isDense: true,
                       textViewTitle: 'Your  Email',
@@ -115,8 +143,8 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _phoneController,
-                      validator: (value){
-                       return Validator.validate(value, 'Phone Number');
+                      validator: (value) {
+                        return Validator.validate(value, 'Phone Number');
                       },
                       isDense: true,
                       keyboardType: TextInputType.phone,
@@ -125,7 +153,8 @@ class SignUpScreen extends StatelessWidget {
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
-                          AppImages.personIcon,
+                          AppImages.phoneIcon,
+                          color: Colors.black,
                           height: 10,
                         ),
                       ),
@@ -137,15 +166,15 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _passwordController,
-                      validator: (value){
-                       return Validator.validate(value, 'Password');
+                      validator: (value) {
+                        return Validator.validate(value, 'Password');
                       },
                       isDense: true,
                       textViewTitle: 'Password',
                       hintText: 'Enter your password',
                       obscureText: user.showPasswordStatus,
                       suffixIcon: GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           user.showPassword();
                         },
                         child: Padding(
@@ -190,8 +219,7 @@ class SignUpScreen extends StatelessWidget {
                         processing: state is AccountProcessing,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                   
-                          RegistrationOptions( context, user);
+                            RegistrationOptions(context, user);
                           }
                         },
                         color: AppColors.lightSecondary,
@@ -219,10 +247,7 @@ class SignUpScreen extends StatelessWidget {
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // Single tapped.
-                                },
+                              recognizer: TapGestureRecognizer()..onTap = () {},
                             ),
                             TextSpan(
                                 text: '  Sign In',
@@ -241,10 +266,7 @@ class SignUpScreen extends StatelessWidget {
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  // Long Pressed.
-                                },
+                              recognizer: TapGestureRecognizer()..onTap = () {},
                             ),
                           ],
                         ),
@@ -263,6 +285,8 @@ class SignUpScreen extends StatelessWidget {
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
+          url:AppStrings.registerUrl,
+          username: _usernameController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
@@ -309,7 +333,8 @@ class SignUpScreen extends StatelessWidget {
                             color: Colors.white,
                           ),
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: AppColors.lightSecondary),
+                              shape: BoxShape.circle,
+                              color: AppColors.lightSecondary),
                         ),
                       )
                     ],
@@ -324,8 +349,8 @@ class SignUpScreen extends StatelessWidget {
                   userTypes('User', () {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
-                    
-                   _submit(context);
+
+                    _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,
@@ -339,16 +364,13 @@ class SignUpScreen extends StatelessWidget {
 
                     user.setUserType(UserType.serviceProvider);
 
-                 AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.otpScreen);
-                    // _submit(context);
+                    AppNavigator.pushAndReplaceName(context,
+                        name: AppRoutes.otpScreen);
+                     _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,
                   ),
-                 
-                   
-                
                   Divider(),
                   const SizedBox(
                     height: 10,
@@ -358,7 +380,7 @@ class SignUpScreen extends StatelessWidget {
             )));
   }
 
-   userTypes(String title, Function onTap, BuildContext context) {
+  userTypes(String title, Function onTap, BuildContext context) {
     return GestureDetector(
       onTap: () {
         onTap();
@@ -386,5 +408,4 @@ class SignUpScreen extends StatelessWidget {
       ),
     );
   }
-
 }

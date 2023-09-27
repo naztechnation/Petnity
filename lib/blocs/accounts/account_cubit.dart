@@ -16,6 +16,8 @@ class AccountCubit extends Cubit<AccountStates> {
   final UserViewModel viewModel;
 
   Future<void> registerUser({
+    required String username,
+    required String url,
     required String email,
     required String password,
     required String phoneNumber,
@@ -24,6 +26,8 @@ class AccountCubit extends Cubit<AccountStates> {
       emit(AccountProcessing());
 
       final user = await accountRepository.registerUser(
+        url: url,
+        username: username,
           email: email, password: password, phone: phoneNumber);
 
        await viewModel.setUserData(username:email);
@@ -74,12 +78,12 @@ class AccountCubit extends Cubit<AccountStates> {
 
  
   Future<void> loginUser(
-      {required String password, required String email}) async {
+      {required String password, required String username}) async {
     try {
       emit(AccountLoading());
 
       final userData =
-          await accountRepository.loginUser(email: email, password: password);
+          await accountRepository.loginUser(username: username, password: password);
 
       // await viewModel.setUser(userData);
       emit(AccountLoaded(userData));
@@ -125,28 +129,29 @@ class AccountCubit extends Cubit<AccountStates> {
       }
     }
   }
-  // Future<void> verifyOTP(String otp) async {
-  //   try {
-  //     emit(AccountProcessing());
+  
+  Future<void> verifyOTP(String username, String code) async {
+    try {
+      emit(AccountProcessing());
 
-  //     final user = await accountRepository.verifyOTP(otp);
+      final user = await accountRepository.verifyUser(username: username, code: code);
 
-  //     await viewModel.updateUser(user);
-  //     emit(AccountUpdated(user));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
+      // await viewModel.updateUser(user);
+      emit(AccountUpdated(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   // Future<void> resentOTP(String phone) async {
   //   try {

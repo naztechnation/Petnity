@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,8 +16,9 @@ import '../widgets/custom_text.dart';
 import 'service_kyc_two.dart';
 
 class KycServiceScreenOne extends StatelessWidget {
-
-  KycServiceScreenOne({super.key,});
+  KycServiceScreenOne({
+    super.key,
+  });
 
   final TextEditingController _petNameController = TextEditingController();
 
@@ -36,14 +35,10 @@ class KycServiceScreenOne extends StatelessWidget {
           decoration: BoxDecoration(),
           child: Column(
             children: [
-                SizedBox(
-                  height: screenSize(context).height * 0.4,
-                ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-               
-               
+              SizedBox(
+                height: screenSize(context).height * 0.4,
+              ),
+              Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: Align(
@@ -60,34 +55,30 @@ class KycServiceScreenOne extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: MediaQuery.sizeOf(context).height * 0.3),
-                 
-              
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
-                    child: ButtonView(
-                      onPressed: () {
-                        petProfile.setPetName(_petNameController.text);
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
+                  child: ButtonView(
+                    onPressed: () {
+                      petProfile.setPetName(_petNameController.text);
 
-                        AppNavigator.pushAndStackPage(context,
-                            page: KycServiceScreenTwo(
-                               
-                            ));
-                      },
-                      color: AppColors.lightSecondary,
-                      borderRadius: 22,
-                      borderColor: Colors.white,
-                      child: CustomText(
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        text: 'Continue',
-                        weight: FontWeight.w700,
-                        size: 20,
-                        fontFamily: AppStrings.interSans,
-                        color: Colors.white,
-                      ),
+                      AppNavigator.pushAndStackPage(context,
+                          page: KycServiceScreenTwo());
+                    },
+                    color: AppColors.lightSecondary,
+                    borderRadius: 22,
+                    borderColor: Colors.white,
+                    child: CustomText(
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      text: 'Continue',
+                      weight: FontWeight.w500,
+                      size: 16,
+                      fontFamily: AppStrings.interSans,
+                      color: Colors.white,
                     ),
                   ),
+                ),
                 SizedBox(
                   height: 50,
                 ),

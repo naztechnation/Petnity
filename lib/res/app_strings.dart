@@ -25,6 +25,8 @@ class AppStrings {
   static final locationApiKey = Platform.isAndroid ? _androidKey : _iosKey;
 
   static const String networkErrorMessage = "Network error, try again later";
+  static const String registerUrl = "auth/register";
+  static   String resendCodeUrl(String username) => "auth/resend-code/$username";
 
   static String googlePlaceUrl(String query) =>
       'https://maps.googleapis.com/maps/api/place/autocomplete/json'
@@ -32,7 +34,9 @@ class AppStrings {
       '&key=$locationApiKey&sessiontoken=${AppHandler.generateUniqueId()}';
 
 
-  static const String registerUrl = '${_baseUrl}auth/register';
+  static   String otpUrl(String url) => '${_baseUrl}$url';
+  static   String verifyUserProfileUrl(String username) => '${_baseUrl}auth/verify-profile/$username';
+  
   static const String loginUrl = '${_baseUrl}auth/login';
   static String petHealthStatusUrl({String? petId = '2'}) => '${_baseUrl}pets/add-allergies/$petId';
   static String petAlergeyDataUrl({String? petId = '2'}) => '${_baseUrl}pets/add-allergies/$petId';

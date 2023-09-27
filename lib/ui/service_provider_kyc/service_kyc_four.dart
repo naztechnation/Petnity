@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,14 +18,17 @@ import '../widgets/text_edit_view.dart';
 import 'service_kyc_five.dart';
 
 class KycServiceScreenFour extends StatelessWidget {
+  KycServiceScreenFour({
+    super.key,
+  });
 
-  KycServiceScreenFour({super.key,});
-
-  final TextEditingController _serviceProviderAgeController = TextEditingController();
+  final TextEditingController _serviceProviderAgeController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-            final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: false);
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
@@ -41,16 +42,15 @@ class KycServiceScreenFour extends StatelessWidget {
             Row(
               children: [
                 backButton(context),
-                
-                 CustomText(
-              textAlign: TextAlign.center,
-              maxLines: 1,
-              text: 'Your age',
-              weight: FontWeight.w700,
-              size: 32,
-              fontFamily: AppStrings.interSans,
-              color: Colors.black,
-            ),
+                CustomText(
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  text: 'Your age',
+                  weight: FontWeight.w500,
+                  size: 16,
+                  fontFamily: AppStrings.interSans,
+                  color: Colors.black,
+                ),
               ],
             ),
             SizedBox(
@@ -74,10 +74,14 @@ class KycServiceScreenFour extends StatelessWidget {
                 isDense: true,
                 readOnly: true,
                 labelText: 'Year/Month/Day',
-                suffixIcon: Icon(Icons.arrow_drop_down, size: 32,),
-                onTap: ()async{
-                await  serviceProvider.showDatePickerDialog(context);
-                _serviceProviderAgeController.text = serviceProvider.serviceProviderAge;
+                suffixIcon: Icon(
+                  Icons.arrow_drop_down,
+                  size: 32,
+                ),
+                onTap: () async {
+                  await serviceProvider.showDatePickerDialog(context);
+                  _serviceProviderAgeController.text =
+                      serviceProvider.serviceProviderAge;
                 },
               ),
             ),
@@ -88,13 +92,11 @@ class KycServiceScreenFour extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
-                    serviceProvider.setServiceProviderAge(_serviceProviderAgeController.text);
+                    serviceProvider.setServiceProviderAge(
+                        _serviceProviderAgeController.text);
 
                     AppNavigator.pushAndStackPage(context,
-
-                        page: KycServiceScreenFive(
-                           
-                        ));
+                        page: KycServiceScreenFive());
                   },
                   color: AppColors.lightSecondary,
                   borderRadius: 22,
@@ -103,8 +105,8 @@ class KycServiceScreenFour extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     text: 'Next',
-                    weight: FontWeight.w700,
-                    size: 20,
+                    weight: FontWeight.w500,
+                    size: 16,
                     fontFamily: AppStrings.interSans,
                     color: Colors.white,
                   ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../handlers/location_handler.dart';
+import '../../handlers/secure_handler.dart';
 import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
@@ -33,6 +34,13 @@ class UserViewModel extends BaseViewModel {
   double _longitude = 7.496529864154287;
 
   Services _selectedService = Services.none;
+
+  getUsername() async{
+
+   _username = await StorageHandler.getUserName();
+    setViewState(ViewState.success);
+
+  }
 
   showPassword() {
     _showPassword = !_showPassword;

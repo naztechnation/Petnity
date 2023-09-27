@@ -9,6 +9,7 @@ import 'package:petnity/utils/validator.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_routes.dart';
@@ -21,29 +22,28 @@ import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
 
 class SignInScreen extends StatelessWidget {
-    SignInScreen({super.key});
+  SignInScreen({super.key});
 
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
 
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
-      body: Container(
-        height: screenSize(context).height,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                begin: Alignment.topRight,
-                end: Alignment.topLeft)),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 25.0, right: 25),
-          child:  BlocProvider<AccountCubit>(
+        body: Container(
+      height: screenSize(context).height,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [AppColors.scaffoldColor, Colors.red.shade50],
+              begin: Alignment.topRight,
+              end: Alignment.topLeft)),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 25.0, right: 25),
+        child: BlocProvider<AccountCubit>(
           lazy: false,
           create: (_) => AccountCubit(
               accountRepository: AccountRepositoryImpl(),
@@ -51,20 +51,17 @@ class SignInScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                
-                 Modals.showToast(state.userData.message!,
-                      messageType: MessageType.success);
+                Modals.showToast(state.userData.message!,
+                    messageType: MessageType.success);
 
-                      if(state.userData.status!){
-                         AppNavigator.pushAndStackNamed(context,
+                if (state.userData.status!) {
+                  AppNavigator.pushAndStackNamed(context,
                       name: AppRoutes.landingPage);
-                      }else{
-                          AppNavigator.pushAndReplaceName(context,
-                    name: AppRoutes.serviceProviderLandingPage);
-                 
-                      }
-                      
-                    
+                } else {
+                  AppNavigator.pushAndReplaceName(context,
+                      name: AppRoutes.serviceProviderLandingPage);
+                }
+                StorageHandler.saveUserName(_usernameController.text.trim());
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
@@ -110,17 +107,17 @@ class SignInScreen extends StatelessWidget {
                       height: 24,
                     ),
                     TextEditView(
-                      controller: _emailController,
+                      controller: _usernameController,
                       // validator: (value){
                       //  return Validator.validateEmail(value, 'Email');
                       // },
                       isDense: true,
-                      textViewTitle: 'Your  Email',
-                      hintText: 'Enter email',
+                      textViewTitle: 'Your Username',
+                      hintText: 'Enter username',
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
-                          AppImages.messageIcon,
+                          AppImages.personIcon,
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,
@@ -131,18 +128,17 @@ class SignInScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _passwordController,
-                      validator: (value){
-                       return Validator.validate(value, 'Password');
+                      validator: (value) {
+                        return Validator.validate(value, 'Password');
                       },
                       isDense: true,
                       textViewTitle: 'Password',
                       hintText: 'Enter your password',
-                            obscureText: user.showPasswordStatus,
-                          
+                      obscureText: user.showPasswordStatus,
                       suffixIcon: GestureDetector(
-                         onTap: (){
-                                user.showPassword();
-                              },
+                        onTap: () {
+                          user.showPassword();
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: ImageView.svg(
@@ -179,8 +175,8 @@ class SignInScreen extends StatelessWidget {
                       height: 30,
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 0),
                       child: ButtonView(
                         processing: state is AccountLoading,
                         onPressed: () {
@@ -218,7 +214,8 @@ class SignInScreen extends StatelessWidget {
                             ),
                             TextSpan(
                                 text: '  Create Account',
-                                style: TextStyle(color: AppColors.lightSecondary),
+                                style:
+                                    TextStyle(color: AppColors.lightSecondary),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     AppNavigator.pushAndReplaceName(context,
@@ -246,11 +243,10 @@ class SignInScreen extends StatelessWidget {
     ));
   }
 
-    _submit(BuildContext ctx) {
+  _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().loginUser(
-          
-          email: _emailController.text.trim(),
+          username: _usernameController.text.trim(),
           password: _passwordController.text.trim());
       FocusScope.of(ctx).unfocus();
     }

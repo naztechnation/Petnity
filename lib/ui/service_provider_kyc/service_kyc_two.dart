@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,14 +18,17 @@ import '../widgets/text_edit_view.dart';
 import 'service_kyc_three.dart';
 
 class KycServiceScreenTwo extends StatelessWidget {
+  KycServiceScreenTwo({
+    super.key,
+  });
 
-  KycServiceScreenTwo({super.key,});
-
-  final TextEditingController _serviceProviderNameController = TextEditingController();
+  final TextEditingController _serviceProviderNameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: false);
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: false);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
@@ -68,12 +69,11 @@ class KycServiceScreenTwo extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                 child: ButtonView(
                   onPressed: () {
-                    serviceProvider.setServiceProviderName(_serviceProviderNameController.text);
+                    serviceProvider.setServiceProviderName(
+                        _serviceProviderNameController.text);
 
                     AppNavigator.pushAndStackPage(context,
-                        page: KycServiceScreenThree(
-                           
-                        ));
+                        page: KycServiceScreenThree());
                   },
                   color: AppColors.lightSecondary,
                   borderRadius: 22,
@@ -82,8 +82,8 @@ class KycServiceScreenTwo extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: 1,
                     text: 'Next',
-                    weight: FontWeight.w700,
-                    size: 20,
+                    weight: FontWeight.w500,
+                    size: 16,
                     fontFamily: AppStrings.interSans,
                     color: Colors.white,
                   ),
