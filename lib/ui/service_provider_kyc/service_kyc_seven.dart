@@ -10,7 +10,6 @@ import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
-import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
@@ -29,6 +28,7 @@ class KycServiceScreenSeven extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final userDetails = Provider.of<UserViewModel>(context, listen: true);
 
     return Scaffold(
         body: Container(
@@ -48,10 +48,10 @@ class KycServiceScreenSeven extends StatelessWidget {
           listener: (context, state) {
             if (state is PetProfileLoaded) {
               if (state.userData.status!) {
-                // AppNavigator.pushAndStackPage(context,
-                //         page: KycServiceScreenEight(
+                AppNavigator.pushAndStackPage(context,
+                        page: KycServiceScreenEight(
 
-                //         ));
+                        ));
                 Modals.showToast(state.userData.message,
                     messageType: MessageType.success);
               } else {
@@ -171,21 +171,23 @@ class KycServiceScreenSeven extends StatelessWidget {
                       child: ButtonView(
                         onPressed: () {
                           if (user.imageURl != null) {
-                               AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenEight(
-          
-                          ));
-                            // _submit(
-                            //   username: user.username,
-                            //   ctx: context,
-                            //   name: user.serviceProviderName,
-                            //   country: user.serviceProviderCountry,
-                            //   city: user.serviceProviderCity,
-                            //   dob: user.serviceProviderAge,
-                            //   gender: user.servicesProviderGender,
-                            //   about: user.aboutServiceProvider,
-                            //   picture: user.imageURl!,
-                            // );
+                          //      AppNavigator.pushAndStackPage(context,
+                          // page: KycServiceScreenEight(
+                            
+                          // ));
+
+                          _submit(
+                              username: userDetails.username,
+                              ctx: context,
+                              name: user.serviceProviderName,
+                              country: user.serviceProviderCountry,
+                              city: user.serviceProviderCity,
+                              dob: user.serviceProviderAge,
+                              gender: user.servicesProviderGender,
+                              about: user.aboutServiceProvider,
+                              picture: user.imageURl!,
+                            );
+                            
                           }
                         },
                         processing: state is PetProfileLoading,
@@ -225,6 +227,8 @@ class KycServiceScreenSeven extends StatelessWidget {
       required String about,
       required String dob,
       required File picture}) {
+
+      // Modals.showToast(username);
     ctx.read<AccountCubit>().registerServiceProviderProfile(
         username: username,
         dob: dob,

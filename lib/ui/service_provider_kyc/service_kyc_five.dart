@@ -23,7 +23,7 @@ class KycServiceScreenFive extends StatelessWidget {
   });
 
   String state = '';
-  String country= '';
+  String country = '';
   String city = '';
 
   @override
@@ -34,7 +34,7 @@ class KycServiceScreenFive extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SingleChildScrollView(
@@ -99,17 +99,21 @@ class KycServiceScreenFive extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                   child: ButtonView(
                     onPressed: () {
-                       if (country == '') {
+
+                    // serviceProvider.setCountryServiceProvider('Nigeria');
+                    // serviceProvider.setStateServiceProvider('Enugu');
+                    // serviceProvider.setCityServiceProvider( 'Nkanu');
+
+                    //  AppNavigator.pushAndStackPage(context,
+                    //         page: KycServiceScreenSix());
+
+                      if (country == '') {
                         Modals.showToast('please select a country');
-                      }else if (state == '') {
+                      } else if (state == '') {
                         Modals.showToast('please select a state');
-                      }
-                      
-                      else if (city == '') {
+                      } else if (city == '') {
                         Modals.showToast('please select a city');
-                      }
-                      
-                         else {
+                      } else {
                         AppNavigator.pushAndStackPage(context,
                             page: KycServiceScreenSix());
                       }
@@ -121,8 +125,8 @@ class KycServiceScreenFive extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       text: 'Next',
-                      weight: FontWeight.w400,
-                    size: 16,
+                      weight: FontWeight.w500,
+                      size: 16,
                       fontFamily: AppStrings.interSans,
                       color: Colors.white,
                     ),

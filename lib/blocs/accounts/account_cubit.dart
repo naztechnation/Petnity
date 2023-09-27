@@ -47,6 +47,34 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
+  Future<void> resendCode({
+    required String username,
+    
+  }) async {
+    try {
+      emit(AccountProcessing());
+
+      final user = await accountRepository.resendCode(
+        username: username,
+          );
+
+       await viewModel.setUserData(username:username);
+      emit(AccountLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<void> sendPetHealth({
     required String name,
     required String drug,

@@ -11,7 +11,6 @@ class AccountRepositoryImpl implements AccountRepository {
       {required String email,
       required String password,
       required String username,
-      
       required String url,
       required String phone}) async {
     final map = await Requests().post(AppStrings.otpUrl(url), body: {
@@ -115,18 +114,24 @@ class AccountRepositoryImpl implements AccountRepository {
       {required String code, required String username}) async {
     final map =
         await Requests().post(AppStrings.verifyUserProfileUrl(username), body: {
+      "code": code,
+    });
 
-
-
-        
-      "code": code,});
-      
-       return UserData.fromJson(map);}
+    return UserData.fromJson(map);
+  }
 
   Future<UserData> servicePetNames({required List<String> petnames}) async {
     final map = await Requests().patch(AppStrings.selectPetTypeUrl, body: {
       "pet_types": petnames,
     }, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return UserData.fromJson(map);
+  }
+  
+  @override
+  Future<UserData> resendCode({required String username}) async{
+     final map = await Requests().get(AppStrings.otpUrl(username), headers: {
       'Authorization': AppStrings.token,
     });
     return UserData.fromJson(map);

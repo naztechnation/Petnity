@@ -9,6 +9,7 @@ abstract class AccountRepository {
     required String email,required String password,required String phone,required String url, });
   Future<UserData> sendPetHealth({required String name,required String drug,required String prescription,required String url});
   Future<UserData> loginUser({required String username,required String password,});
+  Future<UserData> resendCode({required String username,});
   Future<UserData> verifyUser({required String code,required String username,});
   Future<UserData> registerUserPetProfile({
     required String username,

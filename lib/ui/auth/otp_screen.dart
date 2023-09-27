@@ -170,9 +170,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 child: ButtonView(
                   processing: state is AccountProcessing,
                   onPressed: () {
-                    //  _submit(context, user);
-                    AppNavigator.pushAndReplaceName(context,
-                      name: AppRoutes.successScreen);
+                      _submit(context, user);
+                  //  AppNavigator.pushAndReplaceName(context,
+                      // name: AppRoutes.successScreen);
                   },
                   color: AppColors.lightSecondary,
                   child: CustomText(
@@ -220,12 +220,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
   _resenCode(BuildContext ctx, user) {
     if (_formKey.currentState!.validate()) {
-      ctx.read<AccountCubit>().registerUser(
-          url: AppStrings.resendCodeUrl(user.username),
-          username: widget.username ?? '',
-          phoneNumber: widget.phone ?? '',
-          email: widget.email ?? '',
-          password: widget.password ?? '');
+      ctx.read<AccountCubit>().resendCode(
+          username: AppStrings.resendCodeUrl(user.username),
+          );
       FocusScope.of(ctx).unfocus();
     }
   }

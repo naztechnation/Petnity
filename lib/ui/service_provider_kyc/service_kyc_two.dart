@@ -30,7 +30,7 @@ class KycServiceScreenTwo extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SingleChildScrollView(
@@ -86,12 +86,11 @@ class KycServiceScreenTwo extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                   child: ButtonView(
                     onPressed: () {
-                      serviceProvider.setServiceProviderName(_serviceProviderNameController.text);
-      
+                      serviceProvider.setServiceProviderName(
+                          _serviceProviderNameController.text);
+
                       AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenThree(
-                             
-                          ));
+                          page: KycServiceScreenThree());
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 22,
@@ -100,8 +99,8 @@ class KycServiceScreenTwo extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       text: 'Next',
-                      weight: FontWeight.w700,
-                      size: 20,
+                      weight: FontWeight.w500,
+                      size: 16,
                       fontFamily: AppStrings.interSans,
                       color: Colors.white,
                     ),
