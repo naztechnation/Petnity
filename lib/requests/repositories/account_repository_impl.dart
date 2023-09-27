@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import '../../model/account_models/user_data.dart';
 import '../../res/app_strings.dart';
@@ -47,17 +46,17 @@ class AccountRepositoryImpl implements AccountRepository {
       required String about,
       required File picture}) async {
     final map = await Requests()
-        .post(AppStrings.registerUserPetProfileUrl(username: username),
-            // files: {'picture': picture},
-            body: {
-          "type": type,
-          "name": petname,
-          "gender": gender,
-          "breed": breed,
-          "size": size,
-          "about": about,
-          'picture': picture.path
-        });
+        .post(AppStrings.registerUserPetProfileUrl(username: username), body: {
+      "type": type,
+      "name": petname,
+      "gender": gender,
+      "breed": breed,
+      "size": size,
+      "about": about,
+      'picture':
+          'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
+      // 'picture': picture.path
+    });
     return UserData.fromJson(map);
   }
 
@@ -75,11 +74,60 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
+  Future<UserData> registerServiceProviderProfile(
+      {required String username,
+      required String dob,
+      required String name,
+      required String gender,
+      required String country,
+      required String city,
+      required String about,
+      required File picture}) async {
+    final map = await Requests().post(
+        AppStrings.registerServiceProviderProfileUrl(username: username),
+        body: {
+          "date_of_birth": dob,
+          "name": name,
+          "gender": gender,
+          "about": about,
+          "country": country,
+          "city": city,
+          'picture':
+              'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
+          // 'picture': picture.path
+        });
+    return UserData.fromJson(map);
+  }
+
+  @override
+  Future<UserData> serviceProvided(
+      {required List<String> services, required String username}) async {
+    final map = await Requests().patch(AppStrings.selectServiceTypeUrl, body: {
+      "service_types": services,
+    }, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return UserData.fromJson(map);
+  }
+
+  @override
   Future<UserData> verifyUser(
       {required String code, required String username}) async {
     final map =
         await Requests().post(AppStrings.verifyUserProfileUrl(username), body: {
-      "code": code,
+
+
+
+        
+      "code": code,});
+      
+       return UserData.fromJson(map);}
+
+  Future<UserData> servicePetNames({required List<String> petnames}) async {
+    final map = await Requests().patch(AppStrings.selectPetTypeUrl, body: {
+      "pet_types": petnames,
+    }, headers: {
+      'Authorization': AppStrings.token,
     });
     return UserData.fromJson(map);
   }

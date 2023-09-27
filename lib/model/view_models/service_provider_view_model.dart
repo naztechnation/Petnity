@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,47 +8,32 @@ import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
 class ServiceProviderViewModel extends BaseViewModel {
- 
-
-  String _address = '';
   String _username = '';
-  String _petType = '';
+  String _serviceProviderCountry = '';
+  String _serviceProviderState = '';
+  String _serviceProviderCity = '';
+
   String _petTypeIndex = '';
   String _serviceProviderName = '';
   String _serviceProviderGender = '';
   String _serviceProviderAge = '';
-  String _petBreed = '';
-  String _petSize = '';
-  String _aboutPet = '';
+
+  String _aboutServiceProvider = '';
   File? _imageURl;
-  UserType _userType = UserType.none;
+  File? _imageURl2;
+  List<String> _selectedServiceItems = [];
+  List<String> _selectedPetType = [];
 
   ImagePicker picker = ImagePicker();
 
-  bool _showPassword = false;
-
-  double _latitude = 6.424676142638944;
-
-  double _longitude = 7.496529864154287;
-
   Services _selectedService = Services.none;
 
-  
-
-  
-
-  setPetType(String petType) {
-    _petType = petType;
-    setViewState(ViewState.success);
-  }
-
   setServiceProviderAge(String age) {
-    
     _serviceProviderAge = age;
     setViewState(ViewState.success);
   }
 
-   Future<String> showDatePickerDialog(BuildContext context) async {
+  Future<String> showDatePickerDialog(BuildContext context) async {
     String age = '';
     DateTime? selectedDate = await showDatePicker(
       context: context,
@@ -79,61 +62,147 @@ class ServiceProviderViewModel extends BaseViewModel {
     if (selectedDate != null) {
       String formattedDate = "${selectedDate.toLocal()}".split(' ')[0];
 
-        setServiceProviderAge(formattedDate);
+      setServiceProviderAge(formattedDate);
 
-        age = serviceProviderAge;
-     
+      age = serviceProviderAge;
     }
 
     return age;
   }
-
-
 
   setServiceProviderName(String name) {
     _serviceProviderName = name;
     setViewState(ViewState.success);
   }
 
+ 
+
   setServiceProviderGender(String serviceGender) {
     _serviceProviderGender = serviceGender;
     setViewState(ViewState.success);
   }
 
-     setPetTypeIndex(String petTypeIndex) {
+  setPetTypeIndex(String petTypeIndex) {
     _petTypeIndex = petTypeIndex;
     setViewState(ViewState.success);
   }
 
-  setPetSize(String petSize) {
-    _petSize = petSize;
+  addService(String service) {
+    if (_selectedServiceItems.contains(service)) {
+      _selectedServiceItems.remove(service);
+    } else {
+      _selectedServiceItems.add(service);
+    }
     setViewState(ViewState.success);
   }
 
-  setAboutPet(String aboutPet) {
-    _aboutPet = aboutPet;
+   addPetServiceType(String service) {
+    if (_selectedPetType.contains(service)) {
+      _selectedPetType.remove(service);
+    } else {
+      _selectedPetType.add(service);
+    }
     setViewState(ViewState.success);
   }
 
-  setPetBreed(String petBreed) {
-    _petBreed = petBreed;
+  setAboutServiceProvider(String about) {
+    _aboutServiceProvider = about;
     setViewState(ViewState.success);
   }
 
-  setUserType(UserType userType) {
-    _userType = userType;
+  setCityServiceProvider(String city) {
+    _serviceProviderCity = city;
     setViewState(ViewState.success);
   }
+
+  setCountryServiceProvider(String country) {
+    _serviceProviderCountry = country;
+    setViewState(ViewState.success);
+  }
+
+  setStateServiceProvider(String state) {
+    _serviceProviderState = state;
+    setViewState(ViewState.success);
+  }
+
+ 
 
   Future<void> setUserData({required String username}) async {
     _username = username;
     setViewState(ViewState.success);
   }
 
-  
-  Future<void> setAddress(String address) async {
-    _address = address;
-    setViewState(ViewState.success);
+  loadImage(BuildContext context, bool isSecondUpload) async {
+    await showModalBottomSheet<dynamic>(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.0))),
+        builder: (BuildContext bc) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 30.0, right: 8.0, top: 8.0, bottom: 8.0),
+                child: Text('Select the images source',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontWeight: FontWeight.bold)),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.photo_camera,
+                  size: 35.0,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                title: const Text('Camera'),
+                onTap: () async {
+                  Navigator.pop(context);
+
+                  final image = await ImagePicker().pickImage(
+                      source: ImageSource.camera,
+                      imageQuality: 80,
+                      maxHeight: 1000,
+                      maxWidth: 1000);
+
+                      if(isSecondUpload){
+                        _imageURl2 = File(image!.path);
+                      }else{
+                        _imageURl = File(image!.path);
+                      }
+                  
+                  setViewState(ViewState.success);
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.photo,
+                  size: 35.0,
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+                title: const Text('Gallery'),
+                onTap: () async {
+                  Navigator.pop(context);
+                  final image = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                      imageQuality: 80,
+                      maxHeight: 1000,
+                      maxWidth: 1000);
+                   if(isSecondUpload){
+                        _imageURl2 = File(image!.path);
+                      }else{
+                        _imageURl = File(image!.path);
+                      }
+                  setViewState(ViewState.success);
+                },
+              ),
+            ],
+          );
+        });
   }
 
   Future<void> setSelectedService(Services selectedService) async {
@@ -141,24 +210,21 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  String get address => _address;
+
   Services get selectedService => _selectedService;
 
   
-
-  double get longitude => _longitude;
-
-  double get latitude => _latitude;
-  bool get showPasswordStatus => _showPassword;
   String get username => _username;
-  String get petType => _petType;
-  String get petTypeIndex=> _petTypeIndex;
+  String get serviceProviderCity => _serviceProviderCity;
+  String get serviceProviderCountry => _serviceProviderCountry;
+  String get serviceProviderState => _serviceProviderState;
+  String get petTypeIndex => _petTypeIndex;
   String get serviceProviderName => _serviceProviderName;
   String get servicesProviderGender => _serviceProviderGender;
   String get serviceProviderAge => _serviceProviderAge;
-  String get petBreed => _petBreed;
-  String get petSize => _petSize;
-  String get aboutPet => _aboutPet;
+  List<String> get selectedServiceItems => _selectedServiceItems;
+  List<String> get selectedPetType => _selectedPetType;
+  String get aboutServiceProvider => _aboutServiceProvider;
   File? get imageURl => _imageURl;
-  UserType get userType => _userType;
+  File? get imageURl2 => _imageURl2;
 }

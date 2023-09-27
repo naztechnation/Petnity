@@ -25,12 +25,22 @@ class _KycScreenOneState extends State<KycScreenOne> {
 
   int _index = -1;
     List<String> pets = [
-      'Monkey',
-      'Dog',
-      'Rabbit',
+      'Dogs ',
       'Cat',
-      'Squirell',
-      'Snake',
+      'Monkeys',
+      'Squirrels',
+      'Parrot',
+      'Birds',
+      'Rabbit',
+    ];
+     List<String> petsPics = [
+      AppImages.dogsPic,
+      AppImages.catPic,
+      AppImages.monkeyPic,
+      AppImages.squirrelPic,
+      AppImages.parrotPic,
+      AppImages.birdsPic,
+      AppImages.rabbitPic,
     ];
   @override
   Widget build(BuildContext context) {
@@ -79,7 +89,7 @@ class _KycScreenOneState extends State<KycScreenOne> {
                           itemCount: pets.length,
                           itemBuilder: (context, index) {
                             return PetType(
-                              imageUrl: AppImages.squirrelPic,
+                              imageUrl: petsPics[index],
                               petName: pets[index],
                               isPetType: _index == index,
                               onPressed: () {

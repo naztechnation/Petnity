@@ -1,16 +1,15 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/view_models/service_provider_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
-import '../../res/app_images.dart';
+
 import '../../res/app_strings.dart';
 import '../../utils/navigator/page_navigator.dart';
-import '../user_kyc/kyc_screen_three.dart';
+
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
@@ -32,6 +31,7 @@ class KycServiceScreenFour extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
+<<<<<<< HEAD
       body: SingleChildScrollView(
         child: Container(
           height: screenSize(context).height,
@@ -106,16 +106,101 @@ class KycServiceScreenFour extends StatelessWidget {
                     maxLines: 1,
                     text: 'Next',
                     weight: FontWeight.w500,
+=======
+      body: GestureDetector(
+        onTap: (){
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            height: screenSize(context).height,
+            width: screenSize(context).width,
+            decoration: BoxDecoration(),
+            child: Column(children: [
+              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+              Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w800,
+>>>>>>> 35e2c8dd57b2da6a67c48d2f1205d45e8e12fed1
                     size: 16,
                     fontFamily: AppStrings.interSans,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
+                ],
+              ),
+              SizedBox(
+                height: screenSize(context).height * 0.2,
+              ),
+              SizedBox(height: 55),
+              CustomText(
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                text: 'Your age',
+                weight: FontWeight.w700,
+                size: 32,
+                fontFamily: AppStrings.interSans,
+                color: Colors.black,
+              ),
+              SizedBox(height: 30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                child: TextEditView(
+                  controller: _serviceProviderAgeController,
+                  isDense: true,
+                  readOnly: true,
+                  labelText: 'Year/Month/Day',
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down,
+                    size: 32,
+                  ),
+                  onTap: () async {
+                    await serviceProvider.showDatePickerDialog(context);
+      
+                    _serviceProviderAgeController.text =
+                        serviceProvider.serviceProviderAge;
+                  },
                 ),
               ),
-            SizedBox(
-              height: 50,
-            ),
-          ]),
+              const Spacer(),
+              if (serviceProvider.serviceProviderAge != '')
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
+                  child: ButtonView(
+                    onPressed: () {
+                      serviceProvider.setServiceProviderAge(
+                          _serviceProviderAgeController.text);
+      
+                      AppNavigator.pushAndStackPage(context,
+                          page: KycServiceScreenFive());
+                    },
+                    color: AppColors.lightSecondary,
+                    borderRadius: 22,
+                    borderColor: Colors.white,
+                    child: CustomText(
+                      textAlign: TextAlign.center,
+                      maxLines: 1,
+                      text: 'Next',
+                      weight: FontWeight.w400,
+                    size: 16,
+                      fontFamily: AppStrings.interSans,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              SizedBox(
+                height: 50,
+              ),
+            ]),
+          ),
         ),
       ),
     );

@@ -131,7 +131,7 @@ class UserViewModel extends BaseViewModel {
                   Navigator.pop(context);
 
                   final image = await ImagePicker().pickImage(
-                      source: ImageSource.gallery,
+                      source: ImageSource.camera,
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);

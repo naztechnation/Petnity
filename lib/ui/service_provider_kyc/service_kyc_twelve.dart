@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/enum.dart';
@@ -13,8 +15,8 @@ import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/image_view.dart';
 
-class RegSuccessful extends StatelessWidget {
-  const RegSuccessful({super.key});
+class KycServiceScreenTwelve extends StatelessWidget {
+  const KycServiceScreenTwelve({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,28 @@ class RegSuccessful extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+
+             Row(
+                children: [
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w800,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
             SizedBox(
               height: screenSize(context).height * 0.35,
             ),
+            
             Padding(
               padding: const EdgeInsets.all(22.0),
               child: Material(
@@ -51,15 +72,18 @@ class RegSuccessful extends StatelessWidget {
                         height: 10,
                       ),
                       Center(
-                        child: CustomText(
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          text:
-                        user.userType == UserType.user ?  'Your account has been successfully created,\nnow you are ready to get access to a slue \nof pets and pets services'   : 'Your account has been successfully created,\nnow you are ready to offer your services to users.',
-                          weight: FontWeight.w600,
-                          size: 13,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: CustomText(
+                            textAlign: TextAlign.justify,
+                            maxLines: 3,
+                            text:
+                          'Your Id upload is successful and is being reviewed, reviews normally take between 2-4 working days.',
+                            weight: FontWeight.w600,
+                            size: 13,
+                            
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],
@@ -68,7 +92,7 @@ class RegSuccessful extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: screenSize(context).height * 0.2,
+              height: screenSize(context).height * 0.1,
             ),
             Padding(
               padding:
@@ -88,7 +112,7 @@ class RegSuccessful extends StatelessWidget {
                 child: CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text: user.userType == UserType.user ? 'Lets get to know your pet' : 'Lets get to know you more',
+                  text:  'Continue',
                   weight: FontWeight.w400,
                   size: 16,
                   fontFamily: AppStrings.interSans,
@@ -97,21 +121,7 @@ class RegSuccessful extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-         if(user.userType == UserType.user)   InkWell(
-              onTap: () {
-                AppNavigator.pushNamedAndRemoveUntil(context,
-                    name: 'landingPage');
-              },
-              child: CustomText(
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                text: 'Skip and go to home',
-                weight: FontWeight.w400,
-                size: 14,
-                fontFamily: AppStrings.interSans,
-                color: AppColors.lightSecondary,
-              ),
-            ),
+        
           ],
         ),
       ),

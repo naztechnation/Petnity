@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_routes.dart';
@@ -38,6 +39,8 @@ class SignUpScreen extends StatelessWidget {
     _phoneController.text = '090746453728';
     _passwordController.text = 'Scarface@306166';
     final user = Provider.of<UserViewModel>(context, listen: true);
+    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+
     return Scaffold(
         body: Container(
       height: double.infinity,
@@ -219,7 +222,7 @@ class SignUpScreen extends StatelessWidget {
                         processing: state is AccountProcessing,
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            RegistrationOptions(context, user);
+                            RegistrationOptions(context, user, serviceProvider);
                           }
                         },
                         color: AppColors.lightSecondary,
@@ -294,7 +297,7 @@ class SignUpScreen extends StatelessWidget {
     }
   }
 
-  RegistrationOptions(BuildContext context, final user) {
+  RegistrationOptions(BuildContext context, final user, final serviceProvider) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
         isScrollControlled: false,
@@ -351,6 +354,9 @@ class SignUpScreen extends StatelessWidget {
                     user.setUserType(UserType.user);
 
                     _submit(context);
+                    AppNavigator.pushAndReplaceName(context,
+                        name: AppRoutes.otpScreen);
+                    //  _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,
@@ -364,8 +370,8 @@ class SignUpScreen extends StatelessWidget {
 
                     user.setUserType(UserType.serviceProvider);
 
-                    AppNavigator.pushAndReplaceName(context,
-                        name: AppRoutes.otpScreen);
+                    // AppNavigator.pushAndReplaceName(context,
+                    //     name: AppRoutes.otpScreen);
                      _submit(context);
                   }, context),
                   const SizedBox(

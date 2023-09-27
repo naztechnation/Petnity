@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/ui/widgets/loading_page.dart';
-import 'package:provider/provider.dart';
+  import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
 import '../../model/view_models/user_view_model.dart';

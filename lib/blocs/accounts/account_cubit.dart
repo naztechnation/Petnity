@@ -104,16 +104,93 @@ class AccountCubit extends Cubit<AccountStates> {
  
 
   Future<void> registerUserPetProfile(
-   {required String username,required String type,required String petname,required String gender,required String breed,required String size,required String about,required File picture}) async {
+   {required String username,required String type,
+   required String petname,required String gender,
+   required String breed,required String size,
+   required String about,required File picture}) async {
     try {
       emit(PetProfileLoading());
 
       final user = await accountRepository.registerUserPetProfile(
         username: username,
-        type: type, petname: petname, size: size, breed: breed, gender: gender, picture: picture, about: about
+        type: type, petname: petname, size: size, breed: breed,
+         gender: gender, picture: picture, about: about
           
       );
-      //  await viewModel.setUserData(username:email);
+     
+      emit(PetProfileLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> registerServiceProviderProfile(
+   { required String username,
+    required String dob,required String name,required String gender,
+    required String country,required String city,required String about,required File picture}) async {
+    try {
+      emit(PetProfileLoading());
+
+      final user = await 
+      accountRepository.registerServiceProviderProfile(username: username, dob: dob, name: name, gender: gender, country: country, city: city, about: about, picture: picture);
+     
+      emit(PetProfileLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> serviceProvided({required List<String> services,required String username}) async {
+    try {
+      emit(AccountProcessing());
+
+      final user = await accountRepository.serviceProvided(services: services, username: username
+          );
+
+      // await viewModel.setUserData(username:email);
+      emit(AccountLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> servicePetType({required List<String> petnames}) async {
+    try {
+      emit(PetProfileLoading());
+
+      final user = await accountRepository.servicePetNames(petnames: petnames,
+          );
+
       emit(PetProfileLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -338,59 +415,7 @@ class AccountCubit extends Cubit<AccountStates> {
   //     idNumber;
   // late File idFront, idBack;
 
-  // Future<void> setKYCValue(
-  //     {String? firstName,
-  //     String? lastName,
-  //     String? dob,
-  //     String? phoneNumber,
-  //     String? nationality,
-  //     String? idType,
-  //     String? idNumber,
-  //     File? idFront,
-  //     File? idBack}) async {
-  //   if (firstName != null) this.firstName = firstName;
-  //   if (lastName != null) this.lastName = lastName;
-  //   if (dob != null) this.dob = dob;
-  //   if (phoneNumber != null) this.phoneNumber = phoneNumber;
-  //   if (nationality != null) this.nationality = nationality;
-  //   if (idType != null) this.idType = idType;
-  //   if (idNumber != null) this.idNumber = idNumber;
-  //   if (idFront != null) this.idFront = idFront;
-  //   if (idBack != null) this.idBack = idBack;
-  // }
-
-  // Future<void> submitKYC(File selfie) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final user = await accountRepository.submitKYC(
-  //         firstName: firstName,
-  //         lastName: lastName,
-  //         dob: dob,
-  //         phoneNumber: phoneNumber,
-  //         nationality: nationality,
-  //         idType: idType,
-  //         idNumber: idNumber,
-  //         idFront: idFront,
-  //         idBack: idBack,
-  //         selfie: selfie);
-
-  //     await viewModel.updateUser(user);
-  //     emit(AccountUpdated(user));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
+ 
 
   // Future<void> requestPinReset(String verifier) async {
   //   try {

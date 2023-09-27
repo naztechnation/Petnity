@@ -22,7 +22,7 @@ class PetType extends StatelessWidget {
     return  InkWell(
       onTap:  onPressed ,
       child: AnimatedContainer( 
-        duration: const Duration (seconds: 1),
+        duration: const Duration (milliseconds: 1000),
        curve: Curves.fastOutSlowIn,
         height: 63,
         decoration: BoxDecoration(
@@ -41,10 +41,10 @@ class PetType extends StatelessWidget {
                           Expanded(
                             child: CustomText(
                                               textAlign: TextAlign.left,
-                                              maxLines: 1,
+                                              maxLines: 2,
                                               text: petName,
                                               weight: FontWeight.w600,
-                                              size: 16,
+                                              size: 15,
                                               fontFamily: AppStrings.interSans,
                                               color: isPetType ? AppColors.lightPrimary :  Colors.black,
                                             ),
