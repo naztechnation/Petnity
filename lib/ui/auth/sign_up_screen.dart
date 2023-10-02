@@ -18,7 +18,6 @@ import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
-import '../service_provider_kyc/service_kyc_eight.dart';
 import '../user_kyc/kyc_screen_one.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
@@ -37,11 +36,11 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _phoneController.text = '090746453728';
-    _passwordController.text = 'Scarface@306166';
+    
     final user = Provider.of<UserViewModel>(context, listen: true);
     final serviceProvider =
         Provider.of<ServiceProviderViewModel>(context, listen: true);
+    StorageHandler.saveOnboardState('true');
 
     return Scaffold(
         body: Container(

@@ -40,13 +40,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     super.initState();
   }
 
-  
-  
-
   nextPage() {
     setState(() {
       if (pageIndex == 4) {
-          AppNavigator.pushAndReplaceName(context, name: AppRoutes.signUpScreen);
+        AppNavigator.pushAndReplaceName(context, name: AppRoutes.signUpScreen);
 
         SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
             overlays: SystemUiOverlay.values);
@@ -67,195 +64,182 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [AppColors.scaffoldColor, Colors.red.shade100],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter)),
+        body: Stack(children: [
+      Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.red.shade100],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter)),
+      ),
+      Positioned(
+        top: screenSize(context).height * 0.04,
+        right: 20,
+        child: GestureDetector(
+          onTap: () => AppNavigator.pushAndReplaceName(context,
+              name: AppRoutes.signUpScreen),
+          child: CustomText(
+            maxLines: 1,
+            text: 'SKIP',
+            weight: FontWeight.w900,
+            size: 14,
+            fontFamily: AppStrings.interSans,
+            color: Colors.black,
           ),
-          Positioned(
-            top: screenSize(context).height * 0.04,
-            right: 20,
-            child: GestureDetector(
-              onTap: () => AppNavigator.pushAndReplaceName(context,
-                  name: AppRoutes.signUpScreen),
+        ),
+      ),
+      Positioned(
+        top: screenSize(context).height * 0.16,
+        left: 80,
+        right: 80,
+        child: ScaleTransition(
+          scale: _animationController.drive(
+            Tween<double>(begin: 1.3, end: 1.0).chain(
+              CurveTween(
+                curve: Interval(0.2, 0.4, curve: Curves.elasticInOut),
+              ),
+            ),
+          ),
+          child: CircleAvatar(
+            radius: 100,
+            backgroundColor: Colors.transparent,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(260),
+                child: ImageView.asset(
+                  onboardPageItems[pageIndex].gifAsset,
+                  width: 200,
+                  height: 260,
+                  fit: BoxFit.cover,
+                )),
+          ),
+        ),
+      ),
+      Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: Container(
+          height: screenSize(context).height * 0.5,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(
+                  top: Radius.elliptical(screenSize(context).width, 90.0))),
+          child: Column(children: [
+            const SizedBox(
+              height: 47,
+            ),
+            FadingSlidingWidget(
+              animationController: _animationController,
+              interval: const Interval(0.5, 0.9),
               child: CustomText(
-                maxLines: 1,
-                text: 'SKIP',
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                text: onboardPageItems[pageIndex].title,
                 weight: FontWeight.w900,
-                size: 14,
+                size: 22,
+                fontFamily: AppStrings.montserrat,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(
+              height: 34,
+            ),
+            FadingSlidingWidget(
+              animationController: _animationController,
+              interval: const Interval(0.5, 0.9),
+              child: CustomText(
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                text: onboardPageItems[pageIndex].description,
+                weight: FontWeight.w400,
+                size: 16,
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
             ),
-          ),
-          Positioned(
-            top: screenSize(context).height * 0.16,
-            left: 80,
-            right: 80,
-            child: ScaleTransition(
-              scale: _animationController.drive(
-                Tween<double>(begin: 1.3, end: 1.0).chain(
-                  CurveTween(
-                    curve: Interval(0.2, 0.4, curve: Curves.elasticInOut),
+            const SizedBox(height: 15),
+            FadingSlidingWidget(
+              animationController: _animationController,
+              interval: const Interval(0.5, 0.9),
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 400),
+                curve: Interval(
+                  0,
+                  0.5,
+                  curve: Curves.easeInOut,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 14.0, horizontal: 20),
+                  child: ButtonView(
+                    onPressed: () {
+                      nextPage();
+                    },
+                    color: AppColors.lightSecondary,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomText(
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          text: (pageIndex == 4) ? 'Lets\'s go' : 'Continue',
+                          weight: FontWeight.w400,
+                          size: 16,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 6,
+                        ),
+                        Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-              child: CircleAvatar(
-                radius: 100,
-                backgroundColor: Colors.transparent,
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(260),
-                    child: ImageView.asset(
-                      onboardPageItems[pageIndex].gifAsset,
-                      width: 200,
-                      height: 260,
-                      fit: BoxFit.cover,
-                    )),
+            ),
+            const SizedBox(height: 15),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 14.0, horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PageIndicator(
+                    isIndex: pageIndex >= 0,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  PageIndicator(
+                    isIndex: pageIndex >= 1,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  PageIndicator(
+                    isIndex: pageIndex >= 2,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  PageIndicator(
+                    isIndex: pageIndex >= 3,
+                  ),
+                  const SizedBox(
+                    width: 6,
+                  ),
+                  PageIndicator(
+                    isIndex: pageIndex >= 4,
+                  ),
+                ],
               ),
             ),
-          ),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: screenSize(context).height * 0.5,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.elliptical(
-                            screenSize(context).width, 90.0))),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 47,
-                    ),
-                    FadingSlidingWidget(
-                      animationController: _animationController,
-                      interval: const Interval(0.5, 0.9),
-                      child: CustomText(
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        text: onboardPageItems[pageIndex].title,
-                        weight: FontWeight.w900,
-                        size: 22,
-                        fontFamily: AppStrings.montserrat,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 34,
-                    ),
-                    FadingSlidingWidget(
-                      animationController: _animationController,
-                      interval: const Interval(0.5, 0.9),
-                      child: CustomText(
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        text: onboardPageItems[pageIndex].description,
-                        weight: FontWeight.w400,
-                        size: 16,
-                        fontFamily: AppStrings.interSans,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    FadingSlidingWidget(
-                      animationController: _animationController,
-                      interval: const Interval(0.5, 0.9),
-                      child: AnimatedContainer(
-                        duration: Duration(milliseconds: 400),
-              curve: Interval(
-                0,
-                0.5,
-                curve: Curves.easeInOut,
-              ),
-                        child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 14.0, horizontal: 20),
-                            child: ButtonView(
-                              onPressed: () {
-                                nextPage();
-                              },
-                              color: AppColors.lightSecondary,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomText(
-                                    textAlign: TextAlign.center,
-                                    maxLines: 2,
-                                    text: (pageIndex == 4)
-                                        ? 'Lets\'s go'
-                                        : 'Continue',
-                                    weight: FontWeight.w400,
-                                    size: 16,
-                                    fontFamily: AppStrings.interSans,
-                                    color: Colors.white,
-                                  ),
-                                  const SizedBox(
-                                    width: 6,
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                  
-                    const SizedBox(height: 15),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 14.0, horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          PageIndicator(
-                            isIndex: pageIndex >= 0,
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          PageIndicator(
-                            isIndex: pageIndex >= 1,
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          PageIndicator(
-                            isIndex: pageIndex >= 2,
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          PageIndicator(
-                            isIndex: pageIndex >= 3,
-                          ),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          PageIndicator(
-                            isIndex: pageIndex >= 4,
-                          ),
-                        ],
-                      ),
-                    ),
-
-        ]),
-                ),
-        )]));
-
-        
+          ]),
+        ),
+      )
+    ]));
   }
-
-
-  
-
 }

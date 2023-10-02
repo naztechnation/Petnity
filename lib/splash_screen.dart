@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 
 import '../../res/app_images.dart';
 import '../res/app_routes.dart';
@@ -30,8 +31,34 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
     changeScreen();
   }
 
+ 
+      String userType = '';
+      String userLoggedIn = '';
+      String isonBoarding = '';
+
+      getUserDetails()async {
+        userType = await StorageHandler.getUserType();
+        userLoggedIn = await StorageHandler.getLoggedInState();
+        isonBoarding = await StorageHandler.getOnBoardState();
+      }
+
   Future<void> changeScreen() async {
+
+    if(isonBoarding == ''){
           AppNavigator.pushAndReplaceName(context, name: AppRoutes.welcomeScreen);
+
+    }else if(userLoggedIn == ''){
+          AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+      
+    }else if(userType != ''){
+      if(userType == 'user'){
+          AppNavigator.pushAndReplaceName(context, name: AppRoutes.landingPage);
+
+      }else if(userType == 'service_provider'){
+          AppNavigator.pushAndReplaceName(context, name: AppRoutes.serviceProviderLandingPage);
+
+      }
+    }
 
 
     //Show status bar
@@ -41,9 +68,10 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
 
   @override
   void initState() {
+    getUserDetails();
      _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1700),
+      duration: const Duration(milliseconds: 500),
     )..forward();
     super.initState();
     startTimeout();

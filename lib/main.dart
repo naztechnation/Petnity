@@ -32,9 +32,9 @@ class Petnity extends StatelessWidget {
       routes: AppRoutes.routes,
 
       //initialRoute: AppRoutes.serviceProviderLandingPage,
-       initialRoute: AppRoutes.signInScreen,
+      //  initialRoute: AppRoutes.signInScreen,
       //initialRoute: AppRoutes.serviceProviderLandingPage,
-      // initialRoute: AppRoutes.welcomeScreen,
+       initialRoute: AppRoutes.splashScreen,
 
       onGenerateRoute: AppRoutes.generateRoute,
     );

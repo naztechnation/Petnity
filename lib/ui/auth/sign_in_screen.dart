@@ -16,7 +16,6 @@ import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
-import '../service_provider_kyc/service_kyc_seven.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
@@ -33,6 +32,7 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: true);
+    StorageHandler.saveOnboardState('true');
 
     return Scaffold(
         body: Container(
@@ -55,10 +55,15 @@ class SignInScreen extends StatelessWidget {
                 Modals.showToast(state.userData.message!,
                     messageType: MessageType.success);
 
+                StorageHandler.saveIsLoggedIn('true');
+
                 if (state.userData.status!) {
                   AppNavigator.pushAndStackNamed(context,
                       name: AppRoutes.landingPage);
+                  StorageHandler.saveIsUserType('user');
                 } else {
+                  StorageHandler.saveIsUserType('service_provider');
+
                   AppNavigator.pushAndReplaceName(context,
                       name: AppRoutes.serviceProviderLandingPage);
                 }
@@ -181,8 +186,7 @@ class SignInScreen extends StatelessWidget {
                       child: ButtonView(
                         processing: state is AccountLoading,
                         onPressed: () {
-                         
-                            _submit(context);
+                          _submit(context);
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(
