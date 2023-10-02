@@ -52,7 +52,6 @@ class Requests {
       if (files != null) {
         final request = http.MultipartRequest('POST', Uri.parse(route));
         request.headers.addAll(headers ?? await formDataHeader());
-      //  if (body != null && body.values is String)
           request.fields.addAll(body as Map<String, String>);
         files.forEach((key, value) async {
           request.files.add(await http.MultipartFile.fromPath(key, value.path,));
@@ -146,11 +145,12 @@ class Requests {
 
     Future<dynamic> patch(String route,
       {Map<String, String>? headers,
-      Map<String, dynamic>? body,
+      var body,
       Map<String, File>? files,
       Encoding? encoding,
-      RetryOptions? retryOption}) async {
+      }) async {
     debugPrint(route);
+
     late dynamic map;
     try {
         await http
@@ -164,7 +164,6 @@ class Requests {
           
         });
 
-     
 
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);

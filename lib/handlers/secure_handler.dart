@@ -22,8 +22,8 @@ class StorageHandler {
     return username;
   }
 
-  static Future<void> saveAgentId([String? id]) async {
-    if (id != null)
+  static Future<void> saveAgentId(String id) async {
+    
       await storage.write(key: 'ID', value: id);
   }
 

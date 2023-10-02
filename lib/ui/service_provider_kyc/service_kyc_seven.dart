@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/ui/service_provider_kyc/service_kyc_eleven.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
@@ -21,11 +22,18 @@ import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 import 'service_kyc_eight.dart';
 
-class KycServiceScreenSeven extends StatelessWidget {
+class KycServiceScreenSeven extends StatefulWidget {
   KycServiceScreenSeven({
     super.key,
   });
 
+  @override
+  State<KycServiceScreenSeven> createState() => _KycServiceScreenSevenState();
+}
+
+class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
+
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
@@ -49,15 +57,14 @@ class KycServiceScreenSeven extends StatelessWidget {
           listener: (context, state) {
             if (state is PetProfileLoaded) {
               if (state.userData.status!) {
-                    StorageHandler.saveAgentId(state.userData.agent!.id.toString());
+                StorageHandler.saveAgentId(state.userData.agent!.id.toString());
+
+                Modals.showToast(state.userData.agent!.id.toString());
 
                 AppNavigator.pushAndStackPage(context,
-                        page: KycServiceScreenEight(
-
-                        ));
+                    page: KycServiceScreenEight());
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
-
               } else {
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
@@ -75,9 +82,9 @@ class KycServiceScreenSeven extends StatelessWidget {
             }
           },
           builder: (context, state) => GestureDetector(
-            onTap: (){
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -94,7 +101,7 @@ class KycServiceScreenSeven extends StatelessWidget {
                         maxLines: 1,
                         text: 'KYC  Registration',
                         weight: FontWeight.w800,
-                    size: 16,
+                        size: 16,
                         fontFamily: AppStrings.interSans,
                         color: Colors.black,
                       ),
@@ -152,7 +159,7 @@ class KycServiceScreenSeven extends StatelessWidget {
                       ? SizedBox.shrink()
                       : TextButton(
                           onPressed: () async {
-                            user.loadImage(context, false);
+                            user.loadImage(context, UploadType.userPhoto);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -173,14 +180,23 @@ class KycServiceScreenSeven extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
-                        onPressed: () {
+                        onPressed: () async {
                           if (user.imageURl != null) {
-                          //      AppNavigator.pushAndStackPage(context,
-                          // page: KycServiceScreenEight(
-                            
-                          // ));
+                                 
+                           
 
-                          _submit(
+                            userDetails.getUserId();
+                              setState(() {
+                                isLoading = true;
+                              });
+                            String imgUrl = await user.uploadImage(
+                                user.imageURl!.path,
+                                'petnity_service_provider');
+                                setState(() {
+                                isLoading = false;
+                              });
+
+                            _submit(
                               username: userDetails.username,
                               ctx: context,
                               name: user.serviceProviderName,
@@ -189,12 +205,11 @@ class KycServiceScreenSeven extends StatelessWidget {
                               dob: user.serviceProviderAge,
                               gender: user.servicesProviderGender,
                               about: user.aboutServiceProvider,
-                              picture: user.imageURl!,
+                              picture: imgUrl,
                             );
-                            
-                          }
+                           }
                         },
-                        processing: state is PetProfileLoading,
+                        processing: (state is PetProfileLoading || isLoading),
                         color: AppColors.lightSecondary,
                         borderRadius: 32,
                         borderColor: Colors.white,
@@ -203,7 +218,7 @@ class KycServiceScreenSeven extends StatelessWidget {
                           maxLines: 1,
                           text: 'Submit',
                           weight: FontWeight.w400,
-                    size: 16,
+                          size: 16,
                           fontFamily: AppStrings.interSans,
                           color: Colors.white,
                         ),
@@ -230,9 +245,8 @@ class KycServiceScreenSeven extends StatelessWidget {
       required String city,
       required String about,
       required String dob,
-      required File picture}) {
-
-      // Modals.showToast(username);
+      required String picture}) {
+    // Modals.showToast(username);
     ctx.read<AccountCubit>().registerServiceProviderProfile(
         username: username,
         dob: dob,

@@ -16,6 +16,7 @@ import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
+import '../service_provider_kyc/service_kyc_seven.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
@@ -180,7 +181,8 @@ class SignInScreen extends StatelessWidget {
                       child: ButtonView(
                         processing: state is AccountLoading,
                         onPressed: () {
-                          _submit(context);
+                         
+                            _submit(context);
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(

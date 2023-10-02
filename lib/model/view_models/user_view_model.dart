@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
+
 
 import '../../handlers/location_handler.dart';
 import '../../handlers/secure_handler.dart';
@@ -36,18 +39,14 @@ class UserViewModel extends BaseViewModel {
 
   Services _selectedService = Services.none;
 
-  getUsername() async{
-
-   _username = await StorageHandler.getUserName();
+  getUsername() async {
+    _username = await StorageHandler.getUserName();
     setViewState(ViewState.success);
-
   }
 
-  getUserId() async{
-
-   _userid = await StorageHandler.getAgentId();
+  getUserId() async {
+    _userid = await StorageHandler.getAgentId();
     setViewState(ViewState.success);
-
   }
 
   showPassword() {
@@ -67,7 +66,7 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   setPetTypeIndex(String petTypeIndex) {
+  setPetTypeIndex(String petTypeIndex) {
     _petTypeIndex = petTypeIndex;
     setViewState(ViewState.success);
   }
@@ -180,6 +179,37 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+  Future<String> uploadImage(String imageUrl, String uploadPreset) async{
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/do2z93mmw/upload');
+
+    String image = '';
+
+    try {
+      final request = http.MultipartRequest('POST', url)
+        ..fields['upload_preset'] = uploadPreset
+        ..files.add(await http.MultipartFile.fromPath('file', imageUrl));
+
+        final response = await request.send();
+
+        if(response.statusCode == 200){
+          final responseData = await response.stream.toBytes();
+          final resPonseString = String.fromCharCodes(responseData);
+          final jsonMap = jsonDecode(resPonseString);
+
+            image = jsonMap['url'];
+
+           
+           return image;
+        }
+    } catch (e) {
+      
+    }
+     
+     return image;
+  }
+
+
+
   String get address => _address;
   Services get selectedService => _selectedService;
 
@@ -198,7 +228,7 @@ class UserViewModel extends BaseViewModel {
   String get username => _username;
   String get petType => _petType;
   String get serviceProviderId => _userid;
-  String get petTypeIndex=> _petTypeIndex;
+  String get petTypeIndex => _petTypeIndex;
   String get petName => _petName;
   String get petGender => _petGender;
   String get petBreed => _petBreed;

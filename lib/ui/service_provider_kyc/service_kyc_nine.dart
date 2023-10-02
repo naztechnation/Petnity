@@ -15,7 +15,6 @@ import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
-import '../user_kyc/widgets/pet_type_container.dart';
 import '../user_kyc/widgets/service_provider_choice_container.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
@@ -53,6 +52,8 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final userData = Provider.of<UserViewModel>(context, listen: true);
+    userData.getUserId();
 
     return Scaffold(
         body: BlocProvider<AccountCubit>(
@@ -66,8 +67,8 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
             Modals.showToast(state.userData.message!,
                 messageType: MessageType.success);
 
-            // AppNavigator.pushAndStackPage(context,
-            //           page: KycServiceScreenNine());
+            AppNavigator.pushAndStackPage(context,
+                                    page: KycServiceScreenTen());
           } else if (state is AccountApiErr) {
             if (state.message != null) {
               Modals.showToast(state.message!, messageType: MessageType.error);
@@ -150,7 +151,7 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                                 vertical: 0.0, horizontal: 0),
                             child: ButtonView(
                               onPressed: () {
-                                _submit(context, user);
+                                _submit(context, user, userData);
                                 AppNavigator.pushAndStackPage(context,
                                     page: KycServiceScreenTen());
                               },
@@ -179,9 +180,10 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
     ));
   }
 
-  _submit(BuildContext ctx, var user) {
+  _submit(BuildContext ctx, var user, var userData) {
     ctx.read<AccountCubit>().servicePetType(
-          petnames: user.selectedPetType,
+          petnames: user.selectedPetType, agentId: userData.serviceProviderId, username: userData.username,
+
         );
   }
 }

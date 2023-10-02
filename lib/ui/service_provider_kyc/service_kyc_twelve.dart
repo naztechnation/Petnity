@@ -79,8 +79,8 @@ class KycServiceScreenTwelve extends StatelessWidget {
                             maxLines: 3,
                             text:
                           'Your Id upload is successful and is being reviewed, reviews normally take between 2-4 working days.',
-                            weight: FontWeight.w600,
-                            size: 13,
+                            weight: FontWeight.w500,
+                            size: 15,
                             
                             color: Colors.black,
                           ),
@@ -99,20 +99,15 @@ class KycServiceScreenTwelve extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                  if(user.userType == UserType.user){
-                     AppNavigator.pushAndReplaceName(context,
-                      name: AppRoutes.kycScreenOne);
-                  }else if(user.userType == UserType.serviceProvider){
-                    AppNavigator.pushAndReplaceName (context,
-                      name: AppRoutes.serviceProviderKycOneScreen);
-                  }
+                  AppNavigator.pushAndReplaceName (context,
+                      name: AppRoutes.serviceProviderLandingPage);
                  
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text:  'Continue',
+                  text:  'Go to Home',
                   weight: FontWeight.w400,
                   size: 16,
                   fontFamily: AppStrings.interSans,

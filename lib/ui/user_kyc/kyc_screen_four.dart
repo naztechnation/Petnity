@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/view_models/user_view_model.dart';
@@ -14,10 +15,8 @@ import '../../utils/navigator/page_navigator.dart';
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/filter_search_section.dart';
 
 import 'kyc_screen_five.dart';
-import 'widgets/pet_type_container.dart';
 
 PetBreedsTypes _petTypes = PetBreedsTypes.none;
 
@@ -40,6 +39,13 @@ class _KycScreenFourState extends State<KycScreenFour> {
       'Squirell',
       'Snake',
     ];
+
+    final petBreedController = TextEditingController();
+    @override
+  void initState() {
+    petBreedController.text = 'None';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,72 +82,75 @@ class _KycScreenFourState extends State<KycScreenFour> {
                     fontFamily: AppStrings.montserrat,
                     color: Colors.black,
                   ),
-                  SizedBox(height: 27),
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 1,
-                      text: 'Select your ${petProfile.petType}breed',
+                      text: 'Input your ${petProfile.petType}breed',
                       weight: FontWeight.w500,
                       size: 16,
                       fontFamily: AppStrings.interSans,
                       color: Colors.black,
                     ),
                   ),
-                  FilterSearchView(
+                
+                  TextEditView(
+                    controller: petBreedController,
                     hintText: 'Select breed',
-                    showFilter: false,
+                    isDense: true,
                   ),
                   SizedBox(height: 30),
-                  Container(
-                    margin: EdgeInsets.all(1),
-                    child: Expanded(
-                      child: StaggeredGridView.countBuilder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 14,
-                          mainAxisSpacing: 12,
-                          itemCount: pets.length,
-                          itemBuilder: (context, index) {
-                            return PetType(
-                              imageUrl: AppImages.squirrelPic,
-                              petName: pets[index],
-                              isPetType: _index == index,
-                              onPressed: () {
-                                setState(() {
-                                  _index = index;
+                  // Container(
+                  //   margin: EdgeInsets.all(1),
+                  //   child: Expanded(
+                  //     child: StaggeredGridView.countBuilder(
+                  //         physics: const NeverScrollableScrollPhysics(),
+                  //         shrinkWrap: true,
+                  //         crossAxisCount: 2,
+                  //         crossAxisSpacing: 14,
+                  //         mainAxisSpacing: 12,
+                  //         itemCount: pets.length,
+                  //         itemBuilder: (context, index) {
+                  //           return PetType(
+                  //             imageUrl: AppImages.squirrelPic,
+                  //             petName: pets[index],
+                  //             isPetType: _index == index,
+                  //             onPressed: () {
+                  //               setState(() {
+                  //                 _index = index;
                                   
-                                  petProfile.setPetBreed(pets[index]);
-                                });
-                              },
-                            );
-                          },
-                          staggeredTileBuilder: (index) {
-                            return StaggeredTile.count(1, 0.45);
-                          }),
-                    ),
-                  ),
+                  //                 petProfile.setPetBreed(pets[index]);
+                  //               });
+                  //             },
+                  //           );
+                  //         },
+                  //         staggeredTileBuilder: (index) {
+                  //           return StaggeredTile.count(1, 0.45);
+                  //         }),
+                  //   ),
+                  // ),
                   SizedBox(height: 30),
 
-                  if (_index != -1)
+                  if (petBreedController.text.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),
                       child: ButtonView(
                         onPressed: () {
+                          petProfile.setPetBreed(petBreedController.text);
                           AppNavigator.pushAndStackPage(context,
                               page: KycScreenFive());
                         },
                         color: AppColors.lightSecondary,
-                        borderRadius: 22,
+                        borderRadius: 16,
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           text: 'Select',
-                          weight: FontWeight.w700,
-                          size: 20,
+                          weight: FontWeight.w500,
+                          size: 16,
                           fontFamily: AppStrings.interSans,
                           color: Colors.white,
                         ),

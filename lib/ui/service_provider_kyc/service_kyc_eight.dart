@@ -13,7 +13,6 @@ import '../../requests/repositories/account_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
-import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
@@ -60,6 +59,7 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
     final userData = Provider.of<UserViewModel>(context, listen: true);
+    userData.getUserId();
 
     return Scaffold(
         body: BlocProvider<AccountCubit>(
@@ -166,7 +166,9 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                                 vertical: 0.0, horizontal: 0),
                             child: ButtonView(
                               onPressed: () {
-                                _submit(context,user, userData);
+                                 userData.getUserId();
+                                //  Modals.showToast(userData.serviceProviderId);
+                               _submit(context, user, userData);
                                 // AppNavigator.pushAndStackPage(context,
                                 //     page: KycServiceScreenNine());
                               },
@@ -177,7 +179,7 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                                 maxLines: 1,
                                 text: 'Select',
                                 weight: FontWeight.w400,
-                    size: 16,
+                                size: 16,
                                 fontFamily: AppStrings.interSans,
                                 color: Colors.white,
                               ),
@@ -196,9 +198,11 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
   }
 
   _submit(BuildContext ctx, var user, var userData) {
-    // Modals.showToast(userData.username);
-    // Modals.showToast(userData.serviceProviderId);
+   
+   
     ctx.read<AccountCubit>().serviceProvided(
-        services: user.selectedServiceItems, username: userData.username, agentId: userData.serviceProviderId);
+        services: user.selectedServiceItems,
+        username: userData.username,
+        agentId: userData.serviceProviderId);
   }
 }

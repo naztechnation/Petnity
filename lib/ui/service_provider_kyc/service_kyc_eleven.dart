@@ -21,14 +21,22 @@ import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 import 'service_kyc_eight.dart';
 
-class KycServiceScreenEleven extends StatelessWidget {
+class KycServiceScreenEleven extends StatefulWidget {
   KycServiceScreenEleven({
     super.key,
   });
 
   @override
+  State<KycServiceScreenEleven> createState() => _KycServiceScreenElevenState();
+}
+
+class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
+
+  bool isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
-    final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
         body: Container(
@@ -46,12 +54,12 @@ class KycServiceScreenEleven extends StatelessWidget {
             viewModel: Provider.of<UserViewModel>(context, listen: false)),
         child: BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
-            if (state is PetProfileLoaded) {
+            if (state is AccountLoaded) {
               if (state.userData.status!) {
-                // AppNavigator.pushAndStackPage(context,
-                //         page: KycServiceScreenEight(
+                AppNavigator.pushAndStackPage(context,
+                        page: KycServiceScreenTwelve(
 
-                //         ));
+                        ));
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
               } else {
@@ -111,7 +119,7 @@ class KycServiceScreenEleven extends StatelessWidget {
                   SizedBox(
                     height: 40,
                   ),
-                  if (user.imageURl2 == null) ...[
+                  if (serviceProvider.imageURl2 == null) ...[
                     Container(
                       padding: EdgeInsets.all(30),
                       height: 294,
@@ -123,7 +131,7 @@ class KycServiceScreenEleven extends StatelessWidget {
                       width: MediaQuery.sizeOf(context).width,
                     ),
                   ],
-                  if (user.imageURl2 != null) ...[
+                  if (serviceProvider.imageURl2 != null) ...[
                     Container(
                         height: 294,
                         decoration: BoxDecoration(
@@ -136,7 +144,7 @@ class KycServiceScreenEleven extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           child: ImageView.file(
                               File(
-                                user.imageURl2!.path,
+                                serviceProvider.imageURl2!.path,
                               ),
                               fit: BoxFit.cover),
                         )),
@@ -148,7 +156,7 @@ class KycServiceScreenEleven extends StatelessWidget {
                       ? SizedBox.shrink()
                       : TextButton(
                           onPressed: () async {
-                            user.loadImage(context, true);
+                            serviceProvider.loadImage(context, UploadType.photoId);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -164,31 +172,30 @@ class KycServiceScreenEleven extends StatelessWidget {
                   const SizedBox(
                     height: 70,
                   ),
-                  if (user.imageURl2 != null)
+                  if (serviceProvider.imageURl2 != null)
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
-                        onPressed: () {
-                          if (user.imageURl2 != null) {
-                               AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenTwelve(
+                        onPressed: () async{
+                          if (serviceProvider.imageURl2 != null) {
+                          //      AppNavigator.pushAndStackPage(context,
+                          // page: KycServiceScreenTwelve(
           
-                          ));
-                            // _submit(
-                            //   username: user.username,
-                            //   ctx: context,
-                            //   name: user.serviceProviderName,
-                            //   country: user.serviceProviderCountry,
-                            //   city: user.serviceProviderCity,
-                            //   dob: user.serviceProviderAge,
-                            //   gender: user.servicesProviderGender,
-                            //   about: user.aboutServiceProvider,
-                            //   picture: user.imageURl!,
-                            // );
+                          // ));
+                             setState(() {
+                                isLoading = true;
+                              });
+                            String imgUrl = await serviceProvider.uploadImage(
+                                serviceProvider.imageURl2!.path,
+                                'petnity_service_provider');
+                                setState(() {
+                                isLoading = false;
+                              });
+                            _submit(ctx: context,photoId: serviceProvider.photoId,picture: imgUrl);
                           }
                         },
-                        processing: state is PetProfileLoading,
+                        processing: (state is AccountLoading || isLoading),
                         color: AppColors.lightSecondary,
                         borderRadius: 32,
                         borderColor: Colors.white,
@@ -217,22 +224,13 @@ class KycServiceScreenEleven extends StatelessWidget {
 
   _submit(
       {required BuildContext ctx,
-      required String username,
-      required String name,
-      required String gender,
-      required String country,
-      required String city,
-      required String about,
-      required String dob,
-      required File picture}) {
-    ctx.read<AccountCubit>().registerServiceProviderProfile(
-        username: username,
-        dob: dob,
-        name: name,
-        gender: gender,
-        country: country,
-        city: city,
-        about: about,
-        picture: picture);
+      required String photoId,
+     
+      required String picture}) {
+    ctx.read<AccountCubit>().uploadPhotoUrl(
+        photoId: photoId,
+        
+        
+        photoUrl: picture);
   }
 }

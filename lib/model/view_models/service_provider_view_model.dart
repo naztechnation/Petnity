@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:image_picker/image_picker.dart';
 
 import '../../res/app_colors.dart';
@@ -9,6 +12,7 @@ import 'base_viewmodel.dart';
 
 class ServiceProviderViewModel extends BaseViewModel {
   String _username = '';
+  String _photoId = '';
   String _serviceProviderCountry = '';
   String _serviceProviderState = '';
   String _serviceProviderCity = '';
@@ -21,12 +25,14 @@ class ServiceProviderViewModel extends BaseViewModel {
   String _aboutServiceProvider = '';
   File? _imageURl;
   File? _imageURl2;
+  File? _imageURl3;
   List<String> _selectedServiceItems = [];
   List<String> _selectedPetType = [];
 
   ImagePicker picker = ImagePicker();
 
   Services _selectedService = Services.none;
+  UploadType _uploadType = UploadType.none;
 
   setServiceProviderAge(String age) {
     _serviceProviderAge = age;
@@ -75,7 +81,10 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
- 
+  setPhotoId(String id){
+    _photoId = id;
+    setViewState(ViewState.success);
+  }
 
   setServiceProviderGender(String serviceGender) {
     _serviceProviderGender = serviceGender;
@@ -96,7 +105,7 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   addPetServiceType(String service) {
+  addPetServiceType(String service) {
     if (_selectedPetType.contains(service)) {
       _selectedPetType.remove(service);
     } else {
@@ -132,7 +141,7 @@ class ServiceProviderViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  loadImage(BuildContext context, bool isSecondUpload) async {
+  loadImage(BuildContext context, UploadType uploadType) async {
     await showModalBottomSheet<dynamic>(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -169,10 +178,13 @@ class ServiceProviderViewModel extends BaseViewModel {
                       maxHeight: 1000,
                       maxWidth: 1000);
 
-                      if(isSecondUpload){
+                       if( uploadType == UploadType.upload1){
+                        _imageURl3 = File(image!.path);
+                      }else if( uploadType == UploadType.photoId){
                         _imageURl2 = File(image!.path);
-                      }else{
+                      }else if( uploadType == UploadType.userPhoto){
                         _imageURl = File(image!.path);
+
                       }
                   
                   setViewState(ViewState.success);
@@ -192,10 +204,13 @@ class ServiceProviderViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                   if(isSecondUpload){
+                     if( uploadType == UploadType.upload1){
+                        _imageURl3 = File(image!.path);
+                      }else if( uploadType == UploadType.photoId){
                         _imageURl2 = File(image!.path);
-                      }else{
+                      }else if( uploadType == UploadType.userPhoto){
                         _imageURl = File(image!.path);
+
                       }
                   setViewState(ViewState.success);
                 },
@@ -211,7 +226,37 @@ class ServiceProviderViewModel extends BaseViewModel {
   }
 
 
+    Future<String> uploadImage(String imageUrl, String uploadPreset) async{
+    final url = Uri.parse('https://api.cloudinary.com/v1_1/do2z93mmw/upload');
+
+    String image = '';
+
+    try {
+      final request = http.MultipartRequest('POST', url)
+        ..fields['upload_preset'] = uploadPreset
+        ..files.add(await http.MultipartFile.fromPath('file', imageUrl));
+
+        final response = await request.send();
+
+        if(response.statusCode == 200){
+          final responseData = await response.stream.toBytes();
+          final resPonseString = String.fromCharCodes(responseData);
+          final jsonMap = jsonDecode(resPonseString);
+
+            image = jsonMap['url'];
+
+           
+           return image;
+        }
+    } catch (e) {
+      
+    }
+     
+     return image;
+  }
+
   Services get selectedService => _selectedService;
+  UploadType get uploadType => _uploadType;
 
   
   String get username => _username;
@@ -222,9 +267,11 @@ class ServiceProviderViewModel extends BaseViewModel {
   String get serviceProviderName => _serviceProviderName;
   String get servicesProviderGender => _serviceProviderGender;
   String get serviceProviderAge => _serviceProviderAge;
+  String get photoId => _photoId;
   List<String> get selectedServiceItems => _selectedServiceItems;
   List<String> get selectedPetType => _selectedPetType;
   String get aboutServiceProvider => _aboutServiceProvider;
   File? get imageURl => _imageURl;
   File? get imageURl2 => _imageURl2;
+  File? get imageURl3 => _imageURl3;
 }

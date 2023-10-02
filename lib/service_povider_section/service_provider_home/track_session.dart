@@ -8,7 +8,7 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/service_povider_section/service_provider_home/feedback.dart';
-import 'package:petnity/ui/Profile/profile.dart';
+import 'package:petnity/ui/profile/profile.dart';
 import 'package:petnity/ui/landing_page/services/service_provider_profile.dart';
 import 'package:petnity/ui/location/widgets/map_view.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';

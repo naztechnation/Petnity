@@ -135,7 +135,7 @@ class AccountCubit extends Cubit<AccountStates> {
    {required String username,required String type,
    required String petname,required String gender,
    required String breed,required String size,
-   required String about,required File picture}) async {
+   required String about,required String picture}) async {
     try {
       emit(PetProfileLoading());
 
@@ -165,7 +165,7 @@ class AccountCubit extends Cubit<AccountStates> {
   Future<void> registerServiceProviderProfile(
    { required String username,
     required String dob,required String name,required String gender,
-    required String country,required String city,required String about,required File picture}) async {
+    required String country,required String city,required String about,required String picture}) async {
     try {
       emit(PetProfileLoading());
 
@@ -212,11 +212,12 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-  Future<void> servicePetType({required List<String> petnames}) async {
+  Future<void> servicePetType({required List<String> petnames, required String username,
+      required String agentId}) async {
     try {
       emit(PetProfileLoading());
 
-      final user = await accountRepository.servicePetNames(petnames: petnames,
+      final user = await accountRepository.servicePetNames(petnames: petnames, agentId: agentId, username: username,
           );
 
       emit(PetProfileLoaded(user));
@@ -258,257 +259,27 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-  // Future<void> resentOTP(String phone) async {
-  //   try {
-  //     emit(AccountProcessing());
+  Future<void> uploadPhotoUrl(
+      {required String photoId, required String photoUrl}) async {
+    try {
+      emit(AccountLoading());
 
-  //     final message = await accountRepository.resendOTP(phone);
+      final userData =
+          await accountRepository.uploadPhotoUrl(photoId: photoId, photoUrl: photoUrl);
 
-  //     emit(OTPResent(message));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> createPin({required String pin, required String userId}) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final user = await accountRepository.createPin(pin: pin, userId: userId);
-
-  //     await viewModel.setUser(user);
-  //     emit(AccountLoaded(user));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
- 
-
-  // Future<void> logoutUser() async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     await viewModel.deleteUser();
-  //     emit(const AccountLoggedOut('Logged out successfully'));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> updateUser(
-  //     {String? firstName,
-  //     String? lastName,
-  //     String? timezone,
-  //     String? location,
-  //     String? latitude,
-  //     String? longitude,
-  //     String? email}) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final user = await accountRepository.updateUser(
-  //         firstName: firstName,
-  //         lastName: lastName,
-  //         timezone: timezone,
-  //         location: location,
-  //         latitude: latitude,
-  //         longitude: longitude,
-  //         email: email);
-
-  //     await viewModel.updateUser(user);
-  //     emit(AccountUpdated(user));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> fetchUser() async {
-  //   try {
-  //     emit(AccountLoading());
-
-  //     final user = await accountRepository.fetchUser();
-
-  //     await viewModel.updateUser(user);
-  //     emit(AccountUpdated(user));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> changePin(
-  //     {required String oldPin, required String newPin}) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final message = await accountRepository.changeAccountPin(
-  //         oldPin: oldPin, newPin: newPin);
-
-  //     emit(AccountPinChanged(message));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> uploadAccountImage(File image) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final picture = await accountRepository.uploadAccountImage(image);
-  //     final user = viewModel.user!.copyWith(picture: picture);
-
-  //     await viewModel.updateUser(user);
-  //     emit(AccountUpdated(user));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // late String firstName,
-  //     lastName,
-  //     dob,
-  //     phoneNumber,
-  //     nationality,
-  //     idType,
-  //     idNumber;
-  // late File idFront, idBack;
-
- 
-
-  // Future<void> requestPinReset(String verifier) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final message = await accountRepository.requestPinReset(verifier);
-
-  //     emit(PinResetOTPSent(message));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> verifyPinRecoveryOTP(String otp) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final message = await accountRepository.verifyPinRecoveryOTP(otp);
-
-  //     emit(PinResetOTPVerified(message));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
-
-  // Future<void> resetPin({required String otp, required String newPin}) async {
-  //   try {
-  //     emit(AccountProcessing());
-
-  //     final message =
-  //         await accountRepository.resetPin(otp: otp, newPin: newPin);
-
-  //     emit(PinResetCompleted(message));
-  //   } on ApiException catch (e) {
-  //     emit(AccountApiErr(e.message));
-  //   } catch (e) {
-  //     if (e is NetworkException ||
-  //         e is BadRequestException ||
-  //         e is UnauthorisedException ||
-  //         e is FileNotFoundException ||
-  //         e is AlreadyRegisteredException) {
-  //       emit(AccountNetworkErr(e.toString()));
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
+      emit(AccountLoaded(userData));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/ui/service_provider_kyc/service_kyc_eleven.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/view_models/user_view_model.dart';
+import '../../model/view_models/service_provider_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_strings.dart';
@@ -19,12 +19,12 @@ class KycServiceScreenTen extends StatelessWidget {
   
    String selectedOption = 'Select';
 
-  List<String> options = ["Select","PVC", "NIN", "International passport", "National ID card", "Drivers license", "Others"];
+  List<String> options = ["Select","NIN", "PVC", "International passport", "National ID card", "Drivers license", "Others"];
 
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -97,7 +97,8 @@ class KycServiceScreenTen extends StatelessWidget {
                   value: selectedOption,
                   onChanged: (value) {
                      selectedOption = value!;
-                  },
+                      serviceProvider.setPhotoId(options.indexOf(value).toString());
+                    },
                   items: options.map((String option) {
                     return DropdownMenuItem<String>(
                       value: option, // Ensure each value is unique.
@@ -124,7 +125,7 @@ class KycServiceScreenTen extends StatelessWidget {
                        AppNavigator.pushAndStackPage(context,
                           page: KycServiceScreenEleven());
                     }else{
-                      Modals.showToast('Please select an id');
+                      Modals.showToast('Please select an id Type');
                     }
                   
                   },

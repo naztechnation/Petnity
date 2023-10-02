@@ -44,7 +44,7 @@ class AccountRepositoryImpl implements AccountRepository {
       required String breed,
       required String size,
       required String about,
-      required File picture}) async {
+      required String picture}) async {
     final map = await Requests()
         .post(AppStrings.registerUserPetProfileUrl(username: username), body: {
       "type": type,
@@ -53,9 +53,7 @@ class AccountRepositoryImpl implements AccountRepository {
       "breed": breed,
       "size": size,
       "about": about,
-      'picture':
-          'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
-      // 'picture': picture.path
+      'picture': picture
     });
     return CreateAgents.fromJson(map);
   }
@@ -82,7 +80,7 @@ class AccountRepositoryImpl implements AccountRepository {
       required String country,
       required String city,
       required String about,
-      required File picture}) async {
+      required String picture}) async {
     final map = await Requests().post(
         AppStrings.registerServiceProviderProfileUrl(username: username),
         body: {
@@ -92,22 +90,11 @@ class AccountRepositoryImpl implements AccountRepository {
           "about": about,
           "country": country,
           "city": city,
-          'picture':
-              'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
-          // 'picture': picture.path
+          // 'picture':
+          //     'https://static.standard.co.uk/s3fs-public/thumbnails/image/2019/03/15/17/pixel-dogsofinstagram-3-15-19.jpg?width=1200&height=1200&fit=crop'
+          'picture': picture
         });
     return CreateAgents.fromJson(map);
-  }
-
-  @override
-  Future<UserData> serviceProvided(
-      {required List<String> services, required String username, required String agentId}) async {
-    final map = await Requests().patch(AppStrings.selectServiceTypeUrl(agentId), body: {
-      "service_types": services,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
-    return UserData.fromJson(map);
   }
 
   @override
@@ -121,19 +108,52 @@ class AccountRepositoryImpl implements AccountRepository {
     return UserData.fromJson(map);
   }
 
-  Future<CreateAgents> servicePetNames({required List<String> petnames}) async {
-    final map = await Requests().patch(AppStrings.selectPetTypeUrl, body: {
+  Future<CreateAgents> servicePetNames(
+      {required List<String> petnames,
+      required String username,
+      required String agentId}) async {
+    final map =
+        await Requests().patch(AppStrings.selectPetTypeUrl(agentId), body: {
       "pet_types": petnames,
     }, headers: {
       'Authorization': AppStrings.token,
+      "Content-type": "application/json"
     });
     return CreateAgents.fromJson(map);
   }
-  
+
   @override
-  Future<UserData> resendCode({required String username}) async{
-     final map = await Requests().get(AppStrings.otpUrl(username), headers: {
+  Future<UserData> resendCode({required String username}) async {
+    final map = await Requests().get(AppStrings.otpUrl(username), headers: {
       'Authorization': AppStrings.token,
+    });
+    return UserData.fromJson(map);
+  }
+
+  @override
+  Future<UserData> serviceProvided(
+      {required List<String> services,
+      required String username,
+      required String agentId}) async {
+    final map = await Requests().patch(AppStrings.selectServiceTypeUrl(agentId),
+        body: {
+          "service_types": services
+        },
+        headers: {
+          'Authorization': AppStrings.token,
+          "Content-type": "application/json"
+        });
+    return UserData.fromJson(map);
+  }
+
+  @override
+  Future<UserData> uploadPhotoUrl(
+      {required String photoId, required String photoUrl}) async {
+    final map = await Requests().patch(AppStrings.uploadIdUrl(photoId), body: {
+      "id_photo": photoUrl,
+    }, headers: {
+      'Authorization': AppStrings.token,
+      "Content-type": "application/json"
     });
     return UserData.fromJson(map);
   }

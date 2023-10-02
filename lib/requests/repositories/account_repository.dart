@@ -13,16 +13,17 @@ abstract class AccountRepository {
   Future<UserData> loginUser({required String username,required String password,});
   Future<UserData> resendCode({required String username,});
   Future<UserData> verifyUser({required String code,required String username,});
+  Future<UserData> uploadPhotoUrl({required String photoId,required String photoUrl,});
   Future<CreateAgents> registerUserPetProfile({
     required String username,
-    required String type,required String petname,required String gender,required String breed,required String size,required String about,required File picture});
+    required String type,required String petname,required String gender,required String breed,required String size,required String about,required String picture});
 
 
 Future<CreateAgents> registerServiceProviderProfile({
     required String username,
     required String dob,required String name,required String gender,
-    required String country,required String city,required String about,required File picture});
+    required String country,required String city,required String about,required String picture});
 
  Future<UserData> serviceProvided({required List<String> services,required String username,required String agentId});   
- Future<CreateAgents> servicePetNames({required List<String> petnames,});   
+ Future<CreateAgents> servicePetNames({required List<String> petnames,required String username,required String agentId});   
 }

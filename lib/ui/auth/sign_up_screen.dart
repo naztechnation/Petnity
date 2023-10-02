@@ -18,6 +18,8 @@ import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
+import '../service_provider_kyc/service_kyc_eight.dart';
+import '../user_kyc/kyc_screen_one.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
@@ -35,11 +37,11 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _emailController.text = 'agbo.raph123@gmail.com';
     _phoneController.text = '090746453728';
     _passwordController.text = 'Scarface@306166';
     final user = Provider.of<UserViewModel>(context, listen: true);
-    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
         body: Container(
@@ -288,7 +290,7 @@ class SignUpScreen extends StatelessWidget {
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
-          url:AppStrings.registerUrl,
+          url: AppStrings.registerUrl,
           username: _usernameController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
           email: _emailController.text.trim(),
@@ -353,10 +355,9 @@ class SignUpScreen extends StatelessWidget {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
 
-                    _submit(context);
-                    AppNavigator.pushAndReplaceName(context,
-                        name: AppRoutes.otpScreen);
-                    //  _submit(context);
+                    // _submit(context);
+                     AppNavigator.pushAndStackPage(context,
+                        page: KycScreenOne());
                   }, context),
                   const SizedBox(
                     height: 10,
@@ -370,9 +371,11 @@ class SignUpScreen extends StatelessWidget {
 
                     user.setUserType(UserType.serviceProvider);
 
+                  
+                    // Modals.showToast(user.serviceProviderId);
                     // AppNavigator.pushAndReplaceName(context,
                     //     name: AppRoutes.otpScreen);
-                     _submit(context);
+                      _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,
