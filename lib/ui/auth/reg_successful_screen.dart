@@ -3,7 +3,7 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/view_models/user_view_model.dart';
+import '../../model/view_models/account_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_routes.dart';
@@ -19,7 +19,7 @@ class RegSuccessful extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
 
     return Scaffold(
       body: SingleChildScrollView(

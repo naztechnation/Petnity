@@ -14,8 +14,8 @@ import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/location/location_cubit.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/location_repository_impl.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/location_repo/location_repository_impl.dart';
 import '../../ui/landing_page/services/pet_profile/pet_profile.dart';
 
 class ServiceRequest extends StatelessWidget {
@@ -30,7 +30,7 @@ class ServiceRequest extends StatelessWidget {
           create: (_) => LocationCubit(
               locationRepository: LocationRepositoryImpl(),
               userViewModel:
-                  Provider.of<UserViewModel>(context, listen: false)),
+                  Provider.of<AccountViewModel>(context, listen: false)),
         )
       ],
       child: Scaffold(

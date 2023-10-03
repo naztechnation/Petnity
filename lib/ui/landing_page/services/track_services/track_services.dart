@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../model/view_models/user_view_model.dart';
+import '../../../../model/view_models/account_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_strings.dart';
@@ -48,7 +48,7 @@ class TrackServicesScreen extends StatelessWidget {
                       CustomText(
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        text: Provider.of<UserViewModel>(context, listen: false)
+                        text: Provider.of<AccountViewModel>(context, listen: false)
                                     .selectedService ==
                                 Services.trainer
                             ? 'Service request'

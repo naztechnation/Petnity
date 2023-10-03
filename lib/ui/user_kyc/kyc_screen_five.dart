@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/ui/user_kyc/kyc_screen_six.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/view_models/user_view_model.dart';
+import '../../model/view_models/account_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
@@ -32,7 +32,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
   @override
   Widget build(BuildContext context) {
 
-    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+    final petProfile = Provider.of<AccountViewModel>(context, listen: false);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,

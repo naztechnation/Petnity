@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/view_models/service_provider_view_model.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repository_impl.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
@@ -36,8 +36,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
     final serviceProvider =
         Provider.of<ServiceProviderViewModel>(context, listen: true);
     StorageHandler.saveOnboardState('true');
@@ -57,7 +56,7 @@ class SignUpScreen extends StatelessWidget {
           lazy: false,
           create: (_) => AccountCubit(
               accountRepository: AccountRepositoryImpl(),
-              viewModel: Provider.of<UserViewModel>(context, listen: false)),
+              viewModel: Provider.of<AccountViewModel>(context, listen: false)),
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
@@ -355,7 +354,7 @@ class SignUpScreen extends StatelessWidget {
                     user.setUserType(UserType.user);
 
                     // _submit(context);
-                     AppNavigator.pushAndStackPage(context,
+                    AppNavigator.pushAndStackPage(context,
                         page: KycScreenOne());
                   }, context),
                   const SizedBox(
@@ -370,11 +369,10 @@ class SignUpScreen extends StatelessWidget {
 
                     user.setUserType(UserType.serviceProvider);
 
-                  
                     // Modals.showToast(user.serviceProviderId);
                     // AppNavigator.pushAndReplaceName(context,
                     //     name: AppRoutes.otpScreen);
-                      _submit(context);
+                    _submit(context);
                   }, context),
                   const SizedBox(
                     height: 10,

@@ -6,7 +6,7 @@ import 'package:petnity/ui/landing_page/services/payment_success_screen.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/view_models/user_view_model.dart';
+import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
@@ -59,7 +59,7 @@ class ReviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Provider.of<UserViewModel>(context, listen: false)
+                    Provider.of<AccountViewModel>(context, listen: false)
                                 .selectedService ==
                             Services.trainer
                         ? Column(

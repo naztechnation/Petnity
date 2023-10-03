@@ -60,8 +60,7 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
       }
     }
 
-
-    //Show status bar
+ 
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: SystemUiOverlay.values);
   }
@@ -71,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen>  with SingleTickerProviderS
     getUserDetails();
      _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 1700),
     )..forward();
     super.initState();
     startTimeout();

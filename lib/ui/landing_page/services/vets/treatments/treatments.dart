@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/blocs/location/location_cubit.dart';
-import 'package:petnity/model/view_models/user_view_model.dart';
+import 'package:petnity/model/view_models/account_view_model.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_strings.dart';
@@ -13,7 +13,7 @@ import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../requests/repositories/location_repository_impl.dart';
+import '../../../../../requests/repositories/location_repo/location_repository_impl.dart';
 
 class Treatment extends StatefulWidget {
   const Treatment({Key? key})
@@ -40,7 +40,7 @@ class _TreatmentState extends State<Treatment> {
           create: (_) => LocationCubit(
               locationRepository: LocationRepositoryImpl(),
               userViewModel:
-                  Provider.of<UserViewModel>(context, listen: false)),
+                  Provider.of<AccountViewModel>(context, listen: false)),
         )
       ],
       child: Scaffold(

@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/location/location_cubit.dart';
 import '../../../handlers/location_handler.dart';
-import '../../../model/view_models/user_view_model.dart';
+import '../../../model/view_models/account_view_model.dart';
 
 class MapViews extends StatefulWidget {
 final double zoom;
@@ -26,7 +26,7 @@ class _MapViewsState extends State<MapViews> {
 
   late LocationCubit _locationCubit;
 
-  late UserViewModel _userViewModel;
+  late AccountViewModel _userViewModel;
 
   
 
@@ -37,7 +37,7 @@ class _MapViewsState extends State<MapViews> {
   @override
   void initState() {
     _locationCubit = context.read<LocationCubit>();
-    _userViewModel = Provider.of<UserViewModel>(context, listen: false);
+    _userViewModel = Provider.of<AccountViewModel>(context, listen: false);
     _initPosition();
     WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
     super.initState();

@@ -5,7 +5,7 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/view_models/user_view_model.dart';
+import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
@@ -25,7 +25,7 @@ import './vets/vet_service.dart';
 class ServiceProviderProfile extends StatelessWidget {
   ServiceProviderProfile({super.key});
 
-  final UserViewModel userViewModel = UserViewModel();
+  final AccountViewModel userViewModel = AccountViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +177,7 @@ class ServiceProviderProfile extends StatelessWidget {
                     child: ButtonView(
                       onPressed: () {
                         openServices(
-                            Provider.of<UserViewModel>(context, listen: false)
+                            Provider.of<AccountViewModel>(context, listen: false)
                                 .selectedService,
                             context);
                       },

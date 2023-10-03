@@ -36,6 +36,7 @@ class AppStrings {
 
   static   String otpUrl(String url) => '${_baseUrl}$url';
   static   String verifyCodeUrl(String username) => '${_baseUrl}auth/resend-code/$username';
+  static   String getServiseProvidersList(String serviceId) => '${_baseUrl}users/get-service-agents/$serviceId';
   static   String verifyUserProfileUrl(String username) => '${_baseUrl}auth/verify-profile/$username';
   
   static const String loginUrl = '${_baseUrl}auth/login';

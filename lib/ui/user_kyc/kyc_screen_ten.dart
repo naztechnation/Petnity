@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../model/view_models/user_view_model.dart';
+import '../../model/view_models/account_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_strings.dart';
@@ -22,7 +22,7 @@ class KycScreenTen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final petProfile = Provider.of<UserViewModel>(context, listen: false);
+    final petProfile = Provider.of<AccountViewModel>(context, listen: false);
 
     return Scaffold(
       body: Container(

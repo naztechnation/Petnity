@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repository_impl.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
@@ -44,7 +44,7 @@ class _OtpScreenState extends State<OtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
 
     user.getUsername();
 
@@ -53,7 +53,7 @@ class _OtpScreenState extends State<OtpScreen> {
       lazy: false,
       create: (_) => AccountCubit(
           accountRepository: AccountRepositoryImpl(),
-          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+          viewModel: Provider.of<AccountViewModel>(context, listen: false)),
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
           if (state is AccountUpdated) {

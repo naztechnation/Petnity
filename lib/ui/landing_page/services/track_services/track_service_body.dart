@@ -8,8 +8,8 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/location/location.dart';
-import '../../../../model/view_models/user_view_model.dart';
-import '../../../../requests/repositories/location_repository_impl.dart';
+import '../../../../model/view_models/account_view_model.dart';
+import '../../../../requests/repositories/location_repo/location_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';
@@ -29,7 +29,7 @@ class TrackServicesBody extends StatelessWidget {
             create: (_) => LocationCubit(
                 locationRepository: LocationRepositoryImpl(),
                 userViewModel:
-                    Provider.of<UserViewModel>(context, listen: false)),
+                    Provider.of<AccountViewModel>(context, listen: false)),
           )
         ],
         child: Padding(
@@ -64,7 +64,7 @@ class TrackServicesBody extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              Provider.of<UserViewModel>(context, listen: false)
+              Provider.of<AccountViewModel>(context, listen: false)
                           .selectedService ==
                       Services.trainer
                   ? Column(

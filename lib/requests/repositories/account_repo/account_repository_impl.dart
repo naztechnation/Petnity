@@ -1,14 +1,13 @@
-import 'dart:io';
 
-import '../../model/account_models/create_agent.dart';
-import '../../model/account_models/user_data.dart';
-import '../../res/app_strings.dart';
-import '../setup/requests.dart';
+import '../../../model/account_models/create_agent.dart';
+import '../../../model/account_models/auth_data.dart';
+import '../../../res/app_strings.dart';
+import '../../setup/requests.dart';
 import 'account_repository.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
   @override
-  Future<UserData> registerUser(
+  Future<AuthData> registerUser(
       {required String email,
       required String password,
       required String username,
@@ -20,11 +19,11 @@ class AccountRepositoryImpl implements AccountRepository {
       "password": password,
       "phone_number": phone,
     });
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 
   @override
-  Future<UserData> loginUser({
+  Future<AuthData> loginUser({
     required String username,
     required String password,
   }) async {
@@ -32,7 +31,7 @@ class AccountRepositoryImpl implements AccountRepository {
       "username": username,
       "password": password,
     });
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 
   @override
@@ -58,7 +57,7 @@ class AccountRepositoryImpl implements AccountRepository {
     return CreateAgents.fromJson(map);
   }
 
-  Future<UserData> sendPetHealth(
+  Future<AuthData> sendPetHealth(
       {required String name,
       required String drug,
       required String prescription,
@@ -68,7 +67,7 @@ class AccountRepositoryImpl implements AccountRepository {
       "drug": drug,
       "prescription": prescription,
     });
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 
   @override
@@ -98,14 +97,14 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<UserData> verifyUser(
+  Future<AuthData> verifyUser(
       {required String code, required String username}) async {
     final map =
         await Requests().post(AppStrings.verifyUserProfileUrl(username), body: {
       "code": code,
     });
 
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 
   Future<CreateAgents> servicePetNames(
@@ -123,15 +122,15 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<UserData> resendCode({required String username}) async {
+  Future<AuthData> resendCode({required String username}) async {
     final map = await Requests().get(AppStrings.otpUrl(username), headers: {
       'Authorization': AppStrings.token,
     });
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 
   @override
-  Future<UserData> serviceProvided(
+  Future<AuthData> serviceProvided(
       {required List<String> services,
       required String username,
       required String agentId}) async {
@@ -143,11 +142,11 @@ class AccountRepositoryImpl implements AccountRepository {
           'Authorization': AppStrings.token,
           "Content-type": "application/json"
         });
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 
   @override
-  Future<UserData> uploadPhotoUrl(
+  Future<AuthData> uploadPhotoUrl(
       {required String photoId, required String photoUrl}) async {
     final map = await Requests().patch(AppStrings.uploadIdUrl(photoId), body: {
       "id_photo": photoUrl,
@@ -155,6 +154,6 @@ class AccountRepositoryImpl implements AccountRepository {
       'Authorization': AppStrings.token,
       "Content-type": "application/json"
     });
-    return UserData.fromJson(map);
+    return AuthData.fromJson(map);
   }
 }

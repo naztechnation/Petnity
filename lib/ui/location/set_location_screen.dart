@@ -4,8 +4,8 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/location/location.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/location_repository_impl.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/location_repo/location_repository_impl.dart';
 import '../../res/app_strings.dart';
 import '../widgets/back_button.dart';
 import '../widgets/custom_text.dart';
@@ -37,7 +37,7 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
             create: (_) => LocationCubit(
                 locationRepository: LocationRepositoryImpl(),
                 userViewModel:
-                    Provider.of<UserViewModel>(context, listen: false)),
+                    Provider.of<AccountViewModel>(context, listen: false)),
           )
         ],
         child: Scaffold(

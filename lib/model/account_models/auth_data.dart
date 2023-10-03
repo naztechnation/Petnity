@@ -1,13 +1,13 @@
 
 
-class UserData {
+class AuthData{
   bool? status;
   var message;
   bool? isAgent;
 
-  UserData({this.status,this.message, this.isAgent});
+  AuthData({this.status,this.message, this.isAgent});
 
-  UserData.fromJson(Map<String, dynamic> json) {
+  AuthData.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     status = json['status'];
     isAgent = json['is_agent'];

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../handlers/location_handler.dart';
 import '../../model/data_models/location/location_prediction.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/location_repository.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/location_repo/location_repository.dart';
 import '../../utils/exceptions.dart';
 import 'location_states.dart';
 
@@ -15,7 +15,7 @@ class LocationCubit extends Cubit<LocationStates> {
       : super(const InitialState());
 
   final LocationRepository? locationRepository;
-  final UserViewModel userViewModel;
+  final AccountViewModel userViewModel;
 
   List<LocationPrediction> locations = [];
 

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repository.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository.dart';
 import '../../utils/exceptions.dart';
 import 'account_states.dart';
 
@@ -13,7 +13,7 @@ class AccountCubit extends Cubit<AccountStates> {
   AccountCubit({required this.accountRepository, required this.viewModel})
       : super(const InitialState());
   final AccountRepository accountRepository;
-  final UserViewModel viewModel;
+  final AccountViewModel viewModel;
 
   Future<void> registerUser({
     required String username,
@@ -110,7 +110,7 @@ class AccountCubit extends Cubit<AccountStates> {
     try {
       emit(AccountLoading());
 
-      final userData =
+      final userData=
           await accountRepository.loginUser(username: username, password: password);
 
       // await viewModel.setUser(userData);
@@ -264,7 +264,7 @@ class AccountCubit extends Cubit<AccountStates> {
     try {
       emit(AccountLoading());
 
-      final userData =
+      final userData=
           await accountRepository.uploadPhotoUrl(photoId: photoId, photoUrl: photoUrl);
 
       emit(AccountLoaded(userData));

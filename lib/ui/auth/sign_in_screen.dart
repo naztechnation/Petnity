@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repository_impl.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
@@ -31,7 +31,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserViewModel>(context, listen: true);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
     StorageHandler.saveOnboardState('true');
 
     return Scaffold(
@@ -48,7 +48,7 @@ class SignInScreen extends StatelessWidget {
           lazy: false,
           create: (_) => AccountCubit(
               accountRepository: AccountRepositoryImpl(),
-              viewModel: Provider.of<UserViewModel>(context, listen: false)),
+              viewModel: Provider.of<AccountViewModel>(context, listen: false)),
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {

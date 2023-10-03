@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
 import '../../model/view_models/service_provider_view_model.dart';
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repository_impl.dart';
+import '../../model/view_models/account_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_strings.dart';
@@ -51,7 +51,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
         lazy: false,
         create: (_) => AccountCubit(
             accountRepository: AccountRepositoryImpl(),
-            viewModel: Provider.of<UserViewModel>(context, listen: false)),
+            viewModel: Provider.of<AccountViewModel>(context, listen: false)),
         child: BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
             if (state is AccountLoaded) {
