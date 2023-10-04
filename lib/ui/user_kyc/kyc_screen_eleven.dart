@@ -167,18 +167,19 @@ class KycScreenEleven extends StatelessWidget {
                                   child: ButtonView(
                                     processing: state is AccountProcessing,
                                     onPressed: () {
-                                    _submit(context);
+                                    //  Modals.showToast(petProfile.petId);
+                                    _submit(context, petProfile.petId);
                                     },
                                     color: AppColors.lightSecondary,
                                     borderRadius: 30,
-                                    borderColor: Colors.white,
+                                    borderColor: AppColors.lightSecondary,
                                     child:  CustomText(
                                           textAlign: TextAlign.center,
                                           maxLines: 1,
                                           
                                           text: 'Confirm and register',
-                                          weight: FontWeight.w600,
-                                          size: 18,
+                                          weight: FontWeight.w700,
+                                          size: 16,
                                           fontFamily: AppStrings.interSans,
                                           color: Colors.white,
                                         ),
@@ -193,14 +194,14 @@ class KycScreenEleven extends StatelessWidget {
     ));
   }
 
-  _submit(BuildContext ctx) {
+  _submit(BuildContext ctx, String petId) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().sendPetHealth(
           
           name: _illnessNameController.text.trim(),
           drug: _drugNameController.text.trim(),
           prescription: _prescribeNameController.text.trim(),
-          url: AppStrings.petHealthStatusUrl(petId: '2')
+          url: 'pets/add-allergies/$petId'
           );
       FocusScope.of(ctx).unfocus();
     }

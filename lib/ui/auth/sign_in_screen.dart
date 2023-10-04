@@ -52,22 +52,29 @@ class SignInScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                Modals.showToast(state.userData.message!,
-                    messageType: MessageType.success);
-
-                StorageHandler.saveIsLoggedIn('true');
-
                 if (state.userData.status!) {
-                  AppNavigator.pushAndStackNamed(context,
-                      name: AppRoutes.landingPage);
-                  StorageHandler.saveIsUserType('user');
-                } else {
-                  StorageHandler.saveIsUserType('service_provider');
+                  Modals.showToast(state.userData.message!,
+                      messageType: MessageType.success);
 
-                  AppNavigator.pushAndReplaceName(context,
-                      name: AppRoutes.serviceProviderLandingPage);
+                  StorageHandler.saveIsLoggedIn('true');
+                  StorageHandler.saveUserPassword(_passwordController.text);
+                  StorageHandler.saveUserName(_usernameController.text.trim());
+
+                  if (!state.userData.isAgent!) {
+                    StorageHandler.saveIsUserType('user');
+
+                    AppNavigator.pushAndStackNamed(context,
+                        name: AppRoutes.landingPage);
+                  } else {
+                    StorageHandler.saveIsUserType('service_provider');
+
+                    AppNavigator.pushAndReplaceName(context,
+                        name: AppRoutes.serviceProviderLandingPage);
+                  }
+                } else {
+                  Modals.showToast(state.userData.message!,
+                      messageType: MessageType.error);
                 }
-                StorageHandler.saveUserName(_usernameController.text.trim());
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,

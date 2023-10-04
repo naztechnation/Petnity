@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:provider/provider.dart';
 
+import '../../model/view_models/account_view_model.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_routes.dart';
@@ -19,6 +21,9 @@ class KycScreenTwelve extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+
+    final petProfile = Provider.of<AccountViewModel>(context, listen: true);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -53,7 +58,7 @@ class KycScreenTwelve extends StatelessWidget {
                           textAlign: TextAlign.center,
                           maxLines: 3,
                           text:
-                              'Yaay, you have completed your dogs KYC\nsuccessfully now lets get started',
+                              'Yaay, you have completed your ${petProfile.petType } KYC\nsuccessfully now lets get started',
                           weight: FontWeight.w600,
                           size: 13,
                           fontFamily: AppStrings.interSans,
@@ -73,14 +78,13 @@ class KycScreenTwelve extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                  AppNavigator.pushAndStackNamed(context,
-                      name: AppRoutes.landingPage);
+                        AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text: 'Go to home',
+                  text: 'Go to Login',
                   weight: FontWeight.w700,
                   size: 18,
                   fontFamily: AppStrings.interSans,

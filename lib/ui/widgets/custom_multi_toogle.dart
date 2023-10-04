@@ -77,7 +77,10 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
                 ],
               border: Border.all(
                   width: 1.0,
-                  color: Colors.white,
+                  color:  selected
+                ? 
+                    AppColors.lightSecondary
+                : (widget.color ?? Theme.of(context).backgroundColor),
                   style: BorderStyle.solid)
           ),
           child: Column(

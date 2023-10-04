@@ -66,14 +66,32 @@ class _KycScreenFourState extends State<KycScreenFour> {
           shrinkWrap: true,
           children: [
             SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-            backButton(context),
+             Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w800,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
             SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomText(
+                 
+                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.15),
+                   CustomText(
                     textAlign: TextAlign.left,
                     maxLines: 2,
                     text: '${petProfile.petType} breed',
@@ -82,13 +100,14 @@ class _KycScreenFourState extends State<KycScreenFour> {
                     fontFamily: AppStrings.montserrat,
                     color: Colors.black,
                   ),
-                  SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+            SizedBox(height: 40),
+
                   Align(
                     alignment: Alignment.centerLeft,
                     child: CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 1,
-                      text: 'Input your ${petProfile.petType}breed',
+                      text: 'Input your ${petProfile.petType} breed',
                       weight: FontWeight.w500,
                       size: 16,
                       fontFamily: AppStrings.interSans,

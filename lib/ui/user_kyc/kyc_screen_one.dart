@@ -124,7 +124,7 @@ class _KycScreenOneState extends State<KycScreenOne> {
                           maxLines: 1,
                           text: 'Select',
                           weight: FontWeight.w700,
-                          size: 20,
+                          size: 16,
                           fontFamily: AppStrings.interSans,
                           color: Colors.white,
                         ),

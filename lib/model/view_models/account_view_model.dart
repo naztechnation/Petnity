@@ -21,6 +21,7 @@ class AccountViewModel extends BaseViewModel {
   String _userid = '';
   String _petType = '';
   String _petTypeIndex = '';
+  String _petId = '';
   String _petName = '';
   String _petGender = '';
   String _petBreed = '';
@@ -51,6 +52,11 @@ class AccountViewModel extends BaseViewModel {
 
   showPassword() {
     _showPassword = !_showPassword;
+    setViewState(ViewState.success);
+  }
+
+  setPetId(String petId) {
+    _petId = petId;
     setViewState(ViewState.success);
   }
 
@@ -208,7 +214,11 @@ class AccountViewModel extends BaseViewModel {
      return image;
   }
 
-
+Future<void> deleteUser() async {
+   
+    await StorageHandler.clearCache();
+    setViewState(ViewState.success);
+  }
 
   String get address => _address;
   Services get selectedService => _selectedService;
@@ -234,6 +244,7 @@ class AccountViewModel extends BaseViewModel {
   String get petBreed => _petBreed;
   String get petSize => _petSize;
   String get aboutPet => _aboutPet;
+  String get petId => _petId;
   File? get imageURl => _imageURl;
   UserType get userType => _userType;
 }

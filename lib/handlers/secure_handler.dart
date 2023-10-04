@@ -10,6 +10,11 @@ class StorageHandler {
       await storage.write(key: 'USER', value: username);
   }
 
+   static Future<void> saveUserPassword([String? password]) async {
+    if (password != null)
+      await storage.write(key: 'PASSWORD', value: password);
+  }
+
   static Future<void> saveOnboardState([String? onBoard]) async {
     if (onBoard != null)
       await storage.write(key: 'ONBOARD', value: onBoard);
@@ -25,6 +30,10 @@ class StorageHandler {
       await storage.write(key: 'USERTYPE', value: isUserType);
   }
 
+static Future<void> saveAgentId(String id) async {
+    
+      await storage.write(key: 'ID', value: id);
+  }
   static Future<String> getUserName() async {
    String? value = await storage.read(key: 'USER');
     String? username;
@@ -73,10 +82,19 @@ class StorageHandler {
     return usertype;
   }
 
-  static Future<void> saveAgentId(String id) async {
-    
-      await storage.write(key: 'ID', value: id);
+   static Future<String> getUserPassword() async {
+   String? value = await storage.read(key: 'PASSWORD');
+    String? password;
+    String? data = value;
+    if (data != null) {
+      password = data;
+    }else{
+      password = '';
+    }
+    return password;
   }
+
+  
 
   static Future<String> getAgentId() async {
    String? value = await storage.read(key: 'ID');
@@ -90,9 +108,7 @@ class StorageHandler {
     return id;
   }
 
-  static Future<void> clearUserDetails() async {
-    await storage.delete(key: 'USER');
-  }
+  
 
   static Future<void> clearCache() async {
     await storage.deleteAll();

@@ -7,10 +7,29 @@ import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
+import '../../handlers/secure_handler.dart';
 import '../widgets/filter_search_section.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final TextEditingController search = TextEditingController();
+
+  String username = '';
+
+  getUsername()async{
+    username = await StorageHandler.getUserName();
+
+  }
+
+  @override
+  void initState() {
+    getUsername();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +52,17 @@ class HomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        'Hi Sarah,',
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: AppStrings.montserrat),
+                      Expanded(
+                        child: Text(
+                          'Hi $username,',
+                          maxLines: 1,
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: AppStrings.montserrat),
+                        ),
                       ),
                       Container(
                         child: Row(
@@ -93,7 +117,6 @@ class HomePage extends StatelessWidget {
   }
 
   // Widget search() {}
-
   Widget card(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

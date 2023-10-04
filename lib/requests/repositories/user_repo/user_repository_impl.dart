@@ -15,5 +15,12 @@ class UserRepositoryImpl implements UserRepository {
     return ServiceProvidersList.fromJson(map);
   }
 
+@override
+  Future<ServiceProvidersList> getServiceTypes() async {
+    final map = await Requests().get(AppStrings.getServiceTypes, headers: {
+      'Authorization': AppStrings.token,
+     });
+    return ServiceProvidersList.fromJson(map);
+  }
   
 }

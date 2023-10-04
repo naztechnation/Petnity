@@ -40,10 +40,12 @@ class AppStrings {
   static   String verifyUserProfileUrl(String username) => '${_baseUrl}auth/verify-profile/$username';
   
   static const String loginUrl = '${_baseUrl}auth/login';
+  static const String logoutUrl = '${_baseUrl}auth/logout';
+  static const String getServiceTypes = '${_baseUrl}get-service-types';
   static   String uploadIdUrl(String photoId) => '${_baseUrl}auth/upload-id-photo/$photoId';
   static   String selectPetTypeUrl(String agentId) => '${_baseUrl}auth/select-pet-types/$agentId';
   static   String selectServiceTypeUrl(String agentId) => '${_baseUrl}auth/select-service-types/$agentId';
-  static String petHealthStatusUrl({String? petId = '2'}) => '${_baseUrl}pets/add-health-issue/$petId';
+  static String petHealthStatusUrl({String? petId}) => '${_baseUrl}pets/add-health-issue/$petId';
   static String petAlergeyDataUrl({String? petId = '2'}) => '${_baseUrl}pets/add-allergies/$petId';
   static   String petHealthUrl({required url}) =>'${_baseUrl+url}';
    static String registerUserPetProfileUrl({required username}) =>

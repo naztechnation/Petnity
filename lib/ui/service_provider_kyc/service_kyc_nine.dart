@@ -63,8 +63,8 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
           viewModel: Provider.of<AccountViewModel>(context, listen: false)),
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
-          if (state is PetProfileLoaded) {
-            Modals.showToast(state.userData.message!,
+          if (state is AgentResLoaded) {
+            Modals.showToast(state.agents.message!,
                 messageType: MessageType.success);
 
             AppNavigator.pushAndStackPage(context,
@@ -79,7 +79,7 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
             }
           }
         },
-        builder: (context, state) => (state is PetProfileLoading)
+        builder: (context, state) => (state is AgentResLoading)
             ? Container(
                 color: AppColors.lightPrimary,
                 height: screenSize(context).height,
@@ -135,7 +135,7 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                                       _index = index;
 
                                       user.addPetServiceType(petName);
-                                      // user.setPetTypeIndex('${index + 1}');
+                                    
                                     });
                                   },
                                 );
@@ -152,8 +152,7 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                             child: ButtonView(
                               onPressed: () {
                                 _submit(context, user, userData);
-                                AppNavigator.pushAndStackPage(context,
-                                    page: KycServiceScreenTen());
+                                
                               },
                               color: AppColors.lightSecondary,
                               borderRadius: 22,

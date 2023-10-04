@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../model/account_models/create_agent.dart';
 import '../../model/account_models/auth_data.dart';
+import '../../model/account_models/pet_profile.dart';
 
 
 abstract class AccountStates extends Equatable {
@@ -37,12 +38,23 @@ class PetProfileLoading extends AccountStates {
 }
 
 class PetProfileLoaded extends AccountStates {
-  final   CreateAgents userData;
-  const PetProfileLoaded(this.userData);
+  final   PetProfile petData;
+  const PetProfileLoaded(this.petData);
   @override
-  List<Object> get props => [userData];
+  List<Object> get props => [petData];
 }
 
+class AgentResLoading extends AccountStates {
+  @override
+  List<Object> get props => [];
+}
+
+class AgentResLoaded extends AccountStates {
+  final   CreateAgents agents;
+  const AgentResLoaded(this.agents);
+  @override
+  List<Object> get props => [agents];
+}
 
 class AccountUpdated extends AccountStates {
   final AuthData user;

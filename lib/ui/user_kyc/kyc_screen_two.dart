@@ -35,7 +35,23 @@ class KycScreenTwo extends StatelessWidget {
           decoration: BoxDecoration(),
           child: Column(children: [
             SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
-            backButton(context),
+             Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w800,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
             SizedBox(
               height: screenSize(context).height * 0.2,
             ),
@@ -80,7 +96,7 @@ class KycScreenTwo extends StatelessWidget {
                     maxLines: 1,
                     text: 'Next',
                     weight: FontWeight.w700,
-                    size: 20,
+                    size: 16,
                     fontFamily: AppStrings.interSans,
                     color: Colors.white,
                   ),

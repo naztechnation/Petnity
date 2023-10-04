@@ -6,7 +6,8 @@ import 'package:petnity/model/user_models/service_provider_lists.dart';
 import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/user/user.dart';
+import '../../../blocs/user/user_cubit.dart';
+import '../../../blocs/user/user_states.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_strings.dart';

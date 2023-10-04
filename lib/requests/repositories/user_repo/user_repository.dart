@@ -8,4 +8,6 @@ abstract class UserRepository {
     required String serviceId,
     
     });   
+
+    Future<ServiceProvidersList> getServiceTypes(); 
 }

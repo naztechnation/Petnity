@@ -54,18 +54,18 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
             viewModel: Provider.of<AccountViewModel>(context, listen: false)),
         child: BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
-            if (state is PetProfileLoaded) {
-              if (state.userData.status!) {
-                StorageHandler.saveAgentId(state.userData.agent!.id.toString());
+            if (state is AgentResLoaded) {
+              if (state.agents.status!) {
+                StorageHandler.saveAgentId(state.agents.agent!.id.toString());
 
-                Modals.showToast(state.userData.agent!.id.toString());
+                Modals.showToast(state.agents.agent!.id.toString());
 
                 AppNavigator.pushAndStackPage(context,
                     page: KycServiceScreenEight());
-                Modals.showToast(state.userData.message ?? '',
+                Modals.showToast(state.agents.message ?? '',
                     messageType: MessageType.success);
               } else {
-                Modals.showToast(state.userData.message ?? '',
+                Modals.showToast(state.agents.message ?? '',
                     messageType: MessageType.success);
               }
             } else if (state is AccountApiErr) {
@@ -208,7 +208,7 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
                             );
                            }
                         },
-                        processing: (state is PetProfileLoading || isLoading),
+                        processing: (state is AgentResLoading || isLoading),
                         color: AppColors.lightSecondary,
                         borderRadius: 32,
                         borderColor: Colors.white,

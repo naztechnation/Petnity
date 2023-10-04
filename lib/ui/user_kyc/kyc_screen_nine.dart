@@ -35,7 +35,7 @@ class KycScreenNine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final petProfile = Provider.of<AccountViewModel>(context, listen: false);
+    final petProfile = Provider.of<AccountViewModel>(context, listen: true);
 
     return Scaffold(
       body: Container(
@@ -166,8 +166,7 @@ class KycScreenNine extends StatelessWidget {
                     child: ButtonView(
                       processing: state is AccountProcessing,
                       onPressed: () {
-        
-                        _submit(context);
+                         _submit(context, petProfile.petId);
                        
                       },
                       padding: EdgeInsets.symmetric(vertical: 12),
@@ -194,14 +193,14 @@ class KycScreenNine extends StatelessWidget {
     ));
   }
 
-  _submit(BuildContext ctx) {
+  _submit(BuildContext ctx, String petId) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().sendPetHealth(
           
           name: _illnessNameController.text.trim(),
           drug: _drugNameController.text.trim(),
           prescription: _prescribeNameController.text.trim(),
-          url: 'pets/add-health-issue/2'
+          url: 'pets/add-health-issue/$petId'
           );
       FocusScope.of(ctx).unfocus();
     }

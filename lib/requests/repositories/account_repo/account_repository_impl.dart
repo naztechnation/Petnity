@@ -1,6 +1,7 @@
 
 import '../../../model/account_models/create_agent.dart';
 import '../../../model/account_models/auth_data.dart';
+import '../../../model/account_models/pet_profile.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'account_repository.dart';
@@ -35,7 +36,19 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
-  Future<CreateAgents> registerUserPetProfile(
+  Future<AuthData> logoutUser({
+    required String username,
+    required String password,
+  }) async {
+    final map = await Requests().post(AppStrings.logoutUrl, body: {
+      "username": username,
+      "password": password,
+    });
+    return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<PetProfile> registerUserPetProfile(
       {required String username,
       required String type,
       required String petname,
@@ -54,7 +67,7 @@ class AccountRepositoryImpl implements AccountRepository {
       "about": about,
       'picture': picture
     });
-    return CreateAgents.fromJson(map);
+    return PetProfile.fromJson(map);
   }
 
   Future<AuthData> sendPetHealth(

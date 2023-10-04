@@ -46,15 +46,11 @@ class KycScreenEight extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is PetProfileLoaded) {
-                if(state.userData.status!){
-                  AppNavigator.pushAndStackPage(context,
-                          page: KycScreenEight(
-                           
-                          ));
-                 Modals.showToast(state.userData.message ?? '',
-                      messageType: MessageType.success);
+                if(state.petData.status!){
+
+                
                 }else{
-                   Modals.showToast(state.userData.message ?? '',
+                   Modals.showToast(state.petData.message ?? '',
                       messageType: MessageType.success);
                 }
                 

@@ -89,7 +89,7 @@ class KycScreenSix extends StatelessWidget {
                     maxLines: 1,
                     text: 'Next',
                     weight: FontWeight.w700,
-                    size: 20,
+                    size: 16,
                     fontFamily: AppStrings.interSans,
                     color: Colors.white,
                   ),

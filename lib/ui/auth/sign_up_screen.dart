@@ -352,10 +352,11 @@ class SignUpScreen extends StatelessWidget {
                   userTypes('User', () {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
+                  StorageHandler.saveUserName(_usernameController.text.trim());
 
-                    // _submit(context);
-                    AppNavigator.pushAndStackPage(context,
-                        page: KycScreenOne());
+
+                     _submit(context);
+                    
                   }, context),
                   const SizedBox(
                     height: 10,

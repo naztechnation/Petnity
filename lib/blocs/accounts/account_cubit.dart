@@ -129,6 +129,30 @@ class AccountCubit extends Cubit<AccountStates> {
       }
     }
   }
+
+  Future<void> logoutUser(
+      {required String password, required String username}) async {
+    try {
+      emit(AccountLoading());
+
+      final userData=
+          await accountRepository.logoutUser(username: username, password: password);
+
+      emit(AccountLoaded(userData));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
  
 
   Future<void> registerUserPetProfile(
@@ -139,14 +163,14 @@ class AccountCubit extends Cubit<AccountStates> {
     try {
       emit(PetProfileLoading());
 
-      final user = await accountRepository.registerUserPetProfile(
+      final pet = await accountRepository.registerUserPetProfile(
         username: username,
         type: type, petname: petname, size: size, breed: breed,
          gender: gender, picture: picture, about: about
           
       );
      
-      emit(PetProfileLoaded(user));
+      emit(PetProfileLoaded(pet));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
     } catch (e) {
@@ -167,12 +191,12 @@ class AccountCubit extends Cubit<AccountStates> {
     required String dob,required String name,required String gender,
     required String country,required String city,required String about,required String picture}) async {
     try {
-      emit(PetProfileLoading());
+      emit(AgentResLoading());
 
       final user = await 
       accountRepository.registerServiceProviderProfile(username: username, dob: dob, name: name, gender: gender, country: country, city: city, about: about, picture: picture);
      
-      emit(PetProfileLoaded(user));
+      emit(AgentResLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
     } catch (e) {
@@ -215,12 +239,12 @@ class AccountCubit extends Cubit<AccountStates> {
   Future<void> servicePetType({required List<String> petnames, required String username,
       required String agentId}) async {
     try {
-      emit(PetProfileLoading());
+      emit(AgentResLoading());
 
       final user = await accountRepository.servicePetNames(petnames: petnames, agentId: agentId, username: username,
           );
 
-      emit(PetProfileLoaded(user));
+      emit(AgentResLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
     } catch (e) {

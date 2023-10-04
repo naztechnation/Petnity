@@ -45,7 +45,23 @@ class _KycScreenThreeState extends State<KycScreenThree> {
           decoration: BoxDecoration(),
           child: Column(children: [
             SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
-            backButton(context),
+             Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'KYC  Registration',
+                    weight: FontWeight.w800,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
             SizedBox(
               height: screenSize(context).height * 0.13,
             ),

@@ -12,7 +12,9 @@ import '../../../utils/navigator/page_navigator.dart';
 import '../../notfications_pages/notifications_session.dart';
 
 class customDrawer extends StatelessWidget {
-  const customDrawer({super.key});
+
+  final VoidCallback onLogOutPressesd;
+  const customDrawer({super.key, required this.onLogOutPressesd});
 
   @override
   Widget build(BuildContext context) {
@@ -134,9 +136,10 @@ class customDrawer extends StatelessWidget {
               height: screenSize(context).height * .1,
             ),
             ListTile(
-              onTap: () {
-                AppNavigator.pushNamedAndRemoveUntil(context,
-                    name: 'signInScreen');
+              onTap: (){
+                Navigator.pop(context);
+                onLogOutPressesd();
+              
               },
               leading: ImageView.svg(
                 AppImages.logoutIcon,

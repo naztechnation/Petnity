@@ -33,7 +33,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AccountViewModel>(context, listen: true);
+    final petProfile = Provider.of<AccountViewModel>(context, listen: true);
 
     return Scaffold(
         body: Container(
@@ -52,12 +52,16 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
         child: BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
             if (state is PetProfileLoaded) {
-              if (state.userData.status!) {
-                AppNavigator.pushAndStackPage(context, page: KycScreenEight());
-                Modals.showToast(state.userData.message ?? '',
-                    messageType: MessageType.success);
+              if (state.petData.status!) {
+                  petProfile.setPetId(state.petData.pet!.id.toString());
+                  AppNavigator.pushAndStackPage(context,
+                          page: KycScreenEight(
+                           
+                          ));
+                 Modals.showToast(state.petData.message ?? '',
+                      messageType: MessageType.success);
               } else {
-                Modals.showToast(state.userData.message ?? '',
+                Modals.showToast(state.petData.message ?? '',
                     messageType: MessageType.success);
               }
             } else if (state is AccountApiErr) {
@@ -84,7 +88,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                 CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text: 'Upload your ${user.petType} \npicture ',
+                  text: 'Upload your ${petProfile.petType} \npicture ',
                   weight: FontWeight.w700,
                   size: 28,
                   fontFamily: AppStrings.montserrat,
@@ -93,7 +97,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                 SizedBox(
                   height: 50,
                 ),
-                if (user.imageURl == null) ...[
+                if (petProfile.imageURl == null) ...[
                   ClipOval(
                       child: Container(
                           padding: EdgeInsets.all(30),
@@ -107,7 +111,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                             width: 80,
                           ))),
                 ],
-                if (user.imageURl != null) ...[
+                if (petProfile.imageURl != null) ...[
                   ClipOval(
                       child: Container(
                           padding: EdgeInsets.all(0),
@@ -116,7 +120,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                           width: 160,
                           child: ImageView.file(
                               File(
-                                user.imageURl!.path,
+                                petProfile.imageURl!.path,
                               ),
                               fit: BoxFit.cover))),
                 ],
@@ -127,7 +131,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                     ? SizedBox.shrink()
                     : TextButton(
                         onPressed: () async {
-                          user.loadImage(context);
+                          petProfile.loadImage(context);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -143,31 +147,31 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                 const SizedBox(
                   height: 70,
                 ),
-                if (user.imageURl != null)
+                if (petProfile.imageURl != null)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 0.0, horizontal: 20),
                     child: ButtonView(
                       onPressed: () async {
-                        if (user.imageURl != null) {
+                        if (petProfile.imageURl != null) {
                           setState(() {
                             isLoading = true;
                           });
-                          String imgUrl = await user.uploadImage(
-                              user.imageURl!.path, 'petnity_user');
+                          String imgUrl = await petProfile.uploadImage(
+                              petProfile.imageURl!.path, 'petnity_user');
                           setState(() {
                             isLoading = false;
                           });
 
                           _submit(
-                            username: user.username,
+                            username: petProfile.username,
                             ctx: context,
-                            type: user.petTypeIndex,
-                            petname: user.petName,
-                            breed: user.petBreed,
-                            size: user.petSize,
-                            gender: user.petGender,
-                            about: user.aboutPet,
+                            type: petProfile.petTypeIndex,
+                            petname: petProfile.petName,
+                            breed: petProfile.petBreed,
+                            size: petProfile.petSize,
+                            gender: petProfile.petGender,
+                            about: petProfile.aboutPet,
                             picture: imgUrl,
                           );
                         }
