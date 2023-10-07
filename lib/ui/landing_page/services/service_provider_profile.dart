@@ -5,6 +5,7 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
@@ -23,12 +24,17 @@ import 'widgets/providers_profile_body.dart';
 import './vets/vet_service.dart';
 
 class ServiceProviderProfile extends StatelessWidget {
-  ServiceProviderProfile({super.key});
+  final Agents? agents; 
+  ServiceProviderProfile({super.key,  this.agents});
 
   final AccountViewModel userViewModel = AccountViewModel();
 
   @override
   Widget build(BuildContext context) {
+
+
+    
+
     return Scaffold(
       body: Stack(
         children: [
@@ -83,14 +89,15 @@ class ServiceProviderProfile extends StatelessWidget {
                             SizedBox(
                               width: 5,
                             ),
-                            CustomText(
-                              textAlign: TextAlign.start,
-                              maxLines: 2,
-                              text: 'Ikeja, Lagos',
-                              weight: FontWeight.w300,
-                              size: 14,
-                              fontFamily: AppStrings.interSans,
-                              color: Colors.black,
+                            Expanded(
+                              child: CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                text: '${agents!.city}, ${agents!.country}',
+                                weight: FontWeight.w300,
+                                size: 14,
+                                color: Colors.black,
+                              ),
                             ),
                           ],
                         ),
@@ -99,7 +106,7 @@ class ServiceProviderProfile extends StatelessWidget {
                         height: 12,
                       ),
                       ProfileImage(
-                        AppImages.person,
+                        '${agents!.picture}',
                         placeHolder: AppImages.person,
                         radius: 55,
                         height: 120,
@@ -114,7 +121,7 @@ class ServiceProviderProfile extends StatelessWidget {
                           CustomText(
                             textAlign: TextAlign.start,
                             maxLines: 2,
-                            text: 'Dera Jessica',
+                            text: '${agents!.name}',
                             weight: FontWeight.w700,
                             size: 14,
                             fontFamily: AppStrings.interSans,
@@ -123,7 +130,8 @@ class ServiceProviderProfile extends StatelessWidget {
                           const SizedBox(
                             width: 12,
                           ),
-                          ImageView.svg(AppImages.verified),
+                        agents!.isVerified!
+                            ?   ImageView.svg(AppImages.verified): SizedBox.shrink(),
                         ],
                       ),
                       const SizedBox(
@@ -132,28 +140,32 @@ class ServiceProviderProfile extends StatelessWidget {
                       CustomText(
                         textAlign: TextAlign.start,
                         maxLines: 2,
-                        text: 'Verified',
+                        text:  agents!.isVerified!
+                            ? 'Verified'
+                            : 'Not Verified',
                         weight: FontWeight.w300,
                         size: 11,
                         fontFamily: AppStrings.interSans,
-                        color: Colors.black,
+                        color: agents!.isVerified!
+                            ? Colors.green
+                            : Colors.red,
                       ),
                       const SizedBox(
                         height: 12,
                       ),
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        text: '322 Completed walks',
-                        weight: FontWeight.w400,
-                        size: 12,
-                        fontFamily: AppStrings.interSans,
-                        color: Colors.black,
-                      ),
+                      // CustomText(
+                      //   textAlign: TextAlign.start,
+                      //   maxLines: 2,
+                      //   text: '322 Completed walks',
+                      //   weight: FontWeight.w400,
+                      //   size: 12,
+                      //   fontFamily: AppStrings.interSans,
+                      //   color: Colors.black,
+                      // ),
                       const SizedBox(
                         height: 12,
                       ),
-                      ProviderProfileBody(),
+                      ProviderProfileBody(agents: agents,),
                       GallaryRatingSection(),
                       const SizedBox(
                         height: 150,
@@ -176,10 +188,10 @@ class ServiceProviderProfile extends StatelessWidget {
                     flex: 6,
                     child: ButtonView(
                       onPressed: () {
-                        openServices(
-                            Provider.of<AccountViewModel>(context, listen: false)
-                                .selectedService,
-                            context);
+                        // openServices(
+                        //     Provider.of<AccountViewModel>(context, listen: false)
+                        //         .selectedService,
+                        //     context);
                       },
                       child: CustomText(
                         textAlign: TextAlign.start,

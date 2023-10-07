@@ -21,7 +21,7 @@ class AppImages {
   static const birdsPic = '${_baseUrl}birds_pics.png';
   static const rabbitPic = '${_baseUrl}rabbit_pics.png';
   static const defaultImage = '${_baseUrl}default_image.png';
-  static const person = '${_baseUrl}person.jpeg';
+  static const person = '${_baseUrl}person.png';
   static const important = '${_baseUrl}important.png';
   static const dogWalk = '${_baseUrl}dog_walk.png';
   static const petDate = '${_baseUrl}pet_date.png';

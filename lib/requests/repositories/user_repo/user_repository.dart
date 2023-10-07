@@ -1,6 +1,7 @@
  
-
+ 
 import '../../../model/user_models/service_provider_lists.dart';
+import '../../../model/user_models/service_type.dart';
 
 
 abstract class UserRepository {
@@ -9,5 +10,7 @@ abstract class UserRepository {
     
     });   
 
-    Future<ServiceProvidersList> getServiceTypes(); 
+    Future<GetServiceTypes> getServiceTypes(); 
+ Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
+
 }

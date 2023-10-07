@@ -23,10 +23,7 @@ class Requests {
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
 
-        /*if (!map["status"]) {
-            throw ApiException(
-                RequestHandler.handleApiError(map).first.msg!);
-          }*/
+        
       });
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);

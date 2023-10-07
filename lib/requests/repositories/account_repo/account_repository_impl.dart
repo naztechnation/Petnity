@@ -142,21 +142,7 @@ class AccountRepositoryImpl implements AccountRepository {
     return AuthData.fromJson(map);
   }
 
-  @override
-  Future<AuthData> serviceProvided(
-      {required List<String> services,
-      required String username,
-      required String agentId}) async {
-    final map = await Requests().patch(AppStrings.selectServiceTypeUrl(agentId),
-        body: {
-          "service_types": services
-        },
-        headers: {
-          'Authorization': AppStrings.token,
-          "Content-type": "application/json"
-        });
-    return AuthData.fromJson(map);
-  }
+  
 
   @override
   Future<AuthData> uploadPhotoUrl(

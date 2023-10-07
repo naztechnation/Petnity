@@ -26,6 +26,5 @@ Future<CreateAgents> registerServiceProviderProfile({
     required String dob,required String name,required String gender,
     required String country,required String city,required String about,required String picture});
 
- Future<AuthData> serviceProvided({required List<String> services,required String username,required String agentId});   
  Future<CreateAgents> servicePetNames({required List<String> petnames,required String username,required String agentId});   
 }

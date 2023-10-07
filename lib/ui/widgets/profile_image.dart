@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/res/app_colors.dart';
 
 import '../../res/app_images.dart';
 import 'image_view.dart';
@@ -50,13 +51,14 @@ class ProfileImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(100.0),
             child: CircleAvatar(
                 radius: radius,
-                backgroundColor: Theme.of(context).canvasColor,
+                backgroundColor: AppColors.lightPrimary,
                 child: ImageView.network(url,
                     placeholder: placeHolder,
                     fit: fit,
                     height: height,
                     width: width,
                     scale: scale,
+                    
                     imageErrorBuilder: (context, error, stackTrace) =>
                         ImageView.asset(placeHolder,
                             fit: BoxFit.cover, height: height, width: width))),

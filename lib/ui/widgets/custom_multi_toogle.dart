@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 
-import '../../res/app_strings.dart';
+
 
 class CustomMultiToggle extends StatefulWidget {
   final Color? color;
@@ -11,7 +11,7 @@ class CustomMultiToggle extends StatefulWidget {
   final Color? textColor;
   final Color? selectedTextColor;
   final Color? backgroundColor;
-  final List<String> title;
+  final List<dynamic> title;
   final List<String>? subtitle;
   final List<int>? selectedIndex;
   final double elevation;

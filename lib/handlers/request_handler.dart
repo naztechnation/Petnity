@@ -20,7 +20,8 @@ class RequestHandler{
       case 200:
         return response.body;
       case 400:
-        // throw BadRequestException(handleApiError(map).first.msg);
+                return response.body;
+
       case 401:
       case 403:
         // throw UnauthorisedException(handleApiError(map).first.msg);

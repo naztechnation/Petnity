@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../model/user_models/service_provider_lists.dart';
+import '../../model/user_models/service_type.dart';
 
 
 
@@ -19,8 +20,17 @@ class ServiceProviderListLoading extends UserStates {
   List<Object> get props => [];
 }
 
+class ServicesLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
  
-
+class ServicesLoaded extends UserStates {
+  final GetServiceTypes services;
+  const ServicesLoaded(this.services);
+  @override
+  List<Object> get props => [services];
+}
 class ServiceProviderListLoaded extends UserStates {
   final ServiceProvidersList userData;
   const ServiceProviderListLoaded(this.userData);

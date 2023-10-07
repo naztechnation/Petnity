@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
-import 'package:provider/provider.dart';
-
-import '../../../model/view_models/service_provider_view_model.dart';
 import '../../../res/app_strings.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';

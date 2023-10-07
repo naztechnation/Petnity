@@ -8,7 +8,7 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
 import '../../../widgets/image_view.dart';
 
-Widget contactInfo(){
+Widget contactInfo({String? email, String? phone}){
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,7 @@ Widget contactInfo(){
           CustomText(
                         textAlign: TextAlign.start,
                         maxLines: 2,
-                        text: '+233123257865',
+                        text: phone,
                         weight: FontWeight.w600,
                         size: 14,
                         // fontFamily: AppStrings.interSans,
@@ -72,15 +72,18 @@ Widget contactInfo(){
                         color: Colors.black,
                       ),
           ],),
-          CustomText(
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        text: 'example@gmail.com',
-                        weight: FontWeight.w600,
-                        size: 14,
-                        // fontFamily: AppStrings.interSans,
-                        color: Colors.black,
-                      ),
+          const SizedBox(width: 12,),
+          Expanded(
+            child: CustomText(
+                          textAlign: TextAlign.start,
+                          maxLines: 2,
+                          text: email,
+                          weight: FontWeight.w600,
+                          size: 14,
+                          // fontFamily: AppStrings.interSans,
+                          color: Colors.black,
+                        ),
+          ),
         ],
       ),
       const SizedBox(

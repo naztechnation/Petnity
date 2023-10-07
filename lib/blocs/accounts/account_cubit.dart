@@ -194,7 +194,8 @@ class AccountCubit extends Cubit<AccountStates> {
       emit(AgentResLoading());
 
       final user = await 
-      accountRepository.registerServiceProviderProfile(username: username, dob: dob, name: name, gender: gender, country: country, city: city, about: about, picture: picture);
+      accountRepository.registerServiceProviderProfile(username: username, dob: dob, name: name,
+       gender: gender, country: country, city: city, about: about, picture: picture);
      
       emit(AgentResLoaded(user));
     } on ApiException catch (e) {
@@ -212,29 +213,7 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-   Future<void> serviceProvided({required List<String> services,required String username, required String agentId}) async {
-    try {
-      emit(AccountProcessing());
-
-      final user = await accountRepository.serviceProvided(services: services, username: username, agentId: agentId
-          );
-
-      // await viewModel.setUserData(username:email);
-      emit(AccountLoaded(user));
-    } on ApiException catch (e) {
-      emit(AccountApiErr(e.message));
-    } catch (e) {
-      if (e is NetworkException ||
-          e is BadRequestException ||
-          e is UnauthorisedException ||
-          e is FileNotFoundException ||
-          e is AlreadyRegisteredException) {
-        emit(AccountNetworkErr(e.toString()));
-      } else {
-        rethrow;
-      }
-    }
-  }
+  
 
   Future<void> servicePetType({required List<String> petnames, required String username,
       required String agentId}) async {

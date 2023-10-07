@@ -58,8 +58,7 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
               if (state.agents.status!) {
                 StorageHandler.saveAgentId(state.agents.agent!.id.toString());
 
-                Modals.showToast(state.agents.agent!.id.toString());
-
+                
                 AppNavigator.pushAndStackPage(context,
                     page: KycServiceScreenEight());
                 Modals.showToast(state.agents.message ?? '',
@@ -195,17 +194,20 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
                                 isLoading = false;
                               });
 
-                            _submit(
-                              username: userDetails.username,
-                              ctx: context,
-                              name: user.serviceProviderName,
-                              country: user.serviceProviderCountry,
-                              city: user.serviceProviderCity,
-                              dob: user.serviceProviderAge,
-                              gender: user.servicesProviderGender,
-                              about: user.aboutServiceProvider,
-                              picture: imgUrl,
-                            );
+                            // _submit(
+                            //   username: userDetails.username,
+                            //   ctx: context,
+                            //   name: user.serviceProviderName,
+                            //   country: user.serviceProviderCountry,
+                            //   city: user.serviceProviderCity,
+                            //   dob: user.serviceProviderAge,
+                            //   gender: user.servicesProviderGender,
+                            //   about: user.aboutServiceProvider,
+                            //   picture: imgUrl,
+                            // );
+
+                            AppNavigator.pushAndStackPage(context,
+                    page: KycServiceScreenEight());
                            }
                         },
                         processing: (state is AgentResLoading || isLoading),

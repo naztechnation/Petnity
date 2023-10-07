@@ -12,6 +12,7 @@ import 'package:petnity/ui/widgets/notification_icon.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/user_models/service_type.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
@@ -63,7 +64,6 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final user = Provider.of<AccountViewModel>(context, listen: false);
 
     return BlocProvider<AccountCubit>(
@@ -79,7 +79,8 @@ class _LandingScreenState extends State<LandingScreen> {
                     messageType: MessageType.success);
 
                 user.deleteUser();
-                  AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);    
+                AppNavigator.pushAndReplaceName(context,
+                    name: AppRoutes.signInScreen);
               } else {
                 Modals.showToast(state.userData.message!,
                     messageType: MessageType.error);
@@ -103,7 +104,9 @@ class _LandingScreenState extends State<LandingScreen> {
               : Scaffold(
                   drawer: customDrawer(
                     onLogOutPressesd: () {
-                      _submit(context, username, password);
+                      user.deleteUser();
+                      AppNavigator.pushAndReplaceName(context,
+                          name: AppRoutes.signInScreen);
                     },
                   ),
                   backgroundColor: AppColors.lightBackground,
@@ -265,16 +268,34 @@ class HomepageAppbar extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.black),
       actions: [
         NotificationIcon(
-            icon: Icon(Icons.notifications_outlined, size: 28,), nun_of_notifications: 5),
+            icon: Icon(
+              Icons.notifications_outlined,
+              size: 38,
+            ),
+            nun_of_notifications: 5),
+        const SizedBox(
+          width: 20,
+        ),
         GestureDetector(
-          child: CircleAvatar(
-            radius: 50,
-            child: ImageView.asset(AppImages.catPic),
+          child: ClipOval(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: ImageView.network(
+                'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.632798143.1696377600&semt=ais',
+                width: 40.0,
+                height: 40.0,
+                scale: 1,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           onTap: () => AppNavigator.pushAndStackPage(
             context,
             page: PetProfile(),
           ),
+        ),
+        const SizedBox(
+          width: 12,
         ),
       ],
     );

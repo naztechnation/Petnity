@@ -21,11 +21,62 @@ class UserCubit extends Cubit<UserStates> {
     try {
       emit(ServiceProviderListLoading());
 
-      final service = await userRepository.getServiceProviderList(
+      final agents = await userRepository.getServiceProviderList(
         serviceId: serviceId,
        );
 
-      emit(ServiceProviderListLoaded(service));
+       await viewModel.setAgentDetails(agents:agents.agents ?? []);
+
+      emit(ServiceProviderListLoaded(agents));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+  
+  Future<void> getServiceTypes() async {
+    try {
+      emit(ServiceProviderListLoading());
+
+      final service = await userRepository.getServiceTypes(
+       );
+
+       await viewModel.setServicesList(services:service.serviceTypes ?? []);
+
+
+      emit(ServicesLoaded(service));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> serviceProvided({required List<String> services,required String username, required String agentId}) async {
+    try {
+      emit(ServiceProviderListLoading());
+
+      final user = await userRepository.serviceProvided(services: services, username: username, agentId: agentId
+          );
+ 
+      emit(ServiceProviderListLoaded(user));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {

@@ -6,10 +6,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../blocs/accounts/account.dart';
+import '../../blocs/user/user.dart';
+import '../../model/user_models/service_type.dart';
 import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/account_view_model.dart';
-import '../../requests/repositories/account_repo/account_repository_impl.dart';
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 import '../../res/app_images.dart';
@@ -22,27 +24,33 @@ import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
 import 'service_kyc_nine.dart';
 
-class KycServiceScreenEight extends StatefulWidget {
-  KycServiceScreenEight({super.key});
+class KycServiceScreenEight extends StatelessWidget {
+  const KycServiceScreenEight({Key? key}) : super(key: key);
 
   @override
-  State<KycServiceScreenEight> createState() => _KycServiceScreenEightState();
+  Widget build(BuildContext context) {
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: KycServiceEight(),
+    );
+  }
 }
 
-class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
+class KycServiceEight extends StatefulWidget {
+  KycServiceEight({super.key});
+
+  @override
+  State<KycServiceEight> createState() => _KycServiceEightState();
+}
+
+class _KycServiceEightState extends State<KycServiceEight> {
+  List<ServiceTypes> service = [];
+  late UserCubit _userCubit;
+
   int _index = -1;
-  List<String> services = [
-    'Pet walkers',
-    'Pet date',
-    'Pet sitters',
-    'Trainer',
-    'Vets',
-    'Grooming',
-    'Boarding',
-    'Pet care givers',
-    'Pet sellers',
-    'Sell products'
-  ];
+  
   List<String> servicesPics = [
     AppImages.dogWalk,
     AppImages.petDate,
@@ -55,37 +63,50 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
     AppImages.dogSellers,
     AppImages.proPet
   ];
+
+  @override
+  void initState() {
+    _userCubit = context.read<UserCubit>();
+    _userCubit.getServiceTypes();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
-    final userData= Provider.of<AccountViewModel>(context, listen: true);
+    final user = Provider.of<ServiceProviderViewModel>(context, listen: false);
+    final userData = Provider.of<AccountViewModel>(context, listen: false);
+    final services = Provider.of<UserViewModel>(context, listen: false);
     userData.getUserId();
 
     return Scaffold(
-        body: BlocProvider<AccountCubit>(
+        body: BlocProvider<UserCubit>(
       lazy: false,
-      create: (_) => AccountCubit(
-          accountRepository: AccountRepositoryImpl(),
-          viewModel: Provider.of<AccountViewModel>(context, listen: false)),
-      child: BlocConsumer<AccountCubit, AccountStates>(
+      create: (_) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: BlocConsumer<UserCubit, UserStates>(
         listener: (context, state) {
-          if (state is AccountLoaded) {
+          if (state is ServiceProviderListLoaded) {
             Modals.showToast(state.userData.message!,
                 messageType: MessageType.success);
 
             AppNavigator.pushAndStackPage(context,
                 page: KycServiceScreenNine());
-          } else if (state is AccountApiErr) {
+          } else if (state is ServicesLoaded) {
+            if (state.services.status!) {
+              service = _userCubit.viewModel.services;
+            } else {}
+          } else if (state is UserNetworkErrApiErr) {
             if (state.message != null) {
               Modals.showToast(state.message!, messageType: MessageType.error);
             }
-          } else if (state is AccountNetworkErr) {
+          } else if (state is UserNetworkErr) {
             if (state.message != null) {
               Modals.showToast(state.message!, messageType: MessageType.error);
             }
           }
         },
-        builder: (context, state) => (state is AccountProcessing)
+        builder: (context, state) => (state is ServiceProviderListLoading)
             ? Container(
                 color: AppColors.lightPrimary,
                 height: screenSize(context).height,
@@ -139,18 +160,17 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                               crossAxisCount: 2,
                               crossAxisSpacing: 14,
                               mainAxisSpacing: 12,
-                              itemCount: services.length,
+                              itemCount: services.services.length,
                               itemBuilder: (context, index) {
-                                String serviceName = services[index];
+                                String serviceName = services.services[index].name ?? '';
                                 return ServiceProviderChoice(
-                                  imageUrl: servicesPics[index],
+                                  imageUrl: AppImages.dogWalk,
                                   serviceName: serviceName,
                                   isSelected: user.selectedServiceItems
                                       .contains(serviceName),
                                   onPressed: () {
                                     setState(() {
                                       user.addService(serviceName);
-                                      // petProfile.setPetTypeIndex('${index + 1}');
                                     });
                                   },
                                 );
@@ -166,9 +186,9 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
                                 vertical: 0.0, horizontal: 0),
                             child: ButtonView(
                               onPressed: () {
-                                 userData.getUserId();
+                                userData.getUserId();
                                 //  Modals.showToast(userData.serviceProviderId);
-                               _submit(context, user, userData);
+                                _submit(context, user, userData);
                                 // AppNavigator.pushAndStackPage(context,
                                 //     page: KycServiceScreenNine());
                               },
@@ -198,9 +218,7 @@ class _KycServiceScreenEightState extends State<KycServiceScreenEight> {
   }
 
   _submit(BuildContext ctx, var user, var userData) {
-   
-   
-    ctx.read<AccountCubit>().serviceProvided(
+    ctx.read<UserCubit>().serviceProvided(
         services: user.selectedServiceItems,
         username: userData.username,
         agentId: userData.serviceProviderId);

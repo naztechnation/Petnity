@@ -1,11 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:petnity/model/view_models/user_view_model.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/view_models/account_view_model.dart';
-import '../../../res/enum.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../services/services_providers_details.dart';
 
@@ -15,147 +18,53 @@ class ListOfServices extends StatelessWidget {
   final AccountViewModel userViewModel = AccountViewModel();
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserViewModel>(context, listen: true);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(
-              vertical: 10,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Item(context, Colors.lightBlueAccent, 'Pet \nwalkers',
-                    AppImages.dogWalk, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.dogwalkers);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Pet Walkers',
-                      ));
+            margin: EdgeInsets.all(1),
+            child: StaggeredGridView.countBuilder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                crossAxisSpacing: 14,
+                mainAxisSpacing: 12,
+                itemCount: user.services.length,
+                itemBuilder: (context, index) {
+                  Color randomColor = getRandomColor();
+
+                  return Item(context, randomColor,
+                      '${user.services[index].name}', AppImages.dogWalk, () {
+                    Provider.of<AccountViewModel>(context, listen: false)
+                        .setSelectedService(user.services[index].name!);
+                    AppNavigator.pushAndStackPage(context,
+                        page: ServiceProvidersDetails(
+                          petProvider: '${user.services[index].name}',
+                          serviceId: '${user.services[index].id}',
+                        ));
+                  });
+                },
+                staggeredTileBuilder: (index) {
+                  return StaggeredTile.count(1, 0.45);
                 }),
-                Item(context, Colors.brown, 'Pet \ndate', AppImages.petDate,
-                    () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.petdate);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Pet Date',
-                      ));
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Item(context, Color.fromARGB(255, 179, 120, 10),
-                    'Pet \nsitters', AppImages.dogSitter, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.dogsitters);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Pet Sitters',
-                      ));
-                }),
-                Item(context, Color.fromARGB(255, 52, 139, 170), 'Trainer',
-                    AppImages.dogTrainer, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.trainer);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Trainers',
-                      ));
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Item(context, Colors.purpleAccent, 'Vets', AppImages.dogVets,
-                    () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.vets);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Vets',
-                      ));
-                }),
-                Item(context, Color.fromARGB(255, 185, 15, 72), 'Grooming',
-                    AppImages.dogGrooming, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.grooming);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Grooming',
-                      ));
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Item(context, Colors.orangeAccent, 'Boarding',
-                    AppImages.dogBoarding, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.boarding);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Pet boarder',
-                      ));
-                }),
-                Item(context, Colors.lightGreen, 'Breeders',
-                    AppImages.dogBreeders, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.breeders);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Breeders',
-                      ));
-                }),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Item(
-                    context, Colors.blue, 'Pet \nsellers', AppImages.dogSellers,
-                    () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.petsellers);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Pet Sellers',
-                      ));
-                }),
-                Item(context, Colors.pink, 'Pet care \ngivers',
-                    AppImages.petCarers, () {
-                  Provider.of<AccountViewModel>(context, listen: false)
-                      .setSelectedService(Services.petcaregivers);
-                  AppNavigator.pushAndStackPage(context,
-                      page: ServiceProvidersDetails(
-                        petProvider: 'Pet care giving',
-                      ));
-                }),
-              ],
-            ),
           ),
         ],
       ),
     );
   }
+}
+
+Color getRandomColor() {
+  Random random = Random();
+  return Color.fromARGB(
+    255,
+    random.nextInt(256),
+    random.nextInt(256),
+    random.nextInt(256),
+  );
 }
 
 Widget Item(BuildContext context, Color color, String title, String image,
@@ -177,10 +86,12 @@ Widget Item(BuildContext context, Color color, String title, String image,
             radius: 25,
           ),
           const SizedBox(width: 15),
-          Text(
-            title,
-            maxLines: 2,
-            style: TextStyle(fontSize: 14, fontFamily: AppStrings.interSans),
+          Expanded(
+            child: Text(
+              title,
+              maxLines: 2,
+              style: TextStyle(fontSize: 14, fontFamily: AppStrings.interSans),
+            ),
           )
         ],
       ),
