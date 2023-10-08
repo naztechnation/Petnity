@@ -24,17 +24,13 @@ import 'widgets/providers_profile_body.dart';
 import './vets/vet_service.dart';
 
 class ServiceProviderProfile extends StatelessWidget {
-  final Agents? agents; 
-  ServiceProviderProfile({super.key,  this.agents});
+  final Agents? agents;
+  ServiceProviderProfile({super.key, this.agents});
 
   final AccountViewModel userViewModel = AccountViewModel();
 
   @override
   Widget build(BuildContext context) {
-
-
-    
-
     return Scaffold(
       body: Stack(
         children: [
@@ -130,8 +126,9 @@ class ServiceProviderProfile extends StatelessWidget {
                           const SizedBox(
                             width: 12,
                           ),
-                        agents!.isVerified!
-                            ?   ImageView.svg(AppImages.verified): SizedBox.shrink(),
+                          agents!.isVerified!
+                              ? ImageView.svg(AppImages.verified)
+                              : SizedBox.shrink(),
                         ],
                       ),
                       const SizedBox(
@@ -140,15 +137,11 @@ class ServiceProviderProfile extends StatelessWidget {
                       CustomText(
                         textAlign: TextAlign.start,
                         maxLines: 2,
-                        text:  agents!.isVerified!
-                            ? 'Verified'
-                            : 'Not Verified',
+                        text: agents!.isVerified! ? 'Verified' : 'Not Verified',
                         weight: FontWeight.w300,
                         size: 11,
                         fontFamily: AppStrings.interSans,
-                        color: agents!.isVerified!
-                            ? Colors.green
-                            : Colors.red,
+                        color: agents!.isVerified! ? Colors.green : Colors.red,
                       ),
                       const SizedBox(
                         height: 12,
@@ -165,8 +158,10 @@ class ServiceProviderProfile extends StatelessWidget {
                       const SizedBox(
                         height: 12,
                       ),
-                      ProviderProfileBody(agents: agents,),
-                      GallaryRatingSection(),
+                      ProviderProfileBody(
+                        agents: agents,
+                      ),
+                      GallaryRatingSection(userId: agents!.id.toString()),
                       const SizedBox(
                         height: 150,
                       ),

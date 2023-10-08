@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
 
@@ -36,6 +37,18 @@ class ServiceProviderListLoaded extends UserStates {
   const ServiceProviderListLoaded(this.userData);
   @override
   List<Object> get props => [userData];
+}
+
+class ReviewLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ReviewLoaded extends UserStates {
+  final GetReviews reviews;
+  const ReviewLoaded(this.reviews);
+  @override
+  List<Object> get props => [reviews];
 }
 
 class UserNetworkErr extends UserStates {

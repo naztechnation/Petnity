@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
-import '../../../../res/enum.dart';
+import '../../../../res/enum.dart' as gallary;
 import 'gallary_rating_body.dart';
 
 class GallaryRatingSection extends StatefulWidget {
-  GallaryRatingSection({super.key});
+
+  final String userId; 
+
+  GallaryRatingSection({super.key, required this.userId});
 
   @override
   State<GallaryRatingSection> createState() => _GallaryRatingSectionState();
 }
 
 class _GallaryRatingSectionState extends State<GallaryRatingSection> {
-  GallaryRating type = GallaryRating.gallary;
+  gallary.GallaryRating type = gallary.GallaryRating.gallary;
 
   @override
   Widget build(BuildContext context) {
@@ -33,42 +36,42 @@ class _GallaryRatingSectionState extends State<GallaryRatingSection> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    type = GallaryRating.gallary;
+                    type = gallary.GallaryRating.gallary;
                   });
                 },
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: type == GallaryRating.gallary ? 10 : 0,
-                      right: type == GallaryRating.ratings ? 10 : 0),
+                      left: type == gallary.GallaryRating.gallary ? 10 : 0,
+                      right: type == gallary.GallaryRating.ratings ? 10 : 0),
                   child: tabContent(
-                      GallaryRating.gallary, type == GallaryRating.gallary),
+                      gallary.GallaryRating.gallary, type == gallary.GallaryRating.gallary),
                 ),
               ),
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    type = GallaryRating.ratings;
+                    type = gallary.GallaryRating.ratings;
                   });
                 },
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: type == GallaryRating.gallary ? 10 : 0,
-                      right: type == GallaryRating.ratings ? 10 : 0),
+                      left: type == gallary.GallaryRating.gallary ? 10 : 0,
+                      right: type == gallary.GallaryRating.ratings ? 10 : 0),
                   child: tabContent(
-                      GallaryRating.ratings, type == GallaryRating.ratings),
+                      gallary.GallaryRating.ratings, type == gallary.GallaryRating.ratings),
                 ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 30,),
-        GallaryRatingBody(isGallary:type == GallaryRating.gallary),
+        GallaryRatingBody(isGallary:type == gallary.GallaryRating.gallary, userId: widget.userId,),
       ],
     );
   }
 
   tabContent(
-    GallaryRating type,
+    gallary.GallaryRating type,
     bool isTapped,
   ) {
     return Container(

@@ -57,6 +57,8 @@ class SignInScreen extends StatelessWidget {
                       messageType: MessageType.success);
 
                   StorageHandler.saveIsLoggedIn('true');
+                  StorageHandler.saveUserId(
+                      state.userData.profile!.id.toString());
                   StorageHandler.saveUserPassword(_passwordController.text);
                   StorageHandler.saveUserName(_usernameController.text.trim());
 

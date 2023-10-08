@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/modals.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../model/user_models/service_provider_lists.dart';
-import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_strings.dart';
 import '../../../widgets/custom_multi_toogle.dart';
 import '../../../widgets/custom_text.dart';
@@ -180,7 +177,6 @@ class _ProviderProfileBodyState extends State<ProviderProfileBody> {
             text: '${widget.agents!.about}',
             weight: FontWeight.w500,
             size: 14,
-            fontFamily: AppStrings.interSans,
             color: Colors.black,
           ),
           contactInfo(phone: widget.agents!.profile!.phoneNumber, email: widget.agents!.profile!.user!.email),

@@ -92,4 +92,29 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+    Future<void> getReviews({ required String userId}) async {
+    try {
+      emit(ReviewLoading());
+
+      final reviews = await userRepository.getReviews(
+         userId: userId
+          );
+       await viewModel.setReviews(reviews:reviews.reviews ?? []);
+ 
+      emit(ReviewLoaded(reviews));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 }

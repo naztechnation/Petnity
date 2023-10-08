@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../model/user_models/reviews_data.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_images.dart';
 import '../../../../res/app_strings.dart';
@@ -7,16 +8,14 @@ import '../../../widgets/custom_text.dart';
 import '../../../widgets/profile_image.dart';
 import '../../../widgets/ratings_views.dart';
 
-class ReviewContainer extends StatefulWidget {
-  const ReviewContainer({super.key});
+class ReviewContainer extends StatelessWidget {
 
-  @override
-  State<ReviewContainer> createState() => _ReviewContainerState();
-}
+  final Reviews review;
+  const ReviewContainer({super.key, required this.review});
 
-class _ReviewContainerState extends State<ReviewContainer> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -45,7 +44,7 @@ class _ReviewContainerState extends State<ReviewContainer> {
               color: Colors.black,
             ),
             subtitle: RatingView(
-              rating: 4,
+              rating: review.rating ?? 0,
               onSelected: (rating) {
                 // setState(() {
                 //   ratings = rating;
@@ -57,7 +56,7 @@ class _ReviewContainerState extends State<ReviewContainer> {
             textAlign: TextAlign.left,
             maxLines: 4,
             text:
-                'Lorem ipsum dolor sit amet consectetur. Vitae magna blandit nisl pulvinar ac nunc. Turpis pulvinar amet at erat fames venenatis. Est mi egestas eget feugiat nunc. Mattis sapien diam.',
+                review.comment,
             weight: FontWeight.w500,
             size: 14,
             fontFamily: AppStrings.interSans,
