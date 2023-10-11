@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
-import 'package:provider/provider.dart';
 
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
-import '../../../res/app_images.dart';
-import '../../../res/app_routes.dart';
+import '../../../res/app_images.dart'; 
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart'; 
 import '../../location/set_location_screen.dart';
@@ -210,7 +208,7 @@ class ServiceProviderProfile extends StatelessWidget {
                         color: Color(0xFFEAF0FF),
                         onPressed: () {
                            AppNavigator.pushAndReplacePage(context,
-                  page: ChatPage(username: agents!.name ?? '', userImage: agents!.picture ?? '',));
+                  page: ChatPage(username: agents!.name ?? '', userImage: agents!.picture ?? '', uid: 'DNdStkygFfej6LvGGJKdPHaVJxV2',));
                         },
                         child: ImageView.svg(
                           AppImages.messageArrow,

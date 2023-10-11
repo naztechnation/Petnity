@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/view_models/firebase_auth_viewmodel.dart';
 import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
@@ -18,7 +19,6 @@ import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
-import '../user/user_kyc/kyc_screen_one.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
@@ -37,9 +37,15 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
+    final firebaseAuth = Provider.of<FirebaseAuthProvider>(context, listen: true);
     final serviceProvider =
         Provider.of<ServiceProviderViewModel>(context, listen: true);
     StorageHandler.saveOnboardState('true');
+
+    _usernameController.text = 'Agbo';
+    _emailController.text = 'agbo.raph1236@gmail.com';
+    _phoneController.text = '08108803488';
+    _passwordController.text = 'Scarface@306166';
 
     return Scaffold(
         body: Container(
@@ -61,16 +67,10 @@ class SignUpScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status!) {
-                  AppNavigator.pushAndReplacePage(context,
-                      page: OtpScreen(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        phone: _phoneController.text,
-                        username: _usernameController.text,
-                      ));
-                  Modals.showToast(state.userData.message ?? '',
-                      messageType: MessageType.success);
-                  StorageHandler.saveUserName(_usernameController.text.trim());
+                
+                  _firebaseRegUser(firebaseAuth, state.userData.message ?? '', context);
+                            
+                  
                 }
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
@@ -198,19 +198,24 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       height: 45,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ImageView.asset(AppImages.facebookIcon),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        ImageView.asset(AppImages.appleIcon),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        ImageView.asset(AppImages.goggleIcon),
-                      ],
+                    GestureDetector(
+                      onTap: (){
+                        firebaseAuth.setBack();
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ImageView.asset(AppImages.facebookIcon),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          ImageView.asset(AppImages.appleIcon),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          ImageView.asset(AppImages.goggleIcon),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 30,
@@ -219,11 +224,13 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
-                        processing: state is AccountProcessing,
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
+                        processing: (state is AccountProcessing || firebaseAuth.status == Status.authenticating),
+                        onPressed: () async{
+                            if (_formKey.currentState!.validate()) {
                             RegistrationOptions(context, user, serviceProvider);
+                          
                           }
+
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(
@@ -285,6 +292,25 @@ class SignUpScreen extends StatelessWidget {
     ));
   }
 
+
+_firebaseRegUser(final firebaseAuth, String message, BuildContext context) async{
+  if (_formKey.currentState!.validate()) {
+                           await  firebaseAuth.registerUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text, username: _usernameController.text);
+                           
+                           if(firebaseAuth.status == Status.authenticated){
+                            AppNavigator.pushAndReplacePage(context,
+                      page: OtpScreen(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        phone: _phoneController.text,
+                        username: _usernameController.text,
+                      ));
+                  Modals.showToast(message,
+                      messageType: MessageType.success);
+                  StorageHandler.saveUserName(_usernameController.text.trim());
+                           }
+                          }
+}
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(

@@ -135,7 +135,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () => AppNavigator.pushAndStackPage(context,
-                          page: ChatPage(userImage: '', username: '',)),
+                          page: ChatPage(userImage: '', username: '', uid: '',)),
                       child: RequestsContent(
                         isChat: true,
                         isRequestAccepted: false,

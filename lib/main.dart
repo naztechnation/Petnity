@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'model/view_models/firebase_auth_viewmodel.dart';
 import 'model/view_models/service_provider_view_model.dart';
 import 'model/view_models/account_view_model.dart';
 import 'model/view_models/user_view_model.dart';
@@ -17,6 +18,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => AccountViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => ServiceProviderViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
+      ChangeNotifierProvider(create: (_) => FirebaseAuthProvider(), lazy: false),
     ], 
     child: const Petnity(),
   ));

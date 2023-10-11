@@ -1,23 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../ui/constants/firebase_constants.dart';
 
+class MessageChat {
+  String idFrom;
+  String idTo;
+  var timestamp;
+  String content;
+  
 
-import 'package:equatable/equatable.dart';
+  MessageChat({
+    required this.idFrom,
+    required this.idTo,
+    required this.timestamp,
+    required this.content,
+    
+  });
 
-class ChatUser extends Equatable {
- final String id;
- final String photoUrl;
- final String displayName;
- final String phoneNumber;
- final String aboutMe;
-
- const ChatUser(
-     {required this.id,
-     required this.photoUrl,
-     required this.displayName,
-     required this.phoneNumber,
-     required this.aboutMe});
+  Map<String, dynamic> toJson() {
+    return {
+      FirestoreConstants.idFrom: this.idFrom,
+      FirestoreConstants.idTo: this.idTo,
+      FirestoreConstants.timestamp: this.timestamp,
+      FirestoreConstants.content: this.content,
      
-       @override
-       // TODO: implement props
-       List<Object?> get props => throw UnimplementedError();
+    };
+  }
+
+  factory MessageChat.fromDocument(DocumentSnapshot doc) {
+    String idFrom = doc.get(FirestoreConstants.idFrom);
+    String idTo = doc.get(FirestoreConstants.idTo);
+    var timestamp = doc.get(FirestoreConstants.timestamp);
+    String content = doc.get(FirestoreConstants.content);
+  
+    return MessageChat(idFrom: idFrom, idTo: idTo, timestamp: timestamp, content: content);
+  }
 }
