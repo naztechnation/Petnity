@@ -20,7 +20,7 @@ class AppStrings {
   
 
 
-  static const String _androidKey = 'AIzaSyCkRg-SOtAqWIK1AYKUz0FpRFcoB8gT1B4';
+  static const String _androidKey = 'AIzaSyCGhgIA6avmf0LRLakXaAama2vRnBsyL_Q';
   static const String _iosKey = 'Google Maps API key';
   static final locationApiKey = Platform.isAndroid ? _androidKey : _iosKey;
 

@@ -18,7 +18,7 @@ import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
-import '../user_kyc/kyc_screen_one.dart';
+import '../user/user_kyc/kyc_screen_one.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';

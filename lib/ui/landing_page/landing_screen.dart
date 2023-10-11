@@ -33,7 +33,7 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
   String username = '';
   String password = '';
@@ -45,11 +45,7 @@ class _LandingScreenState extends State<LandingScreen> {
     TrackPurchase(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  
 
   getUserDetails() async {
     username = await StorageHandler.getUserName();
@@ -64,7 +60,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AccountViewModel>(context, listen: false);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
 
     return BlocProvider<AccountCubit>(
         lazy: false,
@@ -111,16 +107,16 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                   backgroundColor: AppColors.lightBackground,
                   appBar: PreferredSize(
-                    preferredSize: _selectedIndex == 0
+                    preferredSize: user.selectedIndex == 0
                         ? screenSize(context) * .09
                         : screenSize(context) * .09,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 5),
-                      child: _selectedIndex == 0
+                      child: user.selectedIndex == 0
                           ? HomepageAppbar()
-                          : _selectedIndex == 1
+                          : user.selectedIndex == 1
                               ? simpleAppbar('Services', Container())
-                              : _selectedIndex == 2
+                              : user.selectedIndex == 2
                                   ? simpleAppbar(
                                       'Shop Products',
                                       NotificationIcon(
@@ -129,7 +125,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         ),
                                         nun_of_notifications: 5,
                                       ))
-                                  : _selectedIndex == 3
+                                  : user.selectedIndex == 3
                                       ? simpleAppbar(
                                           'Track Purchase',
                                           InkWell(
@@ -149,7 +145,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   ),
                   body: Center(
-                    child: _widgetOptions.elementAt(_selectedIndex),
+                    child: _widgetOptions.elementAt(user.selectedIndex),
                   ),
                   bottomNavigationBar: SizedBox(
                     height: 88,
@@ -213,7 +209,7 @@ class _LandingScreenState extends State<LandingScreen> {
                           label: 'Track',
                         ),
                       ],
-                      currentIndex: _selectedIndex,
+                      currentIndex: user.selectedIndex,
                       unselectedItemColor: Colors.black,
                       selectedItemColor: AppColors.lightSecondary,
                       unselectedFontSize: 15,
@@ -225,7 +221,9 @@ class _LandingScreenState extends State<LandingScreen> {
                       unselectedLabelStyle: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontFamily: AppStrings.interSans),
-                      onTap: _onItemTapped,
+                      onTap: (index) {
+                        user.changeSelectedIndex(index);
+                      },
                     ),
                   ),
                 ),
@@ -268,10 +266,7 @@ class HomepageAppbar extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.black),
       actions: [
         NotificationIcon(
-            icon: Icon(
-              Icons.notifications_outlined,
-              size: 38,
-            ),
+            icon: ImageView.svg(AppImages.notificationIcon),
             nun_of_notifications: 5),
         const SizedBox(
           width: 20,
@@ -281,9 +276,9 @@ class HomepageAppbar extends StatelessWidget {
             child: AspectRatio(
               aspectRatio: 1,
               child: ImageView.network(
-                'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg?size=626&ext=jpg&ga=GA1.1.632798143.1696377600&semt=ais',
-                width: 40.0,
-                height: 40.0,
+                'https:',
+                width: 30.0,
+                height: 30.0,
                 scale: 1,
                 fit: BoxFit.cover,
               ),

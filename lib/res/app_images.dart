@@ -76,6 +76,7 @@ class AppImages {
   static const videoBorder = '${_svgBaseUrl}video_border.svg';
   static const messageBorder = '${_svgBaseUrl}message_border.svg';
   static const arrowDown = '${_svgBaseUrl}arrow_down.svg';
+  static const notificationIcon = '${_svgBaseUrl}notification_icon.svg';
   static const tag = '${_svgBaseUrl}Tag.svg';
   static const ticket = '${_svgBaseUrl}Ticket.svg';
   static const gift = '${_svgBaseUrl}Gift.svg';

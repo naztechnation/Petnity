@@ -10,9 +10,12 @@ import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
+import '../../../res/app_routes.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
+import '../../chat_screen.dart';
 import '../../location/set_location_screen.dart';
+import '../../notfications_pages/chat_pages/chat_page.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
@@ -206,7 +209,10 @@ class ServiceProviderProfile extends StatelessWidget {
                       flex: 2,
                       child: ButtonView(
                         color: Color(0xFFEAF0FF),
-                        onPressed: () {},
+                        onPressed: () {
+                           AppNavigator.pushAndReplacePage(context,
+                  page: ChatPage(username: agents!.name ?? '', userImage: agents!.picture ?? '',));
+                        },
                         child: ImageView.svg(
                           AppImages.messageArrow,
                         ),

@@ -158,7 +158,7 @@ class SessionStatusScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: ButtonView(
               onPressed: () {
-                AppNavigator.pushAndStackPage(context, page: ChatPage());
+                AppNavigator.pushAndStackPage(context, page: ChatPage(userImage: '', username: '',));
               },
               expanded: true,
               borderRadius: 41,

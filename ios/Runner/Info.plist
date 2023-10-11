@@ -58,5 +58,7 @@
 	<string>App needs access to location</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>App needs access to location</string>
+
+	
 </dict>
 </plist>

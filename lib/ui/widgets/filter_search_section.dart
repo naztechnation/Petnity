@@ -37,6 +37,7 @@ class FilterSearchView extends StatelessWidget {
             borderColor: Colors.white,
             fillColor: fillColor,
             borderRadius: 30,
+            isDense: true,
             controller: controller ?? TextEditingController(text: ''),
             onTap: onSearchTap,
             onChanged: onChanged,

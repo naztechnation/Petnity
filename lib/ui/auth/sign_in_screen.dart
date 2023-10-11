@@ -62,6 +62,14 @@ class SignInScreen extends StatelessWidget {
                   StorageHandler.saveUserPassword(_passwordController.text);
                   StorageHandler.saveUserName(_usernameController.text.trim());
 
+                  if(state.userData.profile!.hasPets!){
+                  StorageHandler.saveUserPetState('true');
+
+                  }else{
+                  StorageHandler.saveUserPetState('');
+
+                  }
+
                   if (!state.userData.isAgent!) {
                     StorageHandler.saveIsUserType('user');
 
@@ -224,7 +232,7 @@ class SignInScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w500),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // Single tapped.
+                                  registerAnounimousUser(user);
                                 },
                             ),
                             TextSpan(
@@ -265,5 +273,9 @@ class SignInScreen extends StatelessWidget {
           password: _passwordController.text.trim());
       FocusScope.of(ctx).unfocus();
     }
+  }
+
+  registerAnounimousUser(final user){
+    user.signInAnonymously();
   }
 }

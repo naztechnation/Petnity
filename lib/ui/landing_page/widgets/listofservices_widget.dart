@@ -73,11 +73,11 @@ Widget Item(BuildContext context, Color color, String title, String image,
     onTap: onPressed,
     child: Container(
       width: screenSize(context).width * .43,
-      height: screenSize(context).height * .08,
+      height: screenSize(context).height * .06,
       padding: EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
           color: color.withOpacity(0.2),
-          borderRadius: BorderRadius.circular(20)),
+          borderRadius: BorderRadius.circular(60)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

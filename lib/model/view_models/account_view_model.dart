@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import '../../handlers/location_handler.dart';
 import '../../handlers/secure_handler.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
@@ -40,6 +41,8 @@ class AccountViewModel extends BaseViewModel {
   double _longitude = 0;
 
   String _selectedService = '';
+  int _selectedIndex = 0;
+
 
 
   
@@ -230,13 +233,13 @@ Future<void> deleteUser() async {
     _longitude = longitude;
     _latitude = latitude;
       final addresses = await placemarkFromCoordinates(
-    _longitude,
+    _latitude,
     _longitude,
   );
 
   if (addresses.isNotEmpty) {
     final firstAddress = addresses.first;
-    final address = "${firstAddress.locality}, ${firstAddress.administrativeArea}, ${firstAddress.country}";
+    final address = "${firstAddress.locality},  ${firstAddress.country}";
     
    _address =  address;
   } else {
@@ -244,6 +247,25 @@ Future<void> deleteUser() async {
   }
     setViewState(ViewState.success);
   }
+
+
+
+  void changeSelectedIndex(int newIndex) {
+    _selectedIndex = newIndex;
+   setViewState(ViewState.success);
+  }
+
+  Future<void> signInAnonymously() async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+    User? user = userCredential.user;
+    print("Signed in anonymously with UID: ${user?.uid}");
+  } catch (e) {
+    print("Error signing in anonymously: $e");
+  }
+}
+
+  
 
   double get longitude => _longitude;
   String get address => _address;
@@ -262,4 +284,6 @@ Future<void> deleteUser() async {
   String get petId => _petId;
   File? get imageURl => _imageURl;
   UserType get userType => _userType;
+  int get selectedIndex => _selectedIndex;
+
 }

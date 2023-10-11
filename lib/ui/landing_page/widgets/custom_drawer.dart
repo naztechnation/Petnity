@@ -7,17 +7,47 @@ import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../../handlers/secure_handler.dart';
+import '../../../model/view_models/account_view_model.dart';
+import '../../../res/app_routes.dart';
+import '../../../res/enum.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../notfications_pages/notifications_session.dart';
 
-class customDrawer extends StatelessWidget {
-
+class customDrawer extends StatefulWidget {
   final VoidCallback onLogOutPressesd;
   const customDrawer({super.key, required this.onLogOutPressesd});
 
   @override
+  State<customDrawer> createState() => _customDrawerState();
+}
+
+class _customDrawerState extends State<customDrawer> {
+  String registeredPet = '';
+  bool isPetRegistered = false;
+
+  getUsername() async {
+    registeredPet = await StorageHandler.getUserPetState();
+
+    if (registeredPet != '') {
+      setState(() {
+        isPetRegistered = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getUsername();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AccountViewModel>(context, listen: true);
+
     return Drawer(
       child: Container(
         child: Column(
@@ -39,10 +69,11 @@ class customDrawer extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   ListTile(
-                    onTap: () =>
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return Profile();
-                    })),
+                     onTap: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: Profile());
+                    },
+                   
                     leading: ImageView.svg(
                       AppImages.personIcon,
                       width: 25,
@@ -74,7 +105,7 @@ class customDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: ImageView.svg(
-                      AppImages.bagIcon,
+                      AppImages.cartIcon,
                       width: 25,
                       height: 25,
                     ),
@@ -86,10 +117,11 @@ class customDrawer extends StatelessWidget {
                     ),
                   ),
                   ListTile(
-                    onTap: () =>
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return Support();
-                    })),
+                     onTap: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: Support());
+                    },
+                   
                     leading: ImageView.svg(
                       AppImages.supportIcon,
                       width: 25,
@@ -108,10 +140,11 @@ class customDrawer extends StatelessWidget {
                       width: 25,
                       height: 25,
                     ),
-                    onTap: () =>
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return SettingsScreen();
-                    })),
+                    onTap: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: SettingsScreen());
+                    },
+                    
                     title: Text(
                       'Settings',
                       style: TextStyle(
@@ -125,21 +158,31 @@ class customDrawer extends StatelessWidget {
             SizedBox(
               height: screenSize(context).height * .1,
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              child: ButtonView(
-                onPressed: () {},
-                child: Text('Beign Registration'),
-              ),
-            ),
+            (isPetRegistered)
+                ? SizedBox.shrink()
+                : Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.center,
+                    child: ButtonView(
+                      borderRadius: 30,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            expanded: false,
+                      onPressed: () {
+                        user.setUserType(UserType.user);
+
+                        AppNavigator.pushAndStackNamed(context,
+                            name: AppRoutes.kycScreenOne);
+                      },
+                      child: Text('Begin Registration', style: TextStyle(fontSize: 14),),
+                    ),
+                  ),
             SizedBox(
               height: screenSize(context).height * .1,
             ),
             ListTile(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
-                onLogOutPressesd();
-              
+                widget.onLogOutPressesd();
               },
               leading: ImageView.svg(
                 AppImages.logoutIcon,

@@ -13,14 +13,22 @@ import '../../widgets/profile_image.dart';
 import 'widget/message_tile.dart';
 
 class ChatPage extends StatefulWidget {
+  final String username;
+  final String userImage;
+
+  const ChatPage({super.key, required this.username, required this.userImage});
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<ChatPage> createState() => _ChatPageState(username,userImage);
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final String username;
+  final String userImage;
   TextEditingController messageController = TextEditingController();
   final _scrollController = ScrollController();
   String admin = "";
+
+  _ChatPageState(this.username, this.userImage);
 
   @override
   void initState() {
@@ -46,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
                 end: Alignment.topLeft)),
         child: Column(
           children: <Widget>[
-            SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 34 : 0)),
+            SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 20 : 0)),
             Container(
               width: screenSize(context).width,
               child: Row(
@@ -58,7 +66,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   ProfileImage(
                     placeHolder: AppImages.person,
-                    '',
+                    '$userImage',
                     height: 80,
                     width: 80,
                     radius: 23,
@@ -72,7 +80,7 @@ class _ChatPageState extends State<ChatPage> {
                       CustomText(
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        text: 'Sarah jhay',
+                        text: '$username',
                         weight: FontWeight.w700,
                         size: 14,
                         fontFamily: AppStrings.interSans,
@@ -90,9 +98,23 @@ class _ChatPageState extends State<ChatPage> {
                     ],
                   ),
                   Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 30.0),
-                    child: ImageView.svg(AppImages.phoneIcon),
+                  Container(
+                    height: 50,
+                    
+                          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                          margin: const EdgeInsets.only(right: 20.0),
+
+                    decoration: BoxDecoration(color: AppColors.lightPrimary, borderRadius: BorderRadius.circular(30)),
+                    child: Row(
+                      children: [
+                  
+                        Padding(
+                          padding: const EdgeInsets.only(right: 14.0),
+                          child: ImageView.svg(AppImages.phoneIcon),
+                        ),
+                         ImageView.svg(AppImages.videoIcon),
+                      ],
+                    ),
                   )
                 ],
               ),

@@ -10,6 +10,11 @@ class StorageHandler {
       await storage.write(key: 'USER', value: username);
   }
 
+  static Future<void> saveUserPetState([String? petState]) async {
+    if (petState != null)
+      await storage.write(key: 'PETSTATE', value: petState);
+  }
+
   static Future<void> saveUserId([String? userId]) async {
     if (userId != null)
       await storage.write(key: 'ID', value: userId);
@@ -49,6 +54,18 @@ static Future<void> saveAgentId(String id) async {
       username = '';
     }
     return username;
+  }
+
+   static Future<String> getUserPetState() async {
+   String? value = await storage.read(key: 'PETSTATE');
+    String? userId;
+    String? data = value;
+    if (data != null) {
+      userId = data;
+    }else{
+      userId = '';
+    }
+    return userId;
   }
 
   static Future<String> getUserId() async {
