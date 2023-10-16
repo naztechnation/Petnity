@@ -4,7 +4,7 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/service_povider_section/service_provider_home/track_session.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/track_session.dart';
 // import 'package:petnity/ui/Profile/profile.dart';
 import 'package:petnity/ui/location/widgets/map_view.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
@@ -13,10 +13,10 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
-import '../../blocs/location/location_cubit.dart';
-import '../../model/view_models/account_view_model.dart';
-import '../../requests/repositories/location_repo/location_repository_impl.dart';
-import '../../ui/landing_page/services/pet_profile/pet_profile.dart';
+import '../../../blocs/location/location_cubit.dart';
+import '../../../model/view_models/account_view_model.dart';
+import '../../../requests/repositories/location_repo/location_repository_impl.dart';
+import '../../landing_page/services/pet_profile/pet_profile.dart';
 
 class ServiceRequest extends StatelessWidget {
   const ServiceRequest({super.key});

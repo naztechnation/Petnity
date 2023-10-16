@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petnity/service_povider_section/landing_page.dart';
-import 'package:petnity/service_povider_section/service_provider_home/service_provider_home.dart';
+import 'package:petnity/ui/service_povider_section/landing_page.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/service_provider_home.dart';
 import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/auth/sign_up_screen.dart';
 import 'package:petnity/ui/user/user_kyc/kyc_screen_one.dart';

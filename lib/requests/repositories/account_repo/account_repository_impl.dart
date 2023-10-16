@@ -13,12 +13,14 @@ class AccountRepositoryImpl implements AccountRepository {
       required String password,
       required String username,
       required String url,
+      required String firebaseId,
       required String phone}) async {
     final map = await Requests().post(AppStrings.otpUrl(url), body: {
       "username": username,
       "email": email,
       "password": password,
       "phone_number": phone,
+      "firebase_id": firebaseId,
     });
     return AuthData.fromJson(map);
   }

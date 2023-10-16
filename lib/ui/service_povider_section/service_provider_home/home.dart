@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/service_povider_section/service_provider_home/service_request.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/service_request.dart';
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';

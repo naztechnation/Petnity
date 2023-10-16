@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/service_povider_section/service_provider_home/service_request.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_delivery_widget.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/service_request.dart';
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
+import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 
-class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
-  ServiceProviderPetDeliveryHomeBody({super.key});
+class ServiceProviderVetHomeBody extends StatelessWidget {
+  ServiceProviderVetHomeBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,19 +17,19 @@ class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomText(
-          text: 'Ongoing Pet Delivery',
+          text: 'Ongoing session',
           weight: FontWeight.bold,
         ),
         SizedBox(
           height: 10,
         ),
-        OngoingDeliveryWidget(
-          label: 'Track',
+        VideoCallSessionWidget(
+          buttonText: 'Track',
         ),
         Row(
           children: [
             CustomText(
-              text: 'All new Pet buying requests ',
+              text: 'All new Vet requests (20)',
               weight: FontWeight.bold,
               size: 13,
             ),

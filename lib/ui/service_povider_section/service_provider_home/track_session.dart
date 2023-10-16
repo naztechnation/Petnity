@@ -1,28 +1,22 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; 
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
-import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/service_povider_section/service_provider_home/feedback.dart';
-import 'package:petnity/ui/profile/profile.dart';
-import 'package:petnity/ui/landing_page/services/service_provider_profile.dart';
+import 'package:petnity/res/app_images.dart'; 
+import 'package:petnity/ui/service_povider_section/service_provider_home/feedback.dart'; 
 import 'package:petnity/ui/location/widgets/map_view.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/custom_text.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:petnity/utils/navigator/page_navigator.dart';
+import 'package:petnity/ui/widgets/custom_text.dart'; 
 import 'package:provider/provider.dart';
 
-import '../../blocs/location/location_cubit.dart';
-import '../../model/view_models/account_view_model.dart';
-import '../../requests/repositories/location_repo/location_repository_impl.dart';
-import '../../ui/landing_page/services/pet_profile/pet_profile.dart';
+import '../../../blocs/location/location_cubit.dart';
+import '../../../model/view_models/account_view_model.dart';
+import '../../../requests/repositories/location_repo/location_repository_impl.dart';
+import '../../landing_page/services/pet_profile/pet_profile.dart';
 
 class TrackService extends StatefulWidget {
   @override

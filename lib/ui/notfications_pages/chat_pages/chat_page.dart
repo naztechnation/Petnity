@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 import '../../../model/chat_model/chat.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
@@ -12,6 +13,7 @@ import '../../../res/app_strings.dart';
 import '../../../res/app_theme.dart';
 import '../../constants/encryption.dart';
 import '../../constants/firebase_constants.dart';
+import '../../video.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/profile_image.dart';
@@ -192,7 +194,11 @@ class _ChatPageState extends State<ChatPage> {
                             padding: const EdgeInsets.only(right: 14.0),
                             child: ImageView.svg(AppImages.phoneIcon),
                           ),
-                          ImageView.svg(AppImages.videoIcon),
+                          GestureDetector(
+                            onTap: (() {
+                              AppNavigator.pushAndStackPage(context, page: MyApp());
+                            }),
+                            child: ImageView.svg(AppImages.videoIcon)),
                         ],
                       ),
                     )

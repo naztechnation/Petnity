@@ -9,7 +9,7 @@ abstract class AccountRepository {
   Future<AuthData> registerUser({
     required String username,
     
-    required String email,required String password,required String phone,required String url, });
+    required String email,required String password,required String phone,required String url,required String firebaseId});
   Future<AuthData> sendPetHealth({required String name,required String drug,required String prescription,required String url});
   Future<AuthData> loginUser({required String username,required String password,});
   Future<AuthData> logoutUser({required String username,required String password,});

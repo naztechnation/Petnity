@@ -10,7 +10,7 @@ import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
-import '../../../utils/navigator/page_navigator.dart';
+import '../../../../utils/navigator/page_navigator.dart';
 
 class SPCustomDrawer extends StatelessWidget {
   const SPCustomDrawer({super.key});

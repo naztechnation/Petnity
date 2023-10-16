@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,15 +38,11 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
-    final firebaseAuth = Provider.of<FirebaseAuthProvider>(context, listen: true);
+    final firebaseAuth =
+        Provider.of<FirebaseAuthProvider>(context, listen: true);
     final serviceProvider =
         Provider.of<ServiceProviderViewModel>(context, listen: true);
     StorageHandler.saveOnboardState('true');
-
-    _usernameController.text = 'Agbo';
-    _emailController.text = 'agbo.raph1236@gmail.com';
-    _phoneController.text = '08108803488';
-    _passwordController.text = 'Scarface@306166';
 
     return Scaffold(
         body: Container(
@@ -67,10 +64,16 @@ class SignUpScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status!) {
-                
-                  _firebaseRegUser(firebaseAuth, state.userData.message ?? '', context);
-                            
-                  
+                  AppNavigator.pushAndReplacePage(context,
+                      page: OtpScreen(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        phone: _phoneController.text,
+                        username: _usernameController.text,
+                      ));
+                  Modals.showToast(state.userData.message ?? '',
+                      messageType: MessageType.success);
+                  StorageHandler.saveUserName(_usernameController.text.trim());
                 }
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
@@ -199,7 +202,7 @@ class SignUpScreen extends StatelessWidget {
                       height: 45,
                     ),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         firebaseAuth.setBack();
                       },
                       child: Row(
@@ -224,13 +227,13 @@ class SignUpScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
-                        processing: (state is AccountProcessing || firebaseAuth.status == Status.authenticating),
-                        onPressed: () async{
-                            if (_formKey.currentState!.validate()) {
-                            RegistrationOptions(context, user, serviceProvider);
-                          
+                        processing: (state is AccountProcessing ||
+                            firebaseAuth.status == Status.authenticating),
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            RegistrationOptions(context, user, serviceProvider, firebaseAuth);
+                            //_firebaseRegUser(  firebaseAuth, 'good',  context);
                           }
-
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(
@@ -292,29 +295,25 @@ class SignUpScreen extends StatelessWidget {
     ));
   }
 
+  _firebaseRegUser(
+      final firebaseAuth, BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      await firebaseAuth.registerUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+          username: _usernameController.text);
 
-_firebaseRegUser(final firebaseAuth, String message, BuildContext context) async{
-  if (_formKey.currentState!.validate()) {
-                           await  firebaseAuth.registerUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text, username: _usernameController.text);
-                           
-                           if(firebaseAuth.status == Status.authenticated){
-                            AppNavigator.pushAndReplacePage(context,
-                      page: OtpScreen(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        phone: _phoneController.text,
-                        username: _usernameController.text,
-                      ));
-                  Modals.showToast(message,
-                      messageType: MessageType.success);
-                  StorageHandler.saveUserName(_usernameController.text.trim());
-                           }
-                          }
-}
+      if (firebaseAuth.status == Status.authenticated) {
+        _submit(context);
+      }
+    }
+  }
+
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
           url: AppStrings.registerUrl,
+          firebaseId: FirebaseAuth.instance.currentUser!.uid,
           username: _usernameController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
           email: _emailController.text.trim(),
@@ -323,7 +322,7 @@ _firebaseRegUser(final firebaseAuth, String message, BuildContext context) async
     }
   }
 
-  RegistrationOptions(BuildContext context, final user, final serviceProvider) {
+  RegistrationOptions(BuildContext context, final user, final serviceProvider, final firebaseAuth) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
         isScrollControlled: false,
@@ -378,10 +377,10 @@ _firebaseRegUser(final firebaseAuth, String message, BuildContext context) async
                   userTypes('User', () {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
-                  StorageHandler.saveUserName(_usernameController.text.trim());
-
-
-                     _submit(context);
+                    StorageHandler.saveUserName(
+                        _usernameController.text.trim());
+ _firebaseRegUser(
+                    firebaseAuth,   context);
                     
                   }, context),
                   const SizedBox(
@@ -399,7 +398,9 @@ _firebaseRegUser(final firebaseAuth, String message, BuildContext context) async
                     // Modals.showToast(user.serviceProviderId);
                     // AppNavigator.pushAndReplaceName(context,
                     //     name: AppRoutes.otpScreen);
-                    _submit(context);
+                     _firebaseRegUser(firebaseAuth,
+                       context);
+                   
                   }, context),
                   const SizedBox(
                     height: 10,
