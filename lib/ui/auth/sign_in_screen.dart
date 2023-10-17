@@ -131,9 +131,9 @@ class SignInScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _usernameController,
-                      // validator: (value){
-                      //  return Validator.validateEmail(value, 'Email');
-                      // },
+                      validator: (value){
+                       return Validator.validate(value, 'Username');
+                      },
                       isDense: true,
                       textViewTitle: 'Your Username',
                       hintText: 'Enter username',
