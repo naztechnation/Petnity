@@ -148,9 +148,10 @@ class AccountRepositoryImpl implements AccountRepository {
 
   @override
   Future<AuthData> uploadPhotoUrl(
-      {required String photoId, required String photoUrl}) async {
-    final map = await Requests().patch(AppStrings.uploadIdUrl(photoId), body: {
+      {required String agentId, required String photoUrl, required String idType}) async {
+    final map = await Requests().patch(AppStrings.uploadIdUrl(agentId), body: {
       "id_photo": photoUrl,
+      "id_type": idType,
     }, headers: {
       'Authorization': AppStrings.token,
       "Content-type": "application/json"

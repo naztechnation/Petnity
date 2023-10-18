@@ -20,7 +20,7 @@ class AccountViewModel extends BaseViewModel {
 
   String _address = '';
   String _username = '';
-  String _userid = '';
+  String _agentId = '';
   String _petType = '';
   String _petTypeIndex = '';
   String _petId = '';
@@ -53,7 +53,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   getUserId() async {
-    _userid = await StorageHandler.getAgentId();
+    _agentId = await StorageHandler.getAgentId();
     setViewState(ViewState.success);
   }
 
@@ -274,7 +274,7 @@ Future<void> deleteUser() async {
   bool get showPasswordStatus => _showPassword;
   String get username => _username;
   String get petType => _petType;
-  String get serviceProviderId => _userid;
+  String get serviceProviderId => _agentId;
   String get petTypeIndex => _petTypeIndex;
   String get petName => _petName;
   String get petGender => _petGender;

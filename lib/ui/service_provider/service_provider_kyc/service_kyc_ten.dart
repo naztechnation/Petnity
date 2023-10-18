@@ -123,7 +123,7 @@ class KycServiceScreenTen extends StatelessWidget {
 
                     if(selectedOption != 'Select'){
                        AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenEleven());
+                          page: KycServiceScreenEleven(idType: selectedOption,));
                     }else{
                       Modals.showToast('Please select an id Type');
                     }

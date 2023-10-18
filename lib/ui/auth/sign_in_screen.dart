@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/view_models/account_view_model.dart';
+import '../../model/view_models/firebase_auth_viewmodel.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
@@ -32,6 +33,7 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
+    final firebaseUser = Provider.of<FirebaseAuthProvider>(context, listen: true);
     StorageHandler.saveOnboardState('true');
 
     return Scaffold(
@@ -53,34 +55,14 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status!) {
-                  Modals.showToast(state.userData.message!,
-                      messageType: MessageType.success);
-
-                  StorageHandler.saveIsLoggedIn('true');
-                  StorageHandler.saveUserId(
-                      state.userData.profile!.id.toString());
-                  StorageHandler.saveUserPassword(_passwordController.text);
-                  StorageHandler.saveUserName(_usernameController.text.trim());
-
-                  if(state.userData.profile!.hasPets!){
-                  StorageHandler.saveUserPetState('true');
-
-                  }else{
-                  StorageHandler.saveUserPetState('');
-
-                  }
-
-                  if (!state.userData.isAgent!) {
-                    StorageHandler.saveIsUserType('user');
-
-                    AppNavigator.pushAndStackNamed(context,
-                        name: AppRoutes.landingPage);
-                  } else {
-                    StorageHandler.saveIsUserType('service_provider');
-
-                    AppNavigator.pushAndReplaceName(context,
-                        name: AppRoutes.serviceProviderLandingPage);
-                  }
+                  loginUser(
+                    firebaseUser: firebaseUser,
+                      context: context,
+                      
+                      message: state.userData.message!,
+                      userId: state.userData.profile!.id.toString(),
+                      hasPet: state.userData.profile!.hasPets!,
+                      isAgent: !state.userData.isAgent!);
                 } else {
                   Modals.showToast(state.userData.message!,
                       messageType: MessageType.error);
@@ -131,8 +113,8 @@ class SignInScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: _usernameController,
-                      validator: (value){
-                       return Validator.validate(value, 'Username');
+                      validator: (value) {
+                        return Validator.validate(value, 'Username');
                       },
                       isDense: true,
                       textViewTitle: 'Your Username',
@@ -201,7 +183,7 @@ class SignInScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),
                       child: ButtonView(
-                        processing: state is AccountLoading,
+                        processing: (state is AccountLoading || firebaseUser.status == Status.authenticating),
                         onPressed: () {
                           _submit(context);
                         },
@@ -232,7 +214,7 @@ class SignInScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w500),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  registerAnounimousUser(user);
+                                  // registerAnounimousUser(user);
                                 },
                             ),
                             TextSpan(
@@ -275,7 +257,43 @@ class SignInScreen extends StatelessWidget {
     }
   }
 
-  registerAnounimousUser(final user){
-    user.signInAnonymously();
+  loginUser(
+      {final firebaseUser,
+      required BuildContext context,
+      required String message,
+      required userId,
+      required bool hasPet,
+      required bool isAgent}) async {
+    await firebaseUser.loginUserWithEmailAndPassword(
+        email: '${_usernameController.text.trim()}@gmail.com',
+        password: _passwordController.text.trim());
+
+    if (firebaseUser.status == null) {
+      Modals.showToast(message, messageType: MessageType.success);
+
+      StorageHandler.saveIsLoggedIn('true');
+      StorageHandler.saveUserId(userId);
+      StorageHandler.saveUserPassword(_passwordController.text);
+      StorageHandler.saveUserName(_usernameController.text.trim());
+
+      Modals.showToast('success');
+
+      if (hasPet) {
+        StorageHandler.saveUserPetState('true');
+      } else {
+        StorageHandler.saveUserPetState('');
+      }
+
+      if (isAgent) {
+        StorageHandler.saveIsUserType('user');
+
+        AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
+      } else {
+        StorageHandler.saveIsUserType('service_provider');
+
+        AppNavigator.pushAndReplaceName(context,
+            name: AppRoutes.serviceProviderLandingPage);
+      }
+    }
   }
 }

@@ -231,8 +231,9 @@ class SignUpScreen extends StatelessWidget {
                             firebaseAuth.status == Status.authenticating),
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            RegistrationOptions(context, user, serviceProvider, firebaseAuth);
-                            //_firebaseRegUser(  firebaseAuth, 'good',  context);
+                            RegistrationOptions(
+                                context, user, serviceProvider, firebaseAuth);
+                            //_firebaseRegUser(  firebaseAuth,    context);
                           }
                         },
                         color: AppColors.lightSecondary,
@@ -295,11 +296,10 @@ class SignUpScreen extends StatelessWidget {
     ));
   }
 
-  _firebaseRegUser(
-      final firebaseAuth, BuildContext context) async {
+  _firebaseRegUser(final firebaseAuth, BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       await firebaseAuth.registerUserWithEmailAndPassword(
-          email: _emailController.text,
+          email: '${_usernameController.text.toLowerCase().trim()}@gmail.com',
           password: _passwordController.text,
           username: _usernameController.text);
 
@@ -322,7 +322,8 @@ class SignUpScreen extends StatelessWidget {
     }
   }
 
-  RegistrationOptions(BuildContext context, final user, final serviceProvider, final firebaseAuth) {
+  RegistrationOptions(BuildContext context, final user, final serviceProvider,
+      final firebaseAuth) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
         isScrollControlled: false,
@@ -379,9 +380,7 @@ class SignUpScreen extends StatelessWidget {
                     user.setUserType(UserType.user);
                     StorageHandler.saveUserName(
                         _usernameController.text.trim());
- _firebaseRegUser(
-                    firebaseAuth,   context);
-                    
+                    _firebaseRegUser(firebaseAuth, context);
                   }, context),
                   const SizedBox(
                     height: 10,
@@ -398,9 +397,7 @@ class SignUpScreen extends StatelessWidget {
                     // Modals.showToast(user.serviceProviderId);
                     // AppNavigator.pushAndReplaceName(context,
                     //     name: AppRoutes.otpScreen);
-                     _firebaseRegUser(firebaseAuth,
-                       context);
-                   
+                    _firebaseRegUser(firebaseAuth, context);
                   }, context),
                   const SizedBox(
                     height: 10,

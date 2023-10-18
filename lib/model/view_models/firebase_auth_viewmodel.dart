@@ -65,4 +65,51 @@ class FirebaseAuthProvider extends BaseViewModel {
       ;
     }
   }
+ 
+
+Future<User?> loginWithEmailAndPassword(String email, String password) async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    User? user = userCredential.user;
+    return user;
+  } catch (e) {
+    print('Login error: $e');
+    return null;
+  }
+}
+
+ 
+
+
+  Future<User?> loginUserWithEmailAndPassword(
+      {required String email,
+      required String password,
+      }) async {
+    _status = Status.authenticating;
+    setViewState(ViewState.success);
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    User? user = userCredential.user;
+    _status = Status.authenticated;
+        setViewState(ViewState.success);
+    return user;
+      
+
+       
+    } on FirebaseAuthException catch (e) {
+      _status = Status.authenticateError;
+      setViewState(ViewState.success);
+
+      return null
+
+      ;
+    }
+  }
 }

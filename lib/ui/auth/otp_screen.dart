@@ -57,11 +57,17 @@ class _OtpScreenState extends State<OtpScreen> {
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
           if (state is AccountUpdated) {
-            Modals.showToast(state.user.message!,
+            
+            if(state.user.status!){
+              Modals.showToast(state.user.message!,
                 messageType: MessageType.success);
 
             AppNavigator.pushAndReplaceName(context,
                 name: AppRoutes.successScreen);
+            }else{
+              Modals.showToast(state.user.message!,
+                messageType: MessageType.success);
+            }
           } else if (state is AccountLoaded) {
             Modals.showToast(state.userData.message!,
                 messageType: MessageType.success);
@@ -147,7 +153,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   : TextSpan(
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
-                                          _resenCode(context, user);
+                                          _resendCode(context, user);
                                         },
                                       text: '  Resend  ',
                                       style: const TextStyle(
@@ -197,7 +203,7 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   _submit(BuildContext ctx, user) {
-    if (_formKey.currentState!.validate()) {
+    if (_pinController.text.isNotEmpty && _pinController.text.length == 6) {
       ctx.read<AccountCubit>().verifyOTP(
             user.username,
             _pinController.text.trim(),
@@ -218,7 +224,7 @@ class _OtpScreenState extends State<OtpScreen> {
     });
   }
 
-  _resenCode(BuildContext ctx, user) {
+  _resendCode(BuildContext ctx, user) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().resendCode(
           username: AppStrings.resendCodeUrl(user.username),

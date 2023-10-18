@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
@@ -64,8 +65,15 @@ class _KycServiceEightState extends State<KycServiceEight> {
     AppImages.proPet
   ];
 
+String agentId = '';
+   
+  getUserDetails() async {
+    agentId = await StorageHandler.getUserId();
+     
+  }
   @override
   void initState() {
+    getUserDetails();
     _userCubit = context.read<UserCubit>();
     _userCubit.getServiceTypes();
     super.initState();
@@ -73,11 +81,11 @@ class _KycServiceEightState extends State<KycServiceEight> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<ServiceProviderViewModel>(context, listen: false);
-    final userData = Provider.of<AccountViewModel>(context, listen: false);
-    final services = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final userData = Provider.of<AccountViewModel>(context, listen: true);
+    final services = Provider.of<UserViewModel>(context, listen: true);
     userData.getUserId();
-
+     
     return Scaffold(
         body: BlocProvider<UserCubit>(
       lazy: false,
@@ -218,6 +226,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
   }
 
   _submit(BuildContext ctx, var user, var userData) {
+   
     ctx.read<UserCubit>().serviceProvided(
         services: user.selectedServiceItems,
         username: userData.username,

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/view_models/account_view_model.dart';

@@ -36,13 +36,13 @@ class AppStrings {
 
   static   String otpUrl(String url) => '${_baseUrl}$url';
   static   String verifyCodeUrl(String username) => '${_baseUrl}auth/resend-code/$username';
-  static   String getServiseProvidersList(String serviceId) => '${_baseUrl}users/get-service-agents/$serviceId';
+  static   String getServiceProvidersList(String serviceId) => '${_baseUrl}users/get-service-agents/$serviceId';
   static   String verifyUserProfileUrl(String username) => '${_baseUrl}auth/verify-profile/$username';
   
   static const String loginUrl = '${_baseUrl}auth/login';
   static const String logoutUrl = '${_baseUrl}auth/logout';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
-  static   String uploadIdUrl(String photoId) => '${_baseUrl}auth/upload-id-photo/$photoId';
+  static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';
   static   String selectPetTypeUrl(String agentId) => '${_baseUrl}auth/select-pet-types/$agentId';
   static   String selectServiceTypeUrl(String agentId) => '${_baseUrl}auth/select-service-types/$agentId';

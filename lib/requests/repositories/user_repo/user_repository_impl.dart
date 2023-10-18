@@ -1,5 +1,4 @@
-
-import '../../../model/account_models/auth_data.dart';
+ 
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
@@ -12,7 +11,7 @@ class UserRepositoryImpl implements UserRepository {
   
   @override
   Future<ServiceProvidersList> getServiceProviderList({required String serviceId}) async {
-    final map = await Requests().get(AppStrings.getServiseProvidersList(serviceId), headers: {
+    final map = await Requests().get(AppStrings.getServiceProvidersList(serviceId), headers: {
       'Authorization': AppStrings.token,
      });
     return ServiceProvidersList.fromJson(map);

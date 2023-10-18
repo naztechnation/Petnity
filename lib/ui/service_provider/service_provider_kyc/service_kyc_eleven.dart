@@ -19,24 +19,30 @@ import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/modals.dart';
-import 'service_kyc_eight.dart';
 
 class KycServiceScreenEleven extends StatefulWidget {
+  final String idType;
   KycServiceScreenEleven({
-    super.key,
+    super.key, required this.idType,
   });
 
   @override
-  State<KycServiceScreenEleven> createState() => _KycServiceScreenElevenState();
+  State<KycServiceScreenEleven> createState() => _KycServiceScreenElevenState(idType: idType);
 }
 
 class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
 
   bool isLoading = false;
+  final String idType;
+
+  _KycServiceScreenElevenState({required this.idType});
+
 
   @override
   Widget build(BuildContext context) {
     final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final userDetails = Provider.of<AccountViewModel>(context, listen: true);
+    userDetails.getUserId();
 
     return Scaffold(
         body: Container(
@@ -192,7 +198,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                                 setState(() {
                                 isLoading = false;
                               });
-                            _submit(ctx: context,photoId: serviceProvider.photoId,picture: imgUrl);
+                            _submit(ctx: context,agentId: userDetails.serviceProviderId,picture: imgUrl, idType: idType);
                           }
                         },
                         processing: (state is AccountLoading || isLoading),
@@ -224,11 +230,13 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
 
   _submit(
       {required BuildContext ctx,
-      required String photoId,
+      required String agentId,
+      required String idType,
      
       required String picture}) {
     ctx.read<AccountCubit>().uploadPhotoUrl(
-        photoId: photoId,
+        agentId: agentId,
+        idType: idType,
         
         
         photoUrl: picture);
