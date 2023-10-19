@@ -1,5 +1,7 @@
  
 
+import 'package:petnity/model/user_models/gallery_data.dart';
+
 import '../../res/enum.dart';
 import '../user_models/reviews_data.dart';
 import '../user_models/service_provider_lists.dart';
@@ -11,7 +13,9 @@ class UserViewModel extends BaseViewModel {
    List<ServiceTypes> _services = [];
    List<Agents> _agents = [];
    List<Reviews> _reviews = [];
+   List<GalleryElements> _gallery = [];
    bool _reviewStatus = false;
+   bool _galleryStatus = false;
 
 
 
@@ -24,6 +28,12 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
   Future<void> emptyReviews() async {
+    _galleryStatus =  false;
+    _gallery =  [];
+    setViewState(ViewState.success);
+  }
+
+   Future<void> emptyGallery() async {
     _reviewStatus =  false;
     _reviews =  [];
     setViewState(ViewState.success);
@@ -35,10 +45,18 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+  Future<void> setGallery({required GalleryAgents gallery}) async {
+    _galleryStatus = gallery.status ?? false;
+    _gallery = gallery.galleryElements ?? [];
+    setViewState(ViewState.success);
+  }
+
   List<ServiceTypes> get services => _services;
   List<Agents> get agents => _agents;
   List<Reviews> get reviews => _reviews;
+  List<GalleryElements> get gallery => _gallery;
   bool get reviewStatus => _reviewStatus;
+  bool get galleryStatus => _galleryStatus;
    List<ServicesDetails> get servicesItems => servicesResults();
    List<Pets> get servicesPetList => servicesPets();
    

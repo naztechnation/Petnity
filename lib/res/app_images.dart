@@ -8,6 +8,7 @@ class AppImages {
 
   // static const icon = '${_baseUrl}icon.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
+  static const logo = '${_baseUrl}logo2.jpg';
   static const line = '${_baseUrl}line.png';
   static const facebookIcon = '${_baseUrl}facebook_icon.png';
   static const appleIcon = '${_baseUrl}apple_icon.png';

@@ -1,4 +1,5 @@
  
+import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
@@ -49,5 +50,12 @@ class UserRepositoryImpl implements UserRepository {
      });
     return GetReviews.fromJson(map);
   }
-  
+   @override
+  Future<GalleryAgents> getGallery({required String userId}) async{
+     
+    final map = await Requests().get(AppStrings.getGalleryUrl(userId), headers: {
+      'Authorization': AppStrings.token,
+     });
+    return GalleryAgents.fromJson(map);
+  }
 }

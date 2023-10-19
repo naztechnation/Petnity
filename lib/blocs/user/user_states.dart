@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
@@ -49,6 +50,17 @@ class ReviewLoaded extends UserStates {
   const ReviewLoaded(this.reviews);
   @override
   List<Object> get props => [reviews];
+}
+class GalleryLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class GalleryLoaded extends UserStates {
+  final GalleryAgents galleryAgents;
+  const GalleryLoaded(this.galleryAgents);
+  @override
+  List<Object> get props => [galleryAgents];
 }
 
 class UserNetworkErr extends UserStates {

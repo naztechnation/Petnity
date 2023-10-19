@@ -117,4 +117,29 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+    Future<void> getGallery({ required String userId}) async {
+    try {
+      emit(GalleryLoading());
+
+      final gallery = await userRepository.getGallery(
+         userId: userId
+          );
+       await viewModel.setGallery(gallery:gallery);
+ 
+      emit(GalleryLoaded(gallery));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 }

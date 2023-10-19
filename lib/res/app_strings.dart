@@ -44,6 +44,7 @@ class AppStrings {
   static const String getServiceTypes = '${_baseUrl}get-service-types';
   static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';
+  static   String getGalleryUrl(String userId) => '${_baseUrl}users/get-gallery-elements/$userId';
   static   String selectPetTypeUrl(String agentId) => '${_baseUrl}auth/select-pet-types/$agentId';
   static   String selectServiceTypeUrl(String agentId) => '${_baseUrl}auth/select-service-types/$agentId';
   static String petHealthStatusUrl({String? petId}) => '${_baseUrl}pets/add-health-issue/$petId';
