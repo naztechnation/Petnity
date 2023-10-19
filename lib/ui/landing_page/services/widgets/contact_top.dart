@@ -8,7 +8,7 @@ import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/image_view.dart';
 
-Widget contactTop (){
+Widget contactTop ({required String date1,required String date2,required String time1,required String time2,required Function onTap1,required Function onTap2,required Function onTap3,required Function onTap4}){
   return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
@@ -60,11 +60,13 @@ Widget contactTop (){
                                   const EdgeInsets.symmetric(horizontal: 20),
                               borderColor: Colors.white,
                               borderRadius: 40,
-                              onPressed: () {},
+                              onPressed: () {
+                                onTap1();
+                              },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: '12-2-2022',
+                                text: date1,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,
@@ -105,11 +107,14 @@ Widget contactTop (){
                                   const EdgeInsets.symmetric(horizontal: 20),
                               borderColor: Colors.white,
                               borderRadius: 40,
-                              onPressed: () {},
+                              onPressed: () {
+                                onTap2();
+
+                              },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: '04:pm',
+                                text: time1,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,
@@ -166,11 +171,14 @@ Widget contactTop (){
                                   const EdgeInsets.symmetric(horizontal: 20),
                               borderColor: Colors.white,
                               borderRadius: 40,
-                              onPressed: () {},
+                              onPressed: () {
+                                onTap3();
+
+                              },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: '12-2-2022',
+                                text: date2,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,
@@ -212,11 +220,14 @@ Widget contactTop (){
                                   const EdgeInsets.symmetric(horizontal: 20),
                               borderColor: Colors.white,
                               borderRadius: 40,
-                              onPressed: () {},
+                              onPressed: () {
+                                onTap4();
+
+                              },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: '04:pm',
+                                text: time2,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,

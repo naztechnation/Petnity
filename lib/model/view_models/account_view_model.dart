@@ -29,7 +29,11 @@ class AccountViewModel extends BaseViewModel {
   String _petBreed = '';
   String _petSize = '';
   String _aboutPet = '';
+  String _userLocation = '';
+  String _agentName = '';
+
   File? _imageURl;
+
   UserType _userType = UserType.none;
 
   ImagePicker picker = ImagePicker();
@@ -52,6 +56,11 @@ class AccountViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+   setAgentName(String agentName)async {
+    _agentName  = agentName;
+    setViewState(ViewState.success);
+  }
+
   getUserId() async {
     _agentId = await StorageHandler.getAgentId();
     setViewState(ViewState.success);
@@ -64,6 +73,10 @@ class AccountViewModel extends BaseViewModel {
 
   setPetId(String petId) {
     _petId = petId;
+    setViewState(ViewState.success);
+  }
+  setUserLocation(String location) {
+    _userLocation = location;
     setViewState(ViewState.success);
   }
 
@@ -269,6 +282,8 @@ Future<void> deleteUser() async {
 
   double get longitude => _longitude;
   String get address => _address;
+  String get location => _userLocation;
+  String get agentName => _agentName;
 
   double get latitude => _latitude;
   bool get showPasswordStatus => _showPassword;

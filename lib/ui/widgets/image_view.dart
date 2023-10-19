@@ -92,7 +92,7 @@ class ImageView extends StatelessWidget {
         fit: fit,
         height: height,
         width: width,
-        fadeInDuration: const Duration(seconds: 1),
+        fadeInDuration: const Duration(seconds: 5),
         fadeInCurve: Curves.easeInCirc,
         placeholder: placeholder ?? AppImages.person,
         image: url!,

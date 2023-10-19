@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
+import 'package:provider/provider.dart';
 
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/view_models/account_view_model.dart';
@@ -198,10 +199,12 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                       flex: 6,
                       child: ButtonView(
                         onPressed: () {
-                          // openServices(
-                          //     Provider.of<AccountViewModel>(context, listen: false)
-                          //         .selectedService,
-                          //     context);
+                          Provider.of<AccountViewModel>(context, listen: false)
+                                  .setAgentName(widget.agents!.name ?? '');
+                          openServices(
+                              Provider.of<AccountViewModel>(context, listen: false)
+                                  .selectedService.toLowerCase(),
+                              context);
                         },
                         child: CustomText(
                           textAlign: TextAlign.start,
@@ -244,40 +247,40 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
     );
   }
 
-  openServices(Services services, BuildContext context) {
+  openServices(String services, BuildContext context) {
     switch (services) {
-      case Services.none:
+      case '':
         break;
-      case Services.dogwalkers:
+      case 'dog walkers':
         AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
 
         break;
-      case Services.petdate:
+      case 'pet date':
         break;
-      case Services.dogsitters:
+      case 'dog sitters':
         AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
         break;
-      case Services.trainer:
+      case 'trainer':
         AppNavigator.pushAndStackPage(context, page: TrainingScreen());
         break;
-      case Services.vets:
+      case 'vets':
         AppNavigator.pushAndStackPage(context, page: VetService());
         break;
-      case Services.grooming:
+      case 'grooming':
         break;
-      case Services.breeders:
+      case 'breeders':
         break;
-      case Services.petsellers:
+      case 'pet sellers':
         AppNavigator.pushAndStackPage(context, page: PetsOnSale());
 
         break;
-      case Services.boarding:
+      case 'boarding':
         break;
-      case Services.petcaregivers:
+      case 'pet care givers':
         break;
 
       default:
-        AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
+        //AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
     }
   }
 }

@@ -99,21 +99,21 @@ class _GalleryRatingState extends State<GalleryRating> {
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40), color: Colors.white),
-          child: GridView.builder(
-            padding: const EdgeInsets.all(.0),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 4,
-              mainAxisSpacing: 1,
-            ),
-            itemCount: galleryList.length,
-            itemBuilder: (ctx, i) {
-              return ClipRRect(
-                      borderRadius: BorderRadius.circular(40),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
 
-                child: Container(
+            child: GridView.builder(
+              padding: const EdgeInsets.all(.0),
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0,
+              ),
+              itemCount: galleryList.length,
+              itemBuilder: (ctx, i) {
+                return Container(
                     decoration: BoxDecoration(
                         color: Colors.white),
                     child: GestureDetector(
@@ -121,9 +121,9 @@ class _GalleryRatingState extends State<GalleryRating> {
                           AppNavigator.pushAndStackPage(context,
                               page: SingleImageView(image: galleryList[i].image ?? '',));
                         },
-                        child: ImageView.network(galleryList[i].image, placeholder: AppImages.logo,fit: BoxFit.cover,))),
-              );
-            },
+                        child: ImageView.network(galleryList[i].image, placeholder: AppImages.logo,fit: BoxFit.cover,)));
+              },
+            ),
           ),
         ),
       );

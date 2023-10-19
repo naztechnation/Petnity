@@ -15,8 +15,15 @@ import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
 
-class ReviewScreen extends StatelessWidget {
-  const ReviewScreen({super.key});
+class ReviewScreen extends StatefulWidget {
+  final String date1,date2,time1,time2;
+  const ReviewScreen({super.key, required this.date1, required this.date2, required this.time1, required this.time2});
+
+  @override
+  State<ReviewScreen> createState() => _ReviewScreenState();
+}
+
+class _ReviewScreenState extends State<ReviewScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +66,7 @@ class ReviewScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    Provider.of<AccountViewModel>(context, listen: false)
-                                .selectedService ==
-                            Services.trainer
-                        ? Column(
+                     Column(
                             children: [
                               TextEditView(
                                 controller: TextEditingController(
@@ -108,14 +112,14 @@ class ReviewScreen extends StatelessWidget {
                                 ),
                               ),
                             ],
-                          )
-                        : SizedBox.shrink(),
+                          ),
+                       // : SizedBox.shrink(),
                     const SizedBox(
                       height: 20,
                     ),
                     TextEditView(
                       controller: TextEditingController(
-                        text: '20 01 2023',
+                        text: widget.date1,
                       ),
                       borderRadius: 30,
                       readOnly: true,
@@ -130,7 +134,7 @@ class ReviewScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: TextEditingController(
-                        text: '04 pm',
+                        text: widget.time1,
                       ),
                       borderRadius: 30,
                       readOnly: true,
@@ -145,7 +149,37 @@ class ReviewScreen extends StatelessWidget {
                     ),
                     TextEditView(
                       controller: TextEditingController(
-                        text: 'Emmanuel lodge',
+                        text: widget.date2,
+                      ),
+                      borderRadius: 30,
+                      readOnly: true,
+                      borderColor: Colors.white,
+                      filled: true,
+                      fillColor: Colors.white,
+                      isDense: true,
+                      textViewTitle: 'Drop off date',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextEditView(
+                      controller: TextEditingController(
+                        text: widget.time2,
+                      ),
+                      borderRadius: 30,
+                      readOnly: true,
+                      borderColor: Colors.white,
+                      filled: true,
+                      fillColor: Colors.white,
+                      isDense: true,
+                      textViewTitle: 'Drop off time',
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextEditView(
+                      controller: TextEditingController(
+                        text: Provider.of<AccountViewModel>(context, listen: false).location,
                       ),
                       borderRadius: 30,
                       readOnly: true,
