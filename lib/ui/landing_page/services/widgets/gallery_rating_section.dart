@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
-import '../../../../res/enum.dart' as gallary;
-import 'gallary_rating_body.dart';
+import '../../../../res/enum.dart' as gallery;
+import 'gallery_rating_body.dart';
 
-class GallaryRatingSection extends StatefulWidget {
+class GalleryRatingSection extends StatefulWidget {
 
   final String userId; 
 
-  GallaryRatingSection({super.key, required this.userId});
+  GalleryRatingSection({super.key, required this.userId});
 
   @override
-  State<GallaryRatingSection> createState() => _GallaryRatingSectionState();
+  State<GalleryRatingSection> createState() => _GalleryRatingSectionState();
 }
 
-class _GallaryRatingSectionState extends State<GallaryRatingSection> {
-  gallary.GallaryRating type = gallary.GallaryRating.gallary;
+class _GalleryRatingSectionState extends State<GalleryRatingSection> {
+  gallery.GalleryRating type = gallery.GalleryRating.gallery;
 
   @override
   Widget build(BuildContext context) {
@@ -36,42 +36,42 @@ class _GallaryRatingSectionState extends State<GallaryRatingSection> {
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    type = gallary.GallaryRating.gallary;
+                    type = gallery.GalleryRating.gallery;
                   });
                 },
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: type == gallary.GallaryRating.gallary ? 10 : 0,
-                      right: type == gallary.GallaryRating.ratings ? 10 : 0),
+                      left: type == gallery.GalleryRating.gallery ? 10 : 0,
+                      right: type == gallery.GalleryRating.ratings ? 10 : 0),
                   child: tabContent(
-                      gallary.GallaryRating.gallary, type == gallary.GallaryRating.gallary),
+                      gallery.GalleryRating.gallery, type == gallery.GalleryRating.gallery),
                 ),
               ),
               GestureDetector(
                 onTap: () {
                   setState(() {
-                    type = gallary.GallaryRating.ratings;
+                    type = gallery.GalleryRating.ratings;
                   });
                 },
                 child: Padding(
                   padding: EdgeInsets.only(
-                      left: type == gallary.GallaryRating.gallary ? 10 : 0,
-                      right: type == gallary.GallaryRating.ratings ? 10 : 0),
+                      left: type == gallery.GalleryRating.gallery ? 10 : 0,
+                      right: type == gallery.GalleryRating.ratings ? 10 : 0),
                   child: tabContent(
-                      gallary.GallaryRating.ratings, type == gallary.GallaryRating.ratings),
+                      gallery.GalleryRating.ratings, type == gallery.GalleryRating.ratings),
                 ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 30,),
-        GallaryRatingBody(isGallary:type == gallary.GallaryRating.gallary, userId: widget.userId,),
+        GalleryRatingBody(isGallery:type == gallery.GalleryRating.gallery, userId: widget.userId,),
       ],
     );
   }
 
   tabContent(
-    gallary.GallaryRating type,
+    gallery.GalleryRating type,
     bool isTapped,
   ) {
     return Container(
@@ -82,7 +82,7 @@ class _GallaryRatingSectionState extends State<GallaryRatingSection> {
           borderRadius: BorderRadius.circular(20)),
       child: Center(
         child: Text(
-          (type.name == 'gallary') ? 'Gallery' : 'Ratings',
+          (type.name == 'gallery') ? 'Gallery' : 'Ratings',
           style: TextStyle(
             color: Colors.black,
           ),

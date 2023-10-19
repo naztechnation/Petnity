@@ -146,7 +146,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 CustomText(
                   textAlign: TextAlign.start,
@@ -171,7 +171,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                   },
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 CustomText(
                   textAlign: TextAlign.start,

@@ -95,11 +95,19 @@ String agentId = '';
       child: BlocConsumer<UserCubit, UserStates>(
         listener: (context, state) {
           if (state is ServiceProviderListLoaded) {
-            Modals.showToast(state.userData.message!,
+
+            if(state.userData.status!){
+              Modals.showToast('Processed Successfully',
                 messageType: MessageType.success);
 
             AppNavigator.pushAndStackPage(context,
                 page: KycServiceScreenNine());
+            }else{
+              Modals.showToast('Something went wrong',
+                messageType: MessageType.error);
+
+            }
+            
           } else if (state is ServicesLoaded) {
             if (state.services.status!) {
               service = _userCubit.viewModel.services;

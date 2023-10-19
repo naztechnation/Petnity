@@ -15,10 +15,10 @@ import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../single_image_view.dart';
 import 'review_container.dart';
 
-class GallaryRatingBody extends StatelessWidget {
-  final bool isGallary;
+class GalleryRatingBody extends StatelessWidget {
+  final bool isGallery;
   final String? userId;
-  GallaryRatingBody({super.key, required this.isGallary,  this.userId});
+  GalleryRatingBody({super.key, required this.isGallery,  this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -26,29 +26,40 @@ class GallaryRatingBody extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: GallaryRating(
-        isGallary: isGallary, userId: userId ?? '',
+      child: GalleryRating(
+        isGallery: isGallery, userId: userId ?? '',
       ),
     );
   }
 }
 
-class GallaryRating extends StatefulWidget {
-  final bool isGallary;
+class GalleryRating extends StatefulWidget {
+  final bool isGallery;
   final String userId;
-  GallaryRating({super.key, required this.isGallary, required this.userId});
+  GalleryRating({super.key, required this.isGallery, required this.userId});
 
   @override
-  State<GallaryRating> createState() => _GallaryRatingState();
+  State<GalleryRating> createState() => _GalleryRatingState();
 }
 
-class _GallaryRatingState extends State<GallaryRating> {
+class _GalleryRatingState extends State<GalleryRating> {
   late UserCubit _userCubit;
   String userId = '';
   getUserId() async {
     userId = await StorageHandler.getUserId();
     _userCubit = context.read<UserCubit>();
-    _userCubit.getReviews(userId: widget.userId);
+
+   await  _userCubit.viewModel.emptyReviews();
+   await _userCubit.getReviews(userId: widget.userId);
+
+   
+    if(_userCubit.viewModel.reviewStatus){
+   reviewsList = _userCubit.viewModel.reviews;
+
+    }else{
+      reviewsList = [];
+    }
+
   }
 
   List<Reviews> reviewsList = [];
@@ -61,9 +72,8 @@ class _GallaryRatingState extends State<GallaryRating> {
 
   @override
   Widget build(BuildContext context) {
-    final reviews = Provider.of<UserViewModel>(context, listen: false).reviews;
-
-    if (widget.isGallary)
+    // final reviews = Provider.of<UserViewModel>(context, listen: true).reviews;
+    if (widget.isGallery)
       return Container(
         height: 230,
         margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -71,6 +81,8 @@ class _GallaryRatingState extends State<GallaryRating> {
             borderRadius: BorderRadius.circular(40), color: Colors.white),
         child: GridView.builder(
           padding: const EdgeInsets.all(10.0),
+                    physics: NeverScrollableScrollPhysics(),
+
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             crossAxisSpacing: 0,
@@ -92,33 +104,15 @@ class _GallaryRatingState extends State<GallaryRating> {
         ),
       );
     else {
-      return BlocProvider<UserCubit>(
-          lazy: false,
-          create: (_) => UserCubit(
-              userRepository: UserRepositoryImpl(),
-              viewModel: Provider.of<UserViewModel>(context, listen: false)),
-          child: BlocConsumer<UserCubit, UserStates>(
-            listener: (context, state) {
-              if (state is ReviewLoaded) {
-                if (state.reviews.status!) {
-                  reviewsList = state.reviews.reviews ?? [];
-                  Modals.showToast('message');
-                } else {}
-              } else if (state is UserNetworkErrApiErr) {
-              } else if (state is UserNetworkErr) {}
-            },
-            builder: (context, state) => (state is ReviewLoading)
-                ? LoadingPage()
-                : ListView.builder(
+      return ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: reviews.length,
+                    itemCount: reviewsList.length,
                     itemBuilder: (_, index) {
                       return ReviewContainer(
-                        review: reviews[index],
+                        review: reviewsList[index],
                       );
-                    }),
-          ));
+                    });
     }
   }
 }

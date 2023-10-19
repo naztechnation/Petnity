@@ -50,6 +50,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void initState() {
+    updateOnlineStatus(true);
+
     generateGroupId();
     Future.delayed(
         const Duration(
@@ -63,6 +65,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void dispose() {
     messageController.dispose();
+    updateOnlineStatus(false);
     super.dispose();
   }
 
@@ -111,6 +114,8 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Future<bool> onBackPress() {
+    updateOnlineStatus(false);
+
     updateDataFirestore(
       FirestoreConstants.pathUserCollection,
       currentUserId,
@@ -119,6 +124,23 @@ class _ChatPageState extends State<ChatPage> {
     Navigator.pop(context);
 
     return Future.value(false);
+  }
+
+  Future<void> updateOnlineStatus(bool isOnline) async {
+    try {
+      final _firebaseAuth = FirebaseAuth.instance;
+      final _firebaseStorage = FirebaseFirestore.instance;
+      final currentUserUid = _firebaseAuth.currentUser!.uid;
+
+      await _firebaseStorage.collection('users').doc(currentUserUid).set(
+        {
+          'online': isOnline,
+        },
+        SetOptions(merge: true),
+      );
+    } catch (e) {
+      print("Error updating online status: $e");
+    }
   }
 
   @override
@@ -168,14 +190,29 @@ class _ChatPageState extends State<ChatPage> {
                           fontFamily: AppStrings.interSans,
                           color: Colors.black,
                         ),
-                        CustomText(
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          text: 'online',
-                          weight: FontWeight.w500,
-                          size: 14,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.grey,
+                        StreamBuilder<bool>(
+                          stream: listenToOnlineStatus(
+                               uid),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Text('Loading...');
+                            }
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            }
+                            final isOnline = snapshot.data ?? false;
+                            final statusText = isOnline ? 'Online' : 'Offline';
+                            return CustomText(
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              text: '$statusText',
+                              weight: FontWeight.w500,
+                              size: 14,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.grey,
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -195,10 +232,11 @@ class _ChatPageState extends State<ChatPage> {
                             child: ImageView.svg(AppImages.phoneIcon),
                           ),
                           GestureDetector(
-                            onTap: (() {
-                              AppNavigator.pushAndStackPage(context, page: MyApp());
-                            }),
-                            child: ImageView.svg(AppImages.videoIcon)),
+                              onTap: (() {
+                                AppNavigator.pushAndStackPage(context,
+                                    page: MyApp());
+                              }),
+                              child: ImageView.svg(AppImages.videoIcon)),
                         ],
                       ),
                     )
@@ -286,43 +324,38 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   chatMessages() {
-    
-
     return StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection("groupMessages")
-                .doc(groupChatId)
-                .collection("messages")
-                .orderBy(FirestoreConstants.timestamp, descending: false)
-                .snapshots(),
-            builder: (context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+        stream: FirebaseFirestore.instance
+            .collection("groupMessages")
+            .doc(groupChatId)
+            .collection("messages")
+            .orderBy(FirestoreConstants.timestamp, descending: false)
+            .snapshots(),
+        builder: (context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-              return ListView.builder(
-                reverse: false,
-                shrinkWrap: true,
-                
-                controller: _scrollController,
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  MessageChat chat =
-                      MessageChat.fromDocument(snapshot.data!.docs[index]);
-                  
-                  return 
-                MessageTile(
+          return ListView.builder(
+            reverse: false,
+            shrinkWrap: true,
+            controller: _scrollController,
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              MessageChat chat =
+                  MessageChat.fromDocument(snapshot.data!.docs[index]);
+
+              return MessageTile(
                   message: chat.content,
                   sender: username,
                   timeStamp: 0,
                   sentByMe: chat.idFrom == currentUserId ? true : false);
-                   
-                },
-              );
-            });
+            },
+          );
+        });
   }
 
   sendMessage() {
@@ -336,5 +369,19 @@ class _ChatPageState extends State<ChatPage> {
 
       messageController.clear();
     }
+  }
+
+  Stream<bool> listenToOnlineStatus(String uid) {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.exists) {
+        return snapshot.data()?['online'] ?? false;
+      } else {
+        return false;
+      }
+    });
   }
 }

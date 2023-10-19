@@ -12,10 +12,10 @@ class FirebaseAuthProvider extends BaseViewModel {
 
   Status get status => _status;
 
-    setBack(){
-       _status = Status.authenticated;
-        setViewState(ViewState.success);
-    }
+  setBack() {
+    _status = Status.authenticated;
+    setViewState(ViewState.success);
+  }
 
   Future<bool> isLoggedIn() async {
     //  bool isLoggedIn = await googleSignIn.isSignedIn();
@@ -41,7 +41,6 @@ class FirebaseAuthProvider extends BaseViewModel {
         email: email,
         password: password,
       );
-      
 
       if (_firebaseAuth.currentUser!.uid != null) {
         await _firebaseStorage
@@ -52,7 +51,8 @@ class FirebaseAuthProvider extends BaseViewModel {
           'uid': _firebaseAuth.currentUser!.uid,
           'userName': username,
           'userEmail': email,
-          'pushToken': ''
+          'pushToken': '',
+          'online': false,
         });
 
         _status = Status.authenticated;
@@ -65,51 +65,51 @@ class FirebaseAuthProvider extends BaseViewModel {
       ;
     }
   }
- 
 
-Future<User?> loginWithEmailAndPassword(String email, String password) async {
-  try {
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    User? user = userCredential.user;
-    return user;
-  } catch (e) {
-    print('Login error: $e');
-    return null;
+  Future<User?> loginWithEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = userCredential.user;
+      return user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+
+      return null;
+    }
   }
-}
 
- 
-
-
-  Future<User?> loginUserWithEmailAndPassword(
-      {required String email,
-      required String password,
-      }) async {
+  Future<User?> loginUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
     _status = Status.authenticating;
     setViewState(ViewState.success);
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    User? user = userCredential.user;
-    _status = Status.authenticated;
-        setViewState(ViewState.success);
-    return user;
-      
-
-       
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      User? user = userCredential.user;
+      _status = Status.authenticated;
+      setViewState(ViewState.success);
+      return user;
     } on FirebaseAuthException catch (e) {
       _status = Status.authenticateError;
       setViewState(ViewState.success);
 
-      return null
-
-      ;
+      return null;
     }
   }
+
+
 }

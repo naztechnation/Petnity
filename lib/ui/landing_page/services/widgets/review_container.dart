@@ -37,7 +37,7 @@ class ReviewContainer extends StatelessWidget {
             title: CustomText(
               textAlign: TextAlign.left,
               maxLines: 1,
-              text: 'Audrey jhay',
+              text: 'user',
               weight: FontWeight.w700,
               size: 16,
               fontFamily: AppStrings.interSans,

@@ -1,13 +1,11 @@
 class ServiceProvidersList {
   bool? status;
-  String? message; 
   List<Agents>? agents;
 
   ServiceProvidersList({this.status, this.agents});
 
   ServiceProvidersList.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message = json['message'];
     if (json['agents'] != null) {
       agents = <Agents>[];
       json['agents'].forEach((v) {
@@ -19,7 +17,6 @@ class ServiceProvidersList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['message'] = this.message;
     if (this.agents != null) {
       data['agents'] = this.agents!.map((v) => v.toJson()).toList();
     }
@@ -42,7 +39,7 @@ class Agents {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  Null? idType;
+  int? idType;
   List<ServicesDetails>? services;
   List<Pets>? petTypes;
 
@@ -127,11 +124,12 @@ class Agents {
 
 class Profile {
   int? id;
+  String? firebaseId;
   String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
-  Null? profileImage;
+  String? address;
+  String? city;
+  String? country;
+  String? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;
@@ -142,6 +140,7 @@ class Profile {
 
   Profile(
       {this.id,
+      this.firebaseId,
       this.phoneNumber,
       this.address,
       this.city,
@@ -157,6 +156,7 @@ class Profile {
 
   Profile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    firebaseId = json['firebase_id'];
     phoneNumber = json['phone_number'];
     address = json['address'];
     city = json['city'];
@@ -174,6 +174,7 @@ class Profile {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['firebase_id'] = this.firebaseId;
     data['phone_number'] = this.phoneNumber;
     data['address'] = this.address;
     data['city'] = this.city;
@@ -223,7 +224,7 @@ class User {
 class ServicesDetails {
   int? id;
   String? name;
-  Null? image;
+  String? image;
 
   ServicesDetails({this.id, this.name, this.image});
 

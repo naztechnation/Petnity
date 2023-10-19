@@ -99,7 +99,7 @@ class UserCubit extends Cubit<UserStates> {
       final reviews = await userRepository.getReviews(
          userId: userId
           );
-       await viewModel.setReviews(reviews:reviews.reviews ?? []);
+       await viewModel.setReviews(reviews:reviews);
  
       emit(ReviewLoaded(reviews));
     } on ApiException catch (e) {

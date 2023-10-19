@@ -15,7 +15,7 @@ enum PetBreedsTypes { none, german , bulldog, chihuahua, poodle, maltipoo, bullm
 
 enum FilterStatus { request, chats }
 
-enum GallaryRating { gallary, ratings }
+enum GalleryRating { gallery, ratings }
 
 enum ViewState { idle, loading, processing, success, failed }
 

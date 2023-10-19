@@ -11,6 +11,8 @@ class UserViewModel extends BaseViewModel {
    List<ServiceTypes> _services = [];
    List<Agents> _agents = [];
    List<Reviews> _reviews = [];
+   bool _reviewStatus = false;
+
 
 
    Future<void> setServicesList({required List<ServiceTypes> services}) async {
@@ -21,16 +23,22 @@ class UserViewModel extends BaseViewModel {
     _agents = agents;
     setViewState(ViewState.success);
   }
+  Future<void> emptyReviews() async {
+    _reviewStatus =  false;
+    _reviews =  [];
+    setViewState(ViewState.success);
+  }
   
-  Future<void> setReviews({required List<Reviews> reviews}) async {
-    _reviews = reviews;
+  Future<void> setReviews({required GetReviews reviews}) async {
+    _reviewStatus = reviews.status ?? false;
+    _reviews = reviews.reviews ?? [];
     setViewState(ViewState.success);
   }
 
   List<ServiceTypes> get services => _services;
   List<Agents> get agents => _agents;
   List<Reviews> get reviews => _reviews;
-
+  bool get reviewStatus => _reviewStatus;
    List<ServicesDetails> get servicesItems => servicesResults();
    List<Pets> get servicesPetList => servicesPets();
    

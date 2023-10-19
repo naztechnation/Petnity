@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
-import 'package:petnity/ui/landing_page/services/widgets/gallary_rating_body.dart';
+import 'package:petnity/ui/landing_page/services/widgets/gallery_rating_body.dart';
 
 import '../../../../../res/app_strings.dart';
 import '../../../../widgets/custom_text.dart';
@@ -98,7 +98,7 @@ class PetBio extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        GallaryRatingBody(isGallary: true),
+        GalleryRatingBody(isGallery: true),
       ],
     );
   }

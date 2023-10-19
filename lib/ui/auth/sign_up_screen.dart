@@ -297,6 +297,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   _firebaseRegUser(final firebaseAuth, BuildContext context) async {
+   
     if (_formKey.currentState!.validate()) {
       await firebaseAuth.registerUserWithEmailAndPassword(
           email: '${_usernameController.text.toLowerCase().trim()}@gmail.com',
