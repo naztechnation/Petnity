@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
-import 'package:petnity/ui/payment/payment_details.dart';
+import 'package:petnity/ui/payment/payment_screen.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../../res/app_colors.dart';

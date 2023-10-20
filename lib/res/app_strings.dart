@@ -11,7 +11,7 @@ class AppStrings {
 
   ///flutterwave api
   static const String flutterwaveApiKey =
-      "FLWPUBK-b2f7bc89c0f02fffb7718de47506db81-X";
+      "FLWPUBK_TEST-e244b020ccc49bcf667b0e3f26dc056b-X";
   
   ///app tokens
   
@@ -48,6 +48,7 @@ class AppStrings {
   static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';
   static   String getGalleryUrl(String userId) => '${_baseUrl}users/get-gallery-elements/$userId';
+  static   String confirmPaymentUrl(String username, String agentId) => '${_baseUrl}/order/order-payment/$username/1$agentId';
   static   String getAgentPackagesUrl(String agentId, String serviceId) => '${_baseUrl}users/get-agent-service-packages/$agentId/$serviceId';
   static   String selectPetTypeUrl(String agentId) => '${_baseUrl}auth/select-pet-types/$agentId';
   static   String selectServiceTypeUrl(String agentId) => '${_baseUrl}auth/select-service-types/$agentId';

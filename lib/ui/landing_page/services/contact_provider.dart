@@ -9,6 +9,7 @@ import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
+import '../../../utils/app_utils.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
@@ -145,7 +146,7 @@ class _ContactProviderState extends State<ContactProvider> {
                   CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    text: '${agent.servicePrice}',
+                    text: '₦${AppUtils.convertPrice(agent.servicePrice)}',
                     weight: FontWeight.w600,
                     size: 14,
                     color: Colors.black,
@@ -163,7 +164,7 @@ class _ContactProviderState extends State<ContactProvider> {
               if(selectedTime1 != 'Select Time' || selectedTime2 != 'Select Time') {
               AppNavigator.pushAndStackPage(context, 
               page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
-              time1: selectedTime1,time2: selectedTime2,));
+              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice));
               }else{
                 Modals.showToast('please select time');
               }

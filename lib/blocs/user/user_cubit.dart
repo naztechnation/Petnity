@@ -167,4 +167,28 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+  Future<void> confirmPayment({ required String agentId, required String username}) async {
+    try {
+      emit(ConfirmPaymentLoading());
+
+      final payment = await userRepository.confirmPayment(agentId: agentId, username: username
+          
+          );
+      
+      emit(ConfirmPaymentLoaded(payment));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 }

@@ -166,7 +166,7 @@ class _PackagesState extends State<PackagePage> {
                             itemBuilder: (__, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  agent.setServicePrice('₦${AppUtils.convertPrice(packages[index].price)}');
+                                  agent.setServicePrice('${packages[index].price}');
                                   agent.setServicePackage(packages[index].name ?? '');
                                   agent.setServiceDuration(packages[index].duration ?? '');
                                 AppNavigator.pushAndStackPage(context, page: SetLocationScreen());

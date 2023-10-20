@@ -1,201 +1,321 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:petnity/blocs/user/user_cubit.dart';
 import 'package:petnity/res/enum.dart';
-import 'package:petnity/ui/landing_page/services/payment_success_screen.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../../blocs/user/user_states.dart';
+import '../../../handlers/secure_handler.dart';
 import '../../../model/view_models/account_view_model.dart';
+import '../../../model/view_models/user_view_model.dart';
+import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
+import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
-import '../../../utils/navigator/page_navigator.dart';
+import '../../../utils/app_utils.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
+import '../../widgets/empty_widget.dart';
+import '../../widgets/loading_page.dart';
+import '../../widgets/modals.dart';
 
-class ReviewScreen extends StatefulWidget {
-  final String date1,date2,time1,time2;
-  const ReviewScreen({super.key, required this.date1, required this.date2, required this.time1, required this.time2});
+
+
+class ReviewScreen  extends StatefulWidget {
+  final String date1,date2,time1,time2, amount;
+  const ReviewScreen({super.key, required this.date1,
+  required this.date2, required this.time1,
+  required this.time2, required this.amount});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: Review(amount: amount, date1: date1, date2: date2, time1: time1, time2: time2,),
+    );
+  }
+  
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
+  }
+}
+class Review  extends StatefulWidget {
+  final String date1,date2,time1,time2, amount;
+  const Review({super.key, required this.date1,
+  required this.date2, required this.time1,
+  required this.time2, required this.amount});
 
   @override
   State<ReviewScreen> createState() => _ReviewScreenState();
 }
 
 class _ReviewScreenState extends State<ReviewScreen> {
+  String email = '';
+
+
+  String transactionId = '';
+  String txId = '';
+  var uuid = const Uuid();
+  
+  getEmail() async{ 
+    email = await StorageHandler.getUserEmail();
+  }
+
+  @override
+  void initState() {
+    getEmail();
+    transactionId = uuid.v1();
+
+    super.initState();
+  }
+
+   _handlePaymentInitialization( ) async {
+    final Customer customer = Customer(email: email);
+
+    final Flutterwave flutterwave = Flutterwave(
+        context: context,
+        publicKey: AppStrings.flutterwaveApiKey,
+        currency: 'NGN',
+        redirectUrl: 'https://petnity.com',
+        txRef: uuid.v1(),
+        amount: widget.amount,
+        customer: customer,
+        paymentOptions:
+            "card",
+        customization: Customization(
+          title: "Petnity",
+          //logo: AppImages.logo,
+        ),
+        isTestMode: true);
+    final ChargeResponse response = await flutterwave.charge();
+
+    if (response != null) {
+      txId = response.transactionId ?? '';
+      if (txId != '') {
+        String message = 'Payment Ref: ${response.txRef}';
+        // url = AppStrings.confirmFluttewaveSubscriptionUrl;
+        // _accountCubit.subscription(txId, url, planId).then((value) => {
+        //       if (_accountCubit.viewModel.paymentStatus)
+        //         {
+        //           AppNavigator.pushAndReplacePage(context,
+        //               page: PaymentSuccess(
+        //                 message: message,
+        //                 info: info,
+        //               )),
+        //         }
+        //     });
+        //Modals.showToast('Successful.', messageType: MessageType.error);
+      }
+    } else {
+      Modals.showToast('Unable to make payment Successfully.',
+          messageType: MessageType.error);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: screenSize(context).height,
-        width: screenSize(context).width,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                begin: Alignment.topRight,
-                end: Alignment.topLeft)),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  backButton(context),
-                  CustomText(
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    text: 'Review',
-                    weight: FontWeight.w600,
-                    size: 18,
-                    fontFamily: AppStrings.montserrat,
-                    color: Colors.black,
-                  ),
-                  const SizedBox(
-                    width: 40,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
+      body: BlocConsumer<UserCubit, UserStates>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is ConfirmPaymentLoading) {
+                return LoadingPage();
+              } else if (state is UserNetworkErr) {
+                return EmptyWidget(
+                  title: 'Network error',
+                  description: state.message,
+                  onRefresh: () {},
+                );
+              } else if (state is UserNetworkErrApiErr) {
+                return EmptyWidget(
+                  title: 'Network error',
+                  description: state.message,
+                  onRefresh: () {},
+                );
+              } else if (state is ConfirmPaymentLoaded) {
+                // agentList = _userCubit.viewModel.agents;
+              }
+
+              return Container(
+          height: screenSize(context).height,
+          width: screenSize(context).width,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                  begin: Alignment.topRight,
+                  end: Alignment.topLeft)),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     Column(
-                            children: [
-                              TextEditView(
-                                controller: TextEditingController(
-                                  text: Provider.of<AccountViewModel>(context, listen: false).servicePackage,
-                                ),
-                                borderRadius: 30,
-                                readOnly: true,
-                                borderColor: Colors.white,
-                                filled: true,
-                                fillColor: Colors.white,
-                                isDense: true,
-                                textViewTitle: 'Package',
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              TextEditView(
-                                controller: TextEditingController(
-                                  text: Provider.of<AccountViewModel>(context, listen: false).serviceDuration,
-                                ),
-                                borderRadius: 30,
-                                readOnly: true,
-                                borderColor: Colors.white,
-                                filled: true,
-                                fillColor: Colors.white,
-                                isDense: true,
-                                textViewTitle: 'Duration',
-                                suffixIcon: Container(
-                                  width: 130,
-                                  alignment: Alignment.centerRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: CustomText(
-                                      textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      text: Provider.of<AccountViewModel>(context, listen: false).servicePrice,
-                                      weight: FontWeight.w500,
-                                      size: 14,
-                                      fontFamily: AppStrings.montserrat,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                       // : SizedBox.shrink(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextEditView(
-                      controller: TextEditingController(
-                        text: widget.date1,
-                      ),
-                      borderRadius: 30,
-                      readOnly: true,
-                      borderColor: Colors.white,
-                      filled: true,
-                      fillColor: Colors.white,
-                      isDense: true,
-                      textViewTitle: 'Pick up date',
+                    backButton(context),
+                    CustomText(
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      text: 'Review',
+                      weight: FontWeight.w600,
+                      size: 18,
+                      fontFamily: AppStrings.montserrat,
+                      color: Colors.black,
                     ),
                     const SizedBox(
-                      height: 20,
-                    ),
-                    TextEditView(
-                      controller: TextEditingController(
-                        text: widget.time1,
-                      ),
-                      borderRadius: 30,
-                      readOnly: true,
-                      borderColor: Colors.white,
-                      filled: true,
-                      fillColor: Colors.white,
-                      isDense: true,
-                      textViewTitle: 'Pick up time',
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextEditView(
-                      controller: TextEditingController(
-                        text: widget.date2,
-                      ),
-                      borderRadius: 30,
-                      readOnly: true,
-                      borderColor: Colors.white,
-                      filled: true,
-                      fillColor: Colors.white,
-                      isDense: true,
-                      textViewTitle: 'Drop off date',
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextEditView(
-                      controller: TextEditingController(
-                        text: widget.time2,
-                      ),
-                      borderRadius: 30,
-                      readOnly: true,
-                      borderColor: Colors.white,
-                      filled: true,
-                      fillColor: Colors.white,
-                      isDense: true,
-                      textViewTitle: 'Drop off time',
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextEditView(
-                      controller: TextEditingController(
-                        text: Provider.of<AccountViewModel>(context, listen: false).location,
-                      ),
-                      borderRadius: 30,
-                      readOnly: true,
-                      borderColor: Colors.white,
-                      filled: true,
-                      fillColor: Colors.white,
-                      isDense: true,
-                      textViewTitle: 'Pick up Location',
+                      width: 40,
                     ),
                   ],
                 ),
-              )
-            ],
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                       Column(
+                              children: [
+                                TextEditView(
+                                  controller: TextEditingController(
+                                    text: Provider.of<AccountViewModel>(context, listen: false).servicePackage,
+                                  ),
+                                  borderRadius: 30,
+                                  readOnly: true,
+                                  borderColor: Colors.white,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  isDense: true,
+                                  textViewTitle: 'Package',
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextEditView(
+                                  controller: TextEditingController(
+                                    text: Provider.of<AccountViewModel>(context, listen: false).serviceDuration,
+                                  ),
+                                  borderRadius: 30,
+                                  readOnly: true,
+                                  borderColor: Colors.white,
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  isDense: true,
+                                  textViewTitle: 'Duration',
+                                  suffixIcon: Container(
+                                    width: 130,
+                                    alignment: Alignment.centerRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 12.0),
+                                      child: CustomText(
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        text: '₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
+                                        weight: FontWeight.w500,
+                                        size: 14,
+                                        fontFamily: AppStrings.montserrat,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                         // : SizedBox.shrink(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextEditView(
+                        controller: TextEditingController(
+                          text: widget.date1,
+                        ),
+                        borderRadius: 30,
+                        readOnly: true,
+                        borderColor: Colors.white,
+                        filled: true,
+                        fillColor: Colors.white,
+                        isDense: true,
+                        textViewTitle: 'Pick up date',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextEditView(
+                        controller: TextEditingController(
+                          text: widget.time1,
+                        ),
+                        borderRadius: 30,
+                        readOnly: true,
+                        borderColor: Colors.white,
+                        filled: true,
+                        fillColor: Colors.white,
+                        isDense: true,
+                        textViewTitle: 'Pick up time',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextEditView(
+                        controller: TextEditingController(
+                          text: widget.date2,
+                        ),
+                        borderRadius: 30,
+                        readOnly: true,
+                        borderColor: Colors.white,
+                        filled: true,
+                        fillColor: Colors.white,
+                        isDense: true,
+                        textViewTitle: 'Drop off date',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextEditView(
+                        controller: TextEditingController(
+                          text: widget.time2,
+                        ),
+                        borderRadius: 30,
+                        readOnly: true,
+                        borderColor: Colors.white,
+                        filled: true,
+                        fillColor: Colors.white,
+                        isDense: true,
+                        textViewTitle: 'Drop off time',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextEditView(
+                        controller: TextEditingController(
+                          text: Provider.of<AccountViewModel>(context, listen: false).location,
+                        ),
+                        borderRadius: 30,
+                        readOnly: true,
+                        borderColor: Colors.white,
+                        filled: true,
+                        fillColor: Colors.white,
+                        isDense: true,
+                        textViewTitle: 'Pick up Location',
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+  }),
       bottomNavigationBar: Container(
         height: 250,
         color: Colors.grey.shade100,
@@ -225,7 +345,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     CustomText(
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      text: Provider.of<AccountViewModel>(context, listen: false).servicePrice,
+                      text: '₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
                       weight: FontWeight.w600,
                       size: 14,
                       color: Colors.black,
@@ -240,8 +360,9 @@ class _ReviewScreenState extends State<ReviewScreen> {
               borderColor: Colors.white,
               borderRadius: 40,
               onPressed: () {
-                AppNavigator.pushAndStackPage(context,
-                    page: PaymentSuccessScreen());
+                _handlePaymentInitialization( );
+                // AppNavigator.pushAndStackPage(context,
+                //     page: PaymentSuccessScreen());
               },
               child: CustomText(
                 textAlign: TextAlign.left,

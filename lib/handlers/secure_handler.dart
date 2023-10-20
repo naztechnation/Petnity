@@ -9,6 +9,10 @@ class StorageHandler {
     if (username != null)
       await storage.write(key: 'USER', value: username);
   }
+  static Future<void> saveEmail([String? username]) async {
+    if (username != null)
+      await storage.write(key: 'EMAIL', value: username);
+  }
 
   static Future<void> saveUserPetState([String? petState]) async {
     if (petState != null)
@@ -54,6 +58,18 @@ static Future<void> saveAgentId(String id) async {
       username = '';
     }
     return username;
+  }
+
+   static Future<String> getUserEmail() async {
+   String? value = await storage.read(key: 'EMAIL');
+    String? email;
+    String? data = value;
+    if (data != null) {
+      email = data;
+    }else{
+      email = '';
+    }
+    return email;
   }
 
    static Future<String> getUserPetState() async {

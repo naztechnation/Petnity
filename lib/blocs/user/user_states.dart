@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../model/account_models/agents_packages.dart';
+import '../../model/account_models/confirm_payment.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
@@ -72,6 +73,18 @@ class AgentPackagesLoading extends UserStates {
 class AgentPackagesLoaded extends UserStates {
   final GetAgentsPackages packages;
   const AgentPackagesLoaded(this.packages);
+  @override
+  List<Object> get props => [packages];
+}
+
+class ConfirmPaymentLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ConfirmPaymentLoaded extends UserStates {
+  final PaymentResponse packages;
+  const ConfirmPaymentLoaded(this.packages);
   @override
   List<Object> get props => [packages];
 }

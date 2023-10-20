@@ -1,5 +1,6 @@
  
 import 'package:petnity/model/account_models/agents_packages.dart';
+import 'package:petnity/model/account_models/confirm_payment.dart';
 
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/reviews_data.dart';
@@ -68,6 +69,15 @@ class UserRepositoryImpl implements UserRepository {
       'Authorization': AppStrings.token,
      });
     return GetAgentsPackages.fromJson(map);
+  }
+
+  @override
+  Future<PaymentResponse> confirmPayment({required String username, required String agentId}) async{
+     
+    final map = await Requests().get(AppStrings.confirmPaymentUrl(username,agentId), headers: {
+      'Authorization': AppStrings.token,
+     });
+    return PaymentResponse.fromJson(map);
   }
 
 }

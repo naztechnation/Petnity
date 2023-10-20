@@ -267,7 +267,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         break;
       case 'dog sitters':
                AppNavigator.pushAndStackPage(context, page: PackagesScreen(serviceId: Provider.of<AccountViewModel>(context, listen: false).serviceId, agentId: Provider.of<AccountViewModel>(context, listen: false).agentId2,));
-
+ 
         break;
       case 'trainer':
         AppNavigator.pushAndStackPage(context, page: TrainingScreen());

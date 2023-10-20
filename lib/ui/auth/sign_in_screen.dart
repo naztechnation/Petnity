@@ -64,8 +64,8 @@ class SignInScreen extends StatelessWidget {
       StorageHandler.saveUserId(state.userData.profile!.id.toString());
       StorageHandler.saveUserPassword(_passwordController.text);
       StorageHandler.saveUserName(_usernameController.text.trim());
+      StorageHandler.saveEmail(state.userData.profile!.user!.email.toString());
 
-      Modals.showToast('success');
 
       if (state.userData.profile!.hasPets!) {
         StorageHandler.saveUserPetState('true');
