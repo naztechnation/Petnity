@@ -144,7 +144,7 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: ButtonView(
                 onPressed: () {
-             AppNavigator.pushAndStackPage(context, page: PaymentDetailsScreen());
+            //  AppNavigator.pushAndStackPage(context, page: PaymentDetailsScreen());
                 },
                 expanded: true,
                 borderRadius: 41,

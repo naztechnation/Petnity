@@ -9,7 +9,10 @@ class AppStrings {
   static const String montserrat = 'Montserrat';
 
 
-
+  ///flutterwave api
+  static const String flutterwaveApiKey =
+      "FLWPUBK-b2f7bc89c0f02fffb7718de47506db81-X";
+  
   ///app tokens
   
   static const token = 'Token 2621dfbf5beb58d815961c015b18e79a34a98c4e';
@@ -45,6 +48,7 @@ class AppStrings {
   static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';
   static   String getGalleryUrl(String userId) => '${_baseUrl}users/get-gallery-elements/$userId';
+  static   String getAgentPackagesUrl(String agentId, String serviceId) => '${_baseUrl}users/get-agent-service-packages/$agentId/$serviceId';
   static   String selectPetTypeUrl(String agentId) => '${_baseUrl}auth/select-pet-types/$agentId';
   static   String selectServiceTypeUrl(String agentId) => '${_baseUrl}auth/select-service-types/$agentId';
   static String petHealthStatusUrl({String? petId}) => '${_baseUrl}pets/add-health-issue/$petId';

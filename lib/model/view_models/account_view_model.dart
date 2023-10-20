@@ -21,6 +21,13 @@ class AccountViewModel extends BaseViewModel {
   String _address = '';
   String _username = '';
   String _agentId = '';
+  String _agentId2 = '';
+  String _serviceId = '';
+  String _servicePrice = '';
+  String _servicePackage = '';
+  String _serviceDuration = '';
+  
+
   String _petType = '';
   String _petTypeIndex = '';
   String _petId = '';
@@ -58,6 +65,30 @@ class AccountViewModel extends BaseViewModel {
 
    setAgentName(String agentName)async {
     _agentName  = agentName;
+    setViewState(ViewState.success);
+  }
+
+  setAgentId(String agentId)async {
+    _agentId2  = agentId;
+    setViewState(ViewState.success);
+  }
+
+   setServiceId(String serviceId)async {
+    _serviceId  = serviceId;
+    setViewState(ViewState.success);
+  }
+
+  setServicePrice(String price)async {
+    _servicePrice  = price;
+    setViewState(ViewState.success);
+  }
+  setServicePackage(String package)async {
+    _servicePackage  = package;
+    setViewState(ViewState.success);
+  }
+
+  setServiceDuration(String duration)async {
+    _serviceDuration  = duration;
     setViewState(ViewState.success);
   }
 
@@ -233,7 +264,7 @@ class AccountViewModel extends BaseViewModel {
      return image;
   }
 
-Future<void> deleteUser() async {
+  Future<void> deleteUser() async {
    
     await StorageHandler.clearCache();
     setViewState(ViewState.success);
@@ -284,6 +315,11 @@ Future<void> deleteUser() async {
   String get address => _address;
   String get location => _userLocation;
   String get agentName => _agentName;
+  String get serviceId => _serviceId;
+  String get servicePrice => _servicePrice;
+  String get servicePackage => _servicePackage;
+  String get serviceDuration => _serviceDuration;
+  String get agentId2 => _agentId2;
 
   double get latitude => _latitude;
   bool get showPasswordStatus => _showPassword;

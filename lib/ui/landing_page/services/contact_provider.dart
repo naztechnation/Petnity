@@ -13,6 +13,7 @@ import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
+import '../../widgets/modals.dart';
 import 'review_screen.dart';
 import 'widgets/contact_top.dart';
 
@@ -94,12 +95,12 @@ class _ContactProviderState extends State<ContactProvider> {
         ),
       ),
       bottomNavigationBar: Container(
-      height: 220,
+      height: 320,
       color: Colors.grey.shade100,
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          Spacer(),
+          //Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -124,33 +125,33 @@ class _ContactProviderState extends State<ContactProvider> {
           const SizedBox(
             height: 20,
           ),
-          // Container(
-          //   padding: const EdgeInsets.symmetric(horizontal: 10),
-          //   height: 60,
-          //   decoration: BoxDecoration(
-          //       color: Colors.white, borderRadius: BorderRadius.circular(30)),
-          //   child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         CustomText(
-          //           textAlign: TextAlign.center,
-          //           maxLines: 2,
-          //           text: 'Fee',
-          //           weight: FontWeight.w600,
-          //           size: 14,
-          //           fontFamily: AppStrings.interSans,
-          //           color: Colors.black,
-          //         ),
-          //         CustomText(
-          //           textAlign: TextAlign.center,
-          //           maxLines: 2,
-          //           text: '\$129',
-          //           weight: FontWeight.w600,
-          //           size: 14,
-          //           color: Colors.black,
-          //         ),
-          //       ]),
-          // ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            height: 60,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(30)),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    text: 'Fee',
+                    weight: FontWeight.w600,
+                    size: 14,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    text: '${agent.servicePrice}',
+                    weight: FontWeight.w600,
+                    size: 14,
+                    color: Colors.black,
+                  ),
+                ]),
+          ),
           const SizedBox(
             height: 45,
           ),
@@ -159,7 +160,13 @@ class _ContactProviderState extends State<ContactProvider> {
             borderColor: Colors.white,
             borderRadius: 40,
             onPressed: () {
-              AppNavigator.pushAndStackPage(context, page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,time1: selectedTime1,time2: selectedTime2,));
+              if(selectedTime1 != 'Select Time' || selectedTime2 != 'Select Time') {
+              AppNavigator.pushAndStackPage(context, 
+              page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
+              time1: selectedTime1,time2: selectedTime2,));
+              }else{
+                Modals.showToast('please select time');
+              }
             },
             child: CustomText(
               textAlign: TextAlign.left,

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/account_models/agents_packages.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
@@ -61,6 +62,18 @@ class GalleryLoaded extends UserStates {
   const GalleryLoaded(this.galleryAgents);
   @override
   List<Object> get props => [galleryAgents];
+}
+
+class AgentPackagesLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class AgentPackagesLoaded extends UserStates {
+  final GetAgentsPackages packages;
+  const AgentPackagesLoaded(this.packages);
+  @override
+  List<Object> get props => [packages];
 }
 
 class UserNetworkErr extends UserStates {

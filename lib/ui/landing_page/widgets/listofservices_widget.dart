@@ -40,6 +40,8 @@ class ListOfServices extends StatelessWidget {
                       '${user.services[index].name}', AppImages.dogWalk, () {
                     Provider.of<AccountViewModel>(context, listen: false)
                         .setSelectedService(user.services[index].name!);
+                         Provider.of<AccountViewModel>(context, listen: false)
+                                  .setServiceId(user.services[index].id.toString());
                     AppNavigator.pushAndStackPage(context,
                         page: ServiceProvidersDetails(
                           petProvider: '${user.services[index].name}',

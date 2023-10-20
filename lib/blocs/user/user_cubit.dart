@@ -142,4 +142,29 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+  Future<void> getAgentPackages({ required String agentId, required String serviceId}) async {
+    try {
+      emit(AgentPackagesLoading());
+
+      final packages = await userRepository.getAgentPackages(agentId: agentId, serviceId: serviceId
+          
+          );
+       await viewModel.setAgentPackages(agentPackage:packages);
+ 
+      emit(AgentPackagesLoaded(packages));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 }

@@ -1,5 +1,6 @@
  
  
+import '../../../model/account_models/agents_packages.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
@@ -15,6 +16,7 @@ abstract class UserRepository {
     Future<GetServiceTypes> getServiceTypes(); 
     Future<GetReviews> getReviews({required String userId}); 
     Future<GalleryAgents> getGallery({required String userId}); 
+    Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
  Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
 
 }

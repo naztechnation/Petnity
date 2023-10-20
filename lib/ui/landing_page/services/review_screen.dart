@@ -70,7 +70,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                             children: [
                               TextEditView(
                                 controller: TextEditingController(
-                                  text: 'Basic',
+                                  text: Provider.of<AccountViewModel>(context, listen: false).servicePackage,
                                 ),
                                 borderRadius: 30,
                                 readOnly: true,
@@ -85,7 +85,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                               ),
                               TextEditView(
                                 controller: TextEditingController(
-                                  text: 'Less than a Week',
+                                  text: Provider.of<AccountViewModel>(context, listen: false).serviceDuration,
                                 ),
                                 borderRadius: 30,
                                 readOnly: true,
@@ -95,14 +95,14 @@ class _ReviewScreenState extends State<ReviewScreen> {
                                 isDense: true,
                                 textViewTitle: 'Duration',
                                 suffixIcon: Container(
-                                  width: 80,
+                                  width: 130,
                                   alignment: Alignment.centerRight,
                                   child: Padding(
                                     padding: const EdgeInsets.only(right: 12.0),
                                     child: CustomText(
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
-                                      text: '\$450',
+                                      text: Provider.of<AccountViewModel>(context, listen: false).servicePrice,
                                       weight: FontWeight.w500,
                                       size: 14,
                                       fontFamily: AppStrings.montserrat,
@@ -225,7 +225,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                     CustomText(
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      text: '\$129',
+                      text: Provider.of<AccountViewModel>(context, listen: false).servicePrice,
                       weight: FontWeight.w600,
                       size: 14,
                       color: Colors.black,

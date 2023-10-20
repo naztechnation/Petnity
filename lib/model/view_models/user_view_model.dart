@@ -3,6 +3,7 @@
 import 'package:petnity/model/user_models/gallery_data.dart';
 
 import '../../res/enum.dart';
+import '../account_models/agents_packages.dart';
 import '../user_models/reviews_data.dart';
 import '../user_models/service_provider_lists.dart';
 import '../user_models/service_type.dart';
@@ -11,6 +12,7 @@ import 'base_viewmodel.dart';
 class UserViewModel extends BaseViewModel {
    
    List<ServiceTypes> _services = [];
+   List<Packages> _packages = [];
    List<Agents> _agents = [];
    List<Reviews> _reviews = [];
    List<GalleryElements> _gallery = [];
@@ -25,6 +27,11 @@ class UserViewModel extends BaseViewModel {
   }
    Future<void> setAgentDetails({required List<Agents> agents}) async {
     _agents = agents;
+    setViewState(ViewState.success);
+  }
+
+   Future<void> setAgentPackages({required GetAgentsPackages agentPackage}) async {
+    _packages = agentPackage.packages ?? [];
     setViewState(ViewState.success);
   }
   Future<void> emptyReviews() async {
@@ -53,6 +60,7 @@ class UserViewModel extends BaseViewModel {
 
   List<ServiceTypes> get services => _services;
   List<Agents> get agents => _agents;
+  List<Packages> get packages => _packages;
   List<Reviews> get reviews => _reviews;
   List<GalleryElements> get gallery => _gallery;
   bool get reviewStatus => _reviewStatus;

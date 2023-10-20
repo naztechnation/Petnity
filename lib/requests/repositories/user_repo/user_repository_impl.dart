@@ -1,4 +1,6 @@
  
+import 'package:petnity/model/account_models/agents_packages.dart';
+
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
@@ -58,4 +60,14 @@ class UserRepositoryImpl implements UserRepository {
      });
     return GalleryAgents.fromJson(map);
   }
+
+  @override
+  Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId}) async{
+     
+    final map = await Requests().get(AppStrings.getAgentPackagesUrl(agentId,serviceId), headers: {
+      'Authorization': AppStrings.token,
+     });
+    return GetAgentsPackages.fromJson(map);
+  }
+
 }

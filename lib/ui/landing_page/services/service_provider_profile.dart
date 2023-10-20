@@ -18,6 +18,7 @@ import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/profile_image.dart';
+import 'agent_packages.dart';
 import 'pet_sellers.dart/pet_on_sale.dart';
 import 'pet_trainers/training_packages.dart';
 import 'widgets/gallery_rating_section.dart';
@@ -42,8 +43,11 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
     return Future.value(false);
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+     
     return WillPopScope(
       onWillPop: onBackPress,
 
@@ -201,6 +205,10 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         onPressed: () {
                           Provider.of<AccountViewModel>(context, listen: false)
                                   .setAgentName(widget.agents!.name ?? '');
+
+                                  Provider.of<AccountViewModel>(context, listen: false)
+                                  .setAgentId(widget.agents!.id.toString());
+                                 
                           openServices(
                               Provider.of<AccountViewModel>(context, listen: false)
                                   .selectedService.toLowerCase(),
@@ -252,13 +260,14 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
       case '':
         break;
       case 'dog walkers':
-        AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
+        AppNavigator.pushAndStackPage(context, page: PackagesScreen(serviceId: Provider.of<AccountViewModel>(context, listen: false).serviceId, agentId: Provider.of<AccountViewModel>(context, listen: false).agentId2,));
 
         break;
       case 'pet date':
         break;
       case 'dog sitters':
-        AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
+               AppNavigator.pushAndStackPage(context, page: PackagesScreen(serviceId: Provider.of<AccountViewModel>(context, listen: false).serviceId, agentId: Provider.of<AccountViewModel>(context, listen: false).agentId2,));
+
         break;
       case 'trainer':
         AppNavigator.pushAndStackPage(context, page: TrainingScreen());
