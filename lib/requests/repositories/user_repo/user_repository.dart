@@ -18,7 +18,7 @@ abstract class UserRepository {
     Future<GetReviews> getReviews({required String userId}); 
     Future<GalleryAgents> getGallery({required String userId}); 
     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
-    Future<PaymentResponse> confirmPayment({required String username, required String agentId,}); 
+    Future<PaymentResponse> confirmPayment({required String username, required String agentId, required String purchaseId}); 
  Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
 
 }

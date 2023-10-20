@@ -72,10 +72,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<PaymentResponse> confirmPayment({required String username, required String agentId}) async{
+  Future<PaymentResponse> confirmPayment({required String username, required String agentId, required String purchaseId, }) async{
      
-    final map = await Requests().get(AppStrings.confirmPaymentUrl(username,agentId), headers: {
+    final map = await Requests().post(AppStrings.confirmPaymentUrl(username,agentId),
+    body: {
+          "purchase_id": purchaseId
+        },
+     headers: {
       'Authorization': AppStrings.token,
+      
      });
     return PaymentResponse.fromJson(map);
   }

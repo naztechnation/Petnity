@@ -167,11 +167,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> confirmPayment({ required String agentId, required String username}) async {
+  Future<void> confirmPayment({ required String agentId, required String username,  required String purchaseId}) async {
     try {
       emit(ConfirmPaymentLoading());
 
-      final payment = await userRepository.confirmPayment(agentId: agentId, username: username
+      final payment = await userRepository.confirmPayment(agentId: agentId, username: username, purchaseId: purchaseId
           
           );
       

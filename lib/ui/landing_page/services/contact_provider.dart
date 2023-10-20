@@ -37,6 +37,7 @@ class _ContactProviderState extends State<ContactProvider> {
   @override
   Widget build(BuildContext context) {
     final agent = Provider.of<AccountViewModel>(context, listen: false);
+    agent.getUsername();
     return Scaffold(
       body: Container(
         height: screenSize(context).height,
@@ -164,7 +165,7 @@ class _ContactProviderState extends State<ContactProvider> {
               if(selectedTime1 != 'Select Time' || selectedTime2 != 'Select Time') {
               AppNavigator.pushAndStackPage(context, 
               page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
-              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice));
+              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice, agentId: agent.agentId2,username: agent.username,));
               }else{
                 Modals.showToast('please select time');
               }

@@ -38,7 +38,7 @@ class AppStrings {
 
 
   static   String otpUrl(String url) => '${_baseUrl}$url';
-  static   String verifyCodeUrl(String username) => '${_baseUrl}auth/resend-code/$username';
+  static   String verifyCodeUr(String username) => '${_baseUrl}auth/resend-code/$username';
   static   String getServiceProvidersList(String serviceId) => '${_baseUrl}users/get-service-agents/$serviceId';
   static   String verifyUserProfileUrl(String username) => '${_baseUrl}auth/verify-profile/$username';
   
@@ -48,7 +48,7 @@ class AppStrings {
   static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';
   static   String getGalleryUrl(String userId) => '${_baseUrl}users/get-gallery-elements/$userId';
-  static   String confirmPaymentUrl(String username, String agentId) => '${_baseUrl}/order/order-payment/$username/1$agentId';
+  static   String confirmPaymentUrl(String username, String agentId) => '${_baseUrl}order/order-payment/$username/$agentId';
   static   String getAgentPackagesUrl(String agentId, String serviceId) => '${_baseUrl}users/get-agent-service-packages/$agentId/$serviceId';
   static   String selectPetTypeUrl(String agentId) => '${_baseUrl}auth/select-pet-types/$agentId';
   static   String selectServiceTypeUrl(String agentId) => '${_baseUrl}auth/select-service-types/$agentId';
