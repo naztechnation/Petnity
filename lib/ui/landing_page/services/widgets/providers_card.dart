@@ -283,7 +283,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
               ],
             ),

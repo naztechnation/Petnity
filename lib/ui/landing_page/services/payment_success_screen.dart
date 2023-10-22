@@ -3,18 +3,23 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/ui/landing_page/landing_screen.dart';
 import 'package:petnity/ui/landing_page/services/track_services/track_services.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
+import '../../../utils/app_utils.dart';
 import '../../../utils/navigator/page_navigator.dart';
-import '../../widgets/back_button.dart';
+
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
-  const PaymentSuccessScreen({super.key});
+  final String txId;
+  const PaymentSuccessScreen({super.key, required this.txId});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,6 @@ class PaymentSuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-              backButton(context),
               SizedBox(
                 height: screenSize(context).height * 0.07,
               ),
@@ -69,7 +73,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                           textAlign: TextAlign.justify,
                           maxLines: 3,
                           text:
-                              'your  transaction for payment off \$345 successful. click on button below to track session',
+                              'your  transaction for payment off ₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)} successful. click on button below to track session',
                           weight: FontWeight.w500,
                           size: 16,
                           color: Colors.black,
@@ -100,7 +104,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                             CustomText(
                               textAlign: TextAlign.center,
                               maxLines: 2,
-                              text: '3243J46L46L',
+                              text: txId.toString(),
                               weight: FontWeight.w600,
                               size: 14,
                               color: Colors.black,
@@ -162,6 +166,23 @@ class PaymentSuccessScreen extends StatelessWidget {
                         color: Colors.white,
                       ),
                     ),
+                    const SizedBox(height: 40,),
+                    GestureDetector(
+                      onTap: (() {
+                        AppNavigator.pushAndReplacePage(context,
+                            page: LandingScreen());
+                      }),
+                      child: CustomText(
+                          textAlign: TextAlign.left,
+                          maxLines: 2,
+                          text: 'Home',
+                          weight: FontWeight.w600,
+                          size: 16,
+                          color: AppColors.lightSecondary,
+                        ),
+                    ),
+                    const SizedBox(height: 120,),
+
                   ],
                 ),
               ),

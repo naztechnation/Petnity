@@ -167,11 +167,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> confirmPayment({ required String agentId, required String username,  required String purchaseId}) async {
+  Future<void> confirmPayment({ required String purchaseId, required String username,  required String orderId}) async {
     try {
       emit(ConfirmPaymentLoading());
 
-      final payment = await userRepository.confirmPayment(agentId: agentId, username: username, purchaseId: purchaseId
+      final payment = await userRepository.confirmPayment(purchaseId: purchaseId, username: username, orderId: orderId
           
           );
       
@@ -185,6 +185,30 @@ class UserCubit extends Cubit<UserStates> {
           e is FileNotFoundException ||
           e is AlreadyRegisteredException) {
         emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+    Future<void> createOrder({ required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation}) async {
+    try {
+      emit(CreateOrderLoading());
+
+      final order = await userRepository.createOrder(packageId: packageId, username: username, pickupTime: pickupTime, dropOffTime: dropOffTime, pickUpLocation: pickUpLocation
+          
+          );
+      
+      emit(CreateOrderLoaded(order));
+    } on ApiException catch (e) {
+      emit(CreateOrderNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateOrderNetworkErr(e.toString()));
       } else {
         rethrow;
       }

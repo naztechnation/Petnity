@@ -38,6 +38,8 @@ class AccountViewModel extends BaseViewModel {
   String _aboutPet = '';
   String _userLocation = '';
   String _agentName = '';
+  String _orderId = '';
+  String _packageId = '';
 
   File? _imageURl;
 
@@ -65,6 +67,16 @@ class AccountViewModel extends BaseViewModel {
 
    setAgentName(String agentName)async {
     _agentName  = agentName;
+    setViewState(ViewState.success);
+  }
+
+  setOrderId(String id)async {
+    _orderId  = id;
+    setViewState(ViewState.success);
+  }
+
+   setPackageId(String id)async {
+    _packageId  = id;
     setViewState(ViewState.success);
   }
 
@@ -320,6 +332,8 @@ class AccountViewModel extends BaseViewModel {
   String get servicePackage => _servicePackage;
   String get serviceDuration => _serviceDuration;
   String get agentId2 => _agentId2;
+  String get orderId => _orderId;
+  String get packageId => _packageId;
 
   double get latitude => _latitude;
   bool get showPasswordStatus => _showPassword;

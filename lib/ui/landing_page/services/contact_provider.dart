@@ -165,7 +165,7 @@ class _ContactProviderState extends State<ContactProvider> {
               if(selectedTime1 != 'Select Time' || selectedTime2 != 'Select Time') {
               AppNavigator.pushAndStackPage(context, 
               page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
-              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice, agentId: agent.agentId2,username: agent.username,));
+              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice, orderId: agent.orderId,username: agent.username,));
               }else{
                 Modals.showToast('please select time');
               }

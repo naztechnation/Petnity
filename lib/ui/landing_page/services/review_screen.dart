@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:intl/intl.dart';
 import 'package:petnity/blocs/user/user_cubit.dart';
 import 'package:petnity/res/enum.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
@@ -18,22 +19,26 @@ import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../../utils/app_utils.dart';
+import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/loading_page.dart';
 import '../../widgets/modals.dart';
+import 'payment_success_screen.dart';
 
 class ReviewScreen extends StatelessWidget {
-  final String date1, date2, time1, time2, amount, agentId, username;
+  final String date1, date2, time1, time2, amount, orderId, username;
   const ReviewScreen(
       {super.key,
       required this.date1,
       required this.date2,
       required this.time1,
       required this.time2,
-      required this.amount, required this.agentId, required this.username});
+      required this.amount,
+      required this.orderId,
+      required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -46,21 +51,25 @@ class ReviewScreen extends StatelessWidget {
         date1: date1,
         date2: date2,
         time1: time1,
-        time2: time2, agentId: agentId, username: username,
+        time2: time2,
+        orderId: orderId,
+        username: username,
       ),
     );
   }
 }
 
 class Review extends StatefulWidget {
-  final String date1, date2, time1, time2, amount, agentId, username;
+  final String date1, date2, time1, time2, amount, orderId, username;
   const Review(
       {super.key,
       required this.date1,
       required this.date2,
       required this.time1,
       required this.time2,
-      required this.amount, required this.agentId, required this.username});
+      required this.amount,
+      required this.orderId,
+      required this.username});
 
   @override
   State<Review> createState() => _ReviewState();
@@ -84,13 +93,13 @@ class _ReviewState extends State<Review> {
     getEmail();
 
     _userCubit = context.read<UserCubit>();
-   
+
     transactionId = uuid.v1();
 
     super.initState();
   }
 
-  _handlePaymentInitialization() async {
+  _handlePaymentInitialization(String orderId) async {
     final Customer customer = Customer(email: email);
 
     final Flutterwave flutterwave = Flutterwave(
@@ -113,9 +122,9 @@ class _ReviewState extends State<Review> {
       txId = response.transactionId ?? '';
       if (txId != '') {
         String message = 'Payment Ref: ${response.txRef}';
-         
-        _userCubit.confirmPayment(agentId: widget.agentId, username: widget.username, purchaseId: txId);
-        
+
+        _userCubit.confirmPayment(
+            orderId: orderId, username: widget.username, purchaseId: txId);
       }
     } else {
       Modals.showToast('Unable to make payment Successfully.',
@@ -125,30 +134,65 @@ class _ReviewState extends State<Review> {
 
   @override
   Widget build(BuildContext context) {
+    final agent = Provider.of<AccountViewModel>(context, listen: false);
+
     return Scaffold(
       body: BlocConsumer<UserCubit, UserStates>(
           listener: (context, state) {},
           builder: (context, state) {
-            if (state is ConfirmPaymentLoading) {
+            if (state is ConfirmPaymentLoading || state is CreateOrderLoading) {
               return LoadingPage();
             } else if (state is UserNetworkErr) {
               return EmptyWidget(
                 title: 'Network error',
                 description: state.message,
-                onRefresh: () =>  _userCubit.confirmPayment(
-                  agentId: widget.agentId,
-                 username: widget.username, purchaseId: txId),
+                onRefresh: () => _userCubit.confirmPayment(
+                    orderId: widget.orderId,
+                    username: widget.username,
+                    purchaseId: txId),
               );
             } else if (state is UserNetworkErrApiErr) {
               return EmptyWidget(
                 title: 'Network error',
                 description: state.message,
-                onRefresh: () =>  _userCubit.confirmPayment(
-                  agentId: widget.agentId,
-                 username: widget.username, purchaseId: txId),
+                onRefresh: () => _userCubit.confirmPayment(
+                    orderId: widget.orderId,
+                    username: widget.username,
+                    purchaseId: txId),
+              );
+            } else if (state is CreateOrderNetworkErr) {
+              return EmptyWidget(
+                  title: 'Network error',
+                  description: state.message,
+                  onRefresh: () => _userCubit.createOrder(
+                      packageId: agent.packageId,
+                      username: widget.username,
+                      pickupTime: '${widget.date1} ${formatTime(widget.time1)}',
+                      dropOffTime:
+                          '${widget.date2} ${formatTime(widget.time2)}',
+                      pickUpLocation: agent.location));
+            } else if (state is CreateOrderNetworkErrApiErr) {
+              return EmptyWidget(
+                title: 'Network error',
+                description: state.message,
+                onRefresh: () => _userCubit.createOrder(
+                    packageId: agent.packageId,
+                    username: widget.username,
+                    pickupTime: '${widget.date1} ${formatTime(widget.time1)}',
+                    dropOffTime: '${widget.date2} ${formatTime(widget.time2)}',
+                    pickUpLocation: agent.location),
               );
             } else if (state is ConfirmPaymentLoaded) {
               Modals.showToast(state.packages.message ?? '');
+             Future.delayed(Duration(seconds: 2), (){
+               AppNavigator.pushAndReplacePage(context,
+                  page: PaymentSuccessScreen(
+                    txId: txId,
+                  ));
+             });
+            } else if (state is CreateOrderLoaded) {
+              _handlePaymentInitialization(
+                  state.createOrder.order!.id.toString());
             }
 
             return Stack(
@@ -166,7 +210,8 @@ class _ReviewState extends State<Review> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SafeArea(
-                            child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+                            child: SizedBox(
+                                height: (Platform.isAndroid) ? 30 : 0)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -197,7 +242,8 @@ class _ReviewState extends State<Review> {
                                   children: [
                                     TextEditView(
                                       controller: TextEditingController(
-                                        text: Provider.of<AccountViewModel>(context,
+                                        text: Provider.of<AccountViewModel>(
+                                                context,
                                                 listen: false)
                                             .servicePackage,
                                       ),
@@ -214,7 +260,8 @@ class _ReviewState extends State<Review> {
                                     ),
                                     TextEditView(
                                       controller: TextEditingController(
-                                        text: Provider.of<AccountViewModel>(context,
+                                        text: Provider.of<AccountViewModel>(
+                                                context,
                                                 listen: false)
                                             .serviceDuration,
                                       ),
@@ -229,7 +276,8 @@ class _ReviewState extends State<Review> {
                                         width: 130,
                                         alignment: Alignment.centerRight,
                                         child: Padding(
-                                          padding: const EdgeInsets.only(right: 12.0),
+                                          padding: const EdgeInsets.only(
+                                              right: 12.0),
                                           child: CustomText(
                                             textAlign: TextAlign.center,
                                             maxLines: 2,
@@ -246,7 +294,6 @@ class _ReviewState extends State<Review> {
                                   ],
                                 ),
                               ),
-                              // : SizedBox.shrink(),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -325,8 +372,7 @@ class _ReviewState extends State<Review> {
                                 textViewTitle: 'Pick up Location',
                               ),
                               SizedBox(
-        height: 250,
-
+                                height: 250,
                               )
                             ],
                           ),
@@ -340,70 +386,85 @@ class _ReviewState extends State<Review> {
                   left: 0,
                   right: 0,
                   child: Container(
-        height: 250,
-        color: Colors.grey.shade100,
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              height: 60,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(30)),
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      text: 'Fee',
-                      weight: FontWeight.w600,
-                      size: 14,
-                      fontFamily: AppStrings.interSans,
-                      color: Colors.black,
+                    height: 250,
+                    color: Colors.grey.shade100,
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomText(
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  text: 'Fee',
+                                  weight: FontWeight.w600,
+                                  size: 14,
+                                  fontFamily: AppStrings.interSans,
+                                  color: Colors.black,
+                                ),
+                                CustomText(
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  text:
+                                      '₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
+                                  weight: FontWeight.w600,
+                                  size: 14,
+                                  color: Colors.black,
+                                ),
+                              ]),
+                        ),
+                        const SizedBox(
+                          height: 45,
+                        ),
+                        ButtonView(
+                          color: AppColors.lightSecondary,
+                          borderColor: Colors.white,
+                          borderRadius: 40,
+                          onPressed: () {
+
+                            _userCubit.createOrder(
+                                packageId: agent.packageId,
+                                username: widget.username,
+                                pickupTime:
+                                    '${widget.date1} ${formatTime(widget.time1)}',
+                                dropOffTime:
+                                    '${widget.date2} ${formatTime(widget.time2)}',
+                                pickUpLocation: agent.location);
+                          },
+                          child: CustomText(
+                            textAlign: TextAlign.left,
+                            maxLines: 2,
+                            text: 'Make payment',
+                            weight: FontWeight.w600,
+                            size: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
-                    CustomText(
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      text:
-                          '₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
-                      weight: FontWeight.w600,
-                      size: 14,
-                      color: Colors.black,
-                    ),
-                  ]),
-            ),
-            const SizedBox(
-              height: 45,
-            ),
-            ButtonView(
-              color: AppColors.lightSecondary,
-              borderColor: Colors.white,
-              borderRadius: 40,
-              onPressed: () {
-                _handlePaymentInitialization();
-                // AppNavigator.pushAndStackPage(context,
-                //     page: PaymentSuccessScreen());
-              },
-              child: CustomText(
-                textAlign: TextAlign.left,
-                maxLines: 2,
-                text: 'Make payment',
-                weight: FontWeight.w600,
-                size: 16,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),)
+                  ),
+                )
               ],
             );
           }),
-      
     );
+  }
+
+  String formatTime(String time) {
+    // Replace non-breaking spaces with regular spaces
+    String inputTime = time.replaceAll(RegExp(r'[\sA-Za-z]'), '');
+    print(inputTime);
+
+    return inputTime;
   }
 }

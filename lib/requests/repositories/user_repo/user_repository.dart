@@ -2,6 +2,7 @@
  
 import '../../../model/account_models/agents_packages.dart';
 import '../../../model/account_models/confirm_payment.dart';
+import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
@@ -18,7 +19,8 @@ abstract class UserRepository {
     Future<GetReviews> getReviews({required String userId}); 
     Future<GalleryAgents> getGallery({required String userId}); 
     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
-    Future<PaymentResponse> confirmPayment({required String username, required String agentId, required String purchaseId}); 
- Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
+    Future<PaymentResponse> confirmPayment({required String username, required String purchaseId, required String orderId}); 
+    Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
+  Future<CreateOrder> createOrder({required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation});
 
 }

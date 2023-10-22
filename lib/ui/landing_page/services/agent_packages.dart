@@ -23,6 +23,7 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/loading_page.dart';
+import '../../widgets/modals.dart';
 
 
 
@@ -169,6 +170,7 @@ class _PackagesState extends State<PackagePage> {
                                   agent.setServicePrice('${packages[index].price}');
                                   agent.setServicePackage(packages[index].name ?? '');
                                   agent.setServiceDuration(packages[index].duration ?? '');
+                                  agent.setPackageId(packages[index].id.toString());
                                 AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
 
                                 },

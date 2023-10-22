@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../model/account_models/agents_packages.dart';
 import '../../model/account_models/confirm_payment.dart';
+import '../../model/user_models/create_order.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
@@ -89,6 +90,19 @@ class ConfirmPaymentLoaded extends UserStates {
   List<Object> get props => [packages];
 }
 
+class CreateOrderLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class CreateOrderLoaded extends UserStates {
+  final CreateOrder createOrder;
+  const CreateOrderLoaded(this.createOrder);
+  @override
+  List<Object> get props => [createOrder];
+}
+
+
 class UserNetworkErr extends UserStates {
   final String? message;
   const UserNetworkErr(this.message);
@@ -99,6 +113,20 @@ class UserNetworkErr extends UserStates {
 class UserNetworkErrApiErr extends UserStates {
   final String? message;
   const UserNetworkErrApiErr(this.message);
+  @override
+  List<Object> get props => [message!];
+}
+
+class CreateOrderNetworkErr extends UserStates {
+  final String? message;
+  const CreateOrderNetworkErr(this.message);
+  @override
+  List<Object> get props => [message!];
+}
+
+class CreateOrderNetworkErrApiErr extends UserStates {
+  final String? message;
+  const CreateOrderNetworkErrApiErr(this.message);
   @override
   List<Object> get props => [message!];
 }

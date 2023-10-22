@@ -46,6 +46,7 @@ class AppStrings {
   static const String logoutUrl = '${_baseUrl}auth/logout';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
   static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
+  static   String createOrder(String packageId,String username) => '${_baseUrl}order/create-order/$username/$packageId';  
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';
   static   String getGalleryUrl(String userId) => '${_baseUrl}users/get-gallery-elements/$userId';
   static   String confirmPaymentUrl(String username, String agentId) => '${_baseUrl}order/order-payment/$username/$agentId';
@@ -55,9 +56,9 @@ class AppStrings {
   static String petHealthStatusUrl({String? petId}) => '${_baseUrl}pets/add-health-issue/$petId';
   static String petAlergeyDataUrl({String? petId = '2'}) => '${_baseUrl}pets/add-allergies/$petId';
   static   String petHealthUrl({required url}) =>'${_baseUrl+url}';
-   static String registerUserPetProfileUrl({required username}) =>
+  static String registerUserPetProfileUrl({required username}) =>
       '${_baseUrl}pets/add-pet/$username';
-     static String registerServiceProviderProfileUrl({required username}) =>
+  static String registerServiceProviderProfileUrl({required username}) =>
       '${_baseUrl}auth/create-agent/$username'; 
  
 }
