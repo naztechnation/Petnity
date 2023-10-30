@@ -263,4 +263,29 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+    Future<void> productDetails(
+      {required String productId}
+      ) async {
+    try {
+      emit(ProductDetailsLoading());
+
+      final shoppingList=
+          await userRepository.productDetails(productId: productId);
+
+      emit(ProductDetailsLoaded(shoppingList)); 
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

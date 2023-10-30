@@ -1,200 +1,248 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
+import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/landing_page/shop_screen/widgets/review_widget.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/notification_icon.dart';
+import 'package:provider/provider.dart';
 
-class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({super.key});
+import '../../../blocs/user/user.dart';
+import '../../../model/user_models/products_detail.dart';
+import '../../../model/view_models/user_view_model.dart';
+import '../../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../widgets/loading_page.dart';
+import '../../widgets/modals.dart';
+
+class ProductDetailScreen extends StatelessWidget {
+  final String productId;
+  const ProductDetailScreen(this.productId);
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: ProductDetail(
+        productId: productId,
+      ),
+    );
+  }
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class ProductDetail extends StatefulWidget {
+  final String productId;
+
+  const ProductDetail({super.key, required this.productId});
+
+  @override
+  State<ProductDetail> createState() =>
+      _ProductDetailState(productId: productId);
+}
+
+class _ProductDetailState extends State<ProductDetail> {
+  final String productId;
+
+  late UserCubit _userCubit;
+
+  Product? _products;
+
+  _ProductDetailState({required this.productId});
+
+  @override
+  void initState() {
+    _userCubit = context.read<UserCubit>();
+
+    _userCubit.productDetails(productId: productId);
+    super.initState();
+  }
+
   var count = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFFF2F6FF),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        height: screenSize(context).height * .08,
-        padding: EdgeInsets.all(5),
-        child: Row(
-          children: [
-            Container(
-              width: screenSize(context).width * .3,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Center(
-                child: Text(
-                  '\$45',
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-            Container(
-              width: screenSize(context).width * .6,
-              child: ButtonView(
-                  onPressed: () {
-                    Navigator.pushNamed(context, 'cartScreen');
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text('Add to cart'), Icon(Icons.shopping_cart)],
-                  )),
-            )
-          ],
-        ),
-      ),
-      appBar: PreferredSize(
-        preferredSize: screenSize(context) * .08,
-        child: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: InkWell(
-              child: ImageView.svg(AppImages.backButton),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          iconTheme: IconThemeData(color: Colors.black),
-          actions: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              child: NotificationIcon(
-                  icon: ImageView.svg(
-                    AppImages.cartIcon,
-                    width: 30,
-                  ),
-                  nun_of_notifications: 3),
-            ),
-            Container(
-              width: 20,
-            )
-          ],
-        ),
-      ),
-      body: Container(
-        height: screenSize(context).height * .9,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: screenSize(context).height * .15,
-                width: screenSize(context).width * .4,
-                margin: EdgeInsets.symmetric(
-                    horizontal: screenSize(context).width * .3),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(AppImages.petDoctor),
-                  ),
-                ),
-              ),
-              Container(
-                width: screenSize(context).width * .2,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)),
+    return BlocConsumer<UserCubit, UserStates>(
+      listener: (context, state) {
+        if (state is ProductDetailsLoaded) {
+          if (state.productDetails.status!) {
+            _products = state.productDetails.product;
+          } else {}
+        } else if (state is UserNetworkErrApiErr) {
+          Modals.showToast(state.message ?? '');
+        } else if (state is UserNetworkErr) {
+          Modals.showToast(state.message ?? '');
+        }
+      },
+      builder: (context, state) => (state is ProductDetailsLoading)
+          ? LoadingPage()
+          : Scaffold(
+              backgroundColor: Color(0xFFF2F6FF),
+              bottomNavigationBar: Container(
+                color: Colors.white,
+                height: 90,
                 padding: EdgeInsets.all(5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          count += 1;
-                        });
-                      },
-                      child: Icon(Icons.add),
-                    ),
-                    Text('$count'),
-                    InkWell(
-                      onTap: () {
-                        if (count > 0) {
-                          count -= 1;
-                          setState(() {
-                            count;
-                          });
-                        }
-                      },
-                      child: Icon(Icons.remove),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: screenSize(context).height * .618,
-                color: Colors.yellow.shade50,
-                padding: EdgeInsets.all(10),
-                child: Column(children: [
-                  Row(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal:20.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Smart Adult Feed',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 24),
+                       '${_products?.price ?? ''}',
+                        style: TextStyle(fontSize: 20, fontFamily: AppStrings.interSans, fontWeight: FontWeight.w800),
                       ),
-                      Text(
-                        'in stock',
-                        style: TextStyle(fontSize: 12),
-                      )
+                      ButtonView(
+                        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 15),
+                        expanded: false,
+                        borderRadius: 30,
+                          onPressed: () {
+                
+                           // Navigator.pushNamed(context, 'cartScreen');
+                          },
+                          child:Text('Make payment'),)
                     ],
                   ),
-                  RatingWidget(
-                    coloredStars: 4,
-                    size: 20,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    width: screenSize(context).width,
-                    child: Text(
-                      'About Product',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                ),
+              ),
+              appBar: PreferredSize(
+                preferredSize: screenSize(context) * .08,
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  leading: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: InkWell(
+                      child: ImageView.svg(AppImages.backButton),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
-                  Text(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                    textAlign: TextAlign.justify,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    width: screenSize(context).width,
-                    child: Text(
-                      'Review',
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  iconTheme: IconThemeData(color: Colors.black),
+                  
+                ),
+              ),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ImageView.network(
+                      _products?.image ?? '',
+                      height: 150,
                     ),
-                  ),
-                  Container(
-                    height: screenSize(context).height * .31,
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: 5,
-                        itemBuilder: (context, index) {
-                          return ReviewWidget();
-                        }),
-                  )
-                ]),
-              )
-            ],
-          ),
-        ),
-      ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: screenSize(context).width * .4,
+                      height: 45,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30)),
+                      padding: EdgeInsets.all(5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          
+                           InkWell(
+                            onTap: () {
+                              if (count > 0) {
+                                count -= 1;
+                                setState(() {
+                                  count;
+                                });
+                              }
+                            },
+                            child: Icon(Icons.remove),
+                          ),
+                          Text('$count',style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 20)),
+                         InkWell(
+                            onTap: () {
+                              setState(() {
+                                count += 1;
+                              });
+                            },
+                            child: Icon(Icons.add),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      color: Colors.yellow.shade50,
+                      padding: EdgeInsets.all(10),
+                      child: Column(children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              _products?.name ?? '',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 24),
+                            ),
+                            Text(
+                              (_products!.inStock!)
+                                  ? 'in stock'
+                                  : 'out of stock',
+                              style: TextStyle(fontSize: 12),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        RatingWidget(
+                          coloredStars: 4,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          width: screenSize(context).width,
+                          child: Text(
+                            'About Product',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        Text(
+                          _products?.description ?? '',
+                          textAlign: TextAlign.justify,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          width: screenSize(context).width,
+                          child: Text(
+                            'Review',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 5,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return ReviewWidget();
+                            })
+                      ]),
+                    )
+                  ],
+                ),
+              ),
+            ),
     );
   }
 }

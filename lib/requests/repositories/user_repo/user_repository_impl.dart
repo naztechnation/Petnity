@@ -1,6 +1,7 @@
  
 import 'package:petnity/model/account_models/agents_packages.dart';
 import 'package:petnity/model/account_models/confirm_payment.dart';
+import 'package:petnity/model/user_models/products_detail.dart';
 
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
@@ -123,4 +124,12 @@ class UserRepositoryImpl implements UserRepository {
     return ShoppingList.fromJson(map);
   }
 
+  @override
+  Future<ProductDetails> productDetails({required String productId})  async{
+     
+    final map = await Requests().get(AppStrings.productDetailsUrl(productId), headers: {
+      'Authorization': AppStrings.token,
+     });
+    return ProductDetails.fromJson(map);
+  }
 }

@@ -18,7 +18,6 @@ import '../../../model/user_models/shopping_lists.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
-import '../../widgets/filter_search_section.dart';
 import '../../widgets/text_edit_view.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -98,6 +97,9 @@ class _ShopState extends State<Shop> {
                               borderColor: Colors.white,
                               fillColor: Colors.white,
                               borderRadius: 30,
+                              textColor: Colors.grey,
+                              hintText: 'Search Products',
+                              labelText: 'Search Products',
                               isDense: true,
                               prefixIcon: const Padding(
                                 padding: EdgeInsets.all(15.0),
@@ -136,7 +138,7 @@ class _ShopState extends State<Shop> {
                                   onTap: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (_) {
-                                      return ProductDetailScreen();
+                                      return ProductDetailScreen(filteredProducts[index].id.toString());
                                     }));
                                   },
                                   child: Column(

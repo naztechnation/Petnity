@@ -6,6 +6,7 @@ import '../../model/account_models/confirm_payment.dart';
 import '../../model/user_models/create_order.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/order_list.dart';
+import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
@@ -126,6 +127,18 @@ class ShoppingListLoaded extends UserStates {
   const ShoppingListLoaded(this.shoppingList);
   @override
   List<Object> get props => [shoppingList];
+}
+
+class ProductDetailsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ProductDetailsLoaded extends UserStates {
+  final ProductDetails productDetails;
+  const ProductDetailsLoaded(this.productDetails);
+  @override
+  List<Object> get props => [productDetails];
 }
 
 
