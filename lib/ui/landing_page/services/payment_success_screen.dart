@@ -141,7 +141,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                       textAlign: TextAlign.left,
                       maxLines: 2,
                       text:
-                          'If session is rejected, funds would be refunded back to your card',
+                          'If session is rejected, funds would be refunded back to your card.',
                       weight: FontWeight.w500,
                       size: 14,
                       color: Colors.black,

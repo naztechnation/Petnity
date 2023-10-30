@@ -44,7 +44,9 @@ class AppStrings {
   
   static const String loginUrl = '${_baseUrl}auth/login';
   static const String logoutUrl = '${_baseUrl}auth/logout';
+  static const String shoppingList = '${_baseUrl}shop/get-products/1';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
+  static     String userOrders(String username) => '${_baseUrl}order/get-user-orders/$username';
   static   String uploadIdUrl(String agentId) => '${_baseUrl}auth/upload-id-photo/$agentId';
   static   String createOrder(String packageId,String username) => '${_baseUrl}order/create-order/$username/$packageId';  
   static   String getReviewUrl(String userId) => '${_baseUrl}users/get-reviews/$userId';

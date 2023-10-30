@@ -4,9 +4,11 @@ import 'package:petnity/model/account_models/confirm_payment.dart';
 
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
+import '../../../model/user_models/order_list.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
+import '../../../model/user_models/shopping_lists.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'user_repository.dart';
@@ -54,6 +56,7 @@ class UserRepositoryImpl implements UserRepository {
      });
     return GetReviews.fromJson(map);
   }
+
    @override
   Future<GalleryAgents> getGallery({required String userId}) async{
      
@@ -100,6 +103,24 @@ class UserRepositoryImpl implements UserRepository {
       
      });
     return CreateOrder.fromJson(map);
+  }
+
+   @override
+  Future<OrderList> orderList({required String username}) async{
+     
+    final map = await Requests().get(AppStrings.userOrders(username), headers: {
+      'Authorization': AppStrings.token,
+     });
+    return OrderList.fromJson(map);
+  }
+
+   @override
+  Future<ShoppingList> shoppingList() async{
+     
+    final map = await Requests().get(AppStrings.shoppingList, headers: {
+      'Authorization': AppStrings.token,
+     });
+    return ShoppingList.fromJson(map);
   }
 
 }

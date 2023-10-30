@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../model/dummy_models/trainers_data.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_strings.dart';
@@ -23,7 +22,6 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/loading_page.dart';
-import '../../widgets/modals.dart';
 
 
 
