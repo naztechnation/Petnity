@@ -6,7 +6,7 @@ class AppImages {
   static const String _baseUrl = 'assets/images/';
   
 
-  // static const icon = '${_baseUrl}icon.png';
+  static const appLogo = '${_baseUrl}app_logo.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
   static const logo = '${_baseUrl}logo2.jpg';
   static const line = '${_baseUrl}line.png';

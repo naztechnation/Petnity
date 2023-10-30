@@ -4,6 +4,7 @@ import 'package:petnity/model/user_models/shopping_lists.dart';
 import '../../model/account_models/agents_packages.dart';
 import '../../model/account_models/confirm_payment.dart';
 import '../../model/user_models/create_order.dart';
+import '../../model/user_models/create_payment_order.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/order_list.dart';
 import '../../model/user_models/products_detail.dart';
@@ -139,6 +140,18 @@ class ProductDetailsLoaded extends UserStates {
   const ProductDetailsLoaded(this.productDetails);
   @override
   List<Object> get props => [productDetails];
+}
+
+class ProductOrderLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ProductOrderLoaded extends UserStates {
+  final CreatePaymentOrder createPaymentOrder;
+  const ProductOrderLoaded(this.createPaymentOrder);
+  @override
+  List<Object> get props => [createPaymentOrder];
 }
 
 

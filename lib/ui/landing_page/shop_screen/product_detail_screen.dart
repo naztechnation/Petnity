@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../model/user_models/products_detail.dart';
+import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../widgets/loading_page.dart';
@@ -64,11 +65,19 @@ class _ProductDetailState extends State<ProductDetail> {
   var count = 0;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AccountViewModel>(context, listen: true);
+    user.getUsername();
+
     return BlocConsumer<UserCubit, UserStates>(
       listener: (context, state) {
         if (state is ProductDetailsLoaded) {
           if (state.productDetails.status!) {
             _products = state.productDetails.product;
+          } else {}
+        }else if (state is ProductOrderLoaded) {
+          if (state.createPaymentOrder.status!) {
+          Modals.showToast(state.createPaymentOrder.message ?? '');
+
           } else {}
         } else if (state is UserNetworkErrApiErr) {
           Modals.showToast(state.message ?? '');
@@ -76,7 +85,7 @@ class _ProductDetailState extends State<ProductDetail> {
           Modals.showToast(state.message ?? '');
         }
       },
-      builder: (context, state) => (state is ProductDetailsLoading)
+      builder: (context, state) => (state is ProductDetailsLoading || state is ProductOrderLoading)
           ? LoadingPage()
           : Scaffold(
               backgroundColor: Color(0xFFF2F6FF),
@@ -99,7 +108,10 @@ class _ProductDetailState extends State<ProductDetail> {
                         borderRadius: 30,
                           onPressed: () {
                 
-                           // Navigator.pushNamed(context, 'cartScreen');
+                           Modals.showAlertOptionDialog(context, title: 'Proceed to make payment', 
+                           message: 'Are you sure you want to Continue to make payment',onTap:  (){
+                            createOrder(context, user, productId, count.toString());
+                           });
                           },
                           child:Text('Make payment'),)
                     ],
@@ -120,7 +132,6 @@ class _ProductDetailState extends State<ProductDetail> {
                       },
                     ),
                   ),
-                  iconTheme: IconThemeData(color: Colors.black),
                   
                 ),
               ),
@@ -244,5 +255,16 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
             ),
     );
+  }
+
+   createOrder(BuildContext ctx, user, String productId, String quantity) {
+   
+      ctx.read<UserCubit>().createOrderPayment(
+          username: user.username,
+          quantity: quantity,
+          productId: productId,
+          );
+      FocusScope.of(ctx).unfocus();
+    
   }
 }

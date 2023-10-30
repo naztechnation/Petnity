@@ -14,7 +14,6 @@ class VideoCallSessionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        height: screenSize(context).height * .28,
         width: screenSize(context).width * .9,
         margin:
             EdgeInsets.symmetric(horizontal: screenSize(context).width * .04),
@@ -47,7 +46,6 @@ class VideoCallSessionWidget extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  // width: screenSize(context).width * .3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -95,31 +93,33 @@ class VideoCallSessionWidget extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 12, fontFamily: AppStrings.interSans)),
                 SizedBox(width: 5),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: Row(
-                    children: [
-                      FittedBox(
-                        child: Text('Video call',
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.blue,
-                                fontFamily: AppStrings.interSans)),
-                      ),
-                      FittedBox(
-                        child: Icon(
-                          Icons.video_call,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blue.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Video call',
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.blue,
+                          fontFamily: AppStrings.interSans)),
+                SizedBox(width: 12),
+
+                  Icon(
+                    Icons.video_call,
+                    color: Colors.blue,
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20,

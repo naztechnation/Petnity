@@ -309,7 +309,7 @@ class simpleAppbar extends StatelessWidget {
       title: Text(
         title,
         style:
-            TextStyle(fontFamily: AppStrings.montserrat, color: Colors.black),
+            TextStyle(fontFamily: AppStrings.interSans, color: Colors.black, fontWeight: FontWeight.w500),
       ),
       centerTitle: true,
       actions: [

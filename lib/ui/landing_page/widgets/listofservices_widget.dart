@@ -15,7 +15,6 @@ import '../services/services_providers_details.dart';
 class ListOfServices extends StatelessWidget {
   ListOfServices({super.key});
 
-  final AccountViewModel userViewModel = AccountViewModel();
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: true);

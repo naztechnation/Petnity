@@ -9,7 +9,7 @@ class TrackPurchase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5, // Number of tabs
+      length: 5,  
       child: Scaffold(
         backgroundColor: AppColors.lightBackground,
         body: Column(
@@ -42,7 +42,7 @@ class TrackPurchase extends StatelessWidget {
                       ),
                     ),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                   Container(
@@ -92,7 +92,6 @@ class TrackPurchase extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      // Customize the color as desired
                     ),
                   ),
                 ],

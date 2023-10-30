@@ -153,7 +153,9 @@ class _ShopState extends State<Shop> {
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                               child: ImageView.network(
+                                                
                                                 filteredProducts[index].image,
+                                                placeholder: AppImages.appLogo,
                                                 fit: BoxFit.contain,
                                                 color: randomColor,
                                               )),

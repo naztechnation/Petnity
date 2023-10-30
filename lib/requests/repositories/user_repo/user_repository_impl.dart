@@ -1,6 +1,7 @@
  
 import 'package:petnity/model/account_models/agents_packages.dart';
 import 'package:petnity/model/account_models/confirm_payment.dart';
+import 'package:petnity/model/user_models/create_payment_order.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 
 import '../../../model/user_models/create_order.dart';
@@ -90,7 +91,8 @@ class UserRepositoryImpl implements UserRepository {
     return PaymentResponse.fromJson(map);
   }
   @override
-  Future<CreateOrder> createOrder({required String packageId, required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation}) async{
+  Future<CreateOrder> createOrder({required String packageId, required String username,
+  required String pickupTime, required String dropOffTime, required String pickUpLocation}) async{
      
     final map = await Requests().post(AppStrings.createOrder(packageId,username),
     body: {
@@ -131,5 +133,22 @@ class UserRepositoryImpl implements UserRepository {
       'Authorization': AppStrings.token,
      });
     return ProductDetails.fromJson(map);
+  }
+
+  @override
+  Future<CreatePaymentOrder> createOrderPayment({required String username, 
+  required String productId, required String quantity}) async{
+     
+    final map = await Requests().post(AppStrings.createOrderPayment(username),
+    body: {
+          "product_id": productId,
+          "quantity": quantity,
+          
+        },
+     headers: {
+      'Authorization': AppStrings.token,
+      
+     });
+    return CreatePaymentOrder.fromJson(map);
   }
 }

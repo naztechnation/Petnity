@@ -100,103 +100,96 @@ class _HomePageScreenState extends State<HomePageScreen> {
             backgroundColor: AppColors.lightBackground,
             body: GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
-              child: BlocProvider<UserCubit>(
-                lazy: false,
-                create: (_) => UserCubit(
-                    userRepository: UserRepositoryImpl(),
-                    viewModel:
-                        Provider.of<UserViewModel>(context, listen: false)),
-                child: BlocConsumer<UserCubit, UserStates>(
-                  listener: (context, state) {
-                    if (state is ServicesLoaded) {
-                      if (state.services.status!) {
-                        service = _userCubit.viewModel.services;
-                      } else {}
-                    } else if (state is UserNetworkErrApiErr) {
-                    } else if (state is UserNetworkErr) {}
-                  },
-                  builder: (context, state) => Container(
-                    height: screenSize(context).height * .9,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: screenSize(context).width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Expanded(
-                                  child: Text(
-                                    'Hi $username,',
-                                    maxLines: 1,
-                                    softWrap: true,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        fontFamily: AppStrings.interSans),
-                                  ),
+              child: BlocConsumer<UserCubit, UserStates>(
+                listener: (context, state) {
+                  if (state is ServicesLoaded) {
+                    if (state.services.status!) {
+                      service = _userCubit.viewModel.services;
+                    } else {}
+                  } else if (state is UserNetworkErrApiErr) {
+                  } else if (state is UserNetworkErr) {}
+                },
+                builder: (context, state) => Container(
+                  height: screenSize(context).height * .9,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          width: screenSize(context).width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  'Hi $username,',
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily: AppStrings.interSans),
                                 ),
-                                Container(
-                                  child: Row(
-                                    children: [
-                                      ImageView.svg(AppImages.location),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        '${user.address.capitalizeFirstOfEach}',
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color:
-                                                Colors.black.withOpacity(0.7),
-                                            fontFamily: AppStrings.interSans),
-                                      )
-                                    ],
-                                  ),
+                              ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    ImageView.svg(AppImages.location),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      '${user.address.capitalizeFirstOfEach}',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color:
+                                              Colors.black.withOpacity(0.7),
+                                          fontFamily: AppStrings.interSans),
+                                    )
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'how is your pet doing?',
-                            style: TextStyle(
-                                fontFamily: AppStrings.interSans,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 22),
-                          ),
-                          FilterSearchView(
-                            showFilter: false,
-                            controller: search,
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          card(context, user),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            'For your pets',
-                            style: TextStyle(
-                                fontFamily: AppStrings.interSans,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 17),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          ListOfServices(),
-                          const SizedBox(
-                            height: 40,
-                          )
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'how is your pet doing?',
+                          style: TextStyle(
+                              fontFamily: AppStrings.interSans,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 22),
+                        ),
+                        FilterSearchView(
+                          showFilter: false,
+                          controller: search,
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        card(context, user),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          'For your pets',
+                          style: TextStyle(
+                              fontFamily: AppStrings.interSans,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 17),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ListOfServices(),
+                        const SizedBox(
+                          height: 40,
+                        )
+                      ],
                     ),
                   ),
                 ),

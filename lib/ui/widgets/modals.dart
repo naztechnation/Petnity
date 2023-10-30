@@ -47,13 +47,16 @@ class Modals {
   static Future<bool?> showAlertOptionDialog(context,
       {required String title,
       required String message,
+      required Function onTap,
       String buttonYesText = 'Yes',
       String buttonNoText = 'No'}) async {
     final data = await showDialog<bool>(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(title),
+          return AlertDialog(  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0), 
+                  ),
+            title: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), ),
             content: Text(message),
             actions: [
               TextButton(
@@ -62,7 +65,10 @@ class Modals {
               ),
               TextButton(
                 child: Text(buttonYesText),
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: (){
+                  onTap();
+                  Navigator.pop(context, false);
+                },
               )
             ],
           );
