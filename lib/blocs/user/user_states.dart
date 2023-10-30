@@ -112,7 +112,7 @@ class OrderListLoading extends UserStates {
 }
  
 class OrderListLoaded extends UserStates {
-  final OrderList orderList;
+  final UserOrderList orderList;
   const OrderListLoaded(this.orderList);
   @override
   List<Object> get props => [orderList];

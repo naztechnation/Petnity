@@ -23,7 +23,7 @@ abstract class UserRepository {
     Future<ShoppingList> shoppingList(); 
     Future<GetReviews> getReviews({required String userId}); 
     Future<GalleryAgents> getGallery({required String userId}); 
-    Future<OrderList> orderList({required String username}); 
+    Future<UserOrderList> orderList({required String username}); 
     Future<ProductDetails> productDetails({required String productId}); 
     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
     Future<PaymentResponse> confirmPayment({required String username, required String purchaseId, required String orderId}); 

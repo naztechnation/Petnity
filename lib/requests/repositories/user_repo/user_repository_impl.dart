@@ -109,12 +109,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
    @override
-  Future<OrderList> orderList({required String username}) async{
+  Future<UserOrderList> orderList({required String username}) async{
      
     final map = await Requests().get(AppStrings.userOrders(username), headers: {
       'Authorization': AppStrings.token,
      });
-    return OrderList.fromJson(map);
+    return UserOrderList.fromJson(map);
   }
 
    @override

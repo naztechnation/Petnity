@@ -313,4 +313,29 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+  Future<void> userOrderList(
+      {required String username,}
+      ) async {
+    try {
+      emit(OrderListLoading());
+
+      final orderList=
+          await userRepository.orderList(username:username, );
+
+      emit(OrderListLoaded(orderList)); 
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }
