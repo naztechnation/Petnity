@@ -41,7 +41,7 @@ class Order {
   String? dateCreated;
   int? profile;
   Agent? agent;
-  int? package;
+  Package? package;
 
   Order(
       {this.id,
@@ -78,8 +78,9 @@ class Order {
     paymentReleased = json['payment_released'];
     dateCreated = json['date_created'];
     profile = json['profile'];
-    agent = json['agent'];
-    package = json['package'];
+     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+   package =
+        json['package'] != null ? new Package.fromJson(json['package']) : null;
   }
 
   Map<String, dynamic> toJson() {

@@ -1,5 +1,7 @@
 
 
+import '../user_models/order_list.dart';
+
 class PaymentResponse {
   bool? status;
   String? message;
@@ -40,8 +42,8 @@ class Order {
   bool? paymentReleased;
   String? dateCreated;
   int? profile;
-  int? agent;
-  int? package;
+  Agent? agent;
+  Package? package;
 
   Order(
       {this.id,
@@ -78,8 +80,9 @@ class Order {
     paymentReleased = json['payment_released'];
     dateCreated = json['date_created'];
     profile = json['profile'];
-    agent = json['agent'];
-    package = json['package'];
+      agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+   package =
+        json['package'] != null ? new Package.fromJson(json['package']) : null;
   }
 
   Map<String, dynamic> toJson() {

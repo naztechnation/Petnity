@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/view_models/user_view_model.dart';
+import '../../../widgets/modals.dart';
 
 class OngoingServiceWidget extends StatefulWidget {
  final  UserOrders allOrders;
@@ -52,7 +53,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.package?.name  ?? '',
+                        allOrders.agent?.name  ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(allOrders.package?.service?.serviceType?.name ?? '',)
@@ -84,7 +85,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                   'Total time: ${services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '',allOrders.dropoffTime ?? '')}',
                   style: TextStyle(fontSize: 10),
                 ),
-                Text('Time remaining : 2hrs',
+                Text('Time remaining : ${services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '')} ',
                     style: TextStyle(fontSize: 10)),
                 SizedBox(width: 8),
               ],
@@ -93,8 +94,9 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               height: 20,
             ),
             LinearProgressIndicator(
-              value: 0.5,  
+              value: 1,  
               minHeight: 8,  
+              borderRadius: BorderRadius.circular(8),
               backgroundColor: Colors.grey[300],  
               valueColor: AlwaysStoppedAnimation<Color>(
                   Colors.blue), // Color of the progress line
@@ -103,7 +105,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               height: 10,
             ),
             Text(
-              'Contact dog walkers',
+              'Contact ${allOrders.package?.service?.serviceType?.name ?? ''}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
              SizedBox(
@@ -164,7 +166,9 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                   width: screenSize(context).width * .23,
                   child: ButtonView(
                     color: Colors.blue,
-                    onPressed: () {},
+                    onPressed: () {
+                      Modals.showToast(services.calculateRemainingProgressTime(allOrders.dropoffTime ?? '').toString());
+                    },
                     child: Text(widget.label),
                     borderRadius: 30,
                   ),

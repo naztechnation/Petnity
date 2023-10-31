@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:petnity/model/user_models/gallery_data.dart';
 
 import '../../res/enum.dart';
+import '../../ui/widgets/modals.dart';
 import '../account_models/agents_packages.dart';
 import '../user_models/order_list.dart';
 import '../user_models/reviews_data.dart';
@@ -78,20 +79,68 @@ class UserViewModel extends BaseViewModel {
   } 
 }
 
-double calculateTimeDifferenceInHours(String startTimeString, String endTimeString) {
+String calculateTimeDifferenceInHours(String startTimeString, String endTimeString) {
   try {
     final startTime = DateTime.parse(startTimeString);
     final endTime = DateTime.parse(endTimeString);
 
-    final difference = endTime.difference(startTime);
-    final hoursDifference = difference.inHours.toDouble();
+    final difference = startTime.isBefore(endTime)
+        ? endTime.difference(startTime)
+        : startTime.difference(endTime);
 
-    return hoursDifference;
+    final hoursDifference = (difference.inMinutes / 60).toDouble();
+
+    return '${hoursDifference.toStringAsFixed(1)} hr';
   } catch (e) {
     print('Error parsing the date strings: $e');
-    return 0.0; 
+    return '0.0';
   }
 }
+
+String calculateRemainingTimeInHours(String endTimeString) {
+  try {
+    final currentTime = DateTime.now();
+    final endTime = DateTime.parse(endTimeString);
+
+    if (endTime.isBefore(currentTime)) {
+      return 'Elapsed';
+    }
+
+    final difference = endTime.difference(currentTime);
+
+    final hours = difference.inMinutes / 60;
+
+    return '${hours.toStringAsFixed(1)} hrs';
+  } catch (e) {
+    print('Error parsing the date string: $e');
+    return 'Invalid date format';
+  }
+}
+
+double calculateRemainingProgressTime( String endTimeString) {
+  try {
+    final currentTime = DateTime.now();
+    final endTime = DateTime.parse(endTimeString);
+
+    if (endTime.isBefore(currentTime)) {
+      return 1.0;
+    }
+
+    final difference = endTime.difference(currentTime);
+
+    final remainingTimeInHours = difference.inMinutes / 60;
+    final percentageOfCompletion = remainingTimeInHours / (DateTime.parse(endTimeString).difference(DateTime.now()).inHours.toDouble());
+    //Modals.showToast(percentageOfCompletion.toString());
+    return percentageOfCompletion;
+  } catch (e) {
+    print('Error parsing the date strings: $e');
+    return 0.0;
+  }
+}
+
+
+
+
 
   List<ServiceTypes> get services => _services;
   List<Agents> get agents => _agents;
