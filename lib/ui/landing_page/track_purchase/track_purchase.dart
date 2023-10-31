@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/all_services.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/awaiting_services.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/rejected_services.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/ongoing_services.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
@@ -176,7 +172,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                             child: Tab(
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text('Awaiting Sessions'),
+                                child: Text('Rejected Services'),
                               ),
                             ),
                             decoration: BoxDecoration(
@@ -190,10 +186,10 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                       child: TabBarView(
                         children: [
                           AllServices(allOrders: allUserOrder,),
-                          OngoingServices(),
-                          PendingServices(),
-                          PendingServices(),
-                          AwaitingServices(),
+                           AllServices(allOrders: ongoingUserOrder,),
+                           AllServices(allOrders: pendingUserOrder,),
+                           AllServices(allOrders: completedUserOrder,),
+                           AllServices(allOrders: rejectedUserOrder,),
                           
                         ],
                       ),

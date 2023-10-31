@@ -23,6 +23,9 @@ class UserViewModel extends BaseViewModel {
   bool _reviewStatus = false;
   bool _galleryStatus = false;
 
+  double _totalHours = 0;
+  double _remainingHours = 0;
+
   Future<void> setOrderList({required UserOrderList orders}) async {
     _userOrder = orders;
     setViewState(ViewState.success);
@@ -90,7 +93,7 @@ String calculateTimeDifferenceInHours(String startTimeString, String endTimeStri
 
     final hoursDifference = (difference.inMinutes / 60).toDouble();
 
-    return '${hoursDifference.toStringAsFixed(1)} hr';
+    return '${hoursDifference.toStringAsFixed(1)}Hrs';
   } catch (e) {
     print('Error parsing the date strings: $e');
     return '0.0';
@@ -110,7 +113,7 @@ String calculateRemainingTimeInHours(String endTimeString) {
 
     final hours = difference.inMinutes / 60;
 
-    return '${hours.toStringAsFixed(1)} hrs';
+    return '${hours.toStringAsFixed(1)}Hrs';
   } catch (e) {
     print('Error parsing the date string: $e');
     return 'Invalid date format';
@@ -138,8 +141,57 @@ double calculateRemainingProgressTime( String endTimeString) {
   }
 }
 
+double calculateTimeDifference(String startTimeString, String endTimeString) {
+  try {
+    final startTime = DateTime.parse(startTimeString);
+    final endTime = DateTime.parse(endTimeString);
+
+    final difference = startTime.isBefore(endTime)
+        ? endTime.difference(startTime)
+        : startTime.difference(endTime);
+
+    final hoursDifference = (difference.inMinutes / 60).toDouble();
+
+    return hoursDifference;
+  } catch (e) {
+    print('Error parsing the date strings: $e');
+    return 0.0; 
+  }
+}
+
+double calculateTimeRemainingInHours(String endTimeString) {
+  try {
+    final currentTime = DateTime.now();
+    final endTime = DateTime.parse(endTimeString);
+
+    if (endTime.isBefore(currentTime)) {
+      return 0.0; // Time has already passed
+    }
+
+    final difference = endTime.difference(currentTime);
+    final hoursRemaining = difference.inMinutes / 60.0;
+
+    return hoursRemaining;
+  } catch (e) {
+    print('Error parsing the date string: $e');
+    return 0.0; // Return 0.0 for invalid dates or errors
+  }
+
+  
+}
 
 
+getProgressTime(String endTimeString){
+  double totalHours = calculateTimeDifference(DateTime.now().toIso8601String(), endTimeString);
+  double remainingHours = calculateTimeRemainingInHours(endTimeString);
+
+
+  _totalHours = totalHours;
+  _remainingHours = remainingHours;
+
+    setViewState(ViewState.success);
+    return _remainingHours / _totalHours;
+}
 
 
   List<ServiceTypes> get services => _services;

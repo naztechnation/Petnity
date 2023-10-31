@@ -4,6 +4,7 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../model/user_models/order_list.dart';
@@ -42,11 +43,10 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CircleAvatar(
-                  backgroundImage: AssetImage(AppImages.dogsPic),
-                  radius: 30,
-                ),
-                const SizedBox(width: 12,),
+                 
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: ImageView.network(allOrders.agent?.picture, height: 50,)),
                 Container(
                   width: screenSize(context).width * .3,
                   child: Column(
@@ -94,7 +94,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               height: 20,
             ),
             LinearProgressIndicator(
-              value: 1,  
+              value: 1.0 - services.getProgressTime(allOrders.dropoffTime ?? ''),  
               minHeight: 8,  
               borderRadius: BorderRadius.circular(8),
               backgroundColor: Colors.grey[300],  
@@ -167,7 +167,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                   child: ButtonView(
                     color: Colors.blue,
                     onPressed: () {
-                      Modals.showToast(services.calculateRemainingProgressTime(allOrders.dropoffTime ?? '').toString());
+                      Modals.showToast('${1.0 - services.getProgressTime(allOrders.dropoffTime ?? '')}');
                     },
                     child: Text(widget.label),
                     borderRadius: 30,
