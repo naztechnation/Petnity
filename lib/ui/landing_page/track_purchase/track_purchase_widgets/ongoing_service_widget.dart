@@ -4,17 +4,34 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:provider/provider.dart';
 
-class OngoinServiceWidget extends StatelessWidget {
+import '../../../../model/user_models/order_list.dart';
+import '../../../../model/view_models/user_view_model.dart';
+
+class OngoingServiceWidget extends StatefulWidget {
+ final  UserOrders allOrders;
+
   final String label;
-  OngoinServiceWidget({this.label = 'Details'});
+  OngoingServiceWidget({this.label = 'Details', required this.allOrders});
+
+  @override
+  State<OngoingServiceWidget> createState() => _OngoingServiceWidgetState(allOrders);
+}
+
+class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
+
+ final  UserOrders allOrders;
+
+  _OngoingServiceWidgetState(this.allOrders);
 
   @override
   Widget build(BuildContext context) {
+    final services = Provider.of<UserViewModel>(context, listen: false);
+
     return Card(
       elevation: 0,
       child: Container(
-        height: screenSize(context).height * .3,
         width: screenSize(context).width * .9,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
@@ -26,23 +43,24 @@ class OngoinServiceWidget extends StatelessWidget {
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage(AppImages.dogsPic),
-                  radius: 40,
+                  radius: 30,
                 ),
+                const SizedBox(width: 12,),
                 Container(
                   width: screenSize(context).width * .3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Dera Jessica',
+                        allOrders.package?.name  ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text('Dog Walking')
+                      Text(allOrders.package?.service?.serviceType?.name ?? '',)
                     ],
                   ),
                 ),
                 Container(
-                  // width: screenSize(context).width * .3,
+                   width: screenSize(context).width * .3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -50,23 +68,23 @@ class OngoinServiceWidget extends StatelessWidget {
                         'Drop off time',
                         style: TextStyle(fontSize: 10),
                       ),
-                      Text('4pm')
+                      Text( services.formatDateTimeToAMPM(allOrders.dropoffTime ?? '')   )
                     ],
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Time per Sitting: 3hrs',
+                  'Total time: ${services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '',allOrders.dropoffTime ?? '')}',
                   style: TextStyle(fontSize: 10),
                 ),
-                Text('Time remaining per sitting: 2hrs',
+                Text('Time remaining : 2hrs',
                     style: TextStyle(fontSize: 10)),
                 SizedBox(width: 8),
               ],
@@ -75,9 +93,9 @@ class OngoinServiceWidget extends StatelessWidget {
               height: 20,
             ),
             LinearProgressIndicator(
-              value: 0.5, // Represents the progress value (from 0.0 to 1.0)
-              minHeight: 8, // Adjust the height of the progress line
-              backgroundColor: Colors.grey[300], // Color of the remaining line
+              value: 0.5,  
+              minHeight: 8,  
+              backgroundColor: Colors.grey[300],  
               valueColor: AlwaysStoppedAnimation<Color>(
                   Colors.blue), // Color of the progress line
             ),
@@ -85,8 +103,11 @@ class OngoinServiceWidget extends StatelessWidget {
               height: 10,
             ),
             Text(
-              'Contact dog walker',
+              'Contact dog walkers',
               style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+             SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,7 +165,7 @@ class OngoinServiceWidget extends StatelessWidget {
                   child: ButtonView(
                     color: Colors.blue,
                     onPressed: () {},
-                    child: Text(label),
+                    child: Text(widget.label),
                     borderRadius: 30,
                   ),
                 ),

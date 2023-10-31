@@ -432,6 +432,9 @@ class _ReviewState extends State<Review> {
                           borderRadius: 40,
                           onPressed: () {
 
+                            // Modals.showToast('${widget.date1} ${formatTime(widget.time1)}');
+                            // Modals.showToast('${widget.date2} ${formatTime(widget.time2)}');
+
                             _userCubit.createOrder(
                                 packageId: agent.packageId,
                                 username: widget.username,

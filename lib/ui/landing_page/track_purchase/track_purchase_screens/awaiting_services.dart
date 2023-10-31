@@ -3,8 +3,8 @@ import 'package:petnity/res/app_constants.dart';
 import '../track_purchase_widgets/pet_Walking_session_widget.dart';
 import '../track_purchase_widgets/video_call_session_widget.dart';
 
-class AwaitingSession extends StatelessWidget {
-  const AwaitingSession({super.key});
+class AwaitingServices extends StatelessWidget {
+  const AwaitingServices({super.key});
 
   @override
   Widget build(BuildContext context) {

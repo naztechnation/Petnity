@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../model/view_models/user_view_model.dart';
@@ -7,8 +6,6 @@ import '../../utils/exceptions.dart';
 import 'user_states.dart';
 
 class UserCubit extends Cubit<UserStates> {
-
-
   UserCubit({required this.userRepository, required this.viewModel})
       : super(const InitialState());
   final UserRepository userRepository;
@@ -16,16 +13,15 @@ class UserCubit extends Cubit<UserStates> {
 
   Future<void> getServiceProviderList({
     required String serviceId,
-    
   }) async {
     try {
       emit(ServiceProviderListLoading());
 
       final agents = await userRepository.getServiceProviderList(
         serviceId: serviceId,
-       );
+      );
 
-       await viewModel.setAgentDetails(agents:agents.agents ?? []);
+      await viewModel.setAgentDetails(agents: agents.agents ?? []);
 
       emit(ServiceProviderListLoaded(agents));
     } on ApiException catch (e) {
@@ -42,16 +38,14 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
-  
+
   Future<void> getServiceTypes() async {
     try {
       emit(ServiceProviderListLoading());
 
-      final service = await userRepository.getServiceTypes(
-       );
+      final service = await userRepository.getServiceTypes();
 
-       await viewModel.setServicesList(services:service.serviceTypes ?? []);
-
+      await viewModel.setServicesList(services: service.serviceTypes ?? []);
 
       emit(ServicesLoaded(service));
     } on ApiException catch (e) {
@@ -69,13 +63,16 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> serviceProvided({required List<String> services,required String username, required String agentId}) async {
+  Future<void> serviceProvided(
+      {required List<String> services,
+      required String username,
+      required String agentId}) async {
     try {
       emit(ServiceProviderListLoading());
 
-      final user = await userRepository.serviceProvided(services: services, username: username, agentId: agentId
-          );
- 
+      final user = await userRepository.serviceProvided(
+          services: services, username: username, agentId: agentId);
+
       emit(ServiceProviderListLoaded(user));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -92,15 +89,13 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> getReviews({ required String userId}) async {
+  Future<void> getReviews({required String userId}) async {
     try {
       emit(ReviewLoading());
 
-      final reviews = await userRepository.getReviews(
-         userId: userId
-          );
-       await viewModel.setReviews(reviews:reviews);
- 
+      final reviews = await userRepository.getReviews(userId: userId);
+      await viewModel.setReviews(reviews: reviews);
+
       emit(ReviewLoaded(reviews));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -117,15 +112,13 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> getGallery({ required String userId}) async {
+  Future<void> getGallery({required String userId}) async {
     try {
       emit(GalleryLoading());
 
-      final gallery = await userRepository.getGallery(
-         userId: userId
-          );
-       await viewModel.setGallery(gallery:gallery);
- 
+      final gallery = await userRepository.getGallery(userId: userId);
+      await viewModel.setGallery(gallery: gallery);
+
       emit(GalleryLoaded(gallery));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -142,15 +135,15 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> getAgentPackages({ required String agentId, required String serviceId}) async {
+  Future<void> getAgentPackages(
+      {required String agentId, required String serviceId}) async {
     try {
       emit(AgentPackagesLoading());
 
-      final packages = await userRepository.getAgentPackages(agentId: agentId, serviceId: serviceId
-          
-          );
-       await viewModel.setAgentPackages(agentPackage:packages);
- 
+      final packages = await userRepository.getAgentPackages(
+          agentId: agentId, serviceId: serviceId);
+      await viewModel.setAgentPackages(agentPackage: packages);
+
       emit(AgentPackagesLoaded(packages));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -167,14 +160,16 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> confirmPayment({ required String purchaseId, required String username,  required String orderId}) async {
+  Future<void> confirmPayment(
+      {required String purchaseId,
+      required String username,
+      required String orderId}) async {
     try {
       emit(ConfirmPaymentLoading());
 
-      final payment = await userRepository.confirmPayment(purchaseId: purchaseId, username: username, orderId: orderId
-          
-          );
-      
+      final payment = await userRepository.confirmPayment(
+          purchaseId: purchaseId, username: username, orderId: orderId);
+
       emit(ConfirmPaymentLoaded(payment));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -191,14 +186,22 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> createOrder({ required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation}) async {
+  Future<void> createOrder(
+      {required String packageId,
+      required String username,
+      required String pickupTime,
+      required String dropOffTime,
+      required String pickUpLocation}) async {
     try {
       emit(CreateOrderLoading());
 
-      final order = await userRepository.createOrder(packageId: packageId, username: username, pickupTime: pickupTime, dropOffTime: dropOffTime, pickUpLocation: pickUpLocation
-          
-          );
-      
+      final order = await userRepository.createOrder(
+          packageId: packageId,
+          username: username,
+          pickupTime: pickupTime,
+          dropOffTime: dropOffTime,
+          pickUpLocation: pickUpLocation);
+
       emit(CreateOrderLoaded(order));
     } on ApiException catch (e) {
       emit(CreateOrderNetworkErrApiErr(e.message));
@@ -215,14 +218,13 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-
- Future<void> orderList(
-      {required String username,}) async {
+  Future<void> orderList({
+    required String username,
+  }) async {
     try {
       emit(OrderListLoading());
 
-      final userData=
-          await userRepository.orderList(username: username);
+      final userData = await userRepository.orderList(username: username);
 
       emit(OrderListLoaded(userData));
     } on ApiException catch (e) {
@@ -240,15 +242,13 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-   Future<void> shoppingList(
-      ) async {
+  Future<void> shoppingList() async {
     try {
       emit(ShoppingListLoading());
 
-      final shoppingList=
-          await userRepository.shoppingList();
+      final shoppingList = await userRepository.shoppingList();
 
-      emit(ShoppingListLoaded(shoppingList)); 
+      emit(ShoppingListLoaded(shoppingList));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {
@@ -264,16 +264,14 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> productDetails(
-      {required String productId}
-      ) async {
+  Future<void> productDetails({required String productId}) async {
     try {
       emit(ProductDetailsLoading());
 
-      final shoppingList=
+      final shoppingList =
           await userRepository.productDetails(productId: productId);
 
-      emit(ProductDetailsLoaded(shoppingList)); 
+      emit(ProductDetailsLoaded(shoppingList));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {
@@ -289,16 +287,21 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> createOrderPayment(
-      {required String username, required String productId, required String quantity,}
-      ) async {
+  Future<void> createOrderPayment({
+    required String username,
+    required String productId,
+    required String quantity,
+  }) async {
     try {
       emit(ProductOrderLoading());
 
-      final productOrder=
-          await userRepository.createOrderPayment(username:username, productId: productId, quantity: quantity,);
+      final productOrder = await userRepository.createOrderPayment(
+        username: username,
+        productId: productId,
+        quantity: quantity,
+      );
 
-      emit(ProductOrderLoaded(productOrder)); 
+      emit(ProductOrderLoaded(productOrder));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {
@@ -314,16 +317,20 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> userOrderList(
-      {required String username,}
-      ) async {
+  Future<void> userOrderList({
+    required String username,
+  }) async {
     try {
       emit(OrderListLoading());
 
-      final orderList=
-          await userRepository.orderList(username:username, );
+      final orderList = await userRepository.orderList(
+        username: username,
+      );
 
-      emit(OrderListLoaded(orderList)); 
+      await viewModel.setOrderList(orders: orderList);
+
+
+      emit(OrderListLoaded(orderList));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {

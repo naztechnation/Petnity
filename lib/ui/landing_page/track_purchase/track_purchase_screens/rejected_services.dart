@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_purchase_widget.dart';
 
-class OngoingPurchases extends StatelessWidget {
-  const OngoingPurchases({super.key});
+class PendingServices extends StatelessWidget {
+  const PendingServices({super.key});
 
   @override
   Widget build(BuildContext context) {

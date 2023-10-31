@@ -1,3 +1,5 @@
+import 'order_list.dart';
+
 class CreateOrder {
   bool? status;
   String? message;
@@ -38,7 +40,7 @@ class Order {
   bool? paymentReleased;
   String? dateCreated;
   int? profile;
-  int? agent;
+  Agent? agent;
   int? package;
 
   Order(
