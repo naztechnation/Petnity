@@ -82,7 +82,7 @@ class AppRoutes {
     kycScreenTwo: (context) => KycScreenTwo(),
     landingPage: (context) => LandingScreen(),
     serviceProviderLandingPage: (context) => ServiceProviderLandingPage(),
-    productDetailScreen: (context) => ProductDetailScreen('' ),
+    productDetailScreen: (context) => ProductDetailScreen('', '','' ),
     serviceProviderKycOneScreen: (context) => KycServiceScreenOne(),
 
     cartScreen: (context) => CartScreen(),
@@ -118,7 +118,7 @@ class AppRoutes {
         );
       case productDetailScreen:
         return MaterialPageRoute(
-          builder: (context) => ProductDetailScreen(''),
+          builder: (context) => ProductDetailScreen('', '', ''),
         );
       case serviceProviderHomePage:
         return MaterialPageRoute(

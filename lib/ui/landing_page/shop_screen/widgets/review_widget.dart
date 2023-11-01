@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 
+import '../../../../model/user_models/get_product_reviews.dart';
+
 class ReviewWidget extends StatelessWidget {
-  const ReviewWidget({super.key});
+  final ProductReviews reviews;
+  const ReviewWidget({super.key, required this.reviews,});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +23,10 @@ class ReviewWidget extends StatelessWidget {
                   backgroundImage: AssetImage(AppImages.catPic),
                 ),
                 title: Text('Andy Davies'),
-                subtitle: RatingWidget(coloredStars: 3),
+                subtitle: RatingWidget(coloredStars: reviews.rating!),
               ),
               Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                reviews.comment ?? '',
                 textAlign: TextAlign.justify,
               )
             ],

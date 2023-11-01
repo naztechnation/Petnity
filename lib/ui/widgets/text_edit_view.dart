@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../res/app_strings.dart';
 import 'custom_text.dart';
@@ -34,6 +35,7 @@ class TextEditView extends StatelessWidget {
   final Color? textColor;
   final Iterable<String>? autofillHints;
   final FocusNode? focusNode;
+   final List<TextInputFormatter>? inputFormatters;
   const TextEditView(
       {Key? key,
       this.onChanged,
@@ -64,7 +66,7 @@ class TextEditView extends StatelessWidget {
       this.focusNode,
       this.helperText,
       this.maxLength,
-      this.maxLines = 1, this.textViewTitle = ''})
+      this.maxLines = 1, this.textViewTitle = '', this.inputFormatters})
       : super(key: key);
 
   OutlineInputBorder _border(BuildContext context) => OutlineInputBorder(
@@ -104,6 +106,7 @@ class TextEditView extends StatelessWidget {
             autofocus: autofocus,
             obscureText: obscureText,
             maxLines: maxLines,
+            inputFormatters: inputFormatters,
             maxLength: maxLength,
             autofillHints: autofillHints,
             onFieldSubmitted: onFieldSubmitted,

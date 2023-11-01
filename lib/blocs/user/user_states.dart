@@ -3,9 +3,11 @@ import 'package:petnity/model/user_models/shopping_lists.dart';
 
 import '../../model/account_models/agents_packages.dart';
 import '../../model/account_models/confirm_payment.dart';
+import '../../model/user_models/confirm_shop_payment.dart';
 import '../../model/user_models/create_order.dart';
 import '../../model/user_models/create_payment_order.dart';
 import '../../model/user_models/gallery_data.dart';
+import '../../model/user_models/get_product_reviews.dart';
 import '../../model/user_models/order_list.dart';
 import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
@@ -152,6 +154,30 @@ class ProductOrderLoaded extends UserStates {
   const ProductOrderLoaded(this.createPaymentOrder);
   @override
   List<Object> get props => [createPaymentOrder];
+}
+
+class ConfirmShoppingOrderLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ConfirmShoppingOrderLoaded extends UserStates {
+  final ConfirmShopPayment confirmPaymentOrder;
+  const ConfirmShoppingOrderLoaded(this.confirmPaymentOrder);
+  @override
+  List<Object> get props => [confirmPaymentOrder];
+}
+
+class GetProductReviewsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class GetProductReviewsLoaded extends UserStates {
+  final GetProductReviews getAgentPayment;
+  const GetProductReviewsLoaded(this.getAgentPayment);
+  @override
+  List<Object> get props => [getAgentPayment];
 }
 
 

@@ -345,4 +345,63 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+  Future<void> confirmShoppingOrderPay({
+    required String username,
+    required String purchaseId,
+    required String shopOrderId,
+  }) async {
+    try {
+      emit(ConfirmShoppingOrderLoading());
+
+      final confirmOrder = await userRepository.confirmShoppingPayment(
+        username: username, purchaseId: purchaseId, shopOrderId: shopOrderId,
+      );
+
+       
+
+      emit(ConfirmShoppingOrderLoaded(confirmOrder));
+    } on ApiException catch (e) {
+      emit(CreateOrderNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateOrderNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> getProductReviews({
+    required String productId,
+     
+  }) async {
+    try {
+      emit(GetProductReviewsLoading());
+
+      final getProducts = await userRepository.getProductReviews(
+         productId: productId,
+      );
+
+       
+
+      emit(GetProductReviewsLoaded(getProducts));
+    } on ApiException catch (e) {
+      emit(CreateOrderNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateOrderNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

@@ -1,7 +1,9 @@
  
 import 'package:petnity/model/account_models/agents_packages.dart';
 import 'package:petnity/model/account_models/confirm_payment.dart';
+import 'package:petnity/model/user_models/confirm_shop_payment.dart';
 import 'package:petnity/model/user_models/create_payment_order.dart';
+import 'package:petnity/model/user_models/get_product_reviews.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 
 import '../../../model/user_models/create_order.dart';
@@ -150,5 +152,27 @@ class UserRepositoryImpl implements UserRepository {
       
      });
     return CreatePaymentOrder.fromJson(map);
+  }
+
+  @override
+  Future<ConfirmShopPayment> confirmShoppingPayment({required String username, required String purchaseId, required String shopOrderId}) async {
+    final map = await Requests().patch(AppStrings.confirmShoppingPaymentUrl(username: username, shopOrderId: shopOrderId),
+        body: {
+          "payment_id": purchaseId
+        },
+        headers: {
+          'Authorization': AppStrings.token,
+          "Content-type": "application/json"
+        });
+    return ConfirmShopPayment.fromJson(map);
+  }
+
+  @override
+  Future<GetProductReviews> getProductReviews({required String productId}) async{
+     
+    final map = await Requests().get(AppStrings.getProductReview(productId: productId), headers: {
+      'Authorization': AppStrings.token,
+     });
+    return GetProductReviews.fromJson(map);
   }
 }

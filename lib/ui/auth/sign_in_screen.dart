@@ -56,36 +56,34 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status!) {
+                  Modals.showToast(state.userData.message!,
+                      messageType: MessageType.success);
 
-                    
-      Modals.showToast(state.userData.message!, messageType: MessageType.success);
+                  StorageHandler.saveIsLoggedIn('true');
+                  StorageHandler.saveUserId(
+                      state.userData.profile!.id.toString());
+                  StorageHandler.saveUserPassword(_passwordController.text);
+                  StorageHandler.saveUserName(_usernameController.text.trim());
+                  StorageHandler.saveEmail(
+                      state.userData.profile!.user!.email.toString());
 
-      StorageHandler.saveIsLoggedIn('true');
-      StorageHandler.saveUserId(state.userData.profile!.id.toString());
-      StorageHandler.saveUserPassword(_passwordController.text);
-      StorageHandler.saveUserName(_usernameController.text.trim());
-      StorageHandler.saveEmail(state.userData.profile!.user!.email.toString());
+                  if (state.userData.profile!.hasPets!) {
+                    StorageHandler.saveUserPetState('true');
+                  } else {
+                    StorageHandler.saveUserPetState('');
+                  }
 
+                  if (!state.userData.isAgent!) {
+                    StorageHandler.saveIsUserType('user');
 
-      if (state.userData.profile!.hasPets!) {
-        StorageHandler.saveUserPetState('true');
-      } else {
-        StorageHandler.saveUserPetState('');
-      }
+                    AppNavigator.pushAndStackNamed(context,
+                        name: AppRoutes.landingPage);
+                  } else {
+                    StorageHandler.saveIsUserType('service_provider');
 
-      if (!state.userData.isAgent!) {
-        StorageHandler.saveIsUserType('user');
-
-        AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
-      } else {
-        StorageHandler.saveIsUserType('service_provider');
-
-        AppNavigator.pushAndReplaceName(context,
-            name: AppRoutes.serviceProviderLandingPage);
-      
-    }
-
-
+                    AppNavigator.pushAndReplaceName(context,
+                        name: AppRoutes.serviceProviderLandingPage);
+                  }
 
                   // loginUser(
                   //     firebaseUser: firebaseUser,

@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../model/user_models/shopping_lists.dart';
+import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
@@ -65,6 +66,8 @@ class _ShopState extends State<Shop> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AccountViewModel>(context, listen: false);
+    user.getUsername();
     return Scaffold(
         backgroundColor: AppColors.lightBackground,
         body: BlocConsumer<UserCubit, UserStates>(
@@ -138,7 +141,8 @@ class _ShopState extends State<Shop> {
                                   onTap: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (_) {
-                                      return ProductDetailScreen(filteredProducts[index].id.toString());
+                                      return ProductDetailScreen(filteredProducts[index].id.toString(), 
+                                      filteredProducts[index].price.toString(), user.username);
                                     }));
                                   },
                                   child: Column(

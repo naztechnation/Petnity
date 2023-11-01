@@ -133,7 +133,6 @@ double calculateRemainingProgressTime( String endTimeString) {
 
     final remainingTimeInHours = difference.inMinutes / 60;
     final percentageOfCompletion = remainingTimeInHours / (DateTime.parse(endTimeString).difference(DateTime.now()).inHours.toDouble());
-    //Modals.showToast(percentageOfCompletion.toString());
     return percentageOfCompletion;
   } catch (e) {
     print('Error parsing the date strings: $e');
