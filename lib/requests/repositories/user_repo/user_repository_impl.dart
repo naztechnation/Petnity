@@ -1,4 +1,3 @@
- 
 import 'package:petnity/model/account_models/agents_packages.dart';
 import 'package:petnity/model/account_models/confirm_payment.dart';
 import 'package:petnity/model/user_models/confirm_shop_payment.dart';
@@ -6,6 +5,7 @@ import 'package:petnity/model/user_models/create_payment_order.dart';
 import 'package:petnity/model/user_models/get_product_reviews.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 
+import '../../../model/account_models/auth_data.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/order_list.dart';
@@ -18,21 +18,21 @@ import '../../setup/requests.dart';
 import 'user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
- 
-  
   @override
-  Future<ServiceProvidersList> getServiceProviderList({required String serviceId}) async {
-    final map = await Requests().get(AppStrings.getServiceProvidersList(serviceId), headers: {
+  Future<ServiceProvidersList> getServiceProviderList(
+      {required String serviceId}) async {
+    final map = await Requests()
+        .get(AppStrings.getServiceProvidersList(serviceId), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return ServiceProvidersList.fromJson(map);
   }
 
-@override
+  @override
   Future<GetServiceTypes> getServiceTypes() async {
     final map = await Requests().get(AppStrings.getServiceTypes, headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return GetServiceTypes.fromJson(map);
   }
 
@@ -51,112 +51,115 @@ class UserRepositoryImpl implements UserRepository {
         });
     return ServiceProvidersList.fromJson(map);
   }
-  
+
   @override
-  Future<GetReviews> getReviews({required String userId}) async{
-     
+  Future<GetReviews> getReviews({required String userId}) async {
     final map = await Requests().get(AppStrings.getReviewUrl(userId), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return GetReviews.fromJson(map);
   }
 
-   @override
-  Future<GalleryAgents> getGallery({required String userId}) async{
-     
-    final map = await Requests().get(AppStrings.getGalleryUrl(userId), headers: {
+  @override
+  Future<GalleryAgents> getGallery({required String userId}) async {
+    final map =
+        await Requests().get(AppStrings.getGalleryUrl(userId), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return GalleryAgents.fromJson(map);
   }
 
   @override
-  Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId}) async{
-     
-    final map = await Requests().get(AppStrings.getAgentPackagesUrl(agentId,serviceId), headers: {
+  Future<GetAgentsPackages> getAgentPackages(
+      {required String agentId, required String serviceId}) async {
+    final map = await Requests()
+        .get(AppStrings.getAgentPackagesUrl(agentId, serviceId), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return GetAgentsPackages.fromJson(map);
   }
 
   @override
-  Future<PaymentResponse> confirmPayment({required String username, required String purchaseId, required String orderId, }) async{
-     
-    final map = await Requests().post(AppStrings.confirmPaymentUrl(username,orderId),
-    body: {
-          "purchase_id": purchaseId
-        },
-     headers: {
+  Future<PaymentResponse> confirmPayment({
+    required String username,
+    required String purchaseId,
+    required String orderId,
+  }) async {
+    final map = await Requests()
+        .post(AppStrings.confirmPaymentUrl(username, orderId), body: {
+      "purchase_id": purchaseId
+    }, headers: {
       'Authorization': AppStrings.token,
-      
-     });
+    });
     return PaymentResponse.fromJson(map);
   }
+
   @override
-  Future<CreateOrder> createOrder({required String packageId, required String username,
-  required String pickupTime, required String dropOffTime, required String pickUpLocation}) async{
-     
-    final map = await Requests().post(AppStrings.createOrder(packageId,username),
-    body: {
-          "pickup_time": pickupTime,
-          "dropoff_time": dropOffTime,
-          "pickup_location": pickUpLocation,
-          
-        },
-     headers: {
+  Future<CreateOrder> createOrder(
+      {required String packageId,
+      required String username,
+      required String pickupTime,
+      required String dropOffTime,
+      required String pickUpLocation}) async {
+    final map = await Requests()
+        .post(AppStrings.createOrder(packageId, username), body: {
+      "pickup_time": pickupTime,
+      "dropoff_time": dropOffTime,
+      "pickup_location": pickUpLocation,
+    }, headers: {
       'Authorization': AppStrings.token,
-      
-     });
+    });
     return CreateOrder.fromJson(map);
   }
 
-   @override
-  Future<UserOrderList> orderList({required String username}) async{
-     
+  @override
+  Future<UserOrderList> orderList({required String username}) async {
     final map = await Requests().get(AppStrings.userOrders(username), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return UserOrderList.fromJson(map);
   }
 
-   @override
-  Future<ShoppingList> shoppingList() async{
-     
+  @override
+  Future<ShoppingList> shoppingList() async {
     final map = await Requests().get(AppStrings.shoppingList, headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return ShoppingList.fromJson(map);
   }
 
   @override
-  Future<ProductDetails> productDetails({required String productId})  async{
-     
-    final map = await Requests().get(AppStrings.productDetailsUrl(productId), headers: {
+  Future<ProductDetails> productDetails({required String productId}) async {
+    final map =
+        await Requests().get(AppStrings.productDetailsUrl(productId), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return ProductDetails.fromJson(map);
   }
 
   @override
-  Future<CreatePaymentOrder> createOrderPayment({required String username, 
-  required String productId, required String quantity}) async{
-     
-    final map = await Requests().post(AppStrings.createOrderPayment(username),
-    body: {
-          "product_id": productId,
-          "quantity": quantity,
-          
-        },
-     headers: {
+  Future<CreatePaymentOrder> createOrderPayment(
+      {required String username,
+      required String productId,
+      required String quantity}) async {
+    final map =
+        await Requests().post(AppStrings.createOrderPayment(username), body: {
+      "product_id": productId,
+      "quantity": quantity,
+    }, headers: {
       'Authorization': AppStrings.token,
-      
-     });
+    });
     return CreatePaymentOrder.fromJson(map);
   }
 
   @override
-  Future<ConfirmShopPayment> confirmShoppingPayment({required String username, required String purchaseId, required String shopOrderId}) async {
-    final map = await Requests().patch(AppStrings.confirmShoppingPaymentUrl(username: username, shopOrderId: shopOrderId),
+  Future<ConfirmShopPayment> confirmShoppingPayment(
+      {required String username,
+      required String purchaseId,
+      required String shopOrderId}) async {
+    final map = await Requests().patch(
+        AppStrings.confirmShoppingPaymentUrl(
+            username: username, shopOrderId: shopOrderId),
         body: {
           "payment_id": purchaseId
         },
@@ -168,11 +171,31 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<GetProductReviews> getProductReviews({required String productId}) async{
-     
-    final map = await Requests().get(AppStrings.getProductReview(productId: productId), headers: {
+  Future<GetProductReviews> getProductReviews(
+      {required String productId}) async {
+    final map = await Requests()
+        .get(AppStrings.getProductReview(productId: productId), headers: {
       'Authorization': AppStrings.token,
-     });
+    });
     return GetProductReviews.fromJson(map);
+  }
+
+  @override
+  Future<AuthData> sendReviews(
+      {required String username,
+      required String productId,
+      required String comment,
+      required String rating}) async {
+    final map = await Requests().post(
+        AppStrings.publishProductReview(
+            productId: productId, username: username),
+        body: {
+          "rating": rating,
+          "comment": comment,
+        },
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+    return AuthData.fromJson(map);
   }
 }

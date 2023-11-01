@@ -14,8 +14,8 @@ class RatingView extends StatelessWidget {
   const RatingView(
       {required this.rating,
       this.onSelected,
-      this.color = Colors.yellow,
-      this.selectedColor = AppColors.lightBackground,
+      this.color = Colors.orange,
+      this.selectedColor = Colors.grey,
       this.space = 5,
       this.size = 18,
       Key? key})
@@ -40,6 +40,6 @@ class RatingView extends StatelessWidget {
   }
 
   bool _isLast(int index) {
-    return index == 5;
+    return index == 6;
   }
 }

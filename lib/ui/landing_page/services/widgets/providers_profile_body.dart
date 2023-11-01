@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../blocs/user/user_cubit.dart';
 import '../../../../model/user_models/service_provider_lists.dart';
+import '../../../../model/view_models/account_view_model.dart';
 import '../../../../res/app_strings.dart';
+import '../../../../utils/validator.dart';
 import '../../../widgets/custom_multi_toogle.dart';
 import '../../../widgets/custom_text.dart';
+import '../../../widgets/modals.dart';
 import '../../../widgets/ratings_views.dart';
+import '../../../widgets/text_edit_view.dart';
+import '../../widgets/rating_widget.dart';
 import 'contact_info.dart';
 
 class ProviderProfileBody extends StatefulWidget {
@@ -27,8 +35,18 @@ class _ProviderProfileBodyState extends State<ProviderProfileBody> {
   String animalsInfo = '';
   int ratings = 4;
 
+  bool isProcessing = false;
+
+  int ratingNumber = 0;
+ final commentController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<AccountViewModel>(context, listen: false);
+    user.getUsername();
     services = widget.agents!.services != null
         ? widget.agents!.services!.map((service) => service.name ?? '').toList()
         : <String>[];
@@ -133,28 +151,42 @@ class _ProviderProfileBodyState extends State<ProviderProfileBody> {
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomText(
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    text: 'Ratings',
-                    weight: FontWeight.w600,
-                    size: 14,
-                    fontFamily: AppStrings.interSans,
-                    color: Colors.black,
-                  ),
-                  RatingView(
-                    rating: ratings,
-                    onSelected: (rating) {
-                      setState(() {
-                        ratings = rating;
-                      });
-                    },
-                  ),
-                ],
-              )
+
+               ButtonView(
+                                                    padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                                                    expanded: false,
+                                                    borderRadius: 30,
+                                                    onPressed: () {
+                            Modals.showBottomSheetModal(context,
+                                isDissmissible: true,
+                                heightFactor: 1,
+                                page: Ratings(
+                                  ctxt: context,
+                                    username: user.username,
+                                    agentName:widget.agents?.name ?? '',
+                                    productId: ''));
+                                                    },
+                                                    child: Text('Add Review'),
+                                                  ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     CustomText(
+              //       textAlign: TextAlign.start,
+              //       maxLines: 2,
+              //       text: 'Ratings',
+              //       weight: FontWeight.w600,
+              //       size: 14,
+              //       fontFamily: AppStrings.interSans,
+              //       color: Colors.black,
+              //     ),
+              //     const SizedBox(width: 12,),
+              //     RatingWidget(coloredStars: widget.agents!., size: 25,),
+                     
+             
+              //   ],
+              // )
             ],
           ),
           const SizedBox(
@@ -184,5 +216,133 @@ class _ProviderProfileBodyState extends State<ProviderProfileBody> {
             height: 30,
           ),
         ]));
+  }
+
+  Ratings({
+    required String username,
+    required BuildContext ctxt,
+    required String agentName,
+    required String productId,
+  }) {
+    return StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+      return Container(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Rate this ${agentName.capitalizeFirstOfEach}\'s Product',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              RatingView(
+                rating: ratingNumber,
+                size: 30,
+                onSelected: (value) {
+                  setState((() {
+                    ratingNumber = value + 1;
+                  }));
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Form(
+                key: _formKey,
+                child: TextEditView(
+                  controller: commentController,
+                  validator: (value) {
+                    return Validator.validate(value, 'comment');
+                  },
+                  isDense: true,
+                  textViewTitle: 'Write a review',
+                  hintText: 'Enter comment',
+                  borderWidth: 0.5,
+                  fillColor: AppColors.lightPrimary,
+                  borderColor: Color.fromARGB(255, 41, 12, 12),
+                  borderRadius: 30,
+                  onChanged: ((value) {
+                    setState(() {});
+                  }),
+                  maxLines: 6,
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              if (commentController.text.isEmpty)
+                Center(
+                  child: Text(
+                    'Report ${agentName.capitalizeFirstOfEach}',
+                    style:
+                        TextStyle(color: Colors.red, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              const SizedBox(
+                height: 20,
+              ),
+              if (commentController.text.isNotEmpty)
+                ButtonView(
+                  processing: isProcessing,
+                  onPressed: () {
+                    setState((){
+                     
+                    });
+                    _postProductReviews(
+                      ctx: ctxt,
+                      username: username,
+                      productId: productId,
+                      rating: ratingNumber.toString(),
+                      comment: commentController.text,
+                    );
+                  },
+                  color: AppColors.lightSecondary,
+                  child: CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    text: 'Submit',
+                    weight: FontWeight.w400,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.white,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  _postProductReviews(
+      {required BuildContext ctx,
+      required String username,
+      required String productId,
+      required String rating,
+      required String comment}) async{
+    if (_formKey.currentState!.validate()) {
+
+    
+      setState(() {
+        isProcessing = true;
+      });
+    await  ctx.read<UserCubit>().postProductReviews(
+            username: username,
+            productId: productId,
+            rating: rating,
+            comment: comment,
+          );
+          setState(() {
+        isProcessing = false;
+        
+      });
+      FocusScope.of(ctx).unfocus();
+    } else {
+      Modals.showToast('please enter a comment');
+    }
   }
 }

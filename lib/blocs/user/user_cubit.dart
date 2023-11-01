@@ -404,4 +404,36 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+    Future<void> postProductReviews({
+    required String productId,
+    required String username,
+    required String rating,
+    required String comment,
+     
+  }) async {
+    try {
+      emit(PostProductReviewsLoading());
+
+      final postProducts = await userRepository.sendReviews(
+         productId: productId, username: username, comment: comment, rating: rating,
+      );
+
+       
+
+      emit(PostProductReviewsLoaded(postProducts));
+    } on ApiException catch (e) {
+      emit(CreateOrderNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateOrderNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

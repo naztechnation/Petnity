@@ -294,8 +294,7 @@ class SignInScreen extends StatelessWidget {
       required userId,
       required bool hasPet,
       required bool isAgent}) async {
-    //  Modals.showToast('${_usernameController.text.toLowerCase().trim()}@gmail.com');
-    // print('${_usernameController.text.toLowerCase().trim()}@gmail.com');
+   
     await firebaseUser.loginUserWithEmailAndPassword(
         email: '${_usernameController.text.trim()}@gmail.com',
         password: _passwordController.text.trim());

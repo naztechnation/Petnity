@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +12,6 @@ import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
-import '../../../res/enum.dart';
-import '../../location/set_location_screen.dart';
 import '../../notfications_pages/chat_pages/chat_page.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
@@ -43,11 +42,12 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
     return Future.value(false);
   }
 
+  
 
 
   @override
   Widget build(BuildContext context) {
-     
+      
     return WillPopScope(
       onWillPop: onBackPress,
 
@@ -97,26 +97,24 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         const SizedBox(
                           height: 12,
                         ),
-                        SizedBox(
-                          width: 130,
-                          child: Row(
-                            children: [
-                              ImageView.svg(AppImages.location),
-                              SizedBox(
-                                width: 5,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ImageView.svg(AppImages.location),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Align(
+                              child: CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                text: '${widget.agents!.city}, ${widget.agents!.country}',
+                                weight: FontWeight.w300,
+                                size: 14,
+                                color: Colors.black,
                               ),
-                              Expanded(
-                                child: CustomText(
-                                  textAlign: TextAlign.start,
-                                  maxLines: 2,
-                                  text: '${widget.agents!.city}, ${widget.agents!.country}',
-                                  weight: FontWeight.w300,
-                                  size: 14,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 12,
@@ -166,25 +164,19 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         const SizedBox(
                           height: 12,
                         ),
-                        // CustomText(
-                        //   textAlign: TextAlign.start,
-                        //   maxLines: 2,
-                        //   text: '322 Completed walks',
-                        //   weight: FontWeight.w400,
-                        //   size: 12,
-                        //   fontFamily: AppStrings.interSans,
-                        //   color: Colors.black,
-                        // ),
+                           
                         const SizedBox(
                           height: 12,
                         ),
                         ProviderProfileBody(
                           agents: widget.agents,
                         ),
+                     
                         GalleryRatingSection(userId: widget.agents!.id.toString()),
                         const SizedBox(
                           height: 150,
                         ),
+                       
                       ],
                     )),
                   ),
@@ -292,4 +284,6 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         //AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
     }
   }
+
+
 }

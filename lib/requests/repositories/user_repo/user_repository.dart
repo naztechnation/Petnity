@@ -1,6 +1,7 @@
  
  
 import '../../../model/account_models/agents_packages.dart';
+import '../../../model/account_models/auth_data.dart';
 import '../../../model/account_models/confirm_payment.dart';
 import '../../../model/user_models/confirm_shop_payment.dart';
 import '../../../model/user_models/create_order.dart';
@@ -29,6 +30,7 @@ abstract class UserRepository {
     Future<ProductDetails> productDetails({required String productId}); 
     Future<GetProductReviews> getProductReviews({required String productId}); 
     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
+    Future<AuthData> sendReviews({required String username, required String productId,required String comment, required String rating}); 
     Future<PaymentResponse> confirmPayment({required String username, required String purchaseId, required String orderId}); 
     Future<ConfirmShopPayment> confirmShoppingPayment({required String username, required String purchaseId, required String shopOrderId}); 
     Future<CreatePaymentOrder> createOrderPayment({required String username, required String productId, required String quantity}); 

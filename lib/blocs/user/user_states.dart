@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:petnity/model/user_models/shopping_lists.dart';
 
 import '../../model/account_models/agents_packages.dart';
+import '../../model/account_models/auth_data.dart';
 import '../../model/account_models/confirm_payment.dart';
 import '../../model/user_models/confirm_shop_payment.dart';
 import '../../model/user_models/create_order.dart';
@@ -178,6 +179,18 @@ class GetProductReviewsLoaded extends UserStates {
   const GetProductReviewsLoaded(this.getAgentPayment);
   @override
   List<Object> get props => [getAgentPayment];
+}
+
+class PostProductReviewsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class PostProductReviewsLoaded extends UserStates {
+  final AuthData postReview;
+  const PostProductReviewsLoaded(this.postReview);
+  @override
+  List<Object> get props => [postReview];
 }
 
 

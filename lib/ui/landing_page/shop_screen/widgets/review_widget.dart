@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../../../model/user_models/get_product_reviews.dart';
 
@@ -14,20 +14,27 @@ class ReviewWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Card(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
           child: Column(
             children: [
               ListTile(
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage(AppImages.catPic),
-                ),
-                title: Text('Andy Davies'),
-                subtitle: RatingWidget(coloredStars: reviews.rating!),
+                minLeadingWidth: 4,
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: SizedBox(height: 60, width: 50,child: ImageView.network('', height: 60,))),
+                title: Text(reviews.profile?.user?.username ?? ""),
+                subtitle: RatingWidget(coloredStars: reviews.rating!, size: 20,),
               ),
-              Text(
-                reviews.comment ?? '',
-                textAlign: TextAlign.justify,
+              
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left:28.0),
+                  child: Text(
+                    reviews.comment ?? '',
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
               )
             ],
           ),

@@ -19,6 +19,7 @@ import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
+import '../../../utils/app_utils.dart';
 import '../../widgets/text_edit_view.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -176,7 +177,7 @@ class _ShopState extends State<Shop> {
                                       const SizedBox(
                                         height: 5,
                                       ),
-                                      Text(filteredProducts[index].price ?? ''),
+                                      Text(AppUtils.convertPrice(filteredProducts[index].price) ?? ''),
                                       RatingWidget(
                                         coloredStars: 3,
                                       ),
