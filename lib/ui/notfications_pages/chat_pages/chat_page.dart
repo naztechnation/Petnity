@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
+import 'package:provider/provider.dart';
 import '../../../model/chat_model/chat.dart';
+import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
@@ -145,6 +148,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AccountViewModel>(context, listen: true);
+
     return WillPopScope(
       onWillPop: onBackPress,
       child: Scaffold(
@@ -184,7 +189,7 @@ class _ChatPageState extends State<ChatPage> {
                         CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 2,
-                          text: '$username',
+                          text: '$username'.capitalizeFirstOfEach,
                           weight: FontWeight.w700,
                           size: 14,
                           fontFamily: AppStrings.interSans,
@@ -234,7 +239,7 @@ class _ChatPageState extends State<ChatPage> {
                           GestureDetector(
                               onTap: (() {
                                 AppNavigator.pushAndStackPage(context,
-                                    page: MyApp());
+                                    page: VideoCall(user1: username, user2: user.username,));
                               }),
                               child: ImageView.svg(AppImages.videoIcon)),
                         ],

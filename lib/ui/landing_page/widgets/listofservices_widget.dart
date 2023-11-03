@@ -48,7 +48,7 @@ class ListOfServices extends StatelessWidget {
                   });
                 },
                 staggeredTileBuilder: (index) {
-                  return StaggeredTile.count(1, 0.4);
+                  return StaggeredTile.count(1, 0.35);
                 }),
           ),
         ],

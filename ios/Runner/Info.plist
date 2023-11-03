@@ -59,6 +59,12 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>App needs access to location</string>
 
+
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera for video calls.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone for audio calls.</string>
+
 	
 </dict>
 </plist>

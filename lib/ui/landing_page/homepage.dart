@@ -262,7 +262,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               ],
             ),
           ),
-          SizedBox(width: 130, child: ImageView.asset(AppImages.playingCat))
+          Expanded(child: SizedBox(width: 130, child: ImageView.asset(AppImages.playingCat)))
         ],
       ),
     );

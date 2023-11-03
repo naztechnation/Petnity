@@ -3,6 +3,13 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission  android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission  android:name="android.permission.INTERNET"  />
+    <uses-permission  android:name="android.permission.RECORD_AUDIO"  />
+    <uses-permission  android:name="android.permission.CAMERA"  />
+    <uses-permission  android:name="android.permission.MODIFY_AUDIO_SETTINGS"  />
+    <uses-permission  android:name="android.permission.ACCESS_NETWORK_STATE"  />
+    <uses-permission  android:name="android.permission.BLUETOOTH"  />
    <application
         android:label="Petnity"
         android:name="${applicationName}"
@@ -17,11 +24,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            <!-- Specifies an Android theme to apply to this Activity as soon as
-                 the Android process has started. This theme is visible to the user
-                 while the Flutter UI initializes. After that, this theme continues
-                 to determine the Window background behind the Flutter UI. -->
-
+            
             
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
