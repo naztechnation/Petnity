@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:petnity/model/account_models/pet_types.dart';
 
 import '../../model/account_models/create_agent.dart';
 import '../../model/account_models/auth_data.dart';
 import '../../model/account_models/pet_profile.dart';
+import '../../model/user_models/service_type.dart';
 
 
 abstract class AccountStates extends Equatable {
@@ -97,6 +99,18 @@ class PinResetCompleted extends AccountStates {
   const PinResetCompleted(this.message);
   @override
   List<Object> get props => [message];
+}
+
+class PetTypesLoading extends AccountStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class PetTypesLoaded extends AccountStates {
+  final PetTypesModel services;
+  const PetTypesLoaded(this.services);
+  @override
+  List<Object> get props => [services];
 }
 
 class AccountLoggedOut extends AccountStates {

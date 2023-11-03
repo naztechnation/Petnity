@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/model/view_models/user_view_model.dart';
-import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +48,7 @@ class ListOfServices extends StatelessWidget {
                   });
                 },
                 staggeredTileBuilder: (index) {
-                  return StaggeredTile.count(1, 0.45);
+                  return StaggeredTile.count(1, 0.4);
                 }),
           ),
         ],

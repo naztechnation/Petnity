@@ -25,6 +25,7 @@ class AppStrings {
 
   static const String networkErrorMessage = "Network error, try again later";
   static const String registerUrl = "auth/register";
+  static const String petTypesUrl = "${_baseUrl}get-pet-types";
   static String resendCodeUrl(String username) => "auth/resend-code/$username";
 
   static String googlePlaceUrl(String query) =>

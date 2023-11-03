@@ -3,6 +3,7 @@ import 'package:petnity/model/account_models/confirm_payment.dart';
 import 'package:petnity/model/user_models/confirm_shop_payment.dart';
 import 'package:petnity/model/user_models/create_payment_order.dart';
 import 'package:petnity/model/user_models/get_product_reviews.dart';
+import 'package:petnity/model/account_models/pet_types.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 
 import '../../../model/account_models/auth_data.dart';
@@ -198,4 +199,7 @@ class UserRepositoryImpl implements UserRepository {
         });
     return AuthData.fromJson(map);
   }
+
+ 
+
 }

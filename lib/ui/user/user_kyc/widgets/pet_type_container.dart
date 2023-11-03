@@ -15,7 +15,9 @@ class PetType extends StatelessWidget {
   final bool isPetType;
   final VoidCallback onPressed;
 
-    PetType({super.key, required this.imageUrl, required this.petName,  this.spacing = 0, this.isPetType = false, required this.onPressed});
+    PetType({super.key, required this.imageUrl, 
+    required this.petName,  this.spacing = 0, 
+    this.isPetType = false, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class PetType extends StatelessWidget {
       child: AnimatedContainer( 
         duration: const Duration (milliseconds: 1000),
        curve: Curves.fastOutSlowIn,
-        height: 63,
+        height: 43,
         decoration: BoxDecoration(
           color: isPetType ? AppColors.lightSecondary : AppColors.cardColor,
                       borderRadius: BorderRadius.circular(40),
@@ -36,21 +38,19 @@ class PetType extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                          Expanded(
-                            child: CustomText(
-                                              textAlign: TextAlign.left,
-                                              maxLines: 2,
-                                              text: petName,
-                                              weight: FontWeight.w600,
-                                              size: 15,
-                                              fontFamily: AppStrings.interSans,
-                                              color: isPetType ? AppColors.lightPrimary :  Colors.black,
-                                            ),
-                          ),
-                                        SizedBox(width: 5,),
-                                          ImageView.asset(imageUrl, )
+                          CustomText(
+                                            textAlign: TextAlign.left,
+                                            maxLines: 2,
+                                            text: petName,
+                                            weight: FontWeight.w600,
+                                            size: 15,
+                                            fontFamily: AppStrings.interSans,
+                                            color: isPetType ? AppColors.lightPrimary :  Colors.black,
+                                          ),
+                                        SizedBox(width: 15,),
+                                          ImageView.asset(imageUrl, height: 40,)
                         ],),
                       )),
       ),

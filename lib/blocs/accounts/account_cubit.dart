@@ -8,8 +8,6 @@ import '../../utils/exceptions.dart';
 import 'account_states.dart';
 
 class AccountCubit extends Cubit<AccountStates> {
-
-
   AccountCubit({required this.accountRepository, required this.viewModel})
       : super(const InitialState());
   final AccountRepository accountRepository;
@@ -27,11 +25,14 @@ class AccountCubit extends Cubit<AccountStates> {
       emit(AccountProcessing());
 
       final user = await accountRepository.registerUser(
-        url: url,
-        username: username,
-          email: email, password: password, phone: phoneNumber, firebaseId: firebaseId);
+          url: url,
+          username: username,
+          email: email,
+          password: password,
+          phone: phoneNumber,
+          firebaseId: firebaseId);
 
-       await viewModel.setUserData(username:email);
+      await viewModel.setUserData(username: email);
       emit(AccountLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -50,16 +51,15 @@ class AccountCubit extends Cubit<AccountStates> {
 
   Future<void> resendCode({
     required String username,
-    
   }) async {
     try {
       emit(AccountProcessing());
 
       final user = await accountRepository.resendCode(
         username: username,
-          );
+      );
 
-       await viewModel.setUserData(username:username);
+      await viewModel.setUserData(username: username);
       emit(AccountLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -76,12 +76,11 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-  Future<void> sendPetHealth({
-    required String name,
-    required String drug,
-    required String prescription,
-    required String url
-  }) async {
+  Future<void> sendPetHealth(
+      {required String name,
+      required String drug,
+      required String prescription,
+      required String url}) async {
     try {
       emit(AccountProcessing());
 
@@ -105,14 +104,13 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
- 
   Future<void> loginUser(
       {required String password, required String username}) async {
     try {
       emit(AccountLoading());
 
-      final userData=
-          await accountRepository.loginUser(username: username, password: password);
+      final userData = await accountRepository.loginUser(
+          username: username, password: password);
 
       // await viewModel.setUser(userData);
       emit(AccountLoaded(userData));
@@ -136,8 +134,8 @@ class AccountCubit extends Cubit<AccountStates> {
     try {
       emit(AccountLoading());
 
-      final userData=
-          await accountRepository.logoutUser(username: username, password: password);
+      final userData = await accountRepository.logoutUser(
+          username: username, password: password);
 
       emit(AccountLoaded(userData));
     } on ApiException catch (e) {
@@ -154,23 +152,29 @@ class AccountCubit extends Cubit<AccountStates> {
       }
     }
   }
- 
 
   Future<void> registerUserPetProfile(
-   {required String username,required String type,
-   required String petname,required String gender,
-   required String breed,required String size,
-   required String about,required String picture}) async {
+      {required String username,
+      required String type,
+      required String petname,
+      required String gender,
+      required String breed,
+      required String size,
+      required String about,
+      required String picture}) async {
     try {
       emit(PetProfileLoading());
 
       final pet = await accountRepository.registerUserPetProfile(
-        username: username,
-        type: type, petname: petname, size: size, breed: breed,
-         gender: gender, picture: picture, about: about
-          
-      );
-     
+          username: username,
+          type: type,
+          petname: petname,
+          size: size,
+          breed: breed,
+          gender: gender,
+          picture: picture,
+          about: about);
+
       emit(PetProfileLoaded(pet));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -188,16 +192,27 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> registerServiceProviderProfile(
-   { required String username,
-    required String dob,required String name,required String gender,
-    required String country,required String city,required String about,required String picture}) async {
+      {required String username,
+      required String dob,
+      required String name,
+      required String gender,
+      required String country,
+      required String city,
+      required String about,
+      required String picture}) async {
     try {
       emit(AgentResLoading());
 
-      final user = await 
-      accountRepository.registerServiceProviderProfile(username: username, dob: dob, name: name,
-       gender: gender, country: country, city: city, about: about, picture: picture);
-     
+      final user = await accountRepository.registerServiceProviderProfile(
+          username: username,
+          dob: dob,
+          name: name,
+          gender: gender,
+          country: country,
+          city: city,
+          about: about,
+          picture: picture);
+
       emit(AgentResLoaded(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
@@ -214,15 +229,18 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-  
-
-  Future<void> servicePetType({required List<String> petnames, required String username,
+  Future<void> servicePetType(
+      {required List<String> petnames,
+      required String username,
       required String agentId}) async {
     try {
       emit(AgentResLoading());
 
-      final user = await accountRepository.servicePetNames(petnames: petnames, agentId: agentId, username: username,
-          );
+      final user = await accountRepository.servicePetNames(
+        petnames: petnames,
+        agentId: agentId,
+        username: username,
+      );
 
       emit(AgentResLoaded(user));
     } on ApiException catch (e) {
@@ -239,12 +257,13 @@ class AccountCubit extends Cubit<AccountStates> {
       }
     }
   }
-  
+
   Future<void> verifyOTP(String username, String code) async {
     try {
       emit(AccountProcessing());
 
-      final user = await accountRepository.verifyUser(username: username, code: code);
+      final user =
+          await accountRepository.verifyUser(username: username, code: code);
 
       // await viewModel.updateUser(user);
       emit(AccountUpdated(user));
@@ -264,12 +283,14 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> uploadPhotoUrl(
-      {required String agentId, required String photoUrl, required String idType}) async {
+      {required String agentId,
+      required String photoUrl,
+      required String idType}) async {
     try {
       emit(AccountLoading());
 
-      final userData=
-          await accountRepository.uploadPhotoUrl(agentId: agentId, photoUrl: photoUrl, idType: idType);
+      final userData = await accountRepository.uploadPhotoUrl(
+          agentId: agentId, photoUrl: photoUrl, idType: idType);
 
       emit(AccountLoaded(userData));
     } on ApiException catch (e) {
@@ -285,8 +306,29 @@ class AccountCubit extends Cubit<AccountStates> {
         rethrow;
       }
     }
+  }
 
+  Future<void> getPetTypes() async {
+    try {
+      emit(PetTypesLoading());
 
- 
+      final petTypes =
+          await accountRepository.petTypeList( );
+
+       
+      emit(PetTypesLoaded(petTypes));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
       }
+    }
+  }
 }

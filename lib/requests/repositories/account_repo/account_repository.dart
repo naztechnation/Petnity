@@ -4,6 +4,7 @@ import 'package:petnity/model/account_models/auth_data.dart';
 
 import '../../../model/account_models/create_agent.dart';
 import '../../../model/account_models/pet_profile.dart';
+import '../../../model/account_models/pet_types.dart';
 
 abstract class AccountRepository {
   Future<AuthData> registerUser({
@@ -25,6 +26,9 @@ Future<CreateAgents> registerServiceProviderProfile({
     required String username,
     required String dob,required String name,required String gender,
     required String country,required String city,required String about,required String picture});
+
+    Future<PetTypesModel> petTypeList(); 
+
 
  Future<CreateAgents> servicePetNames({required List<String> petnames,required String username,required String agentId});   
 }

@@ -2,6 +2,7 @@
 import '../../../model/account_models/create_agent.dart';
 import '../../../model/account_models/auth_data.dart';
 import '../../../model/account_models/pet_profile.dart';
+import '../../../model/account_models/pet_types.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'account_repository.dart';
@@ -159,5 +160,14 @@ class AccountRepositoryImpl implements AccountRepository {
     return AuthData.fromJson(map);
   }
   
-  
+   @override
+  Future<PetTypesModel> petTypeList()  async {
+    final map = await Requests().get(
+        AppStrings.petTypesUrl,
+       
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+    return PetTypesModel.fromJson(map);
+  }
 }
