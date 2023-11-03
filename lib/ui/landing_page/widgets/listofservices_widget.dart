@@ -36,7 +36,7 @@ class ListOfServices extends StatelessWidget {
                   Color randomColor = getRandomColor();
 
                   return Item(context, randomColor,
-                      '${user.services[index].name}', AppImages.dogWalk, () {
+                      '${user.services[index].name}', AppImages.catPic, () {
                     Provider.of<AccountViewModel>(context, listen: false)
                         .setSelectedService(user.services[index].name!);
                          Provider.of<AccountViewModel>(context, listen: false)
@@ -73,9 +73,9 @@ Widget Item(BuildContext context, Color color, String title, String image,
   return GestureDetector(
     onTap: onPressed,
     child: Container(
-      width: screenSize(context).width * .43,
-      height: screenSize(context).height * .06,
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      // width: screenSize(context).width * .43,
+      // height: screenSize(context).height * .06,
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
       decoration: BoxDecoration(
           color: color.withOpacity(0.2),
           borderRadius: BorderRadius.circular(60)),
@@ -84,7 +84,7 @@ Widget Item(BuildContext context, Color color, String title, String image,
         children: [
           CircleAvatar(
             backgroundImage: AssetImage(image),
-            radius: 25,
+            radius: 18,
           ),
           const SizedBox(width: 15),
           Expanded(

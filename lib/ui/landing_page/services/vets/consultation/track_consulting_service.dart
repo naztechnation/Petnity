@@ -273,8 +273,8 @@ class _TrackConsultingServiceState extends State<TrackConsultingService> {
                   child: ButtonView(
                     expanded: false,
                     onPressed: () {
-                      AppNavigator.pushAndStackPage(context,
-                          page: ServiceProviderProfile());
+                      // AppNavigator.pushAndStackPage(context,
+                      //     page: ServiceProviderProfile());
                     },
                     borderRadius: 50,
                     child: CustomText(

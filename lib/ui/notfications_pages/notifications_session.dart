@@ -11,7 +11,6 @@ import '../../res/enum.dart';
 import '../widgets/back_button.dart';
 import '../widgets/custom_text.dart';
 import 'chat_pages/chat_page.dart';
-import 'tabs_header.dart';
 import 'widgets/requests_content.dart';
 
 class NotificationsScreen extends StatefulWidget {
@@ -57,94 +56,111 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               ],
             ),
             SizedBox(
-              height: 22,
+              height: 30,
             ),
-            Container(
-              alignment: Alignment.center,
-              width: screenSize(context).width * 0.9,
-              height: 50,
-              decoration: BoxDecoration(
-                color: AppColors.lightPrimary,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          status = FilterStatus.request;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: status == FilterStatus.request ? 10 : 0,
-                            right: status == FilterStatus.chats ? 10 : 0),
-                        child: tabHeader(FilterStatus.request,
-                            status == FilterStatus.request, false),
-                      ),
-                    ),
+            Expanded(
+              child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                          onTap: () => AppNavigator.pushAndStackPage(context,
+                              page: SessionStatusScreen()),
+                          child: RequestsContent(
+                            isChat: false,
+                            isRequestAccepted: true,
+                          ));
+                    },
                   ),
-                  Flexible(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          status = FilterStatus.chats;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: status == FilterStatus.request ? 10 : 0,
-                            right: status == FilterStatus.chats ? 10 : 0),
-                        child: tabHeader(
-                            FilterStatus.chats,
-                            status == FilterStatus.chats,
-                            status == FilterStatus.chats),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            if (status == FilterStatus.request) ...[
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                        onTap: () => AppNavigator.pushAndStackPage(context,
-                            page: SessionStatusScreen()),
-                        child: RequestsContent(
-                          isChat: false,
-                          isRequestAccepted: true,
-                        ));
-                  },
-                ),
-              )
-            ] else ...[
-              Expanded(
-                // height: screenSize(context).height * 0.6,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: 6,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => AppNavigator.pushAndStackPage(context,
-                          page: ChatPage(userImage: '', username: '', uid: '',)),
-                      child: RequestsContent(
-                        isChat: true,
-                        isRequestAccepted: false,
-                      ),
-                    );
-                  },
-                ),
-              )
-            ]
+            // Container(
+            //   alignment: Alignment.center,
+            //   width: screenSize(context).width * 0.9,
+            //   height: 50,
+            //   decoration: BoxDecoration(
+            //     color: AppColors.lightPrimary,
+            //     borderRadius: BorderRadius.circular(20),
+            //   ),
+            //   child: 
+              
+            //   Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Expanded(
+            //         child: GestureDetector(
+            //           onTap: () {
+            //             setState(() {
+            //               status = FilterStatus.request;
+            //             });
+            //           },
+            //           child: Padding(
+            //             padding: EdgeInsets.only(
+            //                 left: status == FilterStatus.request ? 10 : 0,
+            //                 right: status == FilterStatus.chats ? 10 : 0),
+            //             child: tabHeader(FilterStatus.request,
+            //                 status == FilterStatus.request, false),
+            //           ),
+            //         ),
+            //       ),
+            //       Flexible(
+            //         child: GestureDetector(
+            //           onTap: () {
+            //             setState(() {
+            //               status = FilterStatus.chats;
+            //             });
+            //           },
+            //           child: Padding(
+            //             padding: EdgeInsets.only(
+            //                 left: status == FilterStatus.request ? 10 : 0,
+            //                 right: status == FilterStatus.chats ? 10 : 0),
+            //             child: tabHeader(
+            //                 FilterStatus.chats,
+            //                 status == FilterStatus.chats,
+            //                 status == FilterStatus.chats),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // if (status == FilterStatus.request) ...[
+            //   Expanded(
+            //     child: ListView.builder(
+            //       shrinkWrap: true,
+            //       itemCount: 6,
+            //       itemBuilder: (context, index) {
+            //         return GestureDetector(
+            //             onTap: () => AppNavigator.pushAndStackPage(context,
+            //                 page: SessionStatusScreen()),
+            //             child: RequestsContent(
+            //               isChat: false,
+            //               isRequestAccepted: true,
+            //             ));
+            //       },
+            //     ),
+            //   )
+            // ] else ...[
+            //   Expanded(
+            //     // height: screenSize(context).height * 0.6,
+            //     child: ListView.builder(
+            //       shrinkWrap: true,
+            //       itemCount: 6,
+            //       itemBuilder: (context, index) {
+            //         return GestureDetector(
+            //           onTap: () => AppNavigator.pushAndStackPage(context,
+            //               page: ChatPage(userImage: '', username: '', uid: '',)),
+            //           child: RequestsContent(
+            //             isChat: true,
+            //             isRequestAccepted: false,
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   )
+            // ]
           ],
         ),
       ),

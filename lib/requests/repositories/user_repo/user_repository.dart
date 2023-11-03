@@ -30,7 +30,7 @@ abstract class UserRepository {
     Future<ProductDetails> productDetails({required String productId}); 
     Future<GetProductReviews> getProductReviews({required String productId}); 
     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 
-    Future<AuthData> sendReviews({required String username, required String productId,required String comment, required String rating}); 
+    Future<AuthData> sendReviews({required String url,  required String comment, required String rating}); 
     Future<PaymentResponse> confirmPayment({required String username, required String purchaseId, required String orderId}); 
     Future<ConfirmShopPayment> confirmShoppingPayment({required String username, required String purchaseId, required String shopOrderId}); 
     Future<CreatePaymentOrder> createOrderPayment({required String username, required String productId, required String quantity}); 

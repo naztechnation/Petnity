@@ -182,13 +182,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<AuthData> sendReviews(
-      {required String username,
-      required String productId,
+      { 
+      required String url,
       required String comment,
       required String rating}) async {
     final map = await Requests().post(
         AppStrings.publishProductReview(
-            productId: productId, username: username),
+            url: url),
         body: {
           "rating": rating,
           "comment": comment,

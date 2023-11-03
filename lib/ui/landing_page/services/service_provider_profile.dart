@@ -120,7 +120,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                           height: 12,
                         ),
                         ProfileImage(
-                          '${widget.agents!.picture}',
+                          '${widget.agents?.picture}',
                           placeHolder: AppImages.person,
                           radius: 55,
                           height: 120,
@@ -135,7 +135,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                             CustomText(
                               textAlign: TextAlign.start,
                               maxLines: 2,
-                              text: '${widget.agents!.name}',
+                              text: '${widget.agents?.name}',
                               weight: FontWeight.w700,
                               size: 14,
                               fontFamily: AppStrings.interSans,
@@ -170,8 +170,9 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         ),
                         ProviderProfileBody(
                           agents: widget.agents,
+                          
                         ),
-                     
+
                         GalleryRatingSection(userId: widget.agents!.id.toString()),
                         const SizedBox(
                           height: 150,

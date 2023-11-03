@@ -11,7 +11,7 @@ import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:petnity/ui/widgets/notification_icon.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
-import '../../handlers/secure_handler.dart'; 
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
@@ -37,21 +37,21 @@ class _LandingScreenState extends State<LandingScreen> {
   String username = '';
   String password = '';
 
-  List<Widget> _widgetOptions =  [];
-
-  
+  List<Widget> _widgetOptions = [];
 
   getUserDetails() async {
     username = await StorageHandler.getUserName();
     password = await StorageHandler.getUserPassword();
 
     setState(() {
-       _widgetOptions = <Widget>[
-    HomePage(),
-    ServicesScreen(),
-    ShopScreen(),
-    TrackPurchase(username: username,),
-  ];
+      _widgetOptions = <Widget>[
+        HomePage(),
+        ServicesScreen(),
+        ShopScreen(),
+        TrackPurchase(
+          username: username,
+        ),
+      ];
     });
   }
 
@@ -122,11 +122,17 @@ class _LandingScreenState extends State<LandingScreen> {
                               : user.selectedIndex == 2
                                   ? simpleAppbar(
                                       'Shop Products',
-                                      NotificationIcon(
-                                        icon: ImageView.svg(
-                                          AppImages.bell,
+                                      GestureDetector(
+                                        onTap: () {
+                                          AppNavigator.pushAndStackPage(context,
+                                              page: NotificationsScreen());
+                                        },
+                                        child: NotificationIcon(
+                                          icon: ImageView.svg(
+                                            AppImages.bell,
+                                          ),
+                                          nun_of_notifications: 5,
                                         ),
-                                        nun_of_notifications: 5,
                                       ))
                                   : user.selectedIndex == 3
                                       ? simpleAppbar(
@@ -268,9 +274,15 @@ class HomepageAppbar extends StatelessWidget {
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       actions: [
-        NotificationIcon(
-            icon: ImageView.svg(AppImages.notificationIcon),
-            nun_of_notifications: 5),
+        GestureDetector(
+           onTap: () {
+                                          AppNavigator.pushAndStackPage(context,
+                                              page: NotificationsScreen());
+                                        },
+          child: NotificationIcon(
+              icon: ImageView.svg(AppImages.notificationIcon),
+              nun_of_notifications: 5),
+        ),
         const SizedBox(
           width: 20,
         ),
@@ -312,8 +324,10 @@ class simpleAppbar extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(
         title,
-        style:
-            TextStyle(fontFamily: AppStrings.interSans, color: Colors.black, fontWeight: FontWeight.w500),
+        style: TextStyle(
+            fontFamily: AppStrings.interSans,
+            color: Colors.black,
+            fontWeight: FontWeight.w500),
       ),
       centerTitle: true,
       actions: [

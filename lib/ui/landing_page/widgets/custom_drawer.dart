@@ -97,25 +97,25 @@ class _customDrawerState extends State<customDrawer> {
                       height: 25,
                     ),
                     title: Text(
-                      'Notifications and chats',
+                      'Notifications ',
                       style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontFamily: AppStrings.interSans),
                     ),
                   ),
-                  ListTile(
-                    leading: ImageView.svg(
-                      AppImages.cartIcon,
-                      width: 25,
-                      height: 25,
-                    ),
-                    title: Text(
-                      'Cart',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
-                    ),
-                  ),
+                  // ListTile(
+                  //   leading: ImageView.svg(
+                  //     AppImages.cartIcon,
+                  //     width: 25,
+                  //     height: 25,
+                  //   ),
+                  //   title: Text(
+                  //     'Cart',
+                  //     style: TextStyle(
+                  //         fontWeight: FontWeight.w800,
+                  //         fontFamily: AppStrings.interSans),
+                  //   ),
+                  // ),
                   ListTile(
                      onTap: () {
                       AppNavigator.pushAndStackPage(context,

@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/model/user_models/gallery_data.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:petnity/ui/widgets/loading_page.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
@@ -48,10 +46,8 @@ class _GalleryRatingState extends State<GalleryRating> {
   late UserCubit _userCubit;
   String userId = '';
 
-
   List<Reviews> reviewsList = [];
   List<GalleryElements> galleryList = [];
-
 
   getUserId() async {
     userId = await StorageHandler.getUserId();
@@ -59,20 +55,16 @@ class _GalleryRatingState extends State<GalleryRating> {
     await _userCubit.viewModel.emptyGallery();
     await _userCubit.getGallery(userId: widget.userId);
 
-     if (_userCubit.viewModel.galleryStatus) {
+    if (_userCubit.viewModel.galleryStatus) {
       galleryList = _userCubit.viewModel.gallery;
     } else {
       galleryList = [];
     }
 
-    setState(() {
-      
-    });
+    setState(() {});
 
     await _userCubit.viewModel.emptyReviews();
     await _userCubit.getReviews(userId: widget.userId);
-    
-   
 
     if (_userCubit.viewModel.reviewStatus) {
       reviewsList = _userCubit.viewModel.reviews;
@@ -80,7 +72,6 @@ class _GalleryRatingState extends State<GalleryRating> {
       reviewsList = [];
     }
   }
-
 
   @override
   void initState() {
@@ -93,15 +84,13 @@ class _GalleryRatingState extends State<GalleryRating> {
     // final reviews = Provider.of<UserViewModel>(context, listen: true).reviews;
     if (widget.isGallery)
       return ClipRRect(
-              borderRadius: BorderRadius.circular(40),
-
+        borderRadius: BorderRadius.circular(40),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40), color: Colors.white),
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(40),
-
+            borderRadius: BorderRadius.circular(40),
             child: GridView.builder(
               padding: const EdgeInsets.all(.0),
               physics: NeverScrollableScrollPhysics(),
@@ -114,14 +103,19 @@ class _GalleryRatingState extends State<GalleryRating> {
               itemCount: galleryList.length,
               itemBuilder: (ctx, i) {
                 return Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white),
+                    decoration: BoxDecoration(color: Colors.white),
                     child: GestureDetector(
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
-                              page: SingleImageView(image: galleryList[i].image ?? '',));
+                              page: SingleImageView(
+                                image: galleryList[i].image ?? '',
+                              ));
                         },
-                        child: ImageView.network(galleryList[i].image, placeholder: AppImages.logo,fit: BoxFit.cover,)));
+                        child: ImageView.network(
+                          galleryList[i].image,
+                          placeholder: AppImages.logo,
+                          fit: BoxFit.cover,
+                        )));
               },
             ),
           ),

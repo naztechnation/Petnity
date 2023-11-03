@@ -161,7 +161,7 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
                             itemCount: agentList.length,
                             shrinkWrap: true,
                             itemBuilder: (_, index) {
-                              return ProvidersCard(index: index);
+                              return ProvidersCard(index: index, );
                             }))
                   ]));
             }));

@@ -406,8 +406,8 @@ class UserCubit extends Cubit<UserStates> {
   }
 
     Future<void> postProductReviews({
-    required String productId,
-    required String username,
+     
+    required String url,
     required String rating,
     required String comment,
      
@@ -416,7 +416,7 @@ class UserCubit extends Cubit<UserStates> {
       emit(PostProductReviewsLoading());
 
       final postProducts = await userRepository.sendReviews(
-         productId: productId, username: username, comment: comment, rating: rating,
+         url: url, comment: comment, rating: rating,
       );
 
        

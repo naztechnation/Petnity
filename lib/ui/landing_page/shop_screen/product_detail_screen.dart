@@ -147,7 +147,7 @@ class _ProductDetailState extends State<ProductDetail> {
   var count = 0;
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AccountViewModel>(context, listen: false);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
     user.getUsername();
 
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
@@ -172,7 +172,7 @@ class _ProductDetailState extends State<ProductDetail> {
         Modals.showToast(state.message ?? '');
       } else if (state is UserNetworkErr) {
         Modals.showToast(state.message ?? '');
-      }else if (state is PostProductReviewsLoaded){
+      } else if (state is PostProductReviewsLoaded) {
         if (state.postReview.status!) {
           Modals.showToast(state.postReview.message ?? '');
           _userCubit.getProductReviews(productId: productId);
@@ -322,8 +322,8 @@ class _ProductDetailState extends State<ProductDetail> {
                           width: 10,
                         ),
                         ButtonView(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 5),
                           expanded: false,
                           borderRadius: 30,
                           onPressed: () {
@@ -331,10 +331,11 @@ class _ProductDetailState extends State<ProductDetail> {
                                 isDissmissible: true,
                                 heightFactor: 1,
                                 page: Ratings(
-                                  ctxt: context,
+                                    ctxt: context,
                                     username: user.username,
                                     agentName: _products?.name ?? '',
-                                    productId: _products?.id.toString() ?? ''));
+                                    productId:
+                                        _products?.id.toString() ?? ''));
                           },
                           child: Text('Add Review'),
                         ),
@@ -348,8 +349,8 @@ class _ProductDetailState extends State<ProductDetail> {
                       width: screenSize(context).width,
                       child: Text(
                         'About Product',
-                        style:
-                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Text(
@@ -364,8 +365,8 @@ class _ProductDetailState extends State<ProductDetail> {
                       width: screenSize(context).width,
                       child: Text(
                         'Review',
-                        style:
-                            TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
                     SizedBox(
@@ -483,8 +484,8 @@ class _ProductDetailState extends State<ProductDetail> {
                 Center(
                   child: Text(
                     'Report ${agentName.capitalizeFirstOfEach}',
-                    style:
-                        TextStyle(color: Colors.red, fontWeight: FontWeight.w700),
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w700),
                   ),
                 ),
               const SizedBox(
@@ -494,9 +495,7 @@ class _ProductDetailState extends State<ProductDetail> {
                 ButtonView(
                   processing: isProcessing,
                   onPressed: () {
-                    setState((){
-                     
-                    });
+                    setState(() {});
                     _postProductReviews(
                       ctx: ctxt,
                       username: username,
@@ -528,22 +527,18 @@ class _ProductDetailState extends State<ProductDetail> {
       required String username,
       required String productId,
       required String rating,
-      required String comment}) async{
+      required String comment}) async {
     if (_formKey.currentState!.validate()) {
-
-    
       setState(() {
         isProcessing = true;
       });
-    await  ctx.read<UserCubit>().postProductReviews(
-            username: username,
-            productId: productId,
+      await ctx.read<UserCubit>().postProductReviews(
+            url: 'shop/review-product/$username/$productId',
             rating: rating,
             comment: comment,
           );
-          setState(() {
+      setState(() {
         isProcessing = false;
-        
       });
       FocusScope.of(ctx).unfocus();
     } else {

@@ -79,8 +79,8 @@ class AppStrings {
       static String getProductReview({required String productId}) =>
       '${_baseUrl}shop/get-product-reviews/$productId';
 
-      static String publishProductReview( {required String productId, required String username}) =>
-      '${_baseUrl}shop/review-product/$username/$productId';
+      static String publishProductReview( {required String url,}) =>
+      '${_baseUrl}$url';
 
   static String confirmShoppingPaymentUrl(
           {required String username, required String shopOrderId}) =>
