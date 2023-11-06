@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository.dart';
 
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository.dart';
@@ -186,37 +187,37 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
 //     }
 //   }
 
-  Future<void> createOrder(
-      {required String packageId,
-      required String username,
-      required String pickupTime,
-      required String dropOffTime,
-      required String pickUpLocation}) async {
-    try {
-      emit(CreateServiceLoading());
+  // Future<void> createService(
+  //     {required String packageId,
+  //     required String username,
+  //     required String pickupTime,
+  //     required String dropOffTime,
+  //     required String pickUpLocation}) async {
+  //   try {
+  //     emit(CreateServiceLoading());
 
-      final order = await userRepository.createOrder(
-          packageId: packageId,
-          username: username,
-          pickupTime: pickupTime,
-          dropOffTime: dropOffTime,
-          pickUpLocation: pickUpLocation);
+  //     final order = await ServiceProviderRepository.createService(
+  //         packageId: packageId,
+  //         username: username,
+  //         pickupTime: pickupTime,
+  //         dropOffTime: dropOffTime,
+  //         pickUpLocation: pickUpLocation);
 
-      emit(CreateServiceLoaded(order));
-    } on ApiException catch (e) {
-      emit(CreateServiceNetworkErrApiErr(e.message));
-    } catch (e) {
-      if (e is NetworkException ||
-          e is BadRequestException ||
-          e is UnauthorisedException ||
-          e is FileNotFoundException ||
-          e is AlreadyRegisteredException) {
-        emit(CreateServiceNetworkErr(e.toString()));
-      } else {
-        rethrow;
-      }
-    }
-  }
+  //     emit(CreateServiceLoaded(order));
+  //   } on ApiException catch (e) {
+  //     emit(CreateServiceNetworkErrApiErr(e.message));
+  //   } catch (e) {
+  //     if (e is NetworkException ||
+  //         e is BadRequestException ||
+  //         e is UnauthorisedException ||
+  //         e is FileNotFoundException ||
+  //         e is AlreadyRegisteredException) {
+  //       emit(CreateServiceNetworkErr(e.toString()));
+  //     } else {
+  //       rethrow;
+  //     }
+  //   }
+  // }
 
 //   Future<void> orderList({
 //     required String username,
