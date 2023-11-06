@@ -85,13 +85,13 @@ class SignInScreen extends StatelessWidget {
                         name: AppRoutes.serviceProviderLandingPage);
                   }
 
-                  loginUser(
-                      firebaseUser: firebaseUser,
-                      context: context,
-                      message: state.userData.message!,
-                      userId: state.userData.profile!.id.toString(),
-                      hasPet: state.userData.profile!.hasPets!,
-                      isAgent: !state.userData.isAgent!);
+                  // loginUser(
+                  //     firebaseUser: firebaseUser,
+                  //     context: context,
+                  //     message: state.userData.message!,
+                  //     userId: state.userData.profile!.id.toString(),
+                  //     hasPet: state.userData.profile!.hasPets!,
+                  //     isAgent: !state.userData.isAgent!);
                 } else {
                   Modals.showToast(state.userData.message!,
                       messageType: MessageType.error);

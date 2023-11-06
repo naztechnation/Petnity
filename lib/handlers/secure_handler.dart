@@ -46,7 +46,7 @@ class StorageHandler {
 
 static Future<void> saveAgentId(String id) async {
     
-      await storage.write(key: 'ID', value: id);
+      await storage.write(key: 'AGENT_ID', value: id);
   }
   static Future<String> getUserName() async {
    String? value = await storage.read(key: 'USER');
@@ -147,7 +147,7 @@ static Future<void> saveAgentId(String id) async {
   
 
   static Future<String> getAgentId() async {
-   String? value = await storage.read(key: 'ID');
+   String? value = await storage.read(key: 'AGENT_ID');
     String? id;
     String? data = value;
     if (data != null) {
