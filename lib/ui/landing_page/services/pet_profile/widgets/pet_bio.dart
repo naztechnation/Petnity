@@ -96,9 +96,9 @@ class PetBio extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.w700),
         ),
         SizedBox(
-          height: 10,
+          height: 20,
         ),
-        GalleryRatingBody(isGallery: true),
+        // GalleryRatingBody(isGallery: true),
       ],
     );
   }

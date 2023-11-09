@@ -8,8 +8,8 @@ class PetStatus extends StatelessWidget {
     return Column(
       children: [
         Container(
-          width: 380,
-          height: 396,
+          width: MediaQuery.sizeOf(context).width,
+          height: 300,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(29),
             image: DecorationImage(

@@ -65,6 +65,21 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone for audio calls.</string>
 
-	
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
+	<key>GoogleMapsApiKey</key>
+	<string>AIzaSyCGhgIA6avmf0LRLakXaAama2vRnBsyL_Q</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location is required for this app.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Your location is required for this app.</string>
+
+
 </dict>
 </plist>

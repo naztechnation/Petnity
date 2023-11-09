@@ -30,15 +30,15 @@ class PetOwner extends StatelessWidget {
             width: screenSize(context).width * 0.38,
             child: Row(
               children: [
-                ImageView.svg(AppImages.callBorder),
+                Expanded(child: ImageView.svg(AppImages.callBorder)),
                 const SizedBox(
                   width: 10,
                 ),
-                ImageView.svg(AppImages.messageBorder),
+                Expanded(child: ImageView.svg(AppImages.messageBorder)),
                 const SizedBox(
                   width: 10,
                 ),
-                ImageView.svg(AppImages.videoBorder),
+                Expanded(child: ImageView.svg(AppImages.videoBorder)),
               ],
             ),
           ),
