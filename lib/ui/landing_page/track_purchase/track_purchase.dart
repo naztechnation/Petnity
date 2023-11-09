@@ -5,6 +5,7 @@ import 'package:petnity/ui/landing_page/track_purchase/track_purchase_screens/al
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
+import '../../../handlers/secure_handler.dart';
 import '../../../model/user_models/order_list.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -12,8 +13,7 @@ import '../../../res/app_images.dart';
 import '../../widgets/image_view.dart';
 
 class TrackPurchase extends StatelessWidget {
-  final String username;
-  const TrackPurchase({Key? key, required this.username}) : super(key: key);
+  const TrackPurchase({Key? key, }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +22,26 @@ class TrackPurchase extends StatelessWidget {
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: TrackPurchaseScreen(
-        username: username,
       ),
     );
   }
 }
 
 class TrackPurchaseScreen extends StatefulWidget {
-  final String username;
+  
 
-  const TrackPurchaseScreen({super.key, required this.username});
+  const TrackPurchaseScreen({super.key,  });
 
   @override
   State<TrackPurchaseScreen> createState() => _TrackPurchaseScreenState(
-        username: username,
+         
       );
 }
 
 class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
-  final String username;
+    String username = '';
 
-  _TrackPurchaseScreenState({required this.username});
+  _TrackPurchaseScreenState( );
 
   List<UserOrders> allUserOrder = [];
   List<UserOrders> completedUserOrder = [];
@@ -55,6 +54,8 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
   bool isLoading = false;
 
   getServicesTypes() async {
+    username = await StorageHandler.getUserName();
+
     _userCubit = context.read<UserCubit>();
 
     setState(() {

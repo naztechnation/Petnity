@@ -37,22 +37,18 @@ class _LandingScreenState extends State<LandingScreen> {
   String username = '';
   String password = '';
 
-  List<Widget> _widgetOptions = [];
-
-  getUserDetails() async {
-    username = await StorageHandler.getUserName();
-    password = await StorageHandler.getUserPassword();
-
-    setState(() {
-      _widgetOptions = <Widget>[
+  List<Widget> _widgetOptions  = <Widget>[
         HomePage(),
         ServicesScreen(),
         ShopScreen(),
         TrackPurchase(
-          username: username,
         ),
       ];
-    });
+
+  getUserDetails() async {
+    password = await StorageHandler.getUserPassword();
+
+     
   }
 
   @override

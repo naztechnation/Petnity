@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_constants.dart';
+import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/service_provider/service_provider.dart';
@@ -10,20 +11,23 @@ import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
+import '../../../../utils/navigator/page_navigator.dart';
 import '../../../../utils/validator.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/modals.dart';
 import '../../../widgets/text_edit_view.dart';
+import '../review_service_package.dart';
 import 'duration_content.dart';
 
 class CreatePackageScreen extends StatelessWidget {
   final String serviceName;
+  final String serviceId;
 
   CreatePackageScreen({
     super.key,
-    required this.serviceName,
+    required this.serviceName, required this.serviceId,
   });
   final _formKey = GlobalKey<FormState>();
 
@@ -55,27 +59,27 @@ class CreatePackageScreen extends StatelessWidget {
                 listen: false)),
         child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
           listener: (context, state) {
-            // if (state is AccountLoaded) {
-            //     if(state.userData.status!){
-            //         AppNavigator.pushAndStackPage(context,
-            //                       page: KycScreenTwelve(
-            //                         selectedPet: petProfile.petType,
-            //                       ));
-            //    Modals.showToast(state.userData.message!,
-            //         messageType: MessageType.success);
-            //     }
+            if (state is CreateServicePackageLoaded) {
+                if(state.package.status!){
+                 
+               Modals.showToast(state.package.message!,
+                    messageType: MessageType.success);
+                }else{
+                  Modals.showToast(state.package.message!,
+                    messageType: MessageType.error);
+                }
 
-            // } else if (state is AccountApiErr) {
-            //   if (state.message != null) {
-            //     Modals.showToast(state.message!,
-            //         messageType: MessageType.error);
-            //   }
-            // } else if (state is AccountNetworkErr) {
-            //   if (state.message != null) {
-            //     Modals.showToast(state.message!,
-            //         messageType: MessageType.error);
-            //   }
-            // }
+            } else if (state is CreateServiceNetworkErr) {
+              if (state.message != null) {
+                Modals.showToast(state.message!,
+                    messageType: MessageType.error);
+              }
+            } else if (state is CreateServiceNetworkErrApiErr) {
+              if (state.message != null) {
+                Modals.showToast(state.message!,
+                    messageType: MessageType.error);
+              }
+            }
           },
           builder: (context, state) => SingleChildScrollView(
             child: Form(
@@ -186,6 +190,7 @@ class CreatePackageScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextEditView(
                             isDense: true,
+                            keyboardType: TextInputType.number,
                             controller: _pricingController,
                             validator: (value) {
                               return Validator.validate(value, 'Pricing');
@@ -193,7 +198,7 @@ class CreatePackageScreen extends StatelessWidget {
                             filled: true,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
-                            hintText: 'Selected Pricing',
+                            hintText: 'Enter Pricing',
                             textViewTitle: 'Pricing',
                           ),
                         ),
@@ -207,10 +212,16 @@ class CreatePackageScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 0.0, horizontal: 20),
                     child: ButtonView(
-                      // processing: state is AccountProcessing,
+                       processing: state is CreateServicePackageLoading,
                       onPressed: () {
-                        //  Modals.showToast(petProfile.petId);
-                        // _submit(context, petProfile.petId);
+                        //  _submit(context, serviceProvider);
+
+                             AppNavigator.pushAndStackPage(context,
+                                  page: ReviewServicePackage(serviceId: serviceId,
+                                   agentId: '2', serviceName: _nameOfLevelController.text, 
+                                   serviceDescription: _descriptionController.text, 
+                                   serviceDuration: _durationController.text,
+                                    servicePrice: _pricingController.text,));
                       },
                       color: AppColors.lightSecondary,
                       borderRadius: 30,
@@ -235,17 +246,29 @@ class CreatePackageScreen extends StatelessWidget {
     ));
   }
 
-  _submit(BuildContext ctx, String petId) {
-    if (_formKey.currentState!.validate()) {
-      // ctx.read<AccountCubit>().sendPetHealth(
+  _submit(BuildContext ctx, final user) {
+     if (_formKey.currentState!.validate()) {
 
-      //     name: _illnessNameController.text.trim(),
-      //     drug: _drugNameController.text.trim(),
-      //     prescription: _prescribeNameController.text.trim(),
-      //     url: 'pets/add-allergies/$petId'
-      //     );
+     // Modals.showToast(_nameOfLevelController.text.trim());
+      // Modals.showToast(serviceId);
+
+      // Modals.showToast(user.selectedIndex.toString());
+
+      // Modals.showToast(_descriptionController.text);
+      // Modals.showToast(_durationController.text);
+      // Modals.showToast(_pricingController.text);
+
+      ctx.read<ServiceProviderCubit>().setServicePackage(
+
+          name: _nameOfLevelController.text.trim(), agentId: '2',
+           servicesId: serviceId, levelAmount: user.selectedIndex.toString(),
+            description: _descriptionController.text.trim(), 
+            duration: _durationController.text.trim(),
+             pricing: _pricingController.text.trim(),
+           
+          );
       FocusScope.of(ctx).unfocus();
-    }
+     }
   }
 
   durationContent(BuildContext context) {

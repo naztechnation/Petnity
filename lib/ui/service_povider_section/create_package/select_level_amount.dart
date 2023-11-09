@@ -46,6 +46,7 @@ class SelectPackageLevelAmount extends StatelessWidget {
                 AppNavigator.pushAndStackPage(context,
                     page: CreatePackageScreen(
                       serviceName: serviceType,
+                      serviceId: state.serviceAmount.service!.id!.toString(),
                     ));
               } else {
                 Modals.showToast(
@@ -113,6 +114,7 @@ class SelectPackageLevelAmount extends StatelessWidget {
                     processing: state is CreateServiceAmountLoading,
                     onPressed: () {
                       _submit(context, serviceProvider);
+                      
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 22,

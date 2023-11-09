@@ -7,6 +7,7 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:provider/provider.dart';
 
+import '../../../model/view_models/account_view_model.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../service_povider_section/create_package/select_level_amount.dart';
  
@@ -17,6 +18,7 @@ class ServicesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: true);
+    final agent = Provider.of<AccountViewModel>(context, listen: false);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -36,6 +38,7 @@ class ServicesList extends StatelessWidget {
 
                   return Item(context, randomColor,
                       '${user.services[index].name}', AppImages.catPic, () {
+                        agent.setServiceId('${user.services[index].id}');
                         AppNavigator.pushAndReplacePage(context, page: SelectPackageLevelAmount(serviceType: '${user.services[index].name}', serviceId: '${user.services[index].id}'));
                   });
                 },
