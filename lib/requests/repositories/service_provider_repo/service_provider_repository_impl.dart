@@ -1,33 +1,32 @@
-import 'package:petnity/model/account_models/agents_packages.dart';
-import 'package:petnity/model/account_models/confirm_payment.dart';
-import 'package:petnity/model/user_models/confirm_shop_payment.dart';
-import 'package:petnity/model/user_models/create_payment_order.dart';
-import 'package:petnity/model/user_models/get_product_reviews.dart';
-import 'package:petnity/model/account_models/pet_types.dart';
-import 'package:petnity/model/user_models/products_detail.dart';
+ 
+import 'package:petnity/model/service_provider_models/create_services_amount.dart';
+import 'package:petnity/model/user_models/create_order.dart';
 
-import '../../../model/account_models/auth_data.dart';
-import '../../../model/user_models/create_order.dart';
-import '../../../model/user_models/gallery_data.dart';
-import '../../../model/user_models/order_list.dart';
-import '../../../model/user_models/reviews_data.dart';
-import '../../../model/user_models/service_provider_lists.dart';
-import '../../../model/user_models/service_type.dart';
-import '../../../model/user_models/shopping_lists.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'service_provider_repository.dart';
 
 class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
-  // @override
-  // Future<ServiceProvidersList> getServiceProviderList(
-  //     {required String serviceId}) async {
-  //   final map = await Requests()
-  //       .get(AppStrings.getServiceProvidersList(serviceId), headers: {
-  //     'Authorization': AppStrings.token,
-  //   });
-  //   return ServiceProvidersList.fromJson(map);
-  // }
+  
+  
+  @override
+   Future<ServiceAmount> createServiceAmount({required String agentId,required String servicesId,required String levelAmount}) async {
+    final map = await Requests()
+        .post(AppStrings.setServiceAmountUrl(agentId, servicesId), headers: {
+      'Authorization': AppStrings.token,
+    },
+    body: {
+      'levels_amount': levelAmount
+    }
+    );
+    return ServiceAmount.fromJson(map);
+  }
+
+  @override
+  Future<CreateOrder> createService({required String packageId, required String username, required String pickupTime, required String dropOffTime, required String pickUpLocation}) {
+    // TODO: implement createService
+    throw UnimplementedError();
+  }
 
   // @override
   // Future<GetServiceTypes> getServiceTypes() async {
@@ -95,23 +94,29 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   //   return PaymentResponse.fromJson(map);
   // }
 
-  @override
-  Future<CreateOrder> createService(
-      {required String packageId,
-      required String username,
-      required String pickupTime,
-      required String dropOffTime,
-      required String pickUpLocation}) async {
-    final map = await Requests()
-        .post(AppStrings.createOrder(packageId, username), body: {
-      "pickup_time": pickupTime,
-      "dropoff_time": dropOffTime,
-      "pickup_location": pickUpLocation,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
-    return CreateOrder.fromJson(map);
-  }
+  // @override
+  // Future<CreateOrder> createService(
+  //     {required String packageId,
+  //     required String username,
+  //     required String pickupTime,
+  //     required String dropOffTime,
+  //     required String pickUpLocation}) async {
+  //   final map = await Requests()
+  //       .post(AppStrings.createOrder(packageId, username), body: {
+  //     "pickup_time": pickupTime,
+  //     "dropoff_time": dropOffTime,
+  //     "pickup_location": pickUpLocation,
+  //   }, headers: {
+  //     'Authorization': AppStrings.token,
+  //   });
+  //   return CreateOrder.fromJson(map);
+  // }
+
+  // @override
+  // Future<ServiceAmount> createServiceAmount({required String agentId, required String servicesId}) {
+  //   // TODO: implement createServiceAmount
+  //   throw UnimplementedError();
+  // }
 
   // @override
   // Future<UserOrderList> orderList({required String username}) async {

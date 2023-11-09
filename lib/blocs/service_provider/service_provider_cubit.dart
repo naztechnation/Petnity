@@ -1,44 +1,45 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository.dart';
 
-import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/user_repo/user_repository.dart';
+import '../../model/view_models/service_provider_inapp.dart';
 import '../../utils/exceptions.dart';
 import 'service_provider_states.dart';
 
 class ServiceProviderCubit extends Cubit<ServiceProviderState> {
-  ServiceProviderCubit({required this.userRepository, required this.viewModel})
+  ServiceProviderCubit({required this.serviceProviderRepository, required this.viewModel})
       : super(const InitialState());
-  final UserRepository userRepository;
-  final UserViewModel viewModel;
+  final ServiceProviderRepository serviceProviderRepository;
+  final ServiceProviderInAppViewModel viewModel;
 
-//   Future<void> getServiceProviderList({
-//     required String serviceId,
-//   }) async {
-//     try {
-//       emit(ServiceProviderListLoading());
+  Future<void> setServiceAmount({
+    required String serviceId,
+    required String agentId,
+    required String levelAmount,
+  }) async {
+    try {
+      emit(CreateServiceAmountLoading());
 
-//       final agents = await userRepository.getServiceProviderList(
-//         serviceId: serviceId,
-//       );
+      final services = await serviceProviderRepository.createServiceAmount(
+        servicesId: serviceId, agentId:agentId,levelAmount:levelAmount,
+      );
 
-//       await viewModel.setAgentDetails(agents: agents.agents ?? []);
+      // await viewModel.setAgentDetails(agents: agents.agents ?? []);
 
-//       emit(ServiceProviderListLoaded(agents));
-//     } on ApiException catch (e) {
-//       emit(UserNetworkErrApiErr(e.message));
-//     } catch (e) {
-//       if (e is NetworkException ||
-//           e is BadRequestException ||
-//           e is UnauthorisedException ||
-//           e is FileNotFoundException ||
-//           e is AlreadyRegisteredException) {
-//         emit(UserNetworkErr(e.toString()));
-//       } else {
-//         rethrow;
-//       }
-//     }
-//   }
+      emit(CreateServiceAmountLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 
 //   Future<void> getServiceTypes() async {
 //     try {

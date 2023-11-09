@@ -146,7 +146,6 @@ class Page2 extends StatelessWidget {
   }
 }
 
-
 class HomepageAppbar extends StatelessWidget {
   const HomepageAppbar({Key? key}) : super(key: key);
 
@@ -160,13 +159,13 @@ class HomepageAppbar extends StatelessWidget {
     );
   }
 }
+
 class HomepageBar extends StatefulWidget {
   @override
   State<HomepageBar> createState() => _HomepageBarState();
 }
 
 class _HomepageBarState extends State<HomepageBar> {
-
   List<ServiceTypes> service = [];
 
   late UserCubit _userCubit;
@@ -176,14 +175,9 @@ class _HomepageBarState extends State<HomepageBar> {
   getServicesTypes() async {
     _userCubit = context.read<UserCubit>();
 
-     try {
-     
-    await _userCubit.getServiceTypes();
-     
-    } catch (e) {
-      
-    }
-  
+    try {
+      await _userCubit.getServiceTypes();
+    } catch (e) {}
   }
 
   @override
@@ -192,6 +186,7 @@ class _HomepageBarState extends State<HomepageBar> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -200,71 +195,84 @@ class _HomepageBarState extends State<HomepageBar> {
       iconTheme: IconThemeData(color: Colors.black),
       actions: [
         BlocConsumer<UserCubit, UserStates>(
-      listener: (context, state) {
-        if (state is ServicesLoaded) {
-          if (state.services.status!) {
-            service = _userCubit.viewModel.services;
-          } else {}
-        } else if (state is UserNetworkErrApiErr) {
-        } else if (state is UserNetworkErr) {}
-      },
-      builder: (context, state) =>  GestureDetector(
-            onTap: (){
-              showModalBottomSheet(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0),
-                                topRight: Radius.circular(20.0),
+          listener: (context, state) {
+            if (state is ServicesLoaded) {
+              if (state.services.status!) {
+                service = _userCubit.viewModel.services;
+              } else {}
+            } else if (state is UserNetworkErrApiErr) {
+            } else if (state is UserNetworkErr) {}
+          },
+          builder: (context, state) => GestureDetector(
+              onTap: () {
+                showModalBottomSheet(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0),
+                      ),
+                    ),
+                    isDismissible: true,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                        height: screenSize(context).height * .5,
+                        child: SingleChildScrollView(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: CustomText(
+                                text: 'Services',
+                                weight: FontWeight.bold,
+                                size: 17,
                               ),
                             ),
-                            isDismissible: true,
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20)),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 20),
-                                height: screenSize(context).height * .5,
-                                child: SingleChildScrollView(
-                                    child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                      Center(
-                                            child: CustomText(
-                                              text: 'Services',
-                                              weight: FontWeight.bold,
-                                              size: 17,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 15,),
-                                          CustomText(
-                                            text: 'All Services',
-                                            weight: FontWeight.bold,
-                                            size: 14,
-                                          ),
-                                          const SizedBox(height: 15,),
-
-                                          CustomText(
-                                            size: 14,
-                                            text: 'Select Service',
-                                          ),
-                                          const SizedBox(height: 15,),
-                                    ServicesList(),
-                                  ],
-                                )),
-                              );
-                            });
-            },
-            child: ImageView.svg(AppImages.addIcon, height: 25,)),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            CustomText(
+                              text: 'All Services',
+                              weight: FontWeight.bold,
+                              size: 14,
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            CustomText(
+                              size: 14,
+                              text: 'Select Service',
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            ServicesList(),
+                          ],
+                        )),
+                      );
+                    });
+              },
+              child: ImageView.svg(
+                AppImages.addIcon,
+                height: 25,
+              )),
         ),
-        const SizedBox(width: 12,),
+        const SizedBox(
+          width: 12,
+        ),
         GestureDetector(
           onTap: () {
             AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
           },
           child: NotificationIcon(
-              icon: ImageView.svg(AppImages.notificationIcon, height: 30,),
+              icon: ImageView.svg(
+                AppImages.notificationIcon,
+                height: 30,
+              ),
               nun_of_notifications: 5),
         ),
       ],

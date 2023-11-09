@@ -59,6 +59,9 @@ class AppStrings {
       '${_baseUrl}users/get-reviews/$userId';
   static String getGalleryUrl(String userId) =>
       '${_baseUrl}users/get-gallery-elements/$userId';
+      static String setServiceAmountUrl(String agentId, String serviceId) =>
+      '${_baseUrl}services/create-service/$agentId/$serviceId';
+      
   static String confirmPaymentUrl(String username, String agentId) =>
       '${_baseUrl}order/order-payment/$username/$agentId';
   static String getAgentPackagesUrl(String agentId, String serviceId) =>

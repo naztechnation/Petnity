@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/user_models/create_order.dart';
 
 
@@ -15,75 +16,7 @@ class InitialState extends ServiceProviderState {
   List<Object> get props => [];
 }
 
-// class ServiceProviderListLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
 
-// class ServicesLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ServicesLoaded extends ServiceProviderState {
-//   final GetServiceTypes services;
-//   const ServicesLoaded(this.services);
-//   @override
-//   List<Object> get props => [services];
-// }
-// class ServiceProviderListLoaded extends ServiceProviderState {
-//   final ServiceProvidersList userData;
-//   const ServiceProviderListLoaded(this.userData);
-//   @override
-//   List<Object> get props => [userData];
-// }
-
-// class ReviewLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ReviewLoaded extends ServiceProviderState {
-//   final GetReviews reviews;
-//   const ReviewLoaded(this.reviews);
-//   @override
-//   List<Object> get props => [reviews];
-// }
-// class GalleryLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class GalleryLoaded extends ServiceProviderState {
-//   final GalleryAgents galleryAgents;
-//   const GalleryLoaded(this.galleryAgents);
-//   @override
-//   List<Object> get props => [galleryAgents];
-// }
-
-// class AgentPackagesLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class AgentPackagesLoaded extends ServiceProviderState {
-//   final GetAgentsPackages packages;
-//   const AgentPackagesLoaded(this.packages);
-//   @override
-//   List<Object> get props => [packages];
-// }
-
-// class ConfirmPaymentLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ConfirmPaymentLoaded extends ServiceProviderState {
-//   final PaymentResponse packages;
-//   const ConfirmPaymentLoaded(this.packages);
-//   @override
-//   List<Object> get props => [packages];
-// }
 
 class CreateServiceLoading extends ServiceProviderState {
   @override
@@ -97,106 +30,19 @@ class CreateServiceLoaded extends ServiceProviderState {
   List<Object> get props => [createService];
 }
 
-// class OrderListLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
+class CreateServiceAmountLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
  
-// class OrderListLoaded extends ServiceProviderState {
-//   final UserOrderList orderList;
-//   const OrderListLoaded(this.orderList);
-//   @override
-//   List<Object> get props => [orderList];
-// }
-
-// class ShoppingListLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ShoppingListLoaded extends ServiceProviderState {
-//   final ShoppingList shoppingList;
-//   const ShoppingListLoaded(this.shoppingList);
-//   @override
-//   List<Object> get props => [shoppingList];
-// }
-
-// class ProductDetailsLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ProductDetailsLoaded extends ServiceProviderState {
-//   final ProductDetails productDetails;
-//   const ProductDetailsLoaded(this.productDetails);
-//   @override
-//   List<Object> get props => [productDetails];
-// }
-
-// class ProductOrderLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ProductOrderLoaded extends ServiceProviderState {
-//   final CreatePaymentOrder createPaymentOrder;
-//   const ProductOrderLoaded(this.createPaymentOrder);
-//   @override
-//   List<Object> get props => [createPaymentOrder];
-// }
-
-// class ConfirmShoppingOrderLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class ConfirmShoppingOrderLoaded extends ServiceProviderState {
-//   final ConfirmShopPayment confirmPaymentOrder;
-//   const ConfirmShoppingOrderLoaded(this.confirmPaymentOrder);
-//   @override
-//   List<Object> get props => [confirmPaymentOrder];
-// }
-
-// class GetProductReviewsLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class GetProductReviewsLoaded extends ServiceProviderState {
-//   final GetProductReviews getAgentPayment;
-//   const GetProductReviewsLoaded(this.getAgentPayment);
-//   @override
-//   List<Object> get props => [getAgentPayment];
-// }
-
-// class PostProductReviewsLoading extends ServiceProviderState {
-//   @override
-//   List<Object> get props => [];
-// }
- 
-// class PostProductReviewsLoaded extends ServiceProviderState {
-//   final AuthData postReview;
-//   const PostProductReviewsLoaded(this.postReview);
-//   @override
-//   List<Object> get props => [postReview];
-// }
+class CreateServiceAmountLoaded extends ServiceProviderState {
+  final ServiceAmount serviceAmount;
+  const CreateServiceAmountLoaded(this.serviceAmount);
+  @override
+  List<Object> get props => [serviceAmount];
+}
 
 
-
-
-// class UserNetworkErr extends ServiceProviderState {
-//   final String? message;
-//   const UserNetworkErr(this.message);
-//   @override
-//   List<Object> get props => [message!];
-// }
-
-// class UserNetworkErrApiErr extends ServiceProviderState {
-//   final String? message;
-//   const UserNetworkErrApiErr(this.message);
-//   @override
-//   List<Object> get props => [message!];
-// }
 
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;

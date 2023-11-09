@@ -36,7 +36,7 @@ class ServicesList extends StatelessWidget {
 
                   return Item(context, randomColor,
                       '${user.services[index].name}', AppImages.catPic, () {
-                        AppNavigator.pushAndReplacePage(context, page: SelectPackageLevelAmount(serviceType: '${user.services[index].name}',));
+                        AppNavigator.pushAndReplacePage(context, page: SelectPackageLevelAmount(serviceType: '${user.services[index].name}', serviceId: '${user.services[index].id}'));
                   });
                 },
                 staggeredTileBuilder: (index) {
