@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/landing_page/landing_screen.dart';
+import 'package:petnity/ui/user/landing_screen.dart';
 import 'package:petnity/ui/landing_page/services/track_services/track_services.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';

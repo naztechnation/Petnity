@@ -5,8 +5,8 @@ import 'package:petnity/ui/service_povider_section/service_provider_home/service
 import 'package:petnity/ui/auth/otp_screen.dart';
 import 'package:petnity/ui/auth/sign_up_screen.dart';
 import 'package:petnity/ui/user/user_kyc/kyc_screen_one.dart';
-import 'package:petnity/ui/landing_page/shop_screen/cart.dart';
-import 'package:petnity/ui/landing_page/shop_screen/product_detail_screen.dart';
+import 'package:petnity/ui/user/shop_screen/cart.dart';
+import 'package:petnity/ui/user/shop_screen/product_detail_screen.dart';
 import 'package:petnity/ui/settings/acount_deleted.dart';
 import 'package:petnity/ui/settings/change_email.dart';
 import 'package:petnity/ui/settings/change_email_&_number_option.dart';
@@ -27,7 +27,7 @@ import '../ui/auth/reg_successful_screen.dart';
 import '../ui/auth/sign_in_screen.dart';
 import '../ui/service_povider_section/service_provider_kyc/service_provider_kyc/service_kyc_one.dart';
 import '../ui/user/user_kyc/kyc_screen_two.dart';
-import '../ui/landing_page/landing_screen.dart';
+import '../ui/user/landing_screen.dart';
 import '../ui/on_boarding/welcome_screen.dart';
 import '../splash_screen.dart';
 

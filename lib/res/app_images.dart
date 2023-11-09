@@ -87,6 +87,7 @@ class AppImages {
   static const activities = '${_svgBaseUrl}Activities_1.svg';
 
   static const creditcard = '${_svgBaseUrl}Credit_Card.svg';
+  static const coupon = '${_svgBaseUrl}sales_coupon.svg';
 
   ///Gif images
   static const _gifBaseUrl = '${_baseUrl}gifs/';

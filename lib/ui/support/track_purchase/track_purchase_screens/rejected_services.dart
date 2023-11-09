@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_purchase_widget.dart';
+import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_purchase_widget.dart';
 
 class PendingServices extends StatelessWidget {
   const PendingServices({super.key});

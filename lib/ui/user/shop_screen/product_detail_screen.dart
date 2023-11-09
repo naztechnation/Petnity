@@ -6,7 +6,7 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/res/enum.dart';
-import 'package:petnity/ui/landing_page/shop_screen/widgets/review_widget.dart';
+import 'package:petnity/ui/user/shop_screen/widgets/review_widget.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';

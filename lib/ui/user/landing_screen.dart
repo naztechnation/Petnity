@@ -17,14 +17,14 @@ import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
 import '../../res/enum.dart';
 import '../widgets/modals.dart';
-import 'services/services_screen.dart';
+import '../landing_page/services/services_screen.dart';
 import 'shop_screen/shop_screen.dart';
 
 import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';
 
-import 'homepage.dart';
-import 'track_purchase/track_purchase.dart';
+import '../landing_page/homepage.dart';
+import '../support/track_purchase/track_purchase.dart';
 
 class LandingScreen extends StatefulWidget {
   @override
@@ -34,21 +34,17 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   // int _selectedIndex = 0;
 
-  String username = '';
   String password = '';
 
-  List<Widget> _widgetOptions  = <Widget>[
-        HomePage(),
-        ServicesScreen(),
-        ShopScreen(),
-        TrackPurchase(
-        ),
-      ];
+  List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
+    ServicesScreen(),
+    ShopScreen(),
+    TrackPurchase(),
+  ];
 
   getUserDetails() async {
     password = await StorageHandler.getUserPassword();
-
-     
   }
 
   @override

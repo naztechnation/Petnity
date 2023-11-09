@@ -64,6 +64,13 @@ class CreatePackageScreen extends StatelessWidget {
                  
                Modals.showToast(state.package.message!,
                     messageType: MessageType.success);
+
+                    AppNavigator.pushAndStackPage(context,
+                                  page: ReviewServicePackage(serviceId: serviceId,
+                                   agentId: '2', serviceName: _nameOfLevelController.text, 
+                                   serviceDescription: _descriptionController.text, 
+                                   serviceDuration: _durationController.text,
+                                    servicePrice: _pricingController.text,));
                 }else{
                   Modals.showToast(state.package.message!,
                     messageType: MessageType.error);
@@ -214,14 +221,9 @@ class CreatePackageScreen extends StatelessWidget {
                     child: ButtonView(
                        processing: state is CreateServicePackageLoading,
                       onPressed: () {
-                        //  _submit(context, serviceProvider);
+                          _submit(context, serviceProvider);
 
-                             AppNavigator.pushAndStackPage(context,
-                                  page: ReviewServicePackage(serviceId: serviceId,
-                                   agentId: '2', serviceName: _nameOfLevelController.text, 
-                                   serviceDescription: _descriptionController.text, 
-                                   serviceDuration: _durationController.text,
-                                    servicePrice: _pricingController.text,));
+                             
                       },
                       color: AppColors.lightSecondary,
                       borderRadius: 30,

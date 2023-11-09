@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
-import 'package:petnity/ui/landing_page/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
+import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
+import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
 import 'package:provider/provider.dart';
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/view_models/user_view_model.dart';

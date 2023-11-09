@@ -16,7 +16,6 @@ import '../../model/user_models/service_type.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
-import '../landing_page/widgets/listofservices_widget.dart';
 import '../widgets/custom_text.dart';
 import 'widget/drawer_custom.dart';
 
@@ -55,7 +54,7 @@ class _ServiceProviderLandingPageState
           child: _selectedIndex == 0
               ? HomepageAppbar()
               : _selectedIndex == 1
-                  ? simpleAppbar('Payment', Container())
+                  ? simpleAppbar('Shop products', Container())
                   : Container(),
         ),
       ),
@@ -91,20 +90,35 @@ class _ServiceProviderLandingPageState
                     ),
                     label: 'Activities',
                   ),
-                  BottomNavigationBarItem(
+                   BottomNavigationBarItem(
                     icon: ImageView.svg(
-                      AppImages.creditcard,
+                      AppImages.coupon,
                       height: 20,
                       width: 20,
+                      color: Colors.black,
                     ),
                     activeIcon: ImageView.svg(
-                      AppImages.creditcard,
+                      AppImages.coupon,
                       height: 20,
                       width: 20,
                       color: AppColors.lightSecondary,
                     ),
-                    label: 'Payment',
+                    label: 'Catalogue',
                   ),
+                  // BottomNavigationBarItem(
+                  //   icon: ImageView.svg(
+                  //     AppImages.creditcard,
+                  //     height: 20,
+                  //     width: 20,
+                  //   ),
+                  //   activeIcon: ImageView.svg(
+                  //     AppImages.creditcard,
+                  //     height: 20,
+                  //     width: 20,
+                  //     color: AppColors.lightSecondary,
+                  //   ),
+                  //   label: 'Payment',
+                  // ),
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: Colors.black,
