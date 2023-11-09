@@ -1,31 +1,26 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/view_models/service_provider_view_model.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
-import '../../../res/app_strings.dart';
-import '../../../utils/navigator/page_navigator.dart';
-import '../../user/user_kyc/widgets/choice_card.dart';
-import '../../widgets/back_button.dart';
-import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart';
-import 'service_kyc_four.dart';
+import '../../../../model/view_models/service_provider_view_model.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../widgets/back_button.dart';
+import '../../../widgets/button_view.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/text_edit_view.dart';
+import 'service_kyc_three.dart';
 
-class KycServiceScreenThree extends StatefulWidget {
-  KycServiceScreenThree({
+class KycServiceScreenTwo extends StatelessWidget {
+  KycServiceScreenTwo({
     super.key,
   });
 
-  @override
-  State<KycServiceScreenThree> createState() => _KycServiceScreenThreeState();
-}
-
-class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
-  PetGenderType _petGenderType = PetGenderType.none;
+  final TextEditingController _serviceProviderNameController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,66 +64,43 @@ class _KycServiceScreenThreeState extends State<KycServiceScreenThree> {
               CustomText(
                 textAlign: TextAlign.center,
                 maxLines: 1,
-                text: 'Your gender',
+                text: 'Your name',
                 weight: FontWeight.w700,
                 size: 32,
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
               SizedBox(height: 30),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 22.0),
-                  child: CustomText(
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    text: 'Select gender',
-                    weight: FontWeight.w500,
-                    size: 16,
-                    fontFamily: AppStrings.interSans,
-                    color: Colors.black,
-                  ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                child: TextEditView(
+                  controller: _serviceProviderNameController,
+                  isDense: true,
+                  labelText: 'input name',
                 ),
               ),
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ChoiceCard(_petGenderType == PetGenderType.male, 'Male', () {
-                    setState(() {
-                      _petGenderType = PetGenderType.male;
-                    });
-                  }),
-                  ChoiceCard(_petGenderType == PetGenderType.female, 'Female',
-                      () {
-                    setState(() {
-                      _petGenderType = PetGenderType.female;
-                    });
-                  })
-                ],
-              ),
               const Spacer(),
-              if (_petGenderType != PetGenderType.none)
+              if (_serviceProviderNameController.text.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 20.0, horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                   child: ButtonView(
                     onPressed: () {
-                      serviceProvider
-                          .setServiceProviderGender(_petGenderType.name);
+                      serviceProvider.setServiceProviderName(
+                          _serviceProviderNameController.text);
+
                       AppNavigator.pushAndStackPage(context,
-                          page: KycServiceScreenFour());
+                          page: KycServiceScreenThree());
                     },
                     color: AppColors.lightSecondary,
-                    borderRadius: 32,
+                    borderRadius: 22,
                     borderColor: Colors.white,
                     child: CustomText(
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       text: 'Next',
-                      weight: FontWeight.w400,
-                    size: 16,
+                      weight: FontWeight.w500,
+                      size: 16,
                       fontFamily: AppStrings.interSans,
                       color: Colors.white,
                     ),

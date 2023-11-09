@@ -1,40 +1,38 @@
 import 'dart:io';
 
-import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/view_models/service_provider_view_model.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
+import '../../../../model/view_models/service_provider_view_model.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
 
-import '../../../res/app_strings.dart';
-import '../../../utils/navigator/page_navigator.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../utils/navigator/page_navigator.dart';
 
-import '../../widgets/back_button.dart';
-import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart';
-import 'service_kyc_six.dart';
+import '../../../widgets/back_button.dart';
+import '../../../widgets/button_view.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/text_edit_view.dart';
+import 'service_kyc_five.dart';
 
-class KycServiceScreenFive extends StatelessWidget {
-  KycServiceScreenFive({
+class KycServiceScreenFour extends StatelessWidget {
+  KycServiceScreenFour({
     super.key,
   });
 
-  String state = '';
-  String country = '';
-  String city = '';
+  final TextEditingController _serviceProviderAgeController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
-        Provider.of<ServiceProviderViewModel>(context, listen: false);
+        Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
       body: GestureDetector(
-        onTap: () {
+        onTap: (){
           FocusScope.of(context).requestFocus(FocusNode());
         },
         child: SingleChildScrollView(
@@ -68,27 +66,29 @@ class KycServiceScreenFive extends StatelessWidget {
               CustomText(
                 textAlign: TextAlign.center,
                 maxLines: 1,
-                text: 'Your Location',
-                weight: FontWeight.w500,
-                size: 18,
+                text: 'Your age',
+                weight: FontWeight.w700,
+                size: 32,
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
               SizedBox(height: 30),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 22.0),
-                child: CSCPicker(
-                  onCountryChanged: (value) {
-                    serviceProvider.setCountryServiceProvider(value);
-                    country = value;
-                  },
-                  onStateChanged: (value) {
-                    serviceProvider.setStateServiceProvider(value ?? '');
-                    state = value ?? '';
-                  },
-                  onCityChanged: (value) {
-                    serviceProvider.setCityServiceProvider(value ?? '');
-                    city = value ?? '';
+                child: TextEditView(
+                  controller: _serviceProviderAgeController,
+                  isDense: true,
+                  readOnly: true,
+                  labelText: 'Year/Month/Day',
+                  suffixIcon: Icon(
+                    Icons.arrow_drop_down,
+                    size: 32,
+                  ),
+                  onTap: () async {
+                    await serviceProvider.showDatePickerDialog(context);
+      
+                    _serviceProviderAgeController.text =
+                        serviceProvider.serviceProviderAge;
                   },
                 ),
               ),
@@ -99,24 +99,11 @@ class KycServiceScreenFive extends StatelessWidget {
                       const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                   child: ButtonView(
                     onPressed: () {
-
-                    // serviceProvider.setCountryServiceProvider('Nigeria');
-                    // serviceProvider.setStateServiceProvider('Enugu');
-                    // serviceProvider.setCityServiceProvider( 'Nkanu');
-
-                    //  AppNavigator.pushAndStackPage(context,
-                    //         page: KycServiceScreenSix());
-
-                      if (country == '') {
-                        Modals.showToast('please select a country');
-                      } else if (state == '') {
-                        Modals.showToast('please select a state');
-                      } else if (city == '') {
-                        Modals.showToast('please select a city');
-                      } else {
-                        AppNavigator.pushAndStackPage(context,
-                            page: KycServiceScreenSix());
-                      }
+                      serviceProvider.setServiceProviderAge(
+                          _serviceProviderAgeController.text);
+      
+                      AppNavigator.pushAndStackPage(context,
+                          page: KycServiceScreenFive());
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 22,
@@ -125,8 +112,8 @@ class KycServiceScreenFive extends StatelessWidget {
                       textAlign: TextAlign.center,
                       maxLines: 1,
                       text: 'Next',
-                      weight: FontWeight.w500,
-                      size: 16,
+                      weight: FontWeight.w400,
+                    size: 16,
                       fontFamily: AppStrings.interSans,
                       color: Colors.white,
                     ),

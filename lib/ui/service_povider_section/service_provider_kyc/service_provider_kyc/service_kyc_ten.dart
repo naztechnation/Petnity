@@ -1,18 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petnity/ui/service_provider/service_provider_kyc/service_kyc_eleven.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_kyc/service_provider_kyc/service_kyc_eleven.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/view_models/service_provider_view_model.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
-import '../../../res/app_strings.dart';
-import '../../../utils/navigator/page_navigator.dart';
-import '../../widgets/back_button.dart';
-import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/modals.dart';
+import '../../../../model/view_models/service_provider_view_model.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../widgets/back_button.dart';
+import '../../../widgets/button_view.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/modals.dart';
 
 class KycServiceScreenTen extends StatelessWidget {
     KycServiceScreenTen({super.key});

@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/view_models/account_view_model.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
-import '../../../res/app_routes.dart';
-import '../../../res/app_strings.dart';
-import '../../../utils/navigator/page_navigator.dart';
-import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/image_view.dart';
+import '../../../../model/view_models/account_view_model.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
+import '../../../../res/app_routes.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../widgets/button_view.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/image_view.dart';
 
 class KycServiceScreenTwelve extends StatelessWidget {
   const KycServiceScreenTwelve({super.key});

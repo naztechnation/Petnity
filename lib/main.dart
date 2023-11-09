@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'model/view_models/firebase_auth_viewmodel.dart';
+import 'model/view_models/service_provider_inapp.dart';
 import 'model/view_models/service_provider_view_model.dart';
 import 'model/view_models/account_view_model.dart';
 import 'model/view_models/user_view_model.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => ServiceProviderViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => FirebaseAuthProvider(), lazy: false),
+      ChangeNotifierProvider(create: (_) => ServiceProviderInAppViewModel(), lazy: false),
     ], 
     child: const Petnity(),
   ));
@@ -36,7 +38,7 @@ class Petnity extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
       themeMode: ThemeMode.light,
-      theme: ThemeData(fontFamily: AppStrings.interSans),
+      theme: ThemeData(fontFamily: AppStrings.montserrat),
       routes: AppRoutes.routes,
 
       

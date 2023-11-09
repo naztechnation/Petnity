@@ -6,6 +6,9 @@ import 'package:petnity/model/view_models/user_view_model.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:provider/provider.dart';
+
+import '../../../utils/navigator/page_navigator.dart';
+import '../../service_povider_section/create_package/select_level_amount.dart';
  
 
 class ServicesList extends StatelessWidget {
@@ -33,7 +36,7 @@ class ServicesList extends StatelessWidget {
 
                   return Item(context, randomColor,
                       '${user.services[index].name}', AppImages.catPic, () {
-                   
+                        AppNavigator.pushAndReplacePage(context, page: SelectPackageLevelAmount(serviceType: '${user.services[index].name}',));
                   });
                 },
                 staggeredTileBuilder: (index) {

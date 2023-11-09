@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/accounts/account.dart';
-import '../../../handlers/secure_handler.dart';
-import '../../../model/view_models/service_provider_view_model.dart';
-import '../../../model/view_models/account_view_model.dart';
-import '../../../requests/repositories/account_repo/account_repository_impl.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
-import '../../../res/app_strings.dart';
-import '../../../res/enum.dart';
-import '../../../utils/navigator/page_navigator.dart';
-import '../../widgets/back_button.dart';
-import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/image_view.dart';
-import '../../widgets/modals.dart';
+import '../../../../blocs/accounts/account.dart';
+import '../../../../handlers/secure_handler.dart';
+import '../../../../model/view_models/service_provider_view_model.dart';
+import '../../../../model/view_models/account_view_model.dart';
+import '../../../../requests/repositories/account_repo/account_repository_impl.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../res/enum.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../widgets/back_button.dart';
+import '../../../widgets/button_view.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/image_view.dart';
+import '../../../widgets/modals.dart';
 import 'service_kyc_eight.dart';
 
 class KycServiceScreenSeven extends StatefulWidget {

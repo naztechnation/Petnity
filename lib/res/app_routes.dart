@@ -25,7 +25,7 @@ import 'package:petnity/ui/support/report_an_issue.dart';
 
 import '../ui/auth/reg_successful_screen.dart';
 import '../ui/auth/sign_in_screen.dart';
-import '../ui/service_provider/service_provider_kyc/service_kyc_one.dart';
+import '../ui/service_povider_section/service_provider_kyc/service_provider_kyc/service_kyc_one.dart';
 import '../ui/user/user_kyc/kyc_screen_two.dart';
 import '../ui/landing_page/landing_screen.dart';
 import '../ui/on_boarding/welcome_screen.dart';

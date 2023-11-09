@@ -7,22 +7,22 @@ import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/user/user.dart';
-import '../../../model/user_models/service_type.dart';
-import '../../../model/view_models/service_provider_view_model.dart';
-import '../../../model/view_models/account_view_model.dart';
-import '../../../model/view_models/user_view_model.dart';
-import '../../../requests/repositories/user_repo/user_repository_impl.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
-import '../../../res/app_images.dart';
-import '../../../res/app_strings.dart';
-import '../../../res/enum.dart';
-import '../../../utils/navigator/page_navigator.dart';
-import '../../user/user_kyc/widgets/service_provider_choice_container.dart';
-import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/modals.dart';
+import '../../../../blocs/user/user.dart';
+import '../../../../model/user_models/service_type.dart';
+import '../../../../model/view_models/service_provider_view_model.dart';
+import '../../../../model/view_models/account_view_model.dart';
+import '../../../../model/view_models/user_view_model.dart';
+import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
+import '../../../../res/app_images.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../res/enum.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../user/user_kyc/widgets/service_provider_choice_container.dart';
+import '../../../widgets/button_view.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/modals.dart';
 import 'service_kyc_nine.dart';
 
 class KycServiceScreenEight extends StatelessWidget {
