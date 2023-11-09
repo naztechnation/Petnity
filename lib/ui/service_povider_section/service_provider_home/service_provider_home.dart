@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -12,14 +13,39 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart';
 
-class ServiceProviderHomePage extends StatelessWidget {
+import '../../../handlers/secure_handler.dart';
+import '../../../model/view_models/account_view_model.dart';
+
+class ServiceProviderHomePage extends StatefulWidget {
   ServiceProviderHomePage({super.key});
 
+  @override
+  State<ServiceProviderHomePage> createState() => _ServiceProviderHomePageState();
+}
+
+class _ServiceProviderHomePageState extends State<ServiceProviderHomePage> {
   final TextEditingController search = TextEditingController();
+
+  String username = '';
+
+  getUsername() async {
+    username = await StorageHandler.getUserName();
+     
+  }
+
+  @override
+  void initState() {
+    getUsername();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    final user = Provider.of<AccountViewModel>(context, listen: true);
+
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       body: GestureDetector(
@@ -36,29 +62,35 @@ class ServiceProviderHomePage extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        'Hi Sarah,',
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: AppStrings.montserrat),
-                      ),
+                      Expanded(
+                                child: Text(
+                                  'Hi ${username.capitalizeFirstOfEach},',
+                                  maxLines: 1,
+                                  softWrap: true,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: AppStrings.interSans),
+                                ),
+                              ),
                     ],
                   ),
                 ),
+                const SizedBox(height: 12,),
                 Text(
                   'How is your pet doing?',
                   style: TextStyle(
                       fontFamily: AppStrings.interSans,
                       fontWeight: FontWeight.w800,
-                      fontSize: 24),
+                      fontSize: 22),
                 ),
                 FilterSearchView(
                   showFilter: false,
                   controller: search,
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 ServiceProviderPetDeliveryHomeBody()
               ],
@@ -69,8 +101,7 @@ class ServiceProviderHomePage extends StatelessWidget {
     );
   }
 
-  // Widget search() {}
-
+  
   Widget card(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

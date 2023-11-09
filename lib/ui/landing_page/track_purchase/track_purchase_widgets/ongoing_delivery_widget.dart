@@ -15,7 +15,7 @@ class OngoingDeliveryWidget extends StatelessWidget {
     return Card(
       elevation: 0,
       child: Container(
-        height: screenSize(context).height * .3,
+        // height: screenSize(context).height * .3,
         width: screenSize(context).width * .9,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
@@ -58,7 +58,7 @@ class OngoingDeliveryWidget extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 5,
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,69 +72,84 @@ class OngoingDeliveryWidget extends StatelessWidget {
                 SizedBox(width: 8),
               ],
             ),
+            
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Expanded(
+            //       child: Container(
+            //           padding: EdgeInsets.all(4),
+            //           decoration: BoxDecoration(
+            //               color: Colors.blue,
+            //               borderRadius: BorderRadius.circular(100)),
+            //           child: ImageView.svg(AppImages.gift)),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //         width: screenSize(context).width * .2,
+            //         height: 4,
+            //         color: Colors.blue,
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //           padding: EdgeInsets.all(4),
+            //           decoration: BoxDecoration(
+            //               color: Colors.blue,
+            //               borderRadius: BorderRadius.circular(100)),
+            //           child: ImageView.svg(AppImages.ticket)),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //         width: screenSize(context).width * .2,
+            //         height: 4,
+            //         color: Colors.blue,
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //           padding: EdgeInsets.all(4),
+            //           decoration: BoxDecoration(
+            //               color: Colors.blue,
+            //               borderRadius: BorderRadius.circular(100)),
+            //           child: ImageView.svg(AppImages.tag)),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //         width: screenSize(context).width * .2,
+            //         height: 4,
+            //         decoration: BoxDecoration(
+            //           gradient: LinearGradient(
+            //               colors: [
+            //                 Colors.blue,
+            //                 Colors.grey.shade400,
+            //                 Colors.grey.shade400,
+            //               ],
+            //               begin: Alignment.centerLeft,
+            //               end: Alignment.centerRight,
+            //               stops: [0.3, 0.4, 1.0]),
+            //         ),
+            //       ),
+            //     ),
+            //     Expanded(
+            //       child: Container(
+            //           padding: EdgeInsets.all(4),
+            //           decoration: BoxDecoration(
+            //               color: Colors.grey.shade400,
+            //               borderRadius: BorderRadius.circular(100)),
+            //           child: ImageView.svg(AppImages.checked)),
+            //     ),
+            //   ],
+            // ),
             SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100)),
-                    child: ImageView.svg(AppImages.gift)),
-                Container(
-                  width: screenSize(context).width * .2,
-                  height: 4,
-                  color: Colors.blue,
-                ),
-                Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100)),
-                    child: ImageView.svg(AppImages.ticket)),
-                Container(
-                  width: screenSize(context).width * .2,
-                  height: 4,
-                  color: Colors.blue,
-                ),
-                Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(100)),
-                    child: ImageView.svg(AppImages.tag)),
-                Container(
-                  width: screenSize(context).width * .2,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [
-                          Colors.blue,
-                          Colors.grey.shade400,
-                          Colors.grey.shade400,
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        stops: [0.3, 0.4, 1.0]),
-                  ),
-                ),
-                Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.circular(100)),
-                    child: ImageView.svg(AppImages.checked)),
-              ],
-            ),
-            SizedBox(
-              height: 10,
+              height: 15,
             ),
             Text(
               'Contact dog walker',
               style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

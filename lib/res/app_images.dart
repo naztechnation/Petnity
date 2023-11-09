@@ -72,6 +72,7 @@ class AppImages {
   static const time = '${_svgBaseUrl}time.svg';
   static const bell = '${_svgBaseUrl}bell.svg';
   static const note = '${_svgBaseUrl}note.svg';
+  static const addIcon = '${_svgBaseUrl}add.svg';
   static const cartIcon = '${_svgBaseUrl}cart_icon.svg';
   static const callBorder = '${_svgBaseUrl}call_border.svg';
   static const videoBorder = '${_svgBaseUrl}video_border.svg';

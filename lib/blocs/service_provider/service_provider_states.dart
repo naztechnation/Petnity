@@ -1,19 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:petnity/model/user_models/shopping_lists.dart';
 
-import '../../model/account_models/agents_packages.dart';
-import '../../model/account_models/auth_data.dart';
-import '../../model/account_models/confirm_payment.dart';
-import '../../model/user_models/confirm_shop_payment.dart';
 import '../../model/user_models/create_order.dart';
-import '../../model/user_models/create_payment_order.dart';
-import '../../model/user_models/gallery_data.dart';
-import '../../model/user_models/get_product_reviews.dart';
-import '../../model/user_models/order_list.dart';
-import '../../model/user_models/products_detail.dart';
-import '../../model/user_models/reviews_data.dart';
-import '../../model/user_models/service_provider_lists.dart';
-import '../../model/user_models/service_type.dart';
+
 
 
 

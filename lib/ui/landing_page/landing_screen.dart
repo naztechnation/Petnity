@@ -275,10 +275,9 @@ class HomepageAppbar extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.black),
       actions: [
         GestureDetector(
-           onTap: () {
-                                          AppNavigator.pushAndStackPage(context,
-                                              page: NotificationsScreen());
-                                        },
+          onTap: () {
+            AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
+          },
           child: NotificationIcon(
               icon: ImageView.svg(AppImages.notificationIcon),
               nun_of_notifications: 5),

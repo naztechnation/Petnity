@@ -123,7 +123,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             children: <Widget>[
                               Expanded(
                                 child: Text(
-                                  'Hi $username,',
+                                  'Hi ${username.capitalizeFirstOfEach},',
                                   maxLines: 1,
                                   softWrap: true,
                                   overflow: TextOverflow.ellipsis,
