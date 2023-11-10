@@ -7,6 +7,7 @@ import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/service_provider/service_provider.dart';
+import '../../../../handlers/secure_handler.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../../res/app_colors.dart';
@@ -18,10 +19,10 @@ import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/modals.dart';
 import '../../../widgets/text_edit_view.dart';
-import '../review_service_package.dart';
+import '../../create_shop_product/review_service_package.dart';
 import 'duration_content.dart';
 
-class CreatePackageScreen extends StatelessWidget {
+class CreatePackageScreen extends StatefulWidget {
   final String serviceName;
   final String serviceId;
 
@@ -29,13 +30,35 @@ class CreatePackageScreen extends StatelessWidget {
     super.key,
     required this.serviceName, required this.serviceId,
   });
+
+  @override
+  State<CreatePackageScreen> createState() => _CreatePackageScreenState();
+}
+
+class _CreatePackageScreenState extends State<CreatePackageScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameOfLevelController = TextEditingController();
+
   final TextEditingController _descriptionController = TextEditingController();
+
   final TextEditingController _durationController = TextEditingController();
+
   final TextEditingController _duration1Controller = TextEditingController();
+
   final TextEditingController _pricingController = TextEditingController();
+
+      String agentId = "";
+
+  getAgentId() async{
+    agentId = await StorageHandler.getAgentId();
+  }
+
+  @override
+  void initState() {
+     getAgentId();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,8 +89,8 @@ class CreatePackageScreen extends StatelessWidget {
                     messageType: MessageType.success);
 
                     AppNavigator.pushAndStackPage(context,
-                                  page: ReviewServicePackage(serviceId: serviceId,
-                                   agentId: '2', serviceName: _nameOfLevelController.text, 
+                                  page: ReviewServicePackage(serviceId: widget.serviceId,
+                                   serviceName: _nameOfLevelController.text, 
                                    serviceDescription: _descriptionController.text, 
                                    serviceDuration: _durationController.text,
                                     servicePrice: _pricingController.text,));
@@ -106,7 +129,7 @@ class CreatePackageScreen extends StatelessWidget {
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 1,
-                          text: '$serviceName packages',
+                          text: '${widget.serviceName} packages',
                           weight: FontWeight.w700,
                           size: 16,
                           color: Colors.black,
@@ -251,19 +274,11 @@ class CreatePackageScreen extends StatelessWidget {
   _submit(BuildContext ctx, final user) {
      if (_formKey.currentState!.validate()) {
 
-     // Modals.showToast(_nameOfLevelController.text.trim());
-      // Modals.showToast(serviceId);
-
-      // Modals.showToast(user.selectedIndex.toString());
-
-      // Modals.showToast(_descriptionController.text);
-      // Modals.showToast(_durationController.text);
-      // Modals.showToast(_pricingController.text);
-
+      
       ctx.read<ServiceProviderCubit>().setServicePackage(
 
-          name: _nameOfLevelController.text.trim(), agentId: '2',
-           servicesId: serviceId, levelAmount: user.selectedIndex.toString(),
+          name: _nameOfLevelController.text.trim(), agentId: agentId,
+           servicesId: widget.serviceId, levelAmount: user.selectedIndex.toString(),
             description: _descriptionController.text.trim(), 
             duration: _durationController.text.trim(),
              pricing: _pricingController.text.trim(),

@@ -45,6 +45,7 @@ class AppStrings {
   static const String logoutUrl = '${_baseUrl}auth/logout';
   static const String shoppingList = '${_baseUrl}shop/get-products/1';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
+  static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
   static String userOrders(String username) =>
       '${_baseUrl}order/get-user-orders/$username';
   static String createOrderPayment(String username) =>
@@ -68,7 +69,6 @@ class AppStrings {
      static String publishPackageUrl(String agentId, String serviceId) =>
       '${_baseUrl}services/publish-service/$agentId/$serviceId';
 
-      
       
   static String confirmPaymentUrl(String username, String agentId) =>
       '${_baseUrl}order/order-payment/$username/$agentId';

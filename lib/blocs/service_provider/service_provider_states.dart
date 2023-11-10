@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:petnity/model/account_models/auth_data.dart';
 
 import '../../model/service_provider_models/create_services_amount.dart';
+import '../../model/service_provider_models/create_shop_products_model.dart';
 import '../../model/user_models/create_order.dart';
 
 abstract class ServiceProviderState extends Equatable {
@@ -60,6 +61,18 @@ class  PublishPackageLoaded extends ServiceProviderState {
   const  PublishPackageLoaded(this.package);
   @override
   List<Object> get props => [package];
+}
+
+class  CreateShopProductsLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  CreateShopProductsLoaded extends ServiceProviderState {
+  final CreateShopProduct createShopProduct;
+  const  CreateShopProductsLoaded(this.createShopProduct);
+  @override
+  List<Object> get props => [createShopProduct];
 }
 
 class CreateServiceNetworkErr extends ServiceProviderState {

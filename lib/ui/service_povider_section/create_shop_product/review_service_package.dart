@@ -6,12 +6,11 @@ import 'package:provider/provider.dart';
 
 import '../../../../../res/app_colors.dart';
 import '../../../../../res/app_constants.dart';
-import '../../../../../res/app_strings.dart';
-import '../../../../blocs/user/user_cubit.dart';
-import '../../../../blocs/user/user_states.dart';
+import '../../../../../res/app_strings.dart'; 
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../res/app_images.dart';
 import '../../../blocs/service_provider/service_provider.dart';
+import '../../../handlers/secure_handler.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../utils/navigator/page_navigator.dart';
@@ -20,11 +19,11 @@ import '../../widgets/button_view.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/modals.dart';
-import 'package_successful.dart';
+import '../create_package/package_successful.dart';
 
 class ReviewServicePackage extends StatefulWidget {
   final String serviceId;
-  final String agentId;
+   
   final String serviceName;
   final String serviceDescription;
   final String serviceDuration;
@@ -32,7 +31,7 @@ class ReviewServicePackage extends StatefulWidget {
   const ReviewServicePackage(
       {super.key,
       required this.serviceId,
-      required this.agentId,
+      
       required this.serviceName,
       required this.serviceDescription,
       required this.serviceDuration,
@@ -41,7 +40,7 @@ class ReviewServicePackage extends StatefulWidget {
   @override
   State<ReviewServicePackage> createState() => _PackagesState(
       serviceId,
-      agentId,
+      
       serviceName,
       serviceDescription,
       servicePrice,
@@ -50,14 +49,26 @@ class ReviewServicePackage extends StatefulWidget {
 
 class _PackagesState extends State<ReviewServicePackage> {
   final String serviceId;
-  final String agentId;
+  
   final String serviceName;
   final String serviceDescription;
   final String serviceDuration;
   final String servicePrice;
 
-  _PackagesState(this.serviceId, this.agentId, this.serviceName,
+  _PackagesState(this.serviceId,   this.serviceName,
       this.serviceDescription, this.servicePrice, this.serviceDuration);
+
+      String agentId = "";
+
+  getAgentId() async{
+    agentId = await StorageHandler.getAgentId();
+  }
+
+  @override
+  void initState() {
+     getAgentId();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -256,6 +267,6 @@ class _PackagesState extends State<ReviewServicePackage> {
   ) {
     ctx
         .read<ServiceProviderCubit>()
-        .publishServicePackage(agentId: '2', servicesId: serviceId);
+        .publishServicePackage(agentId: agentId, servicesId: serviceId);
   }
 }

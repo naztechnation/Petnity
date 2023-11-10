@@ -60,26 +60,29 @@ class SignInScreen extends StatelessWidget {
                       messageType: MessageType.success);
 
                   StorageHandler.saveIsLoggedIn('true');
-                  StorageHandler.saveUserId(
-                      state.userData.profile!.id.toString());
+                 
                   StorageHandler.saveUserPassword(_passwordController.text);
                   StorageHandler.saveUserName(_usernameController.text.trim());
-                  StorageHandler.saveEmail(
-                      state.userData.profile!.user!.email.toString());
+                 
+                 
 
-                  if (state.userData.profile!.hasPets!) {
+                  if (!state.userData.isAgent!) {
+                     if (state.userData.profile!.hasPets!) {
                     StorageHandler.saveUserPetState('true');
                   } else {
                     StorageHandler.saveUserPetState('');
                   }
-
-                  if (!state.userData.isAgent!) {
                     StorageHandler.saveIsUserType('user');
+                     StorageHandler.saveEmail(
+                      state.userData.profile?.user?.email.toString());
 
+                    
                     AppNavigator.pushAndStackNamed(context,
                         name: AppRoutes.landingPage);
                   } else {
                     StorageHandler.saveIsUserType('service_provider');
+                     StorageHandler.saveAgentId(
+                      state.userData.agent!.id.toString());
 
                     AppNavigator.pushAndReplaceName(context,
                         name: AppRoutes.serviceProviderLandingPage);

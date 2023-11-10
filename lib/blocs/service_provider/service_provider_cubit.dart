@@ -100,4 +100,32 @@ Future<void> publishServicePackage({
       }
     }
   }
+
+  Future<void> createShoppingProduct({
+    required String agentId,required String name,
+    required String pricing,required String image,required String description,
+  }) async {
+    try {
+      emit(CreateShopProductsLoading());
+
+      final services = await serviceProviderRepository.createShopProduct(
+          agentId:agentId, name: name, pricing: pricing, image: image, description: description,
+      );
+
+      
+      emit(CreateShopProductsLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

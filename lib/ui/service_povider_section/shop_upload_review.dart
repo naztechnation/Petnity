@@ -8,10 +8,12 @@ import 'package:petnity/res/enum.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/service_provider/service_provider.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/service_provider_inapp.dart';
 import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_strings.dart';
+import '../../utils/app_utils.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
@@ -45,8 +47,17 @@ class _ProductDetailState extends State<ProductReviewDetail> {
 
   bool isChecked = false;
 
+  bool isLoading = false;
+
+  String agentId = "";
+
+  getAgentId() async {
+    agentId = await StorageHandler.getAgentId();
+  }
+
   @override
   void initState() {
+    getAgentId();
     super.initState();
   }
 
@@ -63,9 +74,9 @@ class _ProductDetailState extends State<ProductReviewDetail> {
               listen: false)),
       child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
           listener: (context, state) {
-        if (state is CreateServiceAmountLoaded) {
-          if (state.serviceAmount.status!) {
-            Modals.showToast(state.serviceAmount.message ?? '',
+        if (state is CreateShopProductsLoaded) {
+          if (state.createShopProduct.status!) {
+            Modals.showToast(state.createShopProduct.message ?? '',
                 messageType: MessageType.success);
 
             // AppNavigator.pushAndStackPage(context,
@@ -75,11 +86,13 @@ class _ProductDetailState extends State<ProductReviewDetail> {
             //     ));
           } else {
             Modals.showToast(
-              state.serviceAmount.message ?? '',
+              state.createShopProduct.message ?? '',
             );
           }
         } else if (state is CreateServiceNetworkErrApiErr) {
-          Modals.showSnackBar(state.message ?? '', context: context);
+           Modals.showToast(
+              state.message ?? '',
+            );
         } else if (state is CreateServiceNetworkErr) {}
       }, builder: (context, state) {
         return Scaffold(
@@ -111,16 +124,16 @@ class _ProductDetailState extends State<ProductReviewDetail> {
             ),
             body: SingleChildScrollView(
               child: Container(
-                 height: screenSize(context).height,
-        width: screenSize(context).width,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                begin: Alignment.topRight,
-                end: Alignment.topLeft)),
+                height: screenSize(context).height,
+                width: screenSize(context).width,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                        begin: Alignment.topRight,
+                        end: Alignment.topLeft)),
                 child: Column(
                   children: [
-                     SizedBox(
+                    SizedBox(
                       height: 30,
                     ),
                     Container(
@@ -141,7 +154,8 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                     ),
                     Container(
                       color: Colors.yellow.withOpacity(0.1),
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -205,7 +219,7 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                               height: 10,
                             ),
                             Text(
-                              price,
+                              'NGN${AppUtils.convertPrice(price)}',
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
@@ -218,7 +232,21 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
-                        onPressed: () {},
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          String imgUrl = await serviceProvider.uploadImage(
+                              serviceProvider.imageURl!.path,
+                              'petnity_service_provider');
+                          setState(() {
+                            isLoading = false;
+                          });
+
+                          _submit(context, imgUrl);
+                        },
+                        processing:
+                            (state is CreateShopProductsLoading || isLoading),
                         color: AppColors.lightSecondary,
                         borderRadius: 16,
                         child: CustomText(
@@ -240,5 +268,14 @@ class _ProductDetailState extends State<ProductReviewDetail> {
         );
       }),
     );
+  }
+
+  _submit(BuildContext ctx, String image) {
+    ctx.read<ServiceProviderCubit>().createShoppingProduct(
+        agentId: agentId,
+        name: productName,
+        pricing: price,
+        image: image,
+        description: aboutProduct);
   }
 }

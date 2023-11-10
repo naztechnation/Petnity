@@ -8,19 +8,19 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/service_provider/service_provider.dart';
-import '../../../model/view_models/service_provider_inapp.dart';
-import '../../../res/app_colors.dart';
-import '../../../res/app_constants.dart';
-import '../../../res/app_strings.dart';
-import '../../res/app_images.dart';
-import '../../utils/validator.dart';
-import '../widgets/back_button.dart';
-import '../widgets/button_view.dart';
-import '../widgets/custom_text.dart';
-import '../widgets/modals.dart';
-import '../widgets/text_edit_view.dart';
-import 'shop_upload_review.dart';
+import '../../../../blocs/service_provider/service_provider.dart';
+import '../../../../model/view_models/service_provider_inapp.dart';
+import '../../../../res/app_colors.dart';
+import '../../../../res/app_constants.dart';
+import '../../../../res/app_strings.dart';
+import '../../../res/app_images.dart';
+import '../../../utils/validator.dart';
+import '../../widgets/back_button.dart';
+import '../../widgets/button_view.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/modals.dart';
+import '../../widgets/text_edit_view.dart';
+import '../shop_upload_review.dart';
 
 class CreateShopProducts extends StatefulWidget {
   CreateShopProducts({
@@ -206,6 +206,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                         return Validator.validate(value, 'Product price');
                       },
                       controller: productPrice,
+                      keyboardType: TextInputType.number,
                       filled: true,
                       fillColor: AppColors.lightPrimary,
                       borderRadius: 30,
@@ -241,15 +242,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                     child: ButtonView(
                       onPressed: () async{
                       
-                        // setState(() {
-                        //           isLoading = true;
-                        //         });
-                        //       String imgUrl = await serviceProvider.uploadImage(
-                        //           serviceProvider.imageURl!.path,
-                        //           'petnity_service_provider');
-                        //           setState(() {
-                        //           isLoading = false;
-                        //         });
+                       
                       
                       if(serviceProvider.imageURl != null){
                          _submit(context);

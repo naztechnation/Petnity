@@ -7,6 +7,7 @@ import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
+import '../../../handlers/secure_handler.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
@@ -19,12 +20,29 @@ import '../../widgets/modals.dart';
 import 'widgets/create_package_screen.dart';
 import 'widgets/selected_container.dart';
 
-class SelectPackageLevelAmount extends StatelessWidget {
+class SelectPackageLevelAmount extends StatefulWidget {
   final String serviceType;
   final String serviceId;
   const SelectPackageLevelAmount(
       {super.key, required this.serviceType, required this.serviceId});
 
+  @override
+  State<SelectPackageLevelAmount> createState() => _SelectPackageLevelAmountState();
+}
+
+class _SelectPackageLevelAmountState extends State<SelectPackageLevelAmount> {
+
+      String agentId = "";
+
+  getAgentId() async{
+    agentId = await StorageHandler.getAgentId();
+  }
+
+  @override
+  void initState() {
+     getAgentId();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
@@ -45,7 +63,7 @@ class SelectPackageLevelAmount extends StatelessWidget {
 
                 AppNavigator.pushAndStackPage(context,
                     page: CreatePackageScreen(
-                      serviceName: serviceType,
+                      serviceName: widget.serviceType,
                       serviceId: state.serviceAmount.service!.id!.toString(),
                     ));
               } else {
@@ -79,7 +97,7 @@ class SelectPackageLevelAmount extends StatelessWidget {
                     CustomText(
                       textAlign: TextAlign.center,
                       maxLines: 1,
-                      text: '$serviceType  packages',
+                      text: '${widget.serviceType}  packages',
                       weight: FontWeight.w800,
                       size: 16,
                       fontFamily: AppStrings.interSans,
@@ -146,8 +164,8 @@ class SelectPackageLevelAmount extends StatelessWidget {
     var user,
   ) {
     ctx.read<ServiceProviderCubit>().setServiceAmount(
-        agentId: '2',
-        serviceId: serviceId,
+        agentId: agentId,
+        serviceId: widget.serviceId,
         levelAmount: user.selectedIndex.toString());
   }
 }

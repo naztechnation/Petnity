@@ -17,7 +17,7 @@ import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
 import '../widgets/custom_text.dart';
-import 'create_shop_products.dart';
+import 'create_shop_product/create_shop_products.dart';
 import 'service_catalogue.dart';
 import 'widget/drawer_custom.dart';
 

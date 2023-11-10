@@ -1,6 +1,7 @@
  
 import 'package:petnity/model/account_models/auth_data.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
+import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/user_models/create_order.dart';
 
 import '../../../res/app_strings.dart';
@@ -62,7 +63,26 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     );
     return AuthData.fromJson(map);
   }
-  
+
+  @override
+  Future<CreateShopProduct> createShopProduct({required String agentId, 
+  required String name, required String pricing, required String image, required String description}) async {
+    final map = await Requests()
+        .post(AppStrings.publishShopProductUrl, headers: {
+      'Authorization': AppStrings.token,
+    },
+    body: {
+      'agent_id': agentId,
+      'name': name,
+      'image': image,
+      'description': description,
+      'price': pricing,
+    }
+    );
+    Modals.showToast(pricing);
+
+    return CreateShopProduct.fromJson(map);
+  }
 
  
 
