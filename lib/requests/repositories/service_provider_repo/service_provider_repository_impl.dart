@@ -1,5 +1,6 @@
  
 import 'package:petnity/model/account_models/auth_data.dart';
+import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/user_models/create_order.dart';
@@ -83,6 +84,18 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
     return CreateShopProduct.fromJson(map);
   }
+
+  @override
+  Future<AgentsOrderRequests> agentOrders({required String agentId, required String page}) async {
+    final map = await Requests()
+        .get(AppStrings.agentOrderUrl(agentId,page), headers: {
+      'Authorization': AppStrings.token,
+    },
+   
+    );
+    return AgentsOrderRequests.fromJson(map);
+  }
+
 
  
 

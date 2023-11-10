@@ -1,11 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/user/landing_screen.dart'; 
+import 'package:petnity/ui/user/landing_screen.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
+import '../../../res/app_routes.dart';
 import '../../../res/app_strings.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/button_view.dart';
@@ -17,8 +16,6 @@ class PackageSuccessful extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- 
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -53,7 +50,7 @@ class PackageSuccessful extends StatelessWidget {
                           textAlign: TextAlign.center,
                           maxLines: 3,
                           text:
-                         'Your service package has been added you would get notified when you get a session request',
+                              'Your service package has been added you would get notified when you get a session request',
                           weight: FontWeight.w600,
                           size: 13,
                           fontFamily: AppStrings.interSans,
@@ -73,15 +70,14 @@ class PackageSuccessful extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                 AppNavigator.pushAndStackPage(context,
-                    page: LandingScreen());
-                 
+                  AppNavigator.pushAndReplaceName(context,
+                      name: AppRoutes.serviceProviderLandingPage);
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text:  'Done',
+                  text: 'Done',
                   weight: FontWeight.w400,
                   size: 16,
                   fontFamily: AppStrings.interSans,
@@ -89,7 +85,6 @@ class PackageSuccessful extends StatelessWidget {
                 ),
               ),
             ),
-           
           ],
         ),
       ),

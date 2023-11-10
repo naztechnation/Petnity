@@ -3,11 +3,11 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/user/landing_screen.dart'; 
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
+import '../../../res/app_routes.dart';
 import '../../../res/app_strings.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../widgets/button_view.dart';
@@ -62,7 +62,7 @@ class ShopUploadSuccessful extends StatelessWidget {
                           textAlign: TextAlign.center,
                           maxLines: 3,
                           text:
-                         'Pet uploaded successfully',
+                         'Product uploaded successfully',
                           weight: FontWeight.w600,
                           size: 13,
                           fontFamily: AppStrings.interSans,
@@ -82,8 +82,8 @@ class ShopUploadSuccessful extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                 AppNavigator.pushAndStackPage(context,
-                    page: LandingScreen());
+                 AppNavigator.pushAndReplaceName(context,
+            name: AppRoutes.serviceProviderLandingPage);
                  
                 },
                 color: AppColors.lightSecondary,

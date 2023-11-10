@@ -14,9 +14,11 @@ import '../../requests/repositories/service_provider_repo/service_provider_repos
 import '../../res/app_colors.dart';
 import '../../res/app_strings.dart';
 import '../../utils/app_utils.dart';
+import '../../utils/navigator/page_navigator.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
+import 'create_shop_product/shop_created_success.dart';
 
 class ProductReviewDetail extends StatefulWidget {
   final String productName;
@@ -65,7 +67,7 @@ class _ProductDetailState extends State<ProductReviewDetail> {
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
-        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: false);
 
     return BlocProvider<ServiceProviderCubit>(
       create: (BuildContext context) => ServiceProviderCubit(
@@ -79,11 +81,10 @@ class _ProductDetailState extends State<ProductReviewDetail> {
             Modals.showToast(state.createShopProduct.message ?? '',
                 messageType: MessageType.success);
 
-            // AppNavigator.pushAndStackPage(context,
-            //     page: CreatePackageScreen(
-            //       serviceName: serviceType,
-            //       serviceId: state.serviceAmount.service!.id!.toString(),
-            //     ));
+            AppNavigator.pushAndStackPage(context,
+                page: ShopUploadSuccessful(
+                   
+                ));
           } else {
             Modals.showToast(
               state.createShopProduct.message ?? '',
@@ -122,146 +123,153 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                 ),
               ),
             ),
-            body: SingleChildScrollView(
-              child: Container(
-                height: screenSize(context).height,
-                width: screenSize(context).width,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                        begin: Alignment.topRight,
-                        end: Alignment.topLeft)),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 30,
+            body: Container(
+              height: screenSize(context).height,
+              width: screenSize(context).width,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                      begin: Alignment.topRight,
+                      end: Alignment.topLeft)),
+              child: ListView(
+                children: [
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                      ),
-                      padding: const EdgeInsets.all(20),
+                    margin: const EdgeInsets.symmetric(horizontal:100),
+                    padding: const EdgeInsets.symmetric(horizontal:20),
+                    child: ClipRRect(
                       child: ImageView.file(
                           File(
                             serviceProvider.imageURl!.path,
                           ),
                           height: 150,
+                      width: MediaQuery.sizeOf(context).width * 0.5,
+                    
                           fit: BoxFit.cover),
                     ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      color: Colors.yellow.withOpacity(0.1),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 40),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    productName,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 18),
-                                  ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    color: Colors.yellow.withOpacity(0.1),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  productName,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Mark as in stock',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Checkbox(
-                                        value: isChecked,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isChecked = value!;
-                                          });
-                                        })
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              width: screenSize(context).width,
-                              child: Text(
-                                'About Product',
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold),
                               ),
-                            ),
-                            Text(
-                              aboutProduct,
-                              textAlign: TextAlign.justify,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'Price',
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Mark as in stock',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Checkbox(
+                                      value: isChecked,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isChecked = value!;
+                                        });
+                                      })
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            width: screenSize(context).width,
+                            child: Text(
+                              'About Product',
                               style: TextStyle(
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              'NGN${AppUtils.convertPrice(price)}',
-                              style: TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                          ]),
-                    ),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0.0, horizontal: 20),
-                      child: ButtonView(
-                        onPressed: () async {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          String imgUrl = await serviceProvider.uploadImage(
-                              serviceProvider.imageURl!.path,
-                              'petnity_service_provider');
-                          setState(() {
-                            isLoading = false;
-                          });
+                          ),
+                          Text(
+                            aboutProduct,
+                            textAlign: TextAlign.justify,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Price',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'NGN${AppUtils.convertPrice(price)}',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                        ]),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 0.0, horizontal: 20),
+                    child: ButtonView(
+                      onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        String imgUrl = await serviceProvider.uploadImage(
+                            serviceProvider.imageURl!.path,
+                            'petnity_service_provider');
+                        setState(() {
+                          isLoading = false;
+                        });
 
-                          _submit(context, imgUrl);
-                        },
-                        processing:
-                            (state is CreateShopProductsLoading || isLoading),
-                        color: AppColors.lightSecondary,
-                        borderRadius: 16,
-                        child: CustomText(
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          text: 'Publish',
-                          weight: FontWeight.w500,
-                          size: 16,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.white,
-                        ),
+                        _submit(context, imgUrl);
+                      },
+                      processing:
+                          (state is CreateShopProductsLoading || isLoading),
+                      color: AppColors.lightSecondary,
+                      borderRadius: 16,
+                      child: CustomText(
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        text: 'Publish',
+                        weight: FontWeight.w500,
+                        size: 16,
+                        fontFamily: AppStrings.interSans,
+                        color: Colors.white,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                   SizedBox(
+                    height: 50,
+                  ),
+                ],
               ),
             ),
           ),

@@ -60,16 +60,17 @@ class AppStrings {
       '${_baseUrl}users/get-reviews/$userId';
   static String getGalleryUrl(String userId) =>
       '${_baseUrl}users/get-gallery-elements/$userId';
-      static String setServiceAmountUrl(String agentId, String serviceId) =>
+  static String setServiceAmountUrl(String agentId, String serviceId) =>
       '${_baseUrl}services/create-service/$agentId/$serviceId';
+  static String agentOrderUrl(String agentId, String pageIndex) =>
+      '${_baseUrl}shop/get-agent-shop-orders/$agentId/$pageIndex';
 
-      static String createPackageUrl(String agentId, String serviceId) =>
+  static String createPackageUrl(String agentId, String serviceId) =>
       '${_baseUrl}services/create-package/$agentId/$serviceId';
 
-     static String publishPackageUrl(String agentId, String serviceId) =>
+  static String publishPackageUrl(String agentId, String serviceId) =>
       '${_baseUrl}services/publish-service/$agentId/$serviceId';
 
-      
   static String confirmPaymentUrl(String username, String agentId) =>
       '${_baseUrl}order/order-payment/$username/$agentId';
   static String getAgentPackagesUrl(String agentId, String serviceId) =>
@@ -88,10 +89,12 @@ class AppStrings {
   static String registerServiceProviderProfileUrl({required username}) =>
       '${_baseUrl}auth/create-agent/$username';
 
-      static String getProductReview({required String productId}) =>
+  static String getProductReview({required String productId}) =>
       '${_baseUrl}shop/get-product-reviews/$productId';
 
-      static String publishProductReview( {required String url,}) =>
+  static String publishProductReview({
+    required String url,
+  }) =>
       '${_baseUrl}$url';
 
   static String confirmShoppingPaymentUrl(

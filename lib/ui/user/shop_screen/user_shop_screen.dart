@@ -153,6 +153,8 @@ class _ShopState extends State<Shop> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(20),
                                         child: Container(
+                                          height: 150,
+                                          width: MediaQuery.sizeOf(context).width,
                                           color: randomColor.withOpacity(0.3),
                                           child: ClipRRect(
                                               borderRadius:
