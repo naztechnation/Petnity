@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:petnity/model/account_models/auth_data.dart';
 
+import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/service_provider_models/create_shop_products_model.dart';
 import '../../model/user_models/create_order.dart';
@@ -73,6 +74,18 @@ class  CreateShopProductsLoaded extends ServiceProviderState {
   const  CreateShopProductsLoaded(this.createShopProduct);
   @override
   List<Object> get props => [createShopProduct];
+}
+
+class  AgentOrdersLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  AgentOrdersLoaded extends ServiceProviderState {
+  final AgentsOrderRequests agentsOrderRequests;
+  const  AgentOrdersLoaded(this.agentsOrderRequests);
+  @override
+  List<Object> get props => [agentsOrderRequests];
 }
 
 class CreateServiceNetworkErr extends ServiceProviderState {

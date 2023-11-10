@@ -128,4 +128,32 @@ Future<void> publishServicePackage({
       }
     }
   }
+
+   Future<void> getAllAgentOrder({
+    required String agentId,required String pageIndex,
+     
+  }) async {
+    try {
+      emit(AgentOrdersLoading());
+
+      final services = await serviceProviderRepository.agentOrders(
+          agentId:agentId, page: pageIndex,  
+      );
+
+      
+      emit(AgentOrdersLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }
