@@ -18,7 +18,7 @@ import '../../res/app_routes.dart';
 import '../../res/enum.dart';
 import '../widgets/modals.dart';
 import '../landing_page/services/services_screen.dart';
-import 'shop_screen/shop_screen.dart';
+import 'shop_screen/user_shop_screen.dart';
 
 import '../../res/app_images.dart';
 import '../../utils/navigator/page_navigator.dart';

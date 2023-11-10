@@ -83,6 +83,7 @@ class AppImages {
   static const ticket = '${_svgBaseUrl}Ticket.svg';
   static const gift = '${_svgBaseUrl}Gift.svg';
   static const checked = '${_svgBaseUrl}Checked.svg';
+  static const cross = '${_svgBaseUrl}cross.svg';
 
   static const activities = '${_svgBaseUrl}Activities_1.svg';
 

@@ -17,6 +17,8 @@ import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
 import '../widgets/custom_text.dart';
+import 'create_shop_products.dart';
+import 'service_catalogue.dart';
 import 'widget/drawer_custom.dart';
 
 class ServiceProviderLandingPage extends StatefulWidget {
@@ -31,7 +33,7 @@ class _ServiceProviderLandingPageState
 
   List<Widget> _widgetOptions = <Widget>[
     ServiceProviderHomePage(),
-    Container(),
+    ServiceProviderCatalogueScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -54,7 +56,15 @@ class _ServiceProviderLandingPageState
           child: _selectedIndex == 0
               ? HomepageAppbar()
               : _selectedIndex == 1
-                  ? simpleAppbar('Shop products', Container())
+                  ? simpleAppbar('Shop products', GestureDetector(
+                    onTap: (){
+                      AppNavigator.pushAndStackPage(context, page: CreateShopProducts());
+                    },
+                    child: ImageView.svg(
+                                  AppImages.addIcon,
+                                  height: 25,
+                                ),
+                  ))
                   : Container(),
         ),
       ),

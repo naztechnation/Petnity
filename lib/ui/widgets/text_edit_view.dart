@@ -131,7 +131,7 @@ class TextEditView extends StatelessWidget {
                 errorBorder: _border(context),
                 disabledBorder: _border(context),
                 hintText: hintText,
-                hintStyle: TextStyle(color: textColor),
+                hintStyle: TextStyle(color: Colors.grey.shade400),
                 labelText: labelText,
                 labelStyle: TextStyle(color: textColor),
                 filled: filled,
