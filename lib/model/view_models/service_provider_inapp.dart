@@ -8,17 +8,26 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
 import '../../res/enum.dart';
+import '../service_provider_models/all_agent_orders.dart';
 import 'base_viewmodel.dart';
 
 class ServiceProviderInAppViewModel extends BaseViewModel {
    
   int _selectedIndex = -1 ;
   File? _imageURl;
+  List<ShopOrders> _orders = [];
+
 
 
   setPackageLevelSelectedIndex({required int selectedIndex}){
 
     _selectedIndex = selectedIndex;
+    setViewState(ViewState.success);
+
+  }
+
+  setAgentOrdersList(List<ShopOrders> orders){
+      _orders = orders;
     setViewState(ViewState.success);
 
   }
@@ -123,5 +132,5 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   int get selectedIndex => _selectedIndex;
   File? get imageURl => _imageURl;
 
-
+  List<ShopOrders> get order => _orders;
 }

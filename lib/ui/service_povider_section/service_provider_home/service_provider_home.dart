@@ -6,13 +6,8 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/home.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/pet_selling_home.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/vet_home_screen.dart';
-import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
-import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/pet_selling_home.dart'; 
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
@@ -84,8 +79,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final user = Provider.of<AccountViewModel>(context, listen: true);
+ 
 
     return Scaffold(
       backgroundColor: AppColors.lightBackground,

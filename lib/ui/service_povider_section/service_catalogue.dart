@@ -173,10 +173,14 @@ class _ShopState extends State<Shop> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
-                                        filteredProducts[index].name ?? '',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
+                                      Expanded(
+                                        child: Text(
+                                          filteredProducts[index].name ?? '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
                                       ),
                                       const SizedBox(
                                         height: 5,
