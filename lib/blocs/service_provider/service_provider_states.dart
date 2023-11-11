@@ -88,6 +88,18 @@ class  AgentOrdersLoaded extends ServiceProviderState {
   List<Object> get props => [agentsOrderRequests];
 }
 
+class  UpdateAccountDetailsLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  UpdateAccountDetailsLoaded extends ServiceProviderState {
+  final AuthData account;
+  const  UpdateAccountDetailsLoaded(this.account);
+  @override
+  List<Object> get props => [account];
+}
+
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;
   const CreateServiceNetworkErr(this.message);

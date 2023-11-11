@@ -91,6 +91,9 @@ class AppStrings {
 
   static String getProductReview({required String productId}) =>
       '${_baseUrl}shop/get-product-reviews/$productId';
+  static String updateAccountDetailsUrl({required String agentId}) =>
+      '${_baseUrl}users/add-agent-bank-details/$agentId';
+      
 
   static String publishProductReview({
     required String url,

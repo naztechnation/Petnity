@@ -53,12 +53,14 @@ class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
           height: 10,
         ),
       if(serviceProvider.order.isEmpty)...[
-          CustomText(
-          text: 'no  available order here',
-                size: 16,
-
-          weight: FontWeight.bold,
-        ),
+          Center(
+            child: CustomText(
+            text: 'no  available order here',
+                  size: 16,
+          
+            weight: FontWeight.bold,
+                  ),
+          ),
       ]else...[
         ListView.builder(
           shrinkWrap: true,

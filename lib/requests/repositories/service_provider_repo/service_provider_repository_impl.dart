@@ -80,7 +80,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       'price': pricing,
     }
     );
-    Modals.showToast(pricing);
+     
 
     return CreateShopProduct.fromJson(map);
   }
@@ -95,7 +95,24 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     );
     return AgentsOrderRequests.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> updateAccountDetails({required String agentId, required String accountName, 
+  required String accountNumber, required String bankName}) async {
+    final map = await Requests()
+        .post(AppStrings.updateAccountDetailsUrl(agentId: agentId), headers: {
+      'Authorization': AppStrings.token,
+    },
+    body: {
+      'bank': bankName,
+      'account_name': accountName,
+      'account_number': accountNumber,
+    }
+    );
+    
 
+    return AuthData.fromJson(map);
+  }
 
  
 

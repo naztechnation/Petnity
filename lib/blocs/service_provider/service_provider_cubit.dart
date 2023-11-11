@@ -156,4 +156,32 @@ Future<void> publishServicePackage({
       }
     }
   }
+
+  Future<void> updateAccount({
+    required String agentId,required String bankName,
+    required String accountName, required String accountNumber
+     
+  }) async {
+    try {
+      emit(UpdateAccountDetailsLoading());
+
+      final account = await serviceProviderRepository.updateAccountDetails(
+          agentId:agentId, accountName: accountName, accountNumber: accountNumber, bankName: bankName, );  
+      
+ 
+      emit(UpdateAccountDetailsLoaded(account));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

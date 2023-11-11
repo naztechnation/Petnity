@@ -3,8 +3,12 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 
+import '../../handlers/secure_handler.dart';
 import '../../res/app_strings.dart';
+import '../widgets/modals.dart';
+import 'add_account_details.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -14,6 +18,20 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool switchValue1 = false;
   bool switchValue2 = false;
+  String userType = '';
+
+  getUserDetails() async {
+    userType = await StorageHandler.getUserType();
+    setState(() {
+      
+    });
+  }
+  
+  @override
+  void initState() {
+    getUserDetails();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +73,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
         body: ListView.builder(
-          itemCount: 7,
+          itemCount: 8,
           itemBuilder: (context, index) {
             if (index == 0) {
+              if (userType == 'user') {
+                return SizedBox.shrink();
+              }  else  {
+                return TileWidget(
+                    title: 'Add account details',
+                    icon: Icon(Icons.account_balance),
+                    onpressed: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: AddAccountDetails());
+                    });
+              }
+            } else if (index == 1) {
               return TileWidget(
                   title: 'Change Password',
                   icon: Icon(Icons.lock),
                   onpressed: () {
                     Navigator.pushNamed(context, 'changePassword');
                   });
-            } else if (index == 1) {
+            } else if (index == 2) {
               return TileWidgetWithSwitch(
                   title: 'Hide pet from Scan',
                   icon: Icon(Icons.remove_red_eye),
@@ -77,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   ),
                   onpressed: () {});
-            } else if (index == 2) {
+            } else if (index == 3) {
               return TileWidgetWithSwitch(
                   title: 'Turn on Location',
                   icon: Icon(Icons.location_on),
@@ -90,21 +120,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     },
                   ),
                   onpressed: () {});
-            } else if (index == 3) {
+            } else if (index == 4) {
               return TileWidget(
                   title: 'Cards and Payment',
                   icon: Icon(Icons.payment),
                   onpressed: () {
                     Navigator.pushNamed(context, 'paymentAndCard');
                   });
-            } else if (index == 4) {
+            } else if (index == 5) {
               return TileWidget(
                   title: 'Change number and Email',
                   icon: Icon(Icons.change_circle),
                   onpressed: () {
                     Navigator.pushNamed(context, 'changeEmailandNumber');
                   });
-            } else if (index == 5) {
+            } else if (index == 6) {
               return TileWidget(
                   title: 'FAQ',
                   icon: Icon(Icons.question_mark),

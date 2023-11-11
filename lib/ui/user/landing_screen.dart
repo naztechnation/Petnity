@@ -231,13 +231,7 @@ class _LandingScreenState extends State<LandingScreen> {
         ));
   }
 
-  _submit(BuildContext ctx, String username, String password) {
-    if (username != '' && password != '') {
-      ctx
-          .read<AccountCubit>()
-          .logoutUser(username: username, password: password);
-    }
-  }
+  
 }
 
 class Page2 extends StatelessWidget {

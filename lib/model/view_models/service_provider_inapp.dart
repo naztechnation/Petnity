@@ -1,5 +1,3 @@
-
- 
 import 'dart:convert';
 import 'dart:io';
 
@@ -12,27 +10,47 @@ import '../service_provider_models/all_agent_orders.dart';
 import 'base_viewmodel.dart';
 
 class ServiceProviderInAppViewModel extends BaseViewModel {
-   
-  int _selectedIndex = -1 ;
+  ServiceProviderInAppViewModel() {
+       filterBankList = _banksAndInstitutions;
+
+  }
+  int _selectedIndex = -1;
   File? _imageURl;
   List<ShopOrders> _orders = [];
 
+ List<String>   filterBankList = [];
+
+ resetBankList(){
+       filterBankList = _banksAndInstitutions;
+
+   setViewState(ViewState.success);
+
+ }
+
+    searchBank(String query) {
+    
+      filterBankList = _banksAndInstitutions
+          .where((banks) =>
+              banks.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    setViewState(ViewState.success);
 
 
-  setPackageLevelSelectedIndex({required int selectedIndex}){
+  }
 
+  setPackageLevelSelectedIndex({required int selectedIndex}) {
     _selectedIndex = selectedIndex;
     setViewState(ViewState.success);
-
   }
 
-  setAgentOrdersList(List<ShopOrders> orders){
-      _orders = orders;
+  setAgentOrdersList(List<ShopOrders> orders) {
+    _orders = orders;
     setViewState(ViewState.success);
-
   }
 
-  loadImage(BuildContext context, ) async {
+  loadImage(
+    BuildContext context,
+  ) async {
     await showModalBottomSheet<dynamic>(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -69,8 +87,8 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                       maxHeight: 1000,
                       maxWidth: 1000);
 
-                       _imageURl = File(image!.path);
-                  
+                  _imageURl = File(image!.path);
+
                   setViewState(ViewState.success);
                 },
               ),
@@ -88,7 +106,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                      _imageURl = File(image!.path);
+                  _imageURl = File(image!.path);
 
                   setViewState(ViewState.success);
                 },
@@ -98,7 +116,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
         });
   }
 
-   Future<String> uploadImage(String imageUrl, String uploadPreset) async{
+  Future<String> uploadImage(String imageUrl, String uploadPreset) async {
     final url = Uri.parse('https://api.cloudinary.com/v1_1/do2z93mmw/upload');
 
     String image = '';
@@ -108,29 +126,81 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
         ..fields['upload_preset'] = uploadPreset
         ..files.add(await http.MultipartFile.fromPath('file', imageUrl));
 
-        final response = await request.send();
+      final response = await request.send();
 
-        if(response.statusCode == 200){
-          final responseData = await response.stream.toBytes();
-          final resPonseString = String.fromCharCodes(responseData);
-          final jsonMap = jsonDecode(resPonseString);
+      if (response.statusCode == 200) {
+        final responseData = await response.stream.toBytes();
+        final resPonseString = String.fromCharCodes(responseData);
+        final jsonMap = jsonDecode(resPonseString);
 
-            image = jsonMap['url'];
+        image = jsonMap['url'];
 
-           
-           return image;
-        }
-    } catch (e) {
-      
-    }
-     
-     return image;
+        return image;
+      }
+    } catch (e) {}
+
+    return image;
   }
-
-
 
   int get selectedIndex => _selectedIndex;
   File? get imageURl => _imageURl;
 
   List<ShopOrders> get order => _orders;
+
+  List<String> _banksAndInstitutions = [
+    "Access Bank",
+    "Accion Microfinance Bank",
+    "Advans La Fayette Microfinance Bank",
+    "Citibank Nigeria Limited",
+    "Coronation Merchant Bank",
+    "Covenant Microfinance Bank Ltd",
+    "Dot Microfinance Bank",
+    "Ecobank Nigeria",
+    "Empire Trust Microfinance Bank",
+    "FairMoney Microfinance Bank",
+    "Fidelity Bank Plc",
+    "FBNQuest Merchant Bank",
+    "Fina Trust Microfinance Bank",
+    "Finca Microfinance Bank Limited",
+    "First Bank of Nigeria Limited",
+    "First City Monument Bank Limited",
+    "Globus Bank Limited",
+    "Guaranty Trust Holding Company Plc",
+    "Heritage Bank Plc",
+    "Infinity Microfinance Bank",
+    "Jaiz Bank Plc",
+    "Keystone Bank Limited",
+    "Kuda Bank",
+    "Lotus Bank",
+    "Mint Finex MFB",
+    "Mkobo MFB",
+    "Mutual Trust Microfinance Bank",
+    "Nova Merchant Bank",
+    "Opay",
+    "Optimus Bank Limited",
+    "Palmpay",
+    "Parallex Bank Limited",
+    "Peace Microfinance Bank",
+    "Pearl Microfinance Bank Limited",
+    "PremiumTrust Bank Limited",
+    "Providus Bank Limited",
+    "Rand Merchant Bank",
+    "Raven bank",
+    "Rephidim Microfinance Bank",
+    "Rex Microfinance Bank",
+    "Shepherds Trust Microfinance Bank",
+    "Sparkle Bank",
+    "Stanbic IBTC Bank Plc",
+    "Standard Chartered",
+    "Sterling Bank Plc",
+    "SunTrust Bank Nigeria Limited",
+    "TajBank Limited",
+    "Titan Trust Bank",
+    "Union Bank of Nigeria Plc",
+    "United Bank for Africa Plc",
+    "Unity Bank Plc",
+    "VFD Microfinance Bank",
+    "Wema Bank Plc",
+    "Zenith Bank Plc",
+  ];
 }
