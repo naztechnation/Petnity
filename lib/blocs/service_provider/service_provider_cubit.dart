@@ -184,4 +184,31 @@ Future<void> publishServicePackage({
       }
     }
   }
+
+  Future<void> getAccount({
+    required String agentId, 
+     
+  }) async {
+    try {
+      emit(AccountDetailsLoading());
+
+      final account = await serviceProviderRepository.accountDetails(
+          agentId:agentId,  );  
+      
+ 
+      emit(AccountDetailsLoaded(account));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

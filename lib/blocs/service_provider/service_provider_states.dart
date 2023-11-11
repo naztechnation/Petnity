@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:petnity/model/account_models/auth_data.dart';
 
+import '../../model/service_provider_models/account_details.dart';
 import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/service_provider_models/create_shop_products_model.dart';
@@ -96,6 +97,18 @@ class  UpdateAccountDetailsLoading extends ServiceProviderState {
 class  UpdateAccountDetailsLoaded extends ServiceProviderState {
   final AuthData account;
   const  UpdateAccountDetailsLoaded(this.account);
+  @override
+  List<Object> get props => [account];
+}
+
+class   AccountDetailsLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  AccountDetailsLoaded extends ServiceProviderState {
+  final AccountDetailsList account;
+  const  AccountDetailsLoaded(this.account);
   @override
   List<Object> get props => [account];
 }

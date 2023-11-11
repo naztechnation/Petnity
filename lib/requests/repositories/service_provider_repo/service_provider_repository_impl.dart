@@ -1,5 +1,6 @@
  
 import 'package:petnity/model/account_models/auth_data.dart';
+import 'package:petnity/model/service_provider_models/account_details.dart';
 import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
@@ -112,6 +113,17 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     
 
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<AccountDetailsList> accountDetails({required String agentId, } ) async {
+    final map = await Requests()
+        .get(AppStrings.getAccountDetailsUrl(agentId: agentId, ), headers: {
+      'Authorization': AppStrings.token,
+    },
+   
+    );
+    return AccountDetailsList.fromJson(map);
   }
 
  

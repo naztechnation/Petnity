@@ -68,7 +68,7 @@ class UpdateSuccessfulScreen extends StatelessWidget {
               ),
             Container(
               margin: EdgeInsets.symmetric(
-                  horizontal: screenSize(context).width * .15),
+                  horizontal: screenSize(context).width * .1),
               child: ButtonView(
                 onPressed: onPressed,
                 child: Text(buttonText),
