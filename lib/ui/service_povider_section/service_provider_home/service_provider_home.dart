@@ -6,7 +6,7 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/pet_selling_home.dart'; 
+import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/pet_selling_home.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -19,8 +19,6 @@ import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../widgets/modals.dart';
 
-
-
 class ServiceProviderHomePage extends StatelessWidget {
   const ServiceProviderHomePage({Key? key}) : super(key: key);
 
@@ -29,11 +27,13 @@ class ServiceProviderHomePage extends StatelessWidget {
     return BlocProvider<ServiceProviderCubit>(
       create: (BuildContext context) => ServiceProviderCubit(
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
-          viewModel: Provider.of<ServiceProviderInAppViewModel>(context, listen: false)),
+          viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
+              listen: false)),
       child: ServiceProviderPage(),
     );
   }
 }
+
 class ServiceProviderPage extends StatefulWidget {
   ServiceProviderPage({super.key});
 
@@ -46,11 +46,8 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
 
   String username = '';
 
-
-
   getUsername() async {
     username = await StorageHandler.getUserName();
-     
   }
 
   final TextEditingController searchField = TextEditingController();
@@ -59,54 +56,52 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
 
   late ServiceProviderCubit _serviceProviderCubit;
 
-  int initialPageIndex = 1;
+  //int initialPageIndex = 1;
   String agentId = "";
 
-  fetchOrders()async{
-
+  fetchOrders() async {
     agentId = await StorageHandler.getAgentId();
-     _serviceProviderCubit = context.read<ServiceProviderCubit>();
-    _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: initialPageIndex.toString());
+    _serviceProviderCubit = context.read<ServiceProviderCubit>();
+    _serviceProviderCubit.getAllAgentOrder(
+        agentId: agentId, pageIndex: '1');
   }
-  
+
   @override
   void initState() {
     getUsername();
     fetchOrders();
-   
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
- 
+       final serviceProvider =
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
-          listener: (context, state) {
-            if (state is CreateServiceNetworkErr) {
-              Modals.showToast(state.message ?? '');
-            } else if (state is CreateServiceNetworkErrApiErr) {
-              Modals.showToast(state.message ?? '');
-            } else if (state is AgentOrdersLoaded) {
-               
-                orders = state.agentsOrderRequests.shopOrders ?? [];
-            }
+            listener: (context, state) {
+          if (state is CreateServiceNetworkErr) {
+            Modals.showToast(state.message ?? '');
+          } else if (state is CreateServiceNetworkErrApiErr) {
+            Modals.showToast(state.message ?? '');
+          } else if (state is AgentOrdersLoaded) {
+            orders = state.agentsOrderRequests.shopOrders ?? [];
           }
-          ,
-          builder: (context, state) {
-            if(state is AgentOrdersLoading){
-              return Align(
+        }, builder: (context, state) {
+          if (state is AgentOrdersLoading) {
+            return Align(
                 child: ImageView.asset(
               AppImages.loading,
               height: 50,
             ));
-            }
+          }
 
-            return Container(
+          return Container(
             height: screenSize(context).height * .9,
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
@@ -119,21 +114,23 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Expanded(
-                                  child: Text(
-                                    'Hi ${username.capitalizeFirstOfEach},',
-                                    maxLines: 1,
-                                    softWrap: true,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: AppStrings.interSans),
-                                  ),
-                                ),
+                          child: Text(
+                            'Hi ${username.capitalizeFirstOfEach},',
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: AppStrings.interSans),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 12,),
+                  const SizedBox(
+                    height: 12,
+                  ),
                   Text(
                     'How is your pet doing?',
                     style: TextStyle(
@@ -148,17 +145,19 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  ServiceProviderPetDeliveryHomeBody()
+                  ServiceProviderPetDeliveryHomeBody(onTap:  () {
+                     _serviceProviderCubit.getAllAgentOrder(
+        agentId: agentId, pageIndex: serviceProvider.currentPage.toString());
+                  },)
                 ],
               ),
             ),
           );
-  }),
+        }),
       ),
     );
   }
 
-  
   Widget card(BuildContext context) {
     return Container(
       decoration: BoxDecoration(

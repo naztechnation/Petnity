@@ -45,10 +45,7 @@ class _ProfileState extends State<Profile> {
             ),
             centerTitle: true,
             actions: [
-              Icon(
-                Icons.add_box_outlined,
-                size: 30,
-              )
+             ImageView.svg(AppImages.addIcon)
             ],
           ),
         ),

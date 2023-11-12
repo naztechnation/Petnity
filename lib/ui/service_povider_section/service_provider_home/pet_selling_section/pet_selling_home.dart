@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/service_povider_section/service_provider_home/service_request.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_delivery_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -11,10 +11,19 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/service_provider_models/all_agent_orders.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
+import '../../../widgets/modals.dart';
 
-class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
-  ServiceProviderPetDeliveryHomeBody({super.key});
+class ServiceProviderPetDeliveryHomeBody extends StatefulWidget {
+  final Function onTap;
+  ServiceProviderPetDeliveryHomeBody({super.key, required this.onTap});
 
+  @override
+  State<ServiceProviderPetDeliveryHomeBody> createState() =>
+      _ServiceProviderPetDeliveryHomeBodyState();
+}
+
+class _ServiceProviderPetDeliveryHomeBodyState
+    extends State<ServiceProviderPetDeliveryHomeBody> {
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
@@ -34,8 +43,8 @@ class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
           label: 'Track',
         ),
         SizedBox(
-              height: 25,
-            ),
+          height: 25,
+        ),
         Row(
           children: [
             CustomText(
@@ -52,26 +61,53 @@ class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-      if(serviceProvider.order.isEmpty)...[
+        if (serviceProvider.order.isEmpty) ...[
           Center(
             child: CustomText(
-            text: 'no  available order here',
-                  size: 16,
-          
-            weight: FontWeight.bold,
-                  ),
+              text: 'no  available order here',
+              size: 16,
+              weight: FontWeight.bold,
+            ),
           ),
-      ]else...[
-        ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: serviceProvider.order.length,
-          itemBuilder: ( (context, index)   {
-          return  _shoppingOrder(context, serviceProvider.order[index]);
-        })),
-      ]  
-       
-      
+        ] else ...[
+          ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: serviceProvider.order.length,
+              itemBuilder: ((context, index) {
+                return _shoppingOrder(context, serviceProvider.order[index]);
+              })),
+        ],
+        if (serviceProvider.pageIndex > 1)
+          Container(
+            color: Colors.transparent,
+            padding: const EdgeInsets.only(top: 20),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: NumberPaginator(
+                    numberPages: serviceProvider.pageIndex,
+                    onPageChange: (int index) {
+                      widget.onTap();
+                      setState(() {});
+                      serviceProvider.setOrderPageIndex(index);
+
+                      Modals.showToast(index.toString());
+
+                    },
+                    config: NumberPaginatorUIConfig(
+                      buttonSelectedForegroundColor: AppColors.lightPrimary,
+                      buttonUnselectedForegroundColor:
+                          Theme.of(context).colorScheme.secondary,
+                      buttonUnselectedBackgroundColor:
+                          Colors.grey.withOpacity(0.1),
+                      buttonSelectedBackgroundColor:
+                          Theme.of(context).colorScheme.secondary,
+                    ),
+                  )),
+            ),
+          )
       ],
     );
   }
@@ -83,15 +119,14 @@ class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: ListTile(
-         
         leading: Container(
           width: 80,
           height: screenSize(context).height * .07,
-           decoration: BoxDecoration(
-          color: Colors.red, borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(
+              color: Colors.red, borderRadius: BorderRadius.circular(20)),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: ImageView.network(order.product!.image)),
+              borderRadius: BorderRadius.circular(30),
+              child: ImageView.network(order.product!.image)),
         ),
         title: CustomText(
           text: '${order.product?.name}',
@@ -142,36 +177,37 @@ class ServiceProviderPetDeliveryHomeBody extends StatelessWidget {
     );
   }
 
- Widget _shoppingOrder(BuildContext context, ShopOrders order) {
+  Widget _shoppingOrder(BuildContext context, ShopOrders order) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: ListTile(
-         
         leading: Container(
           width: 80,
           height: 150,
-           decoration: BoxDecoration(
-           borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: ImageView.network(order.product!.image, fit: BoxFit.cover, height: 150,)),
+              borderRadius: BorderRadius.circular(20),
+              child: ImageView.network(
+                order.product!.image,
+                fit: BoxFit.cover,
+                height: 150,
+              )),
         ),
         title: CustomText(
           text: '${order.product?.name}',
-                size: 16,
-
+          size: 16,
           weight: FontWeight.bold,
         ),
         subtitle: Padding(
-          padding: const EdgeInsets.only(top:8.0),
+          padding: const EdgeInsets.only(top: 8.0),
           child: CustomText(
-                text: 'NGN ${order.product?.price}',
-                size: 14,
-                weight: FontWeight.w600,
-              ),
+            text: 'NGN ${order.product?.price}',
+            size: 14,
+            weight: FontWeight.w600,
+          ),
         ),
         trailing: Container(
           width: screenSize(context).width * .2,

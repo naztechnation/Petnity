@@ -35,7 +35,7 @@ class TextEditView extends StatelessWidget {
   final Color? textColor;
   final Iterable<String>? autofillHints;
   final FocusNode? focusNode;
-   final List<TextInputFormatter>? inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
   const TextEditView(
       {Key? key,
       this.onChanged,
@@ -66,7 +66,9 @@ class TextEditView extends StatelessWidget {
       this.focusNode,
       this.helperText,
       this.maxLength,
-      this.maxLines = 1, this.textViewTitle = '', this.inputFormatters})
+      this.maxLines = 1,
+      this.textViewTitle = '',
+      this.inputFormatters})
       : super(key: key);
 
   OutlineInputBorder _border(BuildContext context) => OutlineInputBorder(
@@ -86,14 +88,16 @@ class TextEditView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomText(
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                              text: textViewTitle,
-                              weight: FontWeight.w500,
-                              size: 13,
-                              color: Colors.black,
-                            ),
-                            SizedBox(height: 10,),
+            textAlign: TextAlign.left,
+            maxLines: 2,
+            text: textViewTitle,
+            weight: FontWeight.w500,
+            size: 13,
+            color: Colors.black,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           TextFormField(
             controller: controller,
             keyboardType: keyboardType,
@@ -125,19 +129,19 @@ class TextEditView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(
                         width: borderWidth,
-                        color:
-                            borderColor ?? Theme.of(context).colorScheme.secondary,
+                        color: borderColor ??
+                            Theme.of(context).colorScheme.secondary,
                         style: BorderStyle.solid)),
                 errorBorder: _border(context),
                 disabledBorder: _border(context),
                 hintText: hintText,
-                hintStyle: TextStyle(color: Colors.grey.shade400),
+                hintStyle: TextStyle(color: Colors.grey, fontWeight: FontWeight.normal, fontFamily: AppStrings.montserrat),
                 labelText: labelText,
                 labelStyle: TextStyle(color: textColor),
                 filled: filled,
                 isDense: isDense,
-                fillColor:
-                    fillColor ?? Theme.of(context).shadowColor.withOpacity(0.05),
+                fillColor: fillColor ??
+                    Theme.of(context).shadowColor.withOpacity(0.05),
                 helperText: helperText,
                 helperMaxLines: 2,
                 helperStyle: const TextStyle(fontSize: 10),
@@ -153,4 +157,3 @@ class TextEditView extends StatelessWidget {
     );
   }
 }
-

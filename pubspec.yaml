@@ -40,6 +40,7 @@ dependencies:
   agora_uikit: ^1.3.7
   flutterwave_standard: ^1.0.8
   uuid: ^3.0.7
+  number_paginator: ^0.4.0
     
 dev_dependencies:
   flutter_test:
@@ -85,4 +86,10 @@ flutter:
         - asset: fonts/Montserrat_Italic.ttf
           style: italic
           weight: 400
+
+    - family: Satoshi-Variable
+      fonts:
+        - asset: fonts/Satoshi-Variable.ttf
+        - asset: fonts/Satoshi-Variable.ttf
+             
   

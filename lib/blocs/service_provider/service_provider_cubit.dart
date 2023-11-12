@@ -140,7 +140,7 @@ Future<void> publishServicePackage({
           agentId:agentId, page: pageIndex,  
       );
 
-      viewModel.setAgentOrdersList(services.shopOrders ?? []);
+      viewModel.setAgentOrdersList(services);
       emit(AgentOrdersLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));

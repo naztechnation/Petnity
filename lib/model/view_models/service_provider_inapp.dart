@@ -11,31 +11,33 @@ import 'base_viewmodel.dart';
 
 class ServiceProviderInAppViewModel extends BaseViewModel {
   ServiceProviderInAppViewModel() {
-       filterBankList = _banksAndInstitutions;
-
+    filterBankList = _banksAndInstitutions;
   }
   int _selectedIndex = -1;
+  int _orderPageNumber = 1;
+  int _currentPage = 1;
   File? _imageURl;
   List<ShopOrders> _orders = [];
 
- List<String>   filterBankList = [];
+  List<String> filterBankList = [];
 
- resetBankList(){
-       filterBankList = _banksAndInstitutions;
+  resetBankList() {
+    filterBankList = _banksAndInstitutions;
 
-   setViewState(ViewState.success);
-
- }
-
-    searchBank(String query) {
-    
-      filterBankList = _banksAndInstitutions
-          .where((banks) =>
-              banks.toLowerCase().contains(query.toLowerCase()))
-          .toList();
     setViewState(ViewState.success);
+  }
 
+   setOrderPageIndex(int pageIndex) {
+    _currentPage = pageIndex;
 
+    setViewState(ViewState.success);
+  }
+
+  searchBank(String query) {
+    filterBankList = _banksAndInstitutions
+        .where((banks) => banks.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+    setViewState(ViewState.success);
   }
 
   setPackageLevelSelectedIndex({required int selectedIndex}) {
@@ -43,8 +45,11 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  setAgentOrdersList(List<ShopOrders> orders) {
-    _orders = orders;
+  setAgentOrdersList(AgentsOrderRequests orders) {
+    _orders = orders.shopOrders ?? [];
+    _orderPageNumber = orders.numPages ?? 1;
+
+
     setViewState(ViewState.success);
   }
 
@@ -203,4 +208,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
     "Wema Bank Plc",
     "Zenith Bank Plc",
   ];
+
+  int get pageIndex => _orderPageNumber;
+  int get currentPage => _currentPage;
 }

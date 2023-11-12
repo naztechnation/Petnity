@@ -38,7 +38,7 @@ class Petnity extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
       themeMode: ThemeMode.light,
-      theme: ThemeData(fontFamily: AppStrings.montserrat),
+      theme: ThemeData(fontFamily: AppStrings.satoshi),
       routes: AppRoutes.routes,
 
       
