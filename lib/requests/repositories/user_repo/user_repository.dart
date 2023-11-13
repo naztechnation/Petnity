@@ -28,6 +28,7 @@ abstract class UserRepository {
     Future<ShoppingList> shoppingList(); 
     Future<GetReviews> getReviews({required String userId}); 
     Future<GalleryAgents> getGallery({required String userId}); 
+    Future<AuthData> uploadGallery({required String agentId, required String image}); 
     Future<UserOrderList> orderList({required String username}); 
     Future<ProductDetails> productDetails({required String productId}); 
     Future<GetProductReviews> getProductReviews({required String productId}); 

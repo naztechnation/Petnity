@@ -17,6 +17,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   int _orderPageNumber = 1;
   int _currentPage = 1;
   File? _imageURl;
+  File? _imageURl1;
   List<ShopOrders> _orders = [];
 
   List<String> filterBankList = [];
@@ -27,7 +28,13 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   setOrderPageIndex(int pageIndex) {
+   resetImage() {
+    _imageURl1 = null;
+
+    setViewState(ViewState.success);
+  }
+
+  setOrderPageIndex(int pageIndex) {
     _currentPage = pageIndex;
 
     setViewState(ViewState.success);
@@ -49,13 +56,10 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
     _orders = orders.shopOrders ?? [];
     _orderPageNumber = orders.numPages ?? 1;
 
-
     setViewState(ViewState.success);
   }
 
-  loadImage(
-    BuildContext context,
-  ) async {
+  loadImage({required BuildContext context, bool isProfile = false}) async {
     await showModalBottomSheet<dynamic>(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -91,8 +95,11 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-
-                  _imageURl = File(image!.path);
+                  if (isProfile) {
+                    _imageURl1 = File(image!.path);
+                  } else {
+                    _imageURl = File(image!.path);
+                  }
 
                   setViewState(ViewState.success);
                 },
@@ -111,8 +118,11 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                       imageQuality: 80,
                       maxHeight: 1000,
                       maxWidth: 1000);
-                  _imageURl = File(image!.path);
-
+                  if (isProfile) {
+                    _imageURl1 = File(image!.path);
+                  } else {
+                    _imageURl = File(image!.path);
+                  }
                   setViewState(ViewState.success);
                 },
               ),
@@ -149,6 +159,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
 
   int get selectedIndex => _selectedIndex;
   File? get imageURl => _imageURl;
+  File? get imageURl1 => _imageURl1;
 
   List<ShopOrders> get order => _orders;
 

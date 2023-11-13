@@ -111,7 +111,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                     GestureDetector(
                       onTap: () {
                         serviceProvider.loadImage(
-                          context,
+                          context: context,
                         );
                       },
                       child: Padding(
@@ -172,7 +172,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                           child: GestureDetector(
                             onTap: (){
                               serviceProvider.loadImage(
-                          context,
+                          context: context,
                         );
                             },
                             child: Container(

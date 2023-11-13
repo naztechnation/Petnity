@@ -43,6 +43,18 @@ class ServicesLoaded extends UserStates {
   @override
   List<Object> get props => [services];
 }
+
+class UploadAgentGalleryLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class UploadAgentGalleryLoaded extends UserStates {
+  final AuthData gallery;
+  const UploadAgentGalleryLoaded(this.gallery);
+  @override
+  List<Object> get props => [gallery];
+}
 class ServiceProviderListLoaded extends UserStates {
   final ServiceProvidersList userData;
   const ServiceProviderListLoaded(this.userData);

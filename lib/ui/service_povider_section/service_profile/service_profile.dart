@@ -7,10 +7,11 @@ import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
-import '../../../blocs/user/user_cubit.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/view_models/account_view_model.dart';
+import '../../../model/view_models/service_provider_inapp.dart';
+import '../../../model/view_models/service_provider_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
@@ -23,12 +24,12 @@ import '../../landing_page/services/pet_trainers/training_packages.dart';
 import '../../landing_page/services/vets/vet_service.dart';
 import '../../landing_page/services/widgets/gallery_rating_section.dart';
 import '../../landing_page/services/widgets/providers_profile_body.dart';
-import '../../notfications_pages/chat_pages/chat_page.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/image_view.dart';
 import '../../widgets/loading_page.dart';
+import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 
 class AgentProfileScreen extends StatelessWidget {
@@ -70,9 +71,14 @@ class _AgentProfileState extends State<AgentProfile> {
   late UserCubit _userCubit;
 
   String agentId = "";
+  String userType = '';
+  bool isLoading = false;
 
   getAgentId() async {
     agentId = await StorageHandler.getAgentId();
+    userType = await StorageHandler.getUserType();
+
+    setState(() {});
   }
 
   @override
@@ -87,6 +93,9 @@ class _AgentProfileState extends State<AgentProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final serviceProvider =
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
+
     return WillPopScope(
         onWillPop: onBackPress,
         child: Scaffold(
@@ -110,13 +119,16 @@ class _AgentProfileState extends State<AgentProfile> {
                     onRefresh: () => _userCubit.getAgentProfile(),
                   );
                 } else if (state is ServiceProviderListLoaded) {
-                  
                   for (var item in state.userData.agents!) {
                     if (item.id.toString() == agentId) {
                       agents = item;
-                      break; 
+                      break;
                     }
                   }
+                } else if (state is UploadAgentGalleryLoaded) {
+                  serviceProvider.resetImage();
+                  Modals.showToast(state.gallery.message!);
+                  _userCubit.getAgentProfile();
                 }
 
                 return Stack(
@@ -251,37 +263,108 @@ class _AgentProfileState extends State<AgentProfile> {
                         ],
                       ),
                     ),
-                    Positioned(
-                      bottom: 30,
-                      left: 0,
-                      right: 0,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 6,
-                              child: ButtonView(
-                                onPressed: () {},
-                                child: CustomText(
-                                  textAlign: TextAlign.start,
-                                  maxLines: 2,
-                                  text: 'Add photo',
-                                  weight: FontWeight.w400,
-                                  size: 12,
-                                  fontFamily: AppStrings.interSans,
-                                  color: Colors.white,
+                    if (userType != 'user')
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 40),
+                          color: Colors.white,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (serviceProvider.imageURl1 != null)
+                                GestureDetector(
+                                  onTap: () {
+                                    serviceProvider.resetImage();
+                                  },
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 26.0),
+                                      child: const Text(
+                                        'Cancel',
+                                        textAlign: TextAlign.end,
+                                        style: TextStyle(
+                                            color: AppColors.lightSecondary,
+                                            fontFamily: AppStrings.interSans,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              if (serviceProvider.imageURl1 != null)
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Container(
+                                    height: 130,
+                                    width: 130,
+                                    child: ImageView.file(
+                                      File(serviceProvider.imageURl1!.path),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0,
+                                ),
+                                child: ButtonView(
+                                  borderRadius: 30,
+                                  processing: (isLoading ||
+                                      state is UploadAgentGalleryLoading),
+                                  onPressed: () async {
+                                    String imgUrl = '';
+                                    if (serviceProvider.imageURl1 != null) {
+                                      setState(() {
+                                        isLoading = true;
+                                      });
+
+                                      imgUrl =
+                                          await serviceProvider.uploadImage(
+                                              serviceProvider.imageURl1!.path,
+                                              'petnity_service_provider');
+                                      setState(() {
+                                        isLoading = false;
+                                      });
+                                      if (imgUrl != null || imgUrl != "") {
+                                        submit(context, imgUrl);
+                                      }
+                                    } else {
+                                      serviceProvider.loadImage(
+                                          context: context, isProfile: true);
+                                    }
+                                  },
+                                  child: CustomText(
+                                    textAlign: TextAlign.start,
+                                    maxLines: 2,
+                                    text: (serviceProvider.imageURl1 == null)
+                                        ? 'Add photo'
+                                        : 'Upload photo',
+                                    weight: FontWeight.w500,
+                                    size: 15,
+                                    // fontFamily: AppStrings.interSans,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    )
+                      )
                   ],
                 );
               }),
         ));
+  }
+
+  submit(BuildContext context, String imageURl) {
+    context.read<UserCubit>().uploadGallery(agentId: agentId, image: imageURl);
   }
 }
 

@@ -146,7 +146,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
-                                fontFamily: AppStrings.interSans),
+                                ),
                           ),
                         ),
                       ),
@@ -162,7 +162,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           height: 25,
                         ),
                         title: Align(
-                          alignment: Alignment(-2.0, 0),
+                          alignment: Alignment(-1.4, 0),
                           child: Text(
                             'Notifications & chats',
                             style: TextStyle(
@@ -184,7 +184,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             'Awaiting Sessions',
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontFamily: AppStrings.interSans),
+                                 ),
                           ),
                         ),
                       ),
@@ -205,7 +205,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             'Support',
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontFamily: AppStrings.interSans),
+                                 ),
                           ),
                         ),
                       ),
@@ -223,7 +223,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
-                                fontFamily: AppStrings.interSans),
+                                 ),
                           ),
                         ),
                       ),
@@ -244,7 +244,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             'Settings',
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontFamily: AppStrings.interSans),
+                                 ),
                           ),
                         ),
                       ),
@@ -332,12 +332,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ),
                         ),
                         title: Align(
-                          alignment: Alignment(-2, 0),
+                          alignment: Alignment(-1.5, 0),
                           child: Text(
                             'Add other Services',
                             style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontFamily: AppStrings.interSans),
+                                 ),
                           ),
                         ),
                       ),

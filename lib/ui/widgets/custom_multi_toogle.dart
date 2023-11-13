@@ -63,23 +63,17 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
           decoration: BoxDecoration(
             color: selected
                 ? (widget.selectedColor ??
-                    AppColors.lightSecondary)
+                    Theme.of(context).colorScheme.secondary)
                 : (widget.color ?? Theme.of(context).backgroundColor),
             borderRadius: const BorderRadius.all(
-              Radius.circular(12.0),
+              Radius.circular(30.0),
             ),
-            boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey,
-                    offset: Offset(0.0, 0.5), //(x,y)
-                    blurRadius: 1.0,
-                  ),
-                ],
+             
               border: Border.all(
                   width: 1.0,
                   color:  selected
                 ? 
-                    AppColors.lightSecondary
+                    Theme.of(context).colorScheme.secondary
                 : (widget.color ?? Theme.of(context).backgroundColor),
                   style: BorderStyle.solid)
           ),
@@ -87,17 +81,19 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(title,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: selected
-                          ? (widget.selectedTextColor ??
-                              Theme.of(context).primaryColor)
-                          : (widget.textColor ??
-                              Theme.of(context).textTheme.caption!.color),
-                      fontSize: widget.fontSize,
-
-                      fontWeight: FontWeight.w500)),
+              Expanded(
+                child: Text(title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: selected
+                            ? (widget.selectedTextColor ??
+                                Theme.of(context).primaryColor)
+                            : (widget.textColor ??
+                                Theme.of(context).textTheme.caption!.color),
+                        fontSize: widget.fontSize,
+              
+                        fontWeight: FontWeight.w500)),
+              ),
              
             ],
           )),

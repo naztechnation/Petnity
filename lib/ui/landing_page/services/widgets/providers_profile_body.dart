@@ -141,12 +141,14 @@ class _ProviderProfileState extends State<ProviderProfile> {
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Text(
                   '${services[0]}',
-                  style: TextStyle(color: AppColors.lightSecondary),
+                  style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                 ),
                 expanded: false,
-                color: AppColors.lightSecondary.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
               ),
             ),
+            const SizedBox(height: 20,),
+
             Align(
               alignment: Alignment.centerLeft,
               child: CustomText(
@@ -159,12 +161,13 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 color: Colors.black,
               ),
             ),
+            const SizedBox(height: 10,),
             CustomMultiToggle(
               title: services,
-              fontSize: 11,
+              fontSize: 14,
               color: AppColors.lightPrimary,
               selectedTextColor: AppColors.lightPrimary,
-              height: 35,
+              height: 40,
               contentMargin: const EdgeInsets.all(5),
               onSelected: (index) {
                 setState(() {
@@ -172,6 +175,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 });
               },
             ),
+            const SizedBox(height: 20,),
+
             Align(
               alignment: Alignment.centerLeft,
               child: CustomText(
@@ -184,6 +189,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 color: Colors.black,
               ),
             ),
+            const SizedBox(height: 20,),
+
             CustomMultiToggle(
               title: animals,
               fontSize: 11,
@@ -191,11 +198,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
               selectedTextColor: AppColors.lightPrimary,
               height: 35,
               contentMargin: const EdgeInsets.all(5),
-              onSelected: (index) {
-                setState(() {
-                  animalsInfo = animals[index];
-                });
-              },
+              onSelected: null,
             ),
             const SizedBox(
               height: 20,

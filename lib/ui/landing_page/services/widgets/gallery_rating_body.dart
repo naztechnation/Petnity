@@ -122,9 +122,9 @@ class _GalleryRatingState extends State<GalleryRating> {
         ),
       ): SizedBox(
         height: 50,
-        child: Align(child: Text('No Gallery to display', style: TextStyle(fontWeight: FontWeight.w200),)));
+        child: Align(child: Text('No Gallery to display', style: TextStyle(fontWeight: FontWeight.w500),)));
     else {
-      return ListView.builder(
+      return (reviewsList.isNotEmpty) ? ListView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: reviewsList.length,
@@ -132,7 +132,9 @@ class _GalleryRatingState extends State<GalleryRating> {
             return ReviewContainer(
               review: reviewsList[index],
             );
-          });
+          }) : SizedBox(
+        height: 50,
+        child: Align(child: Text('No Reviews yet', style: TextStyle(fontWeight: FontWeight.w500),)));
     }
   }
 }

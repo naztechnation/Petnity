@@ -463,5 +463,27 @@ Future<void> getAgentProfile() async {
     }
   }
 
+
+Future<void> uploadGallery({required String agentId, required String image}) async {
+    try {
+      emit(UploadAgentGalleryLoading());
+
+      final gallery = await userRepository.uploadGallery(agentId: agentId, image: image);
+       
+      emit(UploadAgentGalleryLoaded(gallery));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
    
 }
