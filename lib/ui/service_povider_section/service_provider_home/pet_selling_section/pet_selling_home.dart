@@ -78,36 +78,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 return _shoppingOrder(context, serviceProvider.order[index]);
               })),
         ],
-        if (serviceProvider.pageIndex > 1)
-          Container(
-            color: Colors.transparent,
-            padding: const EdgeInsets.only(top: 20),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
-                  child: NumberPaginator(
-                    numberPages: serviceProvider.pageIndex,
-                    onPageChange: (int index) {
-                      widget.onTap();
-                      setState(() {});
-                      serviceProvider.setOrderPageIndex(index);
-
-                      Modals.showToast(index.toString());
-
-                    },
-                    config: NumberPaginatorUIConfig(
-                      buttonSelectedForegroundColor: AppColors.lightPrimary,
-                      buttonUnselectedForegroundColor:
-                          Theme.of(context).colorScheme.secondary,
-                      buttonUnselectedBackgroundColor:
-                          Colors.grey.withOpacity(0.1),
-                      buttonSelectedBackgroundColor:
-                          Theme.of(context).colorScheme.secondary,
-                    ),
-                  )),
-            ),
-          )
+       
       ],
     );
   }

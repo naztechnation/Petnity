@@ -4,7 +4,7 @@ import '../handlers/app_handlers.dart';
 
 class AppStrings {
   static const String appName = 'Petnity';
-  static const String interSans = 'InterSans';
+  static const String interSans = 'Satoshi-Variable';
   static const String montserrat = 'Montserrat';
   static const String satoshi = 'Satoshi-Variable';
 

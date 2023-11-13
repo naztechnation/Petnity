@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:number_paginator/number_paginator.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import 'package:petnity/res/app_colors.dart';
@@ -62,9 +63,10 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   fetchOrders() async {
     agentId = await StorageHandler.getAgentId();
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
-    _serviceProviderCubit.getAllAgentOrder(
-        agentId: agentId, pageIndex: '1');
+    _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: '1');
   }
+
+  final NumberPaginatorController _controller = NumberPaginatorController();
 
   @override
   void initState() {
@@ -76,7 +78,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
 
   @override
   Widget build(BuildContext context) {
-       final serviceProvider =
+    final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
     return Scaffold(
@@ -145,10 +147,44 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  ServiceProviderPetDeliveryHomeBody(onTap:  () {
-                     _serviceProviderCubit.getAllAgentOrder(
-        agentId: agentId, pageIndex: serviceProvider.currentPage.toString());
-                  },)
+                  ServiceProviderPetDeliveryHomeBody(
+                    onTap: () {},
+                  ),
+                  if (serviceProvider.pageIndex > 1)
+                    Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.only(top: 18),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                            padding: const EdgeInsets.only(bottom: 18.0),
+                            child:  NumberPaginator(
+                              numberPages: serviceProvider.pageIndex,
+                               
+                              onPageChange: (int index) {
+                                
+                                serviceProvider.setOrderPageIndex(index + 1);
+                                _serviceProviderCubit.getAllAgentOrder(
+                                    agentId: agentId,
+                                    pageIndex:
+                                        serviceProvider.currentPage.toString());
+                               
+                               
+                              },
+                              config: NumberPaginatorUIConfig(
+                                buttonSelectedForegroundColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                buttonUnselectedForegroundColor:
+                                    Theme.of(context).colorScheme.secondary,
+                                buttonUnselectedBackgroundColor:
+                                      
+                                    AppColors.lightPrimary,
+                                buttonSelectedBackgroundColor:
+                                    AppColors.lightPrimary,
+                              ),
+                            )),
+                      ),
+                    )
                 ],
               ),
             ),

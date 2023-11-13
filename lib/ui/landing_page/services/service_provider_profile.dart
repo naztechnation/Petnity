@@ -35,22 +35,16 @@ class ServiceProviderProfile extends StatefulWidget {
 class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
   final AccountViewModel userViewModel = AccountViewModel();
 
-    Future<bool> onBackPress() {
-     
+  Future<bool> onBackPress() {
     Navigator.pop(context);
 
     return Future.value(false);
   }
 
-  
-
-
   @override
   Widget build(BuildContext context) {
-      
     return WillPopScope(
       onWillPop: onBackPress,
-
       child: Scaffold(
         body: Stack(
           children: [
@@ -108,7 +102,8 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                               child: CustomText(
                                 textAlign: TextAlign.start,
                                 maxLines: 2,
-                                text: '${widget.agents!.city}, ${widget.agents!.country}',
+                                text:
+                                    '${widget.agents!.city}, ${widget.agents!.country}',
                                 weight: FontWeight.w300,
                                 size: 14,
                                 color: Colors.black,
@@ -155,29 +150,30 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         CustomText(
                           textAlign: TextAlign.start,
                           maxLines: 2,
-                          text: widget.agents!.isVerified! ? 'Verified' : 'Not Verified',
+                          text: widget.agents!.isVerified!
+                              ? 'Verified'
+                              : 'Not Verified',
                           weight: FontWeight.w300,
                           size: 11,
                           fontFamily: AppStrings.interSans,
-                          color: widget.agents!.isVerified! ? Colors.green : Colors.red,
+                          color: widget.agents!.isVerified!
+                              ? Colors.green
+                              : Colors.red,
                         ),
                         const SizedBox(
                           height: 12,
                         ),
-                           
                         const SizedBox(
                           height: 12,
                         ),
                         ProviderProfileBody(
                           agents: widget.agents,
-                          
                         ),
-
-                        GalleryRatingSection(userId: widget.agents!.id.toString()),
+                        GalleryRatingSection(
+                            userId: widget.agents!.id.toString()),
                         const SizedBox(
                           height: 150,
                         ),
-                       
                       ],
                     )),
                   ),
@@ -197,14 +193,16 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                       child: ButtonView(
                         onPressed: () {
                           Provider.of<AccountViewModel>(context, listen: false)
-                                  .setAgentName(widget.agents!.name ?? '');
+                              .setAgentName(widget.agents!.name ?? '');
 
-                                  Provider.of<AccountViewModel>(context, listen: false)
-                                  .setAgentId(widget.agents!.id.toString());
-                                 
+                          Provider.of<AccountViewModel>(context, listen: false)
+                              .setAgentId(widget.agents!.id.toString());
+
                           openServices(
-                              Provider.of<AccountViewModel>(context, listen: false)
-                                  .selectedService.toLowerCase(),
+                              Provider.of<AccountViewModel>(context,
+                                      listen: false)
+                                  .selectedService
+                                  .toLowerCase(),
                               context);
                         },
                         child: CustomText(
@@ -253,14 +251,26 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
       case '':
         break;
       case 'dog walkers':
-        AppNavigator.pushAndStackPage(context, page: PackagesScreen(serviceId: Provider.of<AccountViewModel>(context, listen: false).serviceId, agentId: Provider.of<AccountViewModel>(context, listen: false).agentId2,));
+        AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
 
         break;
       case 'pet date':
         break;
       case 'dog sitters':
-               AppNavigator.pushAndStackPage(context, page: PackagesScreen(serviceId: Provider.of<AccountViewModel>(context, listen: false).serviceId, agentId: Provider.of<AccountViewModel>(context, listen: false).agentId2,));
- 
+        AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
+
         break;
       case 'trainer':
         AppNavigator.pushAndStackPage(context, page: TrainingScreen());
@@ -282,9 +292,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         break;
 
       default:
-        //AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
+      //AppNavigator.pushAndStackPage(context, page: SetLocationScreen());
     }
   }
-
-
 }
