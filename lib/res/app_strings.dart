@@ -47,6 +47,10 @@ class AppStrings {
   static const String shoppingList = '${_baseUrl}shop/get-products/1';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
+  static String agentProfile = 
+      '${_baseUrl}users/get-agents'; 
+
+      
   static String userOrders(String username) =>
       '${_baseUrl}order/get-user-orders/$username';
   static String createOrderPayment(String username) =>
@@ -96,7 +100,10 @@ class AppStrings {
       '${_baseUrl}users/add-agent-bank-details/$agentId';
    static String getAccountDetailsUrl({required String agentId}) =>
       '${_baseUrl}users/get-agent-bank-details/$agentId';
-      
+   static String uploadAgentGallery({required String agentId}) =>
+      '${_baseUrl}users/add-gallery-element/$agentId';
+
+       
    
 
   static String publishProductReview({

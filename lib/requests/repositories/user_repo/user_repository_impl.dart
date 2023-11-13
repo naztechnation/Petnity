@@ -199,6 +199,15 @@ class UserRepositoryImpl implements UserRepository {
         });
     return AuthData.fromJson(map);
   }
+  
+  @override
+  Future<ServiceProvidersList> getAgentProfile()  async {
+    final map = await Requests()
+        .get(AppStrings.agentProfile, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return ServiceProvidersList.fromJson(map);
+  }
 
  
 

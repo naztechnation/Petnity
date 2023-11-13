@@ -83,7 +83,7 @@ class _GalleryRatingState extends State<GalleryRating> {
   Widget build(BuildContext context) {
     // final reviews = Provider.of<UserViewModel>(context, listen: true).reviews;
     if (widget.isGallery)
-      return ClipRRect(
+      return  (galleryList.isNotEmpty) ? ClipRRect(
         borderRadius: BorderRadius.circular(40),
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 25),
@@ -120,7 +120,9 @@ class _GalleryRatingState extends State<GalleryRating> {
             ),
           ),
         ),
-      );
+      ): SizedBox(
+        height: 50,
+        child: Align(child: Text('No Gallery to display', style: TextStyle(fontWeight: FontWeight.w200),)));
     else {
       return ListView.builder(
           physics: NeverScrollableScrollPhysics(),

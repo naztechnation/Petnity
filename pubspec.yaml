@@ -89,7 +89,7 @@ flutter:
 
     - family: Satoshi-Variable
       fonts:
-        - asset: fonts/Satoshi-Variable.ttf
-        - asset: fonts/Satoshi-Variable.ttf
+        - asset: fonts/Satoshi-Light.otf
+        
              
   

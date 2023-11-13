@@ -22,6 +22,8 @@ abstract class UserRepository {
     
     });   
 
+
+ Future<ServiceProvidersList> getAgentProfile();   
     Future<GetServiceTypes> getServiceTypes(); 
     Future<ShoppingList> shoppingList(); 
     Future<GetReviews> getReviews({required String userId}); 

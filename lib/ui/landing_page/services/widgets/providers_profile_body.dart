@@ -7,6 +7,7 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/user/user_cubit.dart';
+import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/service_provider_lists.dart';
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../model/view_models/user_view_model.dart';
@@ -20,11 +21,12 @@ import '../../../widgets/ratings_views.dart';
 import '../../../widgets/text_edit_view.dart';
 import 'contact_info.dart';
 
-
 class ProviderProfileBody extends StatelessWidget {
-   final Agents? agents;
-  const ProviderProfileBody(
-      {super.key, required this.agents,  });
+  final Agents? agents;
+  const ProviderProfileBody({
+    super.key,
+    required this.agents,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,11 @@ class ProviderProfileBody extends StatelessWidget {
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: ProviderProfile(
         agents: agents,
-       
       ),
     );
   }
 }
+
 class ProviderProfile extends StatefulWidget {
   final Agents? agents;
 
@@ -55,6 +57,16 @@ class _ProviderProfileState extends State<ProviderProfile> {
 
   String servicesInfo = '';
   String animalsInfo = '';
+  String userType = '';
+
+  getUserDetails() async {
+    userType = await StorageHandler.getUserType();
+
+    setState(() {
+      
+    });
+  }
+
   int ratings = 4;
 
   bool isProcessing = false;
@@ -68,8 +80,9 @@ class _ProviderProfileState extends State<ProviderProfile> {
 
   @override
   void initState() {
+    getUserDetails();
     _userCubit = context.read<UserCubit>();
-     
+
     super.initState();
   }
 
@@ -88,13 +101,13 @@ class _ProviderProfileState extends State<ProviderProfile> {
         : <String>[];
 
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
-        if (state is PostProductReviewsLoaded){
+      if (state is PostProductReviewsLoaded) {
         if (state.postReview.status!) {
           Modals.showToast(state.postReview.message ?? '');
-            _userCubit.getReviews(userId: widget.agents?.id.toString() ?? '');
-           setState(() {
-        isProcessing = false;
-      });
+          _userCubit.getReviews(userId: widget.agents?.id.toString() ?? '');
+          setState(() {
+            isProcessing = false;
+          });
           Navigator.pop(context);
         } else {}
       } else if (state is UserNetworkErrApiErr) {
@@ -103,11 +116,10 @@ class _ProviderProfileState extends State<ProviderProfile> {
         Modals.showToast(state.message ?? '');
       }
     }, builder: (context, state) {
-      
-
       return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Align(
               alignment: Alignment.centerLeft,
               child: CustomText(
@@ -125,7 +137,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
               child: ButtonView(
                 onPressed: () {},
                 borderRadius: 30,
-                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Text(
                   '${services[0]}',
                   style: TextStyle(color: AppColors.lightSecondary),
@@ -199,8 +212,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
                   fontFamily: AppStrings.interSans,
                   color: Colors.black,
                 ),
-    
-                ButtonView(
+
+           if (userType == 'user')   ButtonView(
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   expanded: false,
                   borderRadius: 30,
@@ -230,7 +243,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 //     ),
                 //     const SizedBox(width: 12,),
                 //     RatingWidget(coloredStars: widget.agents!., size: 25,),
-    
+
                 //   ],
                 // )
               ],
@@ -241,7 +254,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
             CustomText(
               textAlign: TextAlign.start,
               maxLines: 2,
-              text: '${widget.agents!.gender}',
+              text: '${widget.agents?.gender}',
               weight: FontWeight.w500,
               size: 14,
               color: Colors.black,
@@ -252,19 +265,19 @@ class _ProviderProfileState extends State<ProviderProfile> {
             CustomText(
               textAlign: TextAlign.start,
               maxLines: 4,
-              text: '${widget.agents!.about}',
+              text: '${widget.agents?.about}',
               weight: FontWeight.w500,
               size: 14,
               color: Colors.black,
             ),
             contactInfo(
-                phone: widget.agents!.profile!.phoneNumber,
-                email: widget.agents!.profile!.user!.email),
+                phone: widget.agents?.profile?.phoneNumber,
+                email: widget.agents?.profile?.user?.email),
             const SizedBox(
               height: 30,
             ),
           ]));
-  });
+    });
   }
 
   Ratings({
@@ -376,10 +389,10 @@ class _ProviderProfileState extends State<ProviderProfile> {
         isProcessing = true;
       });
       await _userCubit.postProductReviews(
-            url: 'users/add-review/$agentId/$username',
-            rating: rating,
-            comment: comment,
-          );
+        url: 'users/add-review/$agentId/$username',
+        rating: rating,
+        comment: comment,
+      );
       setState(() {
         isProcessing = false;
       });

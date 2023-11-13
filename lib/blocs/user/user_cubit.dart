@@ -39,6 +39,32 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
+Future<void> getAgentProfile() async {
+    try {
+      emit(ServiceProviderListLoading());
+
+      final agents = await userRepository.getAgentProfile(
+        
+      );
+
+      await viewModel.setAgentDetails(agents: agents.agents ?? []);
+
+      emit(ServiceProviderListLoaded(agents));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<void> getServiceTypes() async {
     try {
       emit(ServiceProviderListLoading());
