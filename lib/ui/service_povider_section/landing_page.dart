@@ -16,6 +16,7 @@ import '../../model/user_models/service_type.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
+import '../payment/payment_screen.dart';
 import '../widgets/custom_text.dart';
 import 'create_shop_product/create_shop_products.dart';
 import 'service_catalogue.dart';
@@ -34,7 +35,7 @@ class _ServiceProviderLandingPageState
   List<Widget> _widgetOptions = <Widget>[
     ServiceProviderHomePage(),
     ServiceProviderCatalogueScreen(),
-    ServiceProviderCatalogueScreen(),
+    PaymentPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -66,7 +67,8 @@ class _ServiceProviderLandingPageState
                                   height: 25,
                                 ),
                   ))
-                  : Container(),
+                  :  _selectedIndex == 2 
+                  ? simpleAppbar('Payments' , Text('') ):Container(),
         ),
       ),
       body: Center(
@@ -320,7 +322,7 @@ class simpleAppbar extends StatelessWidget {
       title: Text(
         title,
         style:
-            TextStyle(fontFamily: AppStrings.montserrat, color: Colors.black),
+            TextStyle( color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       actions: [
