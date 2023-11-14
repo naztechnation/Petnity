@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
@@ -24,6 +25,9 @@ class ServiceProviderPetDeliveryHomeBody extends StatefulWidget {
 
 class _ServiceProviderPetDeliveryHomeBodyState
     extends State<ServiceProviderPetDeliveryHomeBody> {
+
+       
+       String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
@@ -185,7 +189,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
           child: ButtonView(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return PurchaseRequest();
+                return PurchaseRequest(ownerName: 'Sandra Lee', phoneNumber: '0908765432', productName: '${order.product?.name}',
+                 productImage: '${order.product?.image}', quantity: '${order.quantity}', price: '${order.product?.price}', purchaseId: '${order.paymentId}', deliveryDate: today, deliveryLocation: 'ontisha anambra state',);
               }));
             },
             child: Text(

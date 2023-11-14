@@ -34,6 +34,7 @@ class _ServiceProviderLandingPageState
   List<Widget> _widgetOptions = <Widget>[
     ServiceProviderHomePage(),
     ServiceProviderCatalogueScreen(),
+    ServiceProviderCatalogueScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -56,7 +57,7 @@ class _ServiceProviderLandingPageState
           child: _selectedIndex == 0
               ? HomepageAppbar()
               : _selectedIndex == 1
-                  ? simpleAppbar('Shop products', GestureDetector(
+                  ? simpleAppbar('Shop Products', GestureDetector(
                     onTap: (){
                       AppNavigator.pushAndStackPage(context, page: CreateShopProducts());
                     },
@@ -115,20 +116,20 @@ class _ServiceProviderLandingPageState
                     ),
                     label: 'Catalogue',
                   ),
-                  // BottomNavigationBarItem(
-                  //   icon: ImageView.svg(
-                  //     AppImages.creditcard,
-                  //     height: 20,
-                  //     width: 20,
-                  //   ),
-                  //   activeIcon: ImageView.svg(
-                  //     AppImages.creditcard,
-                  //     height: 20,
-                  //     width: 20,
-                  //     color: AppColors.lightSecondary,
-                  //   ),
-                  //   label: 'Payment',
-                  // ),
+                  BottomNavigationBarItem(
+                    icon: ImageView.svg(
+                      AppImages.creditcard,
+                      height: 20,
+                      width: 20,
+                    ),
+                    activeIcon: ImageView.svg(
+                      AppImages.creditcard,
+                      height: 20,
+                      width: 20,
+                      color: AppColors.lightSecondary,
+                    ),
+                    label: 'Payment',
+                  ),
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: Colors.black,
@@ -217,6 +218,8 @@ class _HomepageBarState extends State<HomepageBar> {
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
+      centerTitle: true,
+      title: Text('Lucacify',style: TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.bold, fontSize: 18),),
       actions: [
         BlocConsumer<UserCubit, UserStates>(
           listener: (context, state) {

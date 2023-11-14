@@ -14,11 +14,23 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../requests/repositories/location_repo/location_repository_impl.dart';
-import '../../../landing_page/services/pet_profile/pet_profile.dart';
+import '../../../../res/app_strings.dart';
+import '../../../../utils/app_utils.dart';
 import '../../../widgets/image_view.dart';
 
 class PurchaseRequest extends StatelessWidget {
-  const PurchaseRequest({super.key});
+  final String ownerName;
+  final String phoneNumber;
+  final String productName;
+  final String productImage;
+  final String quantity;
+  final String price;
+  final String purchaseId;
+  final String deliveryDate;
+  final String deliveryLocation;
+  
+
+  const PurchaseRequest({super.key, required this.ownerName, required this.phoneNumber, required this.productName, required this.productImage, required this.quantity, required this.price, required this.purchaseId, required this.deliveryDate, required this.deliveryLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +102,7 @@ class PurchaseRequest extends StatelessWidget {
                               size: 12,
                             ),
                             CustomText(
-                              text: 'Sandra Lee',
+                              text: ownerName,
                               weight: FontWeight.bold,
                               size: 12,
                             ),
@@ -108,7 +120,9 @@ class PurchaseRequest extends StatelessWidget {
                               borderColor: Colors.red,
                               borderWidth: 2,
                               color: Colors.white,
-                              onPressed: () {},
+                              onPressed: () {
+                                //call number
+                              },
                               child: Icon(
                                 Icons.call_outlined,
                                 color: Colors.red,
@@ -164,7 +178,7 @@ class PurchaseRequest extends StatelessWidget {
                         text: 'Product name',
                       ),
                       CustomText(
-                        text: 'Smart Adult feed',
+                        text: productName,
                         weight: FontWeight.bold,
                       ),
                       const SizedBox(
@@ -185,7 +199,7 @@ class PurchaseRequest extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(30),
                         child: ImageView.network(
-                          'https://www.poochandmutt.co.uk/cdn/shop/products/GLOBAL_PRODUCT_IMAGES_HD-2_672x.jpg?v=1623489378',
+                          productImage,
                           height: 150,
                         ),
                       ),
@@ -230,7 +244,7 @@ class PurchaseRequest extends StatelessWidget {
                           ),
                           Expanded(
                             child: CustomText(
-                              text: 'Smart Adult  feed',
+                              text: productName,
                               weight: FontWeight.bold,
                               maxLines: 2,
                               size: 13,
@@ -250,7 +264,7 @@ class PurchaseRequest extends StatelessWidget {
                             size: 13,
                           ),
                           CustomText(
-                            text: '2',
+                            text: quantity,
                             weight: FontWeight.bold,
                             size: 13,
                           ),
@@ -268,8 +282,9 @@ class PurchaseRequest extends StatelessWidget {
                             size: 13,
                           ),
                           CustomText(
-                            text: 'NGN400',
+                            text: 'NGN ${AppUtils.convertPrice(price)}',
                             weight: FontWeight.bold,
+                            
                             size: 13,
                           ),
                         ],
@@ -294,12 +309,12 @@ class PurchaseRequest extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           CustomText(
-                            text: 'Purchase',
+                            text: 'Purchase Id',
                             weight: FontWeight.bold,
                             size: 13,
                           ),
                           CustomText(
-                            text: 'ID 200000dn9r',
+                            text: purchaseId,
                             weight: FontWeight.bold,
                             size: 13,
                           ),
@@ -327,14 +342,14 @@ class PurchaseRequest extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         child: Row(
                           children: [
                             Icon(Icons.calendar_month),
                             CustomText(
-                              text: '20th October, 2023',
+                              text: deliveryDate,
                               size: 14,
                             )
                           ],
@@ -345,7 +360,7 @@ class PurchaseRequest extends StatelessWidget {
                           children: [
                             Icon(Icons.timer_outlined),
                             CustomText(
-                              text: '06 PM',
+                              text: '',
                               size: 14,
                             )
                           ],
@@ -355,14 +370,113 @@ class PurchaseRequest extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
-                
-                _map(context),
+
+                 
+                Container(
+                  width: screenSize(context).width,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                       
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: 'Amount paid -',
+                            weight: FontWeight.bold,
+                            maxLines: 2,
+                            size: 13,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          CustomText(
+                            text: 'NGN ${AppUtils.convertPrice(price)}',
+                             weight: FontWeight.w900,
+                            fontFamily: AppStrings.montserrat,
+                            maxLines: 2,
+                            size: 12,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: 'App service charge -',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          CustomText(
+                            text: '3000',
+                             weight: FontWeight.w900,
+                            fontFamily: AppStrings.montserrat,
+                            size: 13,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: 'Amount withdrawable -',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          CustomText(
+                            text: '1000',
+                            weight: FontWeight.w900,
+                            fontFamily: AppStrings.montserrat,
+                            size: 13,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+               SizedBox(
+                  height: 14,
+                ),
+               Padding(
+                 padding: const EdgeInsets.only(left: 19.0),
+                 child: CustomText(
+                              text: 'Why service charge?',
+                              color: AppColors.lightSecondary,
+                              weight: FontWeight.w700,
+                              // fontFamily: AppStrings.montserrat,
+                              size: 14,
+                            ),
+               ),
                
                 SizedBox(
                   height: 20,
-                )
+                ),
+                _map(context),
+               
+               
               ],
             ),
           ),
@@ -439,7 +553,7 @@ class PurchaseRequest extends StatelessWidget {
                   left: 0,
                   bottom: 0,
                   child: Container(
-                    width: screenSize(context).width * .74,
+                    width: screenSize(context).width * .72,
                     height: screenSize(context).height * .08,
                     margin: EdgeInsets.all(10),
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
