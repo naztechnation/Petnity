@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
-import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -16,7 +15,7 @@ class LoadingPage extends StatelessWidget {
         height: screenSize(context).height,
         width: screenSize(context).width,
         decoration: BoxDecoration(
-            color:AppColors.lightPrimary,),
+            color:Colors.white,),
         child: Align(child: ImageView.asset(AppImages.loading, height: 50,)),
       ),
     );

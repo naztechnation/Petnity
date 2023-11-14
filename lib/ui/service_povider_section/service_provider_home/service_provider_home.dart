@@ -7,7 +7,7 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/pet_selling_home.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/new_requests_delivery.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';

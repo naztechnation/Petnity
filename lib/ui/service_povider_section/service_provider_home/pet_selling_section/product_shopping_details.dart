@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/blocs/location/location.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -11,13 +12,13 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/location/location_cubit.dart';
-import '../../../model/view_models/account_view_model.dart';
-import '../../../requests/repositories/location_repo/location_repository_impl.dart';
-import '../../landing_page/services/pet_profile/pet_profile.dart';
+import '../../../../model/view_models/account_view_model.dart';
+import '../../../../requests/repositories/location_repo/location_repository_impl.dart';
+import '../../../landing_page/services/pet_profile/pet_profile.dart';
+import '../../../widgets/image_view.dart';
 
-class ServiceRequest extends StatelessWidget {
-  const ServiceRequest({super.key});
+class PurchaseRequest extends StatelessWidget {
+  const PurchaseRequest({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class ServiceRequest extends StatelessWidget {
             child: AppBar(
               centerTitle: true,
               title: Text(
-                'Service Request',
+                'Purchase Request',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -60,7 +61,7 @@ class ServiceRequest extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: 'Pet owner details',
+                  text: 'Product buyer details',
                   weight: FontWeight.bold,
                 ),
                 Container(
@@ -155,41 +156,166 @@ class ServiceRequest extends StatelessWidget {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    CustomText(
-                      text: 'Pet name - ',
+                Align(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomText(
+                        text: 'Product name',
+                      ),
+                      CustomText(
+                        text: 'Smart Adult feed',
+                        weight: FontWeight.bold,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: Container(
+                      height: 160,
+                      width: 160,
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(color: Colors.white),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: ImageView.network(
+                          'https://www.poochandmutt.co.uk/cdn/shop/products/GLOBAL_PRODUCT_IMAGES_HD-2_672x.jpg?v=1623489378',
+                          height: 150,
+                        ),
+                      ),
                     ),
-                    CustomText(
-                      text: 'Thanos',
-                      weight: FontWeight.bold,
-                    )
-                  ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: screenSize(context).width * .05,
-                      vertical: 10),
                   width: screenSize(context).width,
-                  height: screenSize(context).height * .08,
-                  child: ButtonView(
-                      expanded: false,
-                      onPressed: () => Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
-                            return PetProfile();
-                          })),
-                      color: Colors.white,
-                      borderColor: Colors.white,
-                      child: CustomText(
-                        color: Colors.blue,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      CustomText(
+                        text: 'Purchase Review',
                         weight: FontWeight.bold,
-                        text: 'View pet Profile',
-                      )),
+                        size: 15,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: CustomText(
+                              text: 'Product name',
+                              weight: FontWeight.bold,
+                              maxLines: 2,
+                              size: 13,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            child: CustomText(
+                              text: 'Smart Adult  feed',
+                              weight: FontWeight.bold,
+                              maxLines: 2,
+                              size: 13,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: 'QTY',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                          CustomText(
+                            text: '2',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: 'Price',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                          CustomText(
+                            text: 'NGN400',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                CustomText(
-                  text: 'Pick up date and time',
-                  size: 13,
-                  weight: FontWeight.bold,
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  width: screenSize(context).width,
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    
+                  ),
+                  child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: 'Purchase',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                          CustomText(
+                            text: 'ID 200000dn9r',
+                            weight: FontWeight.bold,
+                            size: 13,
+                          ),
+                        ],
+                      ),
+                  ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: CustomText(
+                    text: 'Delivery due date',
+                    size: 13,
+                    weight: FontWeight.bold,
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.all(20),
@@ -231,50 +357,18 @@ class ServiceRequest extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                CustomText(
-                  text: 'Drop off date and time',
-                  weight: FontWeight.bold,
-                  size: 13,
-                ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  margin: EdgeInsets.symmetric(
-                      horizontal: screenSize(context).width * .05,
-                      vertical: 10),
-                  width: screenSize(context).width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        child: Row(
-                          children: [
-                            Icon(Icons.calendar_month),
-                            CustomText(
-                              text: '20th October, 2023',
-                              size: 14,
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        child: Row(
-                          children: [
-                            Icon(Icons.timer_outlined),
-                            CustomText(
-                              text: '06 PM',
-                              size: 14,
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                
                 _map(context),
-                Container(
+               
+                SizedBox(
+                  height: 20,
+                )
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar:  Container(
+          height: 150,
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
@@ -300,7 +394,7 @@ class ServiceRequest extends StatelessWidget {
                             return UpdateSuccessfulScreen(
                                 buttonText: 'Track',
                                 successMessage:
-                                    'Youve successfully accepted  a dog walking session',
+                                    'You\'ve successfully accepted  a dog walking session',
                                 onPressed: () {
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (_) {
@@ -320,13 +414,6 @@ class ServiceRequest extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                )
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -364,19 +451,14 @@ class ServiceRequest extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(
-                          text: 'Amount paid - 1000\$',
-                          size: 12,
-                        ),
+                       
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            ImageView.svg(AppImages.location),
+                            const SizedBox(width: 10,),
                             CustomText(
-                              text: 'Session ID ',
-                              size: 12,
-                            ),
-                            CustomText(
-                              text: 'QWE123456BV',
+                              text: 'delivery location',
                               size: 12,
                               weight: FontWeight.bold,
                             ),

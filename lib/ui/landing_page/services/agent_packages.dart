@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
+import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
@@ -115,10 +116,25 @@ class _PackagesState extends State<PackagePage> {
                       ),
                     ),
                   ),
-                  Text(
-                    'No package available for this Agent',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: Text(
+                            'No package available for this Agent',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                          ),
+                        ),
+                        const SizedBox(height: 30,),
+                        ButtonView(onPressed: (){
+                          Navigator.pop(context);
+                        }, 
+                        expanded: false,
+                        child: Text('Return'))
+                      ],
+                    ),
                   ),
                 ],
               ),

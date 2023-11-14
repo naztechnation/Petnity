@@ -244,9 +244,20 @@ class _ProductDetailState extends State<ProductDetail> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                ImageView.network(
-                  _products?.image ?? '',
-                  height: 150,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Container(
+                    height: 160,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: ImageView.network(
+                        _products?.image ?? '',
+                        height: 150,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -296,16 +307,28 @@ class _ProductDetailState extends State<ProductDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          _products?.name ?? '',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24),
+                        Expanded(
+                          flex: 3,
+                          child: Text(
+                            _products?.name ?? '',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
                         ),
-                        Text(
-                          (_products?.inStock ?? false)
-                              ? 'in stock'
-                              : 'out of stock',
-                          style: TextStyle(fontSize: 12),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            (_products?.inStock ?? false)
+                                ? 'in stock'
+                                : 'out of stock',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: (_products?.inStock ?? false)
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -322,8 +345,8 @@ class _ProductDetailState extends State<ProductDetail> {
                           width: 10,
                         ),
                         ButtonView(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                           expanded: false,
                           borderRadius: 30,
                           onPressed: () {
@@ -334,8 +357,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                     ctxt: context,
                                     username: user.username,
                                     agentName: _products?.name ?? '',
-                                    productId:
-                                        _products?.id.toString() ?? ''));
+                                    productId: _products?.id.toString() ?? ''));
                           },
                           child: Text('Add Review'),
                         ),
@@ -358,7 +380,7 @@ class _ProductDetailState extends State<ProductDetail> {
                       textAlign: TextAlign.justify,
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 5),
@@ -382,16 +404,23 @@ class _ProductDetailState extends State<ProductDetail> {
                               reviews: reviews[index],
                             );
                           })
+                    ] else ...[
+                      if (reviews.isEmpty)
+                        SizedBox(
+                          height: 100,
+                          child: Center(
+                            child: Text(
+                                ' No Reviews available for this product',
+                                style: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                          ),
+                        )
                     ]
                   ]),
                 ),
                 const SizedBox(
                   height: 50,
                 ),
-                if (reviews.isEmpty)
-                  Center(
-                    child: Text(' No Reviews available for the product'),
-                  )
               ],
             ),
           ),

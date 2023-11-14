@@ -171,17 +171,25 @@ class _ShopState extends State<Shop> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
-                                        filteredProducts[index].name ?? '',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          filteredProducts[index].name ?? '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(AppUtils.convertPrice(filteredProducts[index].price) ?? ''),
-                                      RatingWidget(
-                                        coloredStars: 3,
+                                     
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(AppUtils.convertPrice(filteredProducts[index].price) ?? '')),
+                                      Expanded(
+                                        flex: 1,
+                                        child: RatingWidget(
+                                          coloredStars: 3,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -189,7 +197,7 @@ class _ShopState extends State<Shop> {
                               },
                               staggeredTileBuilder: (index) {
                                 return StaggeredTile.count(
-                                    1, index.isEven ? 1.45 : 1.6);
+                                    1, index.isEven ? 1.45 : 1.45);
                               }),
                         ),
                       ],

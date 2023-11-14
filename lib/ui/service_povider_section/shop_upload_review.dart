@@ -143,8 +143,10 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                       color: Colors.white,
                     ),
                     margin: const EdgeInsets.symmetric(horizontal:100),
-                    padding: const EdgeInsets.symmetric(horizontal:20),
+                    padding: const EdgeInsets.symmetric(horizontal:0),
                     child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+
                       child: ImageView.file(
                           File(
                             serviceProvider.imageURl!.path,
@@ -254,7 +256,7 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                       processing:
                           (state is CreateShopProductsLoading || isLoading),
                       color: AppColors.lightSecondary,
-                      borderRadius: 16,
+                      borderRadius: 30,
                       child: CustomText(
                         textAlign: TextAlign.center,
                         maxLines: 1,
