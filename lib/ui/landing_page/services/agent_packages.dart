@@ -279,7 +279,7 @@ class _PackagesState extends State<PackagePage> {
                                                 textAlign: TextAlign.left,
                                                 maxLines: 2,
                                                 text:
-                                                    'price: ₦${AppUtils.convertPrice(packages[index].price)}',
+                                                    'price: NGN ${AppUtils.convertPrice(packages[index].price)}',
                                                 weight: FontWeight.w500,
                                                 size: 16,
                                                 color: Colors.black,

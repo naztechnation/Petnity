@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/view_models/user_view_model.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../landing_page/services/track_services/track_services.dart';
 import '../../../widgets/modals.dart';
 import '../widget/progressbar.dart';
 
@@ -167,7 +169,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                   child: ButtonView(
                     color: Colors.blue,
                     onPressed: () {
-                      Modals.showToast('${1.0 - services.getProgressTime(allOrders.dropoffTime ?? '')}');
+                      AppNavigator.pushAndStackPage(context,
+                            page: TrackServicesScreen());
                     },
                     child: Text(widget.label),
                     borderRadius: 30,

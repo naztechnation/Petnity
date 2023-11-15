@@ -282,7 +282,7 @@ class _ReviewState extends State<Review> {
                                             textAlign: TextAlign.center,
                                             maxLines: 2,
                                             text:
-                                                '₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
+                                                'NGN ${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
                                             weight: FontWeight.w500,
                                             size: 14,
                                             fontFamily: AppStrings.montserrat,
@@ -416,7 +416,7 @@ class _ReviewState extends State<Review> {
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
                                   text:
-                                      '₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
+                                      'NGN ${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
                                   weight: FontWeight.w600,
                                   size: 14,
                                   color: Colors.black,

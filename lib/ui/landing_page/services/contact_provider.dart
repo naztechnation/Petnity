@@ -147,7 +147,7 @@ class _ContactProviderState extends State<ContactProvider> {
                   CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    text: '₦${AppUtils.convertPrice(agent.servicePrice)}',
+                    text: 'NGN ${AppUtils.convertPrice(agent.servicePrice)}',
                     weight: FontWeight.w600,
                     size: 14,
                     color: Colors.black,
@@ -163,9 +163,9 @@ class _ContactProviderState extends State<ContactProvider> {
             borderRadius: 40,
             onPressed: () {
               if(selectedTime1 != 'Select Time' || selectedTime2 != 'Select Time') {
-              AppNavigator.pushAndStackPage(context, 
-              page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
-              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice, orderId: agent.orderId,username: agent.username,));
+
+                checkDatesValidity(selectedDate2, selectedDate1, agent);
+             
               }else{
                 Modals.showToast('please select time');
               }
@@ -228,4 +228,23 @@ class _ContactProviderState extends State<ContactProvider> {
       });
     }
   }
+
+void checkDatesValidity(String startDateString, String endDateString, agent) {
+  
+  DateTime startDate = DateTime.parse(startDateString);
+  DateTime endDate = DateTime.parse(endDateString);
+
+  if (startDate.isBefore(endDate)) {
+      AppNavigator.pushAndStackPage(context, 
+              page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
+              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice, orderId: agent.orderId,username: agent.username,));
+  } else if (startDate.isAfter(endDate)) {
+    Modals.showToast('Make sure your Pick up date is before your Drop off date');
+   
+  } else {
+    AppNavigator.pushAndStackPage(context, 
+              page: ReviewScreen(date1: selectedDate1,date2: selectedDate2,
+              time1: selectedTime1,time2: selectedTime2,amount: agent.servicePrice, orderId: agent.orderId,username: agent.username,));
+  }
+}
 }

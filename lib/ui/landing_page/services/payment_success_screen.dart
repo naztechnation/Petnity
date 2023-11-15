@@ -73,7 +73,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                           textAlign: TextAlign.justify,
                           maxLines: 3,
                           text:
-                              'your  transaction for payment off ₦${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)} successful. click on button below to track session',
+                              'your  transaction for payment off NGN ${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)} successful. click on button below to track session',
                           weight: FontWeight.w500,
                           size: 16,
                           color: Colors.black,

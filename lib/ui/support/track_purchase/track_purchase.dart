@@ -80,11 +80,11 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
             listener: (context, state) {
               if (state is OrderListLoaded) {
                 if (state.orderList.status!) {
-                  allUserOrder = state.orderList.orders ?? [];
-                  ongoingUserOrder = _userCubit.viewModel.onGoingOrdersList;
-                  completedUserOrder = _userCubit.viewModel.onCompletedOrdersList;
-                  pendingUserOrder = _userCubit.viewModel.onPendingOrderList;
-                  rejectedUserOrder = _userCubit.viewModel.onRejectedOrdersList;
+                  allUserOrder = state.orderList.orders?.reversed.toList() ?? [];
+                  ongoingUserOrder = _userCubit.viewModel.onGoingOrdersList.reversed.toList();
+                  completedUserOrder = _userCubit.viewModel.onCompletedOrdersList.reversed.toList();
+                  pendingUserOrder = _userCubit.viewModel.onPendingOrderList.reversed.toList();
+                  rejectedUserOrder = _userCubit.viewModel.onRejectedOrdersList.reversed.toList();
                 } else {}
               } else if (state is UserNetworkErrApiErr) {
               } else if (state is UserNetworkErr) {}
