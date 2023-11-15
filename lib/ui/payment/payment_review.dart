@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -18,89 +12,113 @@ import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
 import '../../../utils/validator.dart';
+import '../../utils/app_utils.dart';
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
 
+class PaymentReview extends StatefulWidget {
+  final String amount;
+  final String accountName;
+  final String accountNumber;
+  final String bankName;
 
-class PaymentReview extends StatelessWidget {
+  PaymentReview({
+    super.key,
+    required this.amount,
+    required this.accountName,
+    required this.accountNumber,
+    required this.bankName,
+  });
 
-  PaymentReview({super.key,  });
+  @override
+  State<PaymentReview> createState() => _PaymentReviewState();
+}
+
+class _PaymentReviewState extends State<PaymentReview> {
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _amountController = TextEditingController();
 
- final TextEditingController _illnessNameController = TextEditingController();
- final TextEditingController _drugNameController = TextEditingController();
-  
+  final TextEditingController _bankDetailsController = TextEditingController();
+
+  @override
+  void initState() {
+    _bankDetailsController.text = widget.accountName;
+    _amountController.text = widget.amount;
+
+  _amountController.text =  AppUtils.convertPrice(_amountController.text);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final petProfile = Provider.of<AccountViewModel>(context, listen: false);
 
     return Scaffold(
-      body: Container(
-        height: screenSize(context).height,
-        width: screenSize(context).width,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                begin: Alignment.topRight,
-                end: Alignment.topLeft)),
-        child: BlocProvider<AccountCubit>(
-          lazy: false,
-          create: (_) => AccountCubit(
-              accountRepository: AccountRepositoryImpl(),
-              viewModel: Provider.of<AccountViewModel>(context, listen: false)),
-          child: BlocConsumer<AccountCubit, AccountStates>(
-            listener: (context, state) {
-              if (state is AccountLoaded) {
-                  if(state.userData.status!){
-                      
-                 Modals.showToast(state.userData.message!,
-                      messageType: MessageType.success);
-                  }
-                 
-              } else if (state is AccountApiErr) {
-                if (state.message != null) {
-                  Modals.showToast(state.message!,
-                      messageType: MessageType.error);
-                }
-              } else if (state is AccountNetworkErr) {
-                if (state.message != null) {
-                  Modals.showToast(state.message!,
-                      messageType: MessageType.error);
-                }
+        body: Container(
+      height: screenSize(context).height,
+      width: screenSize(context).width,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [AppColors.scaffoldColor, Colors.red.shade50],
+              begin: Alignment.topRight,
+              end: Alignment.topLeft)),
+      child: BlocProvider<AccountCubit>(
+        lazy: false,
+        create: (_) => AccountCubit(
+            accountRepository: AccountRepositoryImpl(),
+            viewModel: Provider.of<AccountViewModel>(context, listen: false)),
+        child: BlocConsumer<AccountCubit, AccountStates>(
+          listener: (context, state) {
+            if (state is AccountLoaded) {
+              if (state.userData.status!) {
+                Modals.showToast(state.userData.message!,
+                    messageType: MessageType.success);
               }
-            },
-            builder: (context, state) => SingleChildScrollView(
+            } else if (state is AccountApiErr) {
+              if (state.message != null) {
+                Modals.showToast(state.message!,
+                    messageType: MessageType.error);
+              }
+            } else if (state is AccountNetworkErr) {
+              if (state.message != null) {
+                Modals.showToast(state.message!,
+                    messageType: MessageType.error);
+              }
+            }
+          },
+          builder: (context, state) => SingleChildScrollView(
             child: Form(
               key: _formKey,
               child: Column(
                 children: [
-                  SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-                  
+                  SafeArea(
+                      child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       backButton(context),
                       const SizedBox(
-                    width: 20,
-                  ),
+                        width: 20,
+                      ),
                       Flexible(
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 1,
                           text: 'Payment Review',
                           weight: FontWeight.w700,
-                          size: 22,
+                          size: 18,
                           color: Colors.black,
                         ),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),
                     child: Column(
                       children: [
                         const SizedBox(
@@ -110,10 +128,11 @@ class PaymentReview extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextEditView(
                             isDense: true,
-                             validator: (value){
+                            readOnly: true,
+                            validator: (value) {
                               return Validator.validate(value, 'amount');
                             },
-                            controller: _illnessNameController,
+                            controller: _amountController,
                             filled: true,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
@@ -127,45 +146,57 @@ class PaymentReview extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextEditView(
                             isDense: true,
-                            controller: _drugNameController,
-                             validator: (value){
+                            readOnly: true,
+                            maxLines: 1,
+                            
+                            controller: _bankDetailsController,
+                            validator: (value) {
                               return Validator.validate(value, 'Account');
                             },
                             filled: true,
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.only(right:12.0),
+                              child: Column(
+                                children: [
+                                  Text('${widget.bankName}', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Text('${widget.accountNumber}'),
+                                ],
+                              ),
+                            ),
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
                             textViewTitle: 'To Account',
                           ),
                         ),
-                        
                       ],
                     ),
                   ),
-                  const SizedBox(height: 180,),
+                  const SizedBox(
+                    height: 180,
+                  ),
                   Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 0.0, horizontal: 20),
-                                  child: ButtonView(
-                                    processing: state is AccountProcessing,
-                                    onPressed: () {
-                                    //  Modals.showToast(petProfile.petId);
-                                    // _submit(context, petProfile.petId);
-                                    },
-                                    color: AppColors.lightSecondary,
-                                    borderRadius: 30,
-                                    borderColor: AppColors.lightSecondary,
-                                    child:  CustomText(
-                                          textAlign: TextAlign.center,
-                                          maxLines: 1,
-                                          
-                                          text: 'Confirm',
-                                          weight: FontWeight.w700,
-                                          size: 16,
-                                          fontFamily: AppStrings.interSans,
-                                          color: Colors.white,
-                                        ),
-                                  ),
-                                ),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 0.0, horizontal: 20),
+                    child: ButtonView(
+                      processing: state is AccountProcessing,
+                      onPressed: () {
+                        //  Modals.showToast(petProfile.petId);
+                        // _submit(context, petProfile.petId);
+                      },
+                      color: AppColors.lightSecondary,
+                      borderRadius: 30,
+                      borderColor: AppColors.lightSecondary,
+                      child: CustomText(
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        text: 'Confirm',
+                        weight: FontWeight.w700,
+                        size: 16,
+                        fontFamily: AppStrings.interSans,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -174,17 +205,4 @@ class PaymentReview extends StatelessWidget {
       ),
     ));
   }
-
-  // _submit(BuildContext ctx, String petId) {
-  //   if (_formKey.currentState!.validate()) {
-  //     ctx.read<AccountCubit>().sendPetHealth(
-          
-  //         name: _illnessNameController.text.trim(),
-  //         drug: _drugNameController.text.trim(),
-  //         prescription: _prescribeNameController.text.trim(),
-  //         url: 'pets/add-allergies/$petId'
-  //         );
-  //     FocusScope.of(ctx).unfocus();
-  //   }
- // }
 }

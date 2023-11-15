@@ -14,16 +14,18 @@ import '../../handlers/secure_handler.dart';
 import '../../model/service_provider_models/account_details.dart';
 import '../../model/view_models/service_provider_inapp.dart';
 import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
+import '../../res/app_images.dart';
 import '../../res/app_routes.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../../utils/validator.dart';
-import '../widgets/back_button.dart';
+import '../payment/withdrawal_page.dart';
+import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 
-
 class AddAccountDetails extends StatelessWidget {
-  
-  const AddAccountDetails();
+  final bool isWithdraw;
+
+  const AddAccountDetails({this.isWithdraw = false});
 
   @override
   Widget build(BuildContext context) {
@@ -32,20 +34,25 @@ class AddAccountDetails extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: AddAccount(
-         
-      ),
+      child: AddAccount(isWithdraw: isWithdraw,),
     );
   }
 }
+
 class AddAccount extends StatefulWidget {
-  AddAccount({super.key});
+  final bool isWithdraw;
+
+  AddAccount({super.key, this.isWithdraw = false});
 
   @override
-  State<AddAccount> createState() => _AddAccountState();
+  State<AddAccount> createState() => _AddAccountState(isWithdraw: isWithdraw);
 }
 
 class _AddAccountState extends State<AddAccount> {
+  final bool isWithdraw;
+
+  _AddAccountState({this.isWithdraw = false});
+
   final TextEditingController accountNameController = TextEditingController();
 
   final TextEditingController accountNumberController = TextEditingController();
@@ -66,13 +73,24 @@ class _AddAccountState extends State<AddAccount> {
     _userCubit = context.read<ServiceProviderCubit>();
 
     _userCubit.getAccount(agentId: agentId);
-
   }
 
   @override
   void initState() {
     getAgentId();
     super.initState();
+  }
+
+  Future<bool> onBackPress() {
+    if (isWithdraw) {
+      AppNavigator.pushAndReplacePage(context, page: WithdrawalPage());
+    } else {
+      Navigator.pop(context);
+    }
+
+    Modals.showToast(isWithdraw.toString());
+
+    return Future.value(false);
   }
 
   @override
@@ -96,122 +114,151 @@ class _AddAccountState extends State<AddAccount> {
             }));
           } else {
             Modals.showToast(state.account.message ?? "");
-
           }
-        } if (state is AccountDetailsLoaded) {
+        }
+        if (state is AccountDetailsLoaded) {
           if (state.account.status!) {
-             accountList = state.account.agentBankDetails ?? [];
+            accountList = state.account.agentBankDetails ?? [];
 
-             if(accountList.isNotEmpty){
+            if (accountList.isNotEmpty) {
               accountNameController.text = accountList.last.accountName ?? "";
-              accountNumberController.text = accountList.last.accountNumber ?? "";
+              accountNumberController.text =
+                  accountList.last.accountNumber ?? "";
               bankNameController.text = accountList.last.bank ?? "";
-             }
-          } 
+            }
+          }
         } else if (state is CreateServiceNetworkErrApiErr) {
           Modals.showToast(state.message ?? "");
         } else if (state is CreateServiceNetworkErrApiErr) {
           Modals.showToast(state.message ?? "");
-        }  
+        }
       },
       builder: (context, state) => GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: (state is AccountDetailsLoading) ?    Scaffold(body: LoadingPage()): Scaffold(
-          backgroundColor: AppColors.lightBackground,
-          appBar: PreferredSize(
-            preferredSize: screenSize(context) * .1,
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: AppBar(
-                elevation: 0,
-                backgroundColor: AppColors.lightBackground,
-                leading: backButton(context),
-                title: Text(
-                  'Account Details',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                centerTitle: true,
-              ),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Container(
-                height: screenSize(context).height * .8,
-                padding: EdgeInsets.all(20),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextEditView(
-                        isDense: true,
-                        validator: (value) {
-                          return Validator.validate(value, 'Account name');
-                        },
-                        textViewTitle: 'Account name',
-                        hintText: 'Enter account name',
-                        fillColor: Colors.white,
-                        borderColor: Colors.white,
-                        controller: accountNameController,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextEditView(
-                        isDense: true,
-                        validator: (value) {
-                          return Validator.validate(value, 'Account number');
-                        },
-                        textViewTitle: 'Account number',
-                        keyboardType: TextInputType.number,
-                        fillColor: Colors.white,
-                        borderColor: Colors.white,
-                        hintText: 'Enter account number',
-                        controller: accountNumberController,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextEditView(
-                        controller: bankNameController,
-                        isDense: true,
-                        validator: (value) {
-                          return Validator.validate(value, 'Bank name');
-                        },
-                        fillColor: Colors.white,
-                        borderColor: Colors.white,
-                        textViewTitle: 'Bank name',
-                        hintText: 'Select a bank',
-                        readOnly: true,
-                        suffixIcon: Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 22,
+        child: (state is AccountDetailsLoading)
+            ? Scaffold(body: LoadingPage())
+            : WillPopScope(
+                onWillPop: onBackPress,
+                child: Scaffold(
+                  backgroundColor: AppColors.lightBackground,
+                  appBar: PreferredSize(
+                    preferredSize: screenSize(context) * .1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: AppBar(
+                        elevation: 0,
+                        backgroundColor: AppColors.lightBackground,
+                        leading: GestureDetector(
+                          onTap: () {
+                            if (isWithdraw) {
+                              AppNavigator.pushAndReplacePage(context,
+                                  page: WithdrawalPage());
+                            } else {
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 22.0),
+                                child: ImageView.svg(
+                                  AppImages.backButton,
+                                  height: 30,
+                                  width: 30,
+                                ),
+                              )),
                         ),
-                        onTap: () {
-                          serviceProvider.resetBankList();
-
-                          Modals.showBottomSheetModal(context,
-                              isDissmissible: true,
-                              heightFactor: 1,
-                              isScrollControlled: true,
-                              page: loadBankList(serviceProvider, context));
-                        },
+                        title: Text(
+                          'Account Details',
+                          style: TextStyle(
+                              color: Colors.black, fontWeight: FontWeight.bold),
+                        ),
+                        centerTitle: true,
                       ),
-                      Spacer(),
-                      ButtonView(
-                        borderRadius: 40,
-                        processing: state is UpdateAccountDetailsLoading,
-                        onPressed: () {
-                          _submit(context: context, agentId: agentId);
-                        },
-                        child: Text('Update Account'),
-                      ),
-                    ],
+                    ),
                   ),
-                )),
-          ),
-        ),
+                  body: SingleChildScrollView(
+                    child: Container(
+                        height: screenSize(context).height * .8,
+                        padding: EdgeInsets.all(20),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextEditView(
+                                isDense: true,
+                                validator: (value) {
+                                  return Validator.validate(
+                                      value, 'Account name');
+                                },
+                                textViewTitle: 'Account name',
+                                hintText: 'Enter account name',
+                                fillColor: Colors.white,
+                                borderColor: Colors.white,
+                                controller: accountNameController,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextEditView(
+                                isDense: true,
+                                validator: (value) {
+                                  return Validator.validate(
+                                      value, 'Account number');
+                                },
+                                textViewTitle: 'Account number',
+                                keyboardType: TextInputType.number,
+                                fillColor: Colors.white,
+                                borderColor: Colors.white,
+                                hintText: 'Enter account number',
+                                controller: accountNumberController,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              TextEditView(
+                                controller: bankNameController,
+                                isDense: true,
+                                validator: (value) {
+                                  return Validator.validate(value, 'Bank name');
+                                },
+                                fillColor: Colors.white,
+                                borderColor: Colors.white,
+                                textViewTitle: 'Bank name',
+                                hintText: 'Select a bank',
+                                readOnly: true,
+                                suffixIcon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  size: 22,
+                                ),
+                                onTap: () {
+                                  serviceProvider.resetBankList();
+
+                                  Modals.showBottomSheetModal(context,
+                                      isDissmissible: true,
+                                      heightFactor: 1,
+                                      isScrollControlled: true,
+                                      page: loadBankList(
+                                          serviceProvider, context));
+                                },
+                              ),
+                              Spacer(),
+                              ButtonView(
+                                borderRadius: 40,
+                                processing:
+                                    state is UpdateAccountDetailsLoading,
+                                onPressed: () {
+                                  _submit(context: context, agentId: agentId);
+                                },
+                                child: Text('Update Account'),
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
+                ),
+              ),
       ),
     );
   }

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/service_provider_models/all_agent_orders.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
+import '../../../../utils/app_utils.dart';
 import 'product_shopping_details.dart';
 
 class ServiceProviderPetDeliveryHomeBody extends StatefulWidget {
@@ -66,12 +67,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
           height: 10,
         ),
         if (serviceProvider.order.isEmpty) ...[
-          Center(
-            child: CustomText(
-              text: 'no  available order here',
-              size: 16,
-              weight: FontWeight.bold,
-            ),
+          Container(
+      height: 200,
+      child: Align(child: Text('You don\'t have an available order', style: 
+      TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.bold),))
           ),
         ] else ...[
           ListView.builder(
@@ -179,7 +178,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: CustomText(
-            text: 'NGN ${order.product?.price}',
+            text: 'NGN ${AppUtils.convertPrice(order.product?.price)}',
             size: 14,
             weight: FontWeight.w600,
           ),

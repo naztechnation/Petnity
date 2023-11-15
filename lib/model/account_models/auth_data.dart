@@ -48,7 +48,7 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  String? idType;
+  var idType;
   List<Services>? services;
   List<PetTypes>? petTypes;
 

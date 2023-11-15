@@ -17,7 +17,7 @@ class AccountDeleted extends StatelessWidget {
               height: screenSize(context).height * 0.4,
             ),
             Text(
-              'Account delted successfully',
+              'Account deleted successfully',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Container(
