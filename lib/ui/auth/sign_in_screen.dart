@@ -178,10 +178,7 @@ class SignInScreen extends StatelessWidget {
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: ImageView.svg(
-                            AppImages.visibleIcon,
-                            height: 13,
-                          ),
+                          child: user.showPasswordStatus ?   Icon(Icons.visibility_off, size: 24,) : Icon(Icons.visibility, size: 24),
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,

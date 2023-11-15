@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/ui/payment/payment_review.dart';
@@ -59,6 +61,11 @@ class _WithdrawalState extends State<Withdrawal> {
   String accountName = '';
   String accountNumber = '';
   String bankName = '';
+  String amount = '95000';
+  Color amountColor = Colors.black;
+
+  Timer? _debounce;
+
 
   getAgentId() async {
     agentId = await StorageHandler.getAgentId();
@@ -70,7 +77,30 @@ class _WithdrawalState extends State<Withdrawal> {
   @override
   void initState() {
     getAgentId();
+     amountController.addListener(updateTextColor);
     super.initState();
+  }
+  void updateTextColor() {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      setState(() {
+        double enteredAmount = double.tryParse(amountController.text) ?? 0;
+        double staticAmount = double.tryParse( amount) ?? 0;
+
+        amountColor = enteredAmount > staticAmount ? Colors.red : Colors.black;
+      //   if(amountController.text.isNotEmpty){
+      //   amountController.text = AppUtils.convertPrice(amountController.text);
+
+      //   }
+       });
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    amountController.dispose();
+    super.dispose();
   }
 
   @override
@@ -171,6 +201,9 @@ class _WithdrawalState extends State<Withdrawal> {
                           },
                           controller: amountController,
                           isDense: true,
+                          keyboardType: TextInputType.number,
+                          textColor: amountColor,
+                          
                           textViewTitle: 'Amount',
                           hintText: 'input amount',
                           fillColor: Colors.white,

@@ -115,7 +115,7 @@ class TextEditView extends StatelessWidget {
             autofillHints: autofillHints,
             onFieldSubmitted: onFieldSubmitted,
             focusNode: focusNode,
-            style: TextStyle(color: textColor),
+            style: TextStyle(color: textColor, fontFamily: AppStrings.montserrat, fontSize: 16, fontWeight: FontWeight.w700),
             decoration: InputDecoration(
                 border: _border(context),
                 enabledBorder: _border(context),

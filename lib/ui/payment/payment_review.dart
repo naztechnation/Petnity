@@ -12,7 +12,10 @@ import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
 import '../../../utils/validator.dart';
+import '../../res/app_routes.dart';
 import '../../utils/app_utils.dart';
+import '../../utils/navigator/page_navigator.dart';
+import '../settings/update_successful_page.dart';
 import '../widgets/back_button.dart';
 import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
@@ -44,14 +47,19 @@ class _PaymentReviewState extends State<PaymentReview> {
 
   final TextEditingController _bankDetailsController = TextEditingController();
 
+  Color amountColor = Colors.black;
+
   @override
   void initState() {
     _bankDetailsController.text = widget.accountName;
     _amountController.text = widget.amount;
 
-  _amountController.text =  AppUtils.convertPrice(_amountController.text);
+    _amountController.text = AppUtils.convertPrice(_amountController.text);
+    
     super.initState();
   }
+
+   
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +141,9 @@ class _PaymentReviewState extends State<PaymentReview> {
                               return Validator.validate(value, 'amount');
                             },
                             controller: _amountController,
+                             
                             filled: true,
+                            textColor: amountColor,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
                             textViewTitle: 'Withdraw',
@@ -147,18 +157,27 @@ class _PaymentReviewState extends State<PaymentReview> {
                           child: TextEditView(
                             isDense: true,
                             readOnly: true,
+                            keyboardType: TextInputType.number,
+
                             maxLines: 1,
-                            
                             controller: _bankDetailsController,
+                            onChanged: (value){
+                              
+
+                            },
                             validator: (value) {
                               return Validator.validate(value, 'Account');
                             },
                             filled: true,
                             suffixIcon: Padding(
-                              padding: const EdgeInsets.only(right:12.0),
+                              padding: const EdgeInsets.only(right: 12.0),
                               child: Column(
                                 children: [
-                                  Text('${widget.bankName}', style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Text(
+                                    '${widget.bankName}',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
                                   Text('${widget.accountNumber}'),
                                 ],
                               ),
@@ -180,8 +199,18 @@ class _PaymentReviewState extends State<PaymentReview> {
                     child: ButtonView(
                       processing: state is AccountProcessing,
                       onPressed: () {
-                        //  Modals.showToast(petProfile.petId);
-                        // _submit(context, petProfile.petId);
+                        Navigator.push(context, MaterialPageRoute(builder: (_) {
+                          return UpdateSuccessfulScreen(
+                              notetext:
+                                  'Payment speed is subject to bans internal network',
+                              buttonText: 'Back Home',
+                              onPressed: () {
+                                AppNavigator.pushAndReplaceName(context,
+                                    name: AppRoutes.serviceProviderLandingPage);
+                              },
+                              successMessage:
+                                  'Amount of NGN${AppUtils.convertPrice(widget.amount)} has been sent to you saved bank account Payment should arrive in an hour');
+                        }));
                       },
                       color: AppColors.lightSecondary,
                       borderRadius: 30,

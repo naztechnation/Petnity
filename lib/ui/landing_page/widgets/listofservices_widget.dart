@@ -35,7 +35,7 @@ class ListOfServices extends StatelessWidget {
                   Color randomColor = getRandomColor();
 
                   return Item(context, randomColor,
-                      '${user.services[index].name}', AppImages.catPic, () {
+                      '${user.services[index].name}', AppImages.logo, () {
                     Provider.of<AccountViewModel>(context, listen: false)
                         .setSelectedService(user.services[index].name!);
                          Provider.of<AccountViewModel>(context, listen: false)
@@ -48,7 +48,7 @@ class ListOfServices extends StatelessWidget {
                   });
                 },
                 staggeredTileBuilder: (index) {
-                  return StaggeredTile.count(1, 0.35);
+                  return StaggeredTile.count(1, 0.38);
                 }),
           ),
         ],
@@ -74,7 +74,7 @@ Widget Item(BuildContext context, Color color, String title, String image,
     child: Container(
       // width: screenSize(context).width * .43,
       // height: screenSize(context).height * .06,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
           color: color.withOpacity(0.2),
           borderRadius: BorderRadius.circular(60)),

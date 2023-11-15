@@ -9,7 +9,7 @@ class AppUtils {
   }
 
   static String convertPrice(dynamic price, {bool showCurrency = false}) {
-    double amount = price is String ? double.parse(price) : price;
+    var amount = price is String ? double.parse(price) : price;
     final formatCurrency = NumberFormat("#,##0.00", "en_US");
     return '${showCurrency ? 'NGN' : ''} ${formatCurrency.format(amount)}';
   }

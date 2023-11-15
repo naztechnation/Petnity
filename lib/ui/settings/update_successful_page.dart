@@ -29,12 +29,12 @@ class UpdateSuccessfulScreen extends StatelessWidget {
       bottomNavigationBar: Container(
         height: purchaseID
             ? screenSize(context).height * .3
-            : screenSize(context).height * .12,
+            : screenSize(context).height * .3,
         padding: EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (purchaseID)
+             
               Container(
                 padding: EdgeInsets.all(20),
                 height: screenSize(context).height * .15,
@@ -100,7 +100,6 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                 child: Card(
                     elevation: 0,
                     child: Container(
-                      height: screenSize(context).height * .15,
                       width: screenSize(context).width * .9,
                       padding: EdgeInsets.all(10),
                       child: Column(
@@ -109,13 +108,14 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                           Text(
                             'Successful',
                             style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
+                                fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.lightSecondary),
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Text(
                             successMessage,
+                            style: TextStyle(fontWeight: FontWeight.w600),
                             textAlign: TextAlign.center,
                           ),
                         ],

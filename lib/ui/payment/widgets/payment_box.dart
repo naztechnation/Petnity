@@ -27,7 +27,7 @@ class PaymentBox extends StatelessWidget {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
                           child: ImageView.network(
-                            'https://tinyurl.com/5n86mjnc',
+                            'https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg',
                             height: 60,
                           )),
                     ),
