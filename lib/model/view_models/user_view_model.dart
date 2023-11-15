@@ -93,7 +93,7 @@ String calculateTimeDifferenceInHours(String startTimeString, String endTimeStri
 
     final hoursDifference = (difference.inMinutes / 60).toDouble();
 
-    return '${hoursDifference.toStringAsFixed(1)}Hrs';
+    return '${hoursDifference.toStringAsFixed(1)}';
   } catch (e) {
     print('Error parsing the date strings: $e');
     return '0.0';
@@ -113,7 +113,7 @@ String calculateRemainingTimeInHours(String endTimeString) {
 
     final hours = difference.inMinutes / 60;
 
-    return '${hours.toStringAsFixed(1)}Hrs';
+    return '${hours.toStringAsFixed(1)}';
   } catch (e) {
     print('Error parsing the date string: $e');
     return 'Invalid date format';

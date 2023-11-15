@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../widgets/modals.dart';
+import '../widget/progressbar.dart';
 
 class OngoingServiceWidget extends StatefulWidget {
  final  UserOrders allOrders;
@@ -82,10 +83,10 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total time: ${services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '',allOrders.dropoffTime ?? '')}',
+                  'Total time: ${services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '0',allOrders.dropoffTime ?? '0')} Hrs',
                   style: TextStyle(fontSize: 10),
                 ),
-                Text('Time remaining : ${services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '')} ',
+                Text('Time remaining : ${services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '0')} Hrs',
                     style: TextStyle(fontSize: 10)),
                 SizedBox(width: 8),
               ],
@@ -93,14 +94,13 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
             SizedBox(
               height: 20,
             ),
-            LinearProgressIndicator(
-              value: 1.0 - services.getProgressTime(allOrders.dropoffTime ?? ''),  
-              minHeight: 8,  
-              borderRadius: BorderRadius.circular(8),
-              backgroundColor: Colors.grey[300],  
-              valueColor: AlwaysStoppedAnimation<Color>(
-                  Colors.blue), // Color of the progress line
-            ),
+           ProgressBar(remainingTime: 
+           
+           
+            double.parse((services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '') == 'Elapsed' ? '0.0' : services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? ''))), 
+            
+            
+            totalTime: double.parse(services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '0',allOrders.dropoffTime ?? '0')), ),
             SizedBox(
               height: 10,
             ),
