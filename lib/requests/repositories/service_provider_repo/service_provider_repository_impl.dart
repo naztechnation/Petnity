@@ -50,7 +50,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       'price': pricing,
     }
     );
-    Modals.showToast(pricing);
+    
 
     return AuthData.fromJson(map);
   }

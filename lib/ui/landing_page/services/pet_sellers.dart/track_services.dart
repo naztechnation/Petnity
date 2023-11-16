@@ -111,7 +111,7 @@ class _TrackServicesState extends State<TrackServices> {
                   const SizedBox(
                     height: 20,
                   ),
-                  serviceProfile(context),
+                  serviceProfile(context, sellerName: 'nnmm', sellerImage: 'vvv', sellerId: 'weer'),
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
                     child: Container(

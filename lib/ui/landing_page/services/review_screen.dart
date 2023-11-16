@@ -432,16 +432,16 @@ class _ReviewState extends State<Review> {
                           borderRadius: 40,
                           onPressed: () {
 
-                            // Modals.showToast('${widget.date1} ${formatTime(widget.time1)}');
                             // Modals.showToast('${widget.date2} ${formatTime(widget.time2)}');
+                            // Modals.showToast('${widget.date1} ${formatTime(widget.time1)}');
 
                             _userCubit.createOrder(
                                 packageId: agent.packageId,
                                 username: widget.username,
                                 pickupTime:
-                                    '${widget.date1} ${formatTime(widget.time1)}',
-                                dropOffTime:
                                     '${widget.date2} ${formatTime(widget.time2)}',
+                                dropOffTime:
+                                    '${widget.date1} ${formatTime(widget.time1)}',
                                 pickUpLocation: agent.location);
                           },
                           child: CustomText(

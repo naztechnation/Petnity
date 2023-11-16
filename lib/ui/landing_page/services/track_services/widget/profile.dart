@@ -7,11 +7,17 @@ import 'package:petnity/ui/widgets/profile_image.dart';
 import '../../../../../res/app_strings.dart';
 import '../../../../widgets/custom_text.dart';
 
-Widget serviceProfile(BuildContext context, {bool hideImage = false}) {
+Widget serviceProfile(BuildContext context, {bool hideImage = false,
+required String sellerName ,
+required String sellerImage,required String sellerId,}) {
+
+  
+ 
+
   return ListTile(
     contentPadding: const EdgeInsets.all(0),
     leading: ProfileImage(
-      '',
+      sellerImage,
       radius: 30,
       placeHolder: AppImages.person,
     ),
@@ -33,7 +39,7 @@ Widget serviceProfile(BuildContext context, {bool hideImage = false}) {
         CustomText(
           textAlign: TextAlign.left,
           maxLines: 2,
-          text: 'Sandra lee',
+          text: sellerName,
           weight: FontWeight.w700,
           size: 12,
           fontFamily: AppStrings.interSans,

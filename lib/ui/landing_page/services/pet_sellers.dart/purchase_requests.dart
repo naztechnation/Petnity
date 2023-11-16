@@ -72,7 +72,7 @@ class PurchaseRequests extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      serviceProfile(context, hideImage: true),
+                      serviceProfile(context, hideImage: true, sellerName: 'hhh', sellerImage: 'jjj', sellerId: 'kkk'),
                       const SizedBox(
                         height: 20,
                       ),

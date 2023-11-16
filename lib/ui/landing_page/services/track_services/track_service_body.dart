@@ -9,19 +9,40 @@ import 'package:provider/provider.dart';
 
 import '../../../../blocs/location/location.dart';
 import '../../../../model/view_models/account_view_model.dart';
+import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/location_repo/location_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';
+import '../../../../utils/app_utils.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/text_edit_view.dart';
 import 'widget/profile.dart';
 
 class TrackServicesBody extends StatelessWidget {
-  const TrackServicesBody({super.key});
+  final String sellerName;
+  final String sellerPhoto;
+  final String phone;
+  final String agentId;
+  final String startDate1;
+  final String startDate2;
+  final String paymentId;
+  final String amount;
+  const TrackServicesBody(
+      {super.key,
+      required this.sellerName,
+      required this.phone,
+      required this.agentId,
+      required this.startDate1,
+      required this.startDate2,
+      required this.paymentId,
+      required this.amount,
+      required this.sellerPhoto});
 
   @override
   Widget build(BuildContext context) {
+    final services = Provider.of<UserViewModel>(context, listen: false);
+
     return MultiBlocProvider(
         providers: [
           BlocProvider<LocationCubit>(
@@ -39,7 +60,7 @@ class TrackServicesBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              serviceProfile(context),
+              serviceProfile(context, sellerName: sellerName, sellerImage: sellerPhoto, sellerId: agentId),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Container(
@@ -133,7 +154,7 @@ class TrackServicesBody extends StatelessWidget {
                     CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 2,
-                      text: '20th October 2023',
+                      text: AppUtils.formatComplexDate(dateTime: startDate1),
                       weight: FontWeight.w600,
                       size: 12,
                       fontFamily: AppStrings.interSans,
@@ -150,7 +171,7 @@ class TrackServicesBody extends StatelessWidget {
                         CustomText(
                           textAlign: TextAlign.left,
                           maxLines: 2,
-                          text: '04pm',
+                          text: services.formatDateTimeToAMPM(startDate1 ?? ''),
                           weight: FontWeight.w600,
                           size: 12,
                           color: Colors.black,
@@ -194,7 +215,7 @@ class TrackServicesBody extends StatelessWidget {
                     CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 2,
-                      text: '20th October 2023',
+                      text: AppUtils.formatComplexDate(dateTime: startDate2),
                       weight: FontWeight.w600,
                       size: 12,
                       fontFamily: AppStrings.interSans,
@@ -211,7 +232,7 @@ class TrackServicesBody extends StatelessWidget {
                         CustomText(
                           textAlign: TextAlign.left,
                           maxLines: 2,
-                          text: '04pm',
+                          text: services.formatDateTimeToAMPM(startDate2 ?? ''),
                           weight: FontWeight.w600,
                           size: 12,
                           color: Colors.black,
@@ -276,7 +297,7 @@ class TrackServicesBody extends StatelessWidget {
                       CustomText(
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        text: 'Session Paid - 1000\$',
+                        text: 'Session Paid - NGN $amount',
                         weight: FontWeight.w500,
                         size: 12,
                         color: Colors.black,
@@ -289,7 +310,7 @@ class TrackServicesBody extends StatelessWidget {
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 2,
-                          text: '3243J46L',
+                          text: paymentId,
                           weight: FontWeight.w600,
                           size: 14,
                           color: Colors.black,
@@ -298,7 +319,7 @@ class TrackServicesBody extends StatelessWidget {
                     ]),
               ),
               const SizedBox(
-                height: 80,
+                height: 180,
               ),
             ],
           ),

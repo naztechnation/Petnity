@@ -105,7 +105,7 @@ String calculateRemainingTimeInHours(String endTimeString) {
     final currentTime = DateTime.now();
     final endTime = DateTime.parse(endTimeString);
 
-    if (endTime.isBefore(currentTime)) {
+    if (currentTime.isAfter(endTime)) {
       return 'Elapsed';
     }
 

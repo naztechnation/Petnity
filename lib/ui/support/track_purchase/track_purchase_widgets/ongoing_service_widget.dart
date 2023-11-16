@@ -15,18 +15,18 @@ import '../../../widgets/modals.dart';
 import '../widget/progressbar.dart';
 
 class OngoingServiceWidget extends StatefulWidget {
- final  UserOrders allOrders;
+  final UserOrders allOrders;
 
   final String label;
   OngoingServiceWidget({this.label = 'Details', required this.allOrders});
 
   @override
-  State<OngoingServiceWidget> createState() => _OngoingServiceWidgetState(allOrders);
+  State<OngoingServiceWidget> createState() =>
+      _OngoingServiceWidgetState(allOrders);
 }
 
 class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
-
- final  UserOrders allOrders;
+  final UserOrders allOrders;
 
   _OngoingServiceWidgetState(this.allOrders);
 
@@ -35,7 +35,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
     final services = Provider.of<UserViewModel>(context, listen: false);
 
     return Card(
-      elevation: 0,
+      elevation: 1,
       child: Container(
         width: screenSize(context).width * .9,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -46,25 +46,29 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: ImageView.network(allOrders.agent?.picture, height: 50,)),
+                    borderRadius: BorderRadius.circular(30),
+                    child: ImageView.network(
+                      allOrders.agent?.picture,
+                      height: 50,
+                    )),
                 Container(
                   width: screenSize(context).width * .3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.agent?.name  ?? '',
+                        allOrders.agent?.name ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      Text(allOrders.package?.service?.serviceType?.name ?? '',)
+                      Text(
+                        allOrders.package?.service?.serviceType?.name ?? '',
+                      )
                     ],
                   ),
                 ),
                 Container(
-                   width: screenSize(context).width * .3,
+                  width: screenSize(context).width * .3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,7 +76,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                         'Drop off time',
                         style: TextStyle(fontSize: 10),
                       ),
-                      Text( services.formatDateTimeToAMPM(allOrders.dropoffTime ?? '')   )
+                      Text(services
+                          .formatDateTimeToAMPM(allOrders.dropoffTime ?? ''))
                     ],
                   ),
                 ),
@@ -85,10 +90,11 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total time: ${services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '0',allOrders.dropoffTime ?? '0')} Hrs',
+                  'Total time: ${services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '0', allOrders.dropoffTime ?? '0')} Hrs',
                   style: TextStyle(fontSize: 10),
                 ),
-                Text('Time remaining : ${services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '0')} Hrs',
+                Text(
+                    'Time remaining : ${services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '0')} Hrs',
                     style: TextStyle(fontSize: 10)),
                 SizedBox(width: 8),
               ],
@@ -96,13 +102,17 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
             SizedBox(
               height: 20,
             ),
-           ProgressBar(remainingTime: 
-           
-           
-            double.parse((services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? '') == 'Elapsed' ? '0.0' : services.calculateRemainingTimeInHours(allOrders.dropoffTime ?? ''))), 
-            
-            
-            totalTime: double.parse(services.calculateTimeDifferenceInHours(allOrders.pickupTime ?? '0',allOrders.dropoffTime ?? '0')), ),
+            ProgressBar(
+              remainingTime: double.parse(
+                  (services.calculateRemainingTimeInHours(
+                              allOrders.dropoffTime ?? '') ==
+                          'Elapsed'
+                      ? '0.0'
+                      : services.calculateRemainingTimeInHours(
+                          allOrders.dropoffTime ?? ''))),
+              totalTime: double.parse(services.calculateTimeDifferenceInHours(
+                  allOrders.pickupTime ?? '0', allOrders.dropoffTime ?? '0')),
+            ),
             SizedBox(
               height: 10,
             ),
@@ -110,7 +120,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               'Contact ${allOrders.package?.service?.serviceType?.name ?? ''}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-             SizedBox(
+            SizedBox(
               height: 15,
             ),
             Row(
@@ -170,7 +180,12 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     color: Colors.blue,
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
-                            page: TrackServicesScreen());
+                          page: TrackServicesScreen(sellerName: allOrders.agent?.name?? '',
+                           phone: allOrders.agent?.profile?.phoneNumber ?? '',
+                            serviceOffered: allOrders.package?.service?.serviceType?.name ?? '',
+                             agentId: allOrders.agent?.id.toString() ?? '', 
+                             startDate1: allOrders.pickupTime ?? '0', startDate2: allOrders.dropoffTime ?? '0', amount: allOrders.fee ?? '', 
+                             paymentId: allOrders.purchaseId ?? '', sellerImage: allOrders.agent?.picture ?? '',));
                     },
                     child: Text(widget.label),
                     borderRadius: 30,
