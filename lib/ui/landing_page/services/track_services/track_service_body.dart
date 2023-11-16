@@ -62,7 +62,7 @@ class TrackServicesBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              serviceProfile(context, sellerName: sellerName, sellerImage: sellerPhoto, sellerId: agentId, userName: user.username),
+              serviceProfile(context, sellerName: sellerName, sellerImage: sellerPhoto, sellerId: agentId, userName: user.username, phone: phone),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Container(

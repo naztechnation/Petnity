@@ -10,6 +10,8 @@ import '../../../../video.dart';
 import '../../../../widgets/custom_text.dart';
 import '../../../../widgets/modals.dart';
 
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+
 Widget serviceProfile(
   BuildContext context, {
   bool hideImage = false,
@@ -17,6 +19,7 @@ Widget serviceProfile(
   required String sellerImage,
   required String sellerId,
   required String userName,
+  required String phone,
 }) {
   return Row(
     children: [
@@ -59,7 +62,11 @@ Widget serviceProfile(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      ImageView.svg(AppImages.callBorder),
+                      GestureDetector(
+                        onTap: (){
+                          _callNumber(phone);
+                        },
+                        child: ImageView.svg(AppImages.callBorder)),
                       const SizedBox(
                         width: 5,
                       ),
@@ -99,4 +106,8 @@ Widget serviceProfile(
       ),
     ],
   );
+}
+
+_callNumber(String number) async{
+  bool res = await FlutterPhoneDirectCaller.callNumber(number) ?? false;
 }

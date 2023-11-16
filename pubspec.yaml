@@ -41,6 +41,7 @@ dependencies:
   uuid: ^3.0.7
   number_paginator: ^0.4.0
   csc_picker: ^0.2.7
+  flutter_phone_direct_caller: ^2.1.1
   
     
 dev_dependencies:

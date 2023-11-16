@@ -80,6 +80,9 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Your location is required for this app.</string>
 
-
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  	<string>tel</string>
+</array>
 </dict>
 </plist>

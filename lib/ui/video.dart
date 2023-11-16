@@ -1,7 +1,9 @@
 
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/res/app_strings.dart';
 
+import '../handlers/secure_handler.dart';
 import '../res/app_colors.dart';
 
 class VideoCall extends StatefulWidget {
@@ -25,11 +27,31 @@ class _VideoCallState extends State<VideoCall> {
 
   late AgoraClient client;
 
+  String userType = '';
+
+  String guestUsername = '';
+
+
+getUserDetails() async {
+    userType = await StorageHandler.getUserType();
+
+    if (userType == 'user') {
+        setState(() {
+          guestUsername = widget.user1;
+        });
+    }else{
+       setState(() {
+          guestUsername = widget.user2;
+        });
+    }
+    }
+
   @override
   void initState() {
     super.initState();
     channelName = createChannelName(widget.user1, widget.user2);  
     initAgora();
+    getUserDetails();
   }
 
   void initAgora() async {
@@ -48,11 +70,7 @@ class _VideoCallState extends State<VideoCall> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.lightSecondary,
-        title: const Text('Lucacify'),
-        centerTitle: true,
-      ),
+      
       body: SafeArea(
         child: Stack(
           children: [
@@ -65,6 +83,17 @@ class _VideoCallState extends State<VideoCall> {
               client: client,
               addScreenSharing: true,
             ),
+            Positioned(
+              top: 100,
+              left: 30,
+              right: 30,
+              child: Align(child: Column(
+                children: [
+                  Text('Ringing...', style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: AppStrings.montserrat),),
+                  const SizedBox(height: 10,),
+                  Text(guestUsername, style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
+                ],
+              ))),
           ],
         ),
       ),
