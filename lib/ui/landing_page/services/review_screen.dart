@@ -112,7 +112,7 @@ class _ReviewState extends State<Review> {
         customer: customer,
         paymentOptions: "card",
         customization: Customization(
-          title: "Petnity",
+          title: "Lucacify",
           //logo: AppImages.logo,
         ),
         isTestMode: true);

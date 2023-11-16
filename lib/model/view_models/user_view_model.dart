@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 import 'package:petnity/model/user_models/gallery_data.dart';
 
 import '../../res/enum.dart';
-import '../../ui/widgets/modals.dart';
 import '../account_models/agents_packages.dart';
 import '../user_models/order_list.dart';
 import '../user_models/reviews_data.dart';
@@ -74,12 +73,13 @@ class UserViewModel extends BaseViewModel {
   String formatDateTimeToAMPM(String dateTimeString) {
   try {
     final dateTime = DateTime.parse(dateTimeString);
-    final formattedTime = DateFormat('h:mm a').format(dateTime);
+    final formattedTime = DateFormat('h:mm a').format(dateTime.toLocal());
     return formattedTime;
   } catch (e) {
     print('Error parsing the date string: $e');
-    return ''; 
-  } 
+    return '';
+  }
+
 }
 
 String calculateTimeDifferenceInHours(String startTimeString, String endTimeString) {

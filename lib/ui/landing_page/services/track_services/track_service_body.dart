@@ -42,6 +42,8 @@ class TrackServicesBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final services = Provider.of<UserViewModel>(context, listen: false);
+    final user = Provider.of<AccountViewModel>(context, listen: true);
+
 
     return MultiBlocProvider(
         providers: [
@@ -60,7 +62,7 @@ class TrackServicesBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              serviceProfile(context, sellerName: sellerName, sellerImage: sellerPhoto, sellerId: agentId),
+              serviceProfile(context, sellerName: sellerName, sellerImage: sellerPhoto, sellerId: agentId, userName: user.username),
               Padding(
                 padding: const EdgeInsets.only(top: 30),
                 child: Container(
@@ -286,21 +288,22 @@ class TrackServicesBody extends StatelessWidget {
                 height: 50,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                height: 60,
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30)),
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText(
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
-                        text: 'Session Paid - NGN $amount',
-                        weight: FontWeight.w500,
-                        size: 12,
-                        color: Colors.black,
+                      Expanded(
+                        child: CustomText(
+                          textAlign: TextAlign.left,
+                          maxLines: 2,
+                          text: 'Session Paid - NGN $amount',
+                          weight: FontWeight.w500,
+                          size: 12,
+                          color: Colors.black,
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.all(10),

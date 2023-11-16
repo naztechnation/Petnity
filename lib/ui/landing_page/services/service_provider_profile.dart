@@ -16,6 +16,7 @@ import '../../notfications_pages/chat_pages/chat_page.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
+import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 import 'agent_packages.dart';
 import 'pet_sellers.dart/pet_on_sale.dart';
@@ -224,12 +225,18 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         child: ButtonView(
                           color: Color(0xFFEAF0FF),
                           onPressed: () {
-                            AppNavigator.pushAndStackPage(context,
+
+                            if(widget.agents?.profile?.firebaseId != '' || widget.agents?.profile?.firebaseId != null){
+                               AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
                                   username: widget.agents!.name ?? '',
                                   userImage: widget.agents!.picture ?? '',
-                                  uid: widget.agents!.profile!.firebaseId!,
+                                  uid: widget.agents?.profile?.firebaseId ?? '',
                                 ));
+                            }else{
+                              Modals.showToast('This agent is not accessible at the moment');
+                            }
+                           
                           },
                           child: ImageView.svg(
                             AppImages.messageArrow,

@@ -13,8 +13,7 @@ import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
-import '../../../res/app_theme.dart';
-import '../../constants/encryption.dart';
+import '../../../res/app_theme.dart'; 
 import '../../constants/firebase_constants.dart';
 import '../../video.dart';
 import '../../widgets/back_button.dart';
@@ -98,8 +97,7 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   sendChat({required String messaage}) async {
-    final String encmess =
-        Encryption().encryption(messaage, "1234567891234567");
+     
     MessageChat chat = MessageChat(
         content: messaage,
         idFrom: currentUserId,

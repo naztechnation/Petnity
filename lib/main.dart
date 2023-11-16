@@ -22,12 +22,12 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => FirebaseAuthProvider(), lazy: false),
       ChangeNotifierProvider(create: (_) => ServiceProviderInAppViewModel(), lazy: false),
     ], 
-    child: const Petnity(),
+    child: const Lucacify(),
   ));
 }
 
-class Petnity extends StatelessWidget {
-  const Petnity({Key? key}) : super(key: key);
+class Lucacify extends StatelessWidget {
+  const Lucacify({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,9 +1,8 @@
 
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../model/view_models/account_view_model.dart';
+import '../res/app_colors.dart';
 
 class VideoCall extends StatefulWidget {
   final String user1;
@@ -50,7 +49,8 @@ class _VideoCallState extends State<VideoCall> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Petnity'),
+        backgroundColor: AppColors.lightSecondary,
+        title: const Text('Lucacify'),
         centerTitle: true,
       ),
       body: SafeArea(

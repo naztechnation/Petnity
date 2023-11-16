@@ -183,7 +183,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                           page: TrackServicesScreen(sellerName: allOrders.agent?.name?? '',
                            phone: allOrders.agent?.profile?.phoneNumber ?? '',
                             serviceOffered: allOrders.package?.service?.serviceType?.name ?? '',
-                             agentId: allOrders.agent?.id.toString() ?? '', 
+                             agentId: allOrders.agent?.profile?.firebaseId ?? '', 
                              startDate1: allOrders.pickupTime ?? '0', startDate2: allOrders.dropoffTime ?? '0', amount: allOrders.fee ?? '', 
                              paymentId: allOrders.purchaseId ?? '', sellerImage: allOrders.agent?.picture ?? '',));
                     },
