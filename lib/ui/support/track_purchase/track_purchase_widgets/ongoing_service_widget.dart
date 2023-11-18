@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -7,10 +8,13 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
+import '../../../notfications_pages/chat_pages/chat_page.dart';
+import '../../../video.dart';
 import '../../../widgets/modals.dart';
 import '../widget/progressbar.dart';
 
@@ -29,6 +33,18 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
   final UserOrders allOrders;
 
   _OngoingServiceWidgetState(this.allOrders);
+
+  String username = '';
+
+  getUsername() async {
+    username = await StorageHandler.getUserName();
+  }
+
+  @override
+  void initState() {
+    getUsername();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +149,9 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     borderColor: Colors.red,
                     borderWidth: 2,
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                       _callNumber(allOrders.agent?.profile?.phoneNumber ?? '');
+                    },
                     child: Icon(
                       Icons.call_outlined,
                       color: Colors.red,
@@ -149,7 +167,18 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     padding: EdgeInsets.symmetric(vertical: 15),
                     borderWidth: 2,
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      if (allOrders.agent?.profile?.firebaseId == '' || allOrders.agent?.profile?.firebaseId == null) {
+                              Modals.showToast(
+                                  'Can\'t communicate with this agent at the moment. Please');
+                            } else {
+                              AppNavigator.pushAndStackPage(context,
+                                  page: ChatPage(
+                                      username: allOrders.agent?.name?? '',
+                                      userImage: allOrders.agent?.picture ?? '',
+                                      uid: allOrders.agent?.profile?.firebaseId ?? ''));
+                            }
+                    },
                     child: Icon(
                       Icons.chat,
                       color: Colors.green,
@@ -165,7 +194,13 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     borderWidth: 2,
                     padding: EdgeInsets.symmetric(vertical: 15),
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      AppNavigator.pushAndStackPage(context,
+                                page: VideoCall(
+                                  user1: allOrders.agent?.name?? '',
+                                  user2: username,
+                                ));
+                    },
                     child: Icon(
                       Icons.video_call,
                       color: Colors.purple,
@@ -184,6 +219,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                            phone: allOrders.agent?.profile?.phoneNumber ?? '',
                             serviceOffered: allOrders.package?.service?.serviceType?.name ?? '',
                              agentId: allOrders.agent?.profile?.firebaseId ?? '', 
+                             sellerId: allOrders.agent?.id.toString() ?? '', 
                              startDate1: allOrders.pickupTime ?? '0', startDate2: allOrders.dropoffTime ?? '0', amount: allOrders.fee ?? '', 
                              paymentId: allOrders.purchaseId ?? '', sellerImage: allOrders.agent?.picture ?? '',));
                     },
@@ -198,4 +234,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
       ),
     );
   }
+
+  _callNumber(String number) async{
+  bool res = await FlutterPhoneDirectCaller.callNumber(number) ?? false;
+}
 }

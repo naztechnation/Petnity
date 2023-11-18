@@ -15,6 +15,8 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';
 import '../../../../utils/app_utils.dart';
+import '../../../../utils/navigator/page_navigator.dart';
+import '../../../service_povider_section/service_profile/service_profile.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/text_edit_view.dart';
 import 'widget/profile.dart';
@@ -24,6 +26,7 @@ class TrackServicesBody extends StatelessWidget {
   final String sellerPhoto;
   final String phone;
   final String agentId;
+  final String sellerId;
   final String startDate1;
   final String startDate2;
   final String paymentId;
@@ -33,6 +36,7 @@ class TrackServicesBody extends StatelessWidget {
       required this.sellerName,
       required this.phone,
       required this.agentId,
+      required this.sellerId,
       required this.startDate1,
       required this.startDate2,
       required this.paymentId,
@@ -63,23 +67,28 @@ class TrackServicesBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               serviceProfile(context, sellerName: sellerName, sellerImage: sellerPhoto, sellerId: agentId, userName: user.username, phone: phone),
-              Padding(
-                padding: const EdgeInsets.only(top: 30),
-                child: Container(
-                  height: 60,
-                  width: screenSize(context).width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: Center(
-                    child: CustomText(
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      text: 'View profile',
-                      weight: FontWeight.w700,
-                      size: 12,
-                      fontFamily: AppStrings.interSans,
-                      color: AppColors.lightSecondary,
+              GestureDetector(
+                onTap: () {
+                  AppNavigator.pushAndStackPage(context, page: AgentProfileScreen(agentId: sellerId,));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: Container(
+                    height: 60,
+                    width: screenSize(context).width,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    child: Center(
+                      child: CustomText(
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        text: 'View profile',
+                        weight: FontWeight.w700,
+                        size: 12,
+                        fontFamily: AppStrings.interSans,
+                        color: AppColors.lightSecondary,
+                      ),
                     ),
                   ),
                 ),

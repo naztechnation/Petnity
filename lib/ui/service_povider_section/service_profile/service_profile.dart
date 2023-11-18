@@ -33,8 +33,9 @@ import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 
 class AgentProfileScreen extends StatelessWidget {
+  final String? agentId;
   const AgentProfileScreen({
-    super.key,
+    super.key,   this.agentId,
   });
 
   @override
@@ -43,14 +44,16 @@ class AgentProfileScreen extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: AgentProfile(),
+      child: AgentProfile(agentId: agentId,),
     );
   }
 }
 
 class AgentProfile extends StatefulWidget {
+  final String? agentId;
+
   AgentProfile({
-    super.key,
+    super.key, this.agentId,
   });
 
   @override
@@ -75,9 +78,14 @@ class _AgentProfileState extends State<AgentProfile> {
   bool isLoading = false;
 
   getAgentId() async {
-    agentId = await StorageHandler.getAgentId();
     userType = await StorageHandler.getUserType();
-
+   if (userType == 'user'){
+      agentId = widget.agentId ?? '';
+      
+    }else{
+    agentId = await StorageHandler.getAgentId();
+        
+    }
     setState(() {});
   }
 

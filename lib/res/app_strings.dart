@@ -5,7 +5,7 @@ import '../handlers/app_handlers.dart';
 class AppStrings {
   static const String appName = 'Lucacify';
   static const String interSans = 'Satoshi-Variable';
-  static const String montserrat = 'Montserrat';
+  static const String montserrat = 'Satoshi-Variable';
   static const String satoshi = 'Satoshi-Variable';
 
   ///flutterwave api

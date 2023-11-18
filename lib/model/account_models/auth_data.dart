@@ -1,21 +1,16 @@
-
-
 class AuthData {
   bool? status;
   String? message;
   bool? isAgent;
-  Profile? profile;
   Agent? agent;
 
-  AuthData({this.status, this.message, this.isAgent, this.profile});
+  AuthData({this.status, this.message, this.isAgent, this.agent});
 
   AuthData.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     isAgent = json['is_agent'];
-    profile =
-        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
-        agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -23,10 +18,7 @@ class AuthData {
     data['status'] = this.status;
     data['message'] = this.message;
     data['is_agent'] = this.isAgent;
-    if (this.profile != null) {
-      data['profile'] = this.profile!.toJson();
-    }
-     if (this.agent != null) {
+    if (this.agent != null) {
       data['agent'] = this.agent!.toJson();
     }
     return data;
@@ -48,7 +40,7 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  var idType;
+  Null? idType;
   List<Services>? services;
   List<PetTypes>? petTypes;
 
@@ -133,11 +125,12 @@ class Agent {
 
 class Profile {
   int? id;
+  String? firebaseId;
   String? phoneNumber;
-  String? address;
-  String? city;
-  String? country;
-  String? profileImage;
+  Null? address;
+  Null? city;
+  Null? country;
+  Null? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;
@@ -148,6 +141,7 @@ class Profile {
 
   Profile(
       {this.id,
+      this.firebaseId,
       this.phoneNumber,
       this.address,
       this.city,
@@ -163,6 +157,7 @@ class Profile {
 
   Profile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    firebaseId = json['firebase_id'];
     phoneNumber = json['phone_number'];
     address = json['address'];
     city = json['city'];
@@ -180,6 +175,7 @@ class Profile {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
+    data['firebase_id'] = this.firebaseId;
     data['phone_number'] = this.phoneNumber;
     data['address'] = this.address;
     data['city'] = this.city;
@@ -224,14 +220,12 @@ class User {
     data['last_name'] = this.lastName;
     return data;
   }
-
-  
 }
 
 class Services {
   int? id;
   String? name;
-  Null? image;
+  String? image;
 
   Services({this.id, this.name, this.image});
 
@@ -268,4 +262,3 @@ class PetTypes {
     return data;
   }
 }
-

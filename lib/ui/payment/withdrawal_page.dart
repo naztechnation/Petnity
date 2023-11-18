@@ -238,11 +238,14 @@ class _WithdrawalState extends State<Withdrawal> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomText(
-                                  text: accountName,
-                                  weight: FontWeight.bold,
-                                  color: Colors.white,
-                                  size: 13,
+                                Expanded(
+                                  child: CustomText(
+                                    text: accountName,
+                                    weight: FontWeight.bold,
+                                    maxLines: 2,
+                                    color: Colors.white,
+                                    size: 13,
+                                  ),
                                 ),
                               ],
                             ),

@@ -135,7 +135,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                               padding: const EdgeInsets.only(
                                                   right: 15.0, top: 25),
                                               child: Text(
-                                                'History',
+                                                '',
                                                 style: TextStyle(
                                                     fontSize: 12,
                                                     color: Colors.blue),

@@ -67,14 +67,14 @@ class SignInScreen extends StatelessWidget {
                  
 
                   if (!state.userData.isAgent!) {
-                     if (state.userData.profile!.hasPets!) {
+                     if (state.userData.agent?.profile?.hasPets ?? false) {
                     StorageHandler.saveUserPetState('true');
                   } else {
                     StorageHandler.saveUserPetState('');
                   }
                     StorageHandler.saveIsUserType('user');
                      StorageHandler.saveEmail(
-                      state.userData.profile?.user?.email.toString());
+                      state.userData.agent?.profile?.user?.email.toString());
 
                     
                     AppNavigator.pushAndStackNamed(context,

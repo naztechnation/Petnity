@@ -297,7 +297,7 @@ class User {
 class Services {
   int? id;
   String? name;
-  Null? image;
+  String? image;
 
   Services({this.id, this.name, this.image});
 

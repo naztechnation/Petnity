@@ -13,11 +13,9 @@ import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_strings.dart';
-import '../../../../res/enum.dart';
-import '../../../../utils/navigator/page_navigator.dart';
+import '../../../../res/enum.dart'; 
 import '../../../widgets/back_button.dart';
-import '../../../widgets/custom_text.dart';
-import '../pet_trainers/date_selection.dart';
+import '../../../widgets/custom_text.dart'; 
 import 'track_service_body.dart';
 
 class TrackServicesScreen extends StatelessWidget {
@@ -26,6 +24,7 @@ class TrackServicesScreen extends StatelessWidget {
   final String phone;
   final String serviceOffered;
   final String agentId;
+  final String sellerId;
   final String startDate1;
   final String startDate2;
   final String amount;
@@ -35,7 +34,7 @@ class TrackServicesScreen extends StatelessWidget {
 
 
   const TrackServicesScreen({required this.sellerName,required this.phone,required this.serviceOffered,
-  required this.agentId,required this.startDate1,required this.startDate2,required this.amount,required this.paymentId, required this.sellerImage});
+  required this.agentId,required this.sellerId,required this.startDate1,required this.startDate2,required this.amount,required this.paymentId, required this.sellerImage});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class TrackServicesScreen extends StatelessWidget {
       child: TrackServices(phone: phone, sellerName: sellerName,
        serviceOffered: serviceOffered, agentId: agentId, 
        startDate1: startDate1, startDate2: startDate2,
-        amount: amount, paymentId: paymentId, sellerPhoto: sellerImage,),
+        amount: amount, paymentId: paymentId, sellerPhoto: sellerImage, sellerId: sellerId,),
     );
   }
 }
@@ -57,6 +56,8 @@ class TrackServices extends StatefulWidget {
   final String phone;
   final String serviceOffered;
   final String agentId;
+  final String sellerId;
+
   final String startDate1;
   final String startDate2;
   final String amount;
@@ -64,7 +65,9 @@ class TrackServices extends StatefulWidget {
   
   const TrackServices({super.key, required this.sellerName,
    required this.phone, required this.serviceOffered,
-    required this.agentId, required this.startDate1,
+    required this.agentId, 
+    required this.sellerId, 
+    required this.startDate1,
      required this.startDate2, required this.amount,
       required this.paymentId, required this.sellerPhoto});
 
@@ -202,7 +205,9 @@ class _TrackServicesState extends State<TrackServices> {
                           height: 20,
                         ),
                         TrackServicesBody(sellerName: widget.sellerName, 
-                        phone: widget.phone, agentId: widget.agentId,
+                        phone: widget.phone,
+                         agentId: widget.agentId,
+                         sellerId: widget.sellerId,
                          startDate1: widget.startDate1, startDate2: widget.startDate2, 
                          amount: widget.amount, paymentId: widget.paymentId, sellerPhoto: widget.sellerPhoto, )
                       ],
