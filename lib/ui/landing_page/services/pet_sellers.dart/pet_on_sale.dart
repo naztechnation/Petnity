@@ -12,6 +12,7 @@ import '../../../widgets/back_button.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/filter_search_section.dart';
 import '../../widgets/rating_widget.dart';
+import '../pet_profile/pet_profile.dart';
 import 'track_services.dart';
 
 class PetsOnSale extends StatelessWidget {
@@ -98,7 +99,6 @@ class PetsOnSale extends StatelessWidget {
                       Container(
                         height: 100,
                         child: ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
                             itemCount: pets.length,
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (_, index) {
@@ -113,7 +113,7 @@ class PetsOnSale extends StatelessWidget {
                                         shape: BoxShape.circle,
                                         image: DecorationImage(
                                             image:
-                                                AssetImage(AppImages.rabbitPic),
+                                                AssetImage(AppImages.catPic),
                                             fit: BoxFit.cover)),
                                   ),
                                   const SizedBox(
@@ -142,8 +142,9 @@ class PetsOnSale extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
-                                    AppNavigator.pushAndStackPage(context,
-                                        page: TrackServices());
+                                    
+                                         AppNavigator.pushAndStackPage(context,
+                                        page: PetProfile(isUser: true,));
                                   },
                                   child: Column(
                                     children: [

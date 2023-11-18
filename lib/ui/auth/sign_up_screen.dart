@@ -193,39 +193,40 @@ class SignUpScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    ImageView.asset(AppImages.line),
+                    // SizedBox(
+                    //   height: 35,
+                    // ),
+                    // ImageView.asset(AppImages.line),
                     SizedBox(
                       height: 45,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        firebaseAuth.setBack();
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ImageView.asset(AppImages.facebookIcon),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          ImageView.asset(AppImages.appleIcon),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          ImageView.asset(AppImages.goggleIcon),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     firebaseAuth.setBack();
+                    //   },
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       ImageView.asset(AppImages.facebookIcon),
+                    //       SizedBox(
+                    //         width: 15,
+                    //       ),
+                    //       ImageView.asset(AppImages.appleIcon),
+                    //       SizedBox(
+                    //         width: 15,
+                    //       ),
+                    //       ImageView.asset(AppImages.goggleIcon),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: 30,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 0.0, horizontal: 20),
+                          vertical: 0.0, horizontal: 0),
                       child: ButtonView(
+                        borderRadius: 30,
                         processing: (state is AccountProcessing ||
                             firebaseAuth.status == Status.authenticating),
                         onPressed: () async {

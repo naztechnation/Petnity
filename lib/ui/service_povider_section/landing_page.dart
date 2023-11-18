@@ -235,6 +235,7 @@ class _HomepageBarState extends State<HomepageBar> {
           builder: (context, state) => GestureDetector(
               onTap: () {
                 showModalBottomSheet(
+                  
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20.0),
@@ -242,6 +243,7 @@ class _HomepageBarState extends State<HomepageBar> {
                       ),
                     ),
                     isDismissible: true,
+                    
                     context: context,
                     builder: (context) {
                       return Container(
@@ -249,7 +251,7 @@ class _HomepageBarState extends State<HomepageBar> {
                             borderRadius: BorderRadius.circular(20)),
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                        height: screenSize(context).height * .5,
+                        height: screenSize(context).height * .8,
                         child: SingleChildScrollView(
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

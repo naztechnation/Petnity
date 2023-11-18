@@ -34,7 +34,7 @@ class _TimeSelectionsState extends State<TimeSelections> {
                     Text(
                       'Time Selections',
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -51,7 +51,7 @@ class _TimeSelectionsState extends State<TimeSelections> {
                 const SizedBox(height: 49),
                 Text(
                   'Date, Time and Day',
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                 ),
                 const SizedBox(height: 15),
                 UserSelectTime(),
@@ -83,7 +83,7 @@ class _TimeSelectionsState extends State<TimeSelections> {
                 ),
                 ButtonView(
                   borderRadius: 30,
-                  padding: EdgeInsets.symmetric(vertical: 25),
+                  padding: EdgeInsets.symmetric(vertical: 15),
                   color: AppColors.lightSecondary,
                   onPressed: () {
                     Navigator.push(
@@ -95,7 +95,7 @@ class _TimeSelectionsState extends State<TimeSelections> {
                   },
                   child: Text(
                     'Send Request',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
               ],

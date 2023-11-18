@@ -21,12 +21,10 @@ class _SendRequestState extends State<SendRequest> {
   }
 
   void startTimer() {
-    // Set the desired duration for the "Sending request" screen
     const Duration duration = Duration(seconds: 5);
 
     Timer(duration, () {
-      // Redirect to the next screen after the duration has passed
-      // Replace `NextScreen()` with the screen you want to navigate to
+      
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => RequestSuccess()),
@@ -47,7 +45,7 @@ class _SendRequestState extends State<SendRequest> {
           // Loading gif
           ImageView.asset(
             AppImages.loading,
-            height: 100,
+            height: 50,
           ),
           const SizedBox(height: 52),
           Text(

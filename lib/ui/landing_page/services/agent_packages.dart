@@ -120,18 +120,24 @@ class _PackagesState extends State<PackagePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Center(
-                          child: Text(
-                            'No package available for this Agent',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                        Padding(
+                          padding: const EdgeInsets.all(14.0),
+                          child: Center(
+                            child: Text(
+                              'This Agent has\'nt created a package for this service yet. Check back later.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                            ),
                           ),
                         ),
                         const SizedBox(height: 30,),
+                        
                         ButtonView(onPressed: (){
                           Navigator.pop(context);
                         }, 
                         expanded: false,
+                        borderRadius: 30,
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
                         child: Text('Return'))
                       ],
                     ),

@@ -74,6 +74,7 @@ class FirebaseAuthProvider extends BaseViewModel {
         password: password,
       );
       User? user = userCredential.user;
+      print("${user?.uid.toString()} cool uid" );
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -101,6 +102,7 @@ class FirebaseAuthProvider extends BaseViewModel {
       );
       User? user = userCredential.user;
       _status = Status.authenticated;
+      
       setViewState(ViewState.success);
       return user;
     } on FirebaseAuthException catch (e) {

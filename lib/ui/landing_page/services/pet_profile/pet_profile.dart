@@ -13,7 +13,8 @@ import '../../../widgets/image_view.dart';
 import '../single_image_view.dart';
 
 class PetProfile extends StatefulWidget {
-  const PetProfile({super.key});
+  final bool isUser;
+  const PetProfile({super.key,  this.isUser = false});
 
   @override
   State<PetProfile> createState() => _PetProfileState();
@@ -52,7 +53,7 @@ class _PetProfileState extends State<PetProfile> {
                         const SizedBox(height: 15),
                         PetStatus(),
                         const SizedBox(height: 15),
-                        PetOwner(),
+                      if(widget.isUser)   PetOwner(),
                         const SizedBox(
                           height: 15,
                         ),
@@ -99,7 +100,7 @@ class _PetProfileState extends State<PetProfile> {
                             ),
                           ),
                         ),
-                        const SizedBox(
+                     if(widget.isUser)    const SizedBox(
                           height: 120,
                         )
                       ],
@@ -109,7 +110,7 @@ class _PetProfileState extends State<PetProfile> {
               ),
             ],
           ),
-          Positioned(
+        if(widget.isUser)  Positioned(
             bottom: 30,
             left: 25,
             right: 25,
@@ -125,8 +126,8 @@ class _PetProfileState extends State<PetProfile> {
                     ));
               },
               child: Text(
-                'Book Session',
-                style: TextStyle(fontSize: 20),
+                'Request video call inspection',
+                style: TextStyle(fontSize: 15),
               ),
             ),
           ),

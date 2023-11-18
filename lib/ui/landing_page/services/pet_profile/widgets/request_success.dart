@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../res/app_colors.dart';
+import '../../../../../utils/navigator/page_navigator.dart';
 import '../../../../widgets/back_button.dart';
 import '../../../../widgets/button_view.dart';
+import '../../pet_sellers.dart/track_services.dart';
 
 class RequestSuccess extends StatelessWidget {
   const RequestSuccess({super.key});
@@ -32,15 +34,14 @@ class RequestSuccess extends StatelessWidget {
               children: [
                 Spacer(),
                 Container(
-                  height: 185,
-                  width: 384,
+                  width: MediaQuery.sizeOf(context).width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     color: Color(0xFFFFFFFF),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 18, right: 17, top: 24, bottom: 23),
+                        left: 18, right: 17, top: 15, bottom: 15),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -53,10 +54,10 @@ class RequestSuccess extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          'Your pet date request has been sent successfully \nA notification would be sent to you upon when date is accepted',
+                          'Your session request has been sent to dera ',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 16),
+                              fontWeight: FontWeight.w400, fontSize: 14),
                         ),
                       ],
                     ),
@@ -67,13 +68,14 @@ class RequestSuccess extends StatelessWidget {
                 ),
                 ButtonView(
                   borderRadius: 30,
-                  padding: EdgeInsets.symmetric(vertical: 25),
+                  padding: EdgeInsets.symmetric(vertical: 15),
                   color: AppColors.lightSecondary,
                   onPressed: () {
-                    Navigator.pop(context);
+                   AppNavigator.pushAndStackPage(context,
+                                        page: TrackServices());
                   },
                   child: Text(
-                    'Back',
+                    'Track',
                     style: TextStyle(fontSize: 20),
                   ),
                 ),

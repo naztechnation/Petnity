@@ -209,9 +209,9 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         child: CustomText(
                           textAlign: TextAlign.start,
                           maxLines: 2,
-                          text: 'Book session',
+                          text: 'Book Session',
                           weight: FontWeight.w400,
-                          size: 12,
+                          size: 15,
                           fontFamily: AppStrings.interSans,
                           color: Colors.white,
                         ),
@@ -225,18 +225,20 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         child: ButtonView(
                           color: Color(0xFFEAF0FF),
                           onPressed: () {
-
-                            if(widget.agents?.profile?.firebaseId != '' || widget.agents?.profile?.firebaseId != null){
-                               AppNavigator.pushAndStackPage(context,
-                                page: ChatPage(
-                                  username: widget.agents!.name ?? '',
-                                  userImage: widget.agents!.picture ?? '',
-                                  uid: widget.agents?.profile?.firebaseId ?? '',
-                                ));
-                            }else{
-                              Modals.showToast('This agent is not accessible at the moment');
+                            if (widget.agents?.profile?.firebaseId != null ||
+                                widget.agents?.profile?.firebaseId.toString() !=
+                                    "null") {
+                              AppNavigator.pushAndStackPage(context,
+                                  page: ChatPage(
+                                    username: widget.agents!.name ?? '',
+                                    userImage: widget.agents!.picture ?? '',
+                                    uid: widget.agents?.profile?.firebaseId ??
+                                        '',
+                                  ));
+                            } else {
+                              Modals.showToast(
+                                  'This agent is not accessible at the moment');
                             }
-                           
                           },
                           child: ImageView.svg(
                             AppImages.messageArrow,
@@ -268,7 +270,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
 
         break;
       case 'pet date':
-      AppNavigator.pushAndStackPage(context,
+        AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: Provider.of<AccountViewModel>(context, listen: false)
                   .serviceId,
@@ -299,7 +301,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         AppNavigator.pushAndStackPage(context, page: VetService());
         break;
       case 'grooming':
-      AppNavigator.pushAndStackPage(context,
+        AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: Provider.of<AccountViewModel>(context, listen: false)
                   .serviceId,
@@ -308,15 +310,20 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
             ));
         break;
       case 'pet breeders':
-        AppNavigator.pushAndStackPage(context, page: PetsOnSale());
-
+        AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
       case 'pet sellers':
         AppNavigator.pushAndStackPage(context, page: PetsOnSale());
 
         break;
       case 'boarding':
-      AppNavigator.pushAndStackPage(context,
+        AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: Provider.of<AccountViewModel>(context, listen: false)
                   .serviceId,
@@ -325,7 +332,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
             ));
         break;
       case 'pet care givers':
-      AppNavigator.pushAndStackPage(context,
+        AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: Provider.of<AccountViewModel>(context, listen: false)
                   .serviceId,

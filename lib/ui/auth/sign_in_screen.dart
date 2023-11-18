@@ -56,9 +56,7 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status!) {
-                  Modals.showToast(state.userData.message!,
-                      messageType: MessageType.success);
-
+                  
                   StorageHandler.saveIsLoggedIn('true');
                  
                   StorageHandler.saveUserPassword(_passwordController.text);
@@ -77,24 +75,31 @@ class SignInScreen extends StatelessWidget {
                       state.userData.agent?.profile?.user?.email.toString());
 
                     
-                    AppNavigator.pushAndStackNamed(context,
-                        name: AppRoutes.landingPage);
+                     
+                     loginUser(
+                      firebaseUser: firebaseUser,
+                      context: context,
+                      message: state.userData.message!,
+                      userId: state.userData.agent?.profile?.id.toString(),
+                      hasPet: state.userData.agent?.profile?.hasPets ?? false,
+                      isAgent: !state.userData.isAgent!);
                   } else {
                     StorageHandler.saveIsUserType('service_provider');
                      StorageHandler.saveAgentId(
                       state.userData.agent!.id.toString());
 
-                    AppNavigator.pushAndReplaceName(context,
-                        name: AppRoutes.serviceProviderLandingPage);
+                       loginUser(
+                      firebaseUser: firebaseUser,
+                      context: context,
+                      message: state.userData.message!,
+                      userId: state.userData.agent?.profile?.id.toString(),
+                      hasPet: state.userData.agent?.profile?.hasPets ?? false,
+                      isAgent: !state.userData.isAgent!);
+
+                     
                   }
 
-                  // loginUser(
-                  //     firebaseUser: firebaseUser,
-                  //     context: context,
-                  //     message: state.userData.message!,
-                  //     userId: state.userData.profile!.id.toString(),
-                  //     hasPet: state.userData.profile!.hasPets!,
-                  //     isAgent: !state.userData.isAgent!);
+              
                 } else {
                   Modals.showToast(state.userData.message!,
                       messageType: MessageType.error);
@@ -184,30 +189,30 @@ class SignInScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                    SizedBox(
-                      height: 35,
-                    ),
-                    ImageView.asset(AppImages.line),
+                    // SizedBox(
+                    //   height: 35,
+                    // ),
+                    // ImageView.asset(AppImages.line),
                     SizedBox(
                       height: 45,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ImageView.asset(AppImages.facebookIcon),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        ImageView.asset(AppImages.appleIcon),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        ImageView.asset(AppImages.goggleIcon),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     ImageView.asset(AppImages.facebookIcon),
+                    //     SizedBox(
+                    //       width: 15,
+                    //     ),
+                    //     ImageView.asset(AppImages.appleIcon),
+                    //     SizedBox(
+                    //       width: 15,
+                    //     ),
+                    //     ImageView.asset(AppImages.goggleIcon),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 30,
+                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),
@@ -299,6 +304,8 @@ class SignInScreen extends StatelessWidget {
         email: '${_usernameController.text.trim()}@gmail.com',
         password: _passwordController.text.trim());
 
+        
+
     if (firebaseUser.status == Status.authenticated) {
       Modals.showToast(message, messageType: MessageType.success);
 
@@ -307,13 +314,7 @@ class SignInScreen extends StatelessWidget {
       StorageHandler.saveUserPassword(_passwordController.text);
       StorageHandler.saveUserName(_usernameController.text.trim());
 
-      Modals.showToast('success');
-
-      if (hasPet) {
-        StorageHandler.saveUserPetState('true');
-      } else {
-        StorageHandler.saveUserPetState('');
-      }
+      
 
       if (isAgent) {
         StorageHandler.saveIsUserType('user');

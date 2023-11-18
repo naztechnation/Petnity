@@ -168,7 +168,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
               color: AppColors.lightPrimary,
               selectedTextColor: AppColors.lightPrimary,
               height: 40,
-              contentMargin: const EdgeInsets.all(5),
+              contentMargin: const EdgeInsets.all(0),
               onSelected: (index) {
                 setState(() {
                   servicesInfo = services[index];
@@ -197,7 +197,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
               color: AppColors.lightPrimary,
               selectedTextColor: AppColors.lightPrimary,
               height: 35,
-              contentMargin: const EdgeInsets.all(5),
+              contentMargin: const EdgeInsets.all(0),
               onSelected: null,
             ),
             const SizedBox(
@@ -230,7 +230,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                             agentName: widget.agents?.name ?? '',
                             agentId: widget.agents?.id.toString() ?? ''));
                   },
-                  child: Text('Add Review'),
+                  child: Text('Add Review', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, ),),
                 ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.end,
