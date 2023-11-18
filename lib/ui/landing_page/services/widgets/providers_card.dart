@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../model/view_models/account_view_model.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
@@ -273,7 +274,10 @@ class _ProvidersCardState extends State<ProvidersCard> {
                     expanded: true,
                     borderRadius: 41,
                     child: Text(
-                      'View Profile',
+                   (Provider.of<AccountViewModel>(context,
+                                      listen: false)
+                                  .selectedService
+                                  .toLowerCase() == 'vets') ?  'Book session' :  'View Profile',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,

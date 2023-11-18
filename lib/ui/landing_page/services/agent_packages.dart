@@ -147,7 +147,7 @@ class _PackagesState extends State<PackagePage> {
                   serviceId: serviceId, agentId: agentId),
             );
           } else if (state is AgentPackagesLoaded) {
-            packages = _userCubit.viewModel.packages ?? [];
+            packages = _userCubit.viewModel.packages;
           }
 
           return Scaffold(
@@ -249,8 +249,7 @@ class _PackagesState extends State<PackagePage> {
                                               maxLines: 3,
                                               text: packages[index].name,
                                               weight: FontWeight.w700,
-                                              size: 14,
-                                              fontFamily: AppStrings.interSans,
+                                              size: 16,
                                               color: Colors.black,
                                             ),
                                           ),
@@ -258,44 +257,33 @@ class _PackagesState extends State<PackagePage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              const SizedBox(
-                                                height: 7,
-                                              ),
+                                               
                                               CustomText(
                                                 textAlign: TextAlign.left,
                                                 maxLines: 2,
                                                 text:
-                                                    'duration: ${packages[index].duration}',
-                                                weight: FontWeight.w500,
-                                                size: 16,
-                                                fontFamily:
-                                                    AppStrings.interSans,
+                                                    'Duration: ${packages[index].duration}',
+                                                size: 14,
+                                               
                                                 color: Colors.black,
                                               ),
-                                              const SizedBox(
-                                                height: 7,
-                                              ),
+                                               
                                               CustomText(
                                                 textAlign: TextAlign.left,
                                                 maxLines: 2,
                                                 text:
-                                                    'price: NGN ${AppUtils.convertPrice(packages[index].price)}',
-                                                weight: FontWeight.w500,
-                                                size: 16,
+                                                    'Price: NGN ${AppUtils.convertPrice(packages[index].price)}',
+                                                size: 14,
                                                 color: Colors.black,
                                               ),
-                                              const SizedBox(
-                                                height: 7,
-                                              ),
+                                             
                                               CustomText(
                                                 textAlign: TextAlign.left,
                                                 maxLines: 2,
                                                 text:
                                                     packages[index].description,
-                                                weight: FontWeight.w500,
-                                                size: 16,
-                                                fontFamily:
-                                                    AppStrings.interSans,
+                                                size: 14,
+                                                
                                                 color: Colors.black,
                                               ),
                                             ],

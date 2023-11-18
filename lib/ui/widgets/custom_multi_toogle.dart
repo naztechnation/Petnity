@@ -1,7 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:petnity/res/app_colors.dart';
 
 
 
@@ -56,47 +55,60 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
       required void Function() onTap}) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-          height: widget.height,
-          padding: widget.contentPadding,
-          margin: widget.contentMargin,
-          decoration: BoxDecoration(
-            color: selected
-                ? (widget.selectedColor ??
-                    Theme.of(context).colorScheme.secondary)
-                : (widget.color ?? Theme.of(context).backgroundColor),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(30.0),
-            ),
-             
-              border: Border.all(
-                  width: 1.0,
-                  color:  selected
-                ? 
-                    Theme.of(context).colorScheme.secondary
-                : (widget.color ?? Theme.of(context).backgroundColor),
-                  style: BorderStyle.solid)
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: selected
-                            ? (widget.selectedTextColor ??
-                                Theme.of(context).primaryColor)
-                            : (widget.textColor ??
-                                Theme.of(context).textTheme.caption!.color),
-                        fontSize: widget.fontSize,
-              
-                        fontWeight: FontWeight.w500)),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+borderRadius: const BorderRadius.all(
+                Radius.circular(30.0),
               ),
-             
-            ],
-          )),
+
+        ),
+        color: selected
+                  ? (widget.selectedColor ??
+                      Theme.of(context).colorScheme.secondary)
+                  : (widget.color ?? Theme.of(context).backgroundColor),
+        child: Container(
+            height: widget.height,
+            padding: widget.contentPadding,
+            margin: widget.contentMargin,
+            decoration: BoxDecoration(
+              color: selected
+                  ? (widget.selectedColor ??
+                      Theme.of(context).colorScheme.secondary)
+                  : (widget.color ?? Theme.of(context).backgroundColor),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(30.0),
+              ),
+               
+                border: Border.all(
+                    width: 1.0,
+                    color:  selected
+                  ? 
+                      Theme.of(context).colorScheme.secondary
+                  : (widget.color ?? Theme.of(context).backgroundColor),
+                    style: BorderStyle.solid)
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Text(title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: selected
+                              ? (widget.selectedTextColor ??
+                                  Theme.of(context).primaryColor)
+                              : (widget.textColor ??
+                                  Theme.of(context).textTheme.caption!.color),
+                          fontSize: widget.fontSize,
+                
+                          fontWeight: FontWeight.w500)),
+                ),
+               
+              ],
+            )),
+      ),
     );
   }
 

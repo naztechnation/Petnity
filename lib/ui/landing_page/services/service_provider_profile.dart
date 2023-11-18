@@ -268,6 +268,13 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
 
         break;
       case 'pet date':
+      AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
       case 'dog sitters':
         AppNavigator.pushAndStackPage(context,
@@ -279,23 +286,52 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
             ));
 
         break;
-      case 'trainer':
-        AppNavigator.pushAndStackPage(context, page: TrainingScreen());
+      case 'pet trainer':
+        AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
       case 'vets':
         AppNavigator.pushAndStackPage(context, page: VetService());
         break;
       case 'grooming':
+      AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
-      case 'breeders':
+      case 'pet breeders':
+        AppNavigator.pushAndStackPage(context, page: PetsOnSale());
+
         break;
       case 'pet sellers':
         AppNavigator.pushAndStackPage(context, page: PetsOnSale());
 
         break;
       case 'boarding':
+      AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
       case 'pet care givers':
+      AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
 
       default:

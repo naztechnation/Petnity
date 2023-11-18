@@ -142,6 +142,7 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
                         onFilterTap: () {
                           Modals.showBottomSheetModal(
                             context,
+                            isDissmissible: true,
                             page: BottomSheetContent(
                                 addressSpinnerItems: addressSpinnerItems,
                                 age: age,
@@ -156,13 +157,21 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    Expanded(
-                        child: ListView.builder(
-                            itemCount: agentList.length,
-                            shrinkWrap: true,
-                            itemBuilder: (_, index) {
-                              return ProvidersCard(index: index, );
-                            }))
+                    if (agentList.isNotEmpty) ...[
+                      Expanded(
+                          child: ListView.builder(
+                              itemCount: agentList.length,
+                              shrinkWrap: true,
+                              itemBuilder: (_, index) {
+                                return ProvidersCard(
+                                  index: index,
+                                );
+                              }))
+                    ]else ...[
+                      SizedBox(
+                        height: MediaQuery.sizeOf(context).height * 0.6,
+                        child: Align(child: Text('No Agents Available for this service')))
+                    ]
                   ]));
             }));
   }

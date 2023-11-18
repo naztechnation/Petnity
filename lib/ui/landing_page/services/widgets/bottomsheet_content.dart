@@ -35,6 +35,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 20,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -43,8 +44,8 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
               maxLines: 2,
               text: 'Filter',
               weight: FontWeight.w900,
-              size: 24,
-              fontFamily: AppStrings.montserrat,
+              size: 22,
+              fontFamily: AppStrings.interSans,
               color: Colors.black,
             ),
             GestureDetector(

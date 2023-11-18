@@ -92,6 +92,14 @@ flutter:
     - family: Satoshi-Variable
       fonts:
         - asset: fonts/Satoshi-Light.otf
+          weight: 400
+        - asset: fonts/Satoshi-Medium.otf
+          weight: 600
+        - asset: fonts/Satoshi-Variable.ttf
+          weight: 500
+        - asset: fonts/Satoshi-Bold.otf
+          weight: 700
+
         
              
   

@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/model/view_models/user_view_model.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/view_models/account_view_model.dart';
@@ -35,7 +36,7 @@ class ListOfServices extends StatelessWidget {
                   Color randomColor = getRandomColor();
 
                   return Item(context, randomColor,
-                      '${user.services[index].name}', AppImages.logo, () {
+                      '${user.services[index].name}',  '${user.services[index].image}', () {
                     Provider.of<AccountViewModel>(context, listen: false)
                         .setSelectedService(user.services[index].name!);
                          Provider.of<AccountViewModel>(context, listen: false)
@@ -81,16 +82,18 @@ Widget Item(BuildContext context, Color color, String title, String image,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(image),
-            radius: 18,
-          ),
+         ClipRRect(borderRadius: BorderRadius.circular(30),
+          child: SizedBox(
+            height: 40,
+            width: 40,
+            child: ImageView.network(image, fit: BoxFit.cover,)),
+         ),
           const SizedBox(width: 15),
           Expanded(
             child: Text(
               title,
               maxLines: 2,
-              style: TextStyle(fontSize: 14, fontFamily: AppStrings.interSans),
+              style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500, fontFamily: AppStrings.satoshi),
             ),
           )
         ],
