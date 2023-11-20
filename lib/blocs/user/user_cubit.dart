@@ -252,6 +252,9 @@ Future<void> getAgentProfile() async {
 
       final userData = await userRepository.orderList(username: username);
 
+     // await viewModel.setUserOrderList(orders: userData.orders ?? []);
+
+
       emit(OrderListLoaded(userData));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));

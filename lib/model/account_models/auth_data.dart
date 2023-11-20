@@ -2,6 +2,8 @@ class AuthData {
   bool? status;
   String? message;
   bool? isAgent;
+  Profile? profile;
+
   Agent? agent;
 
   AuthData({this.status, this.message, this.isAgent, this.agent});
@@ -10,6 +12,9 @@ class AuthData {
     status = json['status'];
     message = json['message'];
     isAgent = json['is_agent'];
+
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
   }
 
@@ -40,7 +45,7 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  Null? idType;
+  String? idType;
   List<Services>? services;
   List<PetTypes>? petTypes;
 

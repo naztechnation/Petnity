@@ -98,7 +98,7 @@ class _TrackServiceState extends State<TrackService> {
         appBar: PreferredSize(
           preferredSize: screenSize(context) * .1,
           child: Container(
-            padding: EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(bottom: 20, top: 20),
             child: AppBar(
               centerTitle: true,
               title: Text(

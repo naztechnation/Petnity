@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
@@ -63,17 +64,33 @@ class _AllServicesState extends State<AllServices> {
 
   servicesTypes() {
     if (orderList!.isOngoing!) {
-      return Text('Ongoing Services');
+      return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
+
+        child: Text('Ongoing Services', style: TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.w700),),
+      );
     } else if (orderList!.isCompleted!) {
-      return Text('Completed Services');
+      return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
+
+        child: Text('Completed Services', style: TextStyle(color: Colors.green, fontWeight: FontWeight.w700),),
+      );
     } else if (orderList!.isRejected!) {
-      return Text('Rejected Services');
+      return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
+
+        child: Text('Rejected Services', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w700),),
+      );
     } else if (orderList!.isPaid == true && orderList!.isAccepted == false) {
-      return Text('Awaiting Services');
+      return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
+
+        child: Text('Awaiting Services', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w700),),
+      );
     } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
-        child: Text('Not Accepted'),
+        child: Text('Not Accepted',  style: TextStyle(fontWeight: FontWeight.w700),),
       );
     }
   }

@@ -96,6 +96,8 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   _handlePaymentInitialization(String shopOrder) async {
+
+    
     final Customer customer = Customer(email: email);
 
     final Flutterwave flutterwave = Flutterwave(
@@ -109,7 +111,7 @@ class _ProductDetailState extends State<ProductDetail> {
         paymentOptions: "card",
         customization: Customization(
           title: "Petnity",
-          //logo: AppImages.logo,
+          logo: AppImages.logo,
         ),
         isTestMode: true);
     final ChargeResponse response = await flutterwave.charge();

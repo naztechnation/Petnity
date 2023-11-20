@@ -103,8 +103,14 @@ class AppStrings {
    static String uploadAgentGallery({required String agentId}) =>
       '${_baseUrl}users/add-gallery-element/$agentId';
 
-       
-   
+    static String agentAcceptOrder({required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-accept-order/$agentId/$orderId';
+    
+    static String agentMarkOngoingOrder({required String agentId, required String orderId}) =>
+      '${_baseUrl}order/order-ongoing/$agentId/$orderId';
+
+ static String agentMarkCompletedOrder({required String agentId , required String orderId}) =>
+      '${_baseUrl}order/agent-complete-order/$agentId/$orderId';
 
   static String publishProductReview({
     required String url,

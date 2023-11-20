@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:petnity/model/user_models/gallery_data.dart';
 
 import '../../res/enum.dart';
+import '../../ui/widgets/modals.dart';
 import '../account_models/agents_packages.dart';
 import '../user_models/order_list.dart';
 import '../user_models/reviews_data.dart';
@@ -27,6 +28,8 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setOrderList({required UserOrderList orders}) async {
     _userOrder = orders;
+
+    _ordersList = orders.orders ?? [];
     setViewState(ViewState.success);
   }
 
@@ -34,6 +37,8 @@ class UserViewModel extends BaseViewModel {
     _services = services;
     setViewState(ViewState.success);
   }
+
+   
 
   Future<void> setAgentDetails({required List<Agents> agents}) async {
     _agents = agents;
@@ -71,127 +76,127 @@ class UserViewModel extends BaseViewModel {
   }
 
   String formatDateTimeToAMPM(String dateTimeString) {
-  try {
-    final dateTime = DateTime.parse(dateTimeString);
-    final formattedTime = DateFormat('h:mm a').format(dateTime.toLocal());
-    return formattedTime;
-  } catch (e) {
-    print('Error parsing the date string: $e');
-    return '';
-  }
-
-}
-
-String calculateTimeDifferenceInHours(String startTimeString, String endTimeString) {
-  try {
-    final startTime = DateTime.parse(startTimeString);
-    final endTime = DateTime.parse(endTimeString);
-
-    final difference = startTime.isBefore(endTime)
-        ? endTime.difference(startTime)
-        : startTime.difference(endTime);
-
-    final hoursDifference = (difference.inMinutes / 60).toDouble();
-
-    return '${hoursDifference.toStringAsFixed(1)}';
-  } catch (e) {
-    print('Error parsing the date strings: $e');
-    return '0.0';
-  }
-}
-
-String calculateRemainingTimeInHours(String endTimeString) {
-  try {
-    final currentTime = DateTime.now();
-    final endTime = DateTime.parse(endTimeString);
-
-    if (currentTime.isAfter(endTime)) {
-      return 'Elapsed';
+    try {
+      final dateTime = DateTime.parse(dateTimeString);
+      final formattedTime = DateFormat('h:mm a').format(dateTime.toLocal());
+      return formattedTime;
+    } catch (e) {
+      print('Error parsing the date string: $e');
+      return '';
     }
-
-    final difference = endTime.difference(currentTime);
-
-    final hours = difference.inMinutes / 60;
-
-    return '${hours.toStringAsFixed(1)}';
-  } catch (e) {
-    print('Error parsing the date string: $e');
-    return 'Invalid date format';
   }
-}
 
-double calculateRemainingProgressTime( String endTimeString) {
-  try {
-    final currentTime = DateTime.now();
-    final endTime = DateTime.parse(endTimeString);
+  String calculateTimeDifferenceInHours(
+      String startTimeString, String endTimeString) {
+    try {
+      final startTime = DateTime.parse(startTimeString);
+      final endTime = DateTime.parse(endTimeString);
 
-    if (endTime.isBefore(currentTime)) {
-      return 1.0;
+      final difference = startTime.isBefore(endTime)
+          ? endTime.difference(startTime)
+          : startTime.difference(endTime);
+
+      final hoursDifference = (difference.inMinutes / 60).toDouble();
+
+      return '${hoursDifference.toStringAsFixed(1)}';
+    } catch (e) {
+      print('Error parsing the date strings: $e');
+      return '0.0';
     }
-
-    final difference = endTime.difference(currentTime);
-
-    final remainingTimeInHours = difference.inMinutes / 60;
-    final percentageOfCompletion = remainingTimeInHours / (DateTime.parse(endTimeString).difference(DateTime.now()).inHours.toDouble());
-    return percentageOfCompletion;
-  } catch (e) {
-    print('Error parsing the date strings: $e');
-    return 0.0;
   }
-}
 
-double calculateTimeDifference(String startTimeString, String endTimeString) {
-  try {
-    final startTime = DateTime.parse(startTimeString);
-    final endTime = DateTime.parse(endTimeString);
+  String calculateRemainingTimeInHours(String endTimeString) {
+    try {
+      final currentTime = DateTime.now();
+      final endTime = DateTime.parse(endTimeString);
 
-    final difference = startTime.isBefore(endTime)
-        ? endTime.difference(startTime)
-        : startTime.difference(endTime);
+      if (currentTime.isAfter(endTime)) {
+        return 'Elapsed';
+      }
 
-    final hoursDifference = (difference.inMinutes / 60).toDouble();
+      final difference = endTime.difference(currentTime);
 
-    return hoursDifference;
-  } catch (e) {
-    print('Error parsing the date strings: $e');
-    return 0.0; 
-  }
-}
+      final hours = difference.inMinutes / 60;
 
-double calculateTimeRemainingInHours(String endTimeString) {
-  try {
-    final currentTime = DateTime.now();
-    final endTime = DateTime.parse(endTimeString);
-
-    if (endTime.isBefore(currentTime)) {
-      return 0.0; // Time has already passed
+      return '${hours.toStringAsFixed(1)}';
+    } catch (e) {
+      print('Error parsing the date string: $e');
+      return 'Invalid date format';
     }
-
-    final difference = endTime.difference(currentTime);
-    final hoursRemaining = difference.inMinutes / 60.0;
-
-    return hoursRemaining;
-  } catch (e) {
-    print('Error parsing the date string: $e');
-    return 0.0; // Return 0.0 for invalid dates or errors
   }
 
-  
-}
+  double calculateRemainingProgressTime(String endTimeString) {
+    try {
+      final currentTime = DateTime.now();
+      final endTime = DateTime.parse(endTimeString);
 
+      if (endTime.isBefore(currentTime)) {
+        return 1.0;
+      }
 
-getProgressTime(String endTimeString){
-  double totalHours = calculateTimeDifference(DateTime.now().toIso8601String(), endTimeString);
-  double remainingHours = calculateTimeRemainingInHours(endTimeString);
+      final difference = endTime.difference(currentTime);
 
+      final remainingTimeInHours = difference.inMinutes / 60;
+      final percentageOfCompletion = remainingTimeInHours /
+          (DateTime.parse(endTimeString)
+              .difference(DateTime.now())
+              .inHours
+              .toDouble());
+      return percentageOfCompletion;
+    } catch (e) {
+      print('Error parsing the date strings: $e');
+      return 0.0;
+    }
+  }
 
-  _totalHours = totalHours;
-  _remainingHours = remainingHours;
+  double calculateTimeDifference(String startTimeString, String endTimeString) {
+    try {
+      final startTime = DateTime.parse(startTimeString);
+      final endTime = DateTime.parse(endTimeString);
+
+      final difference = startTime.isBefore(endTime)
+          ? endTime.difference(startTime)
+          : startTime.difference(endTime);
+
+      final hoursDifference = (difference.inMinutes / 60).toDouble();
+
+      return hoursDifference;
+    } catch (e) {
+      print('Error parsing the date strings: $e');
+      return 0.0;
+    }
+  }
+
+  double calculateTimeRemainingInHours(String endTimeString) {
+    try {
+      final currentTime = DateTime.now();
+      final endTime = DateTime.parse(endTimeString);
+
+      if (endTime.isBefore(currentTime)) {
+        return 0.0; // Time has already passed
+      }
+
+      final difference = endTime.difference(currentTime);
+      final hoursRemaining = difference.inMinutes / 60.0;
+
+      return hoursRemaining;
+    } catch (e) {
+      print('Error parsing the date string: $e');
+      return 0.0; // Return 0.0 for invalid dates or errors
+    }
+  }
+
+  getProgressTime(String endTimeString) {
+    double totalHours = calculateTimeDifference(
+        DateTime.now().toIso8601String(), endTimeString);
+    double remainingHours = calculateTimeRemainingInHours(endTimeString);
+
+    _totalHours = totalHours;
+    _remainingHours = remainingHours;
 
     setViewState(ViewState.success);
     return _remainingHours / _totalHours;
-}
-
+  }
 
   List<ServiceTypes> get services => _services;
   List<Agents> get agents => _agents;
@@ -232,14 +237,19 @@ getProgressTime(String endTimeString){
     return list;
   }
 
+
   List<UserOrders> onGoingServices() {
     List<UserOrders> list = [];
+
 
     for (var order in _ordersList) {
       if (order.isOngoing == true) {
         list.add(order);
       }
     }
+
+   
+
 
     return list;
   }

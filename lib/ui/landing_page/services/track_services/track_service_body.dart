@@ -308,7 +308,7 @@ class TrackServicesBody extends StatelessWidget {
                         child: CustomText(
                           textAlign: TextAlign.left,
                           maxLines: 2,
-                          text: 'Session Paid - NGN $amount',
+                          text: 'Session Paid - NGN ${AppUtils.convertPrice(amount)}',
                           weight: FontWeight.w500,
                           size: 12,
                           color: Colors.black,

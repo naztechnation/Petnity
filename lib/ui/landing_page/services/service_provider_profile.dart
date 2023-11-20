@@ -259,7 +259,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
     switch (services) {
       case '':
         break;
-      case 'dog walkers':
+      case 'pet walkers':
         AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: Provider.of<AccountViewModel>(context, listen: false)

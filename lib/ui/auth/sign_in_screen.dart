@@ -72,9 +72,8 @@ class SignInScreen extends StatelessWidget {
                   }
                     StorageHandler.saveIsUserType('user');
                      StorageHandler.saveEmail(
-                      state.userData.agent?.profile?.user?.email.toString());
+                      state.userData.profile?.user?.email.toString());
 
-                    
                      
                      loginUser(
                       firebaseUser: firebaseUser,
@@ -87,6 +86,11 @@ class SignInScreen extends StatelessWidget {
                     StorageHandler.saveIsUserType('service_provider');
                      StorageHandler.saveAgentId(
                       state.userData.agent!.id.toString());
+
+                       StorageHandler.saveEmail(
+                      state.userData.agent?.profile?.user?.email.toString());
+
+
 
                        loginUser(
                       firebaseUser: firebaseUser,

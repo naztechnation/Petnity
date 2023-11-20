@@ -128,7 +128,7 @@ class _TrackServicesState extends State<TrackServices> {
                           color: AppColors.cardColor,
                           height: (Platform.isAndroid) ? 0 : 0)),
                   Container(
-                    padding: const EdgeInsets.only(bottom: 0, top: 30),
+                    padding: const EdgeInsets.only(bottom: 20, top: 20),
                     child: Row(
                       children: [
                         backButton(context),
