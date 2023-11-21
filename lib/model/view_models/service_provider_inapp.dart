@@ -234,4 +234,23 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
 
   int get pageIndex => _orderPageNumber;
   int get currentPage => _currentPage;
+
+  List<AgentServicesListOrders> get onGoingOrdersList => onGoingServices();
+
+  List<AgentServicesListOrders> onGoingServices() {
+    List<AgentServicesListOrders> list = [];
+
+
+    for (var order in _availableServices) {
+      if (order.isOngoing == true && order.isCompleted != true) {
+        list.add(order);
+      }
+    }
+
+   
+
+
+    return list;
+  }
+
 }

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,62 +16,60 @@ class AllOngoingDeliveryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
-    return   Scaffold(
-
-      body: Container(
-        height: screenSize(context).height,
-              width: screenSize(context).width,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                      begin: Alignment.topRight,
-                      end: Alignment.topLeft)),
-        child: Column(children: [
-            SafeArea(
-                      child: Container(
-                          color: AppColors.cardColor,
-                          height: (Platform.isAndroid) ? 0 : 0)),
-                  Container(
-                    color: AppColors.cardColor,
-                    padding: const EdgeInsets.only(bottom: 20, top: 10),
-                    child: Row(
-                      children: [
-                        backButton(context),
-                        const SizedBox(
-                          width: 40,
-                        ),
-                        CustomText(
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          text: 'Ongoing Services',
-                          weight: FontWeight.w700,
-                          size: 20,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
-
-                      itemCount: serviceProvider.availableServices.length,
-                      itemBuilder: 
-                    (context, index){
-                      return  OngoingDeliveryWidget(
-                      label: 'Track',
-                    );
-                          
-                    }),
-                  ),
-        ],),
-      )
-    );
+    return Scaffold(
+        body: Container(
+      height: screenSize(context).height,
+      width: screenSize(context).width,
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [AppColors.scaffoldColor, Colors.red.shade50],
+              begin: Alignment.topRight,
+              end: Alignment.topLeft)),
+      child: Column(
+        children: [
+          SafeArea(
+              child: Container(
+                  color: AppColors.cardColor,
+                  height: (Platform.isAndroid) ? 0 : 0)),
+          Container(
+            color: AppColors.cardColor,
+            padding: const EdgeInsets.only(bottom: 20, top: 10),
+            child: Row(
+              children: [
+                backButton(context),
+                const SizedBox(
+                  width: 40,
+                ),
+                CustomText(
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  text: 'Ongoing Services',
+                  weight: FontWeight.w700,
+                  size: 20,
+                  fontFamily: AppStrings.interSans,
+                  color: Colors.black,
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+                shrinkWrap: true,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 13.0, vertical: 15),
+                itemCount: serviceProvider.onGoingOrdersList.length,
+                itemBuilder: (context, index) {
+                  return OngoingDeliveryWidget(
+                    label: 'Track',
+                    services: serviceProvider.onGoingOrdersList[index],
+                  );
+                }),
+          ),
+        ],
+      ),
+    ));
   }
 }

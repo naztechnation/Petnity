@@ -1,23 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
+import 'package:provider/provider.dart';
 
-class OngoingDeliveryWidget extends StatelessWidget {
+import '../../../../handlers/secure_handler.dart';
+import '../../../../model/user_models/agent_services_lists.dart';
+import '../../../../model/view_models/user_view_model.dart';
+import '../../../landing_page/services/track_services/track_services.dart';
+import '../../../notfications_pages/chat_pages/chat_page.dart';
+import '../../../video.dart';
+import '../../../widgets/image_view.dart';
+import '../../../widgets/modals.dart';
+
+class OngoingDeliveryWidget extends StatefulWidget {
   final String label;
-  OngoingDeliveryWidget({this.label = 'Details'});
+  final AgentServicesListOrders services;
+  OngoingDeliveryWidget({this.label = 'Details', required this.services});
+
+  @override
+  State<OngoingDeliveryWidget> createState() => _OngoingDeliveryWidgetState();
+}
+
+class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
+  String username = '';
+
+  getUsername() async {
+    username = await StorageHandler.getUserName();
+  }
+
+  @override
+  void initState() {
+    getUsername();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final userModel = Provider.of<UserViewModel>(context, listen: true);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Card(
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
           // height: screenSize(context).height * .3,
           width: screenSize(context).width * .9,
@@ -36,15 +66,20 @@ class OngoingDeliveryWidget extends StatelessWidget {
                   ),
                   Container(
                     width: screenSize(context).width * .3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Dera Jessica',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('Dog Walking')
-                      ],
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Sandra Lee',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                              '${widget.services.package?.service?.serviceType?.name}'),
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -56,7 +91,8 @@ class OngoingDeliveryWidget extends StatelessWidget {
                           'Drop off time',
                           style: TextStyle(fontSize: 10),
                         ),
-                        Text('4pm')
+                        Text(userModel.formatDateTimeToAMPM(
+                            widget.services.dropoffTime ?? ''))
                       ],
                     ),
                   ),
@@ -69,88 +105,20 @@ class OngoingDeliveryWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Time per Sitting: 3hrs',
+                    'Total time: ${userModel.calculateTimeDifferenceInHours(widget.services.pickupTime ?? '0', widget.services.dropoffTime ?? '0')} Hrs',
                     style: TextStyle(fontSize: 10),
                   ),
-                  Text('Time remaining per sitting: 2hrs',
+                  Text(
+                      'Time remaining:  ${userModel.calculateRemainingTimeInHours(widget.services.dropoffTime ?? '0')} Hrs',
                       style: TextStyle(fontSize: 10)),
                   SizedBox(width: 8),
                 ],
               ),
-              
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Expanded(
-              //       child: Container(
-              //           padding: EdgeInsets.all(4),
-              //           decoration: BoxDecoration(
-              //               color: Colors.blue,
-              //               borderRadius: BorderRadius.circular(100)),
-              //           child: ImageView.svg(AppImages.gift)),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         width: screenSize(context).width * .2,
-              //         height: 4,
-              //         color: Colors.blue,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //           padding: EdgeInsets.all(4),
-              //           decoration: BoxDecoration(
-              //               color: Colors.blue,
-              //               borderRadius: BorderRadius.circular(100)),
-              //           child: ImageView.svg(AppImages.ticket)),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         width: screenSize(context).width * .2,
-              //         height: 4,
-              //         color: Colors.blue,
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //           padding: EdgeInsets.all(4),
-              //           decoration: BoxDecoration(
-              //               color: Colors.blue,
-              //               borderRadius: BorderRadius.circular(100)),
-              //           child: ImageView.svg(AppImages.tag)),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //         width: screenSize(context).width * .2,
-              //         height: 4,
-              //         decoration: BoxDecoration(
-              //           gradient: LinearGradient(
-              //               colors: [
-              //                 Colors.blue,
-              //                 Colors.grey.shade400,
-              //                 Colors.grey.shade400,
-              //               ],
-              //               begin: Alignment.centerLeft,
-              //               end: Alignment.centerRight,
-              //               stops: [0.3, 0.4, 1.0]),
-              //         ),
-              //       ),
-              //     ),
-              //     Expanded(
-              //       child: Container(
-              //           padding: EdgeInsets.all(4),
-              //           decoration: BoxDecoration(
-              //               color: Colors.grey.shade400,
-              //               borderRadius: BorderRadius.circular(100)),
-              //           child: ImageView.svg(AppImages.checked)),
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                'Contact dog walker',
+                'Contact ${widget.services.package?.service?.serviceType?.name ?? ''}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               SizedBox(
@@ -159,60 +127,79 @@ class OngoingDeliveryWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: screenSize(context).width * .13,
-                    child: ButtonView(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      borderColor: Colors.red,
-                      borderWidth: 2,
-                      color: Colors.white,
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.call_outlined,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                      borderRadius: 100,
-                    ),
-                  ),
-                  Container(
-                    width: screenSize(context).width * .13,
-                    child: ButtonView(
-                      borderColor: Colors.green,
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      borderWidth: 2,
-                      color: Colors.white,
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.chat,
-                        color: Colors.green,
-                        size: 20,
-                      ),
-                      borderRadius: 100,
-                    ),
-                  ),
-                  Container(
-                    width: screenSize(context).width * .13,
-                    child: ButtonView(
-                      borderColor: Colors.purple,
-                      borderWidth: 2,
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      color: Colors.white,
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.video_call,
-                        color: Colors.purple,
-                        size: 20,
-                      ),
-                      borderRadius: 100,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _callNumber(
+                                widget.services.agent?.profile?.phoneNumber ??
+                                    '');
+                          },
+                          child: ImageView.svg(AppImages.callBorder)),
+                          const SizedBox(width: 20,),
+                      GestureDetector(
+                          onTap: () {
+                            if (widget.services.agent?.profile?.firebaseId ==
+                                    '' ||
+                                widget.services.agent?.profile?.firebaseId ==
+                                    null) {
+                              Modals.showToast(
+                                  'Can\'t communicate with this agent at the moment. Please');
+                            } else {
+                              AppNavigator.pushAndStackPage(context,
+                                  page: ChatPage(
+                                      username:
+                                          widget.services.agent?.name ?? '',
+                                      userImage:
+                                          widget.services.agent?.picture ?? '',
+                                      uid: widget.services.agent?.profile
+                                              ?.firebaseId ??
+                                          ''));
+                            }
+                          },
+                          child: ImageView.svg(AppImages.messageBorder)),
+                          const SizedBox(width: 20,),
+
+                      GestureDetector(
+                          onTap: () {
+                            /// Todo get the user name and replace here
+                            AppNavigator.pushAndStackPage(context,
+                                page: VideoCall(
+                                  user1: widget.services.agent?.name ?? '',
+                                  user2: username,
+                                ));
+                          },
+                          child: ImageView.svg(AppImages.videoBorder)),
+                    ],
                   ),
                   Container(
                     width: screenSize(context).width * .23,
                     child: ButtonView(
                       color: Colors.blue,
-                      onPressed: () {},
-                      child: Text(label),
+                      onPressed: () {
+                        AppNavigator.pushAndStackPage(context,
+                            page: TrackServicesScreen(
+                              sellerName: widget.services.agent?.name ?? '',
+                              phone:
+                                  widget.services.agent?.profile?.phoneNumber ??
+                                      '',
+                              serviceOffered: widget.services.package?.service
+                                      ?.serviceType?.name ??
+                                  '',
+                              agentId:
+                                  widget.services.agent?.profile?.firebaseId ??
+                                      '',
+                              sellerId:
+                                  widget.services.agent?.id.toString() ?? '',
+                              startDate1: widget.services.pickupTime ?? '0',
+                              startDate2: widget.services.dropoffTime ?? '0',
+                              amount: widget.services.fee ?? '',
+                              paymentId: widget.services.purchaseId ?? '',
+                              sellerImage: widget.services.agent?.picture ?? '',
+                            ));
+                      },
+                      child: Text(widget.label),
                       borderRadius: 30,
                     ),
                   ),
@@ -223,5 +210,9 @@ class OngoingDeliveryWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _callNumber(String number) async {
+    bool res = await FlutterPhoneDirectCaller.callNumber(number) ?? false;
   }
 }

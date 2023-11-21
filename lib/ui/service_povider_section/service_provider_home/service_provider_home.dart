@@ -57,8 +57,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   List<AgentServicesListOrders> availableServices = [];
 
   late ServiceProviderCubit _serviceProviderCubit;
-
-  //int initialPageIndex = 1;
+ 
   String agentId = "";
 
   fetchOrders() async {
@@ -67,8 +66,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
     _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: '1');
     _serviceProviderCubit.getAgentsAvailableServices(agentId: agentId,);
   }
-
-  final NumberPaginatorController _controller = NumberPaginatorController();
+ 
 
   @override
   void initState() {
@@ -80,9 +78,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
 
   @override
   Widget build(BuildContext context) {
-    final serviceProvider =
-        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
-
+    
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
       body: GestureDetector(
@@ -97,6 +93,8 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
             orders = state.agentsOrderRequests.shopOrders ?? [];
           } else if (state is AgentServicesListLoaded) {
             availableServices = state.services.orders ?? [];
+
+            
           }
         }, builder: (context, state) {
           if (state is AgentOrdersLoading || state is AgentServicesListLoading) {
@@ -105,9 +103,10 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
               AppImages.loading,
               height: 50,
             ));
-          }
+          }else if (state is AgentServicesListLoaded) {
+            availableServices = state.services.orders ?? [];
 
-          return Container(
+             return Container(
              height: MediaQuery.of(context).size.height - kToolbarHeight,
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
@@ -151,14 +150,21 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  ServiceProviderPetDeliveryHomeBody(serviceProviderCubit: _serviceProviderCubit,agentId: agentId,
+               ServiceProviderPetDeliveryHomeBody(serviceProviderCubit: _serviceProviderCubit,agentId: agentId,
                    
-                  ),
+                 ),
                  
                 ],
               ),
             ),
           );
+          }
+
+         return Align(
+                child: ImageView.asset(
+              AppImages.loading,
+              height: 50,
+            ));
         }),
       ),
     );

@@ -22,9 +22,10 @@ import 'product_shopping_details.dart';
 import 'widgets/all_ongoing_page.dart';
 
 class ServiceProviderPetDeliveryHomeBody extends StatefulWidget {
- final ServiceProviderCubit serviceProviderCubit;
- final String agentId;
-  ServiceProviderPetDeliveryHomeBody({super.key,  required this.serviceProviderCubit, required this.agentId});
+  final ServiceProviderCubit serviceProviderCubit;
+  final String agentId;
+  ServiceProviderPetDeliveryHomeBody(
+      {super.key, required this.serviceProviderCubit, required this.agentId});
 
   @override
   State<ServiceProviderPetDeliveryHomeBody> createState() =>
@@ -32,13 +33,11 @@ class ServiceProviderPetDeliveryHomeBody extends StatefulWidget {
 }
 
 class _ServiceProviderPetDeliveryHomeBodyState
-    extends State<ServiceProviderPetDeliveryHomeBody> with SingleTickerProviderStateMixin{
+    extends State<ServiceProviderPetDeliveryHomeBody>
+    with SingleTickerProviderStateMixin {
+  bool isServices = true;
 
-
-
-  bool isServices = false;
-
-  changePage(bool serve){
+  changePage(bool serve) {
     setState(() {
       isServices = serve;
     });
@@ -48,29 +47,29 @@ class _ServiceProviderPetDeliveryHomeBodyState
   void initState() {
     super.initState();
   }
-       
-       String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+  String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
-        final userModel =
-        Provider.of<UserViewModel>(context, listen: true);
+    final userModel = Provider.of<UserViewModel>(context, listen: true);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+     if(serviceProvider.onGoingOrdersList.isNotEmpty)    Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomText(
-              text: 'Ongoing Pet Delivery',
+              text: 'Ongoing Services',
               weight: FontWeight.bold,
             ),
             GestureDetector(
-              onTap: (){
-                AppNavigator.pushAndStackPage(context, page: AllOngoingDeliveryScreen());
+              onTap: () {
+                AppNavigator.pushAndStackPage(context,
+                    page: AllOngoingDeliveryScreen());
               },
               child: Padding(
                 padding: const EdgeInsets.only(right: 8.0),
@@ -84,24 +83,23 @@ class _ServiceProviderPetDeliveryHomeBodyState
             ),
           ],
         ),
-        SizedBox(
+      if(serviceProvider.onGoingOrdersList.isNotEmpty)  SizedBox(
           height: 10,
         ),
-        SizedBox(
+     if(serviceProvider.onGoingOrdersList.isNotEmpty)   SizedBox(
           height: 300,
           child: ListView.builder(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            itemCount: serviceProvider.availableServices.length,
-            itemBuilder: 
-          (context, index){
-            return  OngoingDeliveryWidget(
-            label: 'Track',
-          );
-        
-          }),
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: serviceProvider.onGoingOrdersList.length,
+              itemBuilder: (context, index) {
+                return OngoingDeliveryWidget(
+                  label: 'Track',
+                  services: serviceProvider.onGoingOrdersList[index],
+                );
+              }),
         ),
-        SizedBox(
+      if(serviceProvider.onGoingOrdersList.isNotEmpty)  SizedBox(
           height: 10,
         ),
         Row(
@@ -109,155 +107,160 @@ class _ServiceProviderPetDeliveryHomeBodyState
           children: [
             Expanded(
               child: CustomText(
-                text: 'All new requests (${(isServices) ? serviceProvider.availableServices.length :serviceProvider.order.length})',
+                text:
+                    'All new requests (${(isServices) ? serviceProvider.availableServices.length : serviceProvider.order.length})',
                 maxLines: 2,
                 weight: FontWeight.bold,
                 size: 13,
               ),
             ),
-             const SizedBox(width: 20,),
-            Container(
-            margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 1.0),
-            child: Row(
-              children: [
-                // Tab 1
-                GestureDetector(
-                  onTap: () {
-                   setState(() {
-                      changePage(true);
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: isServices ? Colors.blue : Colors.transparent,
-                          width: 5.0,  
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      'Services',
-                      style: TextStyle(
-                        color: isServices? Colors.blue : Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                
-                GestureDetector(
-                  onTap: () {
-                    
-                      changePage(false);
-                   
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: !isServices ? Colors.blue : Colors.transparent,
-                          width: 5.0,  
-                        ),
-                      ),
-                    ),
-                    child: Text(
-                      'Products',
-                      style: TextStyle(
-                        color: !isServices ? Colors.blue : Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            const SizedBox(
+              width: 20,
             ),
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 1.0),
+              child: Row(
+                children: [
+                  // Tab 1
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        changePage(true);
+                      });
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color:
+                                isServices ? Colors.blue : Colors.transparent,
+                            width: 5.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'Services',
+                        style: TextStyle(
+                          color: isServices ? Colors.blue : Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      changePage(false);
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color:
+                                !isServices ? Colors.blue : Colors.transparent,
+                            width: 5.0,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'Products',
+                        style: TextStyle(
+                          color: !isServices ? Colors.blue : Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
         SizedBox(
           height: 10,
         ),
-         if (serviceProvider.availableServices.isEmpty) ...[
-            Container(
+        if (serviceProvider.availableServices.isEmpty &&  isServices) ...[
+          Container(
               height: 200,
-              child: Align(child: Text('You don\'t have an available service', style: 
-              TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.bold),))
-            ),
-          ] else ...[
-            Visibility(
-              visible: isServices,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: serviceProvider.availableServices.length,
-                  itemBuilder: ((context, index) {
-                    return _newRequestWidget(context, serviceProvider.availableServices[index], userModel);
-                  })),
-            ),
-          ],
-            if (serviceProvider.order.isEmpty) ...[
-            Container(
+              child: Align(
+                  child: Text(
+                'You don\'t have an available service',
+                style: TextStyle(
+                    color: AppColors.lightSecondary,
+                    fontWeight: FontWeight.bold),
+              ))),
+        ] else ...[
+          Visibility(
+            visible: isServices,
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: serviceProvider.availableServices.length,
+                itemBuilder: ((context, index) {
+                  return _newRequestWidget(context,
+                      serviceProvider.availableServices[index], userModel);
+                })),
+          ),
+        ],
+        if (serviceProvider.order.isEmpty && !isServices) ...[
+          Container(
               height: 200,
-              child: Align(child: Text('You don\'t have an available order', style: 
-              TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.bold),))
-            ),
-          ] else ...[
-            Visibility(
-              visible: !isServices,
-
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: serviceProvider.order.length,
-                  itemBuilder: ((context, index) {
-                    return _shoppingOrder(context, serviceProvider.order[index]);
-                  })),
-            ),
-             if (serviceProvider.pageIndex > 1)
-                    Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.only(top: 18),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                            padding: const EdgeInsets.only(bottom: 18.0),
-                            child:  NumberPaginator(
-                              numberPages: serviceProvider.pageIndex,
-                               
-                              onPageChange: (int index) {
-                                
-                                serviceProvider.setOrderPageIndex(index + 1);
-                                widget.serviceProviderCubit.getAllAgentOrder(
-                                    agentId: widget.agentId,
-                                    pageIndex:
-                                        serviceProvider.currentPage.toString());
-                               
-                               
-                              },
-                              config: NumberPaginatorUIConfig(
-                                buttonSelectedForegroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                buttonUnselectedForegroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                buttonUnselectedBackgroundColor:
-                                      
-                                    AppColors.lightPrimary,
-                                buttonSelectedBackgroundColor:
-                                    AppColors.lightPrimary,
-                              ),
-                            )),
+              child: Align(
+                  child: Text(
+                'You don\'t have an available order',
+                style: TextStyle(
+                    color: AppColors.lightSecondary,
+                    fontWeight: FontWeight.bold),
+              ))),
+        ] else ...[
+          Visibility(
+            visible: !isServices,
+            child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: serviceProvider.order.length,
+                itemBuilder: ((context, index) {
+                  return _shoppingOrder(context, serviceProvider.order[index]);
+                })),
+          ),
+          if (serviceProvider.pageIndex > 1)
+            Container(
+              color: Colors.transparent,
+              padding: const EdgeInsets.only(top: 18),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                    padding: const EdgeInsets.only(bottom: 18.0),
+                    child: NumberPaginator(
+                      numberPages: serviceProvider.pageIndex,
+                      onPageChange: (int index) {
+                        serviceProvider.setOrderPageIndex(index + 1);
+                        widget.serviceProviderCubit.getAllAgentOrder(
+                            agentId: widget.agentId,
+                            pageIndex: serviceProvider.currentPage.toString());
+                      },
+                      config: NumberPaginatorUIConfig(
+                        buttonSelectedForegroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        buttonUnselectedForegroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        buttonUnselectedBackgroundColor: AppColors.lightPrimary,
+                        buttonSelectedBackgroundColor: AppColors.lightPrimary,
                       ),
-                    )
-          ],
-       
+                    )),
+              ),
+            )
+        ],
       ],
     );
   }
 
-  Widget _newRequestWidget(BuildContext context, AgentServicesListOrders order, userModel) {
+  Widget _newRequestWidget(
+      BuildContext context, AgentServicesListOrders order, userModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -271,7 +274,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: ImageView.network(order.package?.service?.serviceType?.image, fit: BoxFit.cover,)),
+              child: ImageView.network(
+                order.package?.service?.serviceType?.image,
+                fit: BoxFit.cover,
+              )),
         ),
         title: CustomText(
           text: '${order.package?.service?.serviceType?.name}',
@@ -280,30 +286,43 @@ class _ServiceProviderPetDeliveryHomeBodyState
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-                const SizedBox(width: 6,),
-
+            const SizedBox(
+              width: 6,
+            ),
             CustomText(
               text: 'Pick up time',
               size: 12,
             ),
-                const SizedBox(height: 6,),
-
+            const SizedBox(
+              height: 6,
+            ),
             Row(
               children: [
-                ImageView.svg(AppImages.time, height: 16,),
-                const SizedBox(width: 6,),
-
+                ImageView.svg(
+                  AppImages.time,
+                  height: 16,
+                ),
+                const SizedBox(
+                  width: 6,
+                ),
                 CustomText(
                   text: userModel.formatDateTimeToAMPM(order.pickupTime),
                   size: 10,
                 ),
-                const SizedBox(width: 12,),
-                 ImageView.svg(AppImages.calender, height: 16,),
-                const SizedBox(width: 6,),
-
+                const SizedBox(
+                  width: 12,
+                ),
+                ImageView.svg(
+                  AppImages.calender,
+                  height: 16,
+                ),
+                const SizedBox(
+                  width: 6,
+                ),
                 Expanded(
                   child: CustomText(
-                    text: AppUtils.formatComplexDateOnly(dateTime: order.pickupTime ?? ''),
+                    text: AppUtils.formatComplexDateOnly(
+                        dateTime: order.pickupTime ?? ''),
                     size: 10,
                     maxLines: 2,
                   ),
@@ -360,21 +379,25 @@ class _ServiceProviderPetDeliveryHomeBodyState
               size: 14,
               weight: FontWeight.bold,
             ),
-            SizedBox(width: 10,),
-             Container(
+            SizedBox(
+              width: 10,
+            ),
+            Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-              decoration: BoxDecoration(color: order.isPaid! ? Colors.green.shade100 : Colors.red.shade100, 
-                borderRadius: BorderRadius.circular(30)
-              ),
-               child: Container(
-                 child: CustomText(
+              decoration: BoxDecoration(
+                  color: order.isPaid!
+                      ? Colors.green.shade100
+                      : Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(30)),
+              child: Container(
+                child: CustomText(
                   text: 'Paid',
                   size: 12,
-                  color:   order.isPaid! ? Colors.green : Colors.red,
+                  color: order.isPaid! ? Colors.green : Colors.red,
                   weight: FontWeight.bold,
-                           ),
-               ),
-             ),
+                ),
+              ),
+            ),
           ],
         ),
         subtitle: Column(
@@ -389,10 +412,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
               ),
             ),
             CustomText(
-          text: '${order.product?.name}',
-          size: 12,
-          weight: FontWeight.w400,
-        ),
+              text: '${order.product?.name}',
+              size: 12,
+              weight: FontWeight.w400,
+            ),
           ],
         ),
         trailing: Container(
@@ -400,8 +423,17 @@ class _ServiceProviderPetDeliveryHomeBodyState
           child: ButtonView(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return PurchaseRequest(ownerName: 'Sandra Lee', phoneNumber: '0908765432', productName: '${order.product?.name}',
-                 productImage: '${order.product?.image}', quantity: '${order.quantity}', price: '${order.product?.price}', purchaseId: '${order.paymentId}', deliveryDate: today, deliveryLocation: 'ontisha anambra state',);
+                return PurchaseRequest(
+                  ownerName: 'Sandra Lee',
+                  phoneNumber: '0908765432',
+                  productName: '${order.product?.name}',
+                  productImage: '${order.product?.image}',
+                  quantity: '${order.quantity}',
+                  price: '${order.product?.price}',
+                  purchaseId: '${order.paymentId}',
+                  deliveryDate: today,
+                  deliveryLocation: 'ontisha anambra state',
+                );
               }));
             },
             child: Text(
@@ -409,8 +441,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               style: TextStyle(color: Colors.blue),
             ),
             borderRadius: 100,
-                        color: Colors.blue.shade100,
-
+            color: Colors.blue.shade100,
             expanded: false,
             borderColor: Colors.transparent,
           ),

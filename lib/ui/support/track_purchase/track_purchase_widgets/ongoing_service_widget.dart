@@ -140,95 +140,85 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               height: 15,
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: screenSize(context).width * .13,
-                  child: ButtonView(
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    borderColor: Colors.red,
-                    borderWidth: 2,
-                    color: Colors.white,
-                    onPressed: () {
-                       _callNumber(allOrders.agent?.profile?.phoneNumber ?? '');
-                    },
-                    child: Icon(
-                      Icons.call_outlined,
-                      color: Colors.red,
-                      size: 20,
-                    ),
-                    borderRadius: 100,
-                  ),
-                ),
-                Container(
-                  width: screenSize(context).width * .13,
-                  child: ButtonView(
-                    borderColor: Colors.green,
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    borderWidth: 2,
-                    color: Colors.white,
-                    onPressed: () {
-                      if (allOrders.agent?.profile?.firebaseId == '' || allOrders.agent?.profile?.firebaseId == null) {
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            _callNumber(
+                                allOrders.agent?.profile?.phoneNumber ??
+                                    '');
+                          },
+                          child: ImageView.svg(AppImages.callBorder)),
+                          const SizedBox(width: 20,),
+                      GestureDetector(
+                          onTap: () {
+                            if (allOrders.agent?.profile?.firebaseId ==
+                                    '' ||
+                               allOrders.agent?.profile?.firebaseId ==
+                                    null) {
                               Modals.showToast(
                                   'Can\'t communicate with this agent at the moment. Please');
                             } else {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                      username: allOrders.agent?.name?? '',
-                                      userImage: allOrders.agent?.picture ?? '',
-                                      uid: allOrders.agent?.profile?.firebaseId ?? ''));
+                                      username:
+                                          allOrders.agent?.name ?? '',
+                                      userImage:
+                                          allOrders.agent?.picture ?? '',
+                                      uid: allOrders.agent?.profile
+                                              ?.firebaseId ??
+                                          ''));
                             }
-                    },
-                    child: Icon(
-                      Icons.chat,
-                      color: Colors.green,
-                      size: 20,
-                    ),
-                    borderRadius: 100,
-                  ),
-                ),
-                Container(
-                  width: screenSize(context).width * .13,
-                  child: ButtonView(
-                    borderColor: Colors.purple,
-                    borderWidth: 2,
-                    padding: EdgeInsets.symmetric(vertical: 15),
-                    color: Colors.white,
-                    onPressed: () {
-                      AppNavigator.pushAndStackPage(context,
+                          },
+                          child: ImageView.svg(AppImages.messageBorder)),
+                          const SizedBox(width: 20,),
+
+                      GestureDetector(
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
-                                  user1: allOrders.agent?.name?? '',
+                                  user1: allOrders.agent?.name ?? '',
                                   user2: username,
                                 ));
-                    },
-                    child: Icon(
-                      Icons.video_call,
-                      color: Colors.purple,
-                      size: 20,
+                          },
+                          child: ImageView.svg(AppImages.videoBorder)),
+                    ],
+                  ),
+                  Container(
+                    width: screenSize(context).width * .23,
+                    child: ButtonView(
+                      color: Colors.blue,
+                      onPressed: () {
+                        AppNavigator.pushAndStackPage(context,
+                            page: TrackServicesScreen(
+                              sellerName: allOrders.agent?.name ?? '',
+                              phone:
+                                  allOrders.agent?.profile?.phoneNumber ??
+                                      '',
+                              serviceOffered: allOrders.package?.service
+                                      ?.serviceType?.name ??
+                                  '',
+                              agentId:
+                                  allOrders.agent?.profile?.firebaseId ??
+                                      '',
+                              sellerId:
+                                  allOrders.agent?.id.toString() ?? '',
+                              startDate1: allOrders.pickupTime ?? '0',
+                              startDate2: allOrders.dropoffTime ?? '0',
+                              amount: allOrders.fee ?? '',
+                              paymentId:allOrders.purchaseId ?? '',
+                              sellerImage: allOrders.agent?.picture ?? '',
+                            ));
+                      },
+                      child: Text(widget.label),
+                      borderRadius: 30,
                     ),
-                    borderRadius: 100,
                   ),
-                ),
-                Container(
-                  width: screenSize(context).width * .23,
-                  child: ButtonView(
-                    color: Colors.blue,
-                    onPressed: () {
-                      AppNavigator.pushAndStackPage(context,
-                          page: TrackServicesScreen(sellerName: allOrders.agent?.name?? '',
-                           phone: allOrders.agent?.profile?.phoneNumber ?? '',
-                            serviceOffered: allOrders.package?.service?.serviceType?.name ?? '',
-                             agentId: allOrders.agent?.profile?.firebaseId ?? '', 
-                             sellerId: allOrders.agent?.id.toString() ?? '', 
-                             startDate1: allOrders.pickupTime ?? '0', startDate2: allOrders.dropoffTime ?? '0', amount: allOrders.fee ?? '', 
-                             paymentId: allOrders.purchaseId ?? '', sellerImage: allOrders.agent?.picture ?? '',));
-                    },
-                    child: Text(widget.label),
-                    borderRadius: 30,
-                  ),
-                ),
-              ],
-            )
+                ],
+              )
           ],
         ),
       ),
