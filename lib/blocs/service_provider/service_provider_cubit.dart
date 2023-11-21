@@ -211,4 +211,31 @@ Future<void> publishServicePackage({
       }
     }
   }
+
+  Future<void> getAgentsAvailableServices({
+    required String agentId, 
+     
+  }) async {
+    try {
+      emit(AgentServicesListLoading());
+
+      final account = await serviceProviderRepository.getAgentServicesList(
+          agentId:agentId,  );  
+      
+ 
+      emit(AgentServicesListLoaded(account));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

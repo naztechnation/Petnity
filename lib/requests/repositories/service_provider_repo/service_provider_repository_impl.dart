@@ -6,6 +6,7 @@ import 'package:petnity/model/service_provider_models/create_services_amount.dar
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/user_models/create_order.dart';
 
+import '../../../model/user_models/agent_services_lists.dart';
 import '../../../res/app_strings.dart';
 import '../../../ui/widgets/modals.dart';
 import '../../setup/requests.dart';
@@ -127,5 +128,13 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
  
-
+  @override
+  Future<AgentServicesList> getAgentServicesList({required String agentId}) async {
+    final map = await Requests()
+        .get(AppStrings.getAgentServicesLists(agentId: agentId), headers: {
+      'Authorization': AppStrings.token,
+    });
+    
+    return AgentServicesList.fromJson(map);
+  }
 }

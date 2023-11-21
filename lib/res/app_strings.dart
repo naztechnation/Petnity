@@ -120,4 +120,8 @@ class AppStrings {
   static String confirmShoppingPaymentUrl(
           {required String username, required String shopOrderId}) =>
       '${_baseUrl}shop/shop-order-payment/$username/$shopOrderId';
+
+      static String getAgentServicesLists(
+          {required String agentId,}) =>
+      '${_baseUrl}order/get-agent-orders/$agentId';
 }

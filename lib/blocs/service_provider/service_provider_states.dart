@@ -5,6 +5,7 @@ import '../../model/service_provider_models/account_details.dart';
 import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/service_provider_models/create_shop_products_model.dart';
+import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
 
 abstract class ServiceProviderState extends Equatable {
@@ -111,6 +112,18 @@ class  AccountDetailsLoaded extends ServiceProviderState {
   const  AccountDetailsLoaded(this.account);
   @override
   List<Object> get props => [account];
+}
+
+class   AgentServicesListLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  AgentServicesListLoaded extends ServiceProviderState {
+  final AgentServicesList services;
+  const  AgentServicesListLoaded(this.services);
+  @override
+  List<Object> get props => [services];
 }
 
 class CreateServiceNetworkErr extends ServiceProviderState {

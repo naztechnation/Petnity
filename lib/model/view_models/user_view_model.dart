@@ -243,7 +243,7 @@ class UserViewModel extends BaseViewModel {
 
 
     for (var order in _ordersList) {
-      if (order.isOngoing == true) {
+      if (order.isOngoing == true && order.isCompleted != true) {
         list.add(order);
       }
     }

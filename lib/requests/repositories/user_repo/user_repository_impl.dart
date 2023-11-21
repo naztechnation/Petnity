@@ -6,6 +6,7 @@ import 'package:petnity/model/user_models/get_product_reviews.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 
 import '../../../model/account_models/auth_data.dart';
+import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/order_list.dart';
@@ -221,6 +222,7 @@ class UserRepositoryImpl implements UserRepository {
         });
     return AuthData.fromJson(map);
   }
+  
 
  
 
