@@ -16,6 +16,7 @@ import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../video.dart';
 import '../../../widgets/image_view.dart';
 import '../../../widgets/modals.dart';
+import '../widget/progressbar.dart';
 
 class OngoingDeliveryWidget extends StatefulWidget {
   final String label;
@@ -115,6 +116,20 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                 ],
               ),
               SizedBox(
+                height: 15,
+              ),
+               ProgressBar(
+              remainingTime: double.parse(
+                  (userModel.calculateRemainingTimeInHours(
+                              widget.services.dropoffTime ?? '') ==
+                          'Elapsed'
+                      ? '0.0'
+                      : userModel.calculateRemainingTimeInHours(
+                          widget.services.dropoffTime ?? ''))),
+              totalTime: double.parse(userModel.calculateTimeDifferenceInHours(
+                  widget.services.pickupTime ?? '0', widget.services.dropoffTime ?? '0')),
+            ),
+             SizedBox(
                 height: 15,
               ),
               Text(

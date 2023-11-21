@@ -361,23 +361,25 @@ class _ServiceProviderPetDeliveryHomeBodyState
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: ListTile(
         leading: Container(
-          width: 80,
-          height: 150,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+          width: 55,
+          height: 80,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
           child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(60),
               child: ImageView.network(
                 order.product!.image,
                 fit: BoxFit.cover,
-                height: 150,
+                height: 80,
               )),
         ),
         title: Row(
           children: [
-            CustomText(
-              text: 'Sandra Lee',
-              size: 14,
-              weight: FontWeight.bold,
+            Expanded(
+              child: CustomText(
+                text: 'Sandra Lee',
+                size: 14,
+                weight: FontWeight.bold,
+              ),
             ),
             SizedBox(
               width: 10,
@@ -391,7 +393,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   borderRadius: BorderRadius.circular(30)),
               child: Container(
                 child: CustomText(
-                  text: 'Paid',
+                  text: order.isPaid! ? 'Paid' : 'Not Paid',
                   size: 12,
                   color: order.isPaid! ? Colors.green : Colors.red,
                   weight: FontWeight.bold,

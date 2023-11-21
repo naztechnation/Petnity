@@ -9,6 +9,7 @@ import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/location/location_cubit.dart';
@@ -99,57 +100,24 @@ class ServiceRequest extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            width: screenSize(context).width * .12,
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            child: ButtonView(
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              borderColor: Colors.red,
-                              borderWidth: 2,
-                              color: Colors.white,
-                              onPressed: () {},
-                              child: Icon(
-                                Icons.call_outlined,
-                                color: Colors.red,
-                                size: 20,
-                              ),
-                              borderRadius: 100,
-                            ),
-                          ),
-                          Container(
-                            width: screenSize(context).width * .12,
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            child: ButtonView(
-                              borderColor: Colors.green,
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              borderWidth: 2,
-                              color: Colors.white,
-                              onPressed: () {},
-                              child: Icon(
-                                Icons.chat,
-                                color: Colors.green,
-                                size: 20,
-                              ),
-                              borderRadius: 100,
-                            ),
-                          ),
-                          Container(
-                            width: screenSize(context).width * .12,
-                            margin: EdgeInsets.symmetric(horizontal: 3),
-                            child: ButtonView(
-                              borderColor: Colors.purple,
-                              borderWidth: 2,
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              color: Colors.white,
-                              onPressed: () {},
-                              child: Icon(
-                                Icons.video_call,
-                                color: Colors.purple,
-                                size: 20,
-                              ),
-                              borderRadius: 100,
-                            ),
-                          ),
+                          GestureDetector(
+                            onTap: (){
+                              
+                            },
+                            child: ImageView.svg(AppImages.callBorder)),
+                            const SizedBox(width: 10,),
+                         GestureDetector(
+                            onTap: (){
+                              
+                            },
+                            child: ImageView.svg(AppImages.messageBorder)),
+                            const SizedBox(width: 10,),
+
+                          GestureDetector(
+                            onTap: (){
+                              
+                            },
+                            child: ImageView.svg(AppImages.videoBorder)),
                         ],
                       )
                     ],

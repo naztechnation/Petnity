@@ -107,7 +107,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
             availableServices = state.services.orders ?? [];
 
              return Container(
-             height: MediaQuery.of(context).size.height - kToolbarHeight,
+            // height: MediaQuery.of(context).size.height - kToolbarHeight,
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
               child: Column(
