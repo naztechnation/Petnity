@@ -100,7 +100,7 @@ class _ReviewState extends State<Review> {
   }
 
   _handlePaymentInitialization(String orderId) async {
-    final Customer customer = Customer(email: email);
+    final Customer customer = Customer(email: 'agbo.raph123@gmail.com');
 
     final Flutterwave flutterwave = Flutterwave(
         context: context,
@@ -120,6 +120,7 @@ class _ReviewState extends State<Review> {
 
     if (response != null) {
       txId = response.transactionId ?? '';
+      print(txId);
       if (txId != '') {
         String message = 'Payment Ref: ${response.txRef}';
 

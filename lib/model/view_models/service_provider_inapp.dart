@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../../res/enum.dart';
 import '../service_provider_models/all_agent_orders.dart';
+import '../user_models/agent_services_lists.dart';
 import 'base_viewmodel.dart';
 
 class ServiceProviderInAppViewModel extends BaseViewModel {
@@ -19,6 +20,9 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   File? _imageURl;
   File? _imageURl1;
   List<ShopOrders> _orders = [];
+
+  List<AgentServicesListOrders> _availableServices = [];
+
 
   List<String> filterBankList = [];
 
@@ -55,6 +59,13 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   setAgentOrdersList(AgentsOrderRequests orders) {
     _orders = orders.shopOrders ?? [];
     _orderPageNumber = orders.numPages ?? 1;
+
+    setViewState(ViewState.success);
+  }
+
+  setAgentServicesList(AgentServicesList orders) {
+    _availableServices = orders.orders ?? [];
+    // _orderPageNumber = orders.numPages ?? 1;
 
     setViewState(ViewState.success);
   }
@@ -162,6 +173,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   File? get imageURl1 => _imageURl1;
 
   List<ShopOrders> get order => _orders;
+  List<AgentServicesListOrders> get availableServices => _availableServices;
 
   List<String> _banksAndInstitutions = [
     "Access Bank",

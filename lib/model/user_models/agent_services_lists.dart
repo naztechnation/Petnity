@@ -1,16 +1,16 @@
 
 class AgentServicesList {
   bool? status;
-  List<Orders>? orders;
+  List<AgentServicesListOrders>? orders;
 
   AgentServicesList({this.status, this.orders});
 
   AgentServicesList.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['orders'] != null) {
-      orders = <Orders>[];
+      orders = <AgentServicesListOrders>[];
       json['orders'].forEach((v) {
-        orders!.add(new Orders.fromJson(v));
+        orders!.add(new AgentServicesListOrders.fromJson(v));
       });
     }
   }
@@ -25,7 +25,7 @@ class AgentServicesList {
   }
 }
 
-class Orders {
+class AgentServicesListOrders {
   int? id;
   String? pickupLocation;
   String? pickupTime;
@@ -44,7 +44,7 @@ class Orders {
   Agent? agent;
   Package? package;
 
-  Orders(
+  AgentServicesListOrders(
       {this.id,
       this.pickupLocation,
       this.pickupTime,
@@ -63,7 +63,7 @@ class Orders {
       this.agent,
       this.package});
 
-  Orders.fromJson(Map<String, dynamic> json) {
+  AgentServicesListOrders.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     pickupLocation = json['pickup_location'];
     pickupTime = json['pickup_time'];

@@ -50,13 +50,13 @@ class ServiceProviderViewModel extends BaseViewModel {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColors.lightSecondary, // header background color
-              onPrimary: AppColors.lightPrimary, // header text color
-              onSurface: AppColors.lightSecondary, // body text color
+              primary: AppColors.lightSecondary,  
+              onPrimary: AppColors.lightPrimary,  
+              onSurface: AppColors.lightSecondary, 
             ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                foregroundColor: AppColors.lightSecondary, // button text color
+                foregroundColor: AppColors.lightSecondary,  
               ),
             ),
           ),

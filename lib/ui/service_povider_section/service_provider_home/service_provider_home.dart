@@ -7,7 +7,7 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/pet_selling_section/new_requests_delivery.dart';
+import 'package:petnity/ui/service_povider_section/service_provider_home/all_requests_section/new_requests_delivery.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import '../../../blocs/service_provider/service_provider.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/service_provider_models/all_agent_orders.dart';
-import '../../../model/view_models/account_view_model.dart';
+import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../widgets/modals.dart';
 
@@ -54,6 +54,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   final TextEditingController searchField = TextEditingController();
 
   List<ShopOrders> orders = [];
+  List<AgentServicesListOrders> availableServices = [];
 
   late ServiceProviderCubit _serviceProviderCubit;
 
@@ -64,6 +65,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
     agentId = await StorageHandler.getAgentId();
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
     _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: '1');
+    _serviceProviderCubit.getAgentsAvailableServices(agentId: agentId,);
   }
 
   final NumberPaginatorController _controller = NumberPaginatorController();
@@ -93,9 +95,11 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
             Modals.showToast(state.message ?? '');
           } else if (state is AgentOrdersLoaded) {
             orders = state.agentsOrderRequests.shopOrders ?? [];
+          } else if (state is AgentServicesListLoaded) {
+            availableServices = state.services.orders ?? [];
           }
         }, builder: (context, state) {
-          if (state is AgentOrdersLoading) {
+          if (state is AgentOrdersLoading || state is AgentServicesListLoading) {
             return Align(
                 child: ImageView.asset(
               AppImages.loading,
@@ -104,7 +108,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
           }
 
           return Container(
-            height: screenSize(context).height * .9,
+             height: MediaQuery.of(context).size.height - kToolbarHeight,
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: SingleChildScrollView(
               child: Column(
@@ -147,44 +151,10 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  ServiceProviderPetDeliveryHomeBody(
-                    onTap: () {},
+                  ServiceProviderPetDeliveryHomeBody(serviceProviderCubit: _serviceProviderCubit,agentId: agentId,
+                   
                   ),
-                  if (serviceProvider.pageIndex > 1)
-                    Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.only(top: 18),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Padding(
-                            padding: const EdgeInsets.only(bottom: 18.0),
-                            child:  NumberPaginator(
-                              numberPages: serviceProvider.pageIndex,
-                               
-                              onPageChange: (int index) {
-                                
-                                serviceProvider.setOrderPageIndex(index + 1);
-                                _serviceProviderCubit.getAllAgentOrder(
-                                    agentId: agentId,
-                                    pageIndex:
-                                        serviceProvider.currentPage.toString());
-                               
-                               
-                              },
-                              config: NumberPaginatorUIConfig(
-                                buttonSelectedForegroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                buttonUnselectedForegroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                buttonUnselectedBackgroundColor:
-                                      
-                                    AppColors.lightPrimary,
-                                buttonSelectedBackgroundColor:
-                                    AppColors.lightPrimary,
-                              ),
-                            )),
-                      ),
-                    )
+                 
                 ],
               ),
             ),

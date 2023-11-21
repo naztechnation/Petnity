@@ -219,11 +219,13 @@ Future<void> publishServicePackage({
     try {
       emit(AgentServicesListLoading());
 
-      final account = await serviceProviderRepository.getAgentServicesList(
+      final services = await serviceProviderRepository.getAgentServicesList(
           agentId:agentId,  );  
       
- 
-      emit(AgentServicesListLoaded(account));
+      viewModel.setAgentServicesList(services);
+
+
+      emit(AgentServicesListLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
     } catch (e) {
