@@ -227,7 +227,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   return _shoppingOrder(context, serviceProvider.order[index]);
                 })),
           ),
-          if (serviceProvider.pageIndex > 1)
+          if (serviceProvider.pageIndex > 1 && !isServices)
             Container(
               color: Colors.transparent,
               padding: const EdgeInsets.only(top: 18),
