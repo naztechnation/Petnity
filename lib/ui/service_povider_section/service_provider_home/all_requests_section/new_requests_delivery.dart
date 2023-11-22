@@ -367,7 +367,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               //   return ServiceRequest();
               // }));
 
-              if (order.isPaid ?? false) {
+             // if (order.isPaid ?? false) {
                 AppNavigator.pushAndStackPage(context,
                     page: TrackServicesScreen(
                       sellerName: order.agent?.name ?? '',
@@ -383,11 +383,11 @@ class _ServiceProviderPetDeliveryHomeBodyState
                       sellerImage: order.agent?.picture ?? '',
                       isAcceptedService: order.isAccepted ?? false,
                       isOngoingService: order.isOngoing ?? false,
-                      isCompletedService: order.isCompleted ?? false,
+                      isCompletedService: order.isCompleted ?? false, orderId: order.id.toString(),
                     ));
-              } else {
+             // } else {
                 Modals.showToast('This Service has not been paid for.');
-              }
+             // }
             },
             child: Text(
               'view',

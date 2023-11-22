@@ -45,7 +45,8 @@ class TrackServicesBody extends StatefulWidget {
       required this.startDate2,
       required this.paymentId,
       required this.amount,
-      required this.sellerPhoto, required this.sessionStatus});
+      required this.sellerPhoto,
+      required this.sessionStatus});
 
   @override
   State<TrackServicesBody> createState() => _TrackServicesBodyState();
@@ -87,7 +88,9 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                   sellerImage: widget.sellerPhoto,
                   sellerId: widget.agentId,
                   userName: user.username,
-                  phone: widget.phone),
+                  phone: widget.phone,
+                  userType: userType
+                  ),
               if (userType == 'user') ...[
                 GestureDetector(
                   onTap: () {
@@ -121,7 +124,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
               ] else ...[
                 Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: screenSize(context).width * .05,
+                      // horizontal: screenSize(context).width * .05,
                       vertical: 10),
                   width: screenSize(context).width,
                   height: screenSize(context).height * .08,
@@ -132,18 +135,19 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                             return PetProfile();
                           })),
                       color: Colors.white,
+                      borderRadius: 30,
                       borderColor: Colors.white,
                       child: CustomText(
                         color: Colors.blue,
                         weight: FontWeight.bold,
-                        text: 'View pet Profile',
+                        text: 'View Pet Profile',
                       )),
                 ),
               ],
-               const SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-                       DurationTracker(context, services),
+              DurationTracker(context, services),
               const SizedBox(
                 height: 20,
               ),
@@ -207,8 +211,6 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                   ],
                 ),
               ),
-             
-
               const SizedBox(
                 height: 20,
               ),
@@ -352,7 +354,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                     ]),
               ),
               const SizedBox(
-                height: 180,
+                height: 380,
               ),
             ],
           ),
@@ -362,13 +364,11 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
   Widget DurationTracker(BuildContext context, services) {
     return Container(
       width: screenSize(context).width * .9,
-       
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -379,17 +379,22 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                     children: [
                       CustomText(
                         text: 'Estimated time for Session - ',
-                        size: 10,
+                        size: 13,
                       ),
-          const SizedBox(height: 10,),
-
+                      const SizedBox(
+                        height: 10,
+                      ),
                       CustomText(
-                        text: '${services.calculateTimeDifferenceInHours(widget.startDate1 ?? '0', widget.startDate2 ?? '0')} Hrs',
-                        size: 10,
+                        text:
+                            '${services.calculateTimeDifferenceInHours(widget.startDate1 ?? '0', widget.startDate2 ?? '0')} Hrs',
+                        size: 13,
                       ),
                     ],
                   ),
                 ),
+              ),
+              const SizedBox(
+                width: 10,
               ),
               Expanded(
                 child: Container(
@@ -398,13 +403,15 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                     children: [
                       CustomText(
                         text: 'Remaining time for Session - ',
-                        size: 10,
+                        size: 13,
                       ),
-          const SizedBox(height: 10,),
-
+                      const SizedBox(
+                        height: 10,
+                      ),
                       CustomText(
-                        text: '${services.calculateRemainingTimeInHours(widget.startDate2 ?? '0')} Hrs',
-                        size: 10,
+                        text:
+                            '${services.calculateRemainingTimeInHours(widget.startDate2 ?? '0')} Hrs',
+                        size: 13,
                       ),
                     ],
                   ),
@@ -412,18 +419,19 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
               )
             ],
           ),
-          const SizedBox(height: 20,),
-           ProgressBar(
-              remainingTime: double.parse(
-                  (services.calculateRemainingTimeInHours(
-                              widget.startDate2 ?? '') ==
-                          'Elapsed'
-                      ? '0.0'
-                      : services.calculateRemainingTimeInHours(
-                          widget.startDate2 ?? ''))),
-              totalTime: double.parse(services.calculateTimeDifferenceInHours(
-                  widget.startDate1 ?? '0', widget.startDate2 ?? '0')),
-            ),
+          const SizedBox(
+            height: 20,
+          ),
+          ProgressBar(
+            remainingTime: double.parse((services.calculateRemainingTimeInHours(
+                        widget.startDate2 ?? '') ==
+                    'Elapsed'
+                ? '0.0'
+                : services
+                    .calculateRemainingTimeInHours(widget.startDate2 ?? ''))),
+            totalTime: double.parse(services.calculateTimeDifferenceInHours(
+                widget.startDate1 ?? '0', widget.startDate2 ?? '0')),
+          ),
         ],
       ),
     );

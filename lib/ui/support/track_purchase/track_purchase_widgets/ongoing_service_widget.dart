@@ -140,92 +140,88 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
               height: 15,
             ),
             Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                          onTap: () {
-                            _callNumber(
-                                allOrders.agent?.profile?.phoneNumber ??
-                                    '');
-                          },
-                          child: ImageView.svg(AppImages.callBorder)),
-                          const SizedBox(width: 20,),
-                      GestureDetector(
-                          onTap: () {
-                            if (allOrders.agent?.profile?.firebaseId ==
-                                    '' ||
-                               allOrders.agent?.profile?.firebaseId ==
-                                    null) {
-                              Modals.showToast(
-                                  'Can\'t communicate with this agent at the moment. Please');
-                            } else {
-                              AppNavigator.pushAndStackPage(context,
-                                  page: ChatPage(
-                                      username:
-                                          allOrders.agent?.name ?? '',
-                                      userImage:
-                                          allOrders.agent?.picture ?? '',
-                                      uid: allOrders.agent?.profile
-                                              ?.firebaseId ??
-                                          ''));
-                            }
-                          },
-                          child: ImageView.svg(AppImages.messageBorder)),
-                          const SizedBox(width: 20,),
-
-                      GestureDetector(
-                          onTap: () {
-                            AppNavigator.pushAndStackPage(context,
-                                page: VideoCall(
-                                  user1: allOrders.agent?.name ?? '',
-                                  user2: username,
-                                ));
-                          },
-                          child: ImageView.svg(AppImages.videoBorder)),
-                    ],
-                  ),
-                  Container(
-                    width: screenSize(context).width * .23,
-                    child: ButtonView(
-                      color: Colors.blue,
-                      onPressed: () {
-                        AppNavigator.pushAndStackPage(context,
-                            page: TrackServicesScreen(
-                              sellerName: allOrders.agent?.name ?? '',
-                              phone:
-                                  allOrders.agent?.profile?.phoneNumber ??
-                                      '',
-                              serviceOffered: allOrders.package?.service
-                                      ?.serviceType?.name ??
-                                  '',
-                              agentId:
-                                  allOrders.agent?.profile?.firebaseId ??
-                                      '',
-                              sellerId:
-                                  allOrders.agent?.id.toString() ?? '',
-                              startDate1: allOrders.pickupTime ?? '0',
-                              startDate2: allOrders.dropoffTime ?? '0',
-                              amount: allOrders.fee ?? '',
-                              paymentId:allOrders.purchaseId ?? '',
-                              sellerImage: allOrders.agent?.picture ?? '', isAcceptedService: allOrders.isAccepted?? false, isOngoingService: allOrders.isOngoing?? false, isCompletedService: allOrders.isCompleted?? false,
-                            ));
-                      },
-                      child: Text(widget.label),
-                      borderRadius: 30,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          _callNumber(
+                              allOrders.agent?.profile?.phoneNumber ?? '');
+                        },
+                        child: ImageView.svg(AppImages.callBorder)),
+                    const SizedBox(
+                      width: 20,
                     ),
+                    GestureDetector(
+                        onTap: () {
+                          if (allOrders.agent?.profile?.firebaseId == '' ||
+                              allOrders.agent?.profile?.firebaseId == null) {
+                            Modals.showToast(
+                                'Can\'t communicate with this agent at the moment. Please');
+                          } else {
+                            AppNavigator.pushAndStackPage(context,
+                                page: ChatPage(
+                                    username: allOrders.agent?.name ?? '',
+                                    userImage: allOrders.agent?.picture ?? '',
+                                    uid: allOrders.agent?.profile?.firebaseId ??
+                                        ''));
+                          }
+                        },
+                        child: ImageView.svg(AppImages.messageBorder)),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          AppNavigator.pushAndStackPage(context,
+                              page: VideoCall(
+                                user1: allOrders.agent?.name ?? '',
+                                user2: username,
+                              ));
+                        },
+                        child: ImageView.svg(AppImages.videoBorder)),
+                  ],
+                ),
+                Container(
+                  width: screenSize(context).width * .23,
+                  child: ButtonView(
+                    color: Colors.blue,
+                    onPressed: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: TrackServicesScreen(
+                            sellerName: allOrders.agent?.name ?? '',
+                            phone: allOrders.agent?.profile?.phoneNumber ?? '',
+                            serviceOffered:
+                                allOrders.package?.service?.serviceType?.name ??
+                                    '',
+                            agentId: allOrders.agent?.profile?.firebaseId ?? '',
+                            sellerId: allOrders.agent?.id.toString() ?? '',
+                            startDate1: allOrders.pickupTime ?? '0',
+                            startDate2: allOrders.dropoffTime ?? '0',
+                            amount: allOrders.fee ?? '',
+                            paymentId: allOrders.purchaseId ?? '',
+                            sellerImage: allOrders.agent?.picture ?? '',
+                            isAcceptedService: allOrders.isAccepted ?? false,
+                            isOngoingService: allOrders.isOngoing ?? false,
+                            isCompletedService: allOrders.isCompleted ?? false,
+                            orderId: allOrders.id.toString(),
+                          ));
+                    },
+                    child: Text(widget.label),
+                    borderRadius: 30,
                   ),
-                ],
-              )
+                ),
+              ],
+            )
           ],
         ),
       ),
     );
   }
 
-  _callNumber(String number) async{
-  bool res = await FlutterPhoneDirectCaller.callNumber(number) ?? false;
-}
+  _callNumber(String number) async {
+    bool res = await FlutterPhoneDirectCaller.callNumber(number) ?? false;
+  }
 }

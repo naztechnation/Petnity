@@ -50,7 +50,6 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          // height: screenSize(context).height * .3,
           width: screenSize(context).width * .9,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
@@ -118,18 +117,20 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
               SizedBox(
                 height: 15,
               ),
-               ProgressBar(
-              remainingTime: double.parse(
-                  (userModel.calculateRemainingTimeInHours(
-                              widget.services.dropoffTime ?? '') ==
-                          'Elapsed'
-                      ? '0.0'
-                      : userModel.calculateRemainingTimeInHours(
-                          widget.services.dropoffTime ?? ''))),
-              totalTime: double.parse(userModel.calculateTimeDifferenceInHours(
-                  widget.services.pickupTime ?? '0', widget.services.dropoffTime ?? '0')),
-            ),
-             SizedBox(
+              ProgressBar(
+                remainingTime: double.parse(
+                    (userModel.calculateRemainingTimeInHours(
+                                widget.services.dropoffTime ?? '') ==
+                            'Elapsed'
+                        ? '0.0'
+                        : userModel.calculateRemainingTimeInHours(
+                            widget.services.dropoffTime ?? ''))),
+                totalTime: double.parse(
+                    userModel.calculateTimeDifferenceInHours(
+                        widget.services.pickupTime ?? '0',
+                        widget.services.dropoffTime ?? '0')),
+              ),
+              SizedBox(
                 height: 15,
               ),
               Text(
@@ -152,7 +153,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                     '');
                           },
                           child: ImageView.svg(AppImages.callBorder)),
-                          const SizedBox(width: 20,),
+                      const SizedBox(
+                        width: 20,
+                      ),
                       GestureDetector(
                           onTap: () {
                             if (widget.services.agent?.profile?.firebaseId ==
@@ -174,8 +177,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
-                          const SizedBox(width: 20,),
-
+                      const SizedBox(
+                        width: 20,
+                      ),
                       GestureDetector(
                           onTap: () {
                             /// Todo get the user name and replace here
@@ -193,9 +197,8 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                     child: ButtonView(
                       color: Colors.blue,
                       onPressed: () {
-
-                        if(widget.services.isPaid ?? false) {
-                          AppNavigator.pushAndStackPage(context,
+                        //  if(widget.services.isPaid ?? false) {
+                        AppNavigator.pushAndStackPage(context,
                             page: TrackServicesScreen(
                               sellerName: widget.services.agent?.name ?? '',
                               phone:
@@ -214,14 +217,16 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               amount: widget.services.fee ?? '',
                               paymentId: widget.services.purchaseId ?? '',
                               sellerImage: widget.services.agent?.picture ?? '',
-                               isAcceptedService: widget.services.isAccepted ?? false,
-                                isOngoingService: widget.services.isOngoing ?? false,
-                                 isCompletedService: widget.services.isCompleted ?? false,
+                              isAcceptedService:
+                                  widget.services.isAccepted ?? false,
+                              isOngoingService:
+                                  widget.services.isOngoing ?? false,
+                              isCompletedService:
+                                  widget.services.isCompleted ?? false, orderId: widget.services.id.toString(),
                             ));
-                        }else{
-                          Modals.showToast('This Service has not been paid for.');
-                        }
-                        
+                        // }else{
+                        Modals.showToast('This Service has not been paid for.');
+                        //  }
                       },
                       child: Text(widget.label),
                       borderRadius: 30,

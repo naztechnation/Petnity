@@ -20,13 +20,14 @@ Widget serviceProfile(
   required String sellerId,
   required String userName,
   required String phone,
+  required String userType
 }) {
-  return Row(
+  return    (userType == 'user') ?Row(
     children: [
       Expanded(
         flex: 1,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(60),
           child: ImageView.network(
             sellerImage,
             height: 80,
@@ -41,6 +42,90 @@ Widget serviceProfile(
             textAlign: TextAlign.left,
             maxLines: 2,
             text: 'Seller',
+            weight: FontWeight.w700,
+            size: 12,
+            fontFamily: AppStrings.interSans,
+            color: Colors.black,
+          ),
+          subtitle: CustomText(
+            textAlign: TextAlign.left,
+            maxLines: 2,
+            text: sellerName,
+            weight: FontWeight.w700,
+            size: 12,
+            fontFamily: AppStrings.interSans,
+            color: Colors.black,
+          ),
+          trailing: (hideImage)
+              ? ImageView.svg(AppImages.messageBorder)
+              : SizedBox(
+                  width: screenSize(context).width * 0.45,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      GestureDetector(
+                        onTap: (){
+                          _callNumber(phone);
+                        },
+                        child: ImageView.svg(AppImages.callBorder)),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            if (sellerId == '') {
+                              Modals.showToast(
+                                  'Can\'t communicate with this agent at the moment. Please');
+                            } else {
+                              AppNavigator.pushAndStackPage(context,
+                                  page: ChatPage(
+                                      username: sellerName,
+                                      userImage: sellerImage,
+                                      uid: sellerId));
+                            }
+                          },
+                          child: ImageView.svg(AppImages.messageBorder)),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            AppNavigator.pushAndStackPage(context,
+                                page: VideoCall(
+                                  user1: sellerName,
+                                  user2: userName,
+                                ));
+                          },
+                          child: ImageView.svg(AppImages.videoBorder)),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                    ],
+                  ),
+                ),
+        ),
+      ),
+    ],
+  ) : Row(
+    children: [
+      Expanded(
+        flex: 1,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(60),
+          child: ImageView.network(
+            sellerImage,
+            height: 80,
+            placeholder: AppImages.person,
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 6,
+        child: ListTile(
+          title: CustomText(
+            textAlign: TextAlign.left,
+            maxLines: 2,
+            text: 'Customer name',
             weight: FontWeight.w700,
             size: 12,
             fontFamily: AppStrings.interSans,

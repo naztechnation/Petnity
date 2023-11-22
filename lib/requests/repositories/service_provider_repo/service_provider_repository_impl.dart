@@ -151,7 +151,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<AuthData> acceptAgentOrder(
       {required String agentId, required String orderId}) async {
-    final map = await Requests().get(
+    final map = await Requests().patch(
         AppStrings.agentAcceptOrder(agentId: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
@@ -163,7 +163,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<AuthData> acceptCompleteOrder(
       {required String agentId, required String orderId}) async {
-    final map = await Requests().get(
+    final map = await Requests().patch(
         AppStrings.agentMarkCompletedOrder(agentId: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
@@ -175,7 +175,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<AuthData> acceptOngoingOrder(
       {required String agentId, required String orderId}) async {
-    final map = await Requests().get(
+    final map = await Requests().patch(
         AppStrings.agentMarkOngoingOrder(agentId: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
