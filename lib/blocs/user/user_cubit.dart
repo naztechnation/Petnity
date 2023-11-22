@@ -65,7 +65,7 @@ Future<void> getAgentProfile() async {
     }
   }
 
-  Future<void> getServiceTypes() async {
+  Future<void> getServiceTypes([String? agentId]) async {
     try {
       emit(ServiceProviderListLoading());
 

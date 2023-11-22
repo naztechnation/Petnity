@@ -49,13 +49,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
   late UserCubit _userCubit;
 
   bool isLoading = false;
+  String agentId = "";
 
   getServicesTypes() async {
     _userCubit = context.read<UserCubit>();
 
      try {
      
-    await _userCubit.getServiceTypes();
+    agentId = await StorageHandler.getAgentId();
+    await _userCubit.getServiceTypes(agentId);
      
     } catch (e) {
       
@@ -66,7 +68,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
   String userType = '';
 
 
+
+  
     getUserType()async{
+
     userType = await StorageHandler.getUserType();
 
     }

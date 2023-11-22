@@ -46,11 +46,12 @@ class AppStrings {
   static const String logoutUrl = '${_baseUrl}auth/logout';
   static const String shoppingList = '${_baseUrl}shop/get-products/1';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
+  static   String getIndividualAgentService(String agentId) => '${_baseUrl}users/get-agent-services/$agentId';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
   static String agentProfile = '${_baseUrl}users/get-agents';
 
   static String userOrders(String username) =>
-      '${_baseUrl}order/get-user-orders/$username';
+      '${_baseUrl}order/get-user-orders/$username';  
   static String createOrderPayment(String username) =>
       '${_baseUrl}shop/create-shop-order/$username';
   static String uploadIdUrl(String agentId) =>

@@ -30,8 +30,8 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<GetServiceTypes> getServiceTypes() async {
-    final map = await Requests().get(AppStrings.getServiceTypes, headers: {
+  Future<GetServiceTypes> getServiceTypes([String? agentId]) async {
+    final map = await Requests().get((agentId == null)? AppStrings.getServiceTypes : AppStrings.getIndividualAgentService(agentId), headers: {
       'Authorization': AppStrings.token,
     });
     return GetServiceTypes.fromJson(map);

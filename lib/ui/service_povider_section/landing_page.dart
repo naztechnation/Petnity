@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../res/app_images.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../blocs/user/user.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -198,12 +199,15 @@ class _HomepageBarState extends State<HomepageBar> {
   late UserCubit _userCubit;
 
   bool isLoading = false;
+  String agentId = "";
 
   getServicesTypes() async {
+    agentId = await StorageHandler.getAgentId();
+
     _userCubit = context.read<UserCubit>();
 
     try {
-      await _userCubit.getServiceTypes();
+      await _userCubit.getServiceTypes(agentId);
     } catch (e) {}
   }
 
@@ -221,7 +225,8 @@ class _HomepageBarState extends State<HomepageBar> {
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       centerTitle: true,
-      title: Text('Lucacify',style: TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.bold, fontSize: 18),),
+      title: Text('Lucacify',style: TextStyle(color: AppColors.lightSecondary,
+       fontWeight: FontWeight.bold, fontSize: 18),),
       actions: [
         BlocConsumer<UserCubit, UserStates>(
           listener: (context, state) {
