@@ -210,7 +210,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                               startDate2: allOrders.dropoffTime ?? '0',
                               amount: allOrders.fee ?? '',
                               paymentId:allOrders.purchaseId ?? '',
-                              sellerImage: allOrders.agent?.picture ?? '',
+                              sellerImage: allOrders.agent?.picture ?? '', isAcceptedService: allOrders.isAccepted?? false, isOngoingService: allOrders.isOngoing?? false, isCompletedService: allOrders.isCompleted?? false,
                             ));
                       },
                       child: Text(widget.label),

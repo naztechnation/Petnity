@@ -212,6 +212,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               amount: widget.services.fee ?? '',
                               paymentId: widget.services.purchaseId ?? '',
                               sellerImage: widget.services.agent?.picture ?? '',
+                               isAcceptedService: widget.services.isAccepted ?? false,
+                                isOngoingService: widget.services.isOngoing ?? false,
+                                 isCompletedService: widget.services.isCompleted ?? false,
                             ));
                       },
                       child: Text(widget.label),

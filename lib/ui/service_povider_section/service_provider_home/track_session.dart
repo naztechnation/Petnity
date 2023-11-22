@@ -102,7 +102,7 @@ class _TrackServiceState extends State<TrackService> {
             child: AppBar(
               centerTitle: true,
               title: Text(
-                'Track Service',
+                'Track Services',
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
@@ -256,7 +256,7 @@ class _TrackServiceState extends State<TrackService> {
                       SizedBox(
                         height: 5,
                       ),
-                      begin ? durationtracker(context) : Container(),
+                       DurationTracker(context),
                       SizedBox(
                         height: 10,
                       ),
@@ -678,7 +678,7 @@ class _TrackServiceState extends State<TrackService> {
     );
   }
 
-  Widget durationtracker(BuildContext context) {
+  Widget DurationTracker(BuildContext context) {
     return Container(
       width: screenSize(context).width * .9,
       height: screenSize(context).height * .14,

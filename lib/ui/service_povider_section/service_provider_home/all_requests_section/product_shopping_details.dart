@@ -486,19 +486,8 @@ class PurchaseRequest extends StatelessWidget {
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: [
-                      ButtonView(
-                        expanded: false,
-                        color: Colors.transparent,
-                        borderColor: Colors.transparent,
-                        onPressed: () {},
-                        child: Center(
-                          child: CustomText(
-                            text: 'Reject',
-                            color: Colors.red,
-                            weight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      const SizedBox(height: 20,),
+                      
                       ButtonView(
                         borderRadius: 30,
                         expanded: false,
@@ -519,9 +508,25 @@ class PurchaseRequest extends StatelessWidget {
                         },
                         child: Center(
                           child: CustomText(
-                            text: 'Accept Session',
+                            text: 'Receive order',
                             color: Colors.white,
-                            weight: FontWeight.bold,
+                            size: 13,
+                            weight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 10,),
+                      ButtonView(
+                        expanded: false,
+                        color: Colors.transparent,
+                        borderColor: Colors.transparent,
+                        onPressed: () {},
+                        child: Center(
+                          child: CustomText(
+                            text: 'Reject order',
+                            color: Colors.red,
+                            size: 13,
+                            weight: FontWeight.w700,
                           ),
                         ),
                       ),

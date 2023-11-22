@@ -270,7 +270,7 @@ class UserViewModel extends BaseViewModel {
     List<UserOrders> list = [];
 
     for (var order in _ordersList) {
-      if (order.isCompleted == true) {
+      if (order.isPaid == true && order.isCompleted == true) {
         list.add(order);
       }
     }
@@ -281,7 +281,7 @@ class UserViewModel extends BaseViewModel {
   List<Pets> servicesPets() {
     List<Pets> list = [];
 
-    for (var servicePets in _agents ?? []) {
+    for (var servicePets in _agents  ?? []) {
       list.addAll(servicePets.petTypes);
     }
 
