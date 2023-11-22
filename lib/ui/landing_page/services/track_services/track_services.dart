@@ -361,7 +361,7 @@ class _TrackServicesState extends State<TrackServices> {
                       child: CustomText(
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        text: 'Service is on going (mark as completed)',
+                        text: 'Mark as completed',
                         weight: FontWeight.w400,
                         size: 15,
                         fontFamily: AppStrings.interSans,
@@ -370,16 +370,21 @@ class _TrackServicesState extends State<TrackServices> {
                     ),
                   ),
                 ),
+
+                 
               ] else if (widget.isAcceptedService &&
                   widget.isOngoingService &&
                   widget.isCompletedService) ...[
                 Positioned(
-                  bottom: 30,
+                  bottom: 0,
                   left: 0,
                   right: 0,
                   child: Container(
+                    color: Colors.white,
                     margin:
-                        const EdgeInsets.only(bottom: 50, left: 20, right: 20),
+                        const EdgeInsets.only(bottom:  0, left:  0, right: 0),
+                         padding:
+                        const EdgeInsets.all(50),
                     child: Column(
                       children: [
                         ButtonView(
@@ -403,17 +408,9 @@ class _TrackServicesState extends State<TrackServices> {
                               horizontal: screenSize(context).width * .05),
                           padding: EdgeInsets.all(15),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CustomText(
-                                text: 'Session ID ',
-                                size: 12,
-                              ),
-                              CustomText(
-                                text: 'QWE123456BV',
-                                size: 12,
-                                weight: FontWeight.bold,
-                              ),
+                              
                               InkWell(
                                 child: CustomText(
                                   text: 'Report owner',
@@ -444,16 +441,16 @@ class _TrackServicesState extends State<TrackServices> {
   }
 
   checkStatus() {
-    if (widget.isAcceptedService) {
+    if (!widget.isAcceptedService) {
       sessionStatus = 'Awaiting session';
     } else if (widget.isAcceptedService && !widget.isOngoingService) {
-      sessionStatus = 'Service Accepted';
+      sessionStatus = 'Session is Accepted';
     } else if (widget.isAcceptedService && widget.isOngoingService) {
-      sessionStatus = 'Service is ongoing';
+      sessionStatus = 'Session is ongoing';
     } else if (widget.isAcceptedService &&
         widget.isOngoingService &&
         widget.isCompletedService) {
-      sessionStatus = 'Session completed';
+      sessionStatus = 'Session is completed';
     }
 
     setState(() {});

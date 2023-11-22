@@ -18,6 +18,7 @@ import '../../../../res/enum.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../service_povider_section/service_profile/service_profile.dart';
+import '../../../support/track_purchase/widget/progressbar.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/text_edit_view.dart';
 import '../pet_profile/pet_profile.dart';
@@ -142,7 +143,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                const SizedBox(
                 height: 20,
               ),
-                       DurationTracker(context),
+                       DurationTracker(context, services),
               const SizedBox(
                 height: 20,
               ),
@@ -190,7 +191,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                       children: [
                         ImageView.svg(AppImages.time),
                         const SizedBox(
-                          width: 10,
+                          width: 8,
                         ),
                         CustomText(
                           textAlign: TextAlign.left,
@@ -303,9 +304,9 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                         maxLines: 2,
                         text: widget.sessionStatus,
                         weight: FontWeight.w700,
-                        size: 12,
+                        size: 16,
                         fontFamily: AppStrings.interSans,
-                        color: Colors.black,
+                        color: Colors.red,
                       ),
                     ),
                   )
@@ -358,77 +359,71 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
         ));
   }
 
-  Widget DurationTracker(BuildContext context) {
+  Widget DurationTracker(BuildContext context, services) {
     return Container(
       width: screenSize(context).width * .9,
-      height: screenSize(context).height * .14,
+       
       padding: EdgeInsets.symmetric(vertical: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomText(
-            text: 'Drop off time',
-          ),
-          Row(
-            children: [
-              Icon(Icons.timer),
-              CustomText(
-                text: '06 PM',
-                size: 12,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Icon(Icons.calendar_month),
-              CustomText(
-                text: '23rd October, 2023',
-                size: 12,
-              ),
-            ],
-          ),
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: 'Estimated time for walk - ',
-                      size: 10,
-                    ),
-                    CustomText(
-                      text: '2hrs',
-                      size: 10,
-                    ),
-                  ],
+              Expanded(
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: 'Estimated time for Session - ',
+                        size: 10,
+                      ),
+          const SizedBox(height: 10,),
+
+                      CustomText(
+                        text: '${services.calculateTimeDifferenceInHours(widget.startDate1 ?? '0', widget.startDate2 ?? '0')} Hrs',
+                        size: 10,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: 'Remaining time for walk - ',
-                      size: 10,
-                    ),
-                    CustomText(
-                      text: '2hrs',
-                      size: 10,
-                    ),
-                  ],
+              Expanded(
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: 'Remaining time for Session - ',
+                        size: 10,
+                      ),
+          const SizedBox(height: 10,),
+
+                      CustomText(
+                        text: '${services.calculateRemainingTimeInHours(widget.startDate2 ?? '0')} Hrs',
+                        size: 10,
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],
           ),
-          LinearProgressIndicator(
-            value: 0.5, // Represents the progress value (from 0.0 to 1.0)
-            minHeight: 8, // Adjust the height of the progress line
-            backgroundColor: Colors.grey[300], // Color of the remaining line
-            valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.blue), // Color of the progress line
-          ),
+          const SizedBox(height: 20,),
+           ProgressBar(
+              remainingTime: double.parse(
+                  (services.calculateRemainingTimeInHours(
+                              widget.startDate2 ?? '') ==
+                          'Elapsed'
+                      ? '0.0'
+                      : services.calculateRemainingTimeInHours(
+                          widget.startDate2 ?? ''))),
+              totalTime: double.parse(services.calculateTimeDifferenceInHours(
+                  widget.startDate1 ?? '0', widget.startDate2 ?? '0')),
+            ),
         ],
       ),
     );

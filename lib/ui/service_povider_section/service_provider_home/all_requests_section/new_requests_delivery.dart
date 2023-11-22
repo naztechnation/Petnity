@@ -18,6 +18,8 @@ import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/navigator/page_navigator.dart';
+import '../../../landing_page/services/track_services/track_services.dart';
+import '../../../widgets/modals.dart';
 import 'product_shopping_details.dart';
 import 'widgets/all_ongoing_page.dart';
 
@@ -335,9 +337,38 @@ class _ServiceProviderPetDeliveryHomeBodyState
           width: screenSize(context).width * .2,
           child: ButtonView(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return ServiceRequest();
-              }));
+              // Navigator.push(context, MaterialPageRoute(builder: (_) {
+              //   return ServiceRequest();
+              // }));
+
+               if(order.isPaid ?? false){
+                AppNavigator.pushAndStackPage(context,
+                            page: TrackServicesScreen(
+                              sellerName: order.agent?.name ?? '',
+                              phone:
+                                  order.agent?.profile?.phoneNumber ??
+                                      '',
+                              serviceOffered: order.package?.service
+                                      ?.serviceType?.name ??
+                                  '',
+                              agentId:
+                                  order.agent?.profile?.firebaseId ??
+                                      '',
+                              sellerId:
+                                  order.agent?.id.toString() ?? '',
+                              startDate1: order.pickupTime ?? '0',
+                              startDate2: order.dropoffTime ?? '0',
+                              amount: order.fee ?? '',
+                              paymentId: order.purchaseId ?? '',
+                              sellerImage: order.agent?.picture ?? '',
+                               isAcceptedService: order.isAccepted ?? false,
+                                isOngoingService: order.isOngoing ?? false,
+                                 isCompletedService: order.isCompleted ?? false,
+                            ));
+               }else{
+                          Modals.showToast('This Service has not been paid for.');
+
+               }
             },
             child: Text(
               'view',
