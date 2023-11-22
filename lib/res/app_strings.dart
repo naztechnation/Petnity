@@ -47,10 +47,8 @@ class AppStrings {
   static const String shoppingList = '${_baseUrl}shop/get-products/1';
   static const String getServiceTypes = '${_baseUrl}get-service-types';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
-  static String agentProfile = 
-      '${_baseUrl}users/get-agents'; 
+  static String agentProfile = '${_baseUrl}users/get-agents';
 
-      
   static String userOrders(String username) =>
       '${_baseUrl}order/get-user-orders/$username';
   static String createOrderPayment(String username) =>
@@ -98,19 +96,12 @@ class AppStrings {
       '${_baseUrl}shop/get-product-reviews/$productId';
   static String updateAccountDetailsUrl({required String agentId}) =>
       '${_baseUrl}users/add-agent-bank-details/$agentId';
-   static String getAccountDetailsUrl({required String agentId}) =>
+  static String getAccountDetailsUrl({required String agentId}) =>
       '${_baseUrl}users/get-agent-bank-details/$agentId';
-   static String uploadAgentGallery({required String agentId}) =>
+  static String uploadAgentGallery({required String agentId}) =>
       '${_baseUrl}users/add-gallery-element/$agentId';
 
-    static String agentAcceptOrder({required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-accept-order/$agentId/$orderId';
-    
-    static String agentMarkOngoingOrder({required String agentId, required String orderId}) =>
-      '${_baseUrl}order/order-ongoing/$agentId/$orderId';
-
- static String agentMarkCompletedOrder({required String agentId , required String orderId}) =>
-      '${_baseUrl}order/agent-complete-order/$agentId/$orderId';
+  
 
   static String publishProductReview({
     required String url,
@@ -121,7 +112,20 @@ class AppStrings {
           {required String username, required String shopOrderId}) =>
       '${_baseUrl}shop/shop-order-payment/$username/$shopOrderId';
 
-      static String getAgentServicesLists(
-          {required String agentId,}) =>
+  static String getAgentServicesLists({
+    required String agentId,
+  }) =>
       '${_baseUrl}order/get-agent-orders/$agentId';
+
+  static String agentAcceptOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-accept-order/$agentId/$orderId';
+
+  static String agentMarkOngoingOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/order-ongoing/$agentId/$orderId';
+
+  static String agentMarkCompletedOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-complete-order/$agentId/$orderId';
 }

@@ -61,49 +61,53 @@ class _ServiceProviderPetDeliveryHomeBodyState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-     if(serviceProvider.onGoingOrdersList.isNotEmpty)    Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomText(
-              text: 'Ongoing Services',
-              weight: FontWeight.bold,
-            ),
-            GestureDetector(
-              onTap: () {
-                AppNavigator.pushAndStackPage(context,
-                    page: AllOngoingDeliveryScreen());
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: CustomText(
-                  text: 'View all',
-                  weight: FontWeight.w400,
-                  size: 14,
-                  color: AppColors.lightSecondary,
+        if (serviceProvider.onGoingOrdersList.isNotEmpty)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomText(
+                text: 'Ongoing Services',
+                weight: FontWeight.bold,
+              ),
+              GestureDetector(
+                onTap: () {
+                  AppNavigator.pushAndStackPage(context,
+                      page: AllOngoingDeliveryScreen());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: CustomText(
+                    text: 'View all',
+                    weight: FontWeight.w400,
+                    size: 14,
+                    color: AppColors.lightSecondary,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      if(serviceProvider.onGoingOrdersList.isNotEmpty)  SizedBox(
-          height: 10,
-        ),
-     if(serviceProvider.onGoingOrdersList.isNotEmpty)   SizedBox(
-          height: 300,
-          child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: serviceProvider.onGoingOrdersList.length,
-              itemBuilder: (context, index) {
-                return OngoingDeliveryWidget(
-                  label: 'Track',
-                  services: serviceProvider.onGoingOrdersList[index],
-                );
-              }),
-        ),
-      if(serviceProvider.onGoingOrdersList.isNotEmpty)  SizedBox(
-          height: 10,
-        ),
+            ],
+          ),
+        if (serviceProvider.onGoingOrdersList.isNotEmpty)
+          SizedBox(
+            height: 10,
+          ),
+        if (serviceProvider.onGoingOrdersList.isNotEmpty)
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: serviceProvider.onGoingOrdersList.length,
+                itemBuilder: (context, index) {
+                  return OngoingDeliveryWidget(
+                    label: 'Track',
+                    services: serviceProvider.onGoingOrdersList[index],
+                  );
+                }),
+          ),
+        if (serviceProvider.onGoingOrdersList.isNotEmpty)
+          SizedBox(
+            height: 10,
+          ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -185,7 +189,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
         SizedBox(
           height: 10,
         ),
-        if (serviceProvider.availableServices.isEmpty &&  isServices) ...[
+        if (serviceProvider.availableServices.isEmpty && isServices) ...[
           Container(
               height: 200,
               child: Align(
@@ -270,8 +274,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: ListTile(
         leading: Container(
-          width: 80,
-          height: screenSize(context).height * .07,
+          width: 55,
+          height: 50,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: ClipRRect(
@@ -281,9 +285,31 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 fit: BoxFit.cover,
               )),
         ),
-        title: CustomText(
-          text: '${order.package?.service?.serviceType?.name}',
-          weight: FontWeight.bold,
+        title: Row(
+          children: [
+            Expanded(
+              child: CustomText(
+                text: '${order.package?.service?.serviceType?.name}',
+                weight: FontWeight.bold,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              decoration: BoxDecoration(
+                  color: order.isPaid!
+                      ? Colors.green.shade100
+                      : Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(30)),
+              child: Container(
+                child: CustomText(
+                  text: order.isPaid! ? 'Paid' : 'Not Paid',
+                  size: 12,
+                  color: order.isPaid! ? Colors.green : Colors.red,
+                  weight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -341,40 +367,35 @@ class _ServiceProviderPetDeliveryHomeBodyState
               //   return ServiceRequest();
               // }));
 
-               if(order.isPaid ?? false){
+              if (order.isPaid ?? false) {
                 AppNavigator.pushAndStackPage(context,
-                            page: TrackServicesScreen(
-                              sellerName: order.agent?.name ?? '',
-                              phone:
-                                  order.agent?.profile?.phoneNumber ??
-                                      '',
-                              serviceOffered: order.package?.service
-                                      ?.serviceType?.name ??
-                                  '',
-                              agentId:
-                                  order.agent?.profile?.firebaseId ??
-                                      '',
-                              sellerId:
-                                  order.agent?.id.toString() ?? '',
-                              startDate1: order.pickupTime ?? '0',
-                              startDate2: order.dropoffTime ?? '0',
-                              amount: order.fee ?? '',
-                              paymentId: order.purchaseId ?? '',
-                              sellerImage: order.agent?.picture ?? '',
-                               isAcceptedService: order.isAccepted ?? false,
-                                isOngoingService: order.isOngoing ?? false,
-                                 isCompletedService: order.isCompleted ?? false,
-                            ));
-               }else{
-                          Modals.showToast('This Service has not been paid for.');
-
-               }
+                    page: TrackServicesScreen(
+                      sellerName: order.agent?.name ?? '',
+                      phone: order.agent?.profile?.phoneNumber ?? '',
+                      serviceOffered:
+                          order.package?.service?.serviceType?.name ?? '',
+                      agentId: order.agent?.profile?.firebaseId ?? '',
+                      sellerId: order.agent?.id.toString() ?? '',
+                      startDate1: order.pickupTime ?? '0',
+                      startDate2: order.dropoffTime ?? '0',
+                      amount: order.fee ?? '',
+                      paymentId: order.purchaseId ?? '',
+                      sellerImage: order.agent?.picture ?? '',
+                      isAcceptedService: order.isAccepted ?? false,
+                      isOngoingService: order.isOngoing ?? false,
+                      isCompletedService: order.isCompleted ?? false,
+                    ));
+              } else {
+                Modals.showToast('This Service has not been paid for.');
+              }
             },
             child: Text(
               'view',
               style: TextStyle(color: Colors.blue),
             ),
             borderRadius: 100,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+
             color: Colors.blue.shade100,
             expanded: false,
             borderColor: Colors.transparent,
@@ -455,7 +476,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
           width: screenSize(context).width * .2,
           child: ButtonView(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (_) {
+            if (order.isPaid ?? false) { Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return PurchaseRequest(
                   ownerName: 'Sandra Lee',
                   phoneNumber: '0908765432',
@@ -465,9 +486,13 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   price: '${order.product?.price}',
                   purchaseId: '${order.paymentId}',
                   deliveryDate: today,
-                  deliveryLocation: 'ontisha anambra state',
+                  deliveryLocation: ' ',
                 );
               }));
+            }else{
+                Modals.showToast('This product  has not been paid for.');
+
+            }
             },
             child: Text(
               'view',
@@ -475,6 +500,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
             ),
             borderRadius: 100,
             color: Colors.blue.shade100,
+            padding: const EdgeInsets.symmetric(vertical: 10),
             expanded: false,
             borderColor: Colors.transparent,
           ),

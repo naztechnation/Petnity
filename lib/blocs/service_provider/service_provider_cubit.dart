@@ -6,7 +6,8 @@ import '../../utils/exceptions.dart';
 import 'service_provider_states.dart';
 
 class ServiceProviderCubit extends Cubit<ServiceProviderState> {
-  ServiceProviderCubit({required this.serviceProviderRepository, required this.viewModel})
+  ServiceProviderCubit(
+      {required this.serviceProviderRepository, required this.viewModel})
       : super(const InitialState());
   final ServiceProviderRepository serviceProviderRepository;
   final ServiceProviderInAppViewModel viewModel;
@@ -20,7 +21,9 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       emit(CreateServiceAmountLoading());
 
       final services = await serviceProviderRepository.createServiceAmount(
-        servicesId: serviceId, agentId:agentId,levelAmount:levelAmount,
+        servicesId: serviceId,
+        agentId: agentId,
+        levelAmount: levelAmount,
       );
 
       // await viewModel.setAgentDetails(agents: agents.agents ?? []);
@@ -41,17 +44,25 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void> setServicePackage({
-    required String agentId,required String servicesId,
-    required String levelAmount,required String name,
-    required String description, required String duration,required String pricing
-  }) async {
+  Future<void> setServicePackage(
+      {required String agentId,
+      required String servicesId,
+      required String levelAmount,
+      required String name,
+      required String description,
+      required String duration,
+      required String pricing}) async {
     try {
       emit(CreateServicePackageLoading());
 
       final services = await serviceProviderRepository.createServicePackage(
-        servicesId: servicesId, agentId:agentId,levelAmount:levelAmount, 
-        name: name, description: description, duration: duration, pricing: pricing,
+        servicesId: servicesId,
+        agentId: agentId,
+        levelAmount: levelAmount,
+        name: name,
+        description: description,
+        duration: duration,
+        pricing: pricing,
       );
 
       // await viewModel.setAgentDetails(agents: agents.agents ?? []);
@@ -72,19 +83,18 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-
-Future<void> publishServicePackage({
-    required String agentId,required String servicesId,
-    
+  Future<void> publishServicePackage({
+    required String agentId,
+    required String servicesId,
   }) async {
     try {
       emit(PublishPackageLoading());
 
       final services = await serviceProviderRepository.publishPackage(
-        servicesId: servicesId, agentId:agentId,
+        servicesId: servicesId,
+        agentId: agentId,
       );
 
-      
       emit(PublishPackageLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -102,17 +112,23 @@ Future<void> publishServicePackage({
   }
 
   Future<void> createShoppingProduct({
-    required String agentId,required String name,
-    required String pricing,required String image,required String description,
+    required String agentId,
+    required String name,
+    required String pricing,
+    required String image,
+    required String description,
   }) async {
     try {
       emit(CreateShopProductsLoading());
 
       final services = await serviceProviderRepository.createShopProduct(
-          agentId:agentId, name: name, pricing: pricing, image: image, description: description,
+        agentId: agentId,
+        name: name,
+        pricing: pricing,
+        image: image,
+        description: description,
       );
 
-      
       emit(CreateShopProductsLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -129,15 +145,16 @@ Future<void> publishServicePackage({
     }
   }
 
-   Future<void> getAllAgentOrder({
-    required String agentId,required String pageIndex,
-     
+  Future<void> getAllAgentOrder({
+    required String agentId,
+    required String pageIndex,
   }) async {
     try {
       emit(AgentOrdersLoading());
 
       final services = await serviceProviderRepository.agentOrders(
-          agentId:agentId, page: pageIndex,  
+        agentId: agentId,
+        page: pageIndex,
       );
 
       viewModel.setAgentOrdersList(services);
@@ -157,18 +174,21 @@ Future<void> publishServicePackage({
     }
   }
 
-  Future<void> updateAccount({
-    required String agentId,required String bankName,
-    required String accountName, required String accountNumber
-     
-  }) async {
+  Future<void> updateAccount(
+      {required String agentId,
+      required String bankName,
+      required String accountName,
+      required String accountNumber}) async {
     try {
       emit(UpdateAccountDetailsLoading());
 
       final account = await serviceProviderRepository.updateAccountDetails(
-          agentId:agentId, accountName: accountName, accountNumber: accountNumber, bankName: bankName, );  
-      
- 
+        agentId: agentId,
+        accountName: accountName,
+        accountNumber: accountNumber,
+        bankName: bankName,
+      );
+
       emit(UpdateAccountDetailsLoaded(account));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -186,16 +206,15 @@ Future<void> publishServicePackage({
   }
 
   Future<void> getAccount({
-    required String agentId, 
-     
+    required String agentId,
   }) async {
     try {
       emit(AccountDetailsLoading());
 
       final account = await serviceProviderRepository.accountDetails(
-          agentId:agentId,  );  
-      
- 
+        agentId: agentId,
+      );
+
       emit(AccountDetailsLoaded(account));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -213,19 +232,104 @@ Future<void> publishServicePackage({
   }
 
   Future<void> getAgentsAvailableServices({
-    required String agentId, 
-     
+    required String agentId,
   }) async {
     try {
       emit(AgentServicesListLoading());
 
       final services = await serviceProviderRepository.getAgentServicesList(
-          agentId:agentId,  );  
-      
+        agentId: agentId,
+      );
+
       viewModel.setAgentServicesList(services);
 
-
       emit(AgentServicesListLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> acceptAgentOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AcceptOrderLoading());
+
+      final services = await serviceProviderRepository.acceptAgentOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      emit(AcceptOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> markOngoingAgentOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AgentOrdersLoading());
+
+      final services = await serviceProviderRepository.acceptOngoingOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      
+      emit(AcceptOngoingOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> markCompleteAgentOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AgentOrdersLoading());
+
+      final services = await serviceProviderRepository.acceptCompleteOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      
+      emit(AcceptCompletedOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
     } catch (e) {

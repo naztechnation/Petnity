@@ -126,6 +126,36 @@ class  AgentServicesListLoaded extends ServiceProviderState {
   List<Object> get props => [services];
 }
 
+class  AcceptOrderLoaded extends ServiceProviderState {
+  final AuthData order;
+  const  AcceptOrderLoaded(this.order);
+  @override
+  List<Object> get props => [order];
+}
+
+class   AcceptOrderLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  AcceptOngoingOrderLoaded extends ServiceProviderState {
+  final AuthData order;
+  const  AcceptOngoingOrderLoaded(this.order);
+  @override
+  List<Object> get props => [order];
+}
+
+ 
+
+class  AcceptCompletedOrderLoaded extends ServiceProviderState {
+  final AuthData order;
+  const  AcceptCompletedOrderLoaded(this.order);
+  @override
+  List<Object> get props => [order];
+}
+
+ 
+
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;
   const CreateServiceNetworkErr(this.message);
