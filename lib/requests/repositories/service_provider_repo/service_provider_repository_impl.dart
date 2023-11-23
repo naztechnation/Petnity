@@ -7,6 +7,7 @@ import 'package:petnity/model/user_models/create_order.dart';
 
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../res/app_strings.dart';
+import '../../../ui/widgets/modals.dart';
 import '../../setup/requests.dart';
 import 'service_provider_repository.dart';
 
@@ -202,6 +203,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         headers: {
           'Authorization': AppStrings.token,
         });
+
+       
 
     return AuthData.fromJson(map);
   }
