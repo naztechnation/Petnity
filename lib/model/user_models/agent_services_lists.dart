@@ -227,7 +227,7 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  Null? idType;
+  int? idType;
   List<Services>? services;
   List<PetTypes>? petTypes;
 

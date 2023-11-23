@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -38,6 +39,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
     extends State<ServiceProviderPetDeliveryHomeBody>
     with SingleTickerProviderStateMixin {
   bool isServices = true;
+
+  int _currentPage = 0;
 
   changePage(bool serve) {
     setState(() {
@@ -108,6 +111,14 @@ class _ServiceProviderPetDeliveryHomeBodyState
           SizedBox(
             height: 10,
           ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:
+              _buildPageIndicator(serviceProvider.onGoingOrdersList.length),
+        ),
+        SizedBox(
+          height: 20,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -367,27 +378,32 @@ class _ServiceProviderPetDeliveryHomeBodyState
               //   return ServiceRequest();
               // }));
 
-             // if (order.isPaid ?? false) {
-                AppNavigator.pushAndStackPage(context,
-                    page: TrackServicesScreen(
-                      sellerName: order.agent?.name ?? '',
-                      phone: order.agent?.profile?.phoneNumber ?? '',
-                      serviceOffered:
-                          order.package?.service?.serviceType?.name ?? '',
-                      agentId: order.agent?.profile?.firebaseId ?? '',
-                      sellerId: order.agent?.id.toString() ?? '',
-                      startDate1: order.pickupTime ?? '0',
-                      startDate2: order.dropoffTime ?? '0',
-                      amount: order.fee ?? '',
-                      paymentId: order.purchaseId ?? '',
-                      sellerImage: order.agent?.picture ?? '',
-                      isAcceptedService: order.isAccepted ?? false,
-                      isOngoingService: order.isOngoing ?? false,
-                      isCompletedService: order.isCompleted ?? false, orderId: order.id.toString(), customerName: order.profile?.user?.username ?? '',
-                    ));
-             // } else {
-                Modals.showToast('This Service has not been paid for.');
-             // }
+              // if (order.isPaid ?? false) {
+              AppNavigator.pushAndStackPage(context,
+                  page: TrackServicesScreen(
+                    sellerName: order.agent?.name ?? '',
+                    phone: order.agent?.profile?.phoneNumber ?? '',
+                    serviceOffered:
+                        order.package?.service?.serviceType?.name ?? '',
+                    agentId: order.agent?.profile?.firebaseId ?? '',
+                    sellerId: order.agent?.id.toString() ?? '',
+                    startDate1: order.pickupTime ?? '0',
+                    startDate2: order.dropoffTime ?? '0',
+                    amount: order.fee ?? '',
+                    paymentId: order.purchaseId ?? '',
+                    sellerImage: order.agent?.picture ?? '',
+                    isAcceptedService: order.isAccepted ?? false,
+                    isOngoingService: order.isOngoing ?? false,
+                    isCompletedService: order.isCompleted ?? false,
+                    orderId: order.id.toString(),
+                    customerName: order.profile?.user?.username ?? '',
+                    customerFireBaseId: order.profile?.firebaseId ?? '',
+                    customerImage: order.profile?.profileImage ?? '',
+                    customerPhone: order.profile?.phoneNumber ?? '',
+                  ));
+              // } else {
+              Modals.showToast('This Service has not been paid for.');
+              // }
             },
             child: Text(
               'view',
@@ -395,7 +411,6 @@ class _ServiceProviderPetDeliveryHomeBodyState
             ),
             borderRadius: 100,
             padding: const EdgeInsets.symmetric(vertical: 10),
-
             color: Colors.blue.shade100,
             expanded: false,
             borderColor: Colors.transparent,
@@ -428,7 +443,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
           children: [
             Expanded(
               child: CustomText(
-                text: 'Sandra Lee',
+                text: order.profile?.user?.username.toString().capitalizeFirstOfEach,
                 size: 14,
                 weight: FontWeight.bold,
               ),
@@ -476,23 +491,23 @@ class _ServiceProviderPetDeliveryHomeBodyState
           width: screenSize(context).width * .2,
           child: ButtonView(
             onPressed: () {
-            if (order.isPaid ?? false) { Navigator.push(context, MaterialPageRoute(builder: (_) {
-                return PurchaseRequest(
-                  ownerName: 'Sandra Lee',
-                  phoneNumber: '0908765432',
-                  productName: '${order.product?.name}',
-                  productImage: '${order.product?.image}',
-                  quantity: '${order.quantity}',
-                  price: '${order.product?.price}',
-                  purchaseId: '${order.paymentId}',
-                  deliveryDate: today,
-                  deliveryLocation: ' ',
-                );
-              }));
-            }else{
+              if (order.isPaid ?? false) {
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return PurchaseRequest(
+                    ownerName: 'Sandra Lee',
+                    phoneNumber: '0908765432',
+                    productName: '${order.product?.name}',
+                    productImage: '${order.product?.image}',
+                    quantity: '${order.quantity}',
+                    price: '${order.product?.price}',
+                    purchaseId: '${order.paymentId}',
+                    deliveryDate: today,
+                    deliveryLocation: ' ',
+                  );
+                }));
+              } else {
                 Modals.showToast('This product  has not been paid for.');
-
-            }
+              }
             },
             child: Text(
               'view',
@@ -507,5 +522,25 @@ class _ServiceProviderPetDeliveryHomeBodyState
         ),
       ),
     );
+  }
+
+  List<Widget> _buildPageIndicator(int length) {
+    List<Widget> reverseIndicators = [];
+    for (int i = length - 1; i >= 0; i--) {
+      reverseIndicators.add(
+        Container(
+          width: 8.0,
+          height: 8.0,
+          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: _currentPage == (length - 1 - i)
+                ? AppColors.lightSecondary
+                : Colors.grey,
+          ),
+        ),
+      );
+    }
+    return reverseIndicators;
   }
 }

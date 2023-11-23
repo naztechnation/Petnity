@@ -14,13 +14,11 @@ import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/location_repo/location_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
-import '../../../../res/enum.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../service_povider_section/service_profile/service_profile.dart';
 import '../../../support/track_purchase/widget/progressbar.dart';
 import '../../../widgets/custom_text.dart';
-import '../../../widgets/text_edit_view.dart';
 import '../pet_profile/pet_profile.dart';
 import 'widget/profile.dart';
 
@@ -35,6 +33,11 @@ class TrackServicesBody extends StatefulWidget {
   final String paymentId;
   final String amount;
   final String sessionStatus;
+  final String customerName;
+  final String customerImage;
+  final String customerPhone;
+  final String customerFireBaseId;
+
   const TrackServicesBody(
       {super.key,
       required this.sellerName,
@@ -46,7 +49,7 @@ class TrackServicesBody extends StatefulWidget {
       required this.paymentId,
       required this.amount,
       required this.sellerPhoto,
-      required this.sessionStatus});
+      required this.sessionStatus, required this.customerName, required this.customerImage, required this.customerPhone, required this.customerFireBaseId});
 
   @override
   State<TrackServicesBody> createState() => _TrackServicesBodyState();
@@ -89,7 +92,8 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                   sellerId: widget.agentId,
                   userName: user.username,
                   phone: widget.phone,
-                  userType: userType
+                  userType: userType,
+                  customerName: widget.customerName, customerImage: widget.customerImage, customerPhone: widget.customerPhone, customerFireBaseId: widget.customerFireBaseId
                   ),
               if (userType == 'user') ...[
                 GestureDetector(

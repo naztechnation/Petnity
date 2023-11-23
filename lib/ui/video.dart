@@ -1,6 +1,7 @@
 
 import 'package:agora_uikit/agora_uikit.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_strings.dart';
 
 import '../handlers/secure_handler.dart';
@@ -91,7 +92,7 @@ getUserDetails() async {
                 children: [
                   Text('Ringing...', style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: AppStrings.montserrat),),
                   const SizedBox(height: 10,),
-                  Text(guestUsername, style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
+                  Text(guestUsername.capitalizeFirstOfEach, style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
                 ],
               ))),
           ],

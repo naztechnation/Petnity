@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/notfications_pages/chat_pages/chat_page.dart';
@@ -20,7 +21,11 @@ Widget serviceProfile(
   required String sellerId,
   required String userName,
   required String phone,
-  required String userType
+  required String userType,
+  required String customerName,
+  required String customerImage,
+  required String customerPhone,
+  required String customerFireBaseId,
 }) {
   return    (userType == 'user') ?Row(
     children: [
@@ -113,7 +118,7 @@ Widget serviceProfile(
         child: ClipRRect(
           borderRadius: BorderRadius.circular(60),
           child: ImageView.network(
-            sellerImage,
+            customerImage,
             height: 80,
             placeholder: AppImages.person,
           ),
@@ -125,7 +130,7 @@ Widget serviceProfile(
           title: CustomText(
             textAlign: TextAlign.left,
             maxLines: 2,
-            text: 'Customer name',
+            text: 'Name',
             weight: FontWeight.w700,
             size: 12,
             fontFamily: AppStrings.interSans,
@@ -134,7 +139,7 @@ Widget serviceProfile(
           subtitle: CustomText(
             textAlign: TextAlign.left,
             maxLines: 2,
-            text: sellerName,
+            text: customerName.capitalizeFirstOfEach,
             weight: FontWeight.w700,
             size: 12,
             fontFamily: AppStrings.interSans,
@@ -149,7 +154,7 @@ Widget serviceProfile(
                     children: [
                       GestureDetector(
                         onTap: (){
-                          _callNumber(phone);
+                          _callNumber(customerPhone);
                         },
                         child: ImageView.svg(AppImages.callBorder)),
                       const SizedBox(
@@ -157,7 +162,7 @@ Widget serviceProfile(
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (sellerId == '') {
+                            if (customerFireBaseId == '') {
                               Modals.showToast(
                                   'Can\'t communicate with this agent at the moment. Please');
                             } else {
@@ -165,7 +170,7 @@ Widget serviceProfile(
                                   page: ChatPage(
                                       username: sellerName,
                                       userImage: sellerImage,
-                                      uid: sellerId));
+                                      uid: customerFireBaseId));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
@@ -177,7 +182,7 @@ Widget serviceProfile(
                             AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
                                   user1: sellerName,
-                                  user2: userName,
+                                  user2: customerName,
                                 ));
                           },
                           child: ImageView.svg(AppImages.videoBorder)),

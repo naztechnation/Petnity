@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -60,9 +61,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(AppImages.dogsPic),
-                    radius: 40,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: ImageView.network(widget.services.package?.service?.serviceType?.image, height: 80,),
                   ),
                   Container(
                     width: screenSize(context).width * .3,
@@ -71,7 +72,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Sandra Lee',
+                            widget.services.profile?.user?.username.toString().capitalizeFirstOfEach ?? '',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontWeight: FontWeight.bold),
@@ -149,7 +150,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       GestureDetector(
                           onTap: () {
                             _callNumber(
-                                widget.services.agent?.profile?.phoneNumber ??
+                                widget.services.profile?.phoneNumber ??
                                     '');
                           },
                           child: ImageView.svg(AppImages.callBorder)),
@@ -158,9 +159,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (widget.services.agent?.profile?.firebaseId ==
+                            if (widget.services.profile?.firebaseId ==
                                     '' ||
-                                widget.services.agent?.profile?.firebaseId ==
+                                widget.services.profile?.firebaseId ==
                                     null) {
                               Modals.showToast(
                                   'Can\'t communicate with this agent at the moment. Please');
@@ -171,8 +172,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                           widget.services.agent?.name ?? '',
                                       userImage:
                                           widget.services.agent?.picture ?? '',
-                                      uid: widget.services.agent?.profile
-                                              ?.firebaseId ??
+                                      uid: widget.services.profile?.firebaseId ??
                                           ''));
                             }
                           },
@@ -182,11 +182,11 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            /// Todo get the user name and replace here
+                             
                             AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
                                   user1: widget.services.agent?.name ?? '',
-                                  user2: username,
+                                  user2: widget.services.profile?.user?.username ?? '',
                                 ));
                           },
                           child: ImageView.svg(AppImages.videoBorder)),
@@ -222,7 +222,8 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               isOngoingService:
                                   widget.services.isOngoing ?? false,
                               isCompletedService:
-                                  widget.services.isCompleted ?? false, orderId: widget.services.id.toString(), customerName: widget.services.profile?.user?.username?? '',
+                                  widget.services.isCompleted ?? false, orderId: widget.services.id.toString(),
+                                   customerName: widget.services.profile?.user?.username?? '', customerPhone: widget.services.profile?.phoneNumber ?? '', customerImage: widget.services.profile?.profileImage ?? '', customerFireBaseId: widget.services.profile?.firebaseId ?? '',
                             ));
                         // }else{
                         Modals.showToast('This Service has not been paid for.');

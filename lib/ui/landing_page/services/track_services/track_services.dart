@@ -33,6 +33,9 @@ class TrackServicesScreen extends StatelessWidget {
   final String agentId;
   final String orderId;
   final String customerName;
+  final String customerPhone;
+  final String customerImage;
+  final String customerFireBaseId;
 
   final String sellerId;
   final String startDate1;
@@ -57,7 +60,11 @@ class TrackServicesScreen extends StatelessWidget {
       required this.isAcceptedService,
       required this.isOngoingService,
       required this.isCompletedService,
-      required this.orderId, required this.customerName});
+      required this.orderId, 
+      required this.customerName,
+       required this.customerPhone, 
+       required this.customerImage,
+        required this.customerFireBaseId});
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +86,7 @@ class TrackServicesScreen extends StatelessWidget {
         isAcceptedService: isAcceptedService,
         isOngoingService: isOngoingService,
         isCompletedService: isCompletedService,
-        orderId: orderId, customerName: customerName,
+        orderId: orderId, customerName: customerName, customerPhone: customerPhone, customerImage: customerImage, customerFireBaseId: customerFireBaseId,
       ),
     );
   }
@@ -94,7 +101,9 @@ class TrackServices extends StatefulWidget {
   final String sellerId;
   final String orderId;
   final String customerName;
-
+final String customerPhone;
+  final String customerImage;
+  final String customerFireBaseId;
 
   final String startDate1;
   final String startDate2;
@@ -119,7 +128,7 @@ class TrackServices extends StatefulWidget {
       required this.isAcceptedService,
       required this.isOngoingService,
       required this.isCompletedService,
-      required this.orderId, required this.customerName});
+      required this.orderId, required this.customerName, required this.customerPhone, required this.customerImage, required this.customerFireBaseId});
 
   @override
   State<TrackServices> createState() => _TrackServicesState();
@@ -294,7 +303,8 @@ class _TrackServicesState extends State<TrackServices> {
                                 amount: widget.amount,
                                 paymentId: widget.paymentId,
                                 sellerPhoto: widget.sellerPhoto,
-                                sessionStatus: sessionStatus,
+                                sessionStatus: sessionStatus, 
+                                customerName: widget.customerName, customerImage: '', customerPhone: '', customerFireBaseId: '',
                               )
                             ],
                           )),
