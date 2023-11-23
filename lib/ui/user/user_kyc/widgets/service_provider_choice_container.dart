@@ -45,8 +45,8 @@ class ServiceProviderChoice extends StatelessWidget {
                       textAlign: TextAlign.left,
                       maxLines: 2,
                       text: serviceName,
-                      weight: FontWeight.w600,
-                      size: 15,
+                      weight: FontWeight.w400,
+                      size: 14,
                       fontFamily: AppStrings.interSans,
                       color: isSelected ? AppColors.lightPrimary : Colors.black,
                     ),
@@ -54,8 +54,14 @@ class ServiceProviderChoice extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  ImageView.asset(
-                    imageUrl,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: ImageView.network(
+                      imageUrl,
+                      height: 35,
+                      width: 35,
+                      fit: BoxFit.cover,
+                    ),
                   )
                 ],
               ),

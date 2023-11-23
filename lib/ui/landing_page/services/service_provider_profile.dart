@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:petnity/extentions/custom_string_extension.dart';
+import 'package:flutter/material.dart'; 
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +18,7 @@ import '../../widgets/image_view.dart';
 import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 import 'agent_packages.dart';
-import 'pet_sellers.dart/pet_on_sale.dart';
-import 'pet_trainers/training_packages.dart';
+import 'pet_sellers.dart/pet_on_sale.dart'; 
 import 'widgets/gallery_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
 import './vets/vet_service.dart';

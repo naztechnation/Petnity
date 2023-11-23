@@ -63,10 +63,11 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: ImageView.network(widget.services.package?.service?.serviceType?.image, height: 80,),
+                    child: ImageView.network(widget.services.package?.service?.serviceType?.image, height: 60,),
                   ),
+                  const SizedBox(width: 10,),
                   Container(
-                    width: screenSize(context).width * .3,
+                     
                     child: Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

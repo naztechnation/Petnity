@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/blocs/accounts/account.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; 
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/ui/landing_page/widgets/listofservices_widget.dart';
+import 'package:petnity/res/app_strings.dart'; 
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
-import 'package:petnity/ui/profile/profile.dart';
+import 'package:petnity/ui/profile/profile.dart' as profile;
 import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
@@ -16,6 +14,7 @@ import 'package:provider/provider.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
+import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -50,6 +49,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   bool isLoading = false;
   String agentId = "";
+  Agents? agents;
+
+
+   
+
+  List<ServicesDetails> services = [];
 
   getServicesTypes() async {
     _userCubit = context.read<UserCubit>();
@@ -57,7 +62,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
      try {
      
     agentId = await StorageHandler.getAgentId();
-    await _userCubit.getServiceTypes(agentId);
+    await _userCubit.getServiceTypes();
+   await _userCubit.getAgentProfile();
+
      
     } catch (e) {
       
@@ -93,7 +100,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
           if (state.services.status!) {
             service = _userCubit.viewModel.services;
           } else {}
-        } else if (state is UserNetworkErrApiErr) {
+         }else if (state is ServiceProviderListLoaded) {
+                  for (var item in state.userData.agents!) {
+                    if (item.id.toString() == agentId) {
+                      agents = item;
+                      break;
+                    }
+                  }
+                   services = agents?.services ?? []; 
+                } else if (state is UserNetworkErrApiErr) {
         } else if (state is UserNetworkErr) {}
       },
       builder: (context, state) => Drawer(
@@ -129,7 +144,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                            if (userType == 'user') {
                           Navigator.push(context,
                             MaterialPageRoute(builder: (_) {
-                          return Profile();
+                          return profile.Profile();
                         }));
                         }else{
                            Navigator.push(context,
@@ -267,15 +282,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               isDismissible: true,
                               context: context,
                               builder: (context) {
-                                return (state is ServiceProviderListLoading)
-                                    ? Scaffold(
-                                        body: Align(
-                                            child: ImageView.asset(
-                                          AppImages.loading,
-                                          height: 50,
-                                        )),
-                                      )
-                                    : Container(
+                                return  Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20)),
@@ -287,28 +294,28 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Center(
-                                              child: CustomText(
-                                                text: 'Services',
-                                                weight: FontWeight.bold,
-                                                size: 17,
-                                              ),
+                                            Row(
+                                              children: [
+                                                CustomText(
+                                                  text: 'Your Services',
+                                                  weight: FontWeight.bold,
+                                                  size: 17,
+                                                ),
+                                              ],
                                             ),
-                                            const SizedBox(height: 15,),
-                                            CustomText(
-                                              text: 'All Services',
-                                              weight: FontWeight.bold,
-                                              size: 14,
-                                            ),
-                                            const SizedBox(height: 15,),
+                            
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            CustomText(
+                              size: 14,
+                              text: 'Create Service',
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
           
-                                            CustomText(
-                                              size: 14,
-                                              text: 'Select Service',
-                                            ),
-                                            const SizedBox(height: 15,),
-          
-                                            ServicesList(),
+                                          ServicesList(services: services,),
                                           ],
                                         )),
                                       );

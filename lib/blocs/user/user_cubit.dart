@@ -69,7 +69,7 @@ Future<void> getAgentProfile() async {
     try {
       emit(ServiceProviderListLoading());
 
-      final service = await userRepository.getServiceTypes();
+      final service = await userRepository.getServiceTypes(agentId);
 
       await viewModel.setServicesList(services: service.serviceTypes ?? []);
 

@@ -6,6 +6,7 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/service_povider_section/service_provider_home/service_provider_home.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:petnity/ui/widgets/notification_icon.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,7 @@ import '../../../res/app_images.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../blocs/user/user.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -21,6 +23,7 @@ import '../payment/payment_screen.dart';
 import '../widgets/custom_text.dart';
 import 'create_shop_product/create_shop_products.dart';
 import 'service_catalogue.dart';
+import 'service_provider_kyc/service_provider_kyc/service_kyc_eight.dart';
 import 'widget/drawer_custom.dart';
 
 class ServiceProviderLandingPage extends StatefulWidget {
@@ -59,17 +62,21 @@ class _ServiceProviderLandingPageState
           child: _selectedIndex == 0
               ? HomepageAppbar()
               : _selectedIndex == 1
-                  ? simpleAppbar('Shop Products', GestureDetector(
-                    onTap: (){
-                      AppNavigator.pushAndStackPage(context, page: CreateShopProducts());
-                    },
-                    child: ImageView.svg(
-                                  AppImages.addIcon,
-                                  height: 25,
-                                ),
-                  ))
-                  :  _selectedIndex == 2 
-                  ? simpleAppbar('Payments' , Text('') ):Container(),
+                  ? simpleAppbar(
+                      'Shop Products',
+                      GestureDetector(
+                        onTap: () {
+                          AppNavigator.pushAndStackPage(context,
+                              page: CreateShopProducts());
+                        },
+                        child: ImageView.svg(
+                          AppImages.addIcon,
+                          height: 25,
+                        ),
+                      ))
+                  : _selectedIndex == 2
+                      ? simpleAppbar('Payments', Text(''))
+                      : Container(),
         ),
       ),
       body: Center(
@@ -104,7 +111,7 @@ class _ServiceProviderLandingPageState
                     ),
                     label: 'Activities',
                   ),
-                   BottomNavigationBarItem(
+                  BottomNavigationBarItem(
                     icon: ImageView.svg(
                       AppImages.coupon,
                       height: 20,
@@ -201,13 +208,19 @@ class _HomepageBarState extends State<HomepageBar> {
   bool isLoading = false;
   String agentId = "";
 
+  List<ServicesDetails> services = [];
+
+  Agents? agents;
+
   getServicesTypes() async {
     agentId = await StorageHandler.getAgentId();
 
     _userCubit = context.read<UserCubit>();
 
     try {
-      await _userCubit.getServiceTypes(agentId);
+      await _userCubit.getServiceTypes( );
+   await _userCubit.getAgentProfile();
+
     } catch (e) {}
   }
 
@@ -220,13 +233,19 @@ class _HomepageBarState extends State<HomepageBar> {
 
   @override
   Widget build(BuildContext context) {
+ 
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       centerTitle: true,
-      title: Text('Lucacify',style: TextStyle(color: AppColors.lightSecondary,
-       fontWeight: FontWeight.bold, fontSize: 18),),
+      title: Text(
+        'Lucacify',
+        style: TextStyle(
+            color: AppColors.lightSecondary,
+            fontWeight: FontWeight.bold,
+            fontSize: 18),
+      ),
       actions: [
         BlocConsumer<UserCubit, UserStates>(
           listener: (context, state) {
@@ -234,13 +253,20 @@ class _HomepageBarState extends State<HomepageBar> {
               if (state.services.status!) {
                 service = _userCubit.viewModel.services;
               } else {}
-            } else if (state is UserNetworkErrApiErr) {
+            }else if (state is ServiceProviderListLoaded) {
+                  for (var item in state.userData.agents!) {
+                    if (item.id.toString() == agentId) {
+                      agents = item;
+                      break;
+                    }
+                  }
+                   services = agents?.services ?? []; 
+                } else if (state is UserNetworkErrApiErr) {
             } else if (state is UserNetworkErr) {}
           },
           builder: (context, state) => GestureDetector(
               onTap: () {
                 showModalBottomSheet(
-                  
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(20.0),
@@ -248,7 +274,6 @@ class _HomepageBarState extends State<HomepageBar> {
                       ),
                     ),
                     isDismissible: true,
-                    
                     context: context,
                     builder: (context) {
                       return Container(
@@ -261,32 +286,50 @@ class _HomepageBarState extends State<HomepageBar> {
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Center(
-                              child: CustomText(
-                                text: 'Services',
-                                weight: FontWeight.bold,
-                                size: 17,
-                              ),
-                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                CustomText(
+                                                  text: 'Your services',
+                                                  weight: FontWeight.bold,
+                                                  size: 17,
+                                                ),
+                                                GestureDetector(
+                                                  onTap: (){
+                                                    AppNavigator.pushAndStackPage(context, page: KycServiceScreenEight(isRedo: true,));
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      ImageView.svg(AppImages.addIcon, height: 15,
+                                                      
+                                                      ),
+                                                      const SizedBox(width: 10,),
+                                                      CustomText(
+                                                        text: 'add more',
+                                                        weight: FontWeight.w400,
+                                                        size: 14,
+                                                        color: AppColors.lightSecondary,
+                                                      ),
+                                                      const SizedBox(width: 10,),
+                                                
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                             const SizedBox(
                               height: 15,
                             ),
                             CustomText(
-                              text: 'All Services',
-                              weight: FontWeight.bold,
                               size: 14,
+                              text: 'Create Service',
                             ),
                             const SizedBox(
                               height: 15,
                             ),
-                            CustomText(
-                              size: 14,
-                              text: 'Select Service',
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            ServicesList(),
+                          (state is ServiceProviderListLoading ) ?
+                           Align(child: ImageView.asset(AppImages.loading, height: 50,))
+                            : ServicesList(services: services,),
                           ],
                         )),
                       );
@@ -328,8 +371,8 @@ class simpleAppbar extends StatelessWidget {
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(
         title,
-        style:
-            TextStyle( color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       actions: [

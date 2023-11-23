@@ -16,6 +16,7 @@ import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_images.dart';
+import '../../../../res/app_routes.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';
 import '../../../../utils/navigator/page_navigator.dart';
@@ -26,7 +27,9 @@ import '../../../widgets/modals.dart';
 import 'service_kyc_nine.dart';
 
 class KycServiceScreenEight extends StatelessWidget {
-  const KycServiceScreenEight({Key? key}) : super(key: key);
+  final bool isRedo;
+  const KycServiceScreenEight({Key? key, this.isRedo = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +37,17 @@ class KycServiceScreenEight extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: KycServiceEight(),
+      child: KycServiceEight(
+        isRedo: isRedo,
+      ),
     );
   }
 }
 
 class KycServiceEight extends StatefulWidget {
-  KycServiceEight({super.key});
+  final bool isRedo;
+
+  KycServiceEight({super.key, required this.isRedo});
 
   @override
   State<KycServiceEight> createState() => _KycServiceEightState();
@@ -51,26 +58,13 @@ class _KycServiceEightState extends State<KycServiceEight> {
   late UserCubit _userCubit;
 
   int _index = -1;
-  
-  List<String> servicesPics = [
-    AppImages.dogWalk,
-    AppImages.petDate,
-    AppImages.dogSitter,
-    AppImages.dogTrainer,
-    AppImages.dogVets,
-    AppImages.dogGrooming,
-    AppImages.dogBoarding,
-    AppImages.petCarers,
-    AppImages.dogSellers,
-    AppImages.proPet
-  ];
 
-String agentId = '';
-   
+  String agentId = '';
+
   getUserDetails() async {
     agentId = await StorageHandler.getUserId();
-     
   }
+
   @override
   void initState() {
     getUserDetails();
@@ -85,7 +79,7 @@ String agentId = '';
     final userData = Provider.of<AccountViewModel>(context, listen: true);
     final services = Provider.of<UserViewModel>(context, listen: true);
     userData.getUserId();
-     
+
     return Scaffold(
         body: BlocProvider<UserCubit>(
       lazy: false,
@@ -95,19 +89,20 @@ String agentId = '';
       child: BlocConsumer<UserCubit, UserStates>(
         listener: (context, state) {
           if (state is ServiceProviderListLoaded) {
-
-            if(state.userData.status!){
+            if (state.userData.status!) {
               Modals.showToast('Processed Successfully',
-                messageType: MessageType.success);
-
-            AppNavigator.pushAndStackPage(context,
-                page: KycServiceScreenNine());
-            }else{
+                  messageType: MessageType.success);
+              if (widget.isRedo) {
+                 AppNavigator.pushAndReplaceName(context,
+            name: AppRoutes.serviceProviderLandingPage);
+              } else {
+                AppNavigator.pushAndStackPage(context,
+                    page: KycServiceScreenNine());
+              }
+            } else {
               Modals.showToast('Something went wrong',
-                messageType: MessageType.error);
-
+                  messageType: MessageType.error);
             }
-            
           } else if (state is ServicesLoaded) {
             if (state.services.status!) {
               service = _userCubit.viewModel.services;
@@ -178,9 +173,11 @@ String agentId = '';
                               mainAxisSpacing: 12,
                               itemCount: services.services.length,
                               itemBuilder: (context, index) {
-                                String serviceName = services.services[index].name ?? '';
+                                String serviceName =
+                                    services.services[index].name ?? '';
                                 return ServiceProviderChoice(
-                                  imageUrl: AppImages.dogWalk,
+                                  imageUrl:
+                                      services.services[index].image ?? '',
                                   serviceName: serviceName,
                                   isSelected: user.selectedServiceItems
                                       .contains(serviceName),
@@ -192,7 +189,7 @@ String agentId = '';
                                 );
                               },
                               staggeredTileBuilder: (index) {
-                                return StaggeredTile.count(1, 0.45);
+                                return StaggeredTile.count(1, 0.38);
                               }),
                         ),
                         Spacer(),
@@ -203,10 +200,7 @@ String agentId = '';
                             child: ButtonView(
                               onPressed: () {
                                 userData.getUserId();
-                                //  Modals.showToast(userData.serviceProviderId);
                                 _submit(context, user, userData);
-                                // AppNavigator.pushAndStackPage(context,
-                                //     page: KycServiceScreenNine());
                               },
                               color: AppColors.lightSecondary,
                               borderRadius: 22,
@@ -215,7 +209,7 @@ String agentId = '';
                                 maxLines: 1,
                                 text: 'Select',
                                 weight: FontWeight.w400,
-                                size: 16,
+                                size: 15,
                                 fontFamily: AppStrings.interSans,
                                 color: Colors.white,
                               ),
@@ -234,7 +228,6 @@ String agentId = '';
   }
 
   _submit(BuildContext ctx, var user, var userData) {
-   
     ctx.read<UserCubit>().serviceProvided(
         services: user.selectedServiceItems,
         username: userData.username,
