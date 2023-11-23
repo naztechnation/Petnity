@@ -1,5 +1,3 @@
-
-
 class AgentsOrderRequests {
   bool? status;
   String? message;
@@ -54,10 +52,11 @@ class ShopOrders {
   String? total;
   String? paymentId;
   bool? isPaid;
-  bool? isDelivered;
+  bool? userMarkedDelivered;
+  bool? agentMarkedDelivered;
   String? createdAt;
   String? updatedAt;
-  int? profile;
+  Profile? profile;
   int? agent;
   Product? product;
 
@@ -67,7 +66,8 @@ class ShopOrders {
       this.total,
       this.paymentId,
       this.isPaid,
-      this.isDelivered,
+      this.userMarkedDelivered,
+      this.agentMarkedDelivered,
       this.createdAt,
       this.updatedAt,
       this.profile,
@@ -80,10 +80,12 @@ class ShopOrders {
     total = json['total'];
     paymentId = json['payment_id'];
     isPaid = json['is_paid'];
-    isDelivered = json['is_delivered'];
+    userMarkedDelivered = json['user_marked_delivered'];
+    agentMarkedDelivered = json['agent_marked_delivered'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    profile = json['profile'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'];
     product =
         json['product'] != null ? new Product.fromJson(json['product']) : null;
@@ -96,162 +98,16 @@ class ShopOrders {
     data['total'] = this.total;
     data['payment_id'] = this.paymentId;
     data['is_paid'] = this.isPaid;
-    data['is_delivered'] = this.isDelivered;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['profile'] = this.profile;
-    data['agent'] = this.agent;
-    if (this.product != null) {
-      data['product'] = this.product!.toJson();
-    }
-    return data;
-  }
-}
-
-class Product {
-  int? id;
-  String? name;
-  String? price;
-  bool? inStock;
-  String? image;
-  String? description;
-  String? createdAt;
-  String? updatedAt;
-  Agent? agent;
-
-  Product(
-      {this.id,
-      this.name,
-      this.price,
-      this.inStock,
-      this.image,
-      this.description,
-      this.createdAt,
-      this.updatedAt,
-      this.agent});
-
-  Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    price = json['price'];
-    inStock = json['in_stock'];
-    image = json['image'];
-    description = json['description'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['price'] = this.price;
-    data['in_stock'] = this.inStock;
-    data['image'] = this.image;
-    data['description'] = this.description;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.agent != null) {
-      data['agent'] = this.agent!.toJson();
-    }
-    return data;
-  }
-}
-
-class Agent {
-  int? id;
-  String? name;
-  String? gender;
-  String? dateOfBirth;
-  String? about;
-  String? picture;
-  String? country;
-  String? city;
-  String? idPhoto;
-  bool? isVerified;
-  bool? isReachable;
-  String? createdAt;
-  String? updatedAt;
-  Profile? profile;
-  String? idType;
-  List<Services>? services;
-  List<PetTypes>? petTypes;
-
-  Agent(
-      {this.id,
-      this.name,
-      this.gender,
-      this.dateOfBirth,
-      this.about,
-      this.picture,
-      this.country,
-      this.city,
-      this.idPhoto,
-      this.isVerified,
-      this.isReachable,
-      this.createdAt,
-      this.updatedAt,
-      this.profile,
-      this.idType,
-      this.services,
-      this.petTypes});
-
-  Agent.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    gender = json['gender'];
-    dateOfBirth = json['date_of_birth'];
-    about = json['about'];
-    picture = json['picture'];
-    country = json['country'];
-    city = json['city'];
-    idPhoto = json['id_photo'];
-    isVerified = json['is_verified'];
-    isReachable = json['is_reachable'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    profile =
-        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
-    idType = json['id_type'];
-    if (json['services'] != null) {
-      services = <Services>[];
-      json['services'].forEach((v) {
-        services!.add(new Services.fromJson(v));
-      });
-    }
-    if (json['pet_types'] != null) {
-      petTypes = <PetTypes>[];
-      json['pet_types'].forEach((v) {
-        petTypes!.add(new PetTypes.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['gender'] = this.gender;
-    data['date_of_birth'] = this.dateOfBirth;
-    data['about'] = this.about;
-    data['picture'] = this.picture;
-    data['country'] = this.country;
-    data['city'] = this.city;
-    data['id_photo'] = this.idPhoto;
-    data['is_verified'] = this.isVerified;
-    data['is_reachable'] = this.isReachable;
+    data['user_marked_delivered'] = this.userMarkedDelivered;
+    data['agent_marked_delivered'] = this.agentMarkedDelivered;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     if (this.profile != null) {
       data['profile'] = this.profile!.toJson();
     }
-    data['id_type'] = this.idType;
-    if (this.services != null) {
-      data['services'] = this.services!.map((v) => v.toJson()).toList();
-    }
-    if (this.petTypes != null) {
-      data['pet_types'] = this.petTypes!.map((v) => v.toJson()).toList();
+    data['agent'] = this.agent;
+    if (this.product != null) {
+      data['product'] = this.product!.toJson();
     }
     return data;
   }
@@ -261,10 +117,10 @@ class Profile {
   int? id;
   String? firebaseId;
   String? phoneNumber;
-  String? address;
-  String? city;
-  String? country;
-  String? profileImage;
+  Null? address;
+  Null? city;
+  Null? country;
+  Null? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;
@@ -356,6 +212,155 @@ class User {
   }
 }
 
+class Product {
+  int? id;
+  String? name;
+  String? price;
+  bool? inStock;
+  String? image;
+  String? description;
+  String? createdAt;
+  String? updatedAt;
+  Agent? agent;
+
+  Product(
+      {this.id,
+      this.name,
+      this.price,
+      this.inStock,
+      this.image,
+      this.description,
+      this.createdAt,
+      this.updatedAt,
+      this.agent});
+
+  Product.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    price = json['price'];
+    inStock = json['in_stock'];
+    image = json['image'];
+    description = json['description'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['price'] = this.price;
+    data['in_stock'] = this.inStock;
+    data['image'] = this.image;
+    data['description'] = this.description;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
+    }
+    return data;
+  }
+}
+
+class Agent {
+  int? id;
+  String? name;
+  String? gender;
+  String? dateOfBirth;
+  String? about;
+  String? picture;
+  String? country;
+  String? city;
+  String? idPhoto;
+  bool? isVerified;
+  bool? isReachable;
+  String? createdAt;
+  String? updatedAt;
+  Profile? profile;
+  Null? idType;
+  List<Services>? services;
+  List<PetTypes>? petTypes;
+
+  Agent(
+      {this.id,
+      this.name,
+      this.gender,
+      this.dateOfBirth,
+      this.about,
+      this.picture,
+      this.country,
+      this.city,
+      this.idPhoto,
+      this.isVerified,
+      this.isReachable,
+      this.createdAt,
+      this.updatedAt,
+      this.profile,
+      this.idType,
+      this.services,
+      this.petTypes});
+
+  Agent.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    gender = json['gender'];
+    dateOfBirth = json['date_of_birth'];
+    about = json['about'];
+    picture = json['picture'];
+    country = json['country'];
+    city = json['city'];
+    idPhoto = json['id_photo'];
+    isVerified = json['is_verified'];
+    isReachable = json['is_reachable'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+    idType = json['id_type'];
+    if (json['services'] != null) {
+      services = <Services>[];
+      json['services'].forEach((v) {
+        services!.add(new Services.fromJson(v));
+      });
+    }
+    if (json['pet_types'] != null) {
+      petTypes = <PetTypes>[];
+      json['pet_types'].forEach((v) {
+        petTypes!.add(new PetTypes.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['gender'] = this.gender;
+    data['date_of_birth'] = this.dateOfBirth;
+    data['about'] = this.about;
+    data['picture'] = this.picture;
+    data['country'] = this.country;
+    data['city'] = this.city;
+    data['id_photo'] = this.idPhoto;
+    data['is_verified'] = this.isVerified;
+    data['is_reachable'] = this.isReachable;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.profile != null) {
+      data['profile'] = this.profile!.toJson();
+    }
+    data['id_type'] = this.idType;
+    if (this.services != null) {
+      data['services'] = this.services!.map((v) => v.toJson()).toList();
+    }
+    if (this.petTypes != null) {
+      data['pet_types'] = this.petTypes!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
 class Services {
   int? id;
   String? name;
@@ -376,7 +381,6 @@ class Services {
     data['image'] = this.image;
     return data;
   }
-
 }
 
 class PetTypes {

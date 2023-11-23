@@ -18,10 +18,8 @@ import '../../../../requests/repositories/service_provider_repo/service_provider
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
-import '../../../../res/app_images.dart';
 import '../../../../res/app_routes.dart';
 import '../../../../res/app_strings.dart';
-import '../../../../res/enum.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/custom_text.dart';
@@ -34,6 +32,7 @@ class TrackServicesScreen extends StatelessWidget {
   final String serviceOffered;
   final String agentId;
   final String orderId;
+  final String customerName;
 
   final String sellerId;
   final String startDate1;
@@ -58,7 +57,7 @@ class TrackServicesScreen extends StatelessWidget {
       required this.isAcceptedService,
       required this.isOngoingService,
       required this.isCompletedService,
-      required this.orderId});
+      required this.orderId, required this.customerName});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +79,7 @@ class TrackServicesScreen extends StatelessWidget {
         isAcceptedService: isAcceptedService,
         isOngoingService: isOngoingService,
         isCompletedService: isCompletedService,
-        orderId: orderId,
+        orderId: orderId, customerName: customerName,
       ),
     );
   }
@@ -94,6 +93,8 @@ class TrackServices extends StatefulWidget {
   final String agentId;
   final String sellerId;
   final String orderId;
+  final String customerName;
+
 
   final String startDate1;
   final String startDate2;
@@ -118,7 +119,7 @@ class TrackServices extends StatefulWidget {
       required this.isAcceptedService,
       required this.isOngoingService,
       required this.isCompletedService,
-      required this.orderId});
+      required this.orderId, required this.customerName});
 
   @override
   State<TrackServices> createState() => _TrackServicesState();
@@ -220,12 +221,7 @@ class _TrackServicesState extends State<TrackServices> {
                               CustomText(
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
-                                text: Provider.of<AccountViewModel>(context,
-                                                listen: false)
-                                            .selectedService ==
-                                        Services.trainer
-                                    ? 'Service request'
-                                    : 'Track service',
+                                text:  'Track service',
                                 weight: FontWeight.w700,
                                 size: 20,
                                 fontFamily: AppStrings.interSans,
@@ -257,7 +253,7 @@ class _TrackServicesState extends State<TrackServices> {
                                       fontFamily: AppStrings.interSans,
                                       color: Colors.black,
                                     ),
-                                  if(userType == '')  Row(
+                                   Row(
                                       children: [
                                         CustomText(
                                           textAlign: TextAlign.left,

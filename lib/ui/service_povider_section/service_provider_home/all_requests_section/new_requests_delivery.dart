@@ -383,7 +383,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                       sellerImage: order.agent?.picture ?? '',
                       isAcceptedService: order.isAccepted ?? false,
                       isOngoingService: order.isOngoing ?? false,
-                      isCompletedService: order.isCompleted ?? false, orderId: order.id.toString(),
+                      isCompletedService: order.isCompleted ?? false, orderId: order.id.toString(), customerName: order.profile?.user?.username ?? '',
                     ));
              // } else {
                 Modals.showToast('This Service has not been paid for.');

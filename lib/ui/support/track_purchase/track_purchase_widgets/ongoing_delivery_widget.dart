@@ -222,7 +222,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               isOngoingService:
                                   widget.services.isOngoing ?? false,
                               isCompletedService:
-                                  widget.services.isCompleted ?? false, orderId: widget.services.id.toString(),
+                                  widget.services.isCompleted ?? false, orderId: widget.services.id.toString(), customerName: widget.services.profile?.user?.username?? '',
                             ));
                         // }else{
                         Modals.showToast('This Service has not been paid for.');
