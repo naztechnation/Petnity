@@ -183,4 +183,26 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
     return AuthData.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> agentAcceptDeliveredShopOrder({required String agentId, required String orderId}) async {
+    final map = await Requests().patch(
+        AppStrings.agentMarkDeliveredShopOrder(agentId: agentId, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
+  @override
+  Future<AuthData> userAcceptDeliveredShopOrder({required String username, required String orderId}) async {
+    final map = await Requests().patch(
+        AppStrings.userMarkDeliveredShopOrder(username: username, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
 }

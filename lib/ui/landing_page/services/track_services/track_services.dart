@@ -195,13 +195,21 @@ class _TrackServicesState extends State<TrackServices> {
             } else {
               Modals.showToast(state.order.message ?? '');
             }
+          }else if (state is DeliveredShopOrderLoaded) {
+            if (state.order.status!) {
+              AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.serviceProviderLandingPage);
+              Modals.showToast(state.order.message ?? '');
+            } else {
+              Modals.showToast(state.order.message ?? '');
+            }
           } else if (state is CreateServiceNetworkErr) {
             Modals.showToast(state.message ?? '');
           } else if (state is CreateServiceNetworkErrApiErr) {
             Modals.showToast(state.message ?? '');
           }
         },
-        builder: (context, state) => (state is AcceptOrderLoading)
+        builder: (context, state) => (state is AcceptOrderLoading || state is AcceptShopOrderLoading)
             ? LoadingPage()
             : Stack(
                 children: [
@@ -312,8 +320,10 @@ class _TrackServicesState extends State<TrackServices> {
                       ],
                     ),
                   ),
-                  if (userType == 'user')
-                    Positioned(
+                  if (userType == 'user')...[
+                  if(widget.isAcceptedService &&
+                        widget.isOngoingService &&
+                        widget.isCompletedService)   Positioned(
                       bottom: 30,
                       left: 0,
                       right: 0,
@@ -323,8 +333,10 @@ class _TrackServicesState extends State<TrackServices> {
                         child: ButtonView(
                           borderRadius: 30,
                           onPressed: () {
-                            // AppNavigator.pushAndStackPage(context,
-                            //     page: DateSelection());
+                             userMarkAsDelivered(
+                                ctx: context,
+                                username: username,
+                                orderId: widget.orderId);
                           },
                           child: CustomText(
                             textAlign: TextAlign.center,
@@ -338,6 +350,8 @@ class _TrackServicesState extends State<TrackServices> {
                         ),
                       ),
                     ),
+                  ],
+                   
                   if (userType == 'service_provider') ...[
                     if (!widget.isAcceptedService) ...[
                       Positioned(
@@ -444,7 +458,13 @@ class _TrackServicesState extends State<TrackServices> {
                             children: [
                               ButtonView(
                                 borderRadius: 30,
-                                onPressed: () {},
+                                onPressed: () {
+                                   agentMarkAsDelivered(
+                                ctx: context,
+                                agentId: widget.sellerId,
+                                orderId: widget.orderId,
+                              );
+                                },
                                 child: CustomText(
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
@@ -569,5 +589,25 @@ class _TrackServicesState extends State<TrackServices> {
     ctx
         .read<ServiceProviderCubit>()
         .markCompleteAgentOrder(agentId: agentId, orderId: orderId);
+  }
+
+  agentMarkAsDelivered({
+    required BuildContext ctx,
+    required String agentId,
+    required String orderId,
+  }) {
+    ctx
+        .read<ServiceProviderCubit>()
+        .agentDeliveredOrder(agentId: agentId, orderId: orderId);
+  }
+
+   userMarkAsDelivered({
+    required BuildContext ctx,
+    required String username,
+    required String orderId,
+  }) {
+    ctx
+        .read<ServiceProviderCubit>()
+        .userDeliveredOrder(username: username, orderId: orderId);
   }
 }

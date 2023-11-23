@@ -25,5 +25,7 @@ abstract class ServiceProviderRepository {
     Future<AuthData> acceptAgentOrder({required String agentId, required String orderId,}); 
     Future<AuthData> acceptOngoingOrder({required String agentId, required String orderId,}); 
     Future<AuthData> acceptCompleteOrder({required String agentId, required String orderId,}); 
+    Future<AuthData> userAcceptDeliveredShopOrder({required String username, required String orderId,}); 
+    Future<AuthData> agentAcceptDeliveredShopOrder({required String agentId, required String orderId,}); 
 
 }

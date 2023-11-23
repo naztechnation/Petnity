@@ -344,4 +344,63 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+  
+   Future<void> agentDeliveredOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AcceptShopOrderLoading());
+
+      final services = await serviceProviderRepository.agentAcceptDeliveredShopOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      
+      emit(DeliveredShopOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+ Future<void> userDeliveredOrder({
+    required String username,
+    required String orderId,
+  }) async {
+    try {
+      emit(AcceptShopOrderLoading());
+
+      final services = await serviceProviderRepository.userAcceptDeliveredShopOrder(
+        username: username,
+        orderId: orderId,
+      );
+
+      
+      emit(DeliveredShopOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

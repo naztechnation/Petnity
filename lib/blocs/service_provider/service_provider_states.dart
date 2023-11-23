@@ -145,7 +145,17 @@ class  AcceptOngoingOrderLoaded extends ServiceProviderState {
   List<Object> get props => [order];
 }
 
- 
+ class   AcceptShopOrderLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  DeliveredShopOrderLoaded extends ServiceProviderState {
+  final AuthData order;
+  const  DeliveredShopOrderLoaded(this.order);
+  @override
+  List<Object> get props => [order];
+}
 
 class  AcceptCompletedOrderLoaded extends ServiceProviderState {
   final AuthData order;
