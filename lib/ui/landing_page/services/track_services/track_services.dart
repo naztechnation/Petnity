@@ -45,6 +45,9 @@ class TrackServicesScreen extends StatelessWidget {
   final bool isAcceptedService;
   final bool isOngoingService;
   final bool isCompletedService;
+  final bool isRejected;
+  final bool isUserMarkedService;
+  final bool isAgentMarkedService;
 
   const TrackServicesScreen(
       {required this.sellerName,
@@ -60,11 +63,14 @@ class TrackServicesScreen extends StatelessWidget {
       required this.isAcceptedService,
       required this.isOngoingService,
       required this.isCompletedService,
-      required this.orderId, 
+      required this.orderId,
       required this.customerName,
-       required this.customerPhone, 
-       required this.customerImage,
-        required this.customerFireBaseId});
+      required this.customerPhone,
+      required this.customerImage,
+      required this.customerFireBaseId,
+      required this.isRejected,
+      required this.isUserMarkedService,
+      required this.isAgentMarkedService});
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +92,14 @@ class TrackServicesScreen extends StatelessWidget {
         isAcceptedService: isAcceptedService,
         isOngoingService: isOngoingService,
         isCompletedService: isCompletedService,
-        orderId: orderId, customerName: customerName, customerPhone: customerPhone, customerImage: customerImage, customerFireBaseId: customerFireBaseId,
+        orderId: orderId,
+        customerName: customerName,
+        customerPhone: customerPhone,
+        customerImage: customerImage,
+        customerFireBaseId: customerFireBaseId,
+        isRejected: isRejected,
+        isUserMarkedService: isUserMarkedService,
+        isAgentMarkedService: isAgentMarkedService,
       ),
     );
   }
@@ -101,7 +114,7 @@ class TrackServices extends StatefulWidget {
   final String sellerId;
   final String orderId;
   final String customerName;
-final String customerPhone;
+  final String customerPhone;
   final String customerImage;
   final String customerFireBaseId;
 
@@ -112,6 +125,10 @@ final String customerPhone;
   final bool isAcceptedService;
   final bool isOngoingService;
   final bool isCompletedService;
+  final bool isRejected;
+
+  final bool isUserMarkedService;
+  final bool isAgentMarkedService;
 
   const TrackServices(
       {super.key,
@@ -128,7 +145,14 @@ final String customerPhone;
       required this.isAcceptedService,
       required this.isOngoingService,
       required this.isCompletedService,
-      required this.orderId, required this.customerName, required this.customerPhone, required this.customerImage, required this.customerFireBaseId});
+      required this.orderId,
+      required this.customerName,
+      required this.customerPhone,
+      required this.customerImage,
+      required this.customerFireBaseId,
+      required this.isRejected,
+      required this.isUserMarkedService,
+      required this.isAgentMarkedService});
 
   @override
   State<TrackServices> createState() => _TrackServicesState();
@@ -195,7 +219,15 @@ class _TrackServicesState extends State<TrackServices> {
             } else {
               Modals.showToast(state.order.message ?? '');
             }
-          }else if (state is DeliveredShopOrderLoaded) {
+          } else if (state is DeliveredShopOrderLoaded) {
+            if (state.order.status!) {
+              AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.serviceProviderLandingPage);
+              Modals.showToast(state.order.message ?? '');
+            } else {
+              Modals.showToast(state.order.message ?? '');
+            }
+          } else if (state is RejectOrderLoaded) {
             if (state.order.status!) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
@@ -209,7 +241,9 @@ class _TrackServicesState extends State<TrackServices> {
             Modals.showToast(state.message ?? '');
           }
         },
-        builder: (context, state) => (state is AcceptOrderLoading || state is AcceptShopOrderLoading)
+        builder: (context, state) => (state is AcceptOrderLoading ||
+                state is AcceptShopOrderLoading ||
+                state is RejectOrderLoading)
             ? LoadingPage()
             : Stack(
                 children: [
@@ -238,7 +272,7 @@ class _TrackServicesState extends State<TrackServices> {
                               CustomText(
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
-                                text:  'Track service',
+                                text: 'Track service',
                                 weight: FontWeight.w700,
                                 size: 20,
                                 fontFamily: AppStrings.interSans,
@@ -264,13 +298,15 @@ class _TrackServicesState extends State<TrackServices> {
                                     CustomText(
                                       textAlign: TextAlign.left,
                                       maxLines: 2,
-                                      text: (userType == 'user') ? 'Service provider details' : 'Customer details',
+                                      text: (userType == 'user')
+                                          ? 'Service provider details'
+                                          : 'Customer details',
                                       weight: FontWeight.w700,
                                       size: 12,
                                       fontFamily: AppStrings.interSans,
                                       color: Colors.black,
                                     ),
-                                   Row(
+                                    Row(
                                       children: [
                                         CustomText(
                                           textAlign: TextAlign.left,
@@ -311,8 +347,11 @@ class _TrackServicesState extends State<TrackServices> {
                                 amount: widget.amount,
                                 paymentId: widget.paymentId,
                                 sellerPhoto: widget.sellerPhoto,
-                                sessionStatus: sessionStatus, 
-                                customerName: widget.customerName, customerImage: '', customerPhone: '', customerFireBaseId: '',
+                                sessionStatus: sessionStatus,
+                                customerName: widget.customerName,
+                                customerImage: '',
+                                customerPhone: '',
+                                customerFireBaseId: '',
                               )
                             ],
                           )),
@@ -320,224 +359,334 @@ class _TrackServicesState extends State<TrackServices> {
                       ],
                     ),
                   ),
-                  if (userType == 'user')...[
-                  if(widget.isAcceptedService &&
-                        widget.isOngoingService &&
-                        widget.isCompletedService)   Positioned(
-                      bottom: 30,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            bottom: 50, left: 20, right: 20),
-                        child: ButtonView(
-                          borderRadius: 30,
-                          onPressed: () {
-                             userMarkAsDelivered(
-                                ctx: context,
-                                username: username,
-                                orderId: widget.orderId);
-                          },
-                          child: CustomText(
-                            textAlign: TextAlign.center,
-                            maxLines: 2,
-                            text: 'Release payment',
-                            weight: FontWeight.w700,
-                            size: 16,
-                            fontFamily: AppStrings.interSans,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                   
-                  if (userType == 'service_provider') ...[
-                    if (!widget.isAcceptedService) ...[
-                      Positioned(
-                        bottom: 30,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                              bottom: 50, left: 20, right: 20),
-                          child: ButtonView(
-                            borderRadius: 30,
-                            onPressed: () {
-                              markAccepted(
-                                ctx: context,
-                                agentId: widget.sellerId,
-                                orderId: widget.orderId,
-                              );
-                            },
-                            child: CustomText(
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              text: 'Accept Services',
-                              weight: FontWeight.w400,
-                              size: 15,
-                              fontFamily: AppStrings.interSans,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ] else if (widget.isAcceptedService &&
-                        !widget.isOngoingService) ...[
-                      Positioned(
-                        bottom: 30,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                              bottom: 50, left: 20, right: 20),
-                          child: ButtonView(
-                            borderRadius: 30,
-                            onPressed: () {
-                              markOngoingAccepted(
-                                ctx: context,
-                                agentId: widget.sellerId,
-                                orderId: widget.orderId,
-                              );
-                            },
-                            child: CustomText(
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              text: 'Tag as ongoing service',
-                              weight: FontWeight.w400,
-                              size: 15,
-                              fontFamily: AppStrings.interSans,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ] else if (widget.isAcceptedService &&
-                        widget.isOngoingService && !widget.isCompletedService) ...[
-                      Positioned(
-                        bottom: 30,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          margin: const EdgeInsets.only(
-                              bottom: 50, left: 20, right: 20),
-                          child: ButtonView(
-                            borderRadius: 30,
-                            onPressed: () {
-                              markCompletedAccepted(
-                                ctx: context,
-                                agentId: widget.sellerId,
-                                orderId: widget.orderId,
-                              );
-                            },
-                            child: CustomText(
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              text: 'Mark as completed',
-                              weight: FontWeight.w400,
-                              size: 15,
-                              fontFamily: AppStrings.interSans,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ] else if (widget.isAcceptedService &&
-                        widget.isOngoingService &&
-                        widget.isCompletedService) ...[
+                  if (userType == 'user') ...[
+                    if (widget.isRejected) ...[
                       Positioned(
                         bottom: 0,
                         left: 0,
                         right: 0,
                         child: Container(
-                          color: Colors.white,
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(
+                                bottom: 50, top: 50, left: 20, right: 20),
+                            child: Center(
+                              child: CustomText(
+                                text:
+                                    'This service has rejected by the service provider',
+                                color: Colors.red,
+                                size: 14,
+                                weight: FontWeight.w700,
+                              ),
+                            )),
+                      )
+                    ] else if (
+                      widget.isAcceptedService &&
+                        widget.isOngoingService &&
+                        widget.isCompletedService &&
+                        !widget.isAgentMarkedService &&
+                        !widget.isUserMarkedService) ...[
+                      Positioned(
+                        bottom: 30,
+                        left: 0,
+                        right: 0,
+                        child: Container(
                           margin: const EdgeInsets.only(
-                              bottom: 0, left: 0, right: 0),
-                          padding: const EdgeInsets.all(50),
-                          child: Column(
-                            children: [
-                              ButtonView(
-                                borderRadius: 30,
-                                onPressed: () {
-                                   agentMarkAsDelivered(
-                                ctx: context,
-                                agentId: widget.sellerId,
-                                orderId: widget.orderId,
-                              );
-                                },
-                                child: CustomText(
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  text: 'Receive Payment',
-                                  weight: FontWeight.w400,
-                                  size: 15,
-                                  fontFamily: AppStrings.interSans,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(
-                                    horizontal:
-                                        screenSize(context).width * .05),
-                                padding: EdgeInsets.all(15),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      child: CustomText(
-                                        text: 'Report owner',
-                                        color: Colors.red,
-                                        size: 12,
-                                        weight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              CustomText(
-                                text: 'Why service charge?',
-                                size: 12,
-                                weight: FontWeight.bold,
-                                color: Colors.blue,
-                              ),
-
-                              const SizedBox(height: 20,),
-                              Row(
-                                children: [
-                                  Icon(Icons.info, size: 20, color: Colors.red.shade300,),
-                              const SizedBox(width: 10,),
-
-                                  CustomText(
-                                text: 'Note',
-                                size: 12,
-                                weight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                                ],
-                              ),
-                              const SizedBox(height: 10,),
-
-                              CustomText(
-                                text: '• Process would be tagged as completed when buyer receives payment.',
-                                size: 12,
-                                maxLines: 2,
-                                weight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                              const SizedBox(height: 10,),
-
-                              CustomText(
-                                text: '• Payment would be released for withdrawal immediately user flags service completed.',
-                                size: 12,
-                                maxLines: 2,
-                                weight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ],
-                          ),
+                              bottom: 50, left: 20, right: 20),
+                          child: ButtonView(
+                            borderRadius: 30,
+                            onPressed: () {
+                              userMarkAsDelivered(
+                                  ctx: context,
+                                  username: username,
+                                  orderId: widget.orderId);
+                            },
+                            child: CustomText(
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              text: 'Release payment',
+                              weight: FontWeight.w700,
+                              size: 16,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.white,
+                            ),
+                          ), 
                         ),
                       ),
+                    ] else if (widget.isAcceptedService &&
+                        widget.isOngoingService &&
+                        widget.isCompletedService &&
+                        widget.isAgentMarkedService &&
+                        widget.isUserMarkedService) ...[
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(
+                                bottom: 50, top: 50, left: 20, right: 20),
+                            child: Center(
+                              child: CustomText(
+                                text: 'Service Completed',
+                                color: Colors.blue,
+                                size: 14,
+                                weight: FontWeight.w700,
+                              ),
+                            )),
+                      )
                     ]
+                  ],
+                  if (userType == 'service_provider') ...[
+                    if (widget.isRejected) ...[
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(
+                                bottom: 50, top: 50, left: 20, right: 20),
+                            child: Center(
+                              child: CustomText(
+                                text: 'Service Rejected',
+                                color: Colors.red,
+                                size: 14,
+                                weight: FontWeight.w700,
+                              ),
+                            )),
+                      )
+                    ] else ...[
+                      if (!widget.isAcceptedService) ...[
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(
+                                top: 50, left: 20, right: 20),
+                            child: Column(
+                              children: [
+                                ButtonView(
+                                  borderRadius: 30,
+                                  onPressed: () {
+                                    markAccepted(
+                                      ctx: context,
+                                      agentId: widget.sellerId,
+                                      orderId: widget.orderId,
+                                    );
+                                  },
+                                  child: CustomText(
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    text: 'Accept Services',
+                                    weight: FontWeight.w400,
+                                    size: 15,
+                                    fontFamily: AppStrings.interSans,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Modals.showAlertOptionDialog(context,
+                                        title: 'Warning!!!',
+                                        message:
+                                            'Are you sure you want to reject this service as this action cannot be reversed once completed.',
+                                        onTap: () {
+                                      rejectUserOrder(
+                                        ctx: context,
+                                        agentId: widget.sellerId,
+                                        orderId: widget.orderId,
+                                      );
+                                    });
+                                  },
+                                  child: Center(
+                                    child: CustomText(
+                                      text: 'Reject order',
+                                      color: Colors.red,
+                                      size: 14,
+                                      weight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ] else if (widget.isAcceptedService &&
+                          !widget.isOngoingService) ...[
+                        Positioned(
+                          bottom: 30,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                bottom: 50, left: 20, right: 20),
+                            child: ButtonView(
+                              borderRadius: 30,
+                              onPressed: () {
+                                markOngoingAccepted(
+                                  ctx: context,
+                                  agentId: widget.sellerId,
+                                  orderId: widget.orderId,
+                                );
+                              },
+                              child: CustomText(
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                text: 'Tag as ongoing service',
+                                weight: FontWeight.w400,
+                                size: 15,
+                                fontFamily: AppStrings.interSans,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ] else if (widget.isAcceptedService &&
+                          widget.isOngoingService &&
+                          !widget.isCompletedService) ...[
+                        Positioned(
+                          bottom: 30,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            margin: const EdgeInsets.only(
+                                bottom: 50, left: 20, right: 20),
+                            child: ButtonView(
+                              borderRadius: 30,
+                              onPressed: () {
+                                markCompletedAccepted(
+                                  ctx: context,
+                                  agentId: widget.sellerId,
+                                  orderId: widget.orderId,
+                                );
+                              },
+                              child: CustomText(
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                text: 'Mark as completed',
+                                weight: FontWeight.w400,
+                                size: 15,
+                                fontFamily: AppStrings.interSans,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ] else if (widget.isAcceptedService &&
+                          widget.isOngoingService &&
+                          widget.isCompletedService) ...[
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                            color: Colors.white,
+                            margin: const EdgeInsets.only(
+                                bottom: 0, left: 0, right: 0),
+                            padding: const EdgeInsets.all(50),
+                            child: Column(
+                              children: [
+                                ButtonView(
+                                  borderRadius: 30,
+                                  onPressed: () {
+                                    agentMarkAsDelivered(
+                                      ctx: context,
+                                      agentId: widget.sellerId,
+                                      orderId: widget.orderId,
+                                    );
+                                  },
+                                  child: CustomText(
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    text: 'Receive Payment',
+                                    weight: FontWeight.w400,
+                                    size: 15,
+                                    fontFamily: AppStrings.interSans,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal:
+                                          screenSize(context).width * .05),
+                                  padding: EdgeInsets.all(15),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
+                                        child: CustomText(
+                                          text: 'Report owner',
+                                          color: Colors.red,
+                                          size: 12,
+                                          weight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                CustomText(
+                                  text: 'Why service charge?',
+                                  size: 12,
+                                  weight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.info,
+                                      size: 20,
+                                      color: Colors.red.shade300,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    CustomText(
+                                      text: 'Note',
+                                      size: 12,
+                                      weight: FontWeight.w400,
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                CustomText(
+                                  text:
+                                      '• Process would be tagged as completed when buyer receives payment.',
+                                  size: 12,
+                                  maxLines: 2,
+                                  weight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                CustomText(
+                                  text:
+                                      '• Payment would be released for withdrawal immediately user flags service completed.',
+                                  size: 12,
+                                  maxLines: 2,
+                                  weight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ]
+                    ],
                   ]
                 ],
               ),
@@ -546,7 +695,9 @@ class _TrackServicesState extends State<TrackServices> {
   }
 
   checkStatus() {
-    if (!widget.isAcceptedService) {
+    if (widget.isRejected) {
+      sessionStatus = 'Session has been rejected';
+    } else if (!widget.isAcceptedService) {
       sessionStatus = 'Awaiting session';
     } else if (widget.isAcceptedService && !widget.isOngoingService) {
       sessionStatus = 'Session is Accepted';
@@ -601,7 +752,7 @@ class _TrackServicesState extends State<TrackServices> {
         .agentDeliveredOrder(agentId: agentId, orderId: orderId);
   }
 
-   userMarkAsDelivered({
+  userMarkAsDelivered({
     required BuildContext ctx,
     required String username,
     required String orderId,
@@ -609,5 +760,15 @@ class _TrackServicesState extends State<TrackServices> {
     ctx
         .read<ServiceProviderCubit>()
         .userDeliveredOrder(username: username, orderId: orderId);
+  }
+
+  rejectUserOrder({
+    required BuildContext ctx,
+    required String agentId,
+    required String orderId,
+  }) {
+    ctx
+        .read<ServiceProviderCubit>()
+        .rejectUserOrder(agentId: agentId, orderId: orderId);
   }
 }

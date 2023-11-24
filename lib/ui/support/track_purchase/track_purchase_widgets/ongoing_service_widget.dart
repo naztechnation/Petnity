@@ -208,6 +208,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             isCompletedService: allOrders.isCompleted ?? false,
                             orderId: allOrders.id.toString(), customerName: '', 
                             customerPhone: '', customerImage: '', customerFireBaseId: '',
+                            isRejected: allOrders.isRejected ?? false, isUserMarkedService: allOrders.userMarkedDelivered ?? false, isAgentMarkedService: allOrders.agentMarkedDelivered ?? false,
                           ));
                     },
                     child: Text(widget.label),

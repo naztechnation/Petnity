@@ -35,6 +35,8 @@ class UserOrders {
   bool? isPaid;
   bool? isAccepted;
   bool? isRejected;
+  bool? userMarkedDelivered;
+  bool? agentMarkedDelivered;
   bool? isOngoing;
   bool? isCompleted;
   bool? paymentReleased;
@@ -56,6 +58,8 @@ class UserOrders {
       this.isRejected,
       this.isOngoing,
       this.isCompleted,
+      this.userMarkedDelivered,
+      this.agentMarkedDelivered,
       this.paymentReleased,
       this.dateCreated,
       this.profile,
@@ -77,6 +81,8 @@ class UserOrders {
     isCompleted = json['is_completed'];
     paymentReleased = json['payment_released'];
     dateCreated = json['date_created'];
+    userMarkedDelivered = json['user_marked_delivered'];
+    agentMarkedDelivered = json['agent_marked_delivered'];
     profile =
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
@@ -99,6 +105,8 @@ class UserOrders {
     data['is_ongoing'] = this.isOngoing;
     data['is_completed'] = this.isCompleted;
     data['payment_released'] = this.paymentReleased;
+    data['user_marked_delivered'] = this.userMarkedDelivered;
+    data['agent_marked_delivered'] = this.agentMarkedDelivered;
     data['date_created'] = this.dateCreated;
     if (this.profile != null) {
       data['profile'] = this.profile!.toJson();

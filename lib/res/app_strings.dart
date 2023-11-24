@@ -136,4 +136,14 @@ class AppStrings {
   static String agentMarkDeliveredShopOrder(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}shop/agent-marked-delivered/$agentId/$orderId';
+
+      static String agentRejectServiceOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-reject-order/$agentId/$orderId';
+
+       static String userMarkOrderDelivered(
+          {required String username, required String orderId}) =>
+      '${_baseUrl}order/user-complete-order/$username/$orderId';
+
+      
 }

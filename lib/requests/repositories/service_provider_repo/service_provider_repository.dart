@@ -13,7 +13,6 @@ abstract class ServiceProviderRepository {
    
 
   
-    Future<CreateOrder> createService({required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation});
     Future<ServiceAmount> createServiceAmount({required String agentId,required String servicesId,required String levelAmount});
     Future<AuthData> publishPackage({required String agentId,required String servicesId,});
     Future<AgentsOrderRequests> agentOrders({required String agentId,required String page,});
@@ -27,5 +26,8 @@ abstract class ServiceProviderRepository {
     Future<AuthData> acceptCompleteOrder({required String agentId, required String orderId,}); 
     Future<AuthData> userAcceptDeliveredShopOrder({required String username, required String orderId,}); 
     Future<AuthData> agentAcceptDeliveredShopOrder({required String agentId, required String orderId,}); 
+    Future<AuthData> agentRejectServiceOrder({required String agentId, required String orderId,}); 
+    Future<AuthData> userAcceptOrderDelivered({required String username, required String orderId,}); 
+
 
 }

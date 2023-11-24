@@ -138,7 +138,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 1.0),
               child: Row(
                 children: [
-                  // Tab 1
+                  
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -399,7 +399,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     customerName: order.profile?.user?.username ?? '',
                     customerFireBaseId: order.profile?.firebaseId ?? '',
                     customerImage: order.profile?.profileImage ?? '',
-                    customerPhone: order.profile?.phoneNumber ?? '',
+                    customerPhone: order.profile?.phoneNumber ?? '', isRejected: order.isRejected ?? false, isUserMarkedService: order.userMarkedDelivered ?? false, isAgentMarkedService: order.agentMarkedDelivered ?? false,
                   ));
               // } else {
               Modals.showToast('This Service has not been paid for.');
@@ -443,7 +443,9 @@ class _ServiceProviderPetDeliveryHomeBodyState
           children: [
             Expanded(
               child: CustomText(
-                text: order.profile?.user?.username.toString().capitalizeFirstOfEach,
+                text: order.profile?.user?.username
+                    .toString()
+                    .capitalizeFirstOfEach,
                 size: 14,
                 weight: FontWeight.bold,
               ),

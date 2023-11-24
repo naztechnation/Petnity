@@ -36,6 +36,8 @@ class AgentServicesListOrders {
   bool? isAccepted;
   bool? isRejected;
   bool? isOngoing;
+  bool? userMarkedDelivered;
+  bool? agentMarkedDelivered;
   bool? isCompleted;
   bool? paymentReleased;
   String? dateCreated;
@@ -55,6 +57,8 @@ class AgentServicesListOrders {
       this.isAccepted,
       this.isRejected,
       this.isOngoing,
+      this.userMarkedDelivered,
+      this.agentMarkedDelivered,
       this.isCompleted,
       this.paymentReleased,
       this.dateCreated,
@@ -74,6 +78,8 @@ class AgentServicesListOrders {
     isAccepted = json['is_accepted'];
     isRejected = json['is_rejected'];
     isOngoing = json['is_ongoing'];
+    userMarkedDelivered = json['user_marked_delivered'];
+    agentMarkedDelivered = json['agent_marked_delivered'];
     isCompleted = json['is_completed'];
     paymentReleased = json['payment_released'];
     dateCreated = json['date_created'];
@@ -97,6 +103,8 @@ class AgentServicesListOrders {
     data['is_accepted'] = this.isAccepted;
     data['is_rejected'] = this.isRejected;
     data['is_ongoing'] = this.isOngoing;
+    data['user_marked_delivered'] = this.userMarkedDelivered;
+    data['agent_marked_delivered'] = this.agentMarkedDelivered;
     data['is_completed'] = this.isCompleted;
     data['payment_released'] = this.paymentReleased;
     data['date_created'] = this.dateCreated;
@@ -117,10 +125,10 @@ class Profile {
   int? id;
   String? firebaseId;
   String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
-  Null? profileImage;
+  String? address;
+  String? city;
+  String? country;
+  String? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;

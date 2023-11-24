@@ -224,7 +224,13 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                   widget.services.isOngoing ?? false,
                               isCompletedService:
                                   widget.services.isCompleted ?? false, orderId: widget.services.id.toString(),
-                                   customerName: widget.services.profile?.user?.username?? '', customerPhone: widget.services.profile?.phoneNumber ?? '', customerImage: widget.services.profile?.profileImage ?? '', customerFireBaseId: widget.services.profile?.firebaseId ?? '',
+                                   customerName: widget.services.profile?.user?.username?? '', 
+                                   customerPhone: widget.services.profile?.phoneNumber ?? '',
+                                    customerImage: widget.services.profile?.profileImage ?? '', 
+                                    customerFireBaseId: widget.services.profile?.firebaseId ?? '',
+                                     isRejected: widget.services.isRejected ?? false,
+                                      isUserMarkedService: widget.services.userMarkedDelivered ?? false,
+                                       isAgentMarkedService: widget.services.agentMarkedDelivered ?? false,
                             ));
                         // }else{
                         Modals.showToast('This Service has not been paid for.');

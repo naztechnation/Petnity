@@ -270,7 +270,7 @@ class UserViewModel extends BaseViewModel {
     List<UserOrders> list = [];
 
     for (var order in _ordersList) {
-      if (order.isPaid == true && order.isCompleted == true) {
+      if (order.isPaid == true && order.isCompleted == true && order.agentMarkedDelivered == true && order.userMarkedDelivered == true) {
         list.add(order);
       }
     }
