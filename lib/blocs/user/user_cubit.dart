@@ -293,6 +293,28 @@ Future<void> getAgentProfile() async {
     }
   }
 
+   Future<void> agentShoppingList(String agentId)async {
+    try {
+      emit(ShoppingListLoading());
+
+      final shoppingList = await userRepository.agentShoppingList(agentId: agentId);
+
+      emit(ShoppingListLoaded(shoppingList));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<void> productDetails({required String productId}) async {
     try {
       emit(ProductDetailsLoading());

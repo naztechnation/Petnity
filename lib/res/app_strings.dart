@@ -14,11 +14,11 @@ class AppStrings {
 
   ///app tokens
 
-  static const token = 'Token 2621dfbf5beb58d815961c015b18e79a34a98c4e';
+  static const token = 'Token 73adfcf7561bb4f05bd49ef5388761052c7f154a';
 
   ///base url
 
-  static const String _baseUrl = 'https://api.petnity.official-management.com/';
+  static const String _baseUrl = 'https://api.lucacify.com/';
 
   static const String _androidKey = 'AIzaSyCGhgIA6avmf0LRLakXaAama2vRnBsyL_Q';
   static const String _iosKey = 'Google Maps API key';
@@ -144,6 +144,11 @@ class AppStrings {
        static String userMarkOrderDelivered(
           {required String username, required String orderId}) =>
       '${_baseUrl}order/user-complete-order/$username/$orderId';
+ static String agentMarkOrderDelivered(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/user-complete-order/$agentId/$orderId';
+  static String getAgentsProducts(
+          {required String agentId, }) =>
+      '${_baseUrl}shop/get-agent-products/$agentId';
 
-      
 }

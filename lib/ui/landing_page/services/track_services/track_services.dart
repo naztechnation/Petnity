@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 import '../../../../blocs/service_provider/service_provider.dart';
 import '../../../../blocs/user/user.dart';
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/view_models/account_view_model.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
@@ -235,6 +233,15 @@ class _TrackServicesState extends State<TrackServices> {
             } else {
               Modals.showToast(state.order.message ?? '');
             }
+          } else if (state is UserAcceptOrderDeliveredOrderLoaded) {
+            if (state.order.status!) {
+              AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.landingPage);
+
+              Modals.showToast(state.order.message ?? '');
+            } else {
+              Modals.showToast(state.order.message ?? '');
+            }
           } else if (state is CreateServiceNetworkErr) {
             Modals.showToast(state.message ?? '');
           } else if (state is CreateServiceNetworkErrApiErr) {
@@ -379,8 +386,7 @@ class _TrackServicesState extends State<TrackServices> {
                               ),
                             )),
                       )
-                    ] else if (
-                      widget.isAcceptedService &&
+                    ] else if (widget.isAcceptedService &&
                         widget.isOngoingService &&
                         widget.isCompletedService &&
                         !widget.isAgentMarkedService &&
@@ -409,7 +415,7 @@ class _TrackServicesState extends State<TrackServices> {
                               fontFamily: AppStrings.interSans,
                               color: Colors.white,
                             ),
-                          ), 
+                          ),
                         ),
                       ),
                     ] else if (widget.isAcceptedService &&
@@ -434,6 +440,31 @@ class _TrackServicesState extends State<TrackServices> {
                               ),
                             )),
                       )
+                    ] else if (!widget.isAcceptedService) ...[
+                      Positioned(
+                        bottom: 30,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              bottom: 50, left: 20, right: 20),
+                          child: ButtonView(
+                            borderRadius: 30,
+                            color: Colors.yellow.shade600,
+                            borderColor: Colors.yellow.shade600,
+                            onPressed: () {},
+                            child: CustomText(
+                              textAlign: TextAlign.center,
+                              maxLines: 2,
+                              text: 'Pending Acceptance',
+                              weight: FontWeight.w700,
+                              size: 16,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ]
                   ],
                   if (userType == 'service_provider') ...[
@@ -582,7 +613,9 @@ class _TrackServicesState extends State<TrackServices> {
                         ),
                       ] else if (widget.isAcceptedService &&
                           widget.isOngoingService &&
-                          widget.isCompletedService) ...[
+                          widget.isCompletedService &&
+                          widget.isUserMarkedService &&
+                          !widget.isAgentMarkedService) ...[
                         Positioned(
                           bottom: 0,
                           left: 0,
@@ -759,7 +792,7 @@ class _TrackServicesState extends State<TrackServices> {
   }) {
     ctx
         .read<ServiceProviderCubit>()
-        .userDeliveredOrder(username: username, orderId: orderId);
+        .userAcknowledgeOrderDelivered(username: username, orderId: orderId);
   }
 
   rejectUserOrder({

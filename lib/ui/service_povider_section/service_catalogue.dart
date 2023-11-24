@@ -22,6 +22,7 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
 import '../../../utils/app_utils.dart';
+import '../../handlers/secure_handler.dart';
 import '../widgets/text_edit_view.dart';
 
 class ServiceProviderCatalogueScreen extends StatelessWidget {
@@ -50,11 +51,19 @@ class _ShopState extends State<Shop> {
   List<Products> filteredProducts = [];
   final searchController = TextEditingController();
 
+  String agentId = "";
+
+  getAgentId() async {
+    agentId = await StorageHandler.getAgentId();
+
+     _userCubit = context.read<UserCubit>();
+
+    _userCubit.agentShoppingList(agentId);
+  }
+
   @override
   void initState() {
-    _userCubit = context.read<UserCubit>();
-
-    _userCubit.shoppingList();
+    getAgentId();
     super.initState();
   }
 

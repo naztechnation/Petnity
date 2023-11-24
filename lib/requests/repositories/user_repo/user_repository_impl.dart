@@ -131,6 +131,14 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<ShoppingList> agentShoppingList({required String agentId}) async {
+    final map = await Requests().get(AppStrings.getAgentsProducts(agentId: agentId), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return ShoppingList.fromJson(map);
+  }
+
+  @override
   Future<ProductDetails> productDetails({required String productId}) async {
     final map =
         await Requests().get(AppStrings.productDetailsUrl(productId), headers: {

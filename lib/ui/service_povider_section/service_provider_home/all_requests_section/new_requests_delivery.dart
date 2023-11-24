@@ -399,7 +399,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     customerName: order.profile?.user?.username ?? '',
                     customerFireBaseId: order.profile?.firebaseId ?? '',
                     customerImage: order.profile?.profileImage ?? '',
-                    customerPhone: order.profile?.phoneNumber ?? '', isRejected: order.isRejected ?? false, isUserMarkedService: order.userMarkedDelivered ?? false, isAgentMarkedService: order.agentMarkedDelivered ?? false,
+                    customerPhone: order.profile?.phoneNumber ?? '',
+                     isRejected: order.isRejected ?? false, 
+                     isUserMarkedService: order.userMarkedDelivered ?? false, 
+                     isAgentMarkedService: order.agentMarkedDelivered ?? false,
                   ));
               // } else {
               Modals.showToast('This Service has not been paid for.');

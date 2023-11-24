@@ -169,6 +169,13 @@ class  DeliveredShopOrderLoaded extends ServiceProviderState {
   List<Object> get props => [order];
 }
 
+class  UserAcceptOrderDeliveredOrderLoaded extends ServiceProviderState {
+  final AuthData order;
+  const  UserAcceptOrderDeliveredOrderLoaded(this.order);
+  @override
+  List<Object> get props => [order];
+}
+
 class  AcceptCompletedOrderLoaded extends ServiceProviderState {
   final AuthData order;
   const  AcceptCompletedOrderLoaded(this.order);
