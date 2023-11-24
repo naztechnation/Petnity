@@ -40,21 +40,13 @@ class KycScreen extends StatefulWidget {
 }
 
 class _KycScreenState extends State<KycScreen> {
-  List<PetTypes> petServices = [];
+  List<PetTypes> petTypes = [];
 
   bool isLoading = false;
 
   late AccountCubit _accountCubit;
   int _index = -1;
-  List<String> pets = [
-    'Dogs ',
-    'Cat',
-    'Monkeys',
-    'Squirrels',
-    'Parrot',
-    'Birds',
-    'Rabbit',
-  ];
+ 
   List<String> petsPics = [
     AppImages.dogsPic,
     AppImages.catPic,
@@ -92,7 +84,7 @@ class _KycScreenState extends State<KycScreen> {
           BlocConsumer<AccountCubit, AccountStates>(listener: (context, state) {
         if (state is PetTypesLoaded) {
           if (state.services.status!) {
-            petServices = state.services.petTypes ?? [];
+            petTypes = state.services.petTypes ?? [];
           } else {}
         } else if (state is AccountApiErr) {
         } else if (state is AccountNetworkErr) {}
@@ -140,18 +132,18 @@ class _KycScreenState extends State<KycScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 15,
-                        itemCount: petServices.length,
+                        itemCount: petTypes.length,
                         itemBuilder: (context, index) {
                           return PetType(
                             imageUrl: petsPics[index],
-                            petName: petServices[index].name ?? "",
+                            petName: petTypes[index].name ?? "",
                             isPetType: _index == index,
                             onPressed: () {
                               setState(() {
                                 _index = index;
 
                                 petProfile
-                                    .setPetType(petServices[index].name ?? '');
+                                    .setPetType(petTypes[index].name ?? '');
                                 petProfile.setPetTypeIndex('${index + 1}');
                               });
                             },

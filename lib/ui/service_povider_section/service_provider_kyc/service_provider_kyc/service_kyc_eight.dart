@@ -143,7 +143,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
                         CustomText(
                           textAlign: TextAlign.left,
                           maxLines: 2,
-                          text: 'Select service',
+                          text: 'Select Service(s)',
                           weight: FontWeight.w700,
                           size: 24,
                           fontFamily: AppStrings.montserrat,

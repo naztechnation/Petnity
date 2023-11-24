@@ -1,3 +1,5 @@
+import 'package:petnity/model/user_models/order_list.dart';
+
 class PetProfile {
   bool? status;
   String? message;
@@ -32,8 +34,9 @@ class Pet {
   String? picture;
   bool? hasHealthIssues;
   bool? isAllergic;
-  int? profile;
-  int? type;
+  Profile? profile;
+
+  int? idType;
 
   Pet(
       {this.id,
@@ -46,7 +49,7 @@ class Pet {
       this.hasHealthIssues,
       this.isAllergic,
       this.profile,
-      this.type});
+      this.idType});
 
   Pet.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -58,8 +61,9 @@ class Pet {
     picture = json['picture'];
     hasHealthIssues = json['has_health_issues'];
     isAllergic = json['is_allergic'];
-    profile = json['profile'];
-    type = json['type'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+    idType = json['id_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,8 +77,10 @@ class Pet {
     data['picture'] = this.picture;
     data['has_health_issues'] = this.hasHealthIssues;
     data['is_allergic'] = this.isAllergic;
-    data['profile'] = this.profile;
-    data['type'] = this.type;
+
+    if (this.profile != null) {
+      data['profile'] = this.profile!.toJson();
+    }
     return data;
   }
 }

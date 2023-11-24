@@ -117,10 +117,10 @@ class Profile {
   int? id;
   String? firebaseId;
   String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
-  Null? profileImage;
+  String? address;
+  String? city;
+  String? country;
+  String? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;
@@ -278,7 +278,7 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  Null? idType;
+  int? idType;
   List<Services>? services;
   List<PetTypes>? petTypes;
 

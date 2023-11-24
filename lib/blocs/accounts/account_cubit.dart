@@ -285,12 +285,13 @@ class AccountCubit extends Cubit<AccountStates> {
   Future<void> uploadPhotoUrl(
       {required String agentId,
       required String photoUrl,
+      required String id,
       required String idType}) async {
     try {
       emit(AccountLoading());
 
       final userData = await accountRepository.uploadPhotoUrl(
-          agentId: agentId, photoUrl: photoUrl, idType: idType);
+          agentId: agentId, photoUrl: photoUrl, idType: idType, id: id);
 
       emit(AccountLoaded(userData));
     } on ApiException catch (e) {

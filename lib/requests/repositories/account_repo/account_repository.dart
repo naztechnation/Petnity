@@ -16,7 +16,7 @@ abstract class AccountRepository {
   Future<AuthData> logoutUser({required String username,required String password,});
   Future<AuthData> resendCode({required String username,});
   Future<AuthData> verifyUser({required String code,required String username,});
-  Future<AuthData> uploadPhotoUrl({required String agentId,required String photoUrl,required String idType});
+  Future<AuthData> uploadPhotoUrl({required String agentId,required String photoUrl,required String idType,required String id});
   Future<PetProfile> registerUserPetProfile({
     required String username,
     required String type,required String petname,required String gender,required String breed,required String size,required String about,required String picture});

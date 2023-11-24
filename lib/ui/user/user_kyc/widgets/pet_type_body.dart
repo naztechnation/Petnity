@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:petnity/extentions/custom_string_extension.dart';
-
-import '../../../../res/app_colors.dart';
 import '../../../../res/app_images.dart';
-import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';
-import '../../../widgets/button_view.dart';
-import '../../../widgets/custom_text.dart';
 import 'pet_type_container.dart';
 
 class PetTypeBody extends StatefulWidget {

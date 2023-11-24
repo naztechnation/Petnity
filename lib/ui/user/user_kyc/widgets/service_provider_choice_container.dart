@@ -5,19 +5,20 @@ import '../../../widgets/custom_text.dart';
 import '../../../widgets/image_view.dart';
 
 class ServiceProviderChoice extends StatelessWidget {
-  final String imageUrl;
+   final String imageUrl;
   final double spacing;
   final String serviceName;
   final bool isSelected;
+  final bool isShowImage;
   final VoidCallback onPressed;
 
   ServiceProviderChoice(
       {super.key,
-      required this.imageUrl,
+       required this.imageUrl,
       required this.serviceName,
       this.spacing = 0,
       this.isSelected = false,
-      required this.onPressed});
+      required this.onPressed,  this.isShowImage = true});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class ServiceProviderChoice extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomText(
-                      textAlign: TextAlign.left,
+                      textAlign:isShowImage ?  TextAlign.left : TextAlign.center,
                       maxLines: 2,
                       text: serviceName,
                       weight: FontWeight.w400,
@@ -54,7 +55,7 @@ class ServiceProviderChoice extends StatelessWidget {
                   SizedBox(
                     width: 5,
                   ),
-                  ClipRRect(
+                if(isShowImage)  ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: ImageView.network(
                       imageUrl,

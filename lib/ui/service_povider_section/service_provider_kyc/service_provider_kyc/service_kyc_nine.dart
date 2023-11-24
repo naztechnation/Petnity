@@ -22,53 +22,74 @@ import '../../../widgets/loading_page.dart';
 import '../../../widgets/modals.dart';
 import 'service_kyc_ten.dart';
 
-class KycServiceScreenNine extends StatefulWidget {
-  KycServiceScreenNine({super.key});
+class KycServiceScreenNine extends StatelessWidget {
+  const KycServiceScreenNine({Key? key}) : super(key: key);
 
   @override
-  State<KycServiceScreenNine> createState() => _KycServiceScreenNineState();
+  Widget build(BuildContext context) {
+    return BlocProvider<AccountCubit>(
+      create: (BuildContext context) => AccountCubit(
+          accountRepository: AccountRepositoryImpl(),
+          viewModel: Provider.of<AccountViewModel>(context, listen: false)),
+      child: KycScreenNine(),
+    );
+  }
 }
 
-class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
+class KycScreenNine extends StatefulWidget {
+  KycScreenNine({super.key});
+
+  @override
+  State<KycScreenNine> createState() => _KycScreenNineState();
+}
+
+class _KycScreenNineState extends State<KycScreenNine> {
+  var petTypes = [];
+
+  bool isLoading = false;
+
   int _index = -1;
-  List<String> pets = [
-    'Dogs ',
-    'Cat',
-    'Monkeys',
-    'Squirrels',
-    'Parrot',
-    'Birds',
-    'Rabbit',
-  ];
-  List<String> petsPics = [
-    AppImages.dogsPic,
-    AppImages.catPic,
-    AppImages.monkeyPic,
-    AppImages.squirrelPic,
-    AppImages.parrotPic,
-    AppImages.birdsPic,
-    AppImages.rabbitPic,
-  ];
+
+
+  late AccountCubit _accountCubit;
+ 
+
+  getServicesTypes() async {
+    _accountCubit = context.read<AccountCubit>();
+
+    setState(() {
+      isLoading = true;
+    });
+    await _accountCubit.getPetTypes();
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    getServicesTypes();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
-    final userData= Provider.of<AccountViewModel>(context, listen: true);
+    final userData = Provider.of<AccountViewModel>(context, listen: true);
     userData.getUserId();
 
     return Scaffold(
-        body: BlocProvider<AccountCubit>(
-      lazy: false,
-      create: (_) => AccountCubit(
-          accountRepository: AccountRepositoryImpl(),
-          viewModel: Provider.of<AccountViewModel>(context, listen: false)),
-      child: BlocConsumer<AccountCubit, AccountStates>(
+        body:  BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
           if (state is AgentResLoaded) {
             Modals.showToast(state.agents.message!,
                 messageType: MessageType.success);
 
-            AppNavigator.pushAndStackPage(context,
-                                    page: KycServiceScreenTen());
+            AppNavigator.pushAndStackPage(context, page: KycServiceScreenTen());
+          } else if (state is PetTypesLoaded) {
+            if (state.services.status!) {
+               petTypes = state.services.petTypes ?? [];
+            } else {}
           } else if (state is AccountApiErr) {
             if (state.message != null) {
               Modals.showToast(state.message!, messageType: MessageType.error);
@@ -79,7 +100,8 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
             }
           }
         },
-        builder: (context, state) => (state is AgentResLoading)
+        builder: (context, state) => (state is AgentResLoading ||
+                state is PetTypesLoading)
             ? Container(
                 color: AppColors.lightPrimary,
                 height: screenSize(context).height,
@@ -122,11 +144,12 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                               crossAxisCount: 2,
                               crossAxisSpacing: 14,
                               mainAxisSpacing: 12,
-                              itemCount: pets.length,
+                              itemCount: petTypes.length,
                               itemBuilder: (context, index) {
-                                String petName = pets[index];
+                                String petName = petTypes[index].name;
                                 return ServiceProviderChoice(
-                                  imageUrl: petsPics[index],
+                                  isShowImage: false,
+                                   imageUrl: '',
                                   serviceName: petName,
                                   isSelected:
                                       user.selectedPetType.contains(petName),
@@ -135,7 +158,6 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                                       _index = index;
 
                                       user.addPetServiceType(petName);
-                                    
                                     });
                                   },
                                 );
@@ -152,7 +174,6 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                             child: ButtonView(
                               onPressed: () {
                                 _submit(context, user, userData);
-                                
                               },
                               color: AppColors.lightSecondary,
                               borderRadius: 22,
@@ -176,13 +197,14 @@ class _KycServiceScreenNineState extends State<KycServiceScreenNine> {
                 ),
               ),
       ),
-    ));
+    );
   }
 
   _submit(BuildContext ctx, var user, var userData) {
     ctx.read<AccountCubit>().servicePetType(
-          petnames: user.selectedPetType, agentId: userData.serviceProviderId, username: userData.username,
-
+          petnames: user.selectedPetType,
+          agentId: userData.serviceProviderId,
+          username: userData.username,
         );
   }
 }

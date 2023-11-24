@@ -42,7 +42,7 @@ class PetType extends StatelessWidget {
                           children: [
                           Expanded(
                             child: CustomText(
-                                              textAlign: TextAlign.left,
+                                              textAlign: TextAlign.center,
                                               maxLines: 2,
                                               text: petName,
                                               weight: FontWeight.w600,
@@ -52,7 +52,7 @@ class PetType extends StatelessWidget {
                                             ),
                           ),
                                         SizedBox(width: 15,),
-                                          ImageView.asset(imageUrl, height: 40,)
+                                          // ImageView.asset(imageUrl, height: 40,)
                         ],),
                       )),
       ),

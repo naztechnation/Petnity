@@ -327,6 +327,7 @@ class SignUpScreen extends StatelessWidget {
       final firebaseAuth) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
+        heightFactor: 0.5,
         isScrollControlled: false,
         page: Container(
             decoration: BoxDecoration(

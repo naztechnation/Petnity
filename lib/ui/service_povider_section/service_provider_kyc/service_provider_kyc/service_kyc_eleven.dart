@@ -23,7 +23,7 @@ import '../../../widgets/modals.dart';
 class KycServiceScreenEleven extends StatefulWidget {
   final String idType;
   KycServiceScreenEleven({
-    super.key, required this.idType,
+    super.key, required this.idType,  
   });
 
   @override
@@ -198,7 +198,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                                 setState(() {
                                 isLoading = false;
                               });
-                            _submit(ctx: context,agentId: userDetails.serviceProviderId,picture: imgUrl, idType: idType);
+                            _submit(ctx: context,agentId: userDetails.serviceProviderId,picture: imgUrl, idType: idType, id: serviceProvider.photoId);
                           }
                         },
                         processing: (state is AccountLoading || isLoading),
@@ -232,11 +232,13 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
       {required BuildContext ctx,
       required String agentId,
       required String idType,
+      required String id,
      
       required String picture}) {
     ctx.read<AccountCubit>().uploadPhotoUrl(
         agentId: agentId,
         idType: idType,
+        id: id,
         
         
         photoUrl: picture);
