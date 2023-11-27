@@ -19,6 +19,7 @@ import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../landing_page/services/services_lists.dart';
+import '../../payment/payment_screen.dart';
 import '../service_profile/service_profile.dart';
 
 class SPCustomDrawer extends StatelessWidget {
@@ -182,9 +183,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           height: 25,
                         ),
                         title: Align(
-                          alignment: Alignment(-1.4, 0),
+                          alignment: Alignment(-1.2, 0),
                           child: Text(
-                            'Notifications & chats',
+                            'Notifications',
                             style: TextStyle(
                               fontWeight: FontWeight.w800,
                             ),
@@ -231,6 +232,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ),
                       ListTile(
                         minLeadingWidth: 0,
+                        onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (_) {
+                          return PaymentPage();
+                        })),
                         leading: ImageView.asset(
                           AppImages.walletIcon,
                           width: 25,

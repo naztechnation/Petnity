@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
@@ -47,6 +48,18 @@ class _LandingScreenState extends State<LandingScreen> {
     password = await StorageHandler.getUserPassword();
   }
 
+
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signOut() async {
+    try {
+      await _auth.signOut();
+      print("User signed out successfully.");
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
+
   @override
   void initState() {
     getUserDetails();
@@ -68,7 +81,7 @@ class _LandingScreenState extends State<LandingScreen> {
               if (state.userData.status!) {
                 Modals.showToast(state.userData.message!,
                     messageType: MessageType.success);
-
+                _signOut();  
                 user.deleteUser();
                 AppNavigator.pushAndReplaceName(context,
                     name: AppRoutes.signInScreen);
@@ -122,6 +135,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         child: NotificationIcon(
                                           icon: ImageView.svg(
                                             AppImages.bell,
+                                             height: 25,
                                           ),
                                           nun_of_notifications: 5,
                                         ),
@@ -312,7 +326,7 @@ class simpleAppbar extends StatelessWidget {
         style: TextStyle(
             fontFamily: AppStrings.interSans,
             color: Colors.black,
-            fontWeight: FontWeight.w500),
+            fontWeight: FontWeight.w400),
       ),
       centerTitle: true,
       actions: [

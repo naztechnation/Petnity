@@ -39,7 +39,7 @@ class Order {
   bool? isCompleted;
   bool? paymentReleased;
   String? dateCreated;
-  int? profile;
+  Profile? profile;
   Agent? agent;
   Package? package;
 
@@ -77,7 +77,8 @@ class Order {
     isCompleted = json['is_completed'];
     paymentReleased = json['payment_released'];
     dateCreated = json['date_created'];
-    profile = json['profile'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
      agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
    package =
         json['package'] != null ? new Package.fromJson(json['package']) : null;

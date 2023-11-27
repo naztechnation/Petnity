@@ -33,7 +33,7 @@ class ShopOrder {
   bool? isDelivered;
   String? createdAt;
   String? updatedAt;
-  int? profile;
+  Profile? profile;
   int? agent;
   Product? product;
 
@@ -59,7 +59,8 @@ class ShopOrder {
     isDelivered = json['is_delivered'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    profile = json['profile'];
+   profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'];
     product =
         json['product'] != null ? new Product.fromJson(json['product']) : null;

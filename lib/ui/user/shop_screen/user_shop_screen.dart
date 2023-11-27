@@ -126,7 +126,40 @@ class _ShopState extends State<Shop> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        if (products.isEmpty) ...[
+                          Container(
+                              height: 400,
+                              child: Align(
+                                  child: Card(
+                                elevation: 0.5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Container(
+                                  height: 120,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Nothing to show in your shop',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ))),
+                        ]else if(products.isNotEmpty)...[
+                          Container(
                           margin: EdgeInsets.all(12),
                           child: StaggeredGridView.countBuilder(
                               physics: const NeverScrollableScrollPhysics(),
@@ -200,6 +233,7 @@ class _ShopState extends State<Shop> {
                                     1, index.isEven ? 1.45 : 1.45);
                               }),
                         ),
+                        ]
                       ],
                     ),
                   ),

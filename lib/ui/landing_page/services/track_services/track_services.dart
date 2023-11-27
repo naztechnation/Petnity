@@ -388,7 +388,7 @@ class _TrackServicesState extends State<TrackServices> {
                       )
                     ] else if (widget.isAcceptedService &&
                         widget.isOngoingService &&
-                        widget.isCompletedService &&
+                        !widget.isCompletedService &&
                         !widget.isAgentMarkedService &&
                         !widget.isUserMarkedService) ...[
                       Positioned(
@@ -580,40 +580,42 @@ class _TrackServicesState extends State<TrackServices> {
                             ),
                           ),
                         ),
-                      ] else if (widget.isAcceptedService &&
+                      ]
+                      //  else if (widget.isAcceptedService &&
+                      //     widget.isOngoingService &&
+                      //     !widget.isCompletedService) ...[
+                      //   Positioned(
+                      //     bottom: 30,
+                      //     left: 0,
+                      //     right: 0,
+                      //     child: Container(
+                      //       margin: const EdgeInsets.only(
+                      //           bottom: 50, left: 20, right: 20),
+                      //       child: ButtonView(
+                      //         borderRadius: 30,
+                      //         onPressed: () {
+                      //           markCompletedAccepted(
+                      //             ctx: context,
+                      //             agentId: widget.sellerId,
+                      //             orderId: widget.orderId,
+                      //           );
+                      //         },
+                      //         child: CustomText(
+                      //           textAlign: TextAlign.center,
+                      //           maxLines: 2,
+                      //           text: 'Mark as completed',
+                      //           weight: FontWeight.w400,
+                      //           size: 15,
+                      //           fontFamily: AppStrings.interSans,
+                      //           color: Colors.white,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ] 
+                      else if (widget.isAcceptedService &&
                           widget.isOngoingService &&
-                          !widget.isCompletedService) ...[
-                        Positioned(
-                          bottom: 30,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                                bottom: 50, left: 20, right: 20),
-                            child: ButtonView(
-                              borderRadius: 30,
-                              onPressed: () {
-                                markCompletedAccepted(
-                                  ctx: context,
-                                  agentId: widget.sellerId,
-                                  orderId: widget.orderId,
-                                );
-                              },
-                              child: CustomText(
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                text: 'Mark as completed',
-                                weight: FontWeight.w400,
-                                size: 15,
-                                fontFamily: AppStrings.interSans,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ] else if (widget.isAcceptedService &&
-                          widget.isOngoingService &&
-                          widget.isCompletedService &&
+                          !widget.isCompletedService &&
                           widget.isUserMarkedService &&
                           !widget.isAgentMarkedService) ...[
                         Positioned(
@@ -630,11 +632,11 @@ class _TrackServicesState extends State<TrackServices> {
                                 ButtonView(
                                   borderRadius: 30,
                                   onPressed: () {
-                                    agentMarkAsDelivered(
-                                      ctx: context,
-                                      agentId: widget.sellerId,
-                                      orderId: widget.orderId,
-                                    );
+                                     markCompletedAccepted(
+                                  ctx: context,
+                                  agentId: widget.sellerId,
+                                  orderId: widget.orderId,
+                                );
                                   },
                                   child: CustomText(
                                     textAlign: TextAlign.center,

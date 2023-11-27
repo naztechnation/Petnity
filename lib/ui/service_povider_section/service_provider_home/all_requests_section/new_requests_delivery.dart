@@ -202,14 +202,27 @@ class _ServiceProviderPetDeliveryHomeBodyState
         ),
         if (serviceProvider.availableServices.isEmpty && isServices) ...[
           Container(
-              height: 200,
+              height: 400,
               child: Align(
-                  child: Text(
-                'You don\'t have an available service',
-                style: TextStyle(
-                    color: AppColors.lightSecondary,
-                    fontWeight: FontWeight.bold),
-              ))),
+                  child: Card(
+                    elevation: 0.5,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    child: Container(
+                      height: 120,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                                        'Your ongoing and new sessions would appear here',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300),
+                                      ),
+                        ),
+                      ),
+                    ),
+                  ))),
         ] else ...[
           Visibility(
             visible: isServices,
@@ -225,14 +238,27 @@ class _ServiceProviderPetDeliveryHomeBodyState
         ],
         if (serviceProvider.order.isEmpty && !isServices) ...[
           Container(
-              height: 200,
+              height: 400,
               child: Align(
-                  child: Text(
-                'You don\'t have an available order',
-                style: TextStyle(
-                    color: AppColors.lightSecondary,
-                    fontWeight: FontWeight.bold),
-              ))),
+                  child: Card(
+                    elevation: 0.5,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    child: Container(
+                      height: 120,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Text(
+                                        'Your available order would appear here',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300),
+                                      ),
+                        ),
+                      ),
+                    ),
+                  ))),
         ] else ...[
           Visibility(
             visible: !isServices,
@@ -404,9 +430,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
                      isUserMarkedService: order.userMarkedDelivered ?? false, 
                      isAgentMarkedService: order.agentMarkedDelivered ?? false,
                   ));
-              // } else {
+                // } 
+                // else {
               Modals.showToast('This Service has not been paid for.');
-              // }
+              //  }
             },
             child: Text(
               'view',

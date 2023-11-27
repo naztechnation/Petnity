@@ -71,7 +71,7 @@ class _ServiceProviderLandingPageState
                         },
                         child: ImageView.svg(
                           AppImages.addIcon,
-                          height: 25,
+                          height: 20,
                         ),
                       ))
                   : _selectedIndex == 2
@@ -337,7 +337,7 @@ class _HomepageBarState extends State<HomepageBar> {
               },
               child: ImageView.svg(
                 AppImages.addIcon,
-                height: 25,
+                height: 22,
               )),
         ),
         const SizedBox(
@@ -347,12 +347,15 @@ class _HomepageBarState extends State<HomepageBar> {
           onTap: () {
             AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
           },
-          child: NotificationIcon(
-              icon: ImageView.svg(
-                AppImages.notificationIcon,
-                height: 30,
-              ),
-              nun_of_notifications: 5),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: NotificationIcon(
+                icon: ImageView.svg(
+                  AppImages.notificationIcon,
+                  height: 25,
+                ),
+                nun_of_notifications: 5),
+          ),
         ),
       ],
     );

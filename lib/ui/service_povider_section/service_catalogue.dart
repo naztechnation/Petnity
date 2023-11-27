@@ -1,5 +1,3 @@
-
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -23,7 +21,9 @@ import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
 import '../../../utils/app_utils.dart';
 import '../../handlers/secure_handler.dart';
+import '../../utils/navigator/page_navigator.dart';
 import '../widgets/text_edit_view.dart';
+import 'create_shop_product/create_shop_products.dart';
 
 class ServiceProviderCatalogueScreen extends StatelessWidget {
   const ServiceProviderCatalogueScreen();
@@ -56,7 +56,7 @@ class _ShopState extends State<Shop> {
   getAgentId() async {
     agentId = await StorageHandler.getAgentId();
 
-     _userCubit = context.read<UserCubit>();
+    _userCubit = context.read<UserCubit>();
 
     _userCubit.agentShoppingList(agentId);
   }
@@ -137,76 +137,176 @@ class _ShopState extends State<Shop> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          margin: EdgeInsets.all(12),
-                          child: StaggeredGridView.countBuilder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 10,
-                              mainAxisSpacing: 1,
-                              itemCount: filteredProducts.length,
-                              itemBuilder: (context, index) {
-                                Color randomColor = getRandomColor();
-
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (_) {
-                                      return ProductDetailScreen(filteredProducts[index].id.toString(), 
-                                      filteredProducts[index].price.toString(), user.username);
-                                    }));
-                                  },
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: Container(
-                                          height: 150,
-                                          width: MediaQuery.sizeOf(context).width,
-                                          color: randomColor.withOpacity(0.3),
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              child: ImageView.network(
-                                                
-                                                filteredProducts[index].image,
-                                                placeholder: AppImages.appLogo,
-                                                fit: BoxFit.contain,
-                                                color: randomColor,
-                                              )),
-                                        ),
+                        if (products.isEmpty) ...[
+                          Container(
+                              height: 400,
+                              child: Align(
+                                  child: Card(
+                                elevation: 0.5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Container(
+                                  height: 120,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Nothing to show in your catalogue',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              AppNavigator.pushAndStackPage(
+                                                  context,
+                                                  page: CreateShopProducts());
+                                            },
+                                            child: Text(
+                                              'Add products',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline,
+                                                color: AppColors.lightSecondary,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          filteredProducts[index].name ?? '',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(AppUtils.convertPrice(filteredProducts[index].price) ?? ''),
-                                      RatingWidget(
-                                        coloredStars: 3,
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                );
-                              },
-                              staggeredTileBuilder: (index) {
-                                return StaggeredTile.count(
-                                    1, index.isEven ? 1.45 : 1.6);
-                              }),
-                        ),
+                                ),
+                              ))),
+                        ] else if (products.isNotEmpty) ...[
+                          Container(
+                            margin: EdgeInsets.all(12),
+                            child: StaggeredGridView.countBuilder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 1,
+                                itemCount: filteredProducts.length,
+                                itemBuilder: (context, index) {
+                                  Color randomColor = getRandomColor();
+
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (_) {
+                                        return ProductDetailScreen(
+                                            filteredProducts[index]
+                                                .id
+                                                .toString(),
+                                            filteredProducts[index]
+                                                .price
+                                                .toString(),
+                                            user.username);
+                                      }));
+                                    },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          child: Container(
+                                            height: 150,
+                                            width: MediaQuery.sizeOf(context)
+                                                .width,
+                                            color: randomColor.withOpacity(0.3),
+                                            child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: ImageView.network(
+                                                  filteredProducts[index].image,
+                                                  placeholder:
+                                                      AppImages.appLogo,
+                                                  fit: BoxFit.contain,
+                                                  color: randomColor,
+                                                )),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            filteredProducts[index].name ?? '',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w700),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(AppUtils.convertPrice(
+                                                filteredProducts[index]
+                                                    .price) ??
+                                            ''),
+                                        RatingWidget(
+                                          coloredStars: 3,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                staggeredTileBuilder: (index) {
+                                  return StaggeredTile.count(
+                                      1,  1.36 );
+                                }),
+                          ),
+                        ] else if (filteredProducts.isEmpty)
+                          ...[
+                            Container(
+                              height: 400,
+                              child: Align(
+                                  child: Card(
+                                elevation: 0.5,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20)),
+                                child: Container(
+                                  height: 120,
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Nothing to show in your catalogue',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ))),
+                          ]
                       ],
                     ),
                   ),

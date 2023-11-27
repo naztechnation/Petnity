@@ -82,6 +82,8 @@ class _ProductDetailState extends State<ProductDetail> {
 
   Product? _products;
 
+  double totalAmount = 0;
+
   String email = '';
   int ratingNumber = 0;
 
@@ -90,14 +92,14 @@ class _ProductDetailState extends State<ProductDetail> {
   var uuid = const Uuid();
 
   bool isProcessing = false;
+  String userType = '';
 
   getEmail() async {
     email = await StorageHandler.getUserEmail();
+    userType = await StorageHandler.getUserType();
   }
 
   _handlePaymentInitialization(String shopOrder) async {
-
-    
     final Customer customer = Customer(email: email);
 
     final Flutterwave flutterwave = Flutterwave(
@@ -106,7 +108,7 @@ class _ProductDetailState extends State<ProductDetail> {
         currency: 'NGN',
         redirectUrl: 'https://petnity.com',
         txRef: uuid.v1(),
-        amount: widget.amount,
+        amount: totalAmount.toString(),
         customer: customer,
         paymentOptions: "card",
         customization: Customization(
@@ -146,7 +148,7 @@ class _ProductDetailState extends State<ProductDetail> {
     super.initState();
   }
 
-  var count = 0;
+  var count = 1;
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
@@ -156,6 +158,7 @@ class _ProductDetailState extends State<ProductDetail> {
       if (state is ProductDetailsLoaded) {
         if (state.productDetails.status!) {
           _products = state.productDetails.product;
+          totalAmount = double.parse(_products?.price ?? '0.0');
         } else {}
       } else if (state is GetProductReviewsLoaded) {
         if (state.getAgentPayment.status!) {
@@ -192,41 +195,46 @@ class _ProductDetailState extends State<ProductDetail> {
       return Scaffold(
         body: Scaffold(
           backgroundColor: Color(0xFFF2F6FF),
-          bottomNavigationBar: Container(
-            color: Colors.white,
-            height: 90,
-            padding: EdgeInsets.all(5),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '${AppUtils.convertPrice(_products?.price ?? '0')}',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: AppStrings.interSans,
-                        fontWeight: FontWeight.w800),
+          bottomNavigationBar: (userType == 'user')
+              ? Container(
+                  color: Colors.white,
+                  height: 90,
+                  padding: EdgeInsets.all(5),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${AppUtils.convertPrice(totalAmount.toString())}',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: AppStrings.interSans,
+                              fontWeight: FontWeight.w800),
+                        ),
+                        ButtonView(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          expanded: false,
+                          borderRadius: 30,
+                          onPressed: () {
+                            Modals.showAlertOptionDialog(context,
+                                title: 'Proceed to make payment',
+                                message:
+                                    'Are you sure you want to Continue to make payment',
+                                onTap: () {
+                              createOrder(
+                                  context, user, productId, count.toString());
+                            });
+                          },
+                          child: Text('Make payment',
+                              style: TextStyle(fontWeight: FontWeight.w300)),
+                        ),
+                      ],
+                    ),
                   ),
-                  ButtonView(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    expanded: false,
-                    borderRadius: 30,
-                    onPressed: () {
-                      Modals.showAlertOptionDialog(context,
-                          title: 'Proceed to make payment',
-                          message:
-                              'Are you sure you want to Continue to make payment',
-                          onTap: () {
-                        createOrder(context, user, productId, count.toString());
-                      });
-                    },
-                    child: Text('Make payment'),
-                  ),
-                ],
-              ),
-            ),
-          ),
+                )
+              : SizedBox.shrink(),
           appBar: PreferredSize(
             preferredSize: screenSize(context) * .08,
             child: AppBar(
@@ -240,6 +248,14 @@ class _ProductDetailState extends State<ProductDetail> {
                     Navigator.pop(context);
                   },
                 ),
+              ),
+              centerTitle: true,
+              title: Text(
+                _products?.name ?? '',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16),
               ),
             ),
           ),
@@ -264,41 +280,35 @@ class _ProductDetailState extends State<ProductDetail> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  width: screenSize(context).width * .4,
-                  height: 45,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30)),
-                  padding: EdgeInsets.all(5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          if (count > 0) {
-                            count -= 1;
-                            setState(() {
-                              count;
-                            });
-                          }
-                        },
-                        child: Icon(Icons.remove),
-                      ),
-                      Text('$count',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 20)),
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            count += 1;
-                          });
-                        },
-                        child: Icon(Icons.add),
-                      ),
-                    ],
+                if (userType == 'user')
+                  Container(
+                    width: screenSize(context).width * .4,
+                    height: 45,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30)),
+                    padding: EdgeInsets.all(5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            updateTotalAmount(false);
+                          },
+                          child: Icon(Icons.remove),
+                        ),
+                        Text('$count',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700, fontSize: 20)),
+                        InkWell(
+                          onTap: () {
+                            updateTotalAmount(true);
+                          },
+                          child: Icon(Icons.add),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 SizedBox(
                   height: 20,
                 ),
@@ -346,23 +356,28 @@ class _ProductDetailState extends State<ProductDetail> {
                         SizedBox(
                           width: 10,
                         ),
-                        ButtonView(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                          expanded: false,
-                          borderRadius: 30,
-                          onPressed: () {
-                            Modals.showBottomSheetModal(context,
-                                isDissmissible: true,
-                                heightFactor: 1,
-                                page: Ratings(
-                                    ctxt: context,
-                                    username: user.username,
-                                    agentName: _products?.name ?? '',
-                                    productId: _products?.id.toString() ?? ''));
-                          },
-                          child: Text('Add Review'),
-                        ),
+                        if (userType == 'user')
+                          ButtonView(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 5),
+                            expanded: false,
+                            borderRadius: 30,
+                            onPressed: () {
+                              Modals.showBottomSheetModal(context,
+                                  isDissmissible: true,
+                                  heightFactor: 1,
+                                  page: Ratings(
+                                      ctxt: context,
+                                      username: user.username,
+                                      agentName: _products?.name ?? '',
+                                      productId:
+                                          _products?.id.toString() ?? ''));
+                            },
+                            child: Text(
+                              'Add Review',
+                              style: TextStyle(fontWeight: FontWeight.w300),
+                            ),
+                          ),
                       ],
                     ),
                     SizedBox(
@@ -414,7 +429,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             child: Text(
                                 ' No Reviews available for this product',
                                 style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                                    fontSize: 15, fontWeight: FontWeight.w300)),
                           ),
                         )
                     ]
@@ -576,4 +591,18 @@ class _ProductDetailState extends State<ProductDetail> {
       Modals.showToast('please enter a comment');
     }
   }
+
+  void updateTotalAmount(bool isAdding) {
+  setState(() {
+    if (isAdding) {
+      count += 1;
+    } else {
+      if (count > 1) {
+        count -= 1;
+      }
+    }
+    totalAmount = count * double.parse(_products?.price ?? '0.0') ;  
+  });
+}
+
 }

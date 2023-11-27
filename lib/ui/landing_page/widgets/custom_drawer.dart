@@ -97,7 +97,7 @@ class _customDrawerState extends State<customDrawer> {
                       height: 25,
                     ),
                     title: Text(
-                      'Notifications ',
+                      'Notifications',
                       style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontFamily: AppStrings.interSans),

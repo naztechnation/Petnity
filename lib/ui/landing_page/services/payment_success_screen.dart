@@ -154,33 +154,20 @@ class PaymentSuccessScreen extends StatelessWidget {
                       borderColor: Colors.white,
                       borderRadius: 40,
                       onPressed: () {
-                        // AppNavigator.pushAndStackPage(context,
-                        //     page: TrackServicesScreen());
+                        AppNavigator.pushAndReplacePage(context,
+                            page: LandingScreen());
                       },
                       child: CustomText(
                         textAlign: TextAlign.left,
                         maxLines: 2,
-                        text: 'Track',
+                        text: 'Home',
                         weight: FontWeight.w600,
                         size: 16,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 40,),
-                    GestureDetector(
-                      onTap: (() {
-                        AppNavigator.pushAndReplacePage(context,
-                            page: LandingScreen());
-                      }),
-                      child: CustomText(
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          text: 'Home',
-                          weight: FontWeight.w600,
-                          size: 16,
-                          color: AppColors.lightSecondary,
-                        ),
-                    ),
+                   
+                   
                     const SizedBox(height: 120,),
 
                   ],

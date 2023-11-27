@@ -11,7 +11,6 @@ import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 
-
 class ServicesScreen extends StatelessWidget {
   const ServicesScreen({Key? key}) : super(key: key);
 
@@ -25,18 +24,18 @@ class ServicesScreen extends StatelessWidget {
     );
   }
 }
+
 class Services extends StatefulWidget {
   @override
   State<Services> createState() => _ServicesState();
 }
 
 class _ServicesState extends State<Services> {
-
   List<ServiceTypes> service = [];
 
   late UserCubit _userCubit;
 
- bool isLoading = false;
+  bool isLoading = false;
 
   getServicesTypes() async {
     _userCubit = context.read<UserCubit>();
@@ -68,36 +67,36 @@ class _ServicesState extends State<Services> {
             )),
           )
         : Scaffold(
-        backgroundColor: AppColors.lightBackground,
-        body: BlocConsumer<UserCubit, UserStates>(
-                listener: (context, state) {
-                  if (state is ServicesLoaded) {
-                    if (state.services.status!) {
-                      service = _userCubit.viewModel.services;
-                    } else {}
-                  } else if (state is UserNetworkErrApiErr) {
-                  } else if (state is UserNetworkErr) {}
-                },
-                builder: (context, state) => Container(
-            color: AppColors.lightBackground,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('All services'),
-                      InkWell(
-                        child: ImageView.svg(AppImages.filterIcon),
+            backgroundColor: AppColors.lightBackground,
+            body: BlocConsumer<UserCubit, UserStates>(
+              listener: (context, state) {
+                if (state is ServicesLoaded) {
+                  if (state.services.status!) {
+                    service = _userCubit.viewModel.services;
+                  } else {}
+                } else if (state is UserNetworkErrApiErr) {
+                } else if (state is UserNetworkErr) {}
+              },
+              builder: (context, state) => Container(
+                color: AppColors.lightBackground,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('All services'),
+                          InkWell(
+                            child: ImageView.svg(AppImages.filterIcon),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    ListOfServices()
+                  ],
                 ),
-                ListOfServices()
-              ],
-            ),
-          ),
-        ));
+              ),
+            ));
   }
 }

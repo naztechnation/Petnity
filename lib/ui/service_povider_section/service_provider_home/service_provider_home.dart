@@ -63,8 +63,8 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   fetchOrders() async {
     agentId = await StorageHandler.getAgentId();
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
-    _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: '1');
-    _serviceProviderCubit.getAgentsAvailableServices(agentId: agentId,);
+    await _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: '1');
+    await _serviceProviderCubit.getAgentsAvailableServices(agentId: agentId,);
   }
  
 
@@ -78,6 +78,9 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final serviceProvider =
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
     
     return Scaffold(
       backgroundColor: AppColors.lightBackground,
@@ -137,7 +140,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                     height: 12,
                   ),
                   Text(
-                    'How is your pet doing?',
+                   serviceProvider.availableServices.isEmpty ? 'Lets get you started' : 'Your latest requests',
                     style: TextStyle(
                         fontFamily: AppStrings.interSans,
                         fontWeight: FontWeight.w800,
