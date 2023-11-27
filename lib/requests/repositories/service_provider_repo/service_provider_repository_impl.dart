@@ -3,10 +3,10 @@ import 'package:petnity/model/service_provider_models/account_details.dart';
 import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
- 
 
+import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
-import '../../../res/app_strings.dart'; 
+import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'service_provider_repository.dart';
 
@@ -24,8 +24,6 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     });
     return ServiceAmount.fromJson(map);
   }
-
-  
 
   @override
   Future<AuthData> createServicePackage(
@@ -174,67 +172,77 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> agentAcceptDeliveredShopOrder({required String agentId, required String orderId}) async {
+  Future<AuthData> agentAcceptDeliveredShopOrder(
+      {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentMarkDeliveredShopOrder(agentId: agentId, orderId: orderId),
+        AppStrings.agentMarkDeliveredShopOrder(
+            agentId: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
         });
 
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> userAcceptDeliveredShopOrder({required String username, required String orderId}) async {
+  Future<AuthData> userAcceptDeliveredShopOrder(
+      {required String username, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.userMarkDeliveredShopOrder(username: username, orderId: orderId),
+        AppStrings.userMarkDeliveredShopOrder(
+            username: username, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
         });
 
-       
-
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> agentRejectServiceOrder({required String agentId, required String orderId})async {
+  Future<AuthData> agentRejectServiceOrder(
+      {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.agentRejectServiceOrder(agentId: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
         });
 
-       
-
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> userAcceptOrderDelivered({required String username, required String orderId}) async {
+  Future<AuthData> userAcceptOrderDelivered(
+      {required String username, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.userMarkOrderDelivered(username: username, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
         });
 
-       
-
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> agentAcceptDeliveredServiceOrder({required String agentId, required String orderId}) async {
+  Future<AuthData> agentAcceptDeliveredServiceOrder(
+      {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.userMarkOrderDelivered(username: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
         });
 
-       
-
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<AgentBalance> agentBalance({required String agentId}) async {
+    final map = await Requests().get(
+        AppStrings.getAgentsBalance(agentId: agentId, ),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AgentBalance.fromJson(map);
   }
 }

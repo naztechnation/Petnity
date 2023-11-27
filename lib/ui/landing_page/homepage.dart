@@ -158,7 +158,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           height: 10,
                         ),
                         Text(
-                          'how is your pet doing?',
+                          'How is your pet doing?',
                           style: TextStyle(
                               fontFamily: AppStrings.interSans,
                               fontWeight: FontWeight.w800,

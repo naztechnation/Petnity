@@ -490,4 +490,31 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+  Future<void> getAgentBalance({
+    required String agentId,
+  }) async {
+    try {
+      emit(AgentBalanceLoading());
+
+      final services = await serviceProviderRepository.agentBalance(
+        agentId: agentId,
+      );
+
+      
+      emit(AgentBalanceLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

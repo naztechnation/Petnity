@@ -5,6 +5,7 @@ import '../../model/service_provider_models/account_details.dart';
 import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/service_provider_models/create_shop_products_model.dart';
+import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
 
@@ -183,7 +184,17 @@ class  AcceptCompletedOrderLoaded extends ServiceProviderState {
   List<Object> get props => [order];
 }
 
- 
+  class   AgentBalanceLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  AgentBalanceLoaded extends ServiceProviderState {
+  final AgentBalance balance;
+  const  AgentBalanceLoaded(this.balance);
+  @override
+  List<Object> get props => [balance];
+}
 
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;

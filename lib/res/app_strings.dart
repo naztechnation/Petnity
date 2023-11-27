@@ -151,4 +151,11 @@ class AppStrings {
           {required String agentId, }) =>
       '${_baseUrl}shop/get-agent-products/$agentId';
 
+      static String getAgentsBalance(
+          {required String agentId, }) =>
+      '${_baseUrl}users/get-agent-balance/$agentId';
+
+
+    
+
 }
