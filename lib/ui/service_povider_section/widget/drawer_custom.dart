@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart'; 
 import 'package:petnity/res/app_constants.dart';
@@ -18,6 +19,7 @@ import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../../res/app_routes.dart';
 import '../../landing_page/services/services_lists.dart';
 import '../../payment/payment_screen.dart';
 import '../service_profile/service_profile.dart';
@@ -51,6 +53,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
   bool isLoading = false;
   String agentId = "";
   Agents? agents;
+
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
 
 
    
@@ -369,8 +382,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 ListTile(
                   onTap: () {
-                    AppNavigator.pushNamedAndRemoveUntil(context,
-                        name: 'signInScreen');
+                    _signOut(context);
                   },
                   minLeadingWidth: 0,
                   leading: ImageView.svg(

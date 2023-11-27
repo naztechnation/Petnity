@@ -1,5 +1,6 @@
 
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,17 @@ class KycScreenTwelve extends StatelessWidget {
   final String selectedPet;
 
   KycScreenTwelve({super.key, this.selectedPet = ''});
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -78,7 +90,8 @@ class KycScreenTwelve extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                        AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+                        _signOut(context);
+                       
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(

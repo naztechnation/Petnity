@@ -75,6 +75,9 @@ class SignUpScreen extends StatelessWidget {
                   Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
                   StorageHandler.saveUserName(_usernameController.text.trim());
+                }else if(state.userData.message.username != null){
+                  Modals.showToast(state.userData.message.username[0] ?? '',
+                      messageType: MessageType.success);
                 }
               } else if (state is AccountApiErr) {
                 if (state.message != null) {

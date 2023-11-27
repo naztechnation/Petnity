@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -35,6 +36,16 @@ class _customDrawerState extends State<customDrawer> {
       setState(() {
         isPetRegistered = true;
       });
+    }
+  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
     }
   }
 
@@ -182,6 +193,8 @@ class _customDrawerState extends State<customDrawer> {
             ListTile(
               onTap: () {
                 Navigator.pop(context);
+                    _signOut(context);
+
                 widget.onLogOutPressesd();
               },
               leading: ImageView.svg(

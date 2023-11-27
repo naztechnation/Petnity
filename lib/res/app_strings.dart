@@ -56,7 +56,7 @@ class AppStrings {
   static String createOrderPayment(String username) =>
       '${_baseUrl}shop/create-shop-order/$username';
   static String uploadIdUrl(String agentId, String photoId) =>
-      '${_baseUrl}auth/upload-id-photo/$photoId/$agentId';
+      '${_baseUrl}auth/upload-id-photo/$agentId';
   static String productDetailsUrl(String productId) =>
       '${_baseUrl}shop/get-product/$productId';
   static String createOrder(String packageId, String username) =>

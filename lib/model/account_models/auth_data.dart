@@ -1,6 +1,6 @@
 class AuthData {
   bool? status;
-  String? message;
+  var message;
   bool? isAgent;
   Profile? profile;
 

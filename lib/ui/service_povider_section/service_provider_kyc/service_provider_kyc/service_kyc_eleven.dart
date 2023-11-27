@@ -23,24 +23,25 @@ import '../../../widgets/modals.dart';
 class KycServiceScreenEleven extends StatefulWidget {
   final String idType;
   KycServiceScreenEleven({
-    super.key, required this.idType,  
+    super.key,
+    required this.idType,
   });
 
   @override
-  State<KycServiceScreenEleven> createState() => _KycServiceScreenElevenState(idType: idType);
+  State<KycServiceScreenEleven> createState() =>
+      _KycServiceScreenElevenState(idType: idType);
 }
 
 class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
-
   bool isLoading = false;
   final String idType;
 
   _KycServiceScreenElevenState({required this.idType});
 
-
   @override
   Widget build(BuildContext context) {
-    final serviceProvider = Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final serviceProvider =
+        Provider.of<ServiceProviderViewModel>(context, listen: true);
     final userDetails = Provider.of<AccountViewModel>(context, listen: true);
     userDetails.getUserId();
 
@@ -63,9 +64,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
             if (state is AccountLoaded) {
               if (state.userData.status!) {
                 AppNavigator.pushAndStackPage(context,
-                        page: KycServiceScreenTwelve(
-
-                        ));
+                    page: KycServiceScreenTwelve());
                 Modals.showToast(state.userData.message ?? '',
                     messageType: MessageType.success);
               } else {
@@ -85,9 +84,9 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
             }
           },
           builder: (context, state) => GestureDetector(
-            onTap: (){
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -104,7 +103,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                         maxLines: 1,
                         text: 'KYC  Registration',
                         weight: FontWeight.w800,
-                    size: 16,
+                        size: 16,
                         fontFamily: AppStrings.interSans,
                         color: Colors.black,
                       ),
@@ -162,7 +161,8 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                       ? SizedBox.shrink()
                       : TextButton(
                           onPressed: () async {
-                            serviceProvider.loadImage(context, UploadType.photoId);
+                            serviceProvider.loadImage(
+                                context, UploadType.photoId);
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(10.0),
@@ -183,22 +183,27 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 20),
                       child: ButtonView(
-                        onPressed: () async{
+                        onPressed: () async {
                           if (serviceProvider.imageURl2 != null) {
-                          //      AppNavigator.pushAndStackPage(context,
-                          // page: KycServiceScreenTwelve(
-          
-                          // ));
-                             setState(() {
-                                isLoading = true;
-                              });
+                            //      AppNavigator.pushAndStackPage(context,
+                            // page: KycServiceScreenTwelve(
+
+                            // ));
+                            setState(() {
+                              isLoading = true;
+                            });
                             String imgUrl = await serviceProvider.uploadImage(
                                 serviceProvider.imageURl2!.path,
                                 'petnity_service_provider');
-                                setState(() {
-                                isLoading = false;
-                              });
-                            _submit(ctx: context,agentId: userDetails.serviceProviderId,picture: imgUrl, idType: idType, id: serviceProvider.photoId);
+                            setState(() {
+                              isLoading = false;
+                            });
+                            _submit(
+                                ctx: context,
+                                agentId: userDetails.serviceProviderId,
+                                picture: imgUrl,
+                                idType: idType,
+                                id: serviceProvider.photoId);
                           }
                         },
                         processing: (state is AccountLoading || isLoading),
@@ -210,7 +215,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                           maxLines: 1,
                           text: 'Submit',
                           weight: FontWeight.w400,
-                    size: 16,
+                          size: 16,
                           fontFamily: AppStrings.interSans,
                           color: Colors.white,
                         ),
@@ -233,14 +238,8 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
       required String agentId,
       required String idType,
       required String id,
-     
       required String picture}) {
     ctx.read<AccountCubit>().uploadPhotoUrl(
-        agentId: agentId,
-        idType: idType,
-        id: id,
-        
-        
-        photoUrl: picture);
+        agentId: agentId, idType: idType, id: id, photoUrl: picture);
   }
 }
