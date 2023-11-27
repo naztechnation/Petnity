@@ -304,8 +304,8 @@ class SignUpScreen extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       await firebaseAuth.registerUserWithEmailAndPassword(
           email: '${_usernameController.text.toLowerCase().trim()}@gmail.com',
-          password: _passwordController.text,
-          username: _usernameController.text);
+          password: _passwordController.text.trim(),
+          username: _usernameController.text.trim());
 
       if (firebaseAuth.status == Status.authenticated) {
         _submit(context);
