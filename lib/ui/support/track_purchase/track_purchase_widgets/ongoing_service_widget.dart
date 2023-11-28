@@ -52,6 +52,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
 
     return Card(
       elevation: 1,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+
       child: Container(
         width: screenSize(context).width * .9,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),

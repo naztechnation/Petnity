@@ -46,6 +46,8 @@ class AppImages {
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';
+  static const checkedDelivered = '${_svgBaseUrl}checked_delivered.svg';
+  static const giftCard = '${_svgBaseUrl}gift_card.svg';
   static const searchIcon = '${_svgBaseUrl}search.svg';
   static const filterIcon = '${_svgBaseUrl}filter.svg';
   static const messageIcon = '${_svgBaseUrl}message_icon.svg';

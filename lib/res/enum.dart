@@ -22,6 +22,7 @@ enum ViewState { idle, loading, processing, success, failed }
 enum sessionMedium { chat, call, video }
 
 enum UserType {none, user, serviceProvider}
+enum OrderType {none, services, shop}
 
 enum Services {
   none,

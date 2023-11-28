@@ -511,4 +511,26 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
     }
   }
    
+  Future<void> getUserShoppingList(String username) async {
+    try {
+      emit(UserShopListLoading());
+
+      final shoppingList = await userRepository.shopOrderData(username: username);
+
+      emit(UserShopListLoaded(shoppingList));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 }

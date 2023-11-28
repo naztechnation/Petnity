@@ -155,6 +155,10 @@ class AppStrings {
           {required String agentId, }) =>
       '${_baseUrl}users/get-agent-balance/$agentId';
 
+static String getUserOrderedProducts(
+          {required String username, }) =>
+      '${_baseUrl}shop/get-user-shop-orders/$username';
+
 
     
 

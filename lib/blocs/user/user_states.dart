@@ -14,6 +14,7 @@ import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
+import '../../model/user_models/user_shopping_data.dart';
 
 
 
@@ -203,6 +204,18 @@ class PostProductReviewsLoaded extends UserStates {
   const PostProductReviewsLoaded(this.postReview);
   @override
   List<Object> get props => [postReview];
+}
+
+class UserShopListLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class UserShopListLoaded extends UserStates {
+  final UserShopData userShopData;
+  const UserShopListLoaded(this.userShopData);
+  @override
+  List<Object> get props => [userShopData];
 }
 
 

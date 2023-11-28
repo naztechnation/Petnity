@@ -15,6 +15,7 @@ import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/user_models/shopping_lists.dart';
+import '../../../model/user_models/user_shopping_data.dart';
 
 
 abstract class UserRepository {
@@ -24,7 +25,7 @@ abstract class UserRepository {
     });   
 
 
- Future<ServiceProvidersList> getAgentProfile();   
+    Future<ServiceProvidersList> getAgentProfile();   
     Future<GetServiceTypes> getServiceTypes([String? agentId]); 
     Future<ShoppingList> shoppingList(); 
     Future<ShoppingList> agentShoppingList({required String agentId}); 
@@ -32,6 +33,7 @@ abstract class UserRepository {
     Future<GalleryAgents> getGallery({required String userId}); 
     Future<AuthData> uploadGallery({required String agentId, required String image}); 
     Future<UserOrderList> orderList({required String username}); 
+    Future<UserShopData> shopOrderData({required String username}); 
     Future<ProductDetails> productDetails({required String productId}); 
     Future<GetProductReviews> getProductReviews({required String productId}); 
     Future<GetAgentsPackages> getAgentPackages({required String agentId, required String serviceId,}); 

@@ -4,9 +4,9 @@ import 'package:petnity/model/user_models/confirm_shop_payment.dart';
 import 'package:petnity/model/user_models/create_payment_order.dart';
 import 'package:petnity/model/user_models/get_product_reviews.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
+import 'package:petnity/model/user_models/user_shopping_data.dart';
 
 import '../../../model/account_models/auth_data.dart';
-import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/order_list.dart';
@@ -231,7 +231,15 @@ class UserRepositoryImpl implements UserRepository {
         });
     return AuthData.fromJson(map);
   }
-  
+
+  @override
+  Future<UserShopData> shopOrderData({required String username}) async {
+    final map = await Requests()
+        .get(AppStrings.getUserOrderedProducts(username: username), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return UserShopData.fromJson(map);
+  }
 
  
 

@@ -7,13 +7,16 @@ import 'package:provider/provider.dart';
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/user_models/order_list.dart';
+import '../../../model/user_models/user_shopping_data.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
 import '../../widgets/image_view.dart';
 
 class TrackPurchase extends StatelessWidget {
-  const TrackPurchase({Key? key, }) : super(key: key);
+  const TrackPurchase({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,31 +24,29 @@ class TrackPurchase extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: TrackPurchaseScreen(
-      ),
+      child: TrackPurchaseScreen(),
     );
   }
 }
 
 class TrackPurchaseScreen extends StatefulWidget {
-  
-
-  const TrackPurchaseScreen({super.key,  });
+  const TrackPurchaseScreen({
+    super.key,
+  });
 
   @override
-  State<TrackPurchaseScreen> createState() => _TrackPurchaseScreenState(
-         
-      );
+  State<TrackPurchaseScreen> createState() => _TrackPurchaseScreenState();
 }
 
 class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
-    String username = '';
+  String username = '';
 
-  _TrackPurchaseScreenState( );
+  _TrackPurchaseScreenState();
 
   List<UserOrders> allUserOrder = [];
   List<UserOrders> completedUserOrder = [];
   List<UserOrders> pendingUserOrder = [];
+  List<UserShopList> userShopOrder = [];
   List<UserOrders> ongoingUserOrder = [];
   List<UserOrders> rejectedUserOrder = [];
 
@@ -62,6 +63,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
       isLoading = true;
     });
     await _userCubit.userOrderList(username: username);
+    await _userCubit.getUserShoppingList(username);
     setState(() {
       isLoading = false;
     });
@@ -76,25 +78,34 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return   BlocConsumer<UserCubit, UserStates>(
-            listener: (context, state) {
-              if (state is OrderListLoaded) {
-                if (state.orderList.status!) {
-                  allUserOrder = state.orderList.orders?.reversed.toList() ?? [];
-                  ongoingUserOrder = _userCubit.viewModel.onGoingOrdersList.reversed.toList();
-                  completedUserOrder = _userCubit.viewModel.onCompletedOrdersList.reversed.toList();
-                  pendingUserOrder = _userCubit.viewModel.onPendingOrderList.reversed.toList();
-                  rejectedUserOrder = _userCubit.viewModel.onRejectedOrdersList.reversed.toList();
-                } else {}
-              } else if (state is UserNetworkErrApiErr) {
-              } else if (state is UserNetworkErr) {}
-            },
-            builder: (context, state) => (state is OrderListLoading) ? Align(
-                child: ImageView.asset(
+    return BlocConsumer<UserCubit, UserStates>(
+      listener: (context, state) {
+        if (state is OrderListLoaded) {
+          if (state.orderList.status!) {
+            allUserOrder = state.orderList.orders?.reversed.toList() ?? [];
+            ongoingUserOrder =
+                _userCubit.viewModel.onGoingOrdersList.reversed.toList();
+            completedUserOrder =
+                _userCubit.viewModel.onCompletedOrdersList.reversed.toList();
+            pendingUserOrder =
+                _userCubit.viewModel.onPendingOrderList.reversed.toList();
+            rejectedUserOrder =
+                _userCubit.viewModel.onRejectedOrdersList.reversed.toList();
+          } else {}
+        }else if(state is UserShopListLoaded){
+          userShopOrder = state.userShopData.shopOrders ?? [];
+        } 
+        else if (state is UserNetworkErrApiErr) {
+        } else if (state is UserNetworkErr) {}
+      },
+      builder: (context, state) => (state is OrderListLoading)
+          ? Align(
+              child: ImageView.asset(
               AppImages.loading,
               height: 50,
-            )) : DefaultTabController(
-              length: 5,
+            ))
+          : DefaultTabController(
+              length: 6,
               child: Scaffold(
                 backgroundColor: AppColors.lightBackground,
                 body: Column(
@@ -104,9 +115,21 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(child: Text('Total Services (${ allUserOrder.length })', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),)),
-                          const SizedBox(width: 10,),
-                          Expanded(child: Text('Ongoing Services (${ ongoingUserOrder.length})', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),)),
+                          Expanded(
+                              child: Text(
+                            'Total Services (${allUserOrder.length})',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                              child: Text(
+                            'Ongoing Services (${ongoingUserOrder.length})',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w600),
+                          )),
                         ],
                       ),
                     ),
@@ -120,7 +143,9 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                             borderRadius: BorderRadius.circular(20)),
                         tabs: [
                           Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
                             child: Tab(
                               child: Align(
                                 alignment: Alignment.center,
@@ -137,6 +162,18 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text('Ongoing Services'),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Tab(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text('Product Purchases'),
                               ),
                             ),
                             decoration: BoxDecoration(
@@ -165,7 +202,6 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                             ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                               
                             ),
                           ),
                           Container(
@@ -186,12 +222,24 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                     Expanded(
                       child: TabBarView(
                         children: [
-                          AllServices(allOrders: allUserOrder,),
-                           AllServices(allOrders: ongoingUserOrder,),
-                           AllServices(allOrders: pendingUserOrder,),
-                           AllServices(allOrders: completedUserOrder,),
-                           AllServices(allOrders: rejectedUserOrder,),
-                          
+                          AllServices.services(
+                            allOrders: allUserOrder,
+                          ),
+                          AllServices.services(
+                            allOrders: ongoingUserOrder,
+                          ),
+                          AllServices.shop(
+                              userShopOrder: userShopOrder,
+                              emptyListTitle: 'No available purchases'),
+                          AllServices.services(
+                            allOrders: pendingUserOrder,
+                          ),
+                          AllServices.services(
+                            allOrders: completedUserOrder,
+                          ),
+                          AllServices.services(
+                            allOrders: rejectedUserOrder,
+                          ),
                         ],
                       ),
                     ),
@@ -199,6 +247,6 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                 ),
               ),
             ),
-          );
+    );
   }
 }
