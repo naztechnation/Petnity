@@ -777,15 +777,7 @@ class _TrackServicesState extends State<TrackServices> {
         .markCompleteAgentOrder(agentId: agentId, orderId: orderId);
   }
 
-  agentMarkAsDelivered({
-    required BuildContext ctx,
-    required String agentId,
-    required String orderId,
-  }) {
-    ctx
-        .read<ServiceProviderCubit>()
-        .agentDeliveredOrder(agentId: agentId, orderId: orderId);
-  }
+  
 
   userMarkAsDelivered({
     required BuildContext ctx,

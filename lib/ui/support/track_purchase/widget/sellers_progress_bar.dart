@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 
@@ -16,50 +15,49 @@ class OngoingOrderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _buildOrderContainer("Order Received", isOrderReceived, AppImages.giftCard),
-        _buildConnectorContainer(isOrderReceived, isOrderDelivered),
+        _buildConnectorContainer(isOrderReceived, ),
+        _buildConnectorContainer(isOrderDelivered, ),
         _buildOrderContainer("Order Delivered", isOrderDelivered, AppImages.checkedDelivered),
       ],
     );
   }
 
-  Widget _buildOrderContainer(String title, bool isActive,String icon) {
+  Widget _buildOrderContainer(String title, bool isActive, String icon) {
     return Expanded(
+      flex: 1,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(30.0),
+            height: 30,
+            width: 30,
             decoration: BoxDecoration(
               color: isActive ? Colors.blue : Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-              border: Border.all(color: Colors.blue),
+              borderRadius: BorderRadius.circular(40.0),
+              border: Border.all(color: isActive ? Colors.blue : Colors.grey),
             ),
-            child: ImageView.svg(icon, color: isActive ? Colors.white : Colors.blue),
+            child: Padding(
+              padding: const EdgeInsets.all(6.0),
+              child: ImageView.svg(icon, color: isActive ? Colors.white : Colors.grey, height: 12),
+            ),
           ),
-           SizedBox(height: 8.0),
-            Text(
-              title,
-              style: TextStyle(
-                color: isActive ? Colors.white : Colors.blue,
-                fontWeight: FontWeight.w300,
-              ),
-            ),
+         
         ],
       ),
     );
   }
 
-  Widget _buildConnectorContainer(bool isOrderReceived, bool isOrderDelivered) {
-    return Container(
-      width: 20.0,
-      height: 2.0,
-      color: isOrderReceived
-          ? Colors.blue
-          : (isOrderDelivered ? Colors.white : Colors.grey),
+  Widget _buildConnectorContainer(bool isOrderReceived,) {
+    return Expanded(
+      flex: 4,
+      child: Container(
+        height: 2.0,
+        color: (isOrderReceived ? Colors.blue : Colors.grey),
+      ),
     );
   }
 }
-
-  

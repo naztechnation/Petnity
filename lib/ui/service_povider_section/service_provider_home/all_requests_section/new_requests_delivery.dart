@@ -5,7 +5,6 @@ import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/service_povider_section/service_provider_home/pet_service_request.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_delivery_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/custom_text.dart';
@@ -523,23 +522,30 @@ class _ServiceProviderPetDeliveryHomeBodyState
           width: screenSize(context).width * .2,
           child: ButtonView(
             onPressed: () {
-              if (order.isPaid ?? false) {
+              // if (order.isPaid ?? false) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return PurchaseRequest(
-                    ownerName: 'Sandra Lee',
-                    phoneNumber: '0908765432',
+                    ownerName: '${order.product?.agent?.name}',
+                    buyerName: '${order.profile?.user?.username}',
+                     
                     productName: '${order.product?.name}',
                     productImage: '${order.product?.image}',
                     quantity: '${order.quantity}',
                     price: '${order.product?.price}',
                     purchaseId: '${order.paymentId}',
                     deliveryDate: today,
-                    deliveryLocation: ' ',
+                    deliveryLocation: ' ', 
+                    ownerImage: '${order.profile?.profileImage}',
+                     ownerNumber: '${order.profile?.phoneNumber}',
+                      ownerFirebaseId: '${order.profile?.firebaseId}', isUserMarkedOrder: order.userMarkedDelivered ?? false
+                      
+                       , isAgentMarkedOrder: order.agentMarkedDelivered ?? false,
+                       orderId: order.product?.id.toString() ?? '', ownerNormalId: order.product?.agent?.id.toString() ?? '',
                   );
                 }));
-              } else {
-                Modals.showToast('This product  has not been paid for.');
-              }
+              // } else {
+                Modals.showToast('This product has not been paid for.');
+              // }
             },
             child: Text(
               'view',

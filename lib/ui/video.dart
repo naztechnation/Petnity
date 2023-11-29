@@ -6,6 +6,7 @@ import 'package:petnity/res/app_strings.dart';
 
 import '../handlers/secure_handler.dart';
 import '../res/app_colors.dart';
+import 'widgets/modals.dart';
 
 class VideoCall extends StatefulWidget {
   final String user1;
@@ -50,7 +51,7 @@ getUserDetails() async {
   @override
   void initState() {
     super.initState();
-    channelName = createChannelName(widget.user1, widget.user2);  
+    channelName = createChannelName(widget.user1, widget.user2).toLowerCase();  
     initAgora();
     getUserDetails();
   }
@@ -69,6 +70,7 @@ getUserDetails() async {
 
   @override
   Widget build(BuildContext context) {
+    Modals.showToast(channelName);
 
     return Scaffold(
       

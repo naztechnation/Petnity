@@ -359,7 +359,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       );
 
       
-      emit(DeliveredShopOrderLoaded(services));
+      emit(AgentDeliveredShopOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
     } catch (e) {
