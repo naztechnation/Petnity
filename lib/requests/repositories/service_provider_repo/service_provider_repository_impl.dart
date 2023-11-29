@@ -194,6 +194,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
             username: username, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
+          'Content-Type': 'application/json',
         });
 
     return AuthData.fromJson(map);
@@ -230,6 +231,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         AppStrings.userMarkOrderDelivered(username: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
+          
         });
 
     return AuthData.fromJson(map);

@@ -143,7 +143,7 @@ class _PurchaseState extends State<Purchase> {
   String serviceCharge = '1000';
 
   late ServiceProviderCubit _serviceProviderCubit;
-
+  bool isLoading = false;
 
   getUserDetails() async {
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
@@ -656,9 +656,10 @@ class _PurchaseState extends State<Purchase> {
                   ButtonView(
                     borderRadius: 30,
                     expanded: false,
+                    processing: isLoading,
                     color: Colors.green,
                     onPressed: () {
-                      BuildContext cont = context;
+                      
                       setState(() {});
                       Modals.showAlertOptionDialog(context,
                           title: 'Warning!!!',
@@ -666,7 +667,7 @@ class _PurchaseState extends State<Purchase> {
                               'Are you sure you want to mark this order as delivered? Action cannot be reversed once completed.',
                           onTap: () {
                         userMarkDelivered(
-                            ctx: cont,
+                             
                             username: username,
                             orderId: widget.orderId);
                       });
@@ -841,11 +842,17 @@ class _PurchaseState extends State<Purchase> {
   }
 
   userMarkDelivered({
-    required BuildContext ctx,
+    
     required String username,
     required String orderId,
-  }) {
-    _serviceProviderCubit
+  }) async{
+    setState(() {
+      isLoading = true;
+    });
+   await  _serviceProviderCubit
         .userDeliveredOrder(username: username, orderId: orderId);
+         setState(() {
+      isLoading = false;
+    });
   }
 }

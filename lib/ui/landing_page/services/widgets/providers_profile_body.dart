@@ -6,7 +6,6 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../blocs/user/user_cubit.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/service_provider_lists.dart';
 import '../../../../model/view_models/account_view_model.dart';
@@ -19,7 +18,6 @@ import '../../../widgets/custom_text.dart';
 import '../../../widgets/modals.dart';
 import '../../../widgets/ratings_views.dart';
 import '../../../widgets/text_edit_view.dart';
-import 'contact_info.dart';
 
 class ProviderProfileBody extends StatelessWidget {
   final Agents? agents;
@@ -273,9 +271,9 @@ class _ProviderProfileState extends State<ProviderProfile> {
               size: 14,
               color: Colors.black,
             ),
-            contactInfo(
-                phone: widget.agents?.profile?.phoneNumber,
-                email: widget.agents?.profile?.user?.email),
+            // contactInfo(
+            //     phone: widget.agents?.profile?.phoneNumber,
+            //     email: widget.agents?.profile?.user?.email),
             const SizedBox(
               height: 30,
             ),

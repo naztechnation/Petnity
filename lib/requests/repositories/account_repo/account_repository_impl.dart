@@ -32,7 +32,7 @@ class AccountRepositoryImpl implements AccountRepository {
     required String password,
   }) async {
     final map = await Requests().post(AppStrings.loginUrl, body: {
-      "username": username,
+      "username_or_email": username,
       "password": password,
     });
     return AuthData.fromJson(map);

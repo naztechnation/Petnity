@@ -56,54 +56,44 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status!) {
-                  
                   StorageHandler.saveIsLoggedIn('true');
-                 
+
                   StorageHandler.saveUserPassword(_passwordController.text);
                   StorageHandler.saveUserName(_usernameController.text.trim());
-                 
-                 
 
                   if (!state.userData.isAgent!) {
-                     if (state.userData.agent?.profile?.hasPets ?? false) {
-                    StorageHandler.saveUserPetState('true');
-                  } else {
-                    StorageHandler.saveUserPetState('');
-                  }
+                    if (state.userData.agent?.profile?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
+                    }
                     StorageHandler.saveIsUserType('user');
-                     StorageHandler.saveEmail(
-                      state.userData.profile?.user?.email.toString());
+                    StorageHandler.saveEmail(
+                        state.userData.profile?.user?.email.toString());
 
-                     
-                     loginUser(
-                      firebaseUser: firebaseUser,
-                      context: context,
-                      message: state.userData.message!,
-                      userId: state.userData.agent?.profile?.id.toString(),
-                      hasPet: state.userData.agent?.profile?.hasPets ?? false,
-                      isAgent: !state.userData.isAgent!);
+                    loginUser(
+                        firebaseUser: firebaseUser,
+                        context: context,
+                        message: state.userData.message!,
+                        userId: state.userData.agent?.profile?.id.toString(),
+                        hasPet: state.userData.agent?.profile?.hasPets ?? false,
+                        isAgent: !state.userData.isAgent!);
                   } else {
                     StorageHandler.saveIsUserType('service_provider');
-                     StorageHandler.saveAgentId(
-                      state.userData.agent!.id.toString());
+                    StorageHandler.saveAgentId(
+                        state.userData.agent!.id.toString());
 
-                       StorageHandler.saveEmail(
-                      state.userData.agent?.profile?.user?.email.toString());
+                    StorageHandler.saveEmail(
+                        state.userData.agent?.profile?.user?.email.toString());
 
-
-
-                       loginUser(
-                      firebaseUser: firebaseUser,
-                      context: context,
-                      message: state.userData.message!,
-                      userId: state.userData.agent?.profile?.id.toString(),
-                      hasPet: state.userData.agent?.profile?.hasPets ?? false,
-                      isAgent: !state.userData.isAgent!);
-
-                     
+                    loginUser(
+                        firebaseUser: firebaseUser,
+                        context: context,
+                        message: state.userData.message!,
+                        userId: state.userData.agent?.profile?.id.toString(),
+                        hasPet: state.userData.agent?.profile?.hasPets ?? false,
+                        isAgent: !state.userData.isAgent!);
                   }
-
-              
                 } else {
                   Modals.showToast(state.userData.message!,
                       messageType: MessageType.error);
@@ -159,7 +149,7 @@ class SignInScreen extends StatelessWidget {
                       },
                       isDense: true,
                       textViewTitle: 'Your Username',
-                      hintText: 'Enter username',
+                      hintText: 'Enter Username/Email',
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
@@ -187,7 +177,12 @@ class SignInScreen extends StatelessWidget {
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: user.showPasswordStatus ?   Icon(Icons.visibility_off, size: 24,) : Icon(Icons.visibility, size: 24),
+                          child: user.showPasswordStatus
+                              ? Icon(
+                                  Icons.visibility_off,
+                                  size: 24,
+                                )
+                              : Icon(Icons.visibility, size: 24),
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,
@@ -303,12 +298,9 @@ class SignInScreen extends StatelessWidget {
       required userId,
       required bool hasPet,
       required bool isAgent}) async {
-   
     await firebaseUser.loginUserWithEmailAndPassword(
         email: '${_usernameController.text.trim()}@gmail.com',
         password: _passwordController.text.trim());
-
-        
 
     if (firebaseUser.status == Status.authenticated) {
       Modals.showToast(message, messageType: MessageType.success);
@@ -317,8 +309,6 @@ class SignInScreen extends StatelessWidget {
       StorageHandler.saveUserId(userId);
       StorageHandler.saveUserPassword(_passwordController.text);
       StorageHandler.saveUserName(_usernameController.text.trim());
-
-      
 
       if (isAgent) {
         StorageHandler.saveIsUserType('user');

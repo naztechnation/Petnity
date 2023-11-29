@@ -263,12 +263,15 @@ class _ChatPageState extends State<ChatPage> {
                   height: 60,
                   child: Row(
                     children: <Widget>[
-                      Expanded(
-                          flex: 1,
-                          child: Icon(
-                            Icons.attach_file,
-                            color: AppColors.lightSecondary,
-                          )),
+                      // Expanded(
+                      //     flex: 1,
+                      //     child: Icon(
+                      //       Icons.attach_file,
+                      //       color: AppColors.lightSecondary,
+                      //     )),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Expanded(
                         flex: 8,
                         child: Container(
@@ -286,6 +289,9 @@ class _ChatPageState extends State<ChatPage> {
                                 border: InputBorder.none),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        width: 10,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 16.0),

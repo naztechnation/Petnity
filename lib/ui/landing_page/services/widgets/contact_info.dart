@@ -6,7 +6,7 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_strings.dart';
 import '../../../widgets/image_view.dart';
 
-Widget contactInfo({String? email, String? phone}) {
+Widget contactInf({String? email, String? phone}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
