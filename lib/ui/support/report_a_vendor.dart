@@ -6,6 +6,8 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 
+import '../widgets/back_button.dart';
+
 class ReportVendor extends StatelessWidget {
   final TextEditingController vendorName = TextEditingController();
   final TextEditingController problem = TextEditingController();
@@ -14,8 +16,7 @@ class ReportVendor extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        height: screenSize(context).height * .1,
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: ButtonView(
           borderRadius: 40,
           onPressed: () {},
@@ -31,12 +32,7 @@ class ReportVendor extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             backgroundColor: AppColors.lightBackground,
-            leading: InkWell(
-              child: ImageView.svg(AppImages.backButton),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            leading: backButton(context),
             title: Text(
               'Report a vendor',
               style:
@@ -55,19 +51,22 @@ class ReportVendor extends StatelessWidget {
             TextEditView(
               controller: vendorName,
               fillColor: Colors.white,
+              isDense: true,
               borderRadius: 20,
-              hintText: 'Input vendor\'s name',
+              hintText: 'Input vendor\'s username',
             ),
+             
             SizedBox(
-              height: 5,
+              height: 0,
             ),
-            TextEditView(
-              controller: problem,
+             TextEditView(
+              controller: vendorName,
               fillColor: Colors.white,
+              isDense: true,
               borderRadius: 20,
               hintText: 'report problem',
-              maxLines: 5,
-            )
+            ),
+            
           ],
         ),
       ),

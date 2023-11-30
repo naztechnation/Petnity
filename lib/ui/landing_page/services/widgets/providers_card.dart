@@ -161,8 +161,10 @@ class _ProvidersCardState extends State<ProvidersCard> {
                 CustomMultiToggle(
                   title: services,
                   fontSize: 11,
+                  selectedColor: AppColors.lightPrimary,
                   color: AppColors.lightPrimary,
-                  selectedTextColor: AppColors.lightPrimary,
+                  selectedTextColor: Colors.black,
+                  textColor: Colors.black,
                   height: 35,
                   contentMargin: const EdgeInsets.all(5),
                   onSelected: (index) {
@@ -186,10 +188,12 @@ class _ProvidersCardState extends State<ProvidersCard> {
                 CustomMultiToggle(
                   title: animal,
                   fontSize: 11,
+                  
+                  selectedColor: AppColors.lightPrimary,
                   color: AppColors.lightPrimary,
-                  selectedTextColor: AppColors.lightPrimary,
+                  selectedTextColor: Colors.black,
                   height: 35,
-                  contentMargin: const EdgeInsets.all(5),
+                  contentMargin: const EdgeInsets.all(2),
                   onSelected: (index) {
                     setState(() {
                       selectedAnimal = animal[index] ;

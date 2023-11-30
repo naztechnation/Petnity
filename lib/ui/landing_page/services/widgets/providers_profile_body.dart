@@ -152,7 +152,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
               child: CustomText(
                 textAlign: TextAlign.start,
                 maxLines: 2,
-                text: 'Other services',
+                text: 'Other Services',
                 weight: FontWeight.w700,
                 size: 16,
                 fontFamily: AppStrings.interSans,
@@ -163,8 +163,10 @@ class _ProviderProfileState extends State<ProviderProfile> {
             CustomMultiToggle(
               title: services,
               fontSize: 14,
-              color: AppColors.lightPrimary,
-              selectedTextColor: AppColors.lightPrimary,
+              selectedColor: AppColors.lightPrimary,
+                  color: AppColors.lightPrimary,
+                  selectedTextColor: Colors.black,
+                  textColor: Colors.black,
               height: 40,
               contentMargin: const EdgeInsets.all(0),
               onSelected: (index) {
@@ -181,7 +183,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 textAlign: TextAlign.start,
                 maxLines: 2,
                 text: 'Animals',
-                weight: FontWeight.w700,
+                weight: FontWeight.w600,
                 size: 16,
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
@@ -192,8 +194,10 @@ class _ProviderProfileState extends State<ProviderProfile> {
             CustomMultiToggle(
               title: animals,
               fontSize: 11,
-              color: AppColors.lightPrimary,
-              selectedTextColor: AppColors.lightPrimary,
+              selectedColor: AppColors.lightPrimary,
+                  color: AppColors.lightPrimary,
+                  selectedTextColor: Colors.black,
+                  textColor: Colors.black,
               height: 35,
               contentMargin: const EdgeInsets.all(0),
               onSelected: null,

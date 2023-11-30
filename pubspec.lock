@@ -760,6 +760,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  livechatt:
+    dependency: "direct main"
+    description:
+      name: livechatt
+      sha256: ea88e3dc5fbe8a69f0287c735f55f1097125a4f282c7ec9b03d9b9c1716a7260
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   matcher:
     dependency: transitive
     description:

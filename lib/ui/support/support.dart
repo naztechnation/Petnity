@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -9,53 +10,72 @@ import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../widgets/custom_text.dart';
 
-class Support extends StatelessWidget {
+class Support extends StatefulWidget {
+  @override
+  State<Support> createState() => _SupportState();
+}
+
+class _SupportState extends State<Support> {
+
+  String email = "";
+  String phone = "";
+
+
+  getUserDetails() async{
+    email = await StorageHandler.getUserEmail();
+    phone = await StorageHandler.getUserPhone();
+  }
+
+  @override
+  void initState() {
+    getUserDetails();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        height: screenSize(context).height * .1,
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        height: 180,
         width: screenSize(context).width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Container(
-              width: screenSize(context).width * .5,
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.email_outlined),
-                title: CustomText(
-                  text: 'Email',
-                  fontFamily: AppStrings.interSans,
-                ),
-                subtitle: CustomText(
-                  text: 'myexampleemail@sample.com',
-                  fontFamily: AppStrings.interSans,
-                  size: 13,
-                ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.email_outlined),
+              title: CustomText(
+                text: 'Email',
+                fontFamily: AppStrings.interSans,
+                size: 13,
+                weight: FontWeight.w400,
+              ),
+              subtitle: CustomText(
+                text: email,
+                fontFamily: AppStrings.interSans,
+                size: 13,
+                weight: FontWeight.w400,
+
               ),
             ),
-            Container(
-              height: screenSize(context).height * .06,
-              color: Colors.black.withOpacity(0.5),
-              width: 3,
-            ),
-            Container(
-              width: screenSize(context).width * .35,
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: Icon(Icons.call),
-                title: CustomText(
-                  text: 'Number',
-                  fontFamily: AppStrings.interSans,
-                ),
-                subtitle: CustomText(
-                  text: '09150515270',
-                  fontFamily: AppStrings.interSans,
-                  size: 13,
-                ),
+             Divider(),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Icon(Icons.call),
+              title: CustomText(
+                text: 'Number',
+                fontFamily: AppStrings.interSans,
+                 size: 13,
+                weight: FontWeight.w400,
+
+              ),
+              subtitle: CustomText(
+                text: phone,
+                fontFamily: AppStrings.interSans,
+                 size: 13,
+                weight: FontWeight.w400,
+
               ),
             )
           ],

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
+
+import '../widgets/back_button.dart';
 
 class ReportBug extends StatelessWidget {
   final TextEditingController bug = TextEditingController();
@@ -12,8 +12,7 @@ class ReportBug extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        height: screenSize(context).height * .1,
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: ButtonView(
           borderRadius: 40,
           onPressed: () {},
@@ -29,12 +28,7 @@ class ReportBug extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             backgroundColor: AppColors.lightBackground,
-            leading: InkWell(
-              child: ImageView.svg(AppImages.backButton),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            leading:  backButton(context),
             title: Text(
               'Report a bug',
               style:
@@ -45,14 +39,15 @@ class ReportBug extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextEditView(
+             TextEditView(
               controller: bug,
               fillColor: Colors.white,
+              isDense: true,
               borderRadius: 20,
               hintText: 'Type bug',
             ),

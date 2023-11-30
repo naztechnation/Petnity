@@ -34,7 +34,7 @@ class _ProfileState extends State<Profile> {
             backgroundColor: AppColors.lightBackground,
             leading: backButton(context),
             title: Text(
-              'Your Profile',
+              'Profile',
               style: TextStyle(
                         fontSize: 18.0,
                         fontWeight: FontWeight.w600,
@@ -45,7 +45,8 @@ class _ProfileState extends State<Profile> {
             ),
             centerTitle: true,
             actions: [
-             ImageView.svg(AppImages.addIcon)
+             ImageView.svg(AppImages.addIcon, height: 23,),
+             SizedBox(width: 20,)
             ],
           ),
         ),
@@ -75,7 +76,7 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Thanos',
+                      'Dog name',
                        style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w600,
@@ -85,7 +86,7 @@ class _ProfileState extends State<Profile> {
                         ),
                     ),
                     Text(
-                      'Sex: Semale',
+                      'Sex: Female',
                        style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w600,
@@ -152,23 +153,15 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 2.0),
-                width: screenSize(context).width,
-                padding: EdgeInsets.all(5),
-                child: Flexible(
-                  child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    // margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(),
-                    child: Text(
-                      'Lorem ipsum dolor sit amet consectetur. At sed accumsan ac vitae semper nunc aliquam semper eget. Vel arcu sollicitudin magna elit pellentesque egestas id. Nisl vulputate tristique amet mollis ut luctus integer ultrices accumsan. In mi aliquet consectetur id phasellus. Eu amet nulla tortor ut elementum enim. In sed tristique',
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        
-                        fontFamily: AppStrings.interSans
-                      ),
-                    ),
+                padding: EdgeInsets.all(8.0),
+                
+                child: Text(
+                  'Lorem ipsum dolor sit amet consectetur. At sed accumsan ac vitae semper nunc aliquam semper eget. Vel arcu sollicitudin magna elit pellentesque egestas id. Nisl vulputate tristique amet mollis ut luctus integer ultrices accumsan. In mi aliquet consectetur id phasellus. Eu amet nulla tortor ut elementum enim. In sed tristique',
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    
+                    fontFamily: AppStrings.interSans
                   ),
                 ),
               ),

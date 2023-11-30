@@ -56,7 +56,7 @@ class _CustomMultiToggleState extends State<CustomMultiToggle> {
     return InkWell(
       onTap: onTap,
       child: Card(
-        elevation: 2,
+        elevation: 1,
         shape: RoundedRectangleBorder(
 borderRadius: const BorderRadius.all(
                 Radius.circular(30.0),
@@ -84,7 +84,7 @@ borderRadius: const BorderRadius.all(
                     width: 1.0,
                     color:  selected
                   ? 
-                      Theme.of(context).colorScheme.secondary
+                      widget.selectedColor ?? Theme.of(context).colorScheme.secondary
                   : (widget.color ?? Theme.of(context).backgroundColor),
                     style: BorderStyle.solid)
             ),
@@ -103,7 +103,7 @@ borderRadius: const BorderRadius.all(
                                   Theme.of(context).textTheme.caption!.color),
                           fontSize: widget.fontSize,
                 
-                          fontWeight: FontWeight.w500)),
+                          fontWeight: FontWeight.w600)),
                 ),
                
               ],

@@ -70,6 +70,8 @@ class SignInScreen extends StatelessWidget {
                     StorageHandler.saveIsUserType('user');
                     StorageHandler.saveEmail(
                         state.userData.profile?.user?.email.toString());
+                    StorageHandler.saveUserPhone(
+                        state.userData.profile?.phoneNumber.toString());
 
                     loginUser(
                         firebaseUser: firebaseUser,
@@ -85,6 +87,8 @@ class SignInScreen extends StatelessWidget {
 
                     StorageHandler.saveEmail(
                         state.userData.agent?.profile?.user?.email.toString());
+                        StorageHandler.saveUserPhone(
+                        state.userData.agent?.profile?.phoneNumber.toString());
 
                     loginUser(
                         firebaseUser: firebaseUser,

@@ -9,6 +9,7 @@ import '../utils/navigator/page_navigator.dart';
 import 'res/app_colors.dart';
 import 'res/app_constants.dart';
 import 'res/app_strings.dart';
+import 'ui/chat.dart';
 import 'ui/on_boarding/widgets/fading_sliding_in.dart';
 import 'ui/widgets/custom_text.dart';
 import 'ui/widgets/image_view.dart';
@@ -48,6 +49,7 @@ class _SplashScreenState extends State<SplashScreen>
       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } else if (userType != '') {
       if (userType == 'user') {
+        // AppNavigator.pushAndStackPage(context, page: MyTestChat());
         AppNavigator.pushAndReplaceName(context, name: AppRoutes.landingPage);
       } else if (userType == 'service_provider') {
         AppNavigator.pushAndReplaceName(context,
