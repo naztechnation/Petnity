@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart'; 
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
@@ -129,9 +130,9 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                             CustomText(
                               textAlign: TextAlign.start,
                               maxLines: 2,
-                              text: '${widget.agents?.name}',
+                              text: '${widget.agents?.profile?.user?.username}'.capitalizeFirstOfEach,
                               weight: FontWeight.w700,
-                              size: 14,
+                              size: 16,
                               fontFamily: AppStrings.interSans,
                               color: Colors.black,
                             ),
@@ -228,7 +229,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                                     "null") {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                    username: widget.agents!.name ?? '',
+                                    username: widget.agents?.profile?.user?.username ?? '',
                                     userImage: widget.agents!.picture ?? '',
                                     uid: widget.agents?.profile?.firebaseId ??
                                         '',

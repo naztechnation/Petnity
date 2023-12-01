@@ -18,7 +18,6 @@ import 'package:petnity/ui/settings/saved_cards.dart';
 import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/settings/transactions.dart';
 import 'package:petnity/ui/support/faq.dart';
-import 'package:petnity/ui/support/live_support_chat.dart';
 import 'package:petnity/ui/support/report_a_bug.dart';
 import 'package:petnity/ui/support/report_a_vendor.dart';
 import 'package:petnity/ui/support/report_an_issue.dart';
@@ -26,6 +25,7 @@ import 'package:petnity/ui/support/report_an_issue.dart';
 import '../ui/auth/reg_successful_screen.dart';
 import '../ui/auth/sign_in_screen.dart';
 import '../ui/service_povider_section/service_provider_kyc/service_provider_kyc/service_kyc_one.dart';
+import '../ui/support/live_support_chat.dart';
 import '../ui/user/user_kyc/kyc_screen_two.dart';
 import '../ui/user/landing_screen.dart';
 import '../ui/on_boarding/welcome_screen.dart';
@@ -98,7 +98,7 @@ class AppRoutes {
     changePassword: (context) => ChangePassword(),
     accountDeleted: (context) => AccountDeleted(),
     settingsScreen: (context) => SettingsScreen(),
-    liveSupport: (context) => LiveSupport(),
+    liveSupport: (context) => LiveSupportPage(),
     reportBug: (context) => ReportBug(),
     reportIssue: (context) => ReportIssue(),
     reportVendor: (context) => ReportVendor(),
@@ -192,7 +192,7 @@ class AppRoutes {
 
       case liveSupport:
         return MaterialPageRoute(
-          builder: (context) => LiveSupport(),
+          builder: (context) => LiveSupportPage(),
         );
 
       case signUpScreen:

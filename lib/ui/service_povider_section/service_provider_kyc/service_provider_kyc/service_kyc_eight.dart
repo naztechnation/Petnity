@@ -145,7 +145,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
                           maxLines: 2,
                           text: 'Select Service(s)',
                           weight: FontWeight.w700,
-                          size: 24,
+                          size: 20,
                           fontFamily: AppStrings.montserrat,
                           color: Colors.black,
                         ),

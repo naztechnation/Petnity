@@ -59,7 +59,6 @@ class SignInScreen extends StatelessWidget {
                   StorageHandler.saveIsLoggedIn('true');
 
                   StorageHandler.saveUserPassword(_passwordController.text);
-                  StorageHandler.saveUserName(_usernameController.text.trim());
 
                   if (!state.userData.isAgent!) {
                     if (state.userData.agent?.profile?.hasPets ?? false) {
@@ -72,6 +71,10 @@ class SignInScreen extends StatelessWidget {
                         state.userData.profile?.user?.email.toString());
                     StorageHandler.saveUserPhone(
                         state.userData.profile?.phoneNumber.toString());
+
+                     StorageHandler.saveUserId(state.userData.profile?.user?.id.toString());
+                    StorageHandler.saveUserName(
+                        state.userData.profile?.user?.username.toString());
 
                     loginUser(
                         firebaseUser: firebaseUser,
@@ -87,8 +90,12 @@ class SignInScreen extends StatelessWidget {
 
                     StorageHandler.saveEmail(
                         state.userData.agent?.profile?.user?.email.toString());
-                        StorageHandler.saveUserPhone(
+                    StorageHandler.saveUserPhone(
                         state.userData.agent?.profile?.phoneNumber.toString());
+
+                    StorageHandler.saveUserId(
+                        state.userData.agent?.id.toString());
+                    StorageHandler.saveUserName(state.userData.agent?.profile?.user?.username.toString());
 
                     loginUser(
                         firebaseUser: firebaseUser,
@@ -149,11 +156,11 @@ class SignInScreen extends StatelessWidget {
                     TextEditView(
                       controller: _usernameController,
                       validator: (value) {
-                        return Validator.validate(value, 'Username');
+                        return Validator.validate(value, 'Email');
                       },
                       isDense: true,
-                      textViewTitle: 'Your Username',
-                      hintText: 'Enter Username/Email',
+                      textViewTitle: 'Your Email',
+                      hintText: 'Enter your email',
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
@@ -163,7 +170,7 @@ class SignInScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                     
+
                     TextEditView(
                       controller: _passwordController,
                       validator: (value) {
@@ -301,16 +308,11 @@ class SignInScreen extends StatelessWidget {
       required bool hasPet,
       required bool isAgent}) async {
     await firebaseUser.loginUserWithEmailAndPassword(
-        email: '${_usernameController.text.trim()}@gmail.com',
+        email: _usernameController.text.trim(),
         password: _passwordController.text.trim());
 
     if (firebaseUser.status == Status.authenticated) {
       Modals.showToast(message, messageType: MessageType.success);
-
-      StorageHandler.saveIsLoggedIn('true');
-      StorageHandler.saveUserId(userId);
-      StorageHandler.saveUserPassword(_passwordController.text);
-      StorageHandler.saveUserName(_usernameController.text.trim());
 
       if (isAgent) {
         StorageHandler.saveIsUserType('user');

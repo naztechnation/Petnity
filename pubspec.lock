@@ -462,6 +462,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.6"
+  flutter_tawkto:
+    dependency: "direct main"
+    description:
+      name: flutter_tawkto
+      sha256: b71163321c6f2735c3a817ce46d1f60d9565337cff0425a7d8578314f32224d3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter

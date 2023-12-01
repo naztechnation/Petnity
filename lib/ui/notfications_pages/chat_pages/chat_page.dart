@@ -48,6 +48,8 @@ class _ChatPageState extends State<ChatPage> {
   String currentUserId = "";
   String peerId = "";
 
+   final _firebaseAuth = FirebaseAuth.instance;
+
   _ChatPageState(this.username, this.userImage, this.uid);
 
   @override
@@ -129,7 +131,7 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> updateOnlineStatus(bool isOnline) async {
     try {
-      final _firebaseAuth = FirebaseAuth.instance;
+     
       final _firebaseStorage = FirebaseFirestore.instance;
       final currentUserUid = _firebaseAuth.currentUser!.uid;
 
@@ -146,7 +148,8 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AccountViewModel>(context, listen: true);
+    final user = Provider.of<AccountViewModel>(context, listen: false);
+ 
 
     return WillPopScope(
       onWillPop: onBackPress,

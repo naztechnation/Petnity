@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
@@ -84,9 +85,9 @@ class _ProvidersCardState extends State<ProvidersCard> {
                           child: CustomText(
                             textAlign: TextAlign.start,
                             maxLines: 2,
-                            text: user.agents[widget.index].name,
+                            text: user.agents[widget.index].profile?.user?.username.toString().capitalizeFirstOfEach,
                             weight: FontWeight.w700,
-                            size: 14,
+                            size: 16,
                             fontFamily: AppStrings.interSans,
                             color: Colors.black,
                           ),

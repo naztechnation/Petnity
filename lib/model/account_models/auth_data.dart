@@ -132,10 +132,10 @@ class Profile {
   int? id;
   String? firebaseId;
   String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
-  Null? profileImage;
+  String? address;
+  String? city;
+  String? country;
+  String? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;

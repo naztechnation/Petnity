@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:provider/provider.dart';
@@ -15,10 +16,15 @@ import '../../../widgets/custom_text.dart';
 import '../../../widgets/image_view.dart';
 
 class KycServiceScreenTwelve extends StatelessWidget {
-  const KycServiceScreenTwelve({super.key});
+    KycServiceScreenTwelve({super.key});
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
 
   @override
   Widget build(BuildContext context) {
+
+
 
     final user = Provider.of<AccountViewModel>(context, listen: true);
 
@@ -98,15 +104,17 @@ class KycServiceScreenTwelve extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
               child: ButtonView(
                 onPressed: () {
-                  AppNavigator.pushAndReplaceName (context,
-                      name: AppRoutes.serviceProviderLandingPage);
+
+                  _signOut(context);
+                  // AppNavigator.pushAndReplaceName (context,
+                  //     name: AppRoutes.serviceProviderLandingPage);
                  
                 },
                 color: AppColors.lightSecondary,
                 child: CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text:  'Go to Home',
+                  text:  'Go to Login',
                   weight: FontWeight.w400,
                   size: 16,
                   fontFamily: AppStrings.interSans,
@@ -120,5 +128,14 @@ class KycServiceScreenTwelve extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
+    }
   }
 }

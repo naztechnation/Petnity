@@ -223,7 +223,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                     CustomText(
                                       textAlign: TextAlign.start,
                                       maxLines: 2,
-                                      text: '${agents?.name}',
+                                      text: '${agents?.profile?.user?.username}',
                                       weight: FontWeight.w700,
                                       size: 14,
                                       fontFamily: AppStrings.interSans,
