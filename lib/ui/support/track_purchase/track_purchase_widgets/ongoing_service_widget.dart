@@ -67,7 +67,9 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     borderRadius: BorderRadius.circular(30),
                     child: ImageView.network(
                       allOrders.agent?.picture,
-                      height: 50,
+                       height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
                     )),
                 Container(
                   width: screenSize(context).width * .3,

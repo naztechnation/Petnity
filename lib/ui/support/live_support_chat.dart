@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tawkto/flutter_tawk.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/handlers/secure_handler.dart';
+import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 
 
 class LiveSupportPage extends StatefulWidget {
@@ -37,17 +40,18 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
   
     @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    Modals.showToast(customerName,);
+    return Scaffold(
         appBar: AppBar(
-          title: const Text('Chat Our Support Team'),
-          backgroundColor: const Color(0XFFF7931E),
+          title: const Text('Chat Our Support Team', style: TextStyle(fontSize: 16),),
+          backgroundColor: AppColors.lightSecondary,
           elevation: 0,
+          centerTitle: true,
         ),
         body: Tawk(
           directChatLink: 'https://tawk.to/chat/6569d5ceff45ca7d4785bc3e/1hgimmch6',
           visitor: TawkVisitor(
-            name: customerName,
+            name: (userType == 'user') ? customerName.capitalizeFirstOfEach : '${customerName.capitalizeFirstOfEach}(Service Provider)',
             email: email,
           ),
           onLoad: () {
@@ -60,7 +64,7 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
             child: LoadingPage(),
           ),
         ),
-      ),
+     
     );
   }
 }

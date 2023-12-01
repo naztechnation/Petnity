@@ -205,23 +205,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ),
                         ),
                       ),
-                      ListTile(
-                        minLeadingWidth: 0,
-                        leading: ImageView.svg(
-                          AppImages.awaitingIcon,
-                          width: 25,
-                          height: 25,
-                        ),
-                        title: Align(
-                          alignment: Alignment(-1.4, 0),
-                          child: Text(
-                            'Awaiting Sessions',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                 ),
-                          ),
-                        ),
-                      ),
+                     
                       ListTile(
                         minLeadingWidth: 0,
                         onTap: () => Navigator.push(context,
@@ -257,10 +241,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         title: Align(
                           alignment: Alignment(-2.1, 0),
                           child: Text(
-                            'Balance and Withdrawal',
+                            'Balance & Withdrawal',
                             style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
+                                fontWeight: FontWeight.w800,
                                  ),
                           ),
                         ),

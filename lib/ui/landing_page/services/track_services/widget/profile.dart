@@ -35,7 +35,9 @@ Widget serviceProfile(
           borderRadius: BorderRadius.circular(60),
           child: ImageView.network(
             sellerImage,
-            height: 80,
+             height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
             placeholder: AppImages.person,
           ),
         ),
@@ -119,7 +121,9 @@ Widget serviceProfile(
           borderRadius: BorderRadius.circular(60),
           child: ImageView.network(
             customerImage,
-            height: 80,
+            height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
             placeholder: AppImages.person,
           ),
         ),
@@ -130,7 +134,7 @@ Widget serviceProfile(
           title: CustomText(
             textAlign: TextAlign.left,
             maxLines: 2,
-            text: 'Name',
+            text: 'Username',
             weight: FontWeight.w700,
             size: 12,
             fontFamily: AppStrings.interSans,

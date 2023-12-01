@@ -5,7 +5,6 @@ import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_strings.dart';
 
 import '../handlers/secure_handler.dart';
-import '../res/app_colors.dart';
 import 'widgets/modals.dart';
 
 class VideoCall extends StatefulWidget {

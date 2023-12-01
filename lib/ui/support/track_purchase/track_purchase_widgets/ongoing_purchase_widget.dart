@@ -68,6 +68,8 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     child: ImageView.network(
                       '${allOrders.product?.agent?.picture}',
                       height: 50,
+                      width: 50,
+                      fit: BoxFit.cover,
                     )),
                 Container(
                   width: screenSize(context).width * .3,
