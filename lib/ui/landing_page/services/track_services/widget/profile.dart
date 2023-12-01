@@ -54,6 +54,7 @@ Widget serviceProfile(
             fontFamily: AppStrings.interSans,
             color: Colors.black,
           ),
+          //goof
           subtitle: CustomText(
             textAlign: TextAlign.left,
             maxLines: 2,
