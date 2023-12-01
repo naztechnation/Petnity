@@ -20,6 +20,7 @@ class AccountCubit extends Cubit<AccountStates> {
     required String password,
     required String phoneNumber,
     required String firebaseId,
+    required String profileImage,
   }) async {
     try {
       emit(AccountProcessing());
@@ -30,7 +31,7 @@ class AccountCubit extends Cubit<AccountStates> {
           email: email,
           password: password,
           phone: phoneNumber,
-          firebaseId: firebaseId);
+          firebaseId: firebaseId, profileImage: profileImage);
 
       await viewModel.setUserData(username: email);
       emit(AccountLoaded(user));

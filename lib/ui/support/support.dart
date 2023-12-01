@@ -4,10 +4,12 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
+import 'package:petnity/ui/support/all_users.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 
+import '../../utils/navigator/page_navigator.dart';
 import '../widgets/custom_text.dart';
 
 class Support extends StatefulWidget {
@@ -123,7 +125,7 @@ class _SupportState extends State<Support> {
                     borderColor: Colors.transparent,
                     color: Colors.blue.withOpacity(0.2),
                     onPressed: () {
-                      Navigator.pushNamed(context, 'liveSupport');
+                      AppNavigator.pushAndStackPage(context, page: AllUsersChat());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

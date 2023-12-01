@@ -27,7 +27,7 @@ Widget serviceProfile(
   required String customerPhone,
   required String customerFireBaseId,
 }) {
-  return    (userType == 'user') ?Row(
+  return    (userType == 'user') ? Row(
     children: [
       Expanded(
         flex: 1,
@@ -164,12 +164,12 @@ Widget serviceProfile(
                           onTap: () {
                             if (customerFireBaseId == '') {
                               Modals.showToast(
-                                  'Can\'t communicate with this agent at the moment. Please');
+                                  'Can\'t communicate with this buyer at the moment. Please');
                             } else {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                      username: sellerName,
-                                      userImage: sellerImage,
+                                      username: customerName,
+                                      userImage: customerImage,
                                       uid: customerFireBaseId));
                             }
                           },

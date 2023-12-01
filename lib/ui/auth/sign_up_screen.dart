@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,7 @@ import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/view_models/firebase_auth_viewmodel.dart';
+import '../../model/view_models/service_provider_inapp.dart';
 import '../../model/view_models/service_provider_view_model.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
@@ -26,15 +29,25 @@ import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final _phoneController = TextEditingController();
 
   final _emailController = TextEditingController();
+
   final _usernameController = TextEditingController();
+
   final _passwordController = TextEditingController();
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +56,8 @@ class SignUpScreen extends StatelessWidget {
         Provider.of<FirebaseAuthProvider>(context, listen: true);
     final serviceProvider =
         Provider.of<ServiceProviderViewModel>(context, listen: true);
+    final serviceProvider1 =
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
     StorageHandler.saveOnboardState('true');
 
     return Scaffold(
@@ -74,8 +89,9 @@ class SignUpScreen extends StatelessWidget {
                       ));
                   Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
+                      serviceProvider1.resetImage();
                   StorageHandler.saveUserName(_usernameController.text.trim());
-                }else if(state.userData.message.username != null){
+                } else if (state.userData.message.username != null) {
                   Modals.showToast(state.userData.message.username[0] ?? '',
                       messageType: MessageType.success);
                 }
@@ -97,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: screenSize(context).height * 0.13,
+                      height: screenSize(context).height * 0.09,
                     ),
                     CustomText(
                       textAlign: TextAlign.left,
@@ -111,15 +127,99 @@ class SignUpScreen extends StatelessWidget {
                     SizedBox(
                       height: 24,
                     ),
+
+                    if (serviceProvider1.imageURl == null) ...[
+                      GestureDetector(
+                        onTap: () {
+                          serviceProvider1.loadImage(
+                            context: context,
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Center(
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ImageView.svg(
+                                      AppImages.personIcon,
+                                      height: 70,
+                                      color: Colors.grey,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ] else ...[
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                              width: 140,
+                              height: 130,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(80),
+                                child: ImageView.file(
+                                    File(
+                                      serviceProvider1.imageURl!.path,
+                                    ),
+                                    fit: BoxFit.cover),
+                              )),
+                          Positioned(
+                            top: 50,
+                            child: GestureDetector(
+                              onTap: () {
+                                serviceProvider1.loadImage(
+                                  context: context,
+                                );
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Colors.white60,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(14.0),
+                                  child: ImageView.svg(
+                                    AppImages.cross,
+                                    color: Colors.black,
+                                    height: 14,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+
                     TextEditView(
                       controller: _usernameController,
                       validator: (value) {
                         return Validator.validate(value, 'Username');
                       },
                       isDense: true,
-                      textViewTitle: 'Your  Username',
                       hintText: 'Enter username',
-                       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.deny(RegExp(r'\s'))
+                      ],
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
@@ -129,16 +229,13 @@ class SignUpScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+
                     TextEditView(
                       controller: _emailController,
                       validator: (value) {
                         return Validator.validateEmail(value, 'Email');
                       },
                       isDense: true,
-                      textViewTitle: 'Your  Email',
                       hintText: 'Enter email',
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -149,9 +246,7 @@ class SignUpScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+
                     TextEditView(
                       controller: _phoneController,
                       validator: (value) {
@@ -159,8 +254,7 @@ class SignUpScreen extends StatelessWidget {
                       },
                       isDense: true,
                       keyboardType: TextInputType.phone,
-                      textViewTitle: 'Your Number',
-                      hintText: 'Enter Number',
+                      hintText: 'Enter number',
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
@@ -172,25 +266,27 @@ class SignUpScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+
                     TextEditView(
                       controller: _passwordController,
                       validator: (value) {
                         return Validator.validate(value, 'Password');
                       },
                       isDense: true,
-                      textViewTitle: 'Password',
                       hintText: 'Enter your password',
                       obscureText: user.showPasswordStatus,
                       suffixIcon: GestureDetector(
                         onTap: () {
                           user.showPassword();
                         },
-                       child: Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: user.showPasswordStatus ?   Icon(Icons.visibility_off, size: 24,) : Icon(Icons.visibility, size: 24),
+                          child: user.showPasswordStatus
+                              ? Icon(
+                                  Icons.visibility_off,
+                                  size: 24,
+                                )
+                              : Icon(Icons.visibility, size: 24),
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,
@@ -231,12 +327,15 @@ class SignUpScreen extends StatelessWidget {
                       child: ButtonView(
                         borderRadius: 30,
                         processing: (state is AccountProcessing ||
-                            firebaseAuth.status == Status.authenticating),
+                            firebaseAuth.status == Status.authenticating || isLoading),
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            RegistrationOptions(
-                                context, user, serviceProvider, firebaseAuth);
-                            //_firebaseRegUser(  firebaseAuth,    context);
+                          if (serviceProvider1.imageURl != null) {
+                            if (_formKey.currentState!.validate()) {
+                              RegistrationOptions(
+                                  context, user, serviceProvider, firebaseAuth, serviceProvider1);
+                            }
+                          } else {
+                            Modals.showToast('please select an image first');
                           }
                         },
                         color: AppColors.lightSecondary,
@@ -299,8 +398,8 @@ class SignUpScreen extends StatelessWidget {
     ));
   }
 
-  _firebaseRegUser(final firebaseAuth, BuildContext context) async {
-   
+  _firebaseRegUser(
+      final firebaseAuth, BuildContext context, String imageUrl) async {
     if (_formKey.currentState!.validate()) {
       await firebaseAuth.registerUserWithEmailAndPassword(
           email: '${_usernameController.text.toLowerCase().trim()}@gmail.com',
@@ -308,15 +407,16 @@ class SignUpScreen extends StatelessWidget {
           username: _usernameController.text.trim());
 
       if (firebaseAuth.status == Status.authenticated) {
-        _submit(context);
+        _submit(context, imageUrl);
       }
     }
   }
 
-  _submit(BuildContext ctx) {
+  _submit(BuildContext ctx, imageUrl) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
           url: AppStrings.registerUrl,
+          profileImage: imageUrl,
           firebaseId: FirebaseAuth.instance.currentUser!.uid,
           username: _usernameController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
@@ -327,7 +427,7 @@ class SignUpScreen extends StatelessWidget {
   }
 
   RegistrationOptions(BuildContext context, final user, final serviceProvider,
-      final firebaseAuth) {
+      final firebaseAuth,  final serviceProvider1,) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
         heightFactor: 0.5,
@@ -380,12 +480,23 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  userTypes('User', () {
+                  userTypes('User', () async {
                     Navigator.pop(context);
                     user.setUserType(UserType.user);
                     StorageHandler.saveUserName(
                         _usernameController.text.trim());
-                    _firebaseRegUser(firebaseAuth, context);
+
+                    setState(() {
+                      isLoading = true;
+                    });
+                    String imgUrl = await serviceProvider1.uploadImage(
+                        serviceProvider1.imageURl!.path,
+                        'petnity_service_provider');
+                    setState(() {
+                      isLoading = false;
+                    });
+
+                    _firebaseRegUser(firebaseAuth, context, imgUrl);
                   }, context),
                   const SizedBox(
                     height: 10,
@@ -394,15 +505,22 @@ class SignUpScreen extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  userTypes('Service Provider', () {
+                  userTypes('Service Provider', () async {
                     Navigator.pop(context);
 
                     user.setUserType(UserType.serviceProvider);
 
-                    // Modals.showToast(user.serviceProviderId);
-                    // AppNavigator.pushAndReplaceName(context,
-                    //     name: AppRoutes.otpScreen);
-                    _firebaseRegUser(firebaseAuth, context);
+                    setState(() {
+                      isLoading = true;
+                    });
+                    String imgUrl = await serviceProvider1.uploadImage(
+                        serviceProvider1.imageURl!.path,
+                        'petnity_service_provider');
+                    setState(() {
+                      isLoading = false;
+                    });
+
+                    _firebaseRegUser(firebaseAuth, context, imgUrl);
                   }, context),
                   const SizedBox(
                     height: 10,

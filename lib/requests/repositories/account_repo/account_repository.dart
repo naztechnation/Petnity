@@ -9,6 +9,7 @@ import '../../../model/account_models/pet_types.dart';
 abstract class AccountRepository {
   Future<AuthData> registerUser({
     required String username,
+      required String profileImage,
     
     required String email,required String password,required String phone,required String url,required String firebaseId});
   Future<AuthData> sendPetHealth({required String name,required String drug,required String prescription,required String url});

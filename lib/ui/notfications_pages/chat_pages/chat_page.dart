@@ -96,10 +96,10 @@ class _ChatPageState extends State<ChatPage> {
         .update(dataNeedUpdate);
   }
 
-  sendChat({required String messaage}) async {
+  sendChat({required String message}) async {
      
     MessageChat chat = MessageChat(
-        content: messaage,
+        content: message,
         idFrom: currentUserId,
         idTo: peerId,
         timestamp: FieldValue.serverTimestamp());
@@ -111,7 +111,7 @@ class _ChatPageState extends State<ChatPage> {
         .add(chat.toJson());
 
     messageController.text = "";
-    //
+    
   }
 
   Future<bool> onBackPress() {
@@ -371,7 +371,7 @@ class _ChatPageState extends State<ChatPage> {
     Future.delayed(const Duration(milliseconds: 50)).then((_) => _scrollDown());
 
     if (messageController.text.isNotEmpty) {
-      sendChat(messaage: messageController.text);
+      sendChat(message: messageController.text);
       messageController.text = "";
       _scrollDown();
       FocusManager.instance.primaryFocus?.unfocus();

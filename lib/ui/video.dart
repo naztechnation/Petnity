@@ -69,35 +69,52 @@ getUserDetails() async {
   }
 
   @override
+  void dispose() {
+    onBackPress();
+    super.dispose();
+  }
+
+  Future<bool> onBackPress() async{
+    Navigator.pop(context);
+
+    await client.release();
+
+    return Future.value(false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Modals.showToast(channelName);
 
-    return Scaffold(
-      
-      body: SafeArea(
-        child: Stack(
-          children: [
-            AgoraVideoViewer(
-              client: client,
-              layoutType: Layout.floating,
-              enableHostControls: true,
-            ),
-            AgoraVideoButtons(
-              client: client,
-              addScreenSharing: true,
-            ),
-            Positioned(
-              top: 100,
-              left: 30,
-              right: 30,
-              child: Align(child: Column(
-                children: [
-                  Text('Ringing...', style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: AppStrings.montserrat),),
-                  const SizedBox(height: 10,),
-                  Text(guestUsername.capitalizeFirstOfEach, style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
-                ],
-              ))),
-          ],
+    return WillPopScope(
+      onWillPop: onBackPress,
+      child: Scaffold(
+        
+        body: SafeArea(
+          child: Stack(
+            children: [
+              AgoraVideoViewer(
+                client: client,
+                layoutType: Layout.floating,
+                enableHostControls: true,
+              ),
+              AgoraVideoButtons(
+                client: client,
+                addScreenSharing: false,
+              ),
+              Positioned(
+                top: 100,
+                left: 30,
+                right: 30,
+                child: Align(child: Column(
+                  children: [
+                    Text('Ringing...', style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: AppStrings.montserrat),),
+                    const SizedBox(height: 10,),
+                    Text(guestUsername.capitalizeFirstOfEach, style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),),
+                  ],
+                ))),
+            ],
+          ),
         ),
       ),
     );

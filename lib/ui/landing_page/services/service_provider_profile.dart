@@ -93,9 +93,9 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            ImageView.svg(AppImages.location),
+                            ImageView.svg(AppImages.location, height: 20),
                             SizedBox(
-                              width: 5,
+                              width: 10,
                             ),
                             Align(
                               child: CustomText(
@@ -103,8 +103,8 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                                 maxLines: 2,
                                 text:
                                     '${widget.agents!.city}, ${widget.agents!.country}',
-                                weight: FontWeight.w300,
-                                size: 14,
+                                weight: FontWeight.w600,
+                                size: 16,
                                 color: Colors.black,
                               ),
                             ),

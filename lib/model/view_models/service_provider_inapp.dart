@@ -34,6 +34,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
 
    resetImage() {
     _imageURl1 = null;
+    _imageURl = null;
 
     setViewState(ViewState.success);
   }

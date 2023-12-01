@@ -64,6 +64,7 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
                 Modals.showToast(state.agents.message ?? '',
                     messageType: MessageType.success);
               } else {
+                
                 Modals.showToast(state.agents.message ?? '',
                     messageType: MessageType.success);
               }

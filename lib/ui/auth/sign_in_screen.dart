@@ -163,9 +163,7 @@ class SignInScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
+                     
                     TextEditView(
                       controller: _passwordController,
                       validator: (value) {

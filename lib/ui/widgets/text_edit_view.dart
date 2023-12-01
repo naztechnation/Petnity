@@ -87,16 +87,16 @@ class TextEditView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(
-            textAlign: TextAlign.left,
-            maxLines: 2,
-            text: textViewTitle,
-            weight: FontWeight.w500,
-            size: 13,
-            color: Colors.black,
-          ),
+          // CustomText(
+          //   textAlign: TextAlign.left,
+          //   maxLines: 2,
+          //   text: textViewTitle,
+          //   weight: FontWeight.w500,
+          //   size: 13,
+          //   color: Colors.black,
+          // ),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           TextFormField(
             controller: controller,

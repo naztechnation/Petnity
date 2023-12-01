@@ -93,7 +93,8 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                   userName: user.username,
                   phone: widget.phone,
                   userType: userType,
-                  customerName: widget.customerName, customerImage: widget.customerImage, customerPhone: widget.customerPhone, customerFireBaseId: widget.customerFireBaseId
+                  customerName: widget.customerName, customerImage: widget.customerImage,
+                   customerPhone: widget.customerPhone, customerFireBaseId: widget.customerFireBaseId
                   ),
               if (userType == 'user') ...[
                 GestureDetector(

@@ -356,9 +356,9 @@ class _TrackServicesState extends State<TrackServices> {
                                 sellerPhoto: widget.sellerPhoto,
                                 sessionStatus: sessionStatus,
                                 customerName: widget.customerName,
-                                customerImage: '',
-                                customerPhone: '',
-                                customerFireBaseId: '',
+                                customerImage: widget.customerImage,
+                                customerPhone: widget.customerPhone,
+                                customerFireBaseId: widget.customerFireBaseId,
                               )
                             ],
                           )),
