@@ -120,6 +120,18 @@ class AccountLoggedOut extends AccountStates {
   List<Object> get props => [message];
 }
 
+class ResetPasswordLoading extends AccountStates {
+  @override
+  List<Object> get props => [];
+}
+
+class ResetPasswordLoaded extends AccountStates {
+  final AuthData userData;
+  const ResetPasswordLoaded(this.userData);
+  @override
+  List<Object> get props => [userData];
+}
+
 class AccountNetworkErr extends AccountStates {
   final String? message;
   const AccountNetworkErr(this.message);

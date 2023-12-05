@@ -333,4 +333,60 @@ class AccountCubit extends Cubit<AccountStates> {
       }
     }
   }
+
+   Future<void> forgotPassword({
+    required String email,
+  }) async {
+    try {
+      emit(AccountProcessing());
+
+      final user = await accountRepository.forgetPassword(
+        email: email,
+      );
+
+      emit(AccountLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> resetPassword({
+    required String token,
+    required String password,
+    required String email,
+  }) async {
+    try {
+      emit(ResetPasswordLoading());
+
+      final user = await accountRepository.resetPassword(
+        token: token,
+        password: password,
+        email: email,
+      );
+
+      emit(ResetPasswordLoaded(user));
+    } on ApiException catch (e) {
+      emit(AccountApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(AccountNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

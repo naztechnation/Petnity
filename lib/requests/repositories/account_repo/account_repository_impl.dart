@@ -172,4 +172,30 @@ class AccountRepositoryImpl implements AccountRepository {
         });
     return PetTypesModel.fromJson(map);
   }
+
+   
+  
+  @override
+  Future<AuthData> forgetPassword({required String email}) async {
+    final map = await Requests().get(AppStrings.forgotPasswordUrl(email), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return AuthData.fromJson(map);
+  }
+
+   @override
+  Future<AuthData> resetPassword(
+      {required String token, required String password, required String email,}) async {
+    final map =
+        await Requests().post(AppStrings.resetPasswordUrl(email), body: {
+      "code": token,
+      "password": password,
+    },
+    headers: {
+      'Authorization': AppStrings.token,
+    }
+    );
+
+    return AuthData.fromJson(map);
+  }
 }

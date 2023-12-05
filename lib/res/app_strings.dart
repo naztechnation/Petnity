@@ -42,6 +42,10 @@ class AppStrings {
   static String verifyUserProfileUrl(String username) =>
       '${_baseUrl}auth/verify-profile/$username';
 
+  static    String resetPasswordUrl(String email) => '${_baseUrl}auth/change-password/$email';
+  static   String forgotPasswordUrl(String email) => '${_baseUrl}auth/request-password-change/$email';
+
+
   static const String loginUrl = '${_baseUrl}auth/login';
   static const String logoutUrl = '${_baseUrl}auth/logout';
   static const String shoppingList = '${_baseUrl}shop/get-products/1';

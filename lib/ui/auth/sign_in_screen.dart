@@ -21,6 +21,7 @@ import '../widgets/button_view.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
+import 'forgot_password.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -197,6 +198,19 @@ class SignInScreen extends StatelessWidget {
                       fillColor: AppColors.lightPrimary,
                       borderColor: AppColors.lightPrimary,
                     ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                      GestureDetector(
+                        onTap: () {
+                          AppNavigator.pushAndStackPage(context, page: ForgotPasswordScreen());
+                        },
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text('Forgot Password?', style:
+                                        TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.w600),),
+                        ),
+                      ),
                     // SizedBox(
                     //   height: 35,
                     // ),
@@ -221,6 +235,8 @@ class SignInScreen extends StatelessWidget {
                     // SizedBox(
                     //   height: 30,
                     // ),
+                    
+                  
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),
