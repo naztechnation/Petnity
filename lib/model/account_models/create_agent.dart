@@ -37,9 +37,9 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  Null? idType;
-  List<Null>? services;
-  List<Null>? petTypes;
+  var idType;
+  List<String>? services;
+  List<String>? petTypes;
 
   Agent(
       {this.id,
@@ -78,13 +78,13 @@ class Agent {
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     idType = json['id_type'];
     if (json['services'] != null) {
-      services = <Null>[];
+      services = <String>[];
       json['services'].forEach((v) {
       //  services!.add(new Null.fromJson(v));
       });
     }
     if (json['pet_types'] != null) {
-      petTypes = <Null>[];
+      petTypes = <String>[];
       json['pet_types'].forEach((v) {
         //petTypes!.add(new Null.fromJson(v));
       });
@@ -124,10 +124,10 @@ class Profile {
   int? id;
   String? firebaseId;
   String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
-  Null? profileImage;
+  String? address;
+  String? city;
+  String? country;
+  String? profileImage;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;

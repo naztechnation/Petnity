@@ -1,4 +1,5 @@
  
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,9 +35,14 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
 
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _pinController = TextEditingController();
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -58,11 +64,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
           if (state is ResetPasswordLoaded) {
-            if (state.userData.status == 1) {
-              Modals.showDialogModal(context, page: successWidget());
-              navigateToNextPage(context);
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                  overlays: SystemUiOverlay.values);
+            if (state.userData.status == true) {
+
+              resetFirebasePassword(_emailController.text);
+              
             } else {
               Modals.showToast(state.userData.message!,
                   messageType: MessageType.error);
@@ -163,6 +168,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           horizontal: 16.0, vertical: 0),
                       child: TextEditView(
                         controller: _pinController,
+                        keyboardType: TextInputType.number,
                          validator: (value) {
                         return Validator.validate(value, 'Code');
                       },
@@ -216,11 +222,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           horizontal: 16, vertical: 16),
                       child: ButtonView(
                         color: AppColors.lightSecondary,
-                        processing: state is ResetPasswordLoading,
+                        processing: state is ResetPasswordLoading || isLoading,
                         borderColor: Colors.white,
                         borderRadius: 30,
                         onPressed: () {
-                          resetPassword(context);
+              
+                        resetPassword(context);
                         },
                         child: const Text(
                           'Continue',
@@ -249,45 +256,74 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     }
   }
 
+  Future<void> resetFirebasePassword(String email) async {
+    try {
+
+      setState(() {
+        isLoading = true;
+      });
+      await _auth.sendPasswordResetEmail(email: email);
+       setState(() {
+        isLoading = false;
+      });
+      Modals.showDialogModal(context, page: successWidget());
+              navigateToNextPage(context);
+              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+                  overlays: SystemUiOverlay.values);
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      Modals.showToast("Error sending password reset email: $e");
+     
+    }
+  }
+
   successWidget() {
     return const SizedBox(
       // height: 500,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          ImageView.asset(AppImages.celebIcon),
-          SizedBox(
-            height: 43,
-          ),
-          Text(
-            'Congratulations',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: AppColors.lightSecondary,
-              fontWeight: FontWeight.w400,
-              fontSize: 32,
+      child: Padding(
+        padding: EdgeInsets.all(14.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: 30,
             ),
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          Text(
-            'Your account is ready to use. You  would be redirected to Login to your account',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
+            ImageView.asset(AppImages.celebIcon),
+            SizedBox(
+              height: 43,
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          ImageView.asset(AppImages.loading),
-        ],
+            Text(
+              'Congratulations.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.lightSecondary,
+                fontWeight: FontWeight.w400,
+                fontSize: 32,
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              'A confirmation link has been sent to your mail please follow the link to confirm the previous password. make sure the password is same with the one you entered here.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            ImageView.asset(AppImages.loading, height: 60,),
+             SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -295,7 +331,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   navigateToNextPage(BuildContext context) async {
     Future.delayed(
         const Duration(
-          seconds: 4,
+          seconds: 25,
         ), () {
       AppNavigator.pushAndReplacePage(context, page:   SignInScreen());
     });

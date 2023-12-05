@@ -55,7 +55,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
             CustomText(
               textAlign: TextAlign.center,
               maxLines: 1,
-              text: '${widget.selectedPet} size',
+              text: '${petProfile.petType} Size',
               weight: FontWeight.w700,
               size: 32,
               fontFamily: AppStrings.interSans,
@@ -69,7 +69,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
                 child: CustomText(
                   textAlign: TextAlign.left,
                   maxLines: 1,
-                  text: 'Select your ${petProfile.petType} size',
+                  text: 'Select your ${petProfile.petType} Size',
                   weight: FontWeight.w500,
                   size: 16,
                   fontFamily: AppStrings.interSans,
@@ -82,7 +82,7 @@ class _KycScreenFiveState extends State<KycScreenFive> {
               title: dogSizes,
               color: AppColors.lightPrimary,
               selectedTextColor: AppColors.lightPrimary,
-              height: 45,
+              height: 38,
               contentMargin: const EdgeInsets.all(5),
               onSelected: (index) {
 

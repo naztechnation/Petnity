@@ -1,4 +1,4 @@
-package com.petnity.petnity
+package com.lucacity.lucacity
 
 import io.flutter.embedding.android.FlutterActivity
 

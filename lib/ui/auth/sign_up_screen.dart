@@ -440,96 +440,98 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     topRight: Radius.circular(20))),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Continue as...',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 22,
-                            fontWeight: FontWeight.w900),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          child: Icon(
-                            Icons.arrow_downward,
-                            color: Colors.white,
-                          ),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.lightSecondary),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Continue as...',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w900),
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Divider(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  userTypes('User', () async {
-                    Navigator.pop(context);
-                    user.setUserType(UserType.user);
-                    StorageHandler.saveUserName(
-                        _usernameController.text.trim());
-
-                    setState(() {
-                      isLoading = true;
-                    });
-                    String imgUrl = await serviceProvider1.uploadImage(
-                        serviceProvider1.imageURl!.path,
-                        'petnity_service_provider');
-                    setState(() {
-                      isLoading = false;
-                    });
-
-                    _firebaseRegUser(firebaseAuth, context, imgUrl);
-                  }, context),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Divider(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  userTypes('Service Provider', () async {
-                    Navigator.pop(context);
-
-                    user.setUserType(UserType.serviceProvider);
-
-                    setState(() {
-                      isLoading = true;
-                    });
-                    String imgUrl = await serviceProvider1.uploadImage(
-                        serviceProvider1.imageURl!.path,
-                        'petnity_service_provider');
-                    setState(() {
-                      isLoading = false;
-                    });
-
-                    _firebaseRegUser(firebaseAuth, context, imgUrl);
-                  }, context),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Divider(),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ],
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            child: Icon(
+                              Icons.arrow_downward,
+                              color: Colors.white,
+                            ),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.lightSecondary),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Divider(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    userTypes('User', () async {
+                      Navigator.pop(context);
+                      user.setUserType(UserType.user);
+                      StorageHandler.saveUserName(
+                          _usernameController.text.trim());
+              
+                      setState(() {
+                        isLoading = true;
+                      });
+                      String imgUrl = await serviceProvider1.uploadImage(
+                          serviceProvider1.imageURl!.path,
+                          'petnity_service_provider');
+                      setState(() {
+                        isLoading = false;
+                      });
+              
+                      _firebaseRegUser(firebaseAuth, context, imgUrl);
+                    }, context),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    userTypes('Service Provider', () async {
+                      Navigator.pop(context);
+              
+                      user.setUserType(UserType.serviceProvider);
+              
+                      setState(() {
+                        isLoading = true;
+                      });
+                      String imgUrl = await serviceProvider1.uploadImage(
+                          serviceProvider1.imageURl!.path,
+                          'petnity_service_provider');
+                      setState(() {
+                        isLoading = false;
+                      });
+              
+                      _firebaseRegUser(firebaseAuth, context, imgUrl);
+                    }, context),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Divider(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ),
               ),
             )));
   }

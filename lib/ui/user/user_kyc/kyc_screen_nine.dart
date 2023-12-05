@@ -117,12 +117,10 @@ class KycScreenNine extends StatelessWidget {
                             filled: true,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
-                            textViewTitle: 'What\'s the name of the illness',
+                            hintText: 'What\'s the name of the illness',
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextEditView(
@@ -134,12 +132,10 @@ class KycScreenNine extends StatelessWidget {
                             filled: true,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
-                            textViewTitle: 'Drug administered',
+                            hintText: 'Drug administered',
                           ),
                         ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                        
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           child: TextEditView(
@@ -151,7 +147,7 @@ class KycScreenNine extends StatelessWidget {
                             filled: true,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
-                            textViewTitle: 'Drug prescription',
+                            hintText: 'Drug prescription',
                           ),
                         ),
                       ],

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/enum.dart';
@@ -20,6 +21,17 @@ class RegSuccessful extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final user = Provider.of<AccountViewModel>(context, listen: true);
+
+     final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -96,16 +108,15 @@ class RegSuccessful extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
          if(user.userType == UserType.user)   InkWell(
               onTap: () {
-                AppNavigator.pushNamedAndRemoveUntil(context,
-                    name: 'landingPage');
+               _signOut(context);
               },
               child: CustomText(
                 textAlign: TextAlign.center,
                 maxLines: 1,
-                text: 'Skip and go to home',
+                text: 'Login to continue...',
                 weight: FontWeight.w400,
                 size: 14,
                 fontFamily: AppStrings.interSans,

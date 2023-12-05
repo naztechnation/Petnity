@@ -1,21 +1,22 @@
 {
   "project_info": {
-    "project_number": "412432616188",
-    "project_id": "petnity-chat",
-    "storage_bucket": "petnity-chat.appspot.com"
+    "project_number": "584893548247",
+    "firebase_url": "https://lucacity-fbe4a-default-rtdb.firebaseio.com",
+    "project_id": "lucacity-fbe4a",
+    "storage_bucket": "lucacity-fbe4a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:412432616188:android:a9ed75637cf7368de7a579",
+        "mobilesdk_app_id": "1:584893548247:android:fad9010bd3b0eb152a1292",
         "android_client_info": {
-          "package_name": "com.petnity.petnity"
+          "package_name": "com.lucacity.lucacity"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCaSmucV55KOzaCX9rqbQyAKWfbER5Sat0"
+          "current_key": "AIzaSyCHUxJuUNgqHoWqPGZcJ5zMUB9XVfGUUts"
         }
       ],
       "services": {

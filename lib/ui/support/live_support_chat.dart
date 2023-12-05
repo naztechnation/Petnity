@@ -27,6 +27,10 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
     
     userType = await StorageHandler.getUserType();
     email = await StorageHandler.getUserEmail();
+
+    setState(() {
+      
+    });
   }
   
 
@@ -40,7 +44,6 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
   
     @override
   Widget build(BuildContext context) {
-    Modals.showToast(customerName,);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Chat Our Support Team', style: TextStyle(fontSize: 16),),
@@ -49,7 +52,7 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
           centerTitle: true,
         ),
         body: Tawk(
-          directChatLink: 'https://tawk.to/chat/6569d5ceff45ca7d4785bc3e/1hgimmch6',
+          directChatLink: 'https://tawk.to/chat/656f12d9ff45ca7d4787040c/1hgsu39f4',
           visitor: TawkVisitor(
             name: (userType == 'user') ? customerName.capitalizeFirstOfEach : '${customerName.capitalizeFirstOfEach}(Service Provider)',
             email: email,
