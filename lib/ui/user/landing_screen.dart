@@ -273,6 +273,13 @@ class HomepageAppbar extends StatelessWidget {
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
+       title: Text(
+        'Lucacity',
+        style: TextStyle(
+            fontFamily: AppStrings.interSans,
+            color: AppColors.lightSecondary,
+            fontWeight: FontWeight.w700),
+      ),
       actions: [
         GestureDetector(
           onTap: () {
