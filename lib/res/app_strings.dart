@@ -163,7 +163,11 @@ static String getUserOrderedProducts(
           {required String username, }) =>
       '${_baseUrl}shop/get-user-shop-orders/$username';
 
+static String getUserProfile(
+          {required String username, }) =>
+      '${_baseUrl}users/get-profile/$username';
+
 
     
-
+ 
 }

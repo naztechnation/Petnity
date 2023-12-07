@@ -15,6 +15,7 @@ import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/user_models/shopping_lists.dart';
+import '../../../model/user_models/user_profile.dart';
 import '../../../model/user_models/user_shopping_data.dart';
 
 
@@ -43,5 +44,6 @@ abstract class UserRepository {
     Future<CreatePaymentOrder> createOrderPayment({required String username, required String productId, required String quantity}); 
     Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
     Future<CreateOrder> createOrder({required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation});
+    Future<UserProfile> getUserProfile({required String username});
 
 }

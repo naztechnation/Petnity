@@ -14,6 +14,7 @@ import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/user_models/shopping_lists.dart';
+import '../../../model/user_models/user_profile.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'user_repository.dart';
@@ -239,6 +240,15 @@ class UserRepositoryImpl implements UserRepository {
       'Authorization': AppStrings.token,
     });
     return UserShopData.fromJson(map);
+  }
+  
+  @override
+  Future<UserProfile> getUserProfile({required String username}) async{
+    final map = await Requests()
+        .get(AppStrings.getUserProfile(username: username), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return UserProfile.fromJson(map);
   }
 
  

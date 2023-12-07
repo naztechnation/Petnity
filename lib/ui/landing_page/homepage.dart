@@ -20,6 +20,7 @@ import '../../res/app_routes.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../widgets/filter_search_section.dart';
+import '../widgets/modals.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -55,11 +56,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
     username = await StorageHandler.getUserName();
     registeredPet = await StorageHandler.getUserPetState();
 
-    if (registeredPet != '') {
+    if (registeredPet == 'true') {
       setState(() {
         isPetRegistered = true;
       });
     }
+ 
   }
 
   bool isLoading = false;

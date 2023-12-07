@@ -62,7 +62,9 @@ class SignInScreen extends StatelessWidget {
                   StorageHandler.saveUserPassword(_passwordController.text);
 
                   if (!state.userData.isAgent!) {
-                    if (state.userData.agent?.profile?.hasPets ?? false) {
+
+                  
+                    if (state.userData.profile?.hasPets ?? false) {
                       StorageHandler.saveUserPetState('true');
                     } else {
                       StorageHandler.saveUserPetState('');
@@ -81,13 +83,18 @@ class SignInScreen extends StatelessWidget {
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
-                        userId: state.userData.agent?.profile?.id.toString(),
-                        hasPet: state.userData.agent?.profile?.hasPets ?? false,
+                        
                         isAgent: !state.userData.isAgent!);
                   } else {
                     StorageHandler.saveIsUserType('service_provider');
                     StorageHandler.saveAgentId(
                         state.userData.agent!.id.toString());
+
+                         if (state.userData.agent?.profile?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
+                    }
 
                     StorageHandler.saveEmail(
                         state.userData.agent?.profile?.user?.email.toString());
@@ -102,8 +109,7 @@ class SignInScreen extends StatelessWidget {
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
-                        userId: state.userData.agent?.profile?.id.toString(),
-                        hasPet: state.userData.agent?.profile?.hasPets ?? false,
+                        
                         isAgent: !state.userData.isAgent!);
                   }
                 } else {
@@ -320,8 +326,6 @@ class SignInScreen extends StatelessWidget {
       {final firebaseUser,
       required BuildContext context,
       required String message,
-      required userId,
-      required bool hasPet,
       required bool isAgent}) async {
     await firebaseUser.loginUserWithEmailAndPassword(
         email: _usernameController.text.trim(),

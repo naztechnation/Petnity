@@ -14,6 +14,7 @@ import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
+import '../../model/user_models/user_profile.dart';
 import '../../model/user_models/user_shopping_data.dart';
 
 
@@ -211,15 +212,24 @@ class UserShopListLoading extends UserStates {
   List<Object> get props => [];
 }
  
+class UserProfileLoaded extends UserStates {
+  final UserProfile username;
+  const UserProfileLoaded(this.username);
+  @override
+  List<Object> get props => [username];
+}
+
+class UserProfileLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
 class UserShopListLoaded extends UserStates {
   final UserShopData userShopData;
   const UserShopListLoaded(this.userShopData);
   @override
   List<Object> get props => [userShopData];
 }
-
-
-
 
 class UserNetworkErr extends UserStates {
   final String? message;
