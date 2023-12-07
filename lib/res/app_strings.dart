@@ -168,6 +168,12 @@ static String getUserProfile(
       '${_baseUrl}users/get-profile/$username';
 
 
-    
+static String getUserPets(
+          {required String username, }) =>
+      '${_baseUrl}pets/get-user-pets/$username';
+
+  static String getUserPetDetails(
+          {required String petId, }) =>
+      '${_baseUrl}pets/get-pet-details/$petId';  
  
 }

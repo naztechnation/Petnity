@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
-import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +13,6 @@ import '../../model/user_models/user_profile.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../res/app_strings.dart';
-import '../widgets/custom_text.dart';
 import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
 
@@ -185,8 +182,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         fontWeight: FontWeight.w800,
                                         fontFamily: AppStrings.interSans),
                                   ),
-                                  Text('You',
+                                  Text('${userProfile?.profile?.user?.email}'.capitalizeFirstOfEach,
                                       textAlign: TextAlign.justify,
+                                      maxLines: 2,
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: AppStrings.interSans)),
@@ -195,18 +193,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Row(
                               children: [
-                                Text('Reachability',
+                                Text(userProfile?.profile?.phoneNumber ?? "",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontFamily: AppStrings.interSans)),
-                                Switch(
-                                    value: reachability,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        reachability = value;
-                                      });
-                                    })
+                                // Switch(
+                                //     value: reachability,
+                                //     onChanged: (value) {
+                                //       setState(() {
+                                //         reachability = value;
+                                //       });
+                                //     })
                               ],
                             )
                           ],
@@ -529,141 +527,141 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                        width: screenSize(context).width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Gallery',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              height: screenSize(context).height * .25,
-                              width: screenSize(context).width,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      width: screenSize(context).width * .89,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            width: screenSize(context).width *
-                                                .295,
-                                            height: screenSize(context).height *
-                                                .125,
-                                            child: ImageView.asset(
-                                              AppImages.playing,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            color: Colors.pink,
-                                          ),
-                                          Container(
-                                            width: screenSize(context).width *
-                                                .295,
-                                            height: screenSize(context).height *
-                                                .125,
-                                            color: Colors.red,
-                                            child: ImageView.asset(
-                                              AppImages.playing,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: screenSize(context).width *
-                                                .295,
-                                            height: screenSize(context).height *
-                                                .125,
-                                            color: Colors.blue,
-                                            child: ImageView.asset(
-                                              AppImages.playing,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: screenSize(context).width * .89,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            width: screenSize(context).width *
-                                                .295,
-                                            height: screenSize(context).height *
-                                                .125,
-                                            color: Colors.green,
-                                            child: ImageView.asset(
-                                              AppImages.playing,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: screenSize(context).width *
-                                                .295,
-                                            height: screenSize(context).height *
-                                                .125,
-                                            color: Colors.brown,
-                                            child: ImageView.asset(
-                                              AppImages.playing,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Container(
-                                            width: screenSize(context).width *
-                                                .295,
-                                            height: screenSize(context).height *
-                                                .125,
-                                            color: Colors.purple,
-                                            child: ImageView.asset(
-                                              AppImages.playing,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        height: screenSize(context).height * .08,
-                        width: screenSize(context).width * .8,
-                        child: ButtonView(
-                            onPressed: () {},
-                            child: Text(
-                              'Edit profile',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: AppStrings.interSans),
-                            )),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      // Container(
+                      //   padding:
+                      //       EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                      //   width: screenSize(context).width,
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Text(
+                      //         'Gallery',
+                      //         style: TextStyle(fontWeight: FontWeight.bold),
+                      //       ),
+                      //       SizedBox(
+                      //         height: 10,
+                      //       ),
+                      //       Container(
+                      //         height: screenSize(context).height * .25,
+                      //         width: screenSize(context).width,
+                      //         decoration: BoxDecoration(
+                      //             borderRadius: BorderRadius.circular(20)),
+                      //         child: ClipRRect(
+                      //           borderRadius: BorderRadius.circular(20),
+                      //           child: Column(
+                      //             mainAxisAlignment:
+                      //                 MainAxisAlignment.spaceBetween,
+                      //             children: [
+                      //               Container(
+                      //                 width: screenSize(context).width * .89,
+                      //                 child: Row(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.spaceBetween,
+                      //                   children: [
+                      //                     Container(
+                      //                       width: screenSize(context).width *
+                      //                           .295,
+                      //                       height: screenSize(context).height *
+                      //                           .125,
+                      //                       child: ImageView.asset(
+                      //                         AppImages.playing,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                       color: Colors.pink,
+                      //                     ),
+                      //                     Container(
+                      //                       width: screenSize(context).width *
+                      //                           .295,
+                      //                       height: screenSize(context).height *
+                      //                           .125,
+                      //                       color: Colors.red,
+                      //                       child: ImageView.asset(
+                      //                         AppImages.playing,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     ),
+                      //                     Container(
+                      //                       width: screenSize(context).width *
+                      //                           .295,
+                      //                       height: screenSize(context).height *
+                      //                           .125,
+                      //                       color: Colors.blue,
+                      //                       child: ImageView.asset(
+                      //                         AppImages.playing,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     )
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //               Container(
+                      //                 width: screenSize(context).width * .89,
+                      //                 child: Row(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.spaceBetween,
+                      //                   children: [
+                      //                     Container(
+                      //                       width: screenSize(context).width *
+                      //                           .295,
+                      //                       height: screenSize(context).height *
+                      //                           .125,
+                      //                       color: Colors.green,
+                      //                       child: ImageView.asset(
+                      //                         AppImages.playing,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     ),
+                      //                     Container(
+                      //                       width: screenSize(context).width *
+                      //                           .295,
+                      //                       height: screenSize(context).height *
+                      //                           .125,
+                      //                       color: Colors.brown,
+                      //                       child: ImageView.asset(
+                      //                         AppImages.playing,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     ),
+                      //                     Container(
+                      //                       width: screenSize(context).width *
+                      //                           .295,
+                      //                       height: screenSize(context).height *
+                      //                           .125,
+                      //                       color: Colors.purple,
+                      //                       child: ImageView.asset(
+                      //                         AppImages.playing,
+                      //                         fit: BoxFit.cover,
+                      //                       ),
+                      //                     )
+                      //                   ],
+                      //                 ),
+                      //               )
+                      //             ],
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // Container(
+                      //   height: screenSize(context).height * .08,
+                      //   width: screenSize(context).width * .8,
+                      //   child: ButtonView(
+                      //       onPressed: () {},
+                      //       child: Text(
+                      //         'Edit profile',
+                      //         style: TextStyle(
+                      //             fontSize: 14.0,
+                      //             fontWeight: FontWeight.w600,
+                      //             fontFamily: AppStrings.interSans),
+                      //       )),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
                     ],
                   ),
                 ),

@@ -555,4 +555,48 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
     }
   }
 
+  Future<void> getPetProfile(String username) async {
+    try {
+      emit(PetProfileLoading());
+
+      final petProfile = await userRepository.getUserPet(username: username);
+
+      emit(PetProfileLoaded(petProfile));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> getPetProfileDetails(String petId) async {
+    try {
+      emit(PetProfileDetailsLoading());
+
+      final petProfileDetails = await userRepository.getUserPetDetails(petId: petId);
+
+      emit(PetProfileDetailsLoaded(petProfileDetails));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
 }

@@ -3,13 +3,14 @@
 import '../../../model/account_models/agents_packages.dart';
 import '../../../model/account_models/auth_data.dart';
 import '../../../model/account_models/confirm_payment.dart';
-import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/confirm_shop_payment.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/create_payment_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_product_reviews.dart';
 import '../../../model/user_models/order_list.dart'; 
+import '../../../model/user_models/pet_profile_details.dart';
+import '../../../model/user_models/pets_profile.dart';
 import '../../../model/user_models/products_detail.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
@@ -45,5 +46,7 @@ abstract class UserRepository {
     Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
     Future<CreateOrder> createOrder({required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation});
     Future<UserProfile> getUserProfile({required String username});
+    Future<PetProfile> getUserPet({required String username});
+    Future<PetProfileDetails> getUserPetDetails({required String petId});
 
 }

@@ -10,6 +10,8 @@ import '../../model/user_models/create_payment_order.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/get_product_reviews.dart';
 import '../../model/user_models/order_list.dart';
+import '../../model/user_models/pet_profile_details.dart';
+import '../../model/user_models/pets_profile.dart';
 import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
@@ -219,6 +221,29 @@ class UserProfileLoaded extends UserStates {
   List<Object> get props => [username];
 }
 
+class PetProfileLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class PetProfileLoaded extends UserStates {
+  final   PetProfile petData;
+  const PetProfileLoaded(this.petData);
+  @override
+  List<Object> get props => [petData];
+}
+
+class PetProfileDetailsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+
+class PetProfileDetailsLoaded extends UserStates {
+  final   PetProfileDetails petData;
+  const PetProfileDetailsLoaded(this.petData);
+  @override
+  List<Object> get props => [petData];
+}
 class UserProfileLoading extends UserStates {
   @override
   List<Object> get props => [];

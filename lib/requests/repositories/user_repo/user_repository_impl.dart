@@ -10,6 +10,8 @@ import '../../../model/account_models/auth_data.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/order_list.dart';
+import '../../../model/user_models/pet_profile_details.dart';
+import '../../../model/user_models/pets_profile.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
@@ -249,6 +251,25 @@ class UserRepositoryImpl implements UserRepository {
       'Authorization': AppStrings.token,
     });
     return UserProfile.fromJson(map);
+  }
+  
+  @override
+  Future<PetProfile> getUserPet({required String username}) async{
+    final map = await Requests()
+        .get(AppStrings.getUserProfile(username: username), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return PetProfile.fromJson(map);
+  }
+  
+  
+  @override
+  Future<PetProfileDetails> getUserPetDetails({required String petId}) async{
+    final map = await Requests()
+        .get(AppStrings.getUserPetDetails(petId: petId), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return PetProfileDetails.fromJson(map);
   }
 
  
