@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/res/app_colors.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; 
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_bio.dart';
 import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_image_status.dart';
-import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_owner.dart';
-import 'package:petnity/ui/landing_page/services/pet_profile/widgets/time_select.dart';
-import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_owner.dart'; 
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/user/user.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/pet_profile_details.dart';
 import '../../../../model/view_models/user_view_model.dart';
-import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
-import '../../../../utils/navigator/page_navigator.dart';
+import '../../../../requests/repositories/user_repo/user_repository_impl.dart'; 
 import '../../../widgets/back_button.dart';
 import '../../../widgets/image_view.dart';
 import '../../../widgets/modals.dart';
@@ -130,7 +126,7 @@ class _PetProfileState extends State<PetProfileScreen> {
                         AppImages.loading,
                         height: 50,
                       )))
-                    : (petDetails == null )?  Expanded(
+                    : (petDetails.petDetails != null )?  Expanded(
                         child: SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(

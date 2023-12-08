@@ -137,7 +137,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                       expanded: false,
                       onPressed: () => Navigator.push(context,
                               MaterialPageRoute(builder: (_) {
-                            return PetProfile(username: 'PetGuy',);
+                            return PetProfile(username: widget.customerName,);
                           })),
                       color: Colors.white,
                       borderRadius: 30,
