@@ -47,7 +47,7 @@ class _TrackServicesState extends State<TrackServices> {
                   CustomText(
                     textAlign: TextAlign.center,
                     maxLines: 2,
-                    text: 'Track service',
+                    text: 'Track Service',
                     weight: FontWeight.w700,
                     size: 20,
                     fontFamily: AppStrings.interSans,

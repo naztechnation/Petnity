@@ -2,9 +2,9 @@ import 'package:intl/intl.dart';
 import 'package:petnity/model/user_models/gallery_data.dart';
 
 import '../../res/enum.dart';
-import '../../ui/widgets/modals.dart';
 import '../account_models/agents_packages.dart';
 import '../user_models/order_list.dart';
+import '../user_models/pet_profile_details.dart';
 import '../user_models/reviews_data.dart';
 import '../user_models/service_provider_lists.dart';
 import '../user_models/service_type.dart';
@@ -17,6 +17,8 @@ class UserViewModel extends BaseViewModel {
   List<Reviews> _reviews = [];
   List<GalleryElements> _gallery = [];
   List<UserOrders> _ordersList = [];
+
+  PetProfileDetails? _petProfile;
 
   UserOrderList? _userOrder;
 
@@ -42,6 +44,17 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setAgentDetails({required List<Agents> agents}) async {
     _agents = agents;
+    setViewState(ViewState.success);
+  }
+
+  Future<void> setPetDetails({required PetProfileDetails pet}) async {
+    _petProfile = pet;
+    setViewState(ViewState.success);
+  }
+
+  Future<void> clearPetDetails() async {
+   _petProfile = null;
+    
     setViewState(ViewState.success);
   }
 
@@ -205,6 +218,7 @@ class UserViewModel extends BaseViewModel {
   List<GalleryElements> get gallery => _gallery;
   bool get reviewStatus => _reviewStatus;
   bool get galleryStatus => _galleryStatus;
+  PetProfileDetails? get petDetails => _petProfile;
   List<ServicesDetails> get servicesItems => servicesResults();
   List<Pets> get servicesPetList => servicesPets();
 

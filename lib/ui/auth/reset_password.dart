@@ -1,4 +1,3 @@
- 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,12 +20,13 @@ import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
 
-
 class ResetPasswordScreen extends StatefulWidget {
   final String email;
-  
-  const ResetPasswordScreen(
-      {super.key, required this.email, });
+
+  const ResetPasswordScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -35,8 +35,7 @@ class ResetPasswordScreen extends StatefulWidget {
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
 
-   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -53,7 +52,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
-    
+
     StorageHandler.saveOnboardState('true');
     return Scaffold(
         body: BlocProvider<AccountCubit>(
@@ -65,9 +64,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         listener: (context, state) {
           if (state is ResetPasswordLoaded) {
             if (state.userData.status == true) {
-
               resetFirebasePassword(_emailController.text);
-              
             } else {
               Modals.showToast(state.userData.message!,
                   messageType: MessageType.error);
@@ -88,11 +85,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             child: Container(
                 height: MediaQuery.sizeOf(context).height,
                 width: MediaQuery.sizeOf(context).width,
-                decoration:   BoxDecoration(
+                decoration: BoxDecoration(
                     gradient: LinearGradient(
-                  colors: [
-                    AppColors.scaffoldColor, Colors.red.shade50
-                  ],
+                  colors: [AppColors.scaffoldColor, Colors.red.shade50],
                   stops: [0.1, 0.8],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -106,11 +101,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child:   Align(
+                      child: Align(
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding: EdgeInsets.only(left: 20.0),
-                            child: ImageView.svg(AppImages.backButton, height: 28,),
+                            child: ImageView.svg(
+                              AppImages.backButton,
+                              height: 28,
+                            ),
                           )),
                     ),
                     SizedBox(
@@ -127,7 +125,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     const SizedBox(height: 31),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:18.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
                       child: const Text(
                         'Enter the code sent to registered email with your new password.',
                         textAlign: TextAlign.center,
@@ -147,74 +145,74 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       child: TextEditView(
                         controller: _emailController,
                         readOnly: true,
-                         validator: (value) {
-                        return Validator.validateEmail(value, 'Email');
-                      },
-                      isDense: true,
-                      textViewTitle: 'Your Email',
-                      hintText: 'Enter your email',
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ImageView.svg(
-                          AppImages.personIcon,
+                        validator: (value) {
+                          return Validator.validateEmail(value, 'Email');
+                        },
+                        isDense: true,
+                        textViewTitle: 'Your Email',
+                        hintText: 'Enter your email',
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ImageView.svg(
+                            AppImages.personIcon,
+                          ),
                         ),
+                        fillColor: AppColors.lightPrimary,
+                        borderColor: AppColors.lightPrimary,
                       ),
-                      fillColor: AppColors.lightPrimary,
-                      borderColor: AppColors.lightPrimary,
-                    ),
-                    ),
-                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 0),
-                      child: TextEditView(
-                        controller: _pinController,
-                        keyboardType: TextInputType.number,
-                         validator: (value) {
-                        return Validator.validate(value, 'Code');
-                      },
-                      isDense: true,
-                      textViewTitle: '',
-                      hintText: 'Enter your code',
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: ImageView.svg(
-                          AppImages.awaitingIcon,
-                          height: 20,
-                        ),
-                      ),
-                      fillColor: AppColors.lightPrimary,
-                      borderColor: AppColors.lightPrimary,
-                    ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16.0, vertical: 0),
                       child: TextEditView(
-                      controller: _passwordController,
-                      validator: (value) {
-                        return Validator.validate(value, 'Password');
-                      },
-                      isDense: true,
-                      textViewTitle: 'Password',
-                      hintText: 'Enter new password',
-                      obscureText: user.showPasswordStatus,
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          user.showPassword();
+                        controller: _pinController,
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          return Validator.validate(value, 'Code');
                         },
-                        child: Padding(
+                        isDense: true,
+                        textViewTitle: '',
+                        hintText: 'Enter your code',
+                        suffixIcon: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: user.showPasswordStatus
-                              ? Icon(
-                                  Icons.visibility_off,
-                                  size: 24,
-                                )
-                              : Icon(Icons.visibility, size: 24),
+                          child: ImageView.svg(
+                            AppImages.awaitingIcon,
+                            height: 20,
+                          ),
                         ),
+                        fillColor: AppColors.lightPrimary,
+                        borderColor: AppColors.lightPrimary,
                       ),
-                      fillColor: AppColors.lightPrimary,
-                      borderColor: AppColors.lightPrimary,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 0),
+                      child: TextEditView(
+                        controller: _passwordController,
+                        validator: (value) {
+                          return Validator.validate(value, 'Password');
+                        },
+                        isDense: true,
+                        textViewTitle: 'Password',
+                        hintText: 'Enter new password',
+                        obscureText: user.showPasswordStatus,
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            user.showPassword();
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: user.showPasswordStatus
+                                ? Icon(
+                                    Icons.visibility_off,
+                                    size: 24,
+                                  )
+                                : Icon(Icons.visibility, size: 24),
+                          ),
+                        ),
+                        fillColor: AppColors.lightPrimary,
+                        borderColor: AppColors.lightPrimary,
+                      ),
                     ),
                     const Spacer(),
                     Padding(
@@ -226,8 +224,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         borderColor: Colors.white,
                         borderRadius: 30,
                         onPressed: () {
-              
-                        resetPassword(context);
+                          resetPassword(context);
                         },
                         child: const Text(
                           'Continue',
@@ -251,31 +248,31 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   ) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().resetPassword(
-          token: _pinController.text.trim(), password: _passwordController.text.trim(), email: _emailController.text.trim());
+          token: _pinController.text.trim(),
+          password: _passwordController.text.trim(),
+          email: _emailController.text.trim());
       FocusScope.of(ctx).unfocus();
     }
   }
 
   Future<void> resetFirebasePassword(String email) async {
     try {
-
       setState(() {
         isLoading = true;
       });
       await _auth.sendPasswordResetEmail(email: email);
-       setState(() {
+      setState(() {
         isLoading = false;
       });
       Modals.showDialogModal(context, page: successWidget());
-              navigateToNextPage(context);
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-                  overlays: SystemUiOverlay.values);
+      navigateToNextPage(context);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: SystemUiOverlay.values);
     } catch (e) {
       setState(() {
         isLoading = false;
       });
       Modals.showToast("Error sending password reset email: $e");
-     
     }
   }
 
@@ -318,8 +315,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             SizedBox(
               height: 30,
             ),
-            ImageView.asset(AppImages.loading, height: 60,),
-             SizedBox(
+            ImageView.asset(
+              AppImages.loading,
+              height: 60,
+            ),
+            SizedBox(
               height: 30,
             ),
           ],
@@ -333,7 +333,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         const Duration(
           seconds: 25,
         ), () {
-      AppNavigator.pushAndReplacePage(context, page:   SignInScreen());
+      AppNavigator.pushAndReplacePage(context, page: SignInScreen());
     });
   }
 }

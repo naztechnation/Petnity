@@ -256,7 +256,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<PetProfile> getUserPet({required String username}) async{
     final map = await Requests()
-        .get(AppStrings.getUserProfile(username: username), headers: {
+        .get(AppStrings.getUserPets(username: username), headers: {
       'Authorization': AppStrings.token,
     });
     return PetProfile.fromJson(map);

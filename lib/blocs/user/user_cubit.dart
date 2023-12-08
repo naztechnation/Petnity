@@ -252,7 +252,6 @@ Future<void> getAgentProfile() async {
 
       final userData = await userRepository.orderList(username: username);
 
-     // await viewModel.setUserOrderList(orders: userData.orders ?? []);
 
 
       emit(OrderListLoaded(userData));
@@ -582,6 +581,9 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
       emit(PetProfileDetailsLoading());
 
       final petProfileDetails = await userRepository.getUserPetDetails(petId: petId);
+
+     await viewModel.setPetDetails(pet: petProfileDetails);
+
 
       emit(PetProfileDetailsLoaded(petProfileDetails));
     } on ApiException catch (e) {

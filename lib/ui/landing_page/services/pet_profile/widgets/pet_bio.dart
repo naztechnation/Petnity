@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
-import 'package:petnity/ui/landing_page/services/widgets/gallery_rating_body.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../model/view_models/user_view_model.dart';
 import '../../../../../res/app_strings.dart';
 import '../../../../widgets/custom_text.dart';
 
@@ -10,26 +12,29 @@ class PetBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var petDetails = Provider.of<UserViewModel>(context, listen: true);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Lorem ipsum dolor sit amet consectetur. Vitae magna blandit nisl pulvinar ac nunc. Turpis pulvinar amet at erat fames venenatis. Est mi egestas eget feugiat nunc. Mattis sapien diam.',
+          'Dog Bio',
+          style: TextStyle(fontWeight: FontWeight.w800),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          petDetails.petDetails?.pet?.about ?? '',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
           ),
         ),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
-        Text(
-          'Dog Bio',
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
+
         Text(
           'Health Status',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
@@ -38,22 +43,22 @@ class PetBio extends StatelessWidget {
           height: 10,
         ),
         Container(
-          height: 156,
-          width: 379,
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30),
             color: AppColors.lightGreen,
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ListTile(
                 title: CustomText(
-                  text: 'Dog Illness',
+                  text: '${petDetails.petDetails?.pet?.type?.name} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('6 Months 3 Weeks Old'),
+                subtitle: Text('${petDetails.petDetails?.petHealthIssue?.name}'
+                    .capitalizeFirstOfEach),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
                   child: ListTile(
@@ -62,17 +67,45 @@ class PetBio extends StatelessWidget {
                       fontFamily: AppStrings.interSans,
                       weight: FontWeight.w700,
                     ),
-                    subtitle: Text('6-10'),
+                    subtitle: Text(
+                        '${petDetails.petDetails?.petHealthIssue?.drug}'
+                            .capitalizeFirstOfEach),
                   ),
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    text: 'Prescription',
+                    fontFamily: AppStrings.interSans,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                        '${petDetails.petDetails?.petHealthIssue?.prescription}'
+                            .capitalizeFirstOfEach)),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               ListTile(
                 title: CustomText(
-                  text: 'Dog Allergies',
+                  text: '${petDetails.petDetails?.pet?.type?.name} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('Bulldog'),
+                subtitle: Text('${petDetails.petDetails?.petAllergy?.name}'
+                    .capitalizeFirstOfEach),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
                   child: ListTile(
@@ -81,9 +114,35 @@ class PetBio extends StatelessWidget {
                       fontFamily: AppStrings.interSans,
                       weight: FontWeight.w700,
                     ),
-                    subtitle: Text('46Kg'),
+                    subtitle: Text('${petDetails.petDetails?.petAllergy?.drug}'
+                        .capitalizeFirstOfEach),
                   ),
                 ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    text: 'Prescription',
+                    fontFamily: AppStrings.interSans,
+                    weight: FontWeight.w700,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                        '${petDetails.petDetails?.petAllergy?.prescription}'
+                            .capitalizeFirstOfEach)),
+              ),
+              const SizedBox(
+                height: 10,
               ),
             ],
           ),
@@ -91,10 +150,10 @@ class PetBio extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          'Gallery',
-          style: TextStyle(fontWeight: FontWeight.w700),
-        ),
+        // Text(
+        //   'Gallery',
+        //   style: TextStyle(fontWeight: FontWeight.w700),
+        // ),
         SizedBox(
           height: 20,
         ),

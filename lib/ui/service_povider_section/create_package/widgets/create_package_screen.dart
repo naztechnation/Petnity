@@ -162,7 +162,7 @@ class _CreatePackageScreenState extends State<CreatePackageScreen> {
                             filled: true,
                             fillColor: AppColors.lightPrimary,
                             borderRadius: 30,
-                            textViewTitle: 'Name of level',
+                            hintText: 'Name of level',
                           ),
                         ),
                         const SizedBox(

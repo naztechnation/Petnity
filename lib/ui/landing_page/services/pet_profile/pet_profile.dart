@@ -12,21 +12,20 @@ import 'package:provider/provider.dart';
 import '../../../../blocs/user/user.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/pet_profile_details.dart';
-import '../../../../model/user_models/pet_profile_details.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/image_view.dart';
-import '../../../widgets/loading_page.dart';
 import '../../../widgets/modals.dart';
-import '../single_image_view.dart';
+
 import '../../../../model/user_models/pets_profile.dart' as pet;
 
 class PetProfile extends StatelessWidget {
   final bool isUser;
+  final String username;
 
-  const PetProfile({super.key, this.isUser = false});
+  const PetProfile({super.key, this.isUser = false,  this.username = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +35,7 @@ class PetProfile extends StatelessWidget {
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: PetProfileScreen(
         isUser: isUser,
+        username: username,
       ),
     );
   }
@@ -43,7 +43,9 @@ class PetProfile extends StatelessWidget {
 
 class PetProfileScreen extends StatefulWidget {
   final bool isUser;
-  const PetProfileScreen({super.key, this.isUser = false});
+  final String username;
+
+  const PetProfileScreen({super.key, this.isUser = false,  this.username = ''});
 
   @override
   State<PetProfileScreen> createState() => _PetProfileState();
@@ -56,11 +58,17 @@ class _PetProfileState extends State<PetProfileScreen> {
   PetProfileDetails? petProfileDetails;
 
   String username = '';
+  String userType = '';
 
   getUsername() async {
     username = await StorageHandler.getUserName();
+    userType = await StorageHandler.getUserType();
 
     _userCubit = context.read<UserCubit>();
+
+    if(userType != 'user'){
+      username = widget.username;
+    }
 
     _userCubit.getPetProfile(username);
   }
@@ -73,6 +81,9 @@ class _PetProfileState extends State<PetProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    var petDetails = Provider.of<UserViewModel>(context, listen: true);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -97,11 +108,13 @@ class _PetProfileState extends State<PetProfileScreen> {
                 if (state is PetProfileLoaded) {
                   if (state.petData.status!) {
                     petProfile = state.petData;
-                    var petId = petProfile?.pets?[0].id ?? "";
+                    var petId = state.petData.pets?.first.id ?? "";
 
-                    _userCubit.getPetProfileDetails('12');
+                  
+                    getUserPetDetails(petId.toString(),);
                   } else {
-                    Modals.showToast('Failed to load user profile');
+                    Modals.showToast('Failed to load pet profile');
+                    petDetails.clearPetDetails();
                   }
                 } else if (state is UserNetworkErrApiErr) {
                   Modals.showToast(state.message ?? '');
@@ -109,102 +122,148 @@ class _PetProfileState extends State<PetProfileScreen> {
                   Modals.showToast(state.message ?? '');
                 }
               }, builder: (context, state) {
-                if (state is PetProfileLoading ||
-                    state is PetProfileDetailsLoading) {
-                  return Scaffold(body: Expanded(child: LoadingPage()));
-                }
-
-                return Expanded(
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 40),
-                      child: Column(
-                        children: [
-                          PetStatus(),
-                          const SizedBox(height: 15),
-                          if (widget.isUser) PetOwner(),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          PetBio(),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(40),
-                            child: Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 8),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: Colors.white),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(40),
-                                child: GridView.builder(
-                                  padding: const EdgeInsets.all(.0),
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 0,
-                                    mainAxisSpacing: 0,
-                                  ),
-                                  itemCount: 6,
-                                  itemBuilder: (ctx, i) {
-                                    return Container(
-                                        decoration:
-                                            BoxDecoration(color: Colors.white),
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              AppNavigator.pushAndStackPage(
-                                                  context,
-                                                  page: SingleImageView(
-                                                    image: AppImages.dogPet,
-                                                  ));
-                                            },
-                                            child: ImageView.asset(
-                                              AppImages.dogPet,
-                                              fit: BoxFit.cover,
-                                            )));
-                                  },
+                return (state is PetProfileLoading ||
+                        state is PetProfileDetailsLoading)
+                    ? Expanded(
+                        child: Align(
+                            child: ImageView.asset(
+                        AppImages.loading,
+                        height: 50,
+                      )))
+                    : (petDetails == null )?  Expanded(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            child: Column(
+                              children: [
+                                PetStatus(),
+                                const SizedBox(height: 15),
+                                if (widget.isUser) PetOwner(),
+                                const SizedBox(
+                                  height: 15,
                                 ),
-                              ),
+                                PetBio(),
+                                // ClipRRect(
+                                //   borderRadius: BorderRadius.circular(40),
+                                //   child: Container(
+                                //     margin: const EdgeInsets.symmetric(
+                                //         horizontal: 8),
+                                //     decoration: BoxDecoration(
+                                //         borderRadius: BorderRadius.circular(40),
+                                //         color: Colors.white),
+                                //     child: ClipRRect(
+                                //       borderRadius: BorderRadius.circular(40),
+                                //       child: GridView.builder(
+                                //         padding: const EdgeInsets.all(.0),
+                                //         physics: NeverScrollableScrollPhysics(),
+                                //         shrinkWrap: true,
+                                //         gridDelegate:
+                                //             SliverGridDelegateWithFixedCrossAxisCount(
+                                //           crossAxisCount: 3,
+                                //           crossAxisSpacing: 0,
+                                //           mainAxisSpacing: 0,
+                                //         ),
+                                //         itemCount: 6,
+                                //         itemBuilder: (ctx, i) {
+                                //           return Container(
+                                //               decoration: BoxDecoration(
+                                //                   color: Colors.white),
+                                //               child: GestureDetector(
+                                //                   onTap: () {
+                                //                     AppNavigator
+                                //                         .pushAndStackPage(
+                                //                             context,
+                                //                             page:
+                                //                                 SingleImageView(
+                                //                               image: AppImages
+                                //                                   .dogPet,
+                                //                             ));
+                                //                   },
+                                //                   child: ImageView.asset(
+                                //                     AppImages.dogPet,
+                                //                     fit: BoxFit.cover,
+                                //                   )));
+                                //         },
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                                if (widget.isUser)
+                                  const SizedBox(
+                                    height: 120,
+                                  )
+                              ],
                             ),
                           ),
-                          if (widget.isUser)
-                            const SizedBox(
-                              height: 120,
-                            )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                        ),
+                      ): Expanded(
+                        child: Container(
+                                      height: MediaQuery.sizeOf(context).height,
+                                      padding: const EdgeInsets.all(12.0),
+                                      alignment: Alignment.center,
+                                      child: Align(
+                                          child: Card(
+                                        elevation: 0.5,
+                                        shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
+                                        child: Container(
+                                          height: 120,
+                                          child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'You currently do not have a pet registered',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                                          ),
+                                        )))),
+                      );
               }),
             ],
           ),
-          if (widget.isUser)
-            Positioned(
-              bottom: 30,
-              left: 25,
-              right: 25,
-              child: ButtonView(
-                borderRadius: 30,
-                padding: EdgeInsets.symmetric(vertical: 15),
-                color: AppColors.lightSecondary,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TimeSelections(),
-                      ));
-                },
-                child: Text(
-                  'Request video call inspection',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-            ),
+          // if (widget.isUser)
+          //   Positioned(
+          //     bottom: 30,
+          //     left: 25,
+          //     right: 25,
+          //     child: ButtonView(
+          //       borderRadius: 30,
+          //       padding: EdgeInsets.symmetric(vertical: 15),
+          //       color: AppColors.lightSecondary,
+          //       onPressed: () {
+          //         Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) => TimeSelections(),
+          //             ));
+          //       },
+          //       child: Text(
+          //         'Request video call inspection',
+          //         style: TextStyle(fontSize: 15),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );
+  }
+
+  getUserPetDetails(String petId,) async {
+    await _userCubit.getPetProfileDetails(petId);
+    
   }
 }
