@@ -12,6 +12,7 @@ import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_images.dart';
+import '../../res/app_routes.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../../utils/validator.dart';
@@ -43,11 +44,23 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
 
   bool isLoading = false;
 
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
+
   @override
   void initState() {
     _emailController.text = widget.email;
     super.initState();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -333,6 +346,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         const Duration(
           seconds: 25,
         ), () {
+          _signOut(context);
       AppNavigator.pushAndReplacePage(context, page: SignInScreen());
     });
   }

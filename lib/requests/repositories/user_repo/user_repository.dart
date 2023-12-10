@@ -50,5 +50,7 @@ abstract class UserRepository {
     Future<PetProfile> getUserPet({required String username});
     Future<PetProfileDetails> getUserPetDetails({required String petId});
     Future<FAQ> getFaq();
+    Future<AuthData> updateNumber({required String username,required String email,required String number,}); 
+
 
 }

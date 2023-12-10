@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
-import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/res/app_constants.dart'; 
 
-class ChangeEmailAndNumber extends StatelessWidget {
+import '../../handlers/secure_handler.dart';
+import '../widgets/back_button.dart';
+
+class ChangeEmailAndNumber extends StatefulWidget {
+  @override
+  State<ChangeEmailAndNumber> createState() => _ChangeEmailAndNumberState();
+}
+
+class _ChangeEmailAndNumberState extends State<ChangeEmailAndNumber> {
   final TextEditingController number = TextEditingController();
+
+  String email = "";
+
+  String phone = "";
+
+  getUserDetails() async {
+    email = await StorageHandler.getUserEmail();
+    phone = await StorageHandler.getUserPhone();
+  }
+
+  @override
+  void initState() {
+   
+    getUserDetails();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,16 +42,11 @@ class ChangeEmailAndNumber extends StatelessWidget {
           child: AppBar(
             elevation: 0,
             backgroundColor: AppColors.lightBackground,
-            leading: InkWell(
-              child: ImageView.svg(AppImages.backButton),
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
+            leading:backButton(context),
             title: Text(
-              'Change Email/ Number',
+              'Change Number',
               style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
             ),
             centerTitle: true,
           ),
@@ -48,7 +67,7 @@ class ChangeEmailAndNumber extends StatelessWidget {
               ),
               child: ListTile(
                 title: Text(
-                  "09150515270",
+                  phone,
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text('Change Number'),
@@ -58,25 +77,7 @@ class ChangeEmailAndNumber extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: ListTile(
-                title: Text(
-                  "JohnWick@gmail.com",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text('Change Email'),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () {
-                  Navigator.pushNamed(context, 'changeEmail');
-                },
-              ),
-            )
+            
           ],
         ),
       ),

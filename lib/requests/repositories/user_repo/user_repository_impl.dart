@@ -281,7 +281,20 @@ class UserRepositoryImpl implements UserRepository {
     });
     return FAQ.fromJson(map);
   }
-
+  
+  @override
+  Future<AuthData> updateNumber({required String username, required String email,required String number,}) async{
+    final map = await Requests()
+        .patch(AppStrings.updateNumber(username), headers: {
+      'Authorization': AppStrings.token,
+    },
+     body: {
+          "email": email,
+          "phone_number": number,
+        },
+    );
+    return AuthData.fromJson(map);
+  }
  
 
 }

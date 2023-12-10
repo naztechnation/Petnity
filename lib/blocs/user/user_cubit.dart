@@ -597,6 +597,28 @@ class UserCubit extends Cubit<UserStates> {
 
   Future<void> getFaq() async {
     try {
+      emit(PetProfileLoading());
+
+      final faq = await userRepository.getFaq();
+
+      emit(FaqLoaded(faq));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> updateAccount() async {
+    try {
       emit(FaqLoading());
 
       final faq = await userRepository.getFaq();

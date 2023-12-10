@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
@@ -6,10 +5,11 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/ui/widgets/text_edit_view.dart';
 import './widgets/confirm_OTP.dart';
 
 class ChangeNumber extends StatelessWidget {
- final TextEditingController number = TextEditingController();
+  final TextEditingController number = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,12 +73,11 @@ class ChangeNumber extends StatelessWidget {
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(20)),
-              child: TextField(
+              child: TextEditView(
                 controller: number,
-                decoration: InputDecoration(border: InputBorder.none),
               ),
             ),
-            SizedBox(height: 20),
+            
           ],
         ),
       ),

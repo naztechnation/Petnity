@@ -177,6 +177,9 @@ static String getUserPets(
       '${_baseUrl}pets/get-pet-details/$petId'; 
  static const String getFaq =
       '${_baseUrl}get-faqs'; 
+
+      static   String updateNumber(String username) =>
+      '${_baseUrl}/users/change-email-and-phone/$username'; 
        
  
 }

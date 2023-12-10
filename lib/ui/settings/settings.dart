@@ -7,6 +7,7 @@ import 'package:petnity/utils/navigator/page_navigator.dart';
 
 import '../../handlers/secure_handler.dart';
 import '../../res/app_strings.dart';
+import '../auth/forgot_password.dart';
 import '../widgets/modals.dart';
 import 'add_account_details.dart';
 
@@ -22,11 +23,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   getUserDetails() async {
     userType = await StorageHandler.getUserType();
-    setState(() {
-      
-    });
+    setState(() {});
   }
-  
+
   @override
   void initState() {
     getUserDetails();
@@ -78,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             if (index == 0) {
               if (userType == 'user') {
                 return SizedBox.shrink();
-              }  else  {
+              } else {
                 return TileWidget(
                     title: 'Add account details',
                     icon: Icon(Icons.account_balance),
@@ -92,17 +91,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   title: 'Change Password',
                   icon: Icon(Icons.lock),
                   onpressed: () {
-                    Navigator.pushNamed(context, 'changePassword');
+                    AppNavigator.pushAndStackPage(context,
+                        page: ForgotPasswordScreen());
                   });
             } else if (index == 2) {
-               return TileWidget(
+              return TileWidget(
                   title: 'Change number and Email',
                   icon: Icon(Icons.change_circle),
                   onpressed: () {
                     Navigator.pushNamed(context, 'changeEmailandNumber');
                   });
             } else if (index == 3) {
-                return TileWidget(
+              return TileWidget(
                   title: 'FAQ',
                   icon: Icon(Icons.question_mark),
                   onpressed: () {
@@ -115,29 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onpressed: () {
                     Navigator.pushNamed(context, 'privacyPolicy');
                   });
-            } else if (index == 5) {
-              return TileWidget(
-                  title: 'Change number and Email',
-                  icon: Icon(Icons.change_circle),
-                  onpressed: () {
-                    Navigator.pushNamed(context, 'changeEmailandNumber');
-                  });
-            } 
-            // else if (index == 6) {
-            //   return TileWidget(
-            //       title: 'FAQ',
-            //       icon: Icon(Icons.question_mark),
-            //       onpressed: () {
-            //         Navigator.pushNamed(context, 'faqs');
-            //       });
-            // } else {
-            //   return TileWidget(
-            //       title: 'Privacy Policy',
-            //       icon: Icon(Icons.privacy_tip),
-            //       onpressed: () {
-            //         Navigator.pushNamed(context, 'privacyPolicy');
-            //       });
-            // }
+            }
           },
         ),
       ),

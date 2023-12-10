@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
@@ -7,32 +8,60 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../blocs/user/user.dart';
+import '../../model/user_models/faq.dart';
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../widgets/custom_text.dart';
+import '../widgets/loading_page.dart';
+import '../widgets/modals.dart';
 import 'live_support_chat.dart';
 
-class Support extends StatefulWidget {
+class Support extends StatelessWidget {
+  const Support();
+
   @override
-  State<Support> createState() => _SupportState();
+  Widget build(BuildContext context) {
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: SupportScreen(),
+    );
+  }
 }
 
-class _SupportState extends State<Support> {
+class SupportScreen extends StatefulWidget {
+  @override
+  State<SupportScreen> createState() => _SupportScreenState();
+}
 
+class _SupportScreenState extends State<SupportScreen> {
   String email = "";
   String phone = "";
 
+  late UserCubit _userCubit;
 
-  getUserDetails() async{
+  List<Faqs> faqs = [];
+
+  getUserDetails() async {
     email = await StorageHandler.getUserEmail();
     phone = await StorageHandler.getUserPhone();
   }
 
   @override
   void initState() {
+    _userCubit = context.read<UserCubit>();
+
+    _userCubit.getFaq();
     getUserDetails();
+
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,26 +87,23 @@ class _SupportState extends State<Support> {
                 fontFamily: AppStrings.interSans,
                 size: 13,
                 weight: FontWeight.w400,
-
               ),
             ),
-             Divider(),
+            Divider(),
             ListTile(
               contentPadding: EdgeInsets.zero,
               leading: Icon(Icons.call),
               title: CustomText(
                 text: 'Number',
                 fontFamily: AppStrings.interSans,
-                 size: 13,
+                size: 13,
                 weight: FontWeight.w400,
-
               ),
               subtitle: CustomText(
                 text: phone,
                 fontFamily: AppStrings.interSans,
-                 size: 13,
+                size: 13,
                 weight: FontWeight.w400,
-
               ),
             )
           ],
@@ -125,7 +151,8 @@ class _SupportState extends State<Support> {
                     borderColor: Colors.transparent,
                     color: Colors.blue.withOpacity(0.2),
                     onPressed: () {
-                      AppNavigator.pushAndStackPage(context, page: LiveSupportPage());
+                      AppNavigator.pushAndStackPage(context,
+                          page: LiveSupportPage());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -224,77 +251,54 @@ class _SupportState extends State<Support> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20)),
-                height: screenSize(context).height * .28,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ListTile(
-                      leading: Icon(
-                        Icons.circle,
-                        size: 16,
-                        color: Colors.blue,
+              BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
+                if (state is FaqLoaded) {
+                  if (state.faq.status!) {
+                    faqs = state.faq.faqs ?? [];
+                  }
+                } else if (state is UserNetworkErrApiErr) {
+                  Modals.showToast(state.message ?? '');
+                } else if (state is UserNetworkErr) {
+                  Modals.showToast(state.message ?? '');
+                }
+              }, builder: (context, state) {
+                if (state is UserProfileLoading) {
+                  return Scaffold(body: LoadingPage());
+                }
+
+                if (faqs.isNotEmpty) {
+                  ListView.builder(itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      height: screenSize(context).height * .28,
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.circle,
+                          size: 16,
+                          color: Colors.blue,
+                        ),
+                        trailing: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 18,
+                        ),
+                        title: Text(
+                          faqs[index].question ?? '',
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        subtitle: Text(
+                          faqs[index].answer ?? '',
+                          style: TextStyle(fontSize: 14),
+                        ),
                       ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 18,
-                      ),
-                      title: Text(
-                        'Lorem Ipsum dolor cedit something',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.circle,
-                        size: 16,
-                        color: Colors.yellow,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 18,
-                      ),
-                      title: Text(
-                        'Lorem Ipsum dolor cedit something',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.circle,
-                        color: Colors.red,
-                        size: 16,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 18,
-                      ),
-                      title: Text(
-                        'Lorem Ipsum dolor cedit something',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.circle,
-                        color: Colors.green,
-                        size: 16,
-                      ),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        size: 18,
-                      ),
-                      title: Text(
-                        'Lorem Ipsum dolor cedit something',
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                    );
+                  });
+                }
+                ;
+
+                return SizedBox.shrink();
+              }),
               SizedBox(
                 height: 25,
               )
