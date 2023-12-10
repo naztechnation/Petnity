@@ -39,13 +39,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-Future<void> getAgentProfile() async {
+  Future<void> getAgentProfile() async {
     try {
       emit(ServiceProviderListLoading());
 
-      final agents = await userRepository.getAgentProfile(
-        
-      );
+      final agents = await userRepository.getAgentProfile();
 
       await viewModel.setAgentDetails(agents: agents.agents ?? []);
 
@@ -252,8 +250,6 @@ Future<void> getAgentProfile() async {
 
       final userData = await userRepository.orderList(username: username);
 
-
-
       emit(OrderListLoaded(userData));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -292,11 +288,12 @@ Future<void> getAgentProfile() async {
     }
   }
 
-   Future<void> agentShoppingList(String agentId)async {
+  Future<void> agentShoppingList(String agentId) async {
     try {
       emit(ShoppingListLoading());
 
-      final shoppingList = await userRepository.agentShoppingList(agentId: agentId);
+      final shoppingList =
+          await userRepository.agentShoppingList(agentId: agentId);
 
       emit(ShoppingListLoaded(shoppingList));
     } on ApiException catch (e) {
@@ -379,7 +376,6 @@ Future<void> getAgentProfile() async {
 
       await viewModel.setOrderList(orders: orderList);
 
-
       emit(OrderListLoaded(orderList));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -405,10 +401,10 @@ Future<void> getAgentProfile() async {
       emit(ConfirmShoppingOrderLoading());
 
       final confirmOrder = await userRepository.confirmShoppingPayment(
-        username: username, purchaseId: purchaseId, shopOrderId: shopOrderId,
+        username: username,
+        purchaseId: purchaseId,
+        shopOrderId: shopOrderId,
       );
-
-       
 
       emit(ConfirmShoppingOrderLoaded(confirmOrder));
     } on ApiException catch (e) {
@@ -426,18 +422,15 @@ Future<void> getAgentProfile() async {
     }
   }
 
-   Future<void> getProductReviews({
+  Future<void> getProductReviews({
     required String productId,
-     
   }) async {
     try {
       emit(GetProductReviewsLoading());
 
       final getProducts = await userRepository.getProductReviews(
-         productId: productId,
+        productId: productId,
       );
-
-       
 
       emit(GetProductReviewsLoaded(getProducts));
     } on ApiException catch (e) {
@@ -455,21 +448,19 @@ Future<void> getAgentProfile() async {
     }
   }
 
-    Future<void> postProductReviews({
-     
+  Future<void> postProductReviews({
     required String url,
     required String rating,
     required String comment,
-     
   }) async {
     try {
       emit(PostProductReviewsLoading());
 
       final postProducts = await userRepository.sendReviews(
-         url: url, comment: comment, rating: rating,
+        url: url,
+        comment: comment,
+        rating: rating,
       );
-
-       
 
       emit(PostProductReviewsLoaded(postProducts));
     } on ApiException catch (e) {
@@ -487,13 +478,14 @@ Future<void> getAgentProfile() async {
     }
   }
 
-
-Future<void> uploadGallery({required String agentId, required String image}) async {
+  Future<void> uploadGallery(
+      {required String agentId, required String image}) async {
     try {
       emit(UploadAgentGalleryLoading());
 
-      final gallery = await userRepository.uploadGallery(agentId: agentId, image: image);
-       
+      final gallery =
+          await userRepository.uploadGallery(agentId: agentId, image: image);
+
       emit(UploadAgentGalleryLoaded(gallery));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
@@ -509,12 +501,13 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
       }
     }
   }
-   
+
   Future<void> getUserShoppingList(String username) async {
     try {
       emit(UserShopListLoading());
 
-      final shoppingList = await userRepository.shopOrderData(username: username);
+      final shoppingList =
+          await userRepository.shopOrderData(username: username);
 
       emit(UserShopListLoaded(shoppingList));
     } on ApiException catch (e) {
@@ -532,11 +525,12 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
     }
   }
 
-   Future<void> getUserProfile(String username) async {
+  Future<void> getUserProfile(String username) async {
     try {
       emit(UserProfileLoading());
 
-      final userProfile = await userRepository.getUserProfile(username: username);
+      final userProfile =
+          await userRepository.getUserProfile(username: username);
 
       emit(UserProfileLoaded(userProfile));
     } on ApiException catch (e) {
@@ -580,10 +574,10 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
     try {
       emit(PetProfileDetailsLoading());
 
-      final petProfileDetails = await userRepository.getUserPetDetails(petId: petId);
+      final petProfileDetails =
+          await userRepository.getUserPetDetails(petId: petId);
 
-     await viewModel.setPetDetails(pet: petProfileDetails);
-
+      await viewModel.setPetDetails(pet: petProfileDetails);
 
       emit(PetProfileDetailsLoaded(petProfileDetails));
     } on ApiException catch (e) {
@@ -601,4 +595,25 @@ Future<void> uploadGallery({required String agentId, required String image}) asy
     }
   }
 
+  Future<void> getFaq() async {
+    try {
+      emit(FaqLoading());
+
+      final faq = await userRepository.getFaq();
+
+      emit(FaqLoaded(faq));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

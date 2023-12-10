@@ -2,6 +2,7 @@ import 'package:petnity/model/account_models/agents_packages.dart';
 import 'package:petnity/model/account_models/confirm_payment.dart';
 import 'package:petnity/model/user_models/confirm_shop_payment.dart';
 import 'package:petnity/model/user_models/create_payment_order.dart';
+import 'package:petnity/model/user_models/faq.dart';
 import 'package:petnity/model/user_models/get_product_reviews.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 import 'package:petnity/model/user_models/user_shopping_data.dart';
@@ -270,6 +271,15 @@ class UserRepositoryImpl implements UserRepository {
       'Authorization': AppStrings.token,
     });
     return PetProfileDetails.fromJson(map);
+  }
+
+  @override
+  Future<FAQ> getFaq() async{
+    final map = await Requests()
+        .get(AppStrings.getFaq, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return FAQ.fromJson(map);
   }
 
  

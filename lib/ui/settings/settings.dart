@@ -95,37 +95,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Navigator.pushNamed(context, 'changePassword');
                   });
             } else if (index == 2) {
-              return TileWidgetWithSwitch(
-                  title: 'Hide pet from Scan',
-                  icon: Icon(Icons.remove_red_eye),
-                  switchh: Switch(
-                    value: switchValue1,
-                    onChanged: (value) {
-                      setState(() {
-                        switchValue1 = value;
-                      });
-                    },
-                  ),
-                  onpressed: () {});
+               return TileWidget(
+                  title: 'Change number and Email',
+                  icon: Icon(Icons.change_circle),
+                  onpressed: () {
+                    Navigator.pushNamed(context, 'changeEmailandNumber');
+                  });
             } else if (index == 3) {
-              return TileWidgetWithSwitch(
-                  title: 'Turn on Location',
-                  icon: Icon(Icons.location_on),
-                  switchh: Switch(
-                    value: switchValue2,
-                    onChanged: (value) {
-                      setState(() {
-                        switchValue2 = value;
-                      });
-                    },
-                  ),
-                  onpressed: () {});
+                return TileWidget(
+                  title: 'FAQ',
+                  icon: Icon(Icons.question_mark),
+                  onpressed: () {
+                    Navigator.pushNamed(context, 'faqs');
+                  });
             } else if (index == 4) {
               return TileWidget(
-                  title: 'Cards and Payment',
-                  icon: Icon(Icons.payment),
+                  title: 'Privacy Policy',
+                  icon: Icon(Icons.privacy_tip),
                   onpressed: () {
-                    Navigator.pushNamed(context, 'paymentAndCard');
+                    Navigator.pushNamed(context, 'privacyPolicy');
                   });
             } else if (index == 5) {
               return TileWidget(
@@ -134,21 +122,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onpressed: () {
                     Navigator.pushNamed(context, 'changeEmailandNumber');
                   });
-            } else if (index == 6) {
-              return TileWidget(
-                  title: 'FAQ',
-                  icon: Icon(Icons.question_mark),
-                  onpressed: () {
-                    Navigator.pushNamed(context, 'faqs');
-                  });
-            } else {
-              return TileWidget(
-                  title: 'Privacy Policy',
-                  icon: Icon(Icons.privacy_tip),
-                  onpressed: () {
-                    Navigator.pushNamed(context, 'privacyPolicy');
-                  });
-            }
+            } 
+            // else if (index == 6) {
+            //   return TileWidget(
+            //       title: 'FAQ',
+            //       icon: Icon(Icons.question_mark),
+            //       onpressed: () {
+            //         Navigator.pushNamed(context, 'faqs');
+            //       });
+            // } else {
+            //   return TileWidget(
+            //       title: 'Privacy Policy',
+            //       icon: Icon(Icons.privacy_tip),
+            //       onpressed: () {
+            //         Navigator.pushNamed(context, 'privacyPolicy');
+            //       });
+            // }
           },
         ),
       ),

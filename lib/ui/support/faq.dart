@@ -1,10 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart';
+
+import '../../blocs/user/user.dart';
+import '../../model/user_models/faq.dart';
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../widgets/loading_page.dart';
+import '../widgets/modals.dart';
 
 class FAQs extends StatelessWidget {
+  const FAQs();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: FAQsScreen(),
+    );
+  }
+}
+
+class FAQsScreen extends StatefulWidget {
+  @override
+  State<FAQsScreen> createState() => _FAQsScreenState();
+}
+
+class _FAQsScreenState extends State<FAQsScreen> {
+  late UserCubit _userCubit;
+
+  List<Faqs> faqs = [];
+
+  @override
+  void initState() {
+    _userCubit = context.read<UserCubit>();
+
+    _userCubit.getFaq();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +58,10 @@ class FAQs extends StatelessWidget {
             elevation: 0,
             backgroundColor: AppColors.lightBackground,
             leading: InkWell(
-              child: ImageView.svg(AppImages.backButton),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: ImageView.svg(AppImages.backButton, height: 20,),
+              ),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -32,58 +75,82 @@ class FAQs extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'FAQs',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Row(
+      body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
+        if (state is FaqLoaded) {
+          if (state.faq.status!) {
+            faqs = state.faq.faqs ?? [];
+          }
+        } else if (state is UserNetworkErrApiErr) {
+          Modals.showToast(state.message ?? '');
+        } else if (state is UserNetworkErr) {
+          Modals.showToast(state.message ?? '');
+        }
+      }, builder: (context, state) {
+        if (state is UserProfileLoading) {
+          return Scaffold(body: LoadingPage());
+        }
+
+        if (faqs.isNotEmpty) {
+          return ListView.builder(itemBuilder: (context, index) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Icon(
-                      Icons.circle,
-                      color: Colors.blue,
+                  Text(
+                    'FAQs',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Icon(
+                            Icons.circle,
+                            color: Colors.blue,
+                          ),
+                        ),
+                        Text(
+                          faqs[index].question ?? "",
+                        ),
+                      ],
                     ),
                   ),
-                  Text('Lorem Ipsum dolor cedit my nig'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Answer',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: screenSize(context).width * .9,
+                    child: Text(
+                      faqs[index].answer ?? "",
+                      textAlign: TextAlign.justify,
+                    ),
+                  )
                 ],
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Answer',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              width: screenSize(context).width * .9,
-              child: Text(
-                'All plans come with integrations for  Slack & Microsoft Teams in order to cut down on pings, limit distractions and make the tools even more powerful. Business and Enterprise customers get access to Jira, GitHub & Okta integrations.',
-                textAlign: TextAlign.justify,
-              ),
-            )
-          ],
-        ),
-      ),
+            );
+          });
+        }
+
+        return SizedBox.shrink();
+      }),
     );
   }
 }

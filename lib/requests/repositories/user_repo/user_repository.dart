@@ -6,6 +6,7 @@ import '../../../model/account_models/confirm_payment.dart';
 import '../../../model/user_models/confirm_shop_payment.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/create_payment_order.dart';
+import '../../../model/user_models/faq.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_product_reviews.dart';
 import '../../../model/user_models/order_list.dart'; 
@@ -48,5 +49,6 @@ abstract class UserRepository {
     Future<UserProfile> getUserProfile({required String username});
     Future<PetProfile> getUserPet({required String username});
     Future<PetProfileDetails> getUserPetDetails({required String petId});
+    Future<FAQ> getFaq();
 
 }

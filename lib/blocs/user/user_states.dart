@@ -7,6 +7,7 @@ import '../../model/account_models/confirm_payment.dart';
 import '../../model/user_models/confirm_shop_payment.dart';
 import '../../model/user_models/create_order.dart';
 import '../../model/user_models/create_payment_order.dart';
+import '../../model/user_models/faq.dart';
 import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/get_product_reviews.dart';
 import '../../model/user_models/order_list.dart';
@@ -254,6 +255,18 @@ class UserShopListLoaded extends UserStates {
   const UserShopListLoaded(this.userShopData);
   @override
   List<Object> get props => [userShopData];
+}
+
+class FaqLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class FaqLoaded extends UserStates {
+  final FAQ faq;
+  const FaqLoaded(this.faq);
+  @override
+  List<Object> get props => [faq];
 }
 
 class UserNetworkErr extends UserStates {

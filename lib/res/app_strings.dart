@@ -174,6 +174,9 @@ static String getUserPets(
 
   static String getUserPetDetails(
           {required String petId, }) =>
-      '${_baseUrl}pets/get-pet-details/$petId';  
+      '${_baseUrl}pets/get-pet-details/$petId'; 
+ static const String getFaq =
+      '${_baseUrl}get-faqs'; 
+       
  
 }

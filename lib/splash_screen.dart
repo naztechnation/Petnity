@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen>
                 ),
               ),
               child: const CustomText(
-                  text: 'From mejortech',
+                  text: '',
                   weight: FontWeight.w700,
                   size: 14,
                   color: AppColors.lightPrimary,
