@@ -42,9 +42,10 @@ class AppStrings {
   static String verifyUserProfileUrl(String username) =>
       '${_baseUrl}auth/verify-profile/$username';
 
-  static    String resetPasswordUrl(String email) => '${_baseUrl}auth/change-password/$email';
-  static   String forgotPasswordUrl(String email) => '${_baseUrl}auth/request-password-change/$email';
-
+  static String resetPasswordUrl(String email) =>
+      '${_baseUrl}auth/change-password/$email';
+  static String forgotPasswordUrl(String email) =>
+      '${_baseUrl}auth/request-password-change/$email';
 
   static const String loginUrl = '${_baseUrl}auth/login';
   static const String logoutUrl = '${_baseUrl}auth/logout';
@@ -141,45 +142,50 @@ class AppStrings {
           {required String agentId, required String orderId}) =>
       '${_baseUrl}shop/agent-marked-delivered/$agentId/$orderId';
 
-      static String agentRejectServiceOrder(
+  static String agentRejectServiceOrder(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/agent-reject-order/$agentId/$orderId';
 
-       static String userMarkOrderDelivered(
+  static String userMarkOrderDelivered(
           {required String username, required String orderId}) =>
       '${_baseUrl}order/user-complete-order/$username/$orderId';
- static String agentMarkOrderDelivered(
+  static String agentMarkOrderDelivered(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/user-complete-order/$agentId/$orderId';
-  static String getAgentsProducts(
-          {required String agentId, }) =>
+  static String getAgentsProducts({
+    required String agentId,
+  }) =>
       '${_baseUrl}shop/get-agent-products/$agentId';
 
-      static String getAgentsBalance(
-          {required String agentId, }) =>
+  static String getAgentsBalance({
+    required String agentId,
+  }) =>
       '${_baseUrl}users/get-agent-balance/$agentId';
 
-static String getUserOrderedProducts(
-          {required String username, }) =>
+  static String getUserOrderedProducts({
+    required String username,
+  }) =>
       '${_baseUrl}shop/get-user-shop-orders/$username';
 
-static String getUserProfile(
-          {required String username, }) =>
+  static String getUserProfile({
+    required String username,
+  }) =>
       '${_baseUrl}users/get-profile/$username';
 
-
-static String getUserPets(
-          {required String username, }) =>
+  static String getUserPets({
+    required String username,
+  }) =>
       '${_baseUrl}pets/get-user-pets/$username';
 
-  static String getUserPetDetails(
-          {required String petId, }) =>
-      '${_baseUrl}pets/get-pet-details/$petId'; 
- static const String getFaq =
-      '${_baseUrl}get-faqs'; 
+  static String getUserPetDetails({
+    required String petId,
+  }) =>
+      '${_baseUrl}pets/get-pet-details/$petId';
+  static const String getFaq = '${_baseUrl}get-faqs';
 
-      static   String updateNumber(String username) =>
-      '${_baseUrl}users/change-email-and-phone/$username'; 
-       
- 
+  static String updateNumber(String username) =>
+      '${_baseUrl}users/change-email-and-phone/$username';
+
+   static String privacy =
+      '${_baseUrl}get-privacy-policy';    
 }

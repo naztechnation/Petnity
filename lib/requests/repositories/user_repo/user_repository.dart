@@ -12,6 +12,7 @@ import '../../../model/user_models/get_product_reviews.dart';
 import '../../../model/user_models/order_list.dart'; 
 import '../../../model/user_models/pet_profile_details.dart';
 import '../../../model/user_models/pets_profile.dart';
+import '../../../model/user_models/privacy_policy.dart';
 import '../../../model/user_models/products_detail.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
@@ -51,6 +52,7 @@ abstract class UserRepository {
     Future<PetProfileDetails> getUserPetDetails({required String petId});
     Future<FAQ> getFaq();
     Future<AuthData> updateNumber({required String username,required String email,required String number,}); 
+    Future<PrivacyPolicy> privacy(); 
 
 
 }

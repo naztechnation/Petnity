@@ -8,6 +8,7 @@ import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../handlers/secure_handler.dart';
@@ -27,16 +28,21 @@ class customDrawer extends StatefulWidget {
 
 class _customDrawerState extends State<customDrawer> {
   String registeredPet = '';
+  String picture = '';
   bool isPetRegistered = false;
 
   getUsername() async {
     registeredPet = await StorageHandler.getUserPetState();
+    picture = await StorageHandler.getUserPicture();
 
     if (registeredPet != '') {
       setState(() {
         isPetRegistered = true;
       });
     }
+    setState(() {
+      
+    });
   }
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -59,6 +65,7 @@ class _customDrawerState extends State<customDrawer> {
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
 
+
     return Drawer(
       child: Container(
         child: Column(
@@ -73,12 +80,46 @@ class _customDrawerState extends State<customDrawer> {
                   icon: Icon(Icons.close)),
             ),
             SizedBox(
-              height: screenSize(context).height * .08,
+              height: screenSize(context).height * .01,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: <Widget>[
+                  Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Center(
+                            child: Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80),
+                              ),
+                              child: Container(
+                                width: 120,
+                                height: 120,
+                                margin: const EdgeInsets.all(2),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: ClipRRect(
+                              borderRadius: BorderRadius.circular(60),
+                              child: ImageView.network(
+                                picture,
+                                //userProfile?.profile?.profileImage,
+                                height: 120,
+                                width: 120,
+                                fit: BoxFit.cover,
+                              )),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+              height: screenSize(context).height * .012,
+            ),
                   ListTile(
                      onTap: () {
                       AppNavigator.pushAndStackPage(context,

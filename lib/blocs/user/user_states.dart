@@ -13,6 +13,7 @@ import '../../model/user_models/get_product_reviews.dart';
 import '../../model/user_models/order_list.dart';
 import '../../model/user_models/pet_profile_details.dart';
 import '../../model/user_models/pets_profile.dart';
+import '../../model/user_models/privacy_policy.dart';
 import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
@@ -279,6 +280,18 @@ class ChangeNumberLoaded extends UserStates {
   const ChangeNumberLoaded(this.number);
   @override
   List<Object> get props => [number];
+}
+
+class PrivacyLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class PrivacyLoaded extends UserStates {
+  final PrivacyPolicy privacyPolicy;
+  const PrivacyLoaded(this.privacyPolicy);
+  @override
+  List<Object> get props => [privacyPolicy];
 }
 
 class UserNetworkErr extends UserStates {

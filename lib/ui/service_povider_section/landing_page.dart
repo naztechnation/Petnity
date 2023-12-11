@@ -39,7 +39,7 @@ class _ServiceProviderLandingPageState
   List<Widget> _widgetOptions = <Widget>[
     ServiceProviderHomePage(),
     ServiceProviderCatalogueScreen(),
-    PaymentPage(),
+    PaymentPage(mainPage: false,),
   ];
 
   void _onItemTapped(int index) {

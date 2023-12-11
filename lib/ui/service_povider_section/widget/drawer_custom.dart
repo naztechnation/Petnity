@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/res/app_strings.dart'; 
+import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/profile/profile.dart' as profile;
 import 'package:petnity/ui/settings/settings.dart';
@@ -54,49 +54,36 @@ class _CustomDrawerState extends State<CustomDrawer> {
   String agentId = "";
   Agents? agents;
 
-   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _signOut(BuildContext context) async {
     try {
       await _auth.signOut();
-       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+      AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } catch (e) {
       print("Error signing out: $e");
     }
   }
-
-
-   
 
   List<ServicesDetails> services = [];
 
   getServicesTypes() async {
     _userCubit = context.read<UserCubit>();
 
-     try {
-     
-    agentId = await StorageHandler.getAgentId();
-    await _userCubit.getServiceTypes();
-   await _userCubit.getAgentProfile();
-
-     
-    } catch (e) {
-      
-    }
-  
+    try {
+      agentId = await StorageHandler.getAgentId();
+      await _userCubit.getServiceTypes();
+      await _userCubit.getAgentProfile();
+    } catch (e) {}
   }
 
   String userType = '';
+  String picture = '';
 
-
-
-  
-    getUserType()async{
-
+  getUserType() async {
     userType = await StorageHandler.getUserType();
-
-    }
-
+    picture = await StorageHandler.getUserPicture();
+  }
 
   @override
   void initState() {
@@ -114,15 +101,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
           if (state.services.status!) {
             service = _userCubit.viewModel.services;
           } else {}
-         }else if (state is ServiceProviderListLoaded) {
-                  for (var item in state.userData.agents!) {
-                    if (item.id.toString() == agentId) {
-                      agents = item;
-                      break;
-                    }
-                  }
-                   services = agents?.services ?? []; 
-                } else if (state is UserNetworkErrApiErr) {
+        } else if (state is ServiceProviderListLoaded) {
+          for (var item in state.userData.agents!) {
+            if (item.id.toString() == agentId) {
+              agents = item;
+              break;
+            }
+          }
+          services = agents?.services ?? [];
+        } else if (state is UserNetworkErrApiErr) {
         } else if (state is UserNetworkErr) {}
       },
       builder: (context, state) => Drawer(
@@ -131,12 +118,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
                 SafeArea(
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 30),
+                          horizontal: 20, vertical: 0),
                       child: IconButton(
                           onPressed: () {
                             Navigator.pop(context);
@@ -145,134 +135,225 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: screenSize(context).height * .08,
-                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     children: <Widget>[
-                      ListTile(
-                        minLeadingWidth: 0,
-                        onTap: () {
-                           if (userType == 'user') {
-                          Navigator.push(context,
-                            MaterialPageRoute(builder: (_) {
-                          return profile.Profile();
-                        }));
-                        }else{
-                           Navigator.push(context,
-                            MaterialPageRoute(builder: (_) {
-                          return AgentProfileScreen();
-                        }));
-                        }
-                        
-                        } ,
-                        leading: ImageView.svg(
-                          AppImages.personIcon,
-                          width: 25,
-                          height: 25,
-                        ),
-                        title: Align(
-                          alignment: Alignment(-1.15, 0),
-                          child: Text(
-                            'Profile',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 14,
-                                ),
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        minLeadingWidth: 0,
-                        onTap: () {
-                          AppNavigator.pushAndStackPage(context,
-                              page: NotificationsScreen());
-                        },
-                        leading: ImageView.svg(
-                          AppImages.messageIcon,
-                          width: 25,
-                          height: 25,
-                        ),
-                        title: Align(
-                          alignment: Alignment(-1.2, 0),
-                          child: Text(
-                            'Notifications',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w800,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: Center(
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(80),
+                            ),
+                            child: Container(
+                              width: 120,
+                              height: 120,
+                              margin: const EdgeInsets.all(2),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(60),
+                                    child: ImageView.network(
+                                      picture,
+                                      //userProfile?.profile?.profileImage,
+                                      height: 120,
+                                      width: 120,
+                                      fit: BoxFit.cover,
+                                    )),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                     
-                      ListTile(
-                        minLeadingWidth: 0,
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (_) {
-                          return Support();
-                        })),
-                        leading: ImageView.svg(
-                          AppImages.supportIcon,
-                          width: 25,
-                          height: 25,
-                        ),
-                        title: Align(
-                          alignment: Alignment(-1.19, 0),
-                          child: Text(
-                            'Support',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                 ),
-                          ),
-                        ),
+                      SizedBox(
+                        height: 30,
                       ),
-                      ListTile(
-                        minLeadingWidth: 0,
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (_) {
-                          return PaymentPage();
-                        })),
-                        leading: ImageView.asset(
-                          AppImages.walletIcon,
-                          width: 25,
-                          height: 25,
-                        ),
-                        title: Align(
-                          alignment: Alignment(-2.1, 0),
-                          child: Text(
-                            'Balance & Withdrawal',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                 ),
-                          ),
-                        ),
-                      ),
-                      ListTile(
-                        minLeadingWidth: 0,
-                        leading: ImageView.svg(
-                          AppImages.settingsIcon,
-                          width: 25,
-                          height: 25,
-                        ),
-                        onTap: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (_) {
-                          return SettingsScreen();
-                        })),
-                        title: Align(
-                          alignment: Alignment(-1.13, 0),
-                          child: Text(
-                            'Settings',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                 ),
-                          ),
-                        ),
-                      ),
-                      ListTile(
+                      GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
-                           
+
+                          if (userType == 'user') {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return profile.Profile();
+                            }));
+                          } else {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return AgentProfileScreen();
+                            }));
+                          }
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 13,
+                            ),
+                            ImageView.svg(
+                              AppImages.personIcon,
+                              width: 25,
+                              height: 25,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Profile',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+
+                          AppNavigator.pushAndStackPage(context,
+                              page: NotificationsScreen());
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 13,
+                            ),
+                            ImageView.svg(
+                              AppImages.messageIcon,
+                              width: 25,
+                              height: 25,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Notifications',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return Support();
+                          }));
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 13,
+                            ),
+                            ImageView.svg(
+                              AppImages.supportIcon,
+                              width: 25,
+                              height: 25,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Support',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return PaymentPage(
+                              mainPage: true,
+                            );
+                          }));
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 13,
+                            ),
+                            ImageView.asset(
+                              AppImages.walletIcon,
+                              width: 25,
+                              height: 25,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Balance & Withdrawal',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) {
+                            return SettingsScreen();
+                          }));
+                        },
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 13,
+                            ),
+                            ImageView.svg(
+                              AppImages.settingsIcon,
+                              width: 25,
+                              height: 25,
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Settings',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+
                           showModalBottomSheet(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
@@ -283,82 +364,84 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               isDismissible: true,
                               context: context,
                               builder: (context) {
-                                return  Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 20),
-                                        height: screenSize(context).height * .8,
-                                        child: SingleChildScrollView(
-                                            child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                CustomText(
-                                                  text: 'Your Services',
-                                                  weight: FontWeight.bold,
-                                                  size: 17,
-                                                ),
-                                              ],
-                                            ),
-                            
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            CustomText(
-                              size: 14,
-                              text: 'Create Service',
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-          
-                                          ServicesList(services: services,),
-                                          ],
-                                        )),
-                                      );
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  height: screenSize(context).height * .8,
+                                  child: SingleChildScrollView(
+                                      child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          CustomText(
+                                            text: 'Your Services',
+                                            weight: FontWeight.bold,
+                                            size: 17,
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      CustomText(
+                                        size: 14,
+                                        text: 'Create Service',
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      ServicesList(
+                                        services: services,
+                                      ),
+                                    ],
+                                  )),
+                                );
                               });
                         },
-                        minLeadingWidth: 0,
-                        leading: Container(
-                          width: screenSize(context).width * .1,
-                          child: Stack(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Color(0xFFD9D9D9),
-                                radius: 14,
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 13,
+                            ),
+                            Container(
+                              width: screenSize(context).width * .1,
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: Color(0xFFD9D9D9),
+                                    radius: 14,
+                                  ),
+                                  Positioned(
+                                      left: 8,
+                                      child: Container(
+                                        width: screenSize(context).width * .069,
+                                        height:
+                                            screenSize(context).height * .035,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xFFD9D9D9),
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                            border: Border.all(
+                                                color: Colors.white)),
+                                      ))
+                                ],
                               ),
-                              Positioned(
-                                  left: 8,
-                                  child: Container(
-                                    width: screenSize(context).width * .069,
-                                    height: screenSize(context).height * .035,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xFFD9D9D9),
-                                        borderRadius: BorderRadius.circular(100),
-                                        border: Border.all(color: Colors.white)),
-                                  ))
-                            ],
-                          ),
-                        ),
-                        title: Align(
-                          alignment: Alignment(-1.5, 0),
-                          child: Text(
-                            'Add other Services',
-                            style: TextStyle(
+                            ),
+                            Text(
+                              'Add other Services',
+                              style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                 ),
-                          ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: screenSize(context).height * .1,
                 ),
                 SizedBox(
                   height: screenSize(context).height * .1,
@@ -390,6 +473,4 @@ class _CustomDrawerState extends State<CustomDrawer> {
       ),
     );
   }
-
-  
 }

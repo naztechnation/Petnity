@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/ui/payment/withdrawal_page.dart';
+import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,7 +20,8 @@ import '../widgets/modals.dart';
 import 'widgets/payment_box.dart';
 
 class PaymentPage extends StatelessWidget {
-  const PaymentPage({Key? key}) : super(key: key);
+  final bool mainPage;
+  const PaymentPage({Key? key, required this.mainPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +30,16 @@ class PaymentPage extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: Payment(),
+      child: Payment(mainPage: mainPage,),
     );
   }
 }
 
 class Payment extends StatefulWidget {
+  final bool mainPage;
+
   const Payment({
-    super.key,
+    super.key, required this.mainPage,
   });
 
   @override
@@ -75,6 +79,23 @@ class _PaymentState extends State<Payment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: (!widget.mainPage) ? screenSize(context) * 0 :screenSize(context) * .1,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: AppColors.lightBackground,
+            leading: backButton(context),
+            title: Text(
+              'Payments',
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+          ),
+        ),
+      ),
       body: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
             listener: (context, state) {
           if (state is CreateServiceNetworkErr) {
@@ -154,7 +175,7 @@ class _PaymentState extends State<Payment> {
                             ),
                           ),
                           CustomText(
-                            text: 'NGN ${AppUtils.convertPrice('$withdrawableAmount')} ',
+                            text: (withdrawableAmount != 'null') ?'NGN ${AppUtils.convertPrice('$withdrawableAmount')} ' : '0.00',
                             weight: FontWeight.bold,
                             color: AppColors.lightSecondary,
                             fontFamily: AppStrings.montserrat,

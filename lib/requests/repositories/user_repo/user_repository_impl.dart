@@ -4,6 +4,7 @@ import 'package:petnity/model/user_models/confirm_shop_payment.dart';
 import 'package:petnity/model/user_models/create_payment_order.dart';
 import 'package:petnity/model/user_models/faq.dart';
 import 'package:petnity/model/user_models/get_product_reviews.dart';
+import 'package:petnity/model/user_models/privacy_policy.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 import 'package:petnity/model/user_models/user_shopping_data.dart';
 
@@ -35,10 +36,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<GetServiceTypes> getServiceTypes([String? agentId]) async {
-    final map = await Requests().get((agentId == null)? AppStrings.getServiceTypes :
-     AppStrings.getIndividualAgentService(agentId), headers: {
-      'Authorization': AppStrings.token,
-    });
+    final map = await Requests().get(
+        (agentId == null)
+            ? AppStrings.getServiceTypes
+            : AppStrings.getIndividualAgentService(agentId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
     return GetServiceTypes.fromJson(map);
   }
 
@@ -136,7 +140,8 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<ShoppingList> agentShoppingList({required String agentId}) async {
-    final map = await Requests().get(AppStrings.getAgentsProducts(agentId: agentId), headers: {
+    final map = await Requests()
+        .get(AppStrings.getAgentsProducts(agentId: agentId), headers: {
       'Authorization': AppStrings.token,
     });
     return ShoppingList.fromJson(map);
@@ -196,43 +201,36 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<AuthData> sendReviews(
-      { 
-      required String url,
+      {required String url,
       required String comment,
       required String rating}) async {
-    final map = await Requests().post(
-        AppStrings.publishProductReview(
-            url: url),
-        body: {
-          "rating": rating,
-          "comment": comment,
-        },
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+    final map =
+        await Requests().post(AppStrings.publishProductReview(url: url), body: {
+      "rating": rating,
+      "comment": comment,
+    }, headers: {
+      'Authorization': AppStrings.token,
+    });
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<ServiceProvidersList> getAgentProfile()  async {
-    final map = await Requests()
-        .get(AppStrings.agentProfile, headers: {
+  Future<ServiceProvidersList> getAgentProfile() async {
+    final map = await Requests().get(AppStrings.agentProfile, headers: {
       'Authorization': AppStrings.token,
     });
     return ServiceProvidersList.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> uploadGallery({required String agentId, required String image}) async {
-    final map = await Requests().post(
-        AppStrings.uploadAgentGallery(
-            agentId: agentId),
-        body: {
-          "image": image,
-        },
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+  Future<AuthData> uploadGallery(
+      {required String agentId, required String image}) async {
+    final map = await Requests()
+        .post(AppStrings.uploadAgentGallery(agentId: agentId), body: {
+      "image": image,
+    }, headers: {
+      'Authorization': AppStrings.token,
+    });
     return AuthData.fromJson(map);
   }
 
@@ -244,28 +242,27 @@ class UserRepositoryImpl implements UserRepository {
     });
     return UserShopData.fromJson(map);
   }
-  
+
   @override
-  Future<UserProfile> getUserProfile({required String username}) async{
+  Future<UserProfile> getUserProfile({required String username}) async {
     final map = await Requests()
         .get(AppStrings.getUserProfile(username: username), headers: {
       'Authorization': AppStrings.token,
     });
     return UserProfile.fromJson(map);
   }
-  
+
   @override
-  Future<PetProfile> getUserPet({required String username}) async{
+  Future<PetProfile> getUserPet({required String username}) async {
     final map = await Requests()
         .get(AppStrings.getUserPets(username: username), headers: {
       'Authorization': AppStrings.token,
     });
     return PetProfile.fromJson(map);
   }
-  
-  
+
   @override
-  Future<PetProfileDetails> getUserPetDetails({required String petId}) async{
+  Future<PetProfileDetails> getUserPetDetails({required String petId}) async {
     final map = await Requests()
         .get(AppStrings.getUserPetDetails(petId: petId), headers: {
       'Authorization': AppStrings.token,
@@ -274,29 +271,40 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<FAQ> getFaq() async{
-    final map = await Requests()
-        .get(AppStrings.getFaq, headers: {
+  Future<FAQ> getFaq() async {
+    final map = await Requests().get(AppStrings.getFaq, headers: {
       'Authorization': AppStrings.token,
     });
     return FAQ.fromJson(map);
   }
-  
-  @override
-  Future<AuthData> updateNumber({required String username, required String email,required String number,}) async{
-    final map = await Requests()
-        .patch(AppStrings.updateNumber(username), headers: {
-      'Authorization': AppStrings.token,
-          "Content-type": "application/json"
 
-    },
-     body: {
-          "email": email,
-          "phone_number": number,
-        },
+  @override
+  Future<AuthData> updateNumber({
+    required String username,
+    required String email,
+    required String number,
+  }) async {
+    final map = await Requests().patch(
+      AppStrings.updateNumber(username),
+      headers: {
+        'Authorization': AppStrings.token,
+        "Content-type": "application/json"
+      },
+      body: {
+        "email": email,
+        "phone_number": number,
+      },
     );
     return AuthData.fromJson(map);
   }
- 
 
+  @override
+  Future<PrivacyPolicy> privacy(
+     )async {
+    final map = await Requests()
+        .get(AppStrings.privacy, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return PrivacyPolicy.fromJson(map);
+  }
 }
