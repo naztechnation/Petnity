@@ -269,6 +269,18 @@ class FaqLoaded extends UserStates {
   List<Object> get props => [faq];
 }
 
+class ChangeNumberLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ChangeNumberLoaded extends UserStates {
+  final AuthData number;
+  const ChangeNumberLoaded(this.number);
+  @override
+  List<Object> get props => [number];
+}
+
 class UserNetworkErr extends UserStates {
   final String? message;
   const UserNetworkErr(this.message);

@@ -287,6 +287,8 @@ class UserRepositoryImpl implements UserRepository {
     final map = await Requests()
         .patch(AppStrings.updateNumber(username), headers: {
       'Authorization': AppStrings.token,
+          "Content-type": "application/json"
+
     },
      body: {
           "email": email,

@@ -50,6 +50,10 @@ class _SupportScreenState extends State<SupportScreen> {
   getUserDetails() async {
     email = await StorageHandler.getUserEmail();
     phone = await StorageHandler.getUserPhone();
+
+    setState(() {
+      
+    });
   }
 
   @override

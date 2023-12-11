@@ -179,7 +179,7 @@ static String getUserPets(
       '${_baseUrl}get-faqs'; 
 
       static   String updateNumber(String username) =>
-      '${_baseUrl}/users/change-email-and-phone/$username'; 
+      '${_baseUrl}users/change-email-and-phone/$username'; 
        
  
 }

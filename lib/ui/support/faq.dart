@@ -86,7 +86,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
           Modals.showToast(state.message ?? '');
         }
       }, builder: (context, state) {
-        if (state is UserProfileLoading) {
+        if (state is FaqLoading) {
           return Scaffold(body: LoadingPage());
         }
 

@@ -96,7 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   });
             } else if (index == 2) {
               return TileWidget(
-                  title: 'Change number and Email',
+                  title: 'Change Number',
                   icon: Icon(Icons.change_circle),
                   onpressed: () {
                     Navigator.pushNamed(context, 'changeEmailandNumber');

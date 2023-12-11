@@ -597,7 +597,7 @@ class UserCubit extends Cubit<UserStates> {
 
   Future<void> getFaq() async {
     try {
-      emit(PetProfileLoading());
+      emit(FaqLoading());
 
       final faq = await userRepository.getFaq();
 
@@ -617,13 +617,13 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> updateAccount() async {
+  Future<void> updateNumber({required String username, required String email,required String phone,}) async {
     try {
-      emit(FaqLoading());
+      emit(ChangeNumberLoading());
 
-      final faq = await userRepository.getFaq();
+      final number = await userRepository.updateNumber(username: username, email: email, number: phone);
 
-      emit(FaqLoaded(faq));
+      emit(ChangeNumberLoaded(number));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {

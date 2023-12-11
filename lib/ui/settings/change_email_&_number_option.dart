@@ -20,6 +20,9 @@ class _ChangeEmailAndNumberState extends State<ChangeEmailAndNumber> {
   getUserDetails() async {
     email = await StorageHandler.getUserEmail();
     phone = await StorageHandler.getUserPhone();
+    setState(() {
+      
+    });
   }
 
   @override
