@@ -53,6 +53,7 @@ abstract class UserRepository {
     Future<FAQ> getFaq();
     Future<AuthData> updateNumber({required String username,required String email,required String number,}); 
     Future<PrivacyPolicy> privacy(); 
+    Future<AuthData> deleteUser({required String username}); 
 
 
 }

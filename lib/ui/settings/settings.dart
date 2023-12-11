@@ -1,34 +1,93 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
+import 'package:provider/provider.dart';
 
+import '../../blocs/user/user.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../res/app_images.dart';
+import '../../res/app_routes.dart';
 import '../../res/app_strings.dart';
 import '../auth/forgot_password.dart';
+import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 import 'add_account_details.dart';
 
-class SettingsScreen extends StatefulWidget {
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen();
+
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider<UserCubit>(
+      create: (BuildContext context) => UserCubit(
+          userRepository: UserRepositoryImpl(),
+          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+      child: Settings(),
+    );
+  }
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class Settings extends StatefulWidget {
+  @override
+  _SettingsState createState() => _SettingsState();
+}
+
+class _SettingsState extends State<Settings> {
   bool switchValue1 = false;
   bool switchValue2 = false;
   String userType = '';
 
+  late UserCubit _userCubit;
+
+  String username = '';
+
   getUserDetails() async {
     userType = await StorageHandler.getUserType();
+    username = await StorageHandler.getUserName();
+    _userCubit = context.read<UserCubit>();
+
     setState(() {});
   }
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await _auth.signOut();
+      AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
+    } catch (e) {
+      print("Error signing out: $e");
+    }
+  }
+
+
+void deleteAccount(BuildContext context) async {
+  try {
+    User? user = FirebaseAuth.instance.currentUser;
+    
+    if (user != null) {
+      await user.delete();
+      _signOut(context);
+
+      print("User account deleted successfully!");
+    } else {
+      print("No user signed in.");
+    }
+  } catch (e) {
+    print("Error deleting user account: $e");
+  }
+}
   @override
   void initState() {
     getUserDetails();
+
     super.initState();
   }
 
@@ -41,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           height: 40,
           child: Center(
             child: InkWell(
-              onTap: () => _showBottom(),
+              onTap: () => _showBottom(context),
               child: Text(
                 'Delete Account',
                 style:
@@ -175,7 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  _showBottom() {
+  _showBottom(BuildContext contxt) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -186,38 +245,77 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       builder: (context) {
-        return Container(
-          padding: EdgeInsets.all(20),
-          height: screenSize(context).height * .3,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Are you sure you want to delete?',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                ),
-                Container(
-                  width: screenSize(context).width * .4,
-                  child: Center(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, 'accountDeleted');
-                      },
-                      child: Text(
-                        'Yes, proceed',
-                        style: TextStyle(color: Colors.red),
-                      ),
+        return BlocProvider<UserCubit>(
+          lazy: false,
+          create: (_) => UserCubit(
+              userRepository: UserRepositoryImpl(),
+              viewModel: Provider.of<UserViewModel>(context, listen: false)),
+          child: BlocConsumer<UserCubit, UserStates>(listener: (contxt, state) {
+            if (state is DeleteUserLoaded) {
+              if (state.deleteUserData.status ?? false) {
+                Modals.showToast(state.deleteUserData.message ?? '');
+                deleteAccount(context,);
+              } else {
+                Modals.showToast('Account not deleted');
+              }
+            } else if (state is UserNetworkErrApiErr) {
+              Modals.showToast(state.message ?? '');
+            } else if (state is UserNetworkErr) {
+              Modals.showToast(state.message ?? '');
+            }
+          }, builder: (contxt, state) {
+            return Container(
+              padding: EdgeInsets.all(20),
+              height: screenSize(context).height * .3,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Are you sure you want to delete?',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ),
-                Container(
-                    width: screenSize(context).width * .8,
-                    child: ButtonView(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('No, go back')))
-              ]),
+                    if (state is DeleteUserLoading) ...[
+                      Align(
+                          child: ImageView.asset(
+                        AppImages.loading,
+                        height: 50,
+                      )),
+                    ] else ...[
+                      Column(
+                        children: [
+                          Container(
+                            width: screenSize(context).width * .4,
+                            child: Center(
+                              child: InkWell(
+                                onTap: () {
+                                  // Modals.showToast(username);
+
+                                  contxt.read<UserCubit>().deleteUserAccount(username);
+                                },
+                                child: Text(
+                                  'Yes, proceed',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                              width: screenSize(context).width * .8,
+                              child: ButtonView(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('No, go back')))
+                        ],
+                      ),
+                    ]
+                  ]),
+            );
+          }),
         );
       },
     );

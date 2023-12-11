@@ -294,6 +294,18 @@ class PrivacyLoaded extends UserStates {
   List<Object> get props => [privacyPolicy];
 }
 
+class DeleteUserLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class DeleteUserLoaded extends UserStates {
+  final AuthData deleteUserData;
+  const DeleteUserLoaded(this.deleteUserData);
+  @override
+  List<Object> get props => [deleteUserData];
+}
+
 class UserNetworkErr extends UserStates {
   final String? message;
   const UserNetworkErr(this.message);

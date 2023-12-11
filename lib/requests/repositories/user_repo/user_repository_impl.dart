@@ -307,4 +307,15 @@ class UserRepositoryImpl implements UserRepository {
     });
     return PrivacyPolicy.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> deleteUser({required String username}) async {
+    final map = await Requests()
+        .patch(AppStrings.deleteUser(username), headers: {
+      'Authorization': AppStrings.token,
+        "Content-type": "application/json"
+
+    });
+    return AuthData.fromJson(map);
+  }
 }

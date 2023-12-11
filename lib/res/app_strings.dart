@@ -188,4 +188,8 @@ class AppStrings {
 
    static String privacy =
       '${_baseUrl}get-privacy-policy';    
+    
+    static String deleteUser(String username) =>
+      '${_baseUrl}users/delete-user/$username'; 
+      
 }
