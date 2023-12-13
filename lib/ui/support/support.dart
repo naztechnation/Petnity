@@ -16,7 +16,6 @@ import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
 import 'live_support_chat.dart';
 
