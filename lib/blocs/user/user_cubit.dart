@@ -683,4 +683,48 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+    Future<void> reportAgent(String username) async {
+    try {
+      emit(DeleteUserLoading());
+
+      final user = await userRepository.deleteUser(username: username);
+
+      emit(DeleteUserLoaded(user));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+    Future<void> reportBug({required String username,required String title,required String description}) async {
+    try {
+      emit(ReportBugLoading());
+
+      final user = await userRepository.reportBug(username: username, title: title, description: description);
+
+      emit(ReportBugLoaded(user));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

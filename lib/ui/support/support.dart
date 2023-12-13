@@ -68,6 +68,8 @@ class _SupportScreenState extends State<SupportScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    
     return Scaffold(
       bottomNavigationBar: Container(
         color: Colors.white,
@@ -175,29 +177,7 @@ class _SupportScreenState extends State<SupportScreen> {
                       ],
                     )),
               ),
-              InkWell(
-                onTap: () => Navigator.pushNamed(context, 'reportIssue'),
-                child: Container(
-                  width: screenSize(context).width * .9,
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Icon(
-                          Icons.edit_document,
-                        ),
-                      ),
-                      Text('Report an issue'),
-                    ],
-                  ),
-                ),
-              ),
+              
               InkWell(
                 onTap: () => Navigator.pushNamed(context, 'reportBug'),
                 child: Container(
@@ -216,7 +196,7 @@ class _SupportScreenState extends State<SupportScreen> {
                           Icons.file_copy,
                         ),
                       ),
-                      Text('Report a bug'),
+                      Text('Report a bug/issue'),
                     ],
                   ),
                 ),
@@ -266,38 +246,40 @@ class _SupportScreenState extends State<SupportScreen> {
                   Modals.showToast(state.message ?? '');
                 }
               }, builder: (context, state) {
-                if (state is UserProfileLoading) {
-                  return Scaffold(body: LoadingPage());
+                if (state is FaqLoading) {
+                  return Align(child: ImageView.asset(AppImages.loading, height: 50,));
                 }
 
                 if (faqs.isNotEmpty) {
-                  ListView.builder(itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      height: screenSize(context).height * .28,
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.circle,
-                          size: 16,
-                          color: Colors.blue,
-                        ),
-                        trailing: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 18,
-                        ),
-                        title: Text(
-                          faqs[index].question ?? '',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        subtitle: Text(
-                          faqs[index].answer ?? '',
-                          style: TextStyle(fontSize: 14),
-                        ),
+                return  ListView.builder(
+                  itemCount: faqs.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.circle,
+                        size: 16,
+                        color: Colors.blue,
                       ),
-                    );
-                  });
+                      // trailing: Icon(
+                      //   Icons.arrow_forward_ios,
+                      //   size: 18,
+                      // ),
+                      title: Text(
+                        faqs[index].question ?? '',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      subtitle: Text(
+                        faqs[index].answer ?? '',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                    ),
+                  );
+                });
                 }
                 ;
 

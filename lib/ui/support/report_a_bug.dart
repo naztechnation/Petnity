@@ -48,6 +48,7 @@ class ReportBug extends StatelessWidget {
               controller: bug,
               fillColor: Colors.white,
               isDense: true,
+              maxLines: 5,
               borderRadius: 20,
               hintText: 'Type bug',
             ),

@@ -61,6 +61,7 @@ class ReportVendor extends StatelessWidget {
               controller: vendorName,
               fillColor: Colors.white,
               isDense: true,
+              maxLines: 5,
               borderRadius: 20,
               hintText: 'report problem',
             ),

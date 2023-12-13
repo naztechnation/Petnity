@@ -47,6 +47,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.lightBackground,

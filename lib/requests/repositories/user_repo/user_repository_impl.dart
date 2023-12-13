@@ -318,4 +318,29 @@ class UserRepositoryImpl implements UserRepository {
     });
     return AuthData.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> reportAgent({required String username, required String description, required String title}) async {
+    final map = await Requests()
+        .post(AppStrings.reportAgent(username), body: {
+      "title": title,
+      "description": description,
+    }, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return AuthData.fromJson(map);
+  }
+
+  
+  @override
+  Future<AuthData> reportBug({required String username, required String title, required String description}) async {
+    final map = await Requests()
+        .post(AppStrings.reportBug(username), body: {
+      "title": title,
+      "description": description,
+    }, headers: {
+      'Authorization': AppStrings.token,
+    });
+    return AuthData.fromJson(map);
+  }
 }
