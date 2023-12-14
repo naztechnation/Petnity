@@ -306,6 +306,30 @@ class DeleteUserLoaded extends UserStates {
   List<Object> get props => [deleteUserData];
 }
 
+class ReportBugLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ReportBugLoaded extends UserStates {
+  final AuthData reportBug;
+  const ReportBugLoaded(this.reportBug);
+  @override
+  List<Object> get props => [reportBug];
+}
+
+class ReportAgentLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class ReportAgentLoaded extends UserStates {
+  final AuthData reportAgent;
+  const ReportAgentLoaded(this.reportAgent);
+  @override
+  List<Object> get props => [reportAgent];
+}
+
 class UserNetworkErr extends UserStates {
   final String? message;
   const UserNetworkErr(this.message);

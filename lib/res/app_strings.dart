@@ -191,5 +191,13 @@ class AppStrings {
     
     static String deleteUser(String username) =>
       '${_baseUrl}users/delete-user/$username'; 
+
+      static String reportBug(String username) =>
+      '${_baseUrl}report-bug/$username'; 
+
+      static String reportAgent(String username) =>
+      '${_baseUrl}report-agent/$username/1'; 
+
+      
       
 }

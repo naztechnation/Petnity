@@ -47,6 +47,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.lightBackground,
@@ -91,7 +92,9 @@ class _FAQsScreenState extends State<FAQsScreen> {
         }
 
         if (faqs.isNotEmpty) {
-          return ListView.builder(itemBuilder: (context, index) {
+          return ListView.builder(
+            itemCount: faqs.length,
+            itemBuilder: (context, index) {
             return Container(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Column(
@@ -106,7 +109,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
                     height: 10,
                   ),
                   Container(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -127,7 +130,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Text(
                     'Answer',

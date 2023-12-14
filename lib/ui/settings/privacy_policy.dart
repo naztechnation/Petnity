@@ -83,7 +83,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           if (state.privacyPolicy.status ?? false) {
             privacy = state.privacyPolicy.privacyPolicy;
 
-            Modals.showToast(state.privacyPolicy.message ?? '');
+           // Modals.showToast(state.privacyPolicy.message ?? '');
           } else {
             Modals.showToast('Could not load data');
           }
@@ -97,11 +97,12 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
           return Scaffold(body: LoadingPage());
         }
 
-        return Container(
-          height: screenSize(context).height * .8,
-          padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-          child: Html(
-            data: privacy?.content ?? '',
+        return SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            child: Html(
+              data: privacy?.content ?? '',
+            ),
           ),
         );
       }),
