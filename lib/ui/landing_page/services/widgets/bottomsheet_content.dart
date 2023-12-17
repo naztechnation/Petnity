@@ -97,7 +97,7 @@ class _BottomSheetContentState extends State<BottomSheetContent> {
               child: DropdownView.form(
                   isExpanded: false,
                   labelText: '',
-                  borderColor: Theme.of(context).colorScheme.secondary,
+                  borderColor: AppColors.lightSecondary,
                   fillColor: Colors.white,
                   filled: true,
                   borderRadius: 15.0,

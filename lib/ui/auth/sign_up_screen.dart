@@ -417,6 +417,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       final firebaseAuth, BuildContext context, String imageUrl) async {
     if (_formKey.currentState!.validate()) {
      if(deviceId != ''){
+
+   
+
        await firebaseAuth.registerUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),

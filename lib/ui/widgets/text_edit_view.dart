@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:petnity/res/app_colors.dart';
 
 import '../../res/app_strings.dart';
 import 'custom_text.dart';
@@ -83,7 +84,7 @@ class TextEditView extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(
           colorScheme: ColorScheme.light(
-              primary: Theme.of(context).colorScheme.secondary)),
+              primary: AppColors.lightSecondary)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,14 +124,14 @@ class TextEditView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(
                         width: borderWidth,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: AppColors.lightSecondary,
                         style: BorderStyle.solid)),
                 focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(
                         width: borderWidth,
                         color: borderColor ??
-                            Theme.of(context).colorScheme.secondary,
+                            AppColors.lightSecondary,
                         style: BorderStyle.solid)),
                 errorBorder: _border(context),
                 disabledBorder: _border(context),

@@ -159,14 +159,14 @@ class ServiceProviderViewModel extends BaseViewModel {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 20,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: AppColors.lightSecondary,
                         fontWeight: FontWeight.bold)),
               ),
               ListTile(
                 leading: Icon(
                   Icons.photo_camera,
                   size: 35.0,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppColors.lightSecondary,
                 ),
                 title: const Text('Camera'),
                 onTap: () async {
@@ -194,7 +194,7 @@ class ServiceProviderViewModel extends BaseViewModel {
                 leading: Icon(
                   Icons.photo,
                   size: 35.0,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppColors.lightSecondary,
                 ),
                 title: const Text('Gallery'),
                 onTap: () async {

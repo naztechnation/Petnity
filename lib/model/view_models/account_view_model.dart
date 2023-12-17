@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import '../../handlers/location_handler.dart';
 import '../../handlers/secure_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../../res/app_colors.dart';
 import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
@@ -192,14 +193,14 @@ class AccountViewModel extends BaseViewModel {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 20,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: AppColors.lightSecondary,
                         fontWeight: FontWeight.bold)),
               ),
               ListTile(
                 leading: Icon(
                   Icons.photo_camera,
                   size: 35.0,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppColors.lightSecondary,
                 ),
                 title: const Text('Camera'),
                 onTap: () async {
@@ -218,7 +219,7 @@ class AccountViewModel extends BaseViewModel {
                 leading: Icon(
                   Icons.photo,
                   size: 35.0,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppColors.lightSecondary,
                 ),
                 title: const Text('Gallery'),
                 onTap: () async {

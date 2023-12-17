@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../res/app_colors.dart';
+
 
 
 class CustomMultiToggle extends StatefulWidget {
@@ -65,7 +67,7 @@ borderRadius: const BorderRadius.all(
         ),
         color: selected
                   ? (widget.selectedColor ??
-                      Theme.of(context).colorScheme.secondary)
+                      AppColors.lightSecondary)
                   : (widget.color ?? Theme.of(context).backgroundColor),
         child: Container(
             height: widget.height,
@@ -74,7 +76,7 @@ borderRadius: const BorderRadius.all(
             decoration: BoxDecoration(
               color: selected
                   ? (widget.selectedColor ??
-                      Theme.of(context).colorScheme.secondary)
+                      AppColors.lightSecondary)
                   : (widget.color ?? Theme.of(context).backgroundColor),
               borderRadius: const BorderRadius.all(
                 Radius.circular(30.0),
@@ -84,7 +86,7 @@ borderRadius: const BorderRadius.all(
                     width: 1.0,
                     color:  selected
                   ? 
-                      widget.selectedColor ?? Theme.of(context).colorScheme.secondary
+                      widget.selectedColor ?? AppColors.lightSecondary
                   : (widget.color ?? Theme.of(context).backgroundColor),
                     style: BorderStyle.solid)
             ),

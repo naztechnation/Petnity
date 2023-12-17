@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
+import '../../res/app_colors.dart';
 import '../../res/enum.dart';
 import '../service_provider_models/all_agent_orders.dart';
 import '../user_models/agent_services_lists.dart';
@@ -89,14 +90,14 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: AppColors.lightSecondary,
                         fontWeight: FontWeight.w700)),
               ),
               ListTile(
                 leading: Icon(
                   Icons.photo_camera,
                   size: 35.0,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppColors.lightSecondary,
                 ),
                 title: const Text('Camera'),
                 onTap: () async {
@@ -120,7 +121,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                 leading: Icon(
                   Icons.photo,
                   size: 35.0,
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: AppColors.lightSecondary,
                 ),
                 title: const Text('Gallery'),
                 onTap: () async {

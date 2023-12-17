@@ -287,9 +287,9 @@ class _ServiceProviderPetDeliveryHomeBodyState
                       },
                       config: NumberPaginatorUIConfig(
                         buttonSelectedForegroundColor:
-                            Theme.of(context).colorScheme.secondary,
+                            AppColors.lightSecondary,
                         buttonUnselectedForegroundColor:
-                            Theme.of(context).colorScheme.secondary,
+                            AppColors.lightSecondary,
                         buttonUnselectedBackgroundColor: AppColors.lightPrimary,
                         buttonSelectedBackgroundColor: AppColors.lightPrimary,
                       ),

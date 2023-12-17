@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../res/app_colors.dart';
+
 class MessageBubble extends StatefulWidget {
   final String message;
   final String author;
@@ -59,7 +61,7 @@ class _MessageBubbleState extends State<MessageBubble> {
         decoration: BoxDecoration(
             color: (isYourMessage
                 ? Theme.of(context).dividerColor.withOpacity(0.2)
-                : Theme.of(context).colorScheme.secondary.withOpacity(0.8)),
+                : AppColors.lightSecondary.withOpacity(0.8)),
             borderRadius: BorderRadius.circular(8)),
         child: ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 150),

@@ -63,15 +63,18 @@ class RegSuccessful extends StatelessWidget {
                         height: 10,
                       ),
                       Center(
-                        child: CustomText(
-                          textAlign: TextAlign.center,
-                          maxLines: 3,
-                          text:
-                        user.userType == UserType.user ?  'Your account has been successfully created,\nnow you are ready to get access to a slue \nof pets and pets services'   : 'Your account has been successfully created,\nnow you are ready to offer your services to users.',
-                          weight: FontWeight.w600,
-                          size: 13,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CustomText(
+                            textAlign: TextAlign.center,
+                            maxLines: 3,
+                            text:
+                          user.userType == UserType.user ?  'Your account has been successfully created,\nnow you are ready to get access to a slue \nof pets and pets services'   : 'Your account has been successfully created,\nnow you are ready to offer your services to users.',
+                            weight: FontWeight.w600,
+                            size: 13,
+                            fontFamily: AppStrings.interSans,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],

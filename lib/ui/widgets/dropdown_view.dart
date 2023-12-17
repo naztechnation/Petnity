@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../res/app_colors.dart';
 import '../../res/enum.dart';
 
 class DropdownView<T> extends StatelessWidget {
@@ -72,7 +73,7 @@ class DropdownView<T> extends StatelessWidget {
       return Theme(
         data: Theme.of(context).copyWith(
             colorScheme:  ColorScheme.light(
-                primary: Theme.of(context).colorScheme.secondary
+                primary: AppColors.lightSecondary
             )
         ),
         child: DropdownButtonFormField<T>(
@@ -87,13 +88,13 @@ class DropdownView<T> extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(width: borderWidth!,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: AppColors.lightSecondary,
                         style: BorderStyle.solid)
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(borderRadius),
                     borderSide: BorderSide(width: borderWidth!,
-                        color: borderColor ?? Theme.of(context).colorScheme.secondary,
+                        color: borderColor ?? AppColors.lightSecondary,
                         style: BorderStyle.solid)
                 ),
                 errorBorder: _border(context),

@@ -89,7 +89,6 @@ Future<void> main() async {
   _firebaseMessaging.getToken().then((token) async {
     await StorageHandler.saveFireBaseToken(token.toString());
 
-    Modals.showToast(token.toString());
   });
 
   

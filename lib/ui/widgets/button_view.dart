@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../res/app_colors.dart';
 import 'progress_indicator.dart';
 
 class ButtonView extends StatelessWidget {
@@ -47,7 +48,7 @@ class ButtonView extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             primary: disabled
                 ? Theme.of(context).backgroundColor
-                : (color ?? Theme.of(context).colorScheme.secondary),
+                : (color ?? AppColors.lightSecondary),
             padding: EdgeInsets.symmetric(vertical: 12),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
@@ -55,7 +56,7 @@ class ButtonView extends StatelessWidget {
                     color: disabled
                         ? Theme.of(context).textTheme.caption!.color!
                         : (borderColor ??
-                            Theme.of(context).colorScheme.secondary),
+                            AppColors.lightSecondary),
                     width: borderWidth)),
             textStyle: TextStyle(
               color: Theme.of(context).textTheme.bodyText1!.color,
@@ -73,7 +74,7 @@ class ButtonView extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               primary: disabled
                   ? Theme.of(context).backgroundColor
-                  : (color ?? Theme.of(context).colorScheme.secondary),
+                  : (color ?? AppColors.lightSecondary),
               padding: padding,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
@@ -81,7 +82,7 @@ class ButtonView extends StatelessWidget {
                       color: disabled
                           ? Theme.of(context).textTheme.caption!.color!
                           : (borderColor ??
-                              Theme.of(context).colorScheme.secondary),
+                              AppColors.lightSecondary),
                       width: borderWidth)),
               textStyle: TextStyle(
               fontSize: fontSize,
@@ -99,7 +100,7 @@ class ButtonView extends StatelessWidget {
             elevation: 0,
             primary: disabled
                 ? Theme.of(context).backgroundColor
-                : (color ?? Theme.of(context).colorScheme.secondary),
+                : (color ?? AppColors.lightSecondary),
             padding: padding,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
@@ -107,7 +108,7 @@ class ButtonView extends StatelessWidget {
                     color: disabled
                         ? Theme.of(context).textTheme.caption!.color!
                         : (borderColor ??
-                            Theme.of(context).colorScheme.secondary),
+                            AppColors.lightSecondary),
                     width: borderWidth)),
             textStyle: TextStyle(
               fontSize: fontSize,

@@ -45,7 +45,7 @@ class ProfileImage extends StatelessWidget {
             shape: BoxShape.circle,
             border: Border.all(
                 width: borderWidth,
-                color: borderColor ?? Theme.of(context).colorScheme.secondary),
+                color: borderColor ?? AppColors.lightSecondary),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(100.0),
