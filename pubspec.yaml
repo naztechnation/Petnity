@@ -44,6 +44,8 @@ dependencies:
   livechatt: ^1.4.0
   flutter_tawkto: ^0.0.2
   flutter_html: ^3.0.0-beta.2
+  firebase_messaging: ^14.7.9
+  flutter_local_notifications: ^16.2.0
   
     
 dev_dependencies:

@@ -103,7 +103,8 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                                 textAlign: TextAlign.start,
                                 maxLines: 2,
                                 text:
-                                    '${widget.agents!.city}, ${widget.agents!.country}',
+                                    '${widget.agents!.city}, ${widget.agents!.country}'.replaceAll('?', ''),
+     
                                 weight: FontWeight.w600,
                                 size: 16,
                                 color: Colors.black,
@@ -147,18 +148,31 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         const SizedBox(
                           height: 12,
                         ),
-                        CustomText(
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          text: widget.agents!.isVerified!
-                              ? 'Verified'
-                              : 'Not Verified',
-                          weight: FontWeight.w300,
-                          size: 11,
-                          fontFamily: AppStrings.interSans,
-                          color: widget.agents!.isVerified!
-                              ? Colors.green
-                              : Colors.red,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: ImageView.svg(
+                                AppImages.verified,
+                                color: widget.agents?.isVerified ?? false
+                          ? Colors.green : Colors.red,
+                              )),
+                              const SizedBox(width: 10,),
+                            CustomText(
+                              textAlign: TextAlign.start,
+                              maxLines: 2,
+                              text: widget.agents?.isVerified ?? false
+                                  ? 'Verified'
+                                  : 'Not Verified',
+                              weight: FontWeight.w300,
+                              size: 11,
+                              fontFamily: AppStrings.interSans,
+                              color: widget.agents!.isVerified!
+                                  ? Colors.green
+                                  : Colors.red,
+                            ),
+                          ],
                         ),
                         const SizedBox(
                           height: 12,
@@ -191,6 +205,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                     Expanded(
                       flex: 6,
                       child: ButtonView(
+                        color: AppColors.lightSecondary,
                         onPressed: () {
                           Provider.of<AccountViewModel>(context, listen: false)
                               .setAgentName(widget.agents!.name ?? '');

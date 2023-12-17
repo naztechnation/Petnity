@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
+import 'package:petnity/res/app_colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/location/location.dart';
@@ -79,6 +80,7 @@ class _LocationSearchState extends State<LocationSearch> {
                     Visibility(
                       visible: !showNextBtn,
                       child: ButtonView(
+                        color: AppColors.lightSecondary,
                           onPressed: () {
                             setState(() {
                               showNextBtn = true;
@@ -90,7 +92,7 @@ class _LocationSearchState extends State<LocationSearch> {
                           child: const Text('Use current location',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 12, fontWeight: FontWeight.w400))),
+                                  fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))),
                     ),
                   ],
                 ),
@@ -199,6 +201,7 @@ class _LocationSearchState extends State<LocationSearch> {
                 const SizedBox(height: 25.0),
                 if (showNextBtn)
                   ButtonView(
+                    color: AppColors.lightSecondary,
                       onPressed: () {
                         AppNavigator.pushAndStackPage(context,
                             page: ContactProvider());
@@ -208,7 +211,7 @@ class _LocationSearchState extends State<LocationSearch> {
                       child: const Text('Next',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w500))),
+                              fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
               ],
             ),
           );

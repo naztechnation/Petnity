@@ -247,6 +247,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 ),
                 ButtonView(
                   borderRadius: 30,
+                  color: AppColors.lightSecondary,
                   padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   onPressed: () {
                     if (isPetRegistered) {
@@ -258,7 +259,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           name: AppRoutes.kycScreenOne);
                     }
                   },
-                  child: Text((isPetRegistered) ? 'Shop now' : 'Begin now'),
+                  child: Text((isPetRegistered) ? 'Shop now' : 'Begin now', style: TextStyle(color: Colors.white),),
                   expanded: false,
                 ),
               ],

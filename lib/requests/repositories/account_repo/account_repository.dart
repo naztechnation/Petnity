@@ -14,6 +14,7 @@ abstract class AccountRepository {
       required String password,
       required String phone,
       required String url,
+      required String deviceId,
       required String firebaseId});
   Future<AuthData> sendPetHealth(
       {required String name,

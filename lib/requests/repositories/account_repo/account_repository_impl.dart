@@ -15,6 +15,7 @@ class AccountRepositoryImpl implements AccountRepository {
       required String username,
       required String url,
       required String firebaseId,
+      required String deviceId,
       required String profileImage,
       required String phone}) async {
     final map = await Requests().post(AppStrings.otpUrl(url), body: {
@@ -24,6 +25,7 @@ class AccountRepositoryImpl implements AccountRepository {
       "phone_number": phone,
       "firebase_id": firebaseId,
       "profile_image": profileImage,
+      "device_id": profileImage,
     });
     return AuthData.fromJson(map);
   }

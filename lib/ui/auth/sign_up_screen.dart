@@ -49,6 +49,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool isLoading = false;
 
+  String deviceId = '';
+
+  getDeviceId()async{
+    deviceId = await StorageHandler.getFirebaseToken();
+    setState(() {
+      
+    });
+  }
+
+  @override
+  void initState() {
+    getDeviceId();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
@@ -401,7 +416,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   _firebaseRegUser(
       final firebaseAuth, BuildContext context, String imageUrl) async {
     if (_formKey.currentState!.validate()) {
-      await firebaseAuth.registerUserWithEmailAndPassword(
+     if(deviceId != ''){
+       await firebaseAuth.registerUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
           username: _usernameController.text.trim());
@@ -409,6 +425,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (firebaseAuth.status == Status.authenticated) {
         _submit(context, imageUrl);
       }
+     }
     }
   }
 
@@ -421,7 +438,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           username: _usernameController.text.trim(),
           phoneNumber: _phoneController.text.trim(),
           email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
+          deviceId: deviceId,
+          password: _passwordController.text.trim(),);
       FocusScope.of(ctx).unfocus();
     }
   }

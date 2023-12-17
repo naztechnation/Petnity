@@ -138,11 +138,11 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                 child: Text(
-                  '${services[0]}',
-                  style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+                  '${user.selectedService}',
+                  style: TextStyle(color: AppColors.lightSecondary),
                 ),
                 expanded: false,
-                color: Theme.of(context).colorScheme.secondary.withOpacity(0.3),
+                color: AppColors.lightSecondary.withOpacity(0.3),
               ),
             ),
             const SizedBox(height: 20,),
@@ -219,6 +219,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 ),
 
            if (userType == 'user')   ButtonView(
+            color: AppColors.lightSecondary,
                   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
                   expanded: false,
                   borderRadius: 30,
@@ -232,7 +233,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                             agentName: widget.agents?.name ?? '',
                             agentId: widget.agents?.id.toString() ?? ''));
                   },
-                  child: Text('Add Review', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, ),),
+                  child: Text('Add Review', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),),
                 ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.end,

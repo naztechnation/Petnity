@@ -1,46 +1,42 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-
-
 class StorageHandler {
   static FlutterSecureStorage storage = const FlutterSecureStorage();
 
   static Future<void> saveUserName([String? username]) async {
-    if (username != null)
-      await storage.write(key: 'USER', value: username);
+    if (username != null) await storage.write(key: 'USER', value: username);
   }
+
   static Future<void> saveEmail([String? username]) async {
-    if (username != null)
-      await storage.write(key: 'EMAIL', value: username);
+    if (username != null) await storage.write(key: 'EMAIL', value: username);
   }
 
   static Future<void> saveUserPetState([String? petState]) async {
-    if (petState != null)
-      await storage.write(key: 'PETSTATE', value: petState);
+    if (petState != null) await storage.write(key: 'PETSTATE', value: petState);
   }
-   static Future<void> saveUserPicture([String? picture]) async {
-    if (picture != null)
-      await storage.write(key: 'DP', value: picture);
+
+  static Future<void> saveFireBaseToken([String? token]) async {
+    if (token != null) await storage.write(key: 'FIREBASETOKEN', value: token);
+  }
+
+  static Future<void> saveUserPicture([String? picture]) async {
+    if (picture != null) await storage.write(key: 'DP', value: picture);
   }
 
   static Future<void> saveUserPhone([String? phone]) async {
-    if (phone != null)
-      await storage.write(key: 'PHONE', value: phone);
+    if (phone != null) await storage.write(key: 'PHONE', value: phone);
   }
 
   static Future<void> saveUserId([String? userId]) async {
-    if (userId != null)
-      await storage.write(key: 'ID', value: userId);
+    if (userId != null) await storage.write(key: 'ID', value: userId);
   }
 
-   static Future<void> saveUserPassword([String? password]) async {
-    if (password != null)
-      await storage.write(key: 'PASSWORD', value: password);
+  static Future<void> saveUserPassword([String? password]) async {
+    if (password != null) await storage.write(key: 'PASSWORD', value: password);
   }
 
   static Future<void> saveOnboardState([String? onBoard]) async {
-    if (onBoard != null)
-      await storage.write(key: 'ONBOARD', value: onBoard);
+    if (onBoard != null) await storage.write(key: 'ONBOARD', value: onBoard);
   }
 
   static Future<void> saveIsLoggedIn([String? isLoggedIn]) async {
@@ -48,154 +44,160 @@ class StorageHandler {
       await storage.write(key: 'LOGGEDIN', value: isLoggedIn);
   }
 
-   static Future<void> saveIsUserType([String? isUserType]) async {
+  static Future<void> saveIsUserType([String? isUserType]) async {
     if (isUserType != null)
       await storage.write(key: 'USERTYPE', value: isUserType);
   }
 
-static Future<void> saveAgentId(String id) async {
-    
-      await storage.write(key: 'AGENT_ID', value: id);
+  static Future<void> saveAgentId(String id) async {
+    await storage.write(key: 'AGENT_ID', value: id);
   }
+
   static Future<String> getUserName() async {
-   String? value = await storage.read(key: 'USER');
+    String? value = await storage.read(key: 'USER');
     String? username;
     String? data = value;
     if (data != null) {
       username = data;
-    }else{
+    } else {
       username = '';
     }
     return username;
   }
 
+    static Future<String> getFirebaseToken() async {
+    String? value = await storage.read(key: 'FIREBASETOKEN');
+    String? token;
+    String? data = value;
+    if (data != null) {
+      token = data;
+    } else {
+      token = '';
+    }
+    return token;
+  }
+
   static Future<String> getUserPicture() async {
-   String? value = await storage.read(key: 'DP');
+    String? value = await storage.read(key: 'DP');
     String? dp;
     String? data = value;
     if (data != null) {
       dp = data;
-    }else{
+    } else {
       dp = '';
     }
     return dp;
   }
 
-   static Future<String> getUserEmail() async {
-   String? value = await storage.read(key: 'EMAIL');
+  static Future<String> getUserEmail() async {
+    String? value = await storage.read(key: 'EMAIL');
     String? email;
     String? data = value;
     if (data != null) {
       email = data;
-    }else{
+    } else {
       email = '';
     }
     return email;
   }
 
-   static Future<String> getUserPetState() async {
-   String? value = await storage.read(key: 'PETSTATE');
+  static Future<String> getUserPetState() async {
+    String? value = await storage.read(key: 'PETSTATE');
     String? userId;
     String? data = value;
     if (data != null) {
       userId = data;
-    }else{
+    } else {
       userId = '';
     }
     return userId;
   }
 
   static Future<String> getUserId() async {
-   String? value = await storage.read(key: 'ID');
+    String? value = await storage.read(key: 'ID');
     String? userId;
     String? data = value;
     if (data != null) {
       userId = data;
-    }else{
+    } else {
       userId = '';
     }
     return userId;
   }
 
   static Future<String> getUserPhone() async {
-   String? value = await storage.read(key: 'PHONE');
+    String? value = await storage.read(key: 'PHONE');
     String? userId;
     String? data = value;
     if (data != null) {
       userId = data;
-    }else{
+    } else {
       userId = '';
     }
     return userId;
   }
 
   static Future<String> getOnBoardState() async {
-   String? value = await storage.read(key: 'ONBOARD');
+    String? value = await storage.read(key: 'ONBOARD');
     String? onboard;
     String? data = value;
     if (data != null) {
       onboard = data;
-    }else{
+    } else {
       onboard = '';
     }
     return onboard;
   }
 
   static Future<String> getLoggedInState() async {
-   String? value = await storage.read(key: 'LOGGEDIN');
+    String? value = await storage.read(key: 'LOGGEDIN');
     String? loggedin;
     String? data = value;
     if (data != null) {
       loggedin = data;
-    }else{
+    } else {
       loggedin = '';
     }
     return loggedin;
   }
 
   static Future<String> getUserType() async {
-   String? value = await storage.read(key: 'USERTYPE');
+    String? value = await storage.read(key: 'USERTYPE');
     String? usertype;
     String? data = value;
     if (data != null) {
       usertype = data;
-    }else{
+    } else {
       usertype = '';
     }
     return usertype;
   }
 
-   static Future<String> getUserPassword() async {
-   String? value = await storage.read(key: 'PASSWORD');
+  static Future<String> getUserPassword() async {
+    String? value = await storage.read(key: 'PASSWORD');
     String? password;
     String? data = value;
     if (data != null) {
       password = data;
-    }else{
+    } else {
       password = '';
     }
     return password;
   }
 
-  
-
   static Future<String> getAgentId() async {
-   String? value = await storage.read(key: 'AGENT_ID');
+    String? value = await storage.read(key: 'AGENT_ID');
     String? id;
     String? data = value;
     if (data != null) {
       id = data;
-    }else{
+    } else {
       id = '';
     }
     return id;
   }
 
-  
-
   static Future<void> clearCache() async {
     await storage.deleteAll();
   }
-
-  
 }

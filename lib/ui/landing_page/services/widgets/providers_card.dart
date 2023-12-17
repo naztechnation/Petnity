@@ -95,56 +95,56 @@ class _ProvidersCardState extends State<ProvidersCard> {
                       ],
                     ),
                   ),
-                  subtitle: user.agents[widget.index].isVerified!
-                      ? Align(
-                          alignment: Alignment.topLeft,
-                          child: ImageView.svg(
-                            AppImages.verified,
-                            color: Colors.green,
-                          ))
-                      : SizedBox.shrink(),
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  subtitle:  Row(
                     children: [
-                      CustomText(
-                        textAlign: TextAlign.start,
-                        maxLines: 2,
-                        text: user.agents[widget.index].isVerified!
-                            ? 'Verified'
-                            : 'Not Verified',
-                        weight: FontWeight.w300,
-                        size: 11,
-                        fontFamily: AppStrings.interSans,
-                        color: user.agents[widget.index].isVerified!
-                            ? Colors.green
-                            : Colors.red,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      SizedBox(
-                        width: 130,
-                        child: Row(
-                          children: [
-                            ImageView.svg(AppImages.location),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Expanded(
-                              child: CustomText(
-                                textAlign: TextAlign.start,
-                                maxLines: 2,
-                                text: '${user.agents[widget.index].city}, ${user.agents[widget.index].country}.',
-                                weight: FontWeight.w300,
-                                size: 11,
-                                color: Colors.black,
+                      Align(
+                              alignment: Alignment.topLeft,
+                              child: ImageView.svg(
+                                AppImages.verified,
+                                color: user.agents[widget.index].isVerified!
+                          ? Colors.green : Colors.red,
+                              )),
+                              const SizedBox(width: 10,),
+                              Expanded(
+                                child: CustomText(
+                                                        textAlign: TextAlign.start,
+                                                        maxLines: 2,
+                                                        text: user.agents[widget.index].isVerified!
+                                                            ? 'Verified'
+                                                            : 'Not Verified',
+                                                        weight: FontWeight.w300,
+                                                        size: 11,
+                                                        fontFamily: AppStrings.interSans,
+                                                        color: user.agents[widget.index].isVerified!
+                                                            ? Colors.green
+                                                            : Colors.red,
+                                                      ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
+                  )
+                     ,
+                  trailing: SizedBox(
+                    width: 120,
+                  //  height: 130,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ImageView.svg(AppImages.location),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Expanded(
+                          child: CustomText(
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            text: '${user.agents[widget.index].city}, ${user.agents[widget.index].country}.',
+                            weight: FontWeight.w300,
+                            size: 11,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
