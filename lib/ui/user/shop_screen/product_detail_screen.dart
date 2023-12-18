@@ -229,7 +229,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             });
                           },
                           child: Text('Make payment',
-                              style: TextStyle(fontWeight: FontWeight.w300)),
+                              style: TextStyle(fontWeight: FontWeight.w300,  color: Colors.white)),
                         ),
                       ],
                     ),
@@ -370,13 +370,13 @@ class _ProductDetailState extends State<ProductDetail> {
                                   page: Ratings(
                                       ctxt: context,
                                       username: user.username,
-                                      agentName: _products?.name ?? '',
+                                      agentName: _products?.agent?.name ?? '',
                                       productId:
                                           _products?.id.toString() ?? ''));
                             },
                             child: Text(
                               'Add Review',
-                              style: TextStyle(fontWeight: FontWeight.w300),
+                              style: TextStyle(fontWeight: FontWeight.w300, color: Colors.white),
                             ),
                           ),
                       ],
