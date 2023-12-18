@@ -14,30 +14,30 @@ class NotificationIcon extends StatelessWidget {
       child: Stack(
         children: [
           icon,
-          Positioned(
-            right: 0.0,
-            top: 0.0,
-            child: Container(
-              padding: EdgeInsets.all(2.0),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blue,
-              ),
-              constraints: BoxConstraints(
-                minWidth: 16.0,
-                minHeight: 16.0,
-              ),
-              child: Text(
-                nun_of_notifications.toString(),
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
+          // Positioned(
+          //   right: 0.0,
+          //   top: 0.0,
+          //   child: Container(
+          //     padding: EdgeInsets.all(2.0),
+          //     decoration: BoxDecoration(
+          //       shape: BoxShape.circle,
+          //       color: Colors.blue,
+          //     ),
+          //     constraints: BoxConstraints(
+          //       minWidth: 16.0,
+          //       minHeight: 16.0,
+          //     ),
+          //     child: Text(
+          //       nun_of_notifications.toString(),
+          //       style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 12.0,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //       textAlign: TextAlign.center,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

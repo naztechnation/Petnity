@@ -286,7 +286,7 @@ class HomepageAppbar extends StatelessWidget {
             AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
           },
           child: NotificationIcon(
-              icon: ImageView.svg(AppImages.notificationIcon),
+              icon: ImageView.svg(AppImages.notificationIcon, color: AppColors.lightSecondary,height: 25,),
               nun_of_notifications: 5),
         ),
         const SizedBox(

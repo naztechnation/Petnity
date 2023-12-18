@@ -121,7 +121,7 @@ class _NotificationsState extends State<Notifications> {
                       ? LoadingPage()
                       : (notifications.isEmpty)
                           ? Container(
-                              height: 400,
+                              height: 200,
                               margin: const EdgeInsets.all(12),
                               child: Align(
                                   child: Card(

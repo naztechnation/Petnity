@@ -6,7 +6,6 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/service_povider_section/service_provider_home/service_provider_home.dart';
 import 'package:petnity/ui/notfications_pages/notifications_session.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:petnity/ui/widgets/notification_icon.dart';
 import 'package:provider/provider.dart';
 
