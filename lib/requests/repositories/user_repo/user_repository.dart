@@ -55,7 +55,7 @@ abstract class UserRepository {
     Future<PrivacyPolicy> privacy(); 
     Future<AuthData> deleteUser({required String username}); 
     Future<AuthData> reportBug({required String username, required String title, required String description, }); 
-    Future<AuthData> reportAgent({required String username, required String description, required String title, }); 
+    Future<AuthData> reportAgent({required String username, required String description, required String title,required String agentId, }); 
 
 
 }

@@ -4,6 +4,7 @@ import 'package:petnity/blocs/user/user.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
@@ -13,6 +14,7 @@ import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../utils/validator.dart';
+import '../../../support/report_a_vendor.dart';
 import '../../../widgets/custom_multi_toogle.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/modals.dart';
@@ -118,17 +120,37 @@ class _ProviderProfileState extends State<ProviderProfile> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: CustomText(
-                textAlign: TextAlign.start,
-                maxLines: 2,
-                text: 'Service',
-                weight: FontWeight.w700,
-                size: 16,
-                fontFamily: AppStrings.interSans,
-                color: Colors.black,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    textAlign: TextAlign.start,
+                    maxLines: 2,
+                    text: 'Service',
+                    weight: FontWeight.w700,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ),
+                InkWell(
+                  onTap: () => AppNavigator.pushAndStackPage(context, page: ReportVendor(widget.agents?.id.toString() ?? '')),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: CustomText(
+                      textAlign: TextAlign.start,
+                      maxLines: 2,
+                      text: 'Report ${widget.agents?.name ?? ''}',
+                      weight: FontWeight.w500,
+                      size: 13,
+                      fontFamily: AppStrings.interSans,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Align(
               alignment: Alignment.centerLeft,
@@ -344,10 +366,14 @@ class _ProviderProfileState extends State<ProviderProfile> {
               ),
               if (commentController.text.isEmpty)
                 Center(
-                  child: Text(
-                    'Report ${agentName.capitalizeFirstOfEach}',
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.w700),
+                  child: InkWell(
+                  onTap: () => AppNavigator.pushAndStackPage(context, page: ReportVendor(widget.agents?.id.toString() ?? '')),
+
+                    child: Text(
+                      'Report ${agentName.capitalizeFirstOfEach}',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ),
               const SizedBox(

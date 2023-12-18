@@ -101,7 +101,7 @@ class AppRoutes {
     liveSupport: (context) => LiveSupportPage(),
     reportBug: (context) => ReportBug(),
     reportIssue: (context) => ReportIssue(),
-    reportVendor: (context) => ReportVendor(),
+    reportVendor: (context) => ReportVendor(''),
     // productDetailScreen: (context) => ProductDetailScreen(),
   };
 
@@ -187,7 +187,7 @@ class AppRoutes {
         );
       case reportVendor:
         return MaterialPageRoute(
-          builder: (context) => ReportVendor(),
+          builder: (context) => ReportVendor(''),
         );
 
       case liveSupport:

@@ -200,29 +200,29 @@ class _SupportScreenState extends State<SupportScreen> {
                   ),
                 ),
               ),
-              InkWell(
-                onTap: () => Navigator.pushNamed(context, 'reportVendor'),
-                child: Container(
-                  width: screenSize(context).width * .9,
-                  padding: EdgeInsets.all(5),
-                  margin: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Icon(
-                          Icons.file_copy,
-                        ),
-                      ),
-                      Text('Report a vendor'),
-                    ],
-                  ),
-                ),
-              ),
+              // InkWell(
+              //   onTap: () => Navigator.pushNamed(context, 'reportVendor'),
+              //   child: Container(
+              //     width: screenSize(context).width * .9,
+              //     padding: EdgeInsets.all(5),
+              //     margin: EdgeInsets.all(5),
+              //     decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.circular(20),
+              //     ),
+              //     child: Row(
+              //       children: [
+              //         Padding(
+              //           padding: const EdgeInsets.all(15.0),
+              //           child: Icon(
+              //             Icons.file_copy,
+              //           ),
+              //         ),
+              //         Text('Report a vendor'),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 15,
               ),

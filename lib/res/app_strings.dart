@@ -195,8 +195,8 @@ class AppStrings {
       static String reportBug(String username) =>
       '${_baseUrl}report-bug/$username'; 
 
-      static String reportAgent(String username) =>
-      '${_baseUrl}report-agent/$username/1'; 
+      static String reportAgent(String username,  String agentId) =>
+      '${_baseUrl}report-agent/$username/$agentId'; 
 
       
       

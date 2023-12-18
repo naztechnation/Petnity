@@ -33,8 +33,9 @@ class ProductDetailScreen extends StatelessWidget {
   final String productId;
   final String amount;
   final String username;
+  final String agentId;
 
-  const ProductDetailScreen(this.productId, this.amount, this.username);
+  const ProductDetailScreen(this.productId, this.amount, this.username, this.agentId);
 
   @override
   Widget build(BuildContext context) {
@@ -106,13 +107,13 @@ class _ProductDetailState extends State<ProductDetail> {
         context: context,
         publicKey: AppStrings.flutterwaveApiKey,
         currency: 'NGN',
-        redirectUrl: 'https://petnity.com',
+        redirectUrl: 'https://lucacity.com',
         txRef: uuid.v1(),
         amount: totalAmount.toString(),
         customer: customer,
         paymentOptions: "card",
         customization: Customization(
-          title: "Petnity",
+          title: "Lucacity",
           logo: AppImages.logo,
         ),
         isTestMode: true);
@@ -528,10 +529,14 @@ class _ProductDetailState extends State<ProductDetail> {
               ),
               if (commentController.text.isEmpty)
                 Center(
-                  child: Text(
-                    'Report ${agentName.capitalizeFirstOfEach}',
-                    style: TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.w700),
+                  child: InkWell(
+                  // onTap: () => AppNavigator.pushAndStackPage(context, page: ReportVendor(widget.agentName?.id.toString() ?? '')),
+
+                    child: Text(
+                      'Report ${agentName.capitalizeFirstOfEach}',
+                      style: TextStyle(
+                          color: Colors.red, fontWeight: FontWeight.w700),
+                    ),
                   ),
                 ),
               const SizedBox(

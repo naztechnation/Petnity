@@ -320,9 +320,9 @@ class UserRepositoryImpl implements UserRepository {
   }
   
   @override
-  Future<AuthData> reportAgent({required String username, required String description, required String title}) async {
+  Future<AuthData> reportAgent({required String username, required String description, required String title,required String agentId}) async {
     final map = await Requests()
-        .post(AppStrings.reportAgent(username), body: {
+        .post(AppStrings.reportAgent(username, agentId), body: {
       "title": title,
       "description": description,
     }, headers: {

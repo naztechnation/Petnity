@@ -684,11 +684,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> reportAgent({required String username,required String title,required String description}) async {
+    Future<void> reportAgent({required String username,required String title,required String description, required String agentId}) async {
     try {
       emit(ReportAgentLoading());
 
-      final user = await userRepository.reportAgent(username: username, title: title, description: description);
+      final user = await userRepository.reportAgent(username: username, title: title, description: description, agentId: agentId);
 
       emit(ReportAgentLoaded(user));
     } on ApiException catch (e) {

@@ -20,7 +20,8 @@ import '../../utils/validator.dart';
 import '../widgets/back_button.dart';
 
 class ReportVendor extends StatelessWidget {
-  const ReportVendor();
+  final String agentId;
+  const ReportVendor(this.agentId);
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +29,24 @@ class ReportVendor extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: ReportVendorScreen(),
+      child: ReportVendorScreen(agentId: agentId,),
     );
   }
 }
 
 class ReportVendorScreen extends StatefulWidget {
+  final String agentId;
+
+  const ReportVendorScreen({super.key, required this.agentId});
+
+
   @override
   State<ReportVendorScreen> createState() => _ReportVendorScreenState();
 }
 
 class _ReportVendorScreenState extends State<ReportVendorScreen> {
+  
+
   final _formKey = GlobalKey<FormState>();
 
 final TextEditingController vendorName = TextEditingController();
@@ -93,11 +101,11 @@ final TextEditingController vendorName = TextEditingController();
                 _userCubit.reportAgent(
                   username: username,
                   title: vendorTitle.text,
-                  description: problem.text,
+                  description: problem.text, agentId: widget.agentId,
                 );
               }
             },
-            child: Text('Done'),
+            child: Text('Done', style: TextStyle(color: Colors.white),),
           ),
         ),
         resizeToAvoidBottomInset: true,
@@ -137,16 +145,16 @@ final TextEditingController vendorName = TextEditingController();
                     return Validator.validate(value, 'title');
                   },
                 ),
-                TextEditView(
-                  controller: vendorName,
-                  fillColor: Colors.white,
-                  isDense: true,
-                  borderRadius: 20,
-                  hintText: 'Input vendor\'s username',
-                  validator: (value) {
-                    return Validator.validate(value, 'vendor username');
-                  },
-                ),
+                // TextEditView(
+                //   controller: vendorName,
+                //   fillColor: Colors.white,
+                //   isDense: true,
+                //   borderRadius: 20,
+                //   hintText: 'Input vendor\'s username',
+                //   validator: (value) {
+                //     return Validator.validate(value, 'vendor username');
+                //   },
+                // ),
                 TextEditView(
                   controller: problem,
                   fillColor: Colors.white,
