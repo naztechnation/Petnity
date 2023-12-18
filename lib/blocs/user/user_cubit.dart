@@ -727,4 +727,26 @@ class UserCubit extends Cubit<UserStates> {
       }
     }
   }
+
+   Future<void> getNotification({required String username,}) async {
+    try {
+      emit(NotificatonsLoading());
+
+      final notification = await userRepository.getNotification(username: username, );
+
+      emit(NotificatonsLoaded(notification));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

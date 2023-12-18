@@ -4,6 +4,7 @@ import 'package:petnity/model/user_models/confirm_shop_payment.dart';
 import 'package:petnity/model/user_models/create_payment_order.dart';
 import 'package:petnity/model/user_models/faq.dart';
 import 'package:petnity/model/user_models/get_product_reviews.dart';
+import 'package:petnity/model/user_models/notifications.dart';
 import 'package:petnity/model/user_models/privacy_policy.dart';
 import 'package:petnity/model/user_models/products_detail.dart';
 import 'package:petnity/model/user_models/user_shopping_data.dart';
@@ -320,7 +321,8 @@ class UserRepositoryImpl implements UserRepository {
   }
   
   @override
-  Future<AuthData> reportAgent({required String username, required String description, required String title,required String agentId}) async {
+  Future<AuthData> reportAgent({required String username, 
+  required String description, required String title,required String agentId}) async {
     final map = await Requests()
         .post(AppStrings.reportAgent(username, agentId), body: {
       "title": title,
@@ -342,5 +344,14 @@ class UserRepositoryImpl implements UserRepository {
       'Authorization': AppStrings.token,
     });
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<Notifications> getNotification({required String username}) async {
+    final map = await Requests()
+        .get(AppStrings.getUserNotifications(username), headers: {
+      'Authorization': AppStrings.token,
+    });
+    return Notifications.fromJson(map);
   }
 }

@@ -75,7 +75,7 @@ void showFlutterNotification(RemoteMessage message) {
   }
 }
 
-// Create an instance of Flutter Local Notifications Plugin
+
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 Future<void> main() async {

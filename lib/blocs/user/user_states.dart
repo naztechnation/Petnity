@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:petnity/model/user_models/notifications.dart';
 import 'package:petnity/model/user_models/shopping_lists.dart';
 
 import '../../model/account_models/agents_packages.dart';
@@ -328,6 +329,18 @@ class ReportAgentLoaded extends UserStates {
   const ReportAgentLoaded(this.reportAgent);
   @override
   List<Object> get props => [reportAgent];
+}
+
+class NotificatonsLoading extends UserStates {
+  @override
+  List<Object> get props => [];
+}
+ 
+class NotificatonsLoaded extends UserStates {
+  final Notifications notifications;
+  const NotificatonsLoaded(this.notifications);
+  @override
+  List<Object> get props => [notifications];
 }
 
 class UserNetworkErr extends UserStates {

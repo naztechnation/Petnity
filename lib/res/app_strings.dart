@@ -197,6 +197,8 @@ class AppStrings {
 
       static String reportAgent(String username,  String agentId) =>
       '${_baseUrl}report-agent/$username/$agentId'; 
+static String getUserNotifications(String username,) =>
+      '${_baseUrl}notification/get-user-notifications/$username'; 
 
       
       

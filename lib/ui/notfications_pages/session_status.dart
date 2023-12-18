@@ -55,7 +55,7 @@ class SessionStatusScreen extends StatelessWidget {
             RequestsContent(
               isChat: false,
               isRequestAccepted: true,
-              dontShow: true,
+              dontShow: true, title: '', description: '',
             ),
             const SizedBox(
               height: 40,

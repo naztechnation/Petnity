@@ -9,6 +9,7 @@ import '../../../model/user_models/create_payment_order.dart';
 import '../../../model/user_models/faq.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_product_reviews.dart';
+import '../../../model/user_models/notifications.dart';
 import '../../../model/user_models/order_list.dart'; 
 import '../../../model/user_models/pet_profile_details.dart';
 import '../../../model/user_models/pets_profile.dart';
@@ -56,6 +57,7 @@ abstract class UserRepository {
     Future<AuthData> deleteUser({required String username}); 
     Future<AuthData> reportBug({required String username, required String title, required String description, }); 
     Future<AuthData> reportAgent({required String username, required String description, required String title,required String agentId, }); 
+    Future<Notifications> getNotification({required String username, }); 
 
 
 }
