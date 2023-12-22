@@ -225,7 +225,7 @@ class _customDrawerState extends State<customDrawer> {
                         AppNavigator.pushAndStackNamed(context,
                             name: AppRoutes.kycScreenOne);
                       },
-                      child: Text('Begin Registration', style: TextStyle(fontSize: 14),),
+                      child: Text('Begin Registration', style: TextStyle(fontSize: 14, color: Colors.white),),
                     ),
                   ),
             SizedBox(

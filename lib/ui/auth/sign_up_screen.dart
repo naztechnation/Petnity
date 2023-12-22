@@ -51,11 +51,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   String deviceId = '';
 
-  getDeviceId()async{
+  getDeviceId() async {
     deviceId = await StorageHandler.getFirebaseToken();
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -98,13 +96,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   AppNavigator.pushAndReplacePage(context,
                       page: OtpScreen(
                         email: _emailController.text,
-                        password: _passwordController.text,
-                        phone: _phoneController.text,
+                        
                         username: _usernameController.text,
                       ));
                   Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
-                      serviceProvider1.resetImage();
+                  serviceProvider1.resetImage();
                   StorageHandler.saveUserName(_usernameController.text.trim());
                 } else if (state.userData.message.username != null) {
                   Modals.showToast(state.userData.message.username[0] ?? '',
@@ -342,12 +339,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: ButtonView(
                         borderRadius: 30,
                         processing: (state is AccountProcessing ||
-                            firebaseAuth.status == Status.authenticating || isLoading),
+                            firebaseAuth.status == Status.authenticating ||
+                            isLoading),
                         onPressed: () async {
                           if (serviceProvider1.imageURl != null) {
                             if (_formKey.currentState!.validate()) {
                               RegistrationOptions(
-                                  context, user, serviceProvider, firebaseAuth, serviceProvider1);
+                                  context,
+                                  user,
+                                  serviceProvider,
+                                  firebaseAuth,
+                                  serviceProvider1);
                             }
                           } else {
                             Modals.showToast('please select an image first');
@@ -416,39 +418,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
   _firebaseRegUser(
       final firebaseAuth, BuildContext context, String imageUrl) async {
     if (_formKey.currentState!.validate()) {
-     if(deviceId != ''){
+      if (deviceId != '') {
+        await firebaseAuth.registerUserWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+            username: _usernameController.text.trim());
 
-   
-
-       await firebaseAuth.registerUserWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-          username: _usernameController.text.trim());
-
-      if (firebaseAuth.status == Status.authenticated) {
-        _submit(context, imageUrl);
+        if (firebaseAuth.status == Status.authenticated) {
+          _submit(context, imageUrl);
+        } else if (firebaseAuth.status == Status.authenticateError) {
+          Modals.showToast(firebaseAuth.message);
+        }
       }
-     }
     }
   }
 
   _submit(BuildContext ctx, imageUrl) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
-          url: AppStrings.registerUrl,
-          profileImage: imageUrl,
-          firebaseId: FirebaseAuth.instance.currentUser!.uid,
-          username: _usernameController.text.trim(),
-          phoneNumber: _phoneController.text.trim(),
-          email: _emailController.text.trim(),
-          deviceId: deviceId,
-          password: _passwordController.text.trim(),);
+            url: AppStrings.registerUrl,
+            profileImage: imageUrl,
+            firebaseId: FirebaseAuth.instance.currentUser!.uid,
+            username: _usernameController.text.trim(),
+            phoneNumber: _phoneController.text.trim(),
+            email: _emailController.text.trim(),
+            deviceId: deviceId,
+            password: _passwordController.text.trim(),
+          );
       FocusScope.of(ctx).unfocus();
     }
   }
 
-  RegistrationOptions(BuildContext context, final user, final serviceProvider,
-      final firebaseAuth,  final serviceProvider1,) {
+  RegistrationOptions(
+    BuildContext context,
+    final user,
+    final serviceProvider,
+    final firebaseAuth,
+    final serviceProvider1,
+  ) {
     return Modals.showBottomSheetModal(context,
         isDissmissible: true,
         heightFactor: 0.5,
@@ -507,7 +514,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       user.setUserType(UserType.user);
                       StorageHandler.saveUserName(
                           _usernameController.text.trim());
-              
+
                       setState(() {
                         isLoading = true;
                       });
@@ -517,7 +524,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       setState(() {
                         isLoading = false;
                       });
-              
+
                       _firebaseRegUser(firebaseAuth, context, imgUrl);
                     }, context),
                     const SizedBox(
@@ -529,9 +536,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     userTypes('Service Provider', () async {
                       Navigator.pop(context);
-              
+
                       user.setUserType(UserType.serviceProvider);
-              
+
                       setState(() {
                         isLoading = true;
                       });
@@ -541,7 +548,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       setState(() {
                         isLoading = false;
                       });
-              
+
                       _firebaseRegUser(firebaseAuth, context, imgUrl);
                     }, context),
                     const SizedBox(

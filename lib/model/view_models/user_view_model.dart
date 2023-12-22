@@ -18,6 +18,8 @@ class UserViewModel extends BaseViewModel {
   List<GalleryElements> _gallery = [];
   List<UserOrders> _ordersList = [];
 
+  String _petPicture = '';
+
   PetProfileDetails? _petProfile;
 
   UserOrderList? _userOrder;
@@ -35,12 +37,15 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+  Future<void> setPetPicture({required String petPicture}) async {
+    _petPicture = petPicture;
+    setViewState(ViewState.success);
+  }
+
   Future<void> setServicesList({required List<ServiceTypes> services}) async {
     _services = services;
     setViewState(ViewState.success);
   }
-
-   
 
   Future<void> setAgentDetails({required List<Agents> agents}) async {
     _agents = agents;
@@ -53,8 +58,8 @@ class UserViewModel extends BaseViewModel {
   }
 
   Future<void> clearPetDetails() async {
-   _petProfile = null;
-    
+    _petProfile = null;
+
     setViewState(ViewState.success);
   }
 
@@ -217,6 +222,7 @@ class UserViewModel extends BaseViewModel {
   List<Reviews> get reviews => _reviews;
   List<GalleryElements> get gallery => _gallery;
   bool get reviewStatus => _reviewStatus;
+  String get petPicture => _petPicture;
   bool get galleryStatus => _galleryStatus;
   PetProfileDetails? get petDetails => _petProfile;
   List<ServicesDetails> get servicesItems => servicesResults();
@@ -251,19 +257,14 @@ class UserViewModel extends BaseViewModel {
     return list;
   }
 
-
   List<UserOrders> onGoingServices() {
     List<UserOrders> list = [];
-
 
     for (var order in _ordersList) {
       if (order.isOngoing == true && order.isCompleted != true) {
         list.add(order);
       }
     }
-
-   
-
 
     return list;
   }
@@ -284,7 +285,10 @@ class UserViewModel extends BaseViewModel {
     List<UserOrders> list = [];
 
     for (var order in _ordersList) {
-      if (order.isPaid == true && order.isCompleted == true && order.agentMarkedDelivered == true && order.userMarkedDelivered == true) {
+      if (order.isPaid == true &&
+          order.isCompleted == true &&
+          order.agentMarkedDelivered == true &&
+          order.userMarkedDelivered == true) {
         list.add(order);
       }
     }
@@ -295,7 +299,7 @@ class UserViewModel extends BaseViewModel {
   List<Pets> servicesPets() {
     List<Pets> list = [];
 
-    for (var servicePets in _agents  ?? []) {
+    for (var servicePets in _agents ?? []) {
       list.addAll(servicePets.petTypes);
     }
 

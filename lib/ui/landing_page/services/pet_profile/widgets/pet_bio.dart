@@ -53,11 +53,11 @@ class PetBio extends StatelessWidget {
             children: [
               ListTile(
                 title: CustomText(
-                  text: '${petDetails.petDetails?.pet?.type?.name} Illness',
+                  text: '${petDetails.petDetails?.pet?.type?.name ?? 'None'} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('${petDetails.petDetails?.petHealthIssue?.name}'
+                subtitle: Text('${petDetails.petDetails?.petHealthIssue?.name ?? 'None'}'
                     .capitalizeFirstOfEach),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
@@ -68,7 +68,7 @@ class PetBio extends StatelessWidget {
                       weight: FontWeight.w700,
                     ),
                     subtitle: Text(
-                        '${petDetails.petDetails?.petHealthIssue?.drug}'
+                        '${petDetails.petDetails?.petHealthIssue?.drug ?? 'None'}'
                             .capitalizeFirstOfEach),
                   ),
                 ),
@@ -92,7 +92,7 @@ class PetBio extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        '${petDetails.petDetails?.petHealthIssue?.prescription}'
+                        '${petDetails.petDetails?.petHealthIssue?.prescription ?? 'None'}'
                             .capitalizeFirstOfEach)),
               ),
               const SizedBox(
@@ -100,11 +100,11 @@ class PetBio extends StatelessWidget {
               ),
               ListTile(
                 title: CustomText(
-                  text: '${petDetails.petDetails?.pet?.type?.name} Illness',
+                  text: '${petDetails.petDetails?.pet?.type?.name ?? 'None'} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('${petDetails.petDetails?.petAllergy?.name}'
+                subtitle: Text('${petDetails.petDetails?.petAllergy?.name ?? 'None'}'
                     .capitalizeFirstOfEach),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
@@ -114,7 +114,7 @@ class PetBio extends StatelessWidget {
                       fontFamily: AppStrings.interSans,
                       weight: FontWeight.w700,
                     ),
-                    subtitle: Text('${petDetails.petDetails?.petAllergy?.drug}'
+                    subtitle: Text('${petDetails.petDetails?.petAllergy?.drug ?? 'None'}'
                         .capitalizeFirstOfEach),
                   ),
                 ),
@@ -138,7 +138,7 @@ class PetBio extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        '${petDetails.petDetails?.petAllergy?.prescription}'
+                        '${petDetails.petDetails?.petAllergy?.prescription ?? 'None'}'
                             .capitalizeFirstOfEach)),
               ),
               const SizedBox(

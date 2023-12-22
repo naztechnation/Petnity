@@ -71,7 +71,7 @@ class UpdateSuccessfulScreen extends StatelessWidget {
                   horizontal: screenSize(context).width * .1),
               child: ButtonView(
                 onPressed: onPressed,
-                child: Text(buttonText),
+                child: Text(buttonText, style: TextStyle(color: Colors.white)),
               ),
             ),
           ],

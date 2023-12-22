@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/view_models/account_view_model.dart';
+import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_routes.dart';
 import '../../res/enum.dart';
@@ -269,12 +270,14 @@ class Page2 extends StatelessWidget {
 class HomepageAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserViewModel>(context, listen: true);
+
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
        title: Text(
-        'Lucacity',
+        'Lucacify',
         style: TextStyle(
             fontFamily: AppStrings.interSans,
             color: AppColors.lightSecondary,
@@ -290,25 +293,27 @@ class HomepageAppbar extends StatelessWidget {
               nun_of_notifications: 5),
         ),
         const SizedBox(
-          width: 20,
+          width: 10,
         ),
         GestureDetector(
-          child: ClipOval(
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: ImageView.network(
-                'https:',
-                width: 30.0,
-                height: 30.0,
-                scale: 1,
-                fit: BoxFit.cover,
-              ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(65),
+            child: ImageView.network(
+              user.petPicture,
+              width: 50.0,
+              height: 50.0,
+              scale: 1,
+              fit: BoxFit.cover,
+               placeholder: AppImages.person,
             ),
           ),
-          onTap: () => AppNavigator.pushAndStackPage(
-            context,
-            page: PetProfile(),
-          ),
+          onTap: () {
+          //    AppNavigator.pushAndStackPage(
+          //   context,
+          //   page: PetProfile(),
+          // );
+            Modals.showToast(user.petPicture);
+          }
         ),
         const SizedBox(
           width: 12,

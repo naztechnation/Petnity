@@ -96,11 +96,11 @@ class Pets {
 class Profile {
   int? id;
   String? firebaseId;
-  Null? deviceId;
+  String? deviceId;
   String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
+  String? address;
+  String? city;
+  String? country;
   String? profileImage;
   bool? isAgent;
   bool? isReachable;

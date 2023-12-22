@@ -91,7 +91,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                 CustomText(
                   textAlign: TextAlign.center,
                   maxLines: 2,
-                  text: 'Upload your ${petProfile.petType} \npicture ',
+                  text: 'Upload your ${petProfile.petType} \nPicture ',
                   weight: FontWeight.w700,
                   size: 28,
                   fontFamily: AppStrings.montserrat,

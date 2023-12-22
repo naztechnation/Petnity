@@ -47,7 +47,7 @@ class _SessionDurationState extends State<SessionDuration> {
               AppNavigator.pushAndStackPage(context,
                   page: ConsultationReview());
             },
-            child: Text('Finish up and Review')),
+            child: Text('Finish up and Review',style: TextStyle(color: Colors.white))),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),

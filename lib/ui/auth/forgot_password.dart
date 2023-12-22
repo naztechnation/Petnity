@@ -42,9 +42,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           viewModel: Provider.of<AccountViewModel>(context, listen: false)),
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
-          if (state is AccountLoaded) {
-            if (state.userData.status == true) {
-              Modals.showToast(state.userData.message ?? '',
+          if (state is AccountUpdated) {
+            if (state.user.status == true) {
+              Modals.showToast(state.user.message ?? '',
                   messageType: MessageType.success);
                // setToken.setToken(state.userData.token!);
 
@@ -54,7 +54,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                      
                   ));
             } else {
-              Modals.showToast(state.userData.message ?? '',
+              Modals.showToast(state.user.message ?? '',
                   messageType: MessageType.success);
             }
           } else if (state is AccountApiErr) {

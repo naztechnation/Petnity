@@ -7,6 +7,7 @@ class AppImages {
   
 
   static const appLogo = '${_baseUrl}app_logo.png';
+  static const appLogo1 = '${_baseUrl}app_logo1.png';
   static const splashIcon = '${_baseUrl}splash_logo.png';
   static const logo = '${_baseUrl}logo2.jpg';
   static const line = '${_baseUrl}line.png';

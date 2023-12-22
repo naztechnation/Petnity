@@ -45,7 +45,7 @@ class _ConsultationState extends State<Consultation> {
             onPressed: () {
               AppNavigator.pushAndStackPage(context, page: SessionDuration());
             },
-            child: Text('Select')),
+            child: Text('Select', style: TextStyle(color: Colors.white),)),
       ),
       body: Container(
         height: screenSize(context).height * .9,

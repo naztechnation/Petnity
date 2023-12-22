@@ -30,7 +30,7 @@ class RequestHandler{
       case 422:
         // throw AlreadyRegisteredException(handleApiError(map).first.msg);
       case 500:
-        throw NetworkException(response.reasonPhrase ?? 'Network error');
+        throw NetworkException('Network error');
       default:
         throw NetworkException('Network error');
     }

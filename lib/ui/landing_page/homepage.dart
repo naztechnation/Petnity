@@ -73,6 +73,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
       isLoading = true;
     });
     await _userCubit.getServiceTypes();
+
+   await _userCubit.getPetProfile(username);
     setState(() {
       isLoading = false;
     });
@@ -108,7 +110,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     if (state.services.status!) {
                       service = _userCubit.viewModel.services;
                     } else {}
-                  } else if (state is UserNetworkErrApiErr) {
+                  }
+                  
+                   else if (state is UserNetworkErrApiErr) {
                   } else if (state is UserNetworkErr) {}
                 },
                 builder: (context, state) => Container(
@@ -218,14 +222,13 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children: [
           Container(
             width: screenSize(context).width * .60,
-            height: screenSize(context).height * .22,
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 (isPetRegistered)
                     ? Text(
-                        'Shop quick and easy\nfor your pets',
+                        'Shop quick and easy\nfor your pets.',
                         maxLines: 3,
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -235,7 +238,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       )
                     : Text(
                         'Register pets to get full access to products \nand services.',
-                        maxLines: 3,
+                        maxLines: 5,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontWeight: FontWeight.w400,

@@ -22,6 +22,7 @@ import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
 import 'forgot_password.dart';
+import 'otp_screen.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -62,8 +63,6 @@ class SignInScreen extends StatelessWidget {
                   StorageHandler.saveUserPassword(_passwordController.text);
 
                   if (!state.userData.isAgent!) {
-
-                  
                     if (state.userData.profile?.hasPets ?? false) {
                       StorageHandler.saveUserPetState('true');
                     } else {
@@ -75,24 +74,25 @@ class SignInScreen extends StatelessWidget {
                     StorageHandler.saveUserPhone(
                         state.userData.profile?.phoneNumber.toString());
 
-                     StorageHandler.saveUserId(state.userData.profile?.user?.id.toString());
+                    StorageHandler.saveUserId(
+                        state.userData.profile?.user?.id.toString());
                     StorageHandler.saveUserName(
                         state.userData.profile?.user?.username.toString());
-                        StorageHandler.saveUserPicture(
+                    StorageHandler.saveUserPicture(
                         state.userData.profile?.profileImage.toString());
-
+ 
+                        user.setUserData(username:state.userData.profile?.user?.username.toString() ?? '');
                     loginUser(
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
-                        
                         isAgent: !state.userData.isAgent!);
                   } else {
                     StorageHandler.saveIsUserType('service_provider');
                     StorageHandler.saveAgentId(
                         state.userData.agent!.id.toString());
 
-                         if (state.userData.agent?.profile?.hasPets ?? false) {
+                    if (state.userData.agent?.profile?.hasPets ?? false) {
                       StorageHandler.saveUserPetState('true');
                     } else {
                       StorageHandler.saveUserPetState('');
@@ -102,26 +102,48 @@ class SignInScreen extends StatelessWidget {
                         state.userData.agent?.profile?.user?.email.toString());
                     StorageHandler.saveUserPhone(
                         state.userData.agent?.profile?.phoneNumber.toString());
-                        StorageHandler.saveUserPicture(
+                    StorageHandler.saveUserPicture(
                         state.userData.agent?.picture.toString());
-
 
                     StorageHandler.saveUserId(
                         state.userData.agent?.id.toString());
-                    StorageHandler.saveUserName(state.userData.agent?.profile?.user?.username.toString());
+                    StorageHandler.saveUserName(state
+                        .userData.agent?.profile?.user?.username
+                        .toString());
+
+                        user.setUserData(username:state
+                        .userData.agent?.profile?.user?.username
+                        .toString() ?? '');
+
 
                     loginUser(
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
-                        
                         isAgent: !state.userData.isAgent!);
                   }
                 } else {
-                  Modals.showToast(state.userData.message!,
+                  Modals.showToast(state.userData.message,
                       messageType: MessageType.error);
+                  if (state.userData.message == 'Profile is not verified') {
+                    resendCode(context);
+                  }
                 }
-              } else if (state is AccountApiErr) {
+              }else if (state is OTPResent) {
+                    if (state.user.status == true) {
+                      Modals.showToast(state.user.message ?? '',
+                          messageType: MessageType.success);
+                      AppNavigator.pushAndReplacePage(context,
+                      page: OtpScreen(
+                        email: _usernameController.text,
+                        
+                        username: _usernameController.text,
+                      ));
+                    } else {
+                      Modals.showToast(state.user.message ?? '',
+                          messageType: MessageType.success);
+                    }
+                  } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
                       messageType: MessageType.error);
@@ -212,16 +234,21 @@ class SignInScreen extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                      GestureDetector(
-                        onTap: () {
-                          AppNavigator.pushAndStackPage(context, page: ForgotPasswordScreen());
-                        },
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text('Forgot Password?', style:
-                                        TextStyle(color: AppColors.lightSecondary, fontWeight: FontWeight.w600),),
+                    GestureDetector(
+                      onTap: () {
+                        AppNavigator.pushAndStackPage(context,
+                            page: ForgotPasswordScreen());
+                      },
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              color: AppColors.lightSecondary,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
+                    ),
                     // SizedBox(
                     //   height: 35,
                     // ),
@@ -246,14 +273,14 @@ class SignInScreen extends StatelessWidget {
                     // SizedBox(
                     //   height: 30,
                     // ),
-                    
-                  
+
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 0.0, horizontal: 0),
                       child: ButtonView(
                         processing: (state is AccountLoading ||
-                            firebaseUser.status == Status.authenticating),
+                            firebaseUser.status == Status.authenticating ||
+                            state is AccountProcessing),
                         onPressed: () {
                           _submit(context);
                         },
@@ -349,6 +376,15 @@ class SignInScreen extends StatelessWidget {
         AppNavigator.pushAndReplaceName(context,
             name: AppRoutes.serviceProviderLandingPage);
       }
+    }
+  }
+
+  resendCode(BuildContext ctx) {
+    if (_formKey.currentState!.validate()) {
+      ctx.read<AccountCubit>().resendCode(
+            username: AppStrings.resendCodeUrl(_usernameController.text),
+          );
+      FocusScope.of(ctx).unfocus();
     }
   }
 }

@@ -48,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen>
       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } else if (userType != '') {
       if (userType == 'user') {
-        // AppNavigator.pushAndStackPage(context, page: MyTestChat());
         AppNavigator.pushAndReplaceName(context, name: AppRoutes.landingPage);
       } else if (userType == 'service_provider') {
         AppNavigator.pushAndReplaceName(context,

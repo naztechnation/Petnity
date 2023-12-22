@@ -74,10 +74,10 @@ class AccountPinChanged extends AccountStates {
 }
 
 class OTPResent extends AccountStates {
-  final String message;
-  const OTPResent(this.message);
+  final AuthData user;
+  const OTPResent(this.user);
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [user];
 }
 
 

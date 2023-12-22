@@ -62,7 +62,7 @@ class AccountCubit extends Cubit<AccountStates> {
       );
 
       await viewModel.setUserData(username: username);
-      emit(AccountLoaded(user));
+      emit(OTPResent(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
     } catch (e) {
@@ -345,7 +345,7 @@ class AccountCubit extends Cubit<AccountStates> {
         email: email,
       );
 
-      emit(AccountLoaded(user));
+      emit(AccountUpdated(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));
     } catch (e) {

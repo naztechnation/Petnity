@@ -107,13 +107,13 @@ class _ProductDetailState extends State<ProductDetail> {
         context: context,
         publicKey: AppStrings.flutterwaveApiKey,
         currency: 'NGN',
-        redirectUrl: 'https://lucacity.com',
+        redirectUrl: 'https://lucacify.com',
         txRef: uuid.v1(),
         amount: totalAmount.toString(),
         customer: customer,
         paymentOptions: "card",
         customization: Customization(
-          title: "Lucacity",
+          title: "Lucacify",
           logo: AppImages.logo,
         ),
         isTestMode: true);

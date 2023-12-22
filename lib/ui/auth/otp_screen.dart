@@ -18,11 +18,10 @@ import '../widgets/pin_code_view.dart';
 
 class OtpScreen extends StatefulWidget {
   final String? email;
-  final String? password;
   final String? username;
-  final String? phone;
+  
   const OtpScreen(
-      {super.key, this.email, this.password, this.username, this.phone});
+      {super.key, this.email, this.username, });
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -68,8 +67,8 @@ class _OtpScreenState extends State<OtpScreen> {
               Modals.showToast(state.user.message!,
                 messageType: MessageType.success);
             }
-          } else if (state is AccountLoaded) {
-            Modals.showToast(state.userData.message!,
+          } else if (state is OTPResent) {
+            Modals.showToast(state.user.message!,
                 messageType: MessageType.success);
 
             isCountdownComplete = false;

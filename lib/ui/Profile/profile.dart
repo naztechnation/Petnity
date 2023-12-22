@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(30),
                             child: ImageView.network(
-                              userProfile?.petHealthIssue?[0].pet?.picture,
+                              userProfile?.profile?.profileImage ?? '',
                               //userProfile?.profile?.profileImage,
                               fit: BoxFit.cover,
                             )),
@@ -139,14 +139,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Pet name: ${userProfile?.petHealthIssue?[0].pet?.name}'.capitalizeFirstOfEach,
+                              'Pet name: ${userProfile?.pet?.name ?? 'Nill'}'.capitalizeFirstOfEach,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: AppStrings.interSans),
                             ),
                             Text(
-                              'Pet Gender: ${userProfile?.petHealthIssue?[0].pet?.gender}'.capitalizeFirstOfEach,
+                              'Pet Gender: ${userProfile?.pet?.gender ?? 'Nill'}'.capitalizeFirstOfEach,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w600,
@@ -176,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${userProfile?.profile?.user?.username}'.capitalizeFirstOfEach,
+                                    '${userProfile?.profile?.user?.username }'.capitalizeFirstOfEach,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w800,
@@ -213,18 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          userProfile?.petHealthIssue?[0].pet?.about ?? '',
-                          textAlign: TextAlign.justify,
-                          style: TextStyle(
-                              fontSize: 14.0, fontFamily: AppStrings.interSans),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                     
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 10, vertical: 0),
@@ -233,299 +222,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${userProfile?.petHealthIssue?[0].pet?.type?.name} bio'.capitalizeFirstOfEach,
+                              'Your bio'.capitalizeFirstOfEach,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 10,
                             ),
                             Container(
+                        width: screenSize(context).width,
+                        height: 200,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 30),
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.blue),
                                   color: Color(0xff8DADFF).withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(30)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Health Issues',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text('${(userProfile?.petHealthIssue?[0].pet?.hasHealthIssues ?? false) ? 'Yes' : 'None'}'.capitalizeFirstOfEach,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 13))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Size',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Text(userProfile?.petHealthIssue?[0].pet?.size ?? '',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 13))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Breed',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily:
-                                                    AppStrings.interSans,
-                                                fontSize: 14),
-                                          ),
-                                          Text(userProfile?.petHealthIssue?[0].pet?.breed ?? '',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      AppStrings.interSans,
-                                                  fontSize: 13))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Weight',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily:
-                                                    AppStrings.interSans,
-                                                fontSize: 14),
-                                          ),
-                                          Text('Nil',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      AppStrings.interSans,
-                                                  fontSize: 13))
-                                        ],
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
+                              child: Text(
+                          userProfile?.pet?.about ?? '',
+                          textAlign: TextAlign.justify,
+                          maxLines: 5,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14.0, fontFamily: AppStrings.interSans),
+                        ),
                             ),
                           ],
                         ),
                       ),
+                      
+                      
                       SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                        width: screenSize(context).width,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Health Status',
-                                style: TextStyle(
-                                    fontFamily: AppStrings.interSans,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14)),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 30),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.green),
-                                  color: Color(0xFF96FF8D).withOpacity(0.1),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Dog Illness',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  fontFamily:
-                                                      AppStrings.interSans,
-                                                  fontSize: 14)),
-                                          Text(userProfile?.petHealthIssue?[0].name.toString().capitalizeFirstOfEach ?? 'None',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      AppStrings.interSans,
-                                                  fontSize: 13))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Medication',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily:
-                                                    AppStrings.interSans,
-                                                fontSize: 14),
-                                          ),
-                                          Text(userProfile?.petHealthIssue?[0].drug.toString().capitalizeFirstOfEach ?? 'None',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      AppStrings.montserrat,
-                                                  fontSize: 13))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                   Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Prescription',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily:
-                                                    AppStrings.interSans,
-                                                fontSize: 14),
-                                          ),
-                                          Align(
-                                    alignment: Alignment.centerLeft,
-                                     child: Text(
-                                              userProfile?.petHealthIssue?[0].prescription.toString().capitalizeFirstOfEach ?? 'None',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                fontFamily: AppStrings.interSans,
-                                              ),
-                                            ),
-                                   ),
-                                        ],
-                                      ),
-                                   
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                 Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text('Dog Allergies',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  fontFamily:
-                                                      AppStrings.interSans,
-                                                  fontSize: 14)),
-                                          Text(userProfile?.petAllergy?[0].name.toString().capitalizeFirstOfEach ?? 'None',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      AppStrings.interSans,
-                                                  fontSize: 13))
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Medication',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily:
-                                                    AppStrings.interSans,
-                                                fontSize: 14),
-                                          ),
-                                          Text(userProfile?.petAllergy?[0].drug.toString().capitalizeFirstOfEach ?? 'None',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontFamily:
-                                                      AppStrings.montserrat,
-                                                  fontSize: 13))
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                   Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Prescription',
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700,
-                                                fontFamily:
-                                                    AppStrings.interSans,
-                                                fontSize: 14),
-                                          ),
-                                          Align(
-                                    alignment: Alignment.centerLeft,
-                                     child: Text(
-                                              userProfile?.petAllergy?[0].prescription.toString().capitalizeFirstOfEach ?? 'None',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                                fontFamily: AppStrings.interSans,
-                                              ),
-                                            ),
-                                   ),
-                                        ],
-                                      ),
-                                   
-                                 
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
+                        height: 35,
                       ),
                       // Container(
                       //   padding:

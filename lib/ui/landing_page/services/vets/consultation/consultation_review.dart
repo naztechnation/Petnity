@@ -61,7 +61,7 @@ class ConsultationReview extends StatelessWidget {
                 ),
               );
             },
-            child: Text('Make Payment')),
+            child: Text('Make Payment', style: TextStyle(color: Colors.white))),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
