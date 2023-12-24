@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:petnity/ui/landing_page/services/widgets/contact_bottom.dart';
+import 'package:intl/intl.dart'; 
 import 'package:provider/provider.dart';
 
 import '../../../model/view_models/account_view_model.dart';

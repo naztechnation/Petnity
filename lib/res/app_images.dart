@@ -44,6 +44,9 @@ class AppImages {
   static const dogg = '${_baseUrl}dog.png';
   static const dogPet = '${_baseUrl}pet1.jpg';
   static const checkmark = '${_baseUrl}checkmark.png';
+  static const consult = '${_baseUrl}consult.png';
+  static const prescribe = '${_baseUrl}prescribe.png';
+  static const treat = '${_baseUrl}treat.png';
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';

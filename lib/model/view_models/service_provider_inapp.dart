@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import '../../res/app_colors.dart';
 import '../../res/enum.dart';
+import '../../ui/widgets/modals.dart';
 import '../service_provider_models/all_agent_orders.dart';
 import '../user_models/agent_services_lists.dart';
 import 'base_viewmodel.dart';
@@ -24,8 +25,80 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
 
   List<AgentServicesListOrders> _availableServices = [];
 
+  final List<int> _serviceSelectedIndexes = [];
+  final List<int> _contactSelectedIndexes = [];
+  String _amountController = '';
+
+  final List<String> _servicesType = [];
+  final List<int> _servicesIndex = [];
+
+  final List<String> _contactType = [];
+  final List<int> _contactIndex = [];
 
   List<String> filterBankList = [];
+
+  addServiceType(int index, var item, var image) {
+  if (_servicesType.length > 3) {
+    _serviceSelectedIndexes.clear();
+    _servicesType.clear();
+    _servicesIndex.clear();
+
+     
+
+
+  } else {
+    String serviceKey = '${item[index]}-${image[index]}';
+
+    if (_serviceSelectedIndexes.contains(index)) {
+      _serviceSelectedIndexes.remove(index);
+
+      _servicesType.remove(serviceKey);
+
+      _servicesIndex.remove(index + 1);
+    } else {
+      _serviceSelectedIndexes.add(index);
+
+      _servicesType.add(serviceKey);
+      _servicesIndex.add(index + 1);
+    }
+  }
+  setViewState(ViewState.success);
+}
+
+addContactType(int index, var item, var image) {
+  if (contactType.length > 3) {
+    _contactSelectedIndexes.clear();
+    _contactType.clear();
+    _contactIndex.clear();
+
+     
+
+
+  } else {
+    String contactKey = '${item[index]}-${image[index]}';
+
+    if (_contactSelectedIndexes.contains(index)) {
+      _contactSelectedIndexes.remove(index);
+
+      _contactType.remove(contactKey);
+
+      _contactIndex.remove(index + 1);
+    } else {
+      _contactSelectedIndexes.add(index);
+
+      _contactType.add(contactKey);
+      _contactIndex.add(index + 1);
+    }
+  }
+  setViewState(ViewState.success);
+}
+
+
+  updateAmountController(String amount) {
+    _amountController = amount;
+
+    setViewState(ViewState.success);
+  }
 
   resetBankList() {
     filterBankList = _banksAndInstitutions;
@@ -33,7 +106,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-   resetImage() {
+  resetImage() {
     _imageURl1 = null;
     _imageURl = null;
 
@@ -174,6 +247,16 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   File? get imageURl => _imageURl;
   File? get imageURl1 => _imageURl1;
 
+  List<String> get servicesType => _servicesType;
+  List<int> get servicesIndex => _servicesIndex;
+  List<int> get serviceSelectedIndexes => _serviceSelectedIndexes;
+
+   List<String> get contactType => _contactType;
+  List<int> get contactIndex => _contactIndex;
+  List<int> get contactSelectedIndexes => _contactSelectedIndexes;
+
+  String get amountController => _amountController;
+
   List<ShopOrders> get order => _orders;
   List<AgentServicesListOrders> get availableServices => _availableServices;
 
@@ -242,17 +325,12 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   List<AgentServicesListOrders> onGoingServices() {
     List<AgentServicesListOrders> list = [];
 
-
     for (var order in _availableServices) {
       if (order.isOngoing == true && order.isCompleted != true) {
         list.add(order);
       }
     }
 
-   
-
-
     return list;
   }
-
 }

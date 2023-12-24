@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/model/view_models/user_view_model.dart';
-import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +13,7 @@ import '../../../model/view_models/account_view_model.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../service_povider_section/create_package/select_level_amount.dart';
 import '../../widgets/modals.dart';
+import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {
   final List<ServicesDetails> services;
@@ -49,10 +49,21 @@ class ServicesList extends StatelessWidget {
                     return Item(context, randomColor, '${masterItem.name}',
                         '${masterItem.image}', () {
                       agent.setServiceId('${user.services[index].id}');
-                      AppNavigator.pushAndReplacePage(context,
+
+                      if(masterItem.name == 'Vets'){
+
+                        AppNavigator.pushAndReplacePage(context,
+                          page: VetService(
+                              ));
+
+                      }else{
+                         AppNavigator.pushAndReplacePage(context,
                           page: SelectPackageLevelAmount(
                               serviceType: '${user.services[index].name}',
                               serviceId: '${user.services[index].id}'));
+                      }
+                      
+                     
                     }, true);
                   } else {
                     return Item(context, Colors.grey.shade50,

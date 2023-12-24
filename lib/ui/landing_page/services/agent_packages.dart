@@ -138,7 +138,7 @@ class _PackagesState extends State<PackagePage> {
                         expanded: false,
                         borderRadius: 30,
                         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                        child: Text('Return'))
+                        child: Text('Return', style: TextStyle(color: Colors.white),))
                       ],
                     ),
                   ),

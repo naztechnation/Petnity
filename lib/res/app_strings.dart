@@ -200,6 +200,7 @@ class AppStrings {
 static String getUserNotifications(String username,) =>
       '${_baseUrl}notification/get-user-notifications/$username'; 
 
-      
-      
+  static String createVetService(String agentId, String vt) =>
+      '${_baseUrl}services/create-vet-service/7/3/'; 
+    
 }

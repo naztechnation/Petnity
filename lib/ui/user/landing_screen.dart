@@ -164,7 +164,6 @@ class _LandingScreenState extends State<LandingScreen> {
                     child: _widgetOptions.elementAt(user.selectedIndex),
                   ),
                   bottomNavigationBar: SizedBox(
-                    height: 88,
                     child: BottomNavigationBar(
                       type: BottomNavigationBarType.fixed,
                       items: const <BottomNavigationBarItem>[
@@ -308,11 +307,11 @@ class HomepageAppbar extends StatelessWidget {
             ),
           ),
           onTap: () {
-          //    AppNavigator.pushAndStackPage(
-          //   context,
-          //   page: PetProfile(),
-          // );
-            Modals.showToast(user.petPicture);
+             AppNavigator.pushAndStackPage(
+            context,
+            page: PetProfile(),
+          );
+           // Modals.showToast(user.petPicture);
           }
         ),
         const SizedBox(
