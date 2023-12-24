@@ -5,6 +5,7 @@ import '../../model/service_provider_models/account_details.dart';
 import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/service_provider_models/create_shop_products_model.dart';
+import '../../model/service_provider_models/create_vet_services.dart';
 import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
@@ -200,6 +201,30 @@ class  AgentBalanceLoaded extends ServiceProviderState {
   const  AgentBalanceLoaded(this.balance);
   @override
   List<Object> get props => [balance];
+}
+
+  class   CreateServicesLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  CreateServicesLoaded extends ServiceProviderState {
+  final CreateVetServices data;
+  const  CreateServicesLoaded(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
+  class   PublishServicesLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  PublishServicesLoaded extends ServiceProviderState {
+  final AuthData data;
+  const  PublishServicesLoaded(this.data);
+  @override
+  List<Object> get props => [data];
 }
 
 class CreateServiceNetworkErr extends ServiceProviderState {

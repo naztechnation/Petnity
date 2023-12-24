@@ -517,4 +517,63 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+   Future<void> createAgentServices({
+    required String agentId,
+    required String serviceId,
+    required String amount,
+    required var contactMedium,
+    required var sessionType,
+  }) async {
+    try {
+      emit(CreateServicesLoading());
+
+      final services = await serviceProviderRepository.createVetServices(
+        agentId: agentId, serviceId: serviceId, sessionType: sessionType, contactMedium: contactMedium, amount: amount,
+      );
+
+      
+      emit(CreateServicesLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> publishAgentServices({
+    required String agentId,
+    required String serviceId,
+      
+  }) async {
+    try {
+      emit(PublishServicesLoading());
+
+      final services = await serviceProviderRepository.publishVetServices(
+        agentId: agentId, serviceId: serviceId, );
+
+      
+      emit(PublishServicesLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

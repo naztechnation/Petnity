@@ -5,6 +5,7 @@ import '../../../model/service_provider_models/account_details.dart';
 import '../../../model/service_provider_models/all_agent_orders.dart';
 import '../../../model/service_provider_models/create_services_amount.dart';
 import '../../../model/service_provider_models/create_shop_products_model.dart';
+import '../../../model/service_provider_models/create_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 
@@ -30,6 +31,8 @@ abstract class ServiceProviderRepository {
     Future<AuthData> agentRejectServiceOrder({required String agentId, required String orderId,}); 
     Future<AuthData> userAcceptOrderDelivered({required String username, required String orderId,}); 
     Future<AgentBalance> agentBalance({ required String agentId,}); 
+    Future<CreateVetServices> createVetServices({ required String agentId,required String serviceId, required var sessionType, required var contactMedium ,required String amount, }); 
+    Future<AuthData> publishVetServices({ required String agentId,required String serviceId,}); 
 
 
 }

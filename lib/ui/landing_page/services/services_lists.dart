@@ -52,6 +52,7 @@ class ServicesList extends StatelessWidget {
 
                       if(masterItem.name == 'Vets'){
 
+
                         AppNavigator.pushAndReplacePage(context,
                           page: VetService(
                               ));

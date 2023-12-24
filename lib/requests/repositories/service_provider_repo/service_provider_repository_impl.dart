@@ -4,6 +4,7 @@ import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 
+import '../../../model/service_provider_models/create_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../res/app_strings.dart';
@@ -231,7 +232,6 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         AppStrings.userMarkOrderDelivered(username: agentId, orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
-          
         });
 
     return AuthData.fromJson(map);
@@ -240,11 +240,46 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<AgentBalance> agentBalance({required String agentId}) async {
     final map = await Requests().get(
-        AppStrings.getAgentsBalance(agentId: agentId, ),
+        AppStrings.getAgentsBalance(
+          agentId: agentId,
+        ),
         headers: {
           'Authorization': AppStrings.token,
         });
 
     return AgentBalance.fromJson(map);
+  }
+
+  @override
+  Future<CreateVetServices> createVetServices({
+    required String agentId,
+    required String serviceId,
+    required var sessionType,
+    required var contactMedium,
+    required String amount,
+  }) async {
+    final map = await Requests()
+        .post(AppStrings.createVetService(agentId, serviceId), body: {
+      "session_types": [1,2],
+      "contact_mediums": [1,2],
+      "price": amount
+    }, headers: {
+      'Authorization': AppStrings.token,
+    });
+
+    return CreateVetServices.fromJson(map);
+  }
+
+  @override
+  Future<AuthData> publishVetServices({
+    required String agentId,
+    required String serviceId,
+  }) async {
+    final map = await Requests()
+        .patch(AppStrings.publishVetService(agentId, serviceId), headers: {
+      'Authorization': AppStrings.token,
+    });
+
+    return AuthData.fromJson(map);
   }
 }

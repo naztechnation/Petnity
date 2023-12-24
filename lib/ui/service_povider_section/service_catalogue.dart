@@ -177,6 +177,7 @@ class _ShopState extends State<Shop> {
                                               style: TextStyle(
                                                 decoration:
                                                     TextDecoration.underline,
+                                                    
                                                 color: AppColors.lightSecondary,
                                                 fontWeight: FontWeight.w600,
                                               ),
@@ -234,7 +235,7 @@ class _ShopState extends State<Shop> {
                                                   filteredProducts[index].image,
                                                   placeholder:
                                                       AppImages.appLogo,
-                                                  fit: BoxFit.contain,
+                                                  fit: BoxFit.cover,
                                                   color: randomColor,
                                                 )),
                                           ),
