@@ -196,6 +196,7 @@ class _SupportScreenState extends State<SupportScreen> {
                         ),
                       ),
                       Text('Report a bug/issue'),
+                      ImageView.svg(AppImages.arrowDown)
                     ],
                   ),
                 ),
@@ -253,8 +254,10 @@ class _SupportScreenState extends State<SupportScreen> {
                 return  ListView.builder(
                   itemCount: faqs.length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                   return Container(
+                    margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20)),

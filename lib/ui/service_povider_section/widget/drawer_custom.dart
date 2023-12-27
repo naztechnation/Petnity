@@ -19,10 +19,12 @@ import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../../res/app_colors.dart';
 import '../../../res/app_routes.dart';
 import '../../landing_page/services/services_lists.dart';
 import '../../payment/payment_screen.dart';
 import '../service_profile/service_profile.dart';
+import '../service_provider_kyc/service_provider_kyc/service_kyc_eight.dart';
 
 class SPCustomDrawer extends StatelessWidget {
   const SPCustomDrawer({Key? key}) : super(key: key);
@@ -376,11 +378,43 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           CustomText(
-                                            text: 'Your Services',
+                                            text: 'Your services',
                                             weight: FontWeight.bold,
                                             size: 17,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              AppNavigator.pushAndStackPage(
+                                                  context,
+                                                  page: KycServiceScreenEight(
+                                                    isRedo: true,
+                                                  ));
+                                            },
+                                            child: Row(
+                                              children: [
+                                                ImageView.svg(
+                                                  AppImages.addIcon,
+                                                  height: 15,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                CustomText(
+                                                  text: 'add more',
+                                                  weight: FontWeight.w400,
+                                                  size: 14,
+                                                  color:
+                                                      AppColors.lightSecondary,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -394,9 +428,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      ServicesList(
-                                        services: services,
-                                      ),
+                                      (state is ServiceProviderListLoading)
+                                          ? Align(
+                                              child: ImageView.asset(
+                                              AppImages.loading,
+                                              height: 50,
+                                            ))
+                                          : ServicesList(
+                                              services: services,
+                                            ),
                                     ],
                                   )),
                                 );

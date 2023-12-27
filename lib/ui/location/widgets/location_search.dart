@@ -77,7 +77,19 @@ class _LocationSearchState extends State<LocationSearch> {
                                 fontSize: 14, fontWeight: FontWeight.w400)),
                       ],
                     ),
-                    Visibility(
+                    
+                  ],
+                ),
+                const SizedBox(height: 18.0),
+                const CustomText(
+                  text: 'Search address You \nwant your pet to be picked up',
+                  size: 14,
+                  weight: FontWeight.w600,
+                  maxLines: 2,
+                ),
+                const SizedBox(height: 10.0),
+
+                Visibility(
                       visible: !showNextBtn,
                       child: ButtonView(
                         color: AppColors.lightSecondary,
@@ -94,15 +106,6 @@ class _LocationSearchState extends State<LocationSearch> {
                               style: TextStyle(
                                   fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white))),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 18.0),
-                const CustomText(
-                  text: 'Search address You \nwant your pet to be picked up',
-                  size: 14,
-                  weight: FontWeight.w600,
-                  maxLines: 2,
-                ),
                 const SizedBox(height: 25.0),
                 RawAutocomplete(
                   displayStringForOption: (LocationPrediction option) =>

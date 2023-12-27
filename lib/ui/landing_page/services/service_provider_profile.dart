@@ -312,7 +312,13 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
             ));
         break;
       case 'vets':
-        AppNavigator.pushAndStackPage(context, page: VetService());
+        AppNavigator.pushAndStackPage(context,
+            page: PackagesScreen(
+              serviceId: Provider.of<AccountViewModel>(context, listen: false)
+                  .serviceId,
+              agentId: Provider.of<AccountViewModel>(context, listen: false)
+                  .agentId2,
+            ));
         break;
       case 'grooming':
         AppNavigator.pushAndStackPage(context,

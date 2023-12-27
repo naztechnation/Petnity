@@ -67,7 +67,7 @@ class _VetServiceState extends State<VetService> {
                   height: 20,
                 ),
                 Text(
-                  'Add medium',
+                  'Add Session Type',
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
@@ -102,12 +102,7 @@ class _VetServiceState extends State<VetService> {
                               
                             
 
-                            if(serviceProvider.serviceSelectedIndexes.isEmpty){
-                              showButton = false;
-                            }else{
-                              showButton = true;
-                              
-                            }
+                           
                           },
                       child: buildSessionTypeWidget(
                       index,
@@ -121,7 +116,7 @@ class _VetServiceState extends State<VetService> {
                 
                 const Spacer(),
 
-              if(showButton)  ButtonView(onPressed: (){
+              if(serviceProvider.serviceSelectedIndexes.isNotEmpty)  ButtonView(onPressed: (){
                 AppNavigator.pushAndStackPage(context, page: Consultation());
               }, child: Text('Continue', style: TextStyle(color: Colors.white),)),
                

@@ -273,7 +273,9 @@ class _ProductDetailState extends State<ProductDetail> {
                       borderRadius: BorderRadius.circular(30),
                       child: ImageView.network(
                         _products?.image ?? '',
+                        fit: BoxFit.cover,
                         height: 150,
+                        width: 150,
                       ),
                     ),
                   ),

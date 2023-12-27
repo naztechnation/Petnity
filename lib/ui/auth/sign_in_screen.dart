@@ -359,6 +359,7 @@ class SignInScreen extends StatelessWidget {
       required BuildContext context,
       required String message,
       required bool isAgent}) async {
+    
     await firebaseUser.loginUserWithEmailAndPassword(
         email: _usernameController.text.trim(),
         password: _passwordController.text.trim());
@@ -376,6 +377,10 @@ class SignInScreen extends StatelessWidget {
         AppNavigator.pushAndReplaceName(context,
             name: AppRoutes.serviceProviderLandingPage);
       }
+    }else if(firebaseUser.status == Status.authenticateError){
+      Modals.showToast(message, messageType: MessageType.error);
+
+      Modals.showToast(firebaseUser.message);
     }
   }
 

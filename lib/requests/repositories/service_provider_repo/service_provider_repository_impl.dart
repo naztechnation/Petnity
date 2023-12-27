@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:petnity/model/account_models/auth_data.dart';
 import 'package:petnity/model/service_provider_models/account_details.dart';
 import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
@@ -258,14 +260,18 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     required var contactMedium,
     required String amount,
   }) async {
-    final map = await Requests()
-        .post(AppStrings.createVetService(agentId, serviceId), body: {
-      "session_types": [1,2],
-      "contact_mediums": [1,2],
+    var payload = {
+      "session_types": sessionType,
+      "contact_mediums": contactMedium,
       "price": amount
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+    };
+    final map = await Requests().post(
+        AppStrings.createVetService(agentId, serviceId),
+        body: json.encode(payload),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': AppStrings.token,
+        });
 
     return CreateVetServices.fromJson(map);
   }

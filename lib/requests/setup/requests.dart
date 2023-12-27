@@ -22,8 +22,6 @@ class Requests {
           .get(Uri.parse(route), headers: headers ?? await rawDataHeader())
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
-
-        
       });
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
@@ -39,7 +37,7 @@ class Requests {
 
   Future<dynamic> post(String route,
       {Map<String, String>? headers,
-      dynamic body,
+      var body,
       Map<String, File>? files,
       Encoding? encoding,
       RetryOptions? retryOption}) async {
@@ -49,9 +47,12 @@ class Requests {
       if (files != null) {
         final request = http.MultipartRequest('POST', Uri.parse(route));
         request.headers.addAll(headers ?? await formDataHeader());
-          request.fields.addAll(body as Map<String, String>);
+        request.fields.addAll(body as Map<String, String>);
         files.forEach((key, value) async {
-          request.files.add(await http.MultipartFile.fromPath(key, value.path,));
+          request.files.add(await http.MultipartFile.fromPath(
+            key,
+            value.path,
+          ));
         });
 
         final response = retryOption != null
@@ -65,18 +66,16 @@ class Requests {
       } else {
         final client = RetryClient(http.Client());
         await client
-            .post(Uri.parse(route),
-                body: body,
-                headers: headers ?? await formDataHeader(),
-                )
+            .post(
+          Uri.parse(route),
+          body: body,
+          headers: headers ?? await formDataHeader(),
+        )
             .then((response) {
           map = json.decode(RequestHandler.handleServerError(response));
           client.close();
         });
       }
-
-     
-
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
     } on HandshakeException {
@@ -126,9 +125,6 @@ class Requests {
           client.close();
         });
       }
-
-     
-
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
     } on HandshakeException {
@@ -140,28 +136,26 @@ class Requests {
     return map;
   }
 
-    Future<dynamic> patch(String route,
-      {Map<String, String>? headers,
-      var body,
-      Map<String, File>? files,
-      Encoding? encoding,
-      }) async {
+  Future<dynamic> patch(
+    String route, {
+    Map<String, String>? headers,
+    var body,
+    Map<String, File>? files,
+    Encoding? encoding,
+  }) async {
     debugPrint(route);
 
     late dynamic map;
     try {
-        await http
-            .patch(Uri.parse(route),
-                body: json.encode(body),
-                 headers: headers ?? await rawDataHeader(),
-                
-                )
-            .then((response) {
-          map = json.decode(RequestHandler.handleServerError(response));
-          
-        });
-
-
+      await http
+          .patch(
+        Uri.parse(route),
+        body: json.encode(body),
+        headers: headers ?? await rawDataHeader(),
+      )
+          .then((response) {
+        map = json.decode(RequestHandler.handleServerError(response));
+      });
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
     } on HandshakeException {
@@ -183,8 +177,6 @@ class Requests {
           .delete(Uri.parse(route), headers: headers ?? await rawDataHeader())
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
-
-      
       });
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);

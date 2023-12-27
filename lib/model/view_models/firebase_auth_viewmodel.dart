@@ -114,30 +114,51 @@ class FirebaseAuthProvider extends BaseViewModel {
   }
 
   Future<User?> loginUserWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    _status = Status.authenticating;
+  required String email,
+  required String password,
+}) async {
+  _status = Status.authenticating;
+  setViewState(ViewState.loading);
+
+  try {
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    User? user = userCredential.user;
+    _status = Status.authenticated;
+    
     setViewState(ViewState.success);
+    return user;
+  } on FirebaseAuthException catch (e) {
+    _status = Status.authenticateError;
+    setViewState(ViewState.failed);
 
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      User? user = userCredential.user;
-      _status = Status.authenticated;
+    if (e.code == 'user-not-found') {
+           _message = 'No user found for that email.';
+
       
-      setViewState(ViewState.success);
-      return user;
-    } on FirebaseAuthException catch (e) {
-      _status = Status.authenticateError;
-      setViewState(ViewState.success);
-
-      return null;
+    } else if (e.code == 'wrong-password') {
+                _message = 'Wrong password provided for that user.';
+ 
+    } else {
+     _message = 'FirebaseAuthException: ${e.message}';
+       
     }
+
+    return null;
+  } catch (e) {
+    _status = Status.authenticateError;
+    setViewState(ViewState.failed);
+
+    _message = 'Error during authentication: $e';
+     
+
+    return null;
   }
+}
+
 
 
 }

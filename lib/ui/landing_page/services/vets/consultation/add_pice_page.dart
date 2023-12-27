@@ -108,6 +108,7 @@ class _AddPricePageState extends State<AddPricePage> {
 
   saveAmount(BuildContext ctx, serviceProvider) {
     if (_formKey.currentState!.validate()) { 
+      FocusScope.of(ctx).unfocus();
 
       serviceProvider.updateAmountController(amountController.text);
       AppNavigator.pushAndStackPage(context,

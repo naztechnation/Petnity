@@ -137,6 +137,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                       padding: const EdgeInsets.all(10.0),
                       child: TabBar(
                         unselectedLabelColor: Colors.black,
+                        
                         isScrollable: true,
                         indicator: BoxDecoration(
                             color: Colors.blue,
@@ -144,12 +145,12 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                         tabs: [
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 10,
+                              horizontal: 20,
                             ),
                             child: Tab(
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text('All'),
+                                child: Text('All', ),
                               ),
                             ),
                             decoration: BoxDecoration(

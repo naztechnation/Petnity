@@ -83,7 +83,6 @@ getUserDetails() async {
 
   @override
   Widget build(BuildContext context) {
-    Modals.showToast(channelName);
 
     return WillPopScope(
       onWillPop: onBackPress,

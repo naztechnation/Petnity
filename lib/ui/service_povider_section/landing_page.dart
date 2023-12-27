@@ -84,12 +84,12 @@ class _ServiceProviderLandingPageState
       bottomNavigationBar: Container(
         width: screenSize(context).width,
         color: Colors.white,
-        height: 88,
+        height: 120,
         child: Column(
           children: [
             SizedBox(
               width: 300,
-              height: 88,
+              height: 120,
               child: BottomNavigationBar(
                 backgroundColor: Colors.white,
                 elevation: 0,

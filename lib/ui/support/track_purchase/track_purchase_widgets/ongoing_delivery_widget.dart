@@ -63,7 +63,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: ImageView.network(widget.services.package?.service?.serviceType?.image, height: 60,),
+                    child: ImageView.network(widget.services.package?.service?.serviceType?.image, height: 60,width: 60, fit: BoxFit.cover,),
                   ),
                   const SizedBox(width: 10,),
                   Container(
@@ -79,7 +79,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                              '${widget.services.package?.service?.serviceType?.name}'),
+                              '${widget.services.package?.service?.serviceType?.name}', ),
                         ],
                       ),
                     ),
@@ -236,7 +236,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                         Modals.showToast('This Service has not been paid for.');
                           // }
                       },
-                      child: Text(widget.label),
+                      child: Text(widget.label, style: TextStyle(color: Colors.white),),
                       borderRadius: 30,
                     ),
                   ),

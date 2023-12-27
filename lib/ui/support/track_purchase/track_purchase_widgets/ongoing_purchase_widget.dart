@@ -213,7 +213,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                 Modals.showToast('This product  has not been paid for.');
               // }
                     },
-                    child: Text(widget.label),
+                    child: Text(widget.label, style: TextStyle(color: Colors.white),),
                     borderRadius: 30,
                   ),
                 ),
