@@ -5,6 +5,7 @@ import 'package:petnity/model/service_provider_models/account_details.dart';
 import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
+import 'package:petnity/model/user_models/vet_services.dart';
 
 import '../../../model/service_provider_models/create_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
@@ -287,5 +288,18 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     });
 
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<VetsServices> vetServices({required String agentId}) async {
+    final map = await Requests().get(
+        AppStrings.getAgentsBalance(
+          agentId: agentId,
+        ),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return VetsServices.fromJson(map);
   }
 }

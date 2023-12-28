@@ -576,4 +576,32 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+
+   Future<void> vetServices({
+    required String agentId,
+      
+  }) async {
+    try {
+      emit(VetsServicesLoading());
+
+      final services = await serviceProviderRepository.vetServices(
+        agentId: agentId, );
+
+      
+      emit(VetsServicesLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

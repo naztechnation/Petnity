@@ -205,5 +205,10 @@ static String getUserNotifications(String username,) =>
 
       static String publishVetService(String agentId, String serviceTypeId) =>
       '${_baseUrl}services/publish-vet-service/$agentId/$serviceTypeId'; 
+
+ static String getVetService(String agentId,) =>
+      '${_baseUrl}users/get-vet-service/$agentId'; 
+
+      
     
 }

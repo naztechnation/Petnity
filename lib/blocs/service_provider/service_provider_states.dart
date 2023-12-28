@@ -9,6 +9,7 @@ import '../../model/service_provider_models/create_vet_services.dart';
 import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
+import '../../model/user_models/vet_services.dart';
 
 abstract class ServiceProviderState extends Equatable {
   const ServiceProviderState();
@@ -225,6 +226,18 @@ class  PublishServicesLoaded extends ServiceProviderState {
   const  PublishServicesLoaded(this.data);
   @override
   List<Object> get props => [data];
+}
+
+  class   VetsServicesLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  VetsServicesLoaded extends ServiceProviderState {
+  final VetsServices  vetService;
+  const  VetsServicesLoaded(this.vetService);
+  @override
+  List<Object> get props => [vetService];
 }
 
 class CreateServiceNetworkErr extends ServiceProviderState {

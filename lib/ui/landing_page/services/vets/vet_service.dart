@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/widgets/button_view.dart';

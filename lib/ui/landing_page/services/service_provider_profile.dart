@@ -20,6 +20,7 @@ import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 import 'agent_packages.dart';
 import 'pet_sellers.dart/pet_on_sale.dart'; 
+import 'vets/book_pet.dart/booking_page.dart';
 import 'widgets/gallery_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
 import './vets/vet_service.dart';
@@ -313,11 +314,8 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         break;
       case 'vets':
         AppNavigator.pushAndStackPage(context,
-            page: PackagesScreen(
-              serviceId: Provider.of<AccountViewModel>(context, listen: false)
-                  .serviceId,
-              agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+            page: VetBookingPage(name: widget.agents?.name ?? '', image: '${widget.agents?.picture}', gender: widget.agents?.gender ?? '', location: '${widget.agents?.city}, ${widget.agents?.country}'.replaceAll('?', ''), about: widget.agents?.about ?? '',
+               
             ));
         break;
       case 'grooming':
