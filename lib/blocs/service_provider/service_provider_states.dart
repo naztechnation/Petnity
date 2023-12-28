@@ -6,6 +6,7 @@ import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
 import '../../model/service_provider_models/create_shop_products_model.dart';
 import '../../model/service_provider_models/create_vet_services.dart';
+import '../../model/service_provider_models/get_vet_services.dart';
 import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
@@ -236,6 +237,30 @@ class  PublishServicesLoaded extends ServiceProviderState {
 class  VetsServicesLoaded extends ServiceProviderState {
   final VetsServices  vetService;
   const  VetsServicesLoaded(this.vetService);
+  @override
+  List<Object> get props => [vetService];
+}
+
+class   VetsServicesOrderLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  VetsServicesOrderLoaded extends ServiceProviderState {
+  final CreateVetOrder  vetService;
+  const  VetsServicesOrderLoaded(this.vetService);
+  @override
+  List<Object> get props => [vetService];
+}
+
+class   VetsConfirmOrderLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  VetsConfirmOrderLoaded extends ServiceProviderState {
+  final CreateVetOrder  vetService;
+  const  VetsConfirmOrderLoaded(this.vetService);
   @override
   List<Object> get props => [vetService];
 }

@@ -17,6 +17,7 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
+import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
 import '../../../utils/app_utils.dart';
 import '../../../utils/navigator/page_navigator.dart';
@@ -100,20 +101,20 @@ class _ReviewState extends State<Review> {
   }
 
   _handlePaymentInitialization(String orderId) async {
-    final Customer customer = Customer(email: 'agbo.raph123@gmail.com');
+    final Customer customer = Customer(email: email);
 
     final Flutterwave flutterwave = Flutterwave(
         context: context,
         publicKey: AppStrings.flutterwaveApiKey,
         currency: 'NGN',
-        redirectUrl: 'https://petnity.com',
+        redirectUrl: 'https://lucacify.com',
         txRef: uuid.v1(),
         amount: widget.amount,
         customer: customer,
         paymentOptions: "card",
         customization: Customization(
           title: "Lucacify",
-          //logo: AppImages.logo,
+          logo: AppImages.logo,
         ),
         isTestMode: true);
     final ChargeResponse response = await flutterwave.charge();

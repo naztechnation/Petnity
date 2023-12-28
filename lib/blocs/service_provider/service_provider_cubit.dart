@@ -604,4 +604,59 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+  Future<void> vetServicesOrder({
+    required String agentId,
+    required String username,
+    required String  vetService,required String  sessionTime
+  }) async {
+    try {
+      emit(VetsServicesOrderLoading());
+
+      final services = await serviceProviderRepository.createVetOrder(
+        agentId: agentId, username: username, vetService: vetService, sessionTime: sessionTime, );
+
+      
+      emit(VetsServicesOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> verifyVetOrder({
+    required String orderId,
+   required String username, required String vetServiceId, required String purchaseId
+  }) async {
+    try {
+      emit(VetsConfirmOrderLoading());
+
+      final services = await serviceProviderRepository.confirmVetPaymentOrder(
+          username: username, orderId: orderId, vetServiceId: vetServiceId, purchaseId: purchaseId,  );
+
+      
+      emit(VetsConfirmOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

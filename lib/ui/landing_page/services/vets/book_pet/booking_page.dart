@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterwave_standard/flutterwave.dart';
+import 'package:intl/intl.dart';
 import 'package:petnity/model/user_models/vet_services.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../../blocs/service_provider/service_provider.dart';
 import '../../../../../handlers/secure_handler.dart';
@@ -9,6 +12,9 @@ import '../../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../../../res/app_colors.dart';
 import '../../../../../res/app_constants.dart';
+import '../../../../../res/app_images.dart';
+import '../../../../../res/app_strings.dart';
+import '../../../../../res/enum.dart';
 import '../../../../../utils/app_utils.dart';
 import '../../../../widgets/back_button.dart';
 import '../../../../widgets/button_view.dart';
@@ -73,18 +79,79 @@ class VetBooking extends StatefulWidget {
 }
 
 class _VetBookingState extends State<VetBooking> {
+  String selectedDate1 = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  String selectedTime1 = 'Select Time';
   late ServiceProviderCubit _serviceProviderCubit;
 
   VetsServices? vetServices;
 
+  String amount = "";
+
   String agentId = "";
+  String username = "";
+  String vetServiceId = "";
+
+  String email = '';
+
+  String transactionId = '';
+  String txId = '';
+  var uuid = const Uuid();
+
+  bool isLoading = true;
 
   getAgentId() async {
     agentId = await StorageHandler.getAgentId();
+    username = await StorageHandler.getUserName();
+    email = await StorageHandler.getUserEmail();
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
 
-    _serviceProviderCubit.vetServices(agentId: agentId);
+    setState(() {
+      isLoading = true;
+    });
+
+    await _serviceProviderCubit.vetServices(agentId: agentId);
+    setState(() {
+      isLoading = false;
+    });
+    transactionId = uuid.v1();
+  }
+
+  _handlePaymentInitialization(String orderId) async {
+    final Customer customer = Customer(email: email);
+
+    final Flutterwave flutterwave = Flutterwave(
+        context: context,
+        publicKey: AppStrings.flutterwaveApiKey,
+        currency: 'NGN',
+        redirectUrl: 'https://lucacify.com',
+        txRef: uuid.v1(),
+        amount: amount,
+        customer: customer,
+        paymentOptions: "card",
+        customization: Customization(
+          title: "Lucacify",
+          logo: AppImages.logo,
+        ),
+        isTestMode: true);
+    final ChargeResponse response = await flutterwave.charge();
+
+    if (response != null) {
+      txId = response.transactionId ?? '';
+       
+      if (txId != '') {
+        
+
+        _serviceProviderCubit.verifyVetOrder(
+            orderId: orderId,
+            username: username,
+            purchaseId: txId,
+            vetServiceId: vetServiceId);
+      }
+    } else {
+      Modals.showToast('Unable to make payment Successfully.',
+          messageType: MessageType.error);
+    }
   }
 
   @override
@@ -118,12 +185,17 @@ class _VetBookingState extends State<VetBooking> {
             Modals.showToast(state.message ?? '');
           } else if (state is VetsServicesLoaded) {
             vetServices = state.vetService;
-          } else if (state is PublishServicesLoaded) {
-            Modals.showToast(state.data.message ?? '');
+
+            amount = vetServices?.vetService?.price ?? '';
+            vetServiceId = vetServices?.vetService?.id.toString() ?? '';
+          } else if (state is VetsServicesOrderLoaded) {
+            _handlePaymentInitialization(
+                state.vetService.order?.id.toString() ?? '');
+          } else if (state is VetsConfirmOrderLoaded) {
+            Modals.showToast(state.vetService.message ?? '');
           }
         }, builder: (context, state) {
-          return (state is VetsServicesLoading ||
-                  state is CreateServicesLoading)
+          return (isLoading)
               ? LoadingPage()
               : Container(
                   height: screenSize(context).height,
@@ -152,161 +224,109 @@ class _VetBookingState extends State<VetBooking> {
                           ),
                           Container(
                             width: MediaQuery.sizeOf(context).width,
-                            child: Card(
-                              elevation: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: 90,
-                                          height: 90,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                          ),
-                                          child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                              child: ImageView.network(
-                                                  widget.image)),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Column(
-                                                    children: [
-                                                      CustomText(
-                                                        text: 'Name',
-                                                        size: 12,
-                                                      ),
-                                                      CustomText(
-                                                        text: widget.name,
-                                                        weight: FontWeight.bold,
-                                                        size: 12,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 40,
-                                                  ),
-                                                  Column(
-                                                    children: [
-                                                      CustomText(
-                                                        text: 'Gender',
-                                                        size: 12,
-                                                      ),
-                                                      CustomText(
-                                                        text: widget.gender,
-                                                        weight: FontWeight.bold,
-                                                        size: 12,
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                              CustomText(
-                                                text: 'Location',
-                                                size: 12,
-                                              ),
-                                              CustomText(
-                                                text: widget.location,
-                                                weight: FontWeight.bold,
-                                                size: 12,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    CustomText(
-                                      text: 'About:',
-                                      size: 12,
-                                      weight: FontWeight.bold,
-                                    ),
-                                    CustomText(
-                                      text: widget.about,
-                                      size: 12,
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.8),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          CustomText(
-                            text: 'Vets Package',
-                            size: 15,
-                            weight: FontWeight.bold,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            width: MediaQuery.sizeOf(context).width,
-                            child: Card(
-                              elevation: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Align(
-                                    child: Container(
-                                      width: 130,
-                                      height: 130,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      child: ClipRRect(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 90,
+                                        height: 90,
+                                        decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(150),
-                                          child: ImageView.network(
-                                            vetServices?.vetService?.serviceType
-                                                ?.image,
-                                            fit: BoxFit.cover,
-                                          )),
-                                    ),
+                                              BorderRadius.circular(100),
+                                        ),
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(120),
+                                            child: ImageView.network(
+                                                widget.image)),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    CustomText(
+                                                      text: 'Name',
+                                                      size: 12,
+                                                    ),
+                                                    CustomText(
+                                                      text: widget.name,
+                                                      weight: FontWeight.bold,
+                                                      size: 12,
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  width: 40,
+                                                ),
+                                                Column(
+                                                  children: [
+                                                    CustomText(
+                                                      text: 'Gender',
+                                                      size: 12,
+                                                    ),
+                                                    CustomText(
+                                                      text: widget.gender,
+                                                      weight: FontWeight.bold,
+                                                      size: 12,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            CustomText(
+                                              text: 'Location',
+                                              size: 12,
+                                            ),
+                                            CustomText(
+                                              text: widget.location,
+                                              weight: FontWeight.bold,
+                                              size: 12,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   CustomText(
-                                    text:
-                                        'Service Amount: NGN ${AppUtils.convertPrice(vetServices?.vetService?.price)}',
-                                    size: 15,
-                                    weight: FontWeight.w700,
+                                    text: 'About:',
+                                    size: 12,
+                                    weight: FontWeight.bold,
                                   ),
-                                  const SizedBox(
-                                    height: 20,
+                                  CustomText(
+                                    text: widget.about,
+                                    size: 12,
                                   ),
                                 ],
                               ),
@@ -316,39 +336,91 @@ class _VetBookingState extends State<VetBooking> {
                             height: 10,
                           ),
                           CustomText(
-                            text: 'Service Types',
-                            size: 15,
-                            weight: FontWeight.bold,
+                            text: 'Vets Package',
+                            weight: FontWeight.w700,
+                            size: 14,
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Card(
-                            elevation: 1,
-                            child: Container(
-                             // height: screenSize(context).height * .07,
-                              width: screenSize(context).width * .9,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                                                color: Colors.grey.withOpacity(0.04),
-
-                              ),
-                              child: ListView.builder(
-                                itemCount: vetServices
-                                    ?.vetService?.sessionTypes?.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return buildSessionTypeWidget(
-                                      index,
-                                      '',
-                                      vetServices?.vetService
-                                              ?.sessionTypes?[index].name ??
-                                          '',
-                                      context);
-                                },
-                              ),
+                          Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Align(
+                                  child: Container(
+                                    width: 130,
+                                    height: 130,
+                                    decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(100),
+                                    ),
+                                    child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(150),
+                                        child: ImageView.network(
+                                          vetServices?.vetService?.serviceType
+                                              ?.image,
+                                          fit: BoxFit.cover,
+                                        )),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                CustomText(
+                                  text:
+                                      'Service Amount: NGN ${AppUtils.convertPrice(vetServices?.vetService?.price ?? '0')}',
+                                  size: 13,
+                                  weight: FontWeight.w600,
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CustomText(
+                            text: 'Service Types',
+                            weight: FontWeight.w700,
+                            size: 14,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            width: screenSize(context).width * .9,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                            child: ListView.builder(
+                              itemCount: vetServices
+                                      ?.vetService?.sessionTypes?.length ??
+                                  0,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return buildSessionTypeWidget(
+                                    index,
+                                    '',
+                                    vetServices?.vetService
+                                            ?.sessionTypes?[index].name ??
+                                        '',
+                                    context);
+                              },
                             ),
                           ),
                           const SizedBox(
@@ -356,49 +428,168 @@ class _VetBookingState extends State<VetBooking> {
                           ),
                           CustomText(
                             text: 'Contact Medium',
-                            size: 15,
-                            weight: FontWeight.bold,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Card(
-                            elevation: 1,
-                            child: Container(
-                             // height: screenSize(context).height * .07,
-                              width: screenSize(context).width * .9,
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.grey.withOpacity(0.04),
-                              ),
-                              child: ListView.builder(
-                                itemCount: vetServices
-                                    ?.vetService?.contactMediums?.length,
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return buildSessionTypeWidget(
-                                      index,
-                                      '',
-                                      vetServices?.vetService
-                                              ?.contactMediums?[index].name ??
-                                          '',
-                                      context);
-                                },
-                              ),
-                            ),
+                            weight: FontWeight.w700,
+                            size: 14,
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           Container(
-                            height: screenSize(context).height * .12,
+                            width: screenSize(context).width * .9,
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.8),
+                            ),
+                            child: ListView.builder(
+                              itemCount: vetServices
+                                      ?.vetService?.contactMediums?.length ??
+                                  0,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return buildSessionTypeWidget(
+                                    index,
+                                    '',
+                                    vetServices?.vetService
+                                            ?.contactMediums?[index].name ??
+                                        '',
+                                    context);
+                              },
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          CustomText(
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            text: 'Select Session Time',
+                            weight: FontWeight.w700,
+                            size: 14,
+                            fontFamily: AppStrings.interSans,
+                            color: Colors.black,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      ImageView.svg(
+                                        AppImages.calender,
+                                        height: 18,
+                                      ),
+                                      SizedBox(width: 5),
+                                      CustomText(
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        text: 'Date',
+                                        weight: FontWeight.w600,
+                                        size: 14,
+                                        fontFamily: AppStrings.interSans,
+                                        color: Colors.black,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ButtonView(
+                                    color: Colors.white,
+                                    expanded: false,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    borderColor: Colors.white,
+                                    borderRadius: 40,
+                                    onPressed: () {
+                                      _selectDate(context);
+                                    },
+                                    child: CustomText(
+                                      textAlign: TextAlign.left,
+                                      maxLines: 2,
+                                      text: selectedDate1,
+                                      weight: FontWeight.w500,
+                                      size: 16,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      ImageView.svg(
+                                        AppImages.time,
+                                        height: 18,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      CustomText(
+                                        textAlign: TextAlign.center,
+                                        maxLines: 2,
+                                        text: 'Time',
+                                        weight: FontWeight.w600,
+                                        size: 14,
+                                        fontFamily: AppStrings.interSans,
+                                        color: Colors.black,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ButtonView(
+                                    color: Colors.white,
+                                    expanded: false,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    borderColor: Colors.white,
+                                    borderRadius: 40,
+                                    onPressed: () {
+                                      _selectTime(context);
+                                    },
+                                    child: CustomText(
+                                      textAlign: TextAlign.left,
+                                      maxLines: 2,
+                                      text: selectedTime1,
+                                      weight: FontWeight.w500,
+                                      size: 16,
+                                      color: Colors.black,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          Container(
                             padding: EdgeInsets.symmetric(
-                                vertical: 23, horizontal: 20),
+                                vertical: 23, horizontal: 0),
                             child: ButtonView(
                                 borderRadius: 50,
-                                onPressed: () {},
+                                processing: state is VetsServicesOrderLoading ||
+                                    state is VetsConfirmOrderLoading,
+                                onPressed: () {
+
+                                  if(selectedTime1 != 'Select Time'){
+                                    _serviceProviderCubit.vetServicesOrder(
+                                      agentId: agentId,
+                                      username: username,
+                                      vetService: vetServiceId,
+                                      sessionTime: '${selectedDate1} ${selectedTime1}');
+                                  }else{
+                                    Modals.showToast('please select session date and time');
+                                  }
+                                  
+                                },
                                 child: Text(
                                   'Pay for Session',
                                   style: TextStyle(color: Colors.white),
@@ -424,7 +615,8 @@ class _VetBookingState extends State<VetBooking> {
           label,
           style: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
               fontFamily: 'InterSans'),
         ),
         const SizedBox(
@@ -433,5 +625,44 @@ class _VetBookingState extends State<VetBooking> {
         Divider()
       ],
     );
+  }
+
+  Future<void> _selectDate(
+    BuildContext context,
+  ) async {
+    DateTime selectedDate = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+        String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
+
+        selectedDate1 = formattedDate;
+      });
+    }
+  }
+
+  Future<void> _selectTime(
+    BuildContext context,
+  ) async {
+    TimeOfDay selectedTime = TimeOfDay.now();
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+    if (picked != null) {
+      setState(() {
+        selectedTime = picked;
+
+        String formattedTime = selectedTime.format(context);
+
+        selectedTime1 = formattedTime;
+      });
+    }
   }
 }

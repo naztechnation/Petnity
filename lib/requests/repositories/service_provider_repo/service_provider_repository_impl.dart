@@ -5,9 +5,10 @@ import 'package:petnity/model/service_provider_models/account_details.dart';
 import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
+import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/vet_services.dart';
 
-import '../../../model/service_provider_models/create_vet_services.dart';
+import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../res/app_strings.dart';
@@ -301,5 +302,46 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         });
 
     return VetsServices.fromJson(map);
+  }
+
+  @override
+  Future<CreateVetOrder> createVetOrder({
+  required String agentId, 
+  required String  username, 
+  required String  vetService,
+  required String  sessionTime}) async {
+    final map = await Requests().post(
+        AppStrings.createVetOrder(
+            agentId,
+            username
+        ),
+        body: {
+          'vet_service':vetService,
+          'session_time':sessionTime,
+        },
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return CreateVetOrder.fromJson(map);
+  }
+  
+  @override
+  Future<CreateVetOrder> confirmVetPaymentOrder({required String orderId,
+   required String username, required String vetServiceId, required String purchaseId})  async {
+    final map = await Requests().post(
+        AppStrings.confirmVetPaymentOrder(
+            orderId,
+            username
+        ),
+        body: {
+          'purchase_id':purchaseId,
+          'vet_service':vetServiceId,
+        },
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return CreateVetOrder.fromJson(map);
   }
 }

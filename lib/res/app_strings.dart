@@ -209,6 +209,10 @@ static String getUserNotifications(String username,) =>
  static String getVetService(String agentId,) =>
       '${_baseUrl}users/get-vet-service/$agentId'; 
 
-      
+  static String createVetOrder(String agentId,String username) =>
+      '${_baseUrl}order/create-vet-order/$username/$agentId'; 
+  static String confirmVetPaymentOrder(String orderId,String username) =>
+      '${_baseUrl}order/vet-order-payment/$username/$orderId'; 
+    
     
 }
