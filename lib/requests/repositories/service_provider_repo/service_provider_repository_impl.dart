@@ -293,8 +293,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<VetsServices> vetServices({required String agentId}) async {
     final map = await Requests().get(
-        AppStrings.getAgentsBalance(
-          agentId: agentId,
+        AppStrings.getVetService(
+            agentId,
         ),
         headers: {
           'Authorization': AppStrings.token,

@@ -20,7 +20,7 @@ import '../../widgets/modals.dart';
 import '../../widgets/profile_image.dart';
 import 'agent_packages.dart';
 import 'pet_sellers.dart/pet_on_sale.dart'; 
-import 'vets/book_pet.dart/booking_page.dart';
+import 'vets/book_pet/booking_page.dart';
 import 'widgets/gallery_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
 import './vets/vet_service.dart';
