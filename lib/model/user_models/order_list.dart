@@ -1,8 +1,9 @@
 class UserOrderList {
   bool? status;
   List<UserOrders>? orders;
+  List<VetOrders>? vetOrders;
 
-  UserOrderList({this.status, this.orders});
+  UserOrderList({this.status, this.orders, this.vetOrders});
 
   UserOrderList.fromJson(Map<String, dynamic> json) {
     status = json['status'];
@@ -12,6 +13,12 @@ class UserOrderList {
         orders!.add(new UserOrders.fromJson(v));
       });
     }
+    if (json['vet_orders'] != null) {
+      vetOrders = <VetOrders>[];
+      json['vet_orders'].forEach((v) {
+        vetOrders!.add(new VetOrders.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -19,6 +26,9 @@ class UserOrderList {
     data['status'] = this.status;
     if (this.orders != null) {
       data['orders'] = this.orders!.map((v) => v.toJson()).toList();
+    }
+    if (this.vetOrders != null) {
+      data['vet_orders'] = this.vetOrders!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -35,9 +45,9 @@ class UserOrders {
   bool? isPaid;
   bool? isAccepted;
   bool? isRejected;
+  bool? isOngoing;
   bool? userMarkedDelivered;
   bool? agentMarkedDelivered;
-  bool? isOngoing;
   bool? isCompleted;
   bool? paymentReleased;
   String? dateCreated;
@@ -57,9 +67,9 @@ class UserOrders {
       this.isAccepted,
       this.isRejected,
       this.isOngoing,
-      this.isCompleted,
       this.userMarkedDelivered,
       this.agentMarkedDelivered,
+      this.isCompleted,
       this.paymentReleased,
       this.dateCreated,
       this.profile,
@@ -78,11 +88,11 @@ class UserOrders {
     isAccepted = json['is_accepted'];
     isRejected = json['is_rejected'];
     isOngoing = json['is_ongoing'];
+    userMarkedDelivered = json['user_marked_delivered'];
+    agentMarkedDelivered = json['agent_marked_delivered'];
     isCompleted = json['is_completed'];
     paymentReleased = json['payment_released'];
     dateCreated = json['date_created'];
-    userMarkedDelivered = json['user_marked_delivered'];
-    agentMarkedDelivered = json['agent_marked_delivered'];
     profile =
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
@@ -103,10 +113,10 @@ class UserOrders {
     data['is_accepted'] = this.isAccepted;
     data['is_rejected'] = this.isRejected;
     data['is_ongoing'] = this.isOngoing;
-    data['is_completed'] = this.isCompleted;
-    data['payment_released'] = this.paymentReleased;
     data['user_marked_delivered'] = this.userMarkedDelivered;
     data['agent_marked_delivered'] = this.agentMarkedDelivered;
+    data['is_completed'] = this.isCompleted;
+    data['payment_released'] = this.paymentReleased;
     data['date_created'] = this.dateCreated;
     if (this.profile != null) {
       data['profile'] = this.profile!.toJson();
@@ -124,49 +134,58 @@ class UserOrders {
 class Profile {
   int? id;
   String? firebaseId;
+  Null? deviceId;
   String? phoneNumber;
-  String? address;
-  String? city;
-  String? country;
+  Null? address;
+  Null? city;
+  Null? country;
   String? profileImage;
+  Null? bio;
   bool? isAgent;
   bool? isReachable;
   bool? isVerified;
   bool? hasPets;
   String? createdAt;
   String? updatedAt;
+  bool? isDeleted;
   User? user;
 
   Profile(
       {this.id,
       this.firebaseId,
+      this.deviceId,
       this.phoneNumber,
       this.address,
       this.city,
       this.country,
       this.profileImage,
+      this.bio,
       this.isAgent,
       this.isReachable,
       this.isVerified,
       this.hasPets,
       this.createdAt,
       this.updatedAt,
+      this.isDeleted,
       this.user});
 
   Profile.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firebaseId = json['firebase_id'];
+    deviceId = json['device_id'];
     phoneNumber = json['phone_number'];
     address = json['address'];
     city = json['city'];
     country = json['country'];
     profileImage = json['profile_image'];
+    bio = json['bio'];
     isAgent = json['is_agent'];
     isReachable = json['is_reachable'];
     isVerified = json['is_verified'];
     hasPets = json['has_pets'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    isDeleted = json['is_deleted'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
   }
 
@@ -174,17 +193,20 @@ class Profile {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['firebase_id'] = this.firebaseId;
+    data['device_id'] = this.deviceId;
     data['phone_number'] = this.phoneNumber;
     data['address'] = this.address;
     data['city'] = this.city;
     data['country'] = this.country;
     data['profile_image'] = this.profileImage;
+    data['bio'] = this.bio;
     data['is_agent'] = this.isAgent;
     data['is_reachable'] = this.isReachable;
     data['is_verified'] = this.isVerified;
     data['has_pets'] = this.hasPets;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['is_deleted'] = this.isDeleted;
     if (this.user != null) {
       data['user'] = this.user!.toJson();
     }
@@ -235,9 +257,9 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  int? idType;
+  Null? idType;
   List<Services>? services;
-  List<PetTypes>? petTypes;
+  List<Null>? petTypes;
 
   Agent(
       {this.id,
@@ -282,9 +304,9 @@ class Agent {
       });
     }
     if (json['pet_types'] != null) {
-      petTypes = <PetTypes>[];
+      petTypes = <Null>[];
       json['pet_types'].forEach((v) {
-        petTypes!.add(new PetTypes.fromJson(v));
+       // petTypes!.add(new Null.fromJson(v));
       });
     }
   }
@@ -312,7 +334,7 @@ class Agent {
       data['services'] = this.services!.map((v) => v.toJson()).toList();
     }
     if (this.petTypes != null) {
-      data['pet_types'] = this.petTypes!.map((v) => v.toJson()).toList();
+    //  data['pet_types'] = this.petTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -336,25 +358,6 @@ class Services {
     data['id'] = this.id;
     data['name'] = this.name;
     data['image'] = this.image;
-    return data;
-  }
-}
-
-class PetTypes {
-  int? id;
-  String? name;
-
-  PetTypes({this.id, this.name});
-
-  PetTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
     return data;
   }
 }
@@ -452,6 +455,184 @@ class Service {
       data['service_type'] = this.serviceType!.toJson();
     }
     data['agent'] = this.agent;
+    return data;
+  }
+}
+
+class VetOrders {
+  int? id;
+  String? sessionTime;
+  bool? shouldNotify;
+  String? fee;
+  String? purchaseId;
+  bool? isPaid;
+  bool? isAccepted;
+  bool? isRejected;
+  bool? isOngoing;
+  bool? userMarkedDelivered;
+  bool? agentMarkedDelivered;
+  bool? isCompleted;
+  bool? paymentReleased;
+  String? dateCreated;
+  Profile? profile;
+  Agent? agent;
+  VetService? vetService;
+
+  VetOrders(
+      {this.id,
+      this.sessionTime,
+      this.shouldNotify,
+      this.fee,
+      this.purchaseId,
+      this.isPaid,
+      this.isAccepted,
+      this.isRejected,
+      this.isOngoing,
+      this.userMarkedDelivered,
+      this.agentMarkedDelivered,
+      this.isCompleted,
+      this.paymentReleased,
+      this.dateCreated,
+      this.profile,
+      this.agent,
+      this.vetService});
+
+  VetOrders.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    sessionTime = json['session_time'];
+    shouldNotify = json['should_notify'];
+    fee = json['fee'];
+    purchaseId = json['purchase_id'];
+    isPaid = json['is_paid'];
+    isAccepted = json['is_accepted'];
+    isRejected = json['is_rejected'];
+    isOngoing = json['is_ongoing'];
+    userMarkedDelivered = json['user_marked_delivered'];
+    agentMarkedDelivered = json['agent_marked_delivered'];
+    isCompleted = json['is_completed'];
+    paymentReleased = json['payment_released'];
+    dateCreated = json['date_created'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+    vetService = json['vet_service'] != null
+        ? new VetService.fromJson(json['vet_service'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['session_time'] = this.sessionTime;
+    data['should_notify'] = this.shouldNotify;
+    data['fee'] = this.fee;
+    data['purchase_id'] = this.purchaseId;
+    data['is_paid'] = this.isPaid;
+    data['is_accepted'] = this.isAccepted;
+    data['is_rejected'] = this.isRejected;
+    data['is_ongoing'] = this.isOngoing;
+    data['user_marked_delivered'] = this.userMarkedDelivered;
+    data['agent_marked_delivered'] = this.agentMarkedDelivered;
+    data['is_completed'] = this.isCompleted;
+    data['payment_released'] = this.paymentReleased;
+    data['date_created'] = this.dateCreated;
+    if (this.profile != null) {
+      data['profile'] = this.profile!.toJson();
+    }
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
+    }
+    if (this.vetService != null) {
+      data['vet_service'] = this.vetService!.toJson();
+    }
+    return data;
+  }
+}
+
+class VetService {
+  int? id;
+  String? price;
+  bool? isLive;
+  String? createdAt;
+  String? updatedAt;
+  Services? serviceType;
+  int? agent;
+  List<SessionTypes>? sessionTypes;
+  List<SessionTypes>? contactMediums;
+
+  VetService(
+      {this.id,
+      this.price,
+      this.isLive,
+      this.createdAt,
+      this.updatedAt,
+      this.serviceType,
+      this.agent,
+      this.sessionTypes,
+      this.contactMediums});
+
+  VetService.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    price = json['price'];
+    isLive = json['is_live'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    serviceType = json['service_type'] != null
+        ? new Services.fromJson(json['service_type'])
+        : null;
+    agent = json['agent'];
+    if (json['session_types'] != null) {
+      sessionTypes = <SessionTypes>[];
+      json['session_types'].forEach((v) {
+        sessionTypes!.add(new SessionTypes.fromJson(v));
+      });
+    }
+    if (json['contact_mediums'] != null) {
+      contactMediums = <SessionTypes>[];
+      json['contact_mediums'].forEach((v) {
+        contactMediums!.add(new SessionTypes.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['price'] = this.price;
+    data['is_live'] = this.isLive;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    if (this.serviceType != null) {
+      data['service_type'] = this.serviceType!.toJson();
+    }
+    data['agent'] = this.agent;
+    if (this.sessionTypes != null) {
+      data['session_types'] =
+          this.sessionTypes!.map((v) => v.toJson()).toList();
+    }
+    if (this.contactMediums != null) {
+      data['contact_mediums'] =
+          this.contactMediums!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class SessionTypes {
+  int? id;
+  String? name;
+
+  SessionTypes({this.id, this.name});
+
+  SessionTypes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
     return data;
   }
 }

@@ -196,7 +196,7 @@ class _ShopState extends State<Shop> {
                                                 
                                                 filteredProducts[index].image,
                                                 placeholder: AppImages.appLogo,
-                                                fit: BoxFit.contain,
+                                                fit: BoxFit.cover,
                                                 color: randomColor,
                                               )),
                                         ),

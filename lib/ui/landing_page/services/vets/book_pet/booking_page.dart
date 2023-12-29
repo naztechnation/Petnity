@@ -79,7 +79,8 @@ class VetBooking extends StatefulWidget {
 }
 
 class _VetBookingState extends State<VetBooking> {
-  String selectedDate1 = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
   String selectedTime1 = 'Select Time';
   late ServiceProviderCubit _serviceProviderCubit;
 
@@ -138,10 +139,8 @@ class _VetBookingState extends State<VetBooking> {
 
     if (response != null) {
       txId = response.transactionId ?? '';
-       
-      if (txId != '') {
-        
 
+      if (txId != '') {
         _serviceProviderCubit.verifyVetOrder(
             orderId: orderId,
             username: username,
@@ -235,8 +234,7 @@ class _VetBookingState extends State<VetBooking> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
@@ -360,15 +358,14 @@ class _VetBookingState extends State<VetBooking> {
                                     width: 130,
                                     height: 130,
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(100),
+                                      borderRadius: BorderRadius.circular(100),
                                     ),
                                     child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(150),
                                         child: ImageView.network(
-                                          vetServices?.vetService?.serviceType
-                                              ?.image,
+                                          vetServices
+                                              ?.vetService?.serviceType?.image,
                                           fit: BoxFit.cover,
                                         )),
                                   ),
@@ -513,7 +510,10 @@ class _VetBookingState extends State<VetBooking> {
                                     child: CustomText(
                                       textAlign: TextAlign.left,
                                       maxLines: 2,
-                                      text: selectedDate1,
+                                      text: selectedDate
+                                          .toString()
+                                          .split(' ')
+                                          .first,
                                       weight: FontWeight.w500,
                                       size: 16,
                                       color: Colors.black,
@@ -578,17 +578,28 @@ class _VetBookingState extends State<VetBooking> {
                                 processing: state is VetsServicesOrderLoading ||
                                     state is VetsConfirmOrderLoading,
                                 onPressed: () {
+                                  DateTime combinedDateTime = DateTime(
+                                    selectedDate.year,
+                                    selectedDate.month,
+                                    selectedDate.day,
+                                    selectedTime.hour,
+                                    selectedTime.minute,
+                                  );
 
-                                  if(selectedTime1 != 'Select Time'){
+                                  String formattedDateTime =
+                                      DateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                                          .format(combinedDateTime);
+
+                                  if (selectedTime1 != 'Select Time') {
                                     _serviceProviderCubit.vetServicesOrder(
-                                      agentId: agentId,
-                                      username: username,
-                                      vetService: vetServiceId,
-                                      sessionTime: '${selectedDate1} ${selectedTime1}');
-                                  }else{
-                                    Modals.showToast('please select session date and time');
+                                        agentId: agentId,
+                                        username: username,
+                                        vetService: vetServiceId,
+                                        sessionTime: formattedDateTime);
+                                  } else {
+                                    Modals.showToast(
+                                        'please select session date and time');
                                   }
-                                  
                                 },
                                 child: Text(
                                   'Pay for Session',
@@ -640,9 +651,6 @@ class _VetBookingState extends State<VetBooking> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
-
-        selectedDate1 = formattedDate;
       });
     }
   }
@@ -650,7 +658,6 @@ class _VetBookingState extends State<VetBooking> {
   Future<void> _selectTime(
     BuildContext context,
   ) async {
-    TimeOfDay selectedTime = TimeOfDay.now();
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
@@ -659,8 +666,9 @@ class _VetBookingState extends State<VetBooking> {
       setState(() {
         selectedTime = picked;
 
-        String formattedTime = selectedTime.format(context);
+        selectedTime1 = '${selectedTime.hour}:${selectedTime.minute}';
 
+        String formattedTime = selectedTime.format(context);
         selectedTime1 = formattedTime;
       });
     }

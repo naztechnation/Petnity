@@ -14,11 +14,11 @@ class AwaitingServices extends StatelessWidget {
           child: Column(
             children: [
               PetWalkingSessionWidget(),
-              VideoCallSessionWidget(),
+            //  VideoCallSessionWidget(),
               PetWalkingSessionWidget(),
-              VideoCallSessionWidget(),
+            //  VideoCallSessionWidget(),
               PetWalkingSessionWidget(),
-              VideoCallSessionWidget(),
+             // VideoCallSessionWidget(),
             ],
           ),
         ));

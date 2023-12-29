@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_screens/all_services.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
@@ -50,6 +51,9 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
   List<UserOrders> ongoingUserOrder = [];
   List<UserOrders> rejectedUserOrder = [];
 
+   List<VetOrders> vetOrders  = [];
+
+
   late UserCubit _userCubit;
 
   bool isLoading = false;
@@ -91,6 +95,9 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                 _userCubit.viewModel.onPendingOrderList.reversed.toList();
             rejectedUserOrder =
                 _userCubit.viewModel.onRejectedOrdersList.reversed.toList();
+
+             vetOrders =    state.orderList.vetOrders?.reversed.toList()  ?? [];
+                 
           } else {}
         }else if(state is UserShopListLoaded){
           userShopOrder = state.userShopData.shopOrders ?? [];
@@ -105,7 +112,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
               height: 50,
             ))
           : DefaultTabController(
-              length: 6,
+              length: 7,
               child: Scaffold(
                 backgroundColor: AppColors.lightBackground,
                 body: Column(
@@ -117,7 +124,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                         children: [
                           Expanded(
                               child: Text(
-                            'Total Services (${allUserOrder.length})',
+                            'Total Services (${allUserOrder.length + vetOrders.length})',
                             style: TextStyle(
                                 fontSize: 14, fontWeight: FontWeight.w600),
                           )),
@@ -137,7 +144,9 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                       padding: const EdgeInsets.all(10.0),
                       child: TabBar(
                         unselectedLabelColor: Colors.black,
-                        
+                        labelStyle: TextStyle(
+                color: Colors.white, 
+              ),
                         isScrollable: true,
                         indicator: BoxDecoration(
                             color: Colors.blue,
@@ -163,6 +172,18 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Text('Ongoing Services'),
+                              ),
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 10),
+                            child: Tab(
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Text('Vet Services'),
                               ),
                             ),
                             decoration: BoxDecoration(
@@ -229,9 +250,14 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                           AllServices.services(
                             allOrders: ongoingUserOrder,
                           ),
+                          AllServices.vet(
+                            allOrders: ongoingUserOrder, userShopOrder: [], vetOrders: vetOrders,
+                          ),
                           AllServices.shop(
                               userShopOrder: userShopOrder,
                               emptyListTitle: 'No available purchases'),
+
+                              
                           AllServices.services(
                             allOrders: pendingUserOrder,
                           ),

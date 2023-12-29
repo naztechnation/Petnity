@@ -30,10 +30,11 @@ class ShopOrder {
   String? total;
   String? paymentId;
   bool? isPaid;
-  bool? isDelivered;
+  bool? userMarkedDelivered;
+  bool? agentMarkedDelivered;
   String? createdAt;
   String? updatedAt;
-  int? profile;
+  Profile? profile;
   int? agent;
   Product? product;
 
@@ -43,7 +44,8 @@ class ShopOrder {
       this.total,
       this.paymentId,
       this.isPaid,
-      this.isDelivered,
+      this.userMarkedDelivered,
+      this.agentMarkedDelivered,
       this.createdAt,
       this.updatedAt,
       this.profile,
@@ -56,10 +58,12 @@ class ShopOrder {
     total = json['total'];
     paymentId = json['payment_id'];
     isPaid = json['is_paid'];
-    isDelivered = json['is_delivered'];
+    userMarkedDelivered = json['user_marked_delivered'];
+    agentMarkedDelivered = json['agent_marked_delivered'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    profile = json['profile'];
+    profile =
+        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'];
     product =
         json['product'] != null ? new Product.fromJson(json['product']) : null;
@@ -72,14 +76,128 @@ class ShopOrder {
     data['total'] = this.total;
     data['payment_id'] = this.paymentId;
     data['is_paid'] = this.isPaid;
-    data['is_delivered'] = this.isDelivered;
+    data['user_marked_delivered'] = this.userMarkedDelivered;
+    data['agent_marked_delivered'] = this.agentMarkedDelivered;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['profile'] = this.profile;
+    if (this.profile != null) {
+      data['profile'] = this.profile!.toJson();
+    }
     data['agent'] = this.agent;
     if (this.product != null) {
       data['product'] = this.product!.toJson();
     }
+    return data;
+  }
+}
+
+class Profile {
+  int? id;
+  String? firebaseId;
+  Null? deviceId;
+  String? phoneNumber;
+  Null? address;
+  Null? city;
+  Null? country;
+  String? profileImage;
+  Null? bio;
+  bool? isAgent;
+  bool? isReachable;
+  bool? isVerified;
+  bool? hasPets;
+  String? createdAt;
+  String? updatedAt;
+  bool? isDeleted;
+  User? user;
+
+  Profile(
+      {this.id,
+      this.firebaseId,
+      this.deviceId,
+      this.phoneNumber,
+      this.address,
+      this.city,
+      this.country,
+      this.profileImage,
+      this.bio,
+      this.isAgent,
+      this.isReachable,
+      this.isVerified,
+      this.hasPets,
+      this.createdAt,
+      this.updatedAt,
+      this.isDeleted,
+      this.user});
+
+  Profile.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    firebaseId = json['firebase_id'];
+    deviceId = json['device_id'];
+    phoneNumber = json['phone_number'];
+    address = json['address'];
+    city = json['city'];
+    country = json['country'];
+    profileImage = json['profile_image'];
+    bio = json['bio'];
+    isAgent = json['is_agent'];
+    isReachable = json['is_reachable'];
+    isVerified = json['is_verified'];
+    hasPets = json['has_pets'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    isDeleted = json['is_deleted'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['firebase_id'] = this.firebaseId;
+    data['device_id'] = this.deviceId;
+    data['phone_number'] = this.phoneNumber;
+    data['address'] = this.address;
+    data['city'] = this.city;
+    data['country'] = this.country;
+    data['profile_image'] = this.profileImage;
+    data['bio'] = this.bio;
+    data['is_agent'] = this.isAgent;
+    data['is_reachable'] = this.isReachable;
+    data['is_verified'] = this.isVerified;
+    data['has_pets'] = this.hasPets;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['is_deleted'] = this.isDeleted;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    return data;
+  }
+}
+
+class User {
+  int? id;
+  String? username;
+  String? email;
+  String? firstName;
+  String? lastName;
+
+  User({this.id, this.username, this.email, this.firstName, this.lastName});
+
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    username = json['username'];
+    email = json['email'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['username'] = this.username;
+    data['email'] = this.email;
+    data['first_name'] = this.firstName;
+    data['last_name'] = this.lastName;
     return data;
   }
 }
@@ -150,7 +268,7 @@ class Agent {
   String? createdAt;
   String? updatedAt;
   Profile? profile;
-  Null? idType;
+  int? idType;
   List<Services>? services;
   List<PetTypes>? petTypes;
 
@@ -233,109 +351,10 @@ class Agent {
   }
 }
 
-class Profile {
-  int? id;
-  String? firebaseId;
-  String? phoneNumber;
-  Null? address;
-  Null? city;
-  Null? country;
-  Null? profileImage;
-  bool? isAgent;
-  bool? isReachable;
-  bool? isVerified;
-  bool? hasPets;
-  String? createdAt;
-  String? updatedAt;
-  User? user;
-
-  Profile(
-      {this.id,
-      this.firebaseId,
-      this.phoneNumber,
-      this.address,
-      this.city,
-      this.country,
-      this.profileImage,
-      this.isAgent,
-      this.isReachable,
-      this.isVerified,
-      this.hasPets,
-      this.createdAt,
-      this.updatedAt,
-      this.user});
-
-  Profile.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    firebaseId = json['firebase_id'];
-    phoneNumber = json['phone_number'];
-    address = json['address'];
-    city = json['city'];
-    country = json['country'];
-    profileImage = json['profile_image'];
-    isAgent = json['is_agent'];
-    isReachable = json['is_reachable'];
-    isVerified = json['is_verified'];
-    hasPets = json['has_pets'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['firebase_id'] = this.firebaseId;
-    data['phone_number'] = this.phoneNumber;
-    data['address'] = this.address;
-    data['city'] = this.city;
-    data['country'] = this.country;
-    data['profile_image'] = this.profileImage;
-    data['is_agent'] = this.isAgent;
-    data['is_reachable'] = this.isReachable;
-    data['is_verified'] = this.isVerified;
-    data['has_pets'] = this.hasPets;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
-    }
-    return data;
-  }
-}
-
-class User {
-  int? id;
-  String? username;
-  String? email;
-  String? firstName;
-  String? lastName;
-
-  User({this.id, this.username, this.email, this.firstName, this.lastName});
-
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    username = json['username'];
-    email = json['email'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    return data;
-  }
-}
-
 class Services {
   int? id;
   String? name;
-  Null? image;
+  String? image;
 
   Services({this.id, this.name, this.image});
 

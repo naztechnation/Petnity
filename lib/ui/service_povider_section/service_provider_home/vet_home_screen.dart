@@ -22,9 +22,9 @@ class ServiceProviderVetHomeBody extends StatelessWidget {
         SizedBox(
           height: 10,
         ),
-        VideoCallSessionWidget(
-          buttonText: 'Track',
-        ),
+        // VideoCallSessionWidget(
+        //   buttonText: 'Track',
+        // ),
         Row(
           children: [
             CustomText(
