@@ -24,6 +24,8 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   List<ShopOrders> _orders = [];
 
   List<AgentServicesListOrders> _availableServices = [];
+  List<AgentServicesListVetOrders> _vetOrders = [];
+
 
   final List<int> _serviceSelectedIndexes = [];
   final List<int> _contactSelectedIndexes = [];
@@ -140,6 +142,7 @@ addContactType(int index, var item, var image) {
 
   setAgentServicesList(AgentServicesList orders) {
     _availableServices = orders.orders ?? [];
+    _vetOrders = orders.vetOrders ?? [];
     // _orderPageNumber = orders.numPages ?? 1;
 
     setViewState(ViewState.success);
@@ -259,6 +262,7 @@ addContactType(int index, var item, var image) {
 
   List<ShopOrders> get order => _orders;
   List<AgentServicesListOrders> get availableServices => _availableServices;
+  List<AgentServicesListVetOrders> get vetOrders => _vetOrders;
 
   List<String> _banksAndInstitutions = [
     "Access Bank",

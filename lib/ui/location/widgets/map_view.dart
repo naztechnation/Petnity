@@ -73,7 +73,7 @@ class _MapViewsState extends State<MapViews> {
             onMapCreated: _onMapCreated,
             initialCameraPosition: _userPosition,
             myLocationEnabled: true,
-            zoomControlsEnabled: false,
+            zoomControlsEnabled: true,
             myLocationButtonEnabled: false);
       
   }

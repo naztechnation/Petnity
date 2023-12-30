@@ -64,6 +64,13 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
     setState(() {});
   }
 
+
+  @override
+  void initState() {
+    getUsername();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final services = Provider.of<UserViewModel>(context, listen: false);
@@ -187,7 +194,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                     CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 2,
-                      text: AppUtils.formatComplexDate(
+                      text: AppUtils.formatComplexDateOnly(
                           dateTime: widget.startDate1),
                       weight: FontWeight.w600,
                       size: 12,
@@ -250,7 +257,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                     CustomText(
                       textAlign: TextAlign.left,
                       maxLines: 2,
-                      text: AppUtils.formatComplexDate(
+                      text: AppUtils.formatComplexDateOnly(
                           dateTime: widget.startDate2),
                       weight: FontWeight.w600,
                       size: 12,

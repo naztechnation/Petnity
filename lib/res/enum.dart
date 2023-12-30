@@ -20,6 +20,7 @@ enum GalleryRating { gallery, ratings }
 enum ViewState { idle, loading, processing, success, failed }
 
 enum sessionMedium { chat, call, video }
+enum requestsType { services, vets, products }
 
 enum UserType {none, user, serviceProvider}
 enum OrderType {none, services, shop, vet}

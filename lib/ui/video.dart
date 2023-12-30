@@ -8,9 +8,9 @@ import '../handlers/secure_handler.dart';
 import 'widgets/modals.dart';
 
 class VideoCall extends StatefulWidget {
-  final String user1;
-  final String user2;
-  const VideoCall({Key? key, required this.user1, required this.user2}) : super(key: key);
+  final String customerName;
+  final String agentName;
+  const VideoCall({Key? key, required this.customerName, required this.agentName}) : super(key: key);
 
   @override
   State<VideoCall> createState() => _VideoCallState();
@@ -38,11 +38,11 @@ getUserDetails() async {
 
     if (userType == 'user') {
         setState(() {
-          guestUsername = widget.user1;
+          guestUsername = widget.customerName;
         });
     }else{
        setState(() {
-          guestUsername = widget.user2;
+          guestUsername = widget.agentName;
         });
     }
     }
@@ -50,7 +50,7 @@ getUserDetails() async {
   @override
   void initState() {
     super.initState();
-    channelName = createChannelName(widget.user1, widget.user2).toLowerCase();  
+    channelName = createChannelName(widget.customerName, widget.agentName).toLowerCase();  
     initAgora();
     getUserDetails();
   }
@@ -60,7 +60,7 @@ getUserDetails() async {
       agoraConnectionData: AgoraConnectionData(
         appId: "300ca74228b44a1f92c8927fabf14f07",
         channelName: channelName,  
-        username: widget.user1,
+        username: widget.customerName,
       ),
     );
 
@@ -83,6 +83,8 @@ getUserDetails() async {
 
   @override
   Widget build(BuildContext context) {
+
+    Modals.showToast(channelName);
 
     return WillPopScope(
       onWillPop: onBackPress,
