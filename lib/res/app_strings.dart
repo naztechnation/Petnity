@@ -213,6 +213,28 @@ static String getUserNotifications(String username,) =>
       '${_baseUrl}order/create-vet-order/$username/$agentId'; 
   static String confirmVetPaymentOrder(String orderId,String username) =>
       '${_baseUrl}order/vet-order-payment/$username/$orderId'; 
+
+      //Agent accept order
     
-    
+  static String agentAcceptVetOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-accept-vet-order/$agentId/$orderId';
+
+  static String agentMarkOngoingVetOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/vet-order-ongoing/$agentId/$orderId';
+
+  static String agentMarkCompletedVetOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-complete-vet-order/$agentId/$orderId';
+
+      static String agentRejectServiceVetOrder(
+          {required String agentId, required String orderId}) =>
+      '${_baseUrl}order/agent-reject-vet-order/$agentId/$orderId';
+ 
+ 
+
+      static String userMarkVetOrderDelivered(
+          {required String username, required String orderId}) =>
+      '${_baseUrl}order/user-complete-vet-order/$username/$orderId';
 }

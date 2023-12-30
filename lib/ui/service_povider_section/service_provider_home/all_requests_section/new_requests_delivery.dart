@@ -630,7 +630,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               // if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackVetServicesScreen(
-                    agentName: order.agent?.name ?? '',
+                    agentName: order.agent?.profile?.user?.username ?? '',
                     phone: order.agent?.profile?.phoneNumber ?? '',
                     agentId: order.agent?.profile?.firebaseId ?? '',
                     sellerId: order.agent?.id.toString() ?? '',

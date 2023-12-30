@@ -197,7 +197,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: TrackVetServicesScreen(
-                            agentName: widget.vetOrders.agent?.name ?? '',
+                            agentName: widget.vetOrders.agent?.profile?.user?.username ?? '',
                             phone:
                                 widget.vetOrders.agent?.profile?.phoneNumber ??
                                     '',

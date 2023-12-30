@@ -1053,7 +1053,7 @@ class _TrackServicesState extends State<TrackServices> {
   }) {
     ctx
         .read<ServiceProviderCubit>()
-        .acceptAgentOrder(agentId: agentId, orderId: orderId);
+        .acceptAgentVetOrder(agentId: agentId, orderId: orderId);
   }
 
   markOngoingAccepted({
@@ -1063,7 +1063,7 @@ class _TrackServicesState extends State<TrackServices> {
   }) {
     ctx
         .read<ServiceProviderCubit>()
-        .markOngoingAgentOrder(agentId: agentId, orderId: orderId);
+        .markOngoingAgentVetOrder(agentId: agentId, orderId: orderId);
   }
 
   markCompletedAccepted({
@@ -1073,7 +1073,7 @@ class _TrackServicesState extends State<TrackServices> {
   }) {
     ctx
         .read<ServiceProviderCubit>()
-        .markCompleteAgentOrder(agentId: agentId, orderId: orderId);
+        .markCompleteAgentVetOrder(agentId: agentId, orderId: orderId);
   }
 
   userMarkAsDelivered({
@@ -1083,7 +1083,7 @@ class _TrackServicesState extends State<TrackServices> {
   }) {
     ctx
         .read<ServiceProviderCubit>()
-        .userAcknowledgeOrderDelivered(username: username, orderId: orderId);
+        .userAcknowledgeVetOrderDelivered(username: username, orderId: orderId);
   }
 
   rejectUserOrder({
@@ -1093,10 +1093,8 @@ class _TrackServicesState extends State<TrackServices> {
   }) {
     ctx
         .read<ServiceProviderCubit>()
-        .rejectUserOrder(agentId: agentId, orderId: orderId);
+        .rejectUserVetOrder(agentId: agentId, orderId: orderId);
   }
 
-  _callNumber(String number) async {
-    bool res = await FlutterPhoneDirectCaller.callNumber(number) ?? false;
-  }
+   
 }

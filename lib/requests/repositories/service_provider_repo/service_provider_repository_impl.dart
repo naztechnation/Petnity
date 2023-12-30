@@ -344,4 +344,62 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
     return CreateVetOrder.fromJson(map);
   }
+  
+  @override
+  Future<AuthData> acceptAgentVetOrder({required String agentId, 
+  required String orderId}) async {
+    final map = await Requests().patch(
+        AppStrings.agentAcceptVetOrder(agentId: agentId, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
+  @override
+  Future<AuthData> acceptCompleteVetOrder({required String agentId,
+   required String orderId})  async {
+    final map = await Requests().patch(
+        AppStrings.agentMarkCompletedVetOrder(agentId: agentId, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
+  @override
+  Future<AuthData> acceptOngoingVetOrder({required String agentId, required String orderId})  async {
+    final map = await Requests().patch(
+        AppStrings.agentMarkOngoingVetOrder(agentId: agentId, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  @override
+  Future<AuthData> agentRejectServiceVetOrder({required String agentId,
+   required String orderId}) async {
+    final map = await Requests().patch(
+        AppStrings.agentRejectServiceVetOrder(agentId: agentId, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
+  @override
+  Future<AuthData> userAcceptVetOrderDelivered({required String username,
+   required String orderId}) async {
+    final map = await Requests().patch(
+        AppStrings.userMarkVetOrderDelivered(username: username, orderId: orderId),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
 }

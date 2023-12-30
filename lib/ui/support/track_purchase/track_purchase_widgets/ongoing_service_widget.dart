@@ -169,7 +169,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                                     agentName: allOrders.agent?.profile?.user?.username ?? '',
                                     userImage: allOrders.agent?.picture ?? '',
                                     uid: allOrders.agent?.profile?.firebaseId ??
-                                        '', customerName: allOrders.agent?.profile?.user?.username ?? '',));
+                                        '', customerName: allOrders.profile?.user?.username ?? '',));
                           }
                         },
                         child: ImageView.svg(AppImages.messageBorder)),
@@ -180,7 +180,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
-                                customerName: allOrders.agent?.profile?.user?.username ?? '',
+                                customerName: allOrders.profile?.user?.username ?? '',
                                 agentName: allOrders.agent?.profile?.user?.username ?? '',
                               ));
                         },

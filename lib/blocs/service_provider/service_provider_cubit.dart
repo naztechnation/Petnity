@@ -659,4 +659,148 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+Future<void> rejectUserVetOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(RejectOrderLoading());
+
+      final services = await serviceProviderRepository.agentRejectServiceVetOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      
+      emit(RejectOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> userAcknowledgeVetOrderDelivered({
+    required String username,
+    required String orderId,
+  }) async {
+    try {
+      emit(AcceptShopOrderLoading());
+
+      final services = await serviceProviderRepository.userAcceptVetOrderDelivered(
+        username: username,
+        orderId: orderId,
+      );
+
+      
+      emit(UserAcceptOrderDeliveredOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+Future<void> acceptAgentVetOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AcceptOrderLoading());
+
+      final services = await serviceProviderRepository.acceptAgentVetOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      emit(AcceptOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> markOngoingAgentVetOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AgentOrdersLoading());
+
+      final services = await serviceProviderRepository.acceptOngoingVetOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      
+      emit(AcceptOngoingOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+   Future<void> markCompleteAgentVetOrder({
+    required String agentId,
+    required String orderId,
+  }) async {
+    try {
+      emit(AgentOrdersLoading());
+
+      final services = await serviceProviderRepository.acceptCompleteVetOrder(
+        agentId: agentId,
+        orderId: orderId,
+      );
+
+      
+      emit(AcceptCompletedOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }
