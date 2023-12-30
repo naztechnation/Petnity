@@ -149,7 +149,7 @@ class ServiceRequest extends StatelessWidget {
                       color: Colors.white,
                       borderColor: Colors.white,
                       child: CustomText(
-                        color: Colors.blue,
+                        color: AppColors.lightSecondary,
                         weight: FontWeight.bold,
                         text: 'View pet Profile',
                       )),

@@ -381,6 +381,7 @@ class _TrackServicesState extends State<TrackServices> {
                                 text:
                                     'This service has rejected by the service provider',
                                 color: Colors.red,
+                                maxLines: 2,
                                 size: 14,
                                 weight: FontWeight.w700,
                               ),
@@ -434,7 +435,7 @@ class _TrackServicesState extends State<TrackServices> {
                             child: Center(
                               child: CustomText(
                                 text: 'Service Completed',
-                                color: Colors.blue,
+                                color: AppColors.lightSecondary,
                                 size: 14,
                                 weight: FontWeight.w700,
                               ),
@@ -671,7 +672,7 @@ class _TrackServicesState extends State<TrackServices> {
                                   text: 'Why service charge?',
                                   size: 12,
                                   weight: FontWeight.bold,
-                                  color: Colors.blue,
+                                  color: AppColors.lightSecondary,
                                 ),
                                 const SizedBox(
                                   height: 20,

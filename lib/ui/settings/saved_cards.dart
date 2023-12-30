@@ -58,7 +58,7 @@ class SavedCards extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ATMCard(context, [
-              Colors.blue,
+              AppColors.lightSecondary,
               Colors.green,
             ]),
             ATMCard(context, [

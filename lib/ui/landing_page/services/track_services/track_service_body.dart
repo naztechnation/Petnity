@@ -154,7 +154,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                       borderRadius: 30,
                       borderColor: Colors.white,
                       child: CustomText(
-                        color: Colors.blue,
+                        color: AppColors.lightSecondary,
                         weight: FontWeight.bold,
                         text: 'View Pet Profile',
                       )),

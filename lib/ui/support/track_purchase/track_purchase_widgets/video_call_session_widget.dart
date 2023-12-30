@@ -77,7 +77,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: widget.vetOrders.agent?.name,
+                          text: widget.vetOrders.agent?.profile?.user?.username ?? '',
                           size: 14,
                           weight: FontWeight.bold,
                         ),

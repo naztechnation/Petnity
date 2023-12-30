@@ -120,7 +120,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
                           padding: const EdgeInsets.all(15.0),
                           child: Icon(
                             Icons.circle,
-                            color: Colors.blue,
+                            color: AppColors.lightSecondary,
                           ),
                         ),
                         Text(

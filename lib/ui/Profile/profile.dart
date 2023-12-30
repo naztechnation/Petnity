@@ -234,7 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 20, vertical: 30),
                               decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.blue),
+                                  border: Border.all(color: AppColors.lightSecondary),
                                   color: Color(0xff8DADFF).withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(30)),
                               child: Text(
@@ -312,7 +312,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       //                           .295,
                       //                       height: screenSize(context).height *
                       //                           .125,
-                      //                       color: Colors.blue,
+                      //                       color: AppColors.lightSecondary,
                       //                       child: ImageView.asset(
                       //                         AppImages.playing,
                       //                         fit: BoxFit.cover,

@@ -114,7 +114,7 @@ class _TreatmentState extends State<Treatment> {
                             children: [
                               Icon(
                                 Icons.location_on,
-                                color: Colors.blue,
+                                color: AppColors.lightSecondary,
                               ),
                               SizedBox(
                                 width: 10,
@@ -123,7 +123,7 @@ class _TreatmentState extends State<Treatment> {
                                 child: Text(
                                   'Get directions to vets address on map - 223km away',
                                   style: TextStyle(
-                                    color: Colors.blue,
+                                    color: AppColors.lightSecondary,
                                     fontFamily: AppStrings.interSans,
                                   ),
                                 ),

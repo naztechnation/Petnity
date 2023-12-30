@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 
+import '../../../../res/app_colors.dart';
 import '../../../widgets/image_view.dart';
 
 class OngoingOrderWidget extends StatelessWidget {
@@ -36,9 +37,9 @@ class OngoingOrderWidget extends StatelessWidget {
             height: 30,
             width: 30,
             decoration: BoxDecoration(
-              color: isActive ? Colors.blue : Colors.white,
+              color: isActive ? AppColors.lightSecondary : Colors.white,
               borderRadius: BorderRadius.circular(40.0),
-              border: Border.all(color: isActive ? Colors.blue : Colors.grey),
+              border: Border.all(color: isActive ? AppColors.lightSecondary : Colors.grey),
             ),
             child: Padding(
               padding: const EdgeInsets.all(6.0),
@@ -56,7 +57,7 @@ class OngoingOrderWidget extends StatelessWidget {
       flex: 4,
       child: Container(
         height: 2.0,
-        color: (isOrderReceived ? Colors.blue : Colors.grey),
+        color: (isOrderReceived ? AppColors.lightSecondary : Colors.grey),
       ),
     );
   }

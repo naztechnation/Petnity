@@ -102,7 +102,7 @@ class ServiceProviderVetHomeBody extends StatelessWidget {
             },
             child: Text(
               'view',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: AppColors.lightSecondary),
             ),
             borderRadius: 100,
             color: AppColors.scaffoldColor,

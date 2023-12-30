@@ -154,7 +154,7 @@ class _SupportScreenState extends State<SupportScreen> {
                     expanded: false,
                     borderRadius: 30,
                     borderColor: Colors.transparent,
-                    color: Colors.blue.withOpacity(0.2),
+                    color: AppColors.lightSecondary.withOpacity(0.2),
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: LiveSupportPage());
@@ -164,14 +164,14 @@ class _SupportScreenState extends State<SupportScreen> {
                       children: [
                         Icon(
                           Icons.message,
-                          color: Colors.blue,
+                          color: AppColors.lightSecondary,
                         ),
                         SizedBox(
                           width: 10,
                         ),
                         Text(
                           'Live Chat',
-                          style: TextStyle(color: Colors.blue),
+                          style: TextStyle(color: AppColors.lightSecondary),
                         )
                       ],
                     )),
@@ -265,7 +265,7 @@ class _SupportScreenState extends State<SupportScreen> {
                       leading: Icon(
                         Icons.circle,
                         size: 16,
-                        color: Colors.blue,
+                        color: AppColors.lightSecondary,
                       ),
                       // trailing: Icon(
                       //   Icons.arrow_forward_ios,

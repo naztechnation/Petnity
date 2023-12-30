@@ -10,7 +10,7 @@ class ProgressIndicators{
         value: value,
         strokeWidth: strokeWidth,
         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        backgroundColor: (Colors.blue));
+        backgroundColor: (AppColors.lightSecondary));
   }
 
   static Widget linearProgressBar(BuildContext context,

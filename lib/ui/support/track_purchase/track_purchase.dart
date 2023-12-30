@@ -149,7 +149,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
               ),
                         isScrollable: true,
                         indicator: BoxDecoration(
-                            color: Colors.blue,
+                            color: AppColors.lightSecondary,
                             borderRadius: BorderRadius.circular(20)),
                         tabs: [
                           Container(

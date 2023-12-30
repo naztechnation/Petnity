@@ -117,7 +117,7 @@ class PurchaseRequests extends StatelessWidget {
                         height: 5,
                       ),
                       ButtonView(
-                        color: Colors.blue.shade50,
+                        color: AppColors.lightSecondary.withOpacity(0.5),
                         onPressed: () {},
                         borderRadius: 30,
                         borderColor: Colors.white,

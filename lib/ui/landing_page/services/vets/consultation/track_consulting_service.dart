@@ -278,7 +278,7 @@ class _TrackConsultingServiceState extends State<TrackConsultingService> {
                     borderRadius: 50,
                     child: CustomText(
                       text: 'View profile',
-                      color: Colors.blue,
+                      color: AppColors.lightSecondary,
                       size: 13,
                       weight: FontWeight.bold,
                     ),
@@ -463,7 +463,7 @@ class _TrackConsultingServiceState extends State<TrackConsultingService> {
                       padding: const EdgeInsets.all(10.0),
                       child: Icon(
                         Icons.notifications,
-                        color: Colors.blue,
+                        color: AppColors.lightSecondary,
                       ),
                     )
                   ],

@@ -248,7 +248,7 @@ class _TrackServiceState extends State<TrackService> {
                             color: Colors.white,
                             borderColor: Colors.white,
                             child: CustomText(
-                              color: Colors.blue,
+                              color: AppColors.lightSecondary,
                               weight: FontWeight.bold,
                               text: 'View pet Profile',
                             )),
@@ -479,7 +479,7 @@ class _TrackServiceState extends State<TrackService> {
                         text: 'Why service charge?',
                         size: 12,
                         weight: FontWeight.bold,
-                        color: Colors.blue,
+                        color: AppColors.lightSecondary,
                       ),
                       ended
                           ? Container()
@@ -532,7 +532,7 @@ class _TrackServiceState extends State<TrackService> {
                           child: Center(
                             child: CustomText(
                               text: 'Feedbacks?',
-                              color: Colors.blue,
+                              color: AppColors.lightSecondary,
                               weight: FontWeight.bold,
                             ),
                           ),
@@ -566,7 +566,7 @@ class _TrackServiceState extends State<TrackService> {
                         padding: const EdgeInsets.all(10.0),
                         child: Icon(
                           Icons.notifications,
-                          color: Colors.blue,
+                          color: AppColors.lightSecondary,
                         ),
                       )
                     ],
@@ -747,7 +747,7 @@ class _TrackServiceState extends State<TrackService> {
             minHeight: 8, // Adjust the height of the progress line
             backgroundColor: Colors.grey[300], // Color of the remaining line
             valueColor: AlwaysStoppedAnimation<Color>(
-                Colors.blue), // Color of the progress line
+                AppColors.lightSecondary), // Color of the progress line
           ),
         ],
       ),

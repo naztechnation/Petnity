@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 
+import '../../res/app_colors.dart';
+
 class AccountDeleted extends StatelessWidget {
   const AccountDeleted({super.key});
 
@@ -41,7 +43,7 @@ class AccountDeleted extends StatelessWidget {
                       child: Text(
                         'Sign up',
                         style: TextStyle(
-                            color: Colors.blue, fontWeight: FontWeight.bold),
+                            color: AppColors.lightSecondary, fontWeight: FontWeight.bold),
                       ),
                       color: Colors.white,
                     ),

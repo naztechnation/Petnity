@@ -141,7 +141,7 @@ class _VetServiceState extends State<VetService> {
                     ),
                     Icon(
                       Icons.verified,
-                      color: Colors.blue,
+                      color: AppColors.lightSecondary,
                     ),
                   ],
                 ),

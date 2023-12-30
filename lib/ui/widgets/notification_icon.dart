@@ -21,7 +21,7 @@ class NotificationIcon extends StatelessWidget {
           //     padding: EdgeInsets.all(2.0),
           //     decoration: BoxDecoration(
           //       shape: BoxShape.circle,
-          //       color: Colors.blue,
+          //       color: AppColors.lightSecondary,
           //     ),
           //     constraints: BoxConstraints(
           //       minWidth: 16.0,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
+import 'package:petnity/res/app_colors.dart';
 
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -77,7 +78,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.product?.agent?.name ?? '',
+                        allOrders.product?.agent?.profile?.user?.username ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
@@ -185,12 +186,12 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                 Container(
                   width: screenSize(context).width * .23,
                   child: ButtonView(
-                    color: Colors.blue,
+                    color: AppColors.lightSecondary,
                     onPressed: () {
                      // if (order.isPaid ?? false) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return PurchaseRequest(
-                    agentName: '${allOrders.product?.agent?.name}',
+                    agentName: '${allOrders.product?.agent?.profile?.user?.username}',
                     customerName: '${allOrders.profile?.user?.username}',
                      
                     productName: '${allOrders.product?.name}',

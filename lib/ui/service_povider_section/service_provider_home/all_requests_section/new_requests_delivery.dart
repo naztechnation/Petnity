@@ -152,7 +152,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     border: Border(
                       bottom: BorderSide(
                         color: isServices.name == 'services'
-                            ? Colors.blue
+                            ? AppColors.lightSecondary
                             : Colors.transparent,
                         width: 5.0,
                       ),
@@ -162,7 +162,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     'Services',
                     style: TextStyle(
                       color: isServices.name == 'services'
-                          ? Colors.blue
+                          ? AppColors.lightSecondary
                           : Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -182,7 +182,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     border: Border(
                       bottom: BorderSide(
                         color: isServices.name == 'vets'
-                            ? Colors.blue
+                            ? AppColors.lightSecondary
                             : Colors.transparent,
                         width: 5.0,
                       ),
@@ -192,7 +192,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     'Vet Services',
                     style: TextStyle(
                       color: isServices.name == 'vets'
-                          ? Colors.blue
+                          ? AppColors.lightSecondary
                           : Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -210,7 +210,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     border: Border(
                       bottom: BorderSide(
                         color: isServices.name == 'products'
-                            ? Colors.blue
+                            ? AppColors.lightSecondary
                             : Colors.transparent,
                         width: 5.0,
                       ),
@@ -220,7 +220,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     'Products',
                     style: TextStyle(
                       color: isServices.name == 'products'
-                          ? Colors.blue
+                          ? AppColors.lightSecondary
                           : Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
@@ -513,11 +513,11 @@ class _ServiceProviderPetDeliveryHomeBodyState
             },
             child: Text(
               'view',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: AppColors.lightSecondary),
             ),
             borderRadius: 100,
             padding: const EdgeInsets.symmetric(vertical: 10),
-            color: Colors.blue.shade100,
+            color: AppColors.lightSecondary.withOpacity(0.5),
             expanded: false,
             borderColor: Colors.transparent,
           ),
@@ -659,11 +659,11 @@ class _ServiceProviderPetDeliveryHomeBodyState
             },
             child: Text(
               'view',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: AppColors.lightSecondary),
             ),
             borderRadius: 100,
             padding: const EdgeInsets.symmetric(vertical: 10),
-            color: Colors.blue.shade100,
+            color: AppColors.lightSecondary.withOpacity(0.2),
             expanded: false,
             borderColor: Colors.transparent,
           ),
@@ -772,10 +772,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
             },
             child: Text(
               'view',
-              style: TextStyle(color: Colors.blue),
+              style: TextStyle(color: AppColors.lightSecondary),
             ),
             borderRadius: 100,
-            color: Colors.blue.shade100,
+            color: AppColors.lightSecondary.withOpacity(0.5),
             padding: const EdgeInsets.symmetric(vertical: 10),
             expanded: false,
             borderColor: Colors.transparent,

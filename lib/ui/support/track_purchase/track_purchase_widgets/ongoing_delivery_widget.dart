@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/agent_services_lists.dart';
 import '../../../../model/view_models/user_view_model.dart';
+import '../../../../res/app_colors.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
 import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../video.dart';
@@ -211,7 +212,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                   Container(
                     width: screenSize(context).width * .23,
                     child: ButtonView(
-                      color: Colors.blue,
+                      color: AppColors.lightSecondary,
                       onPressed: () {
                         //  if(widget.services.isPaid ?? false) {
                         AppNavigator.pushAndStackPage(context,

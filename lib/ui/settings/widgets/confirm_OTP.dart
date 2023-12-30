@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_constants.dart';
 
+import '../../../res/app_colors.dart';
+
 class ConfirmOTP extends StatefulWidget {
   @override
   _ConfirmOTPState createState() => _ConfirmOTPState();
@@ -131,7 +133,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 children: [
                   Text(
                     'Resend ',
-                    style: TextStyle(color: Colors.blue),
+                    style: TextStyle(color: AppColors.lightSecondary),
                   ),
                   Text('in ${_secondsRemaining} seconds'),
                 ],

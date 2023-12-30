@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/view_models/user_view_model.dart';
+import '../../../../res/app_colors.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
 import '../../../notfications_pages/chat_pages/chat_page.dart';
@@ -77,7 +78,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.agent?.name ?? '',
+                        allOrders.agent?.profile?.user?.username ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
@@ -190,7 +191,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                 Container(
                   width: screenSize(context).width * .23,
                   child: ButtonView(
-                    color: Colors.blue,
+                    color: AppColors.lightSecondary,
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: TrackServicesScreen(

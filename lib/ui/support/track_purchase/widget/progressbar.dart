@@ -3,6 +3,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../../res/app_colors.dart';
+
 class ProgressBar extends StatelessWidget {
   final double totalTime ;
   final double remainingTime;
@@ -21,8 +23,8 @@ class ProgressBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             gradient: LinearGradient(
               colors: [
-                Colors.blue,
-                Colors.blue.withOpacity(0.5), 
+                AppColors.lightSecondary,
+                AppColors.lightSecondary.withOpacity(0.5), 
                 
               ],
               stops: [progress, progress],
