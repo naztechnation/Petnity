@@ -24,7 +24,7 @@ import '../../../widgets/custom_text.dart';
 import 'track_service_body.dart';
 
 class TrackServicesScreen extends StatelessWidget {
-  final String sellerName;
+  final String agentName;
   final String sellerImage;
   final String phone;
   final String serviceOffered;
@@ -48,7 +48,7 @@ class TrackServicesScreen extends StatelessWidget {
   final bool isAgentMarkedService;
 
   const TrackServicesScreen(
-      {required this.sellerName,
+      {required this.agentName,
       required this.phone,
       required this.serviceOffered,
       required this.agentId,
@@ -78,7 +78,7 @@ class TrackServicesScreen extends StatelessWidget {
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: TrackServices(
         phone: phone,
-        sellerName: sellerName,
+        agentName: agentName,
         serviceOffered: serviceOffered,
         agentId: agentId,
         startDate1: startDate1,
@@ -104,7 +104,7 @@ class TrackServicesScreen extends StatelessWidget {
 }
 
 class TrackServices extends StatefulWidget {
-  final String sellerName;
+  final String agentName;
   final String sellerPhoto;
   final String phone;
   final String serviceOffered;
@@ -130,7 +130,7 @@ class TrackServices extends StatefulWidget {
 
   const TrackServices(
       {super.key,
-      required this.sellerName,
+      required this.agentName,
       required this.phone,
       required this.serviceOffered,
       required this.agentId,
@@ -345,7 +345,7 @@ class _TrackServicesState extends State<TrackServices> {
                                 height: 20,
                               ),
                               TrackServicesBody(
-                                sellerName: widget.sellerName,
+                                agentName: widget.agentName,
                                 phone: widget.phone,
                                 agentId: widget.agentId,
                                 sellerId: widget.sellerId,

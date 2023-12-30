@@ -23,7 +23,7 @@ import '../pet_profile/pet_profile.dart';
 import 'widget/profile.dart';
 
 class TrackServicesBody extends StatefulWidget {
-  final String sellerName;
+  final String agentName;
   final String sellerPhoto;
   final String phone;
   final String agentId;
@@ -40,7 +40,7 @@ class TrackServicesBody extends StatefulWidget {
 
   const TrackServicesBody(
       {super.key,
-      required this.sellerName,
+      required this.agentName,
       required this.phone,
       required this.agentId,
       required this.sellerId,
@@ -49,7 +49,11 @@ class TrackServicesBody extends StatefulWidget {
       required this.paymentId,
       required this.amount,
       required this.sellerPhoto,
-      required this.sessionStatus, required this.customerName, required this.customerImage, required this.customerPhone, required this.customerFireBaseId});
+      required this.sessionStatus, 
+      required this.customerName,
+       required this.customerImage, 
+       required this.customerPhone,
+        required this.customerFireBaseId});
 
   @override
   State<TrackServicesBody> createState() => _TrackServicesBodyState();
@@ -94,7 +98,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               serviceProfile(context,
-                  sellerName: widget.sellerName,
+                  agentName: widget.agentName,
                   sellerImage: widget.sellerPhoto,
                   sellerId: widget.agentId,
                   userName: user.username,

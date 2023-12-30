@@ -158,13 +158,13 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                           } else {
                             AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
-                                    username:
+                                    agentName:
                                         allOrders.product?.agent?.name ?? '',
                                     userImage:
                                         allOrders.product?.agent?.picture ?? '',
                                     uid: allOrders.product?.agent?.profile
                                             ?.firebaseId ??
-                                        ''));
+                                        '', customerName: '',));
                           }
                         },
                         child: ImageView.svg(AppImages.messageBorder)),
@@ -175,8 +175,8 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
-                                user1: allOrders.product?.agent?.name ?? '',
-                                user2: username,
+                                customerName: allOrders.profile?.user?.username ?? '',
+                                agentName: allOrders.product?.agent?.profile?.user?.username ?? '',
                               ));
                         },
                         child: ImageView.svg(AppImages.videoBorder)),
@@ -190,8 +190,8 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                      // if (order.isPaid ?? false) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return PurchaseRequest(
-                    ownerName: '${allOrders.product?.agent?.name}',
-                    buyerName: '${allOrders.profile?.user?.username}',
+                    agentName: '${allOrders.product?.agent?.name}',
+                    customerName: '${allOrders.profile?.user?.username}',
                      
                     productName: '${allOrders.product?.name}',
                     productImage: '${allOrders.product?.image}',

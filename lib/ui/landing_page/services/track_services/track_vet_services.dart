@@ -37,7 +37,7 @@ import '../../../widgets/custom_text.dart';
 import '../../../widgets/image_view.dart';
 
 class TrackVetServicesScreen extends StatelessWidget {
-  final String sellerName;
+  final String agentName;
   final String sellerImage;
   final String phone;
   final String agentId;
@@ -62,7 +62,7 @@ class TrackVetServicesScreen extends StatelessWidget {
   final bool isAgentMarkedService;
 
   const TrackVetServicesScreen(
-      {required this.sellerName,
+      {required this.agentName,
       required this.phone,
       required this.agentId,
       required this.sellerId,
@@ -92,7 +92,7 @@ class TrackVetServicesScreen extends StatelessWidget {
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: TrackServices(
         phone: phone,
-        sellerName: sellerName,
+        agentName: agentName,
         agentId: agentId,
         startDate1: startDate1,
         amount: amount,
@@ -118,7 +118,7 @@ class TrackVetServicesScreen extends StatelessWidget {
 }
 
 class TrackServices extends StatefulWidget {
-  final String sellerName;
+  final String agentName;
   final String sellerPhoto;
   final String phone;
   final List<SessionTypes> contactMediums;
@@ -146,7 +146,7 @@ class TrackServices extends StatefulWidget {
 
   const TrackServices(
       {super.key,
-      required this.sellerName,
+      required this.agentName,
       required this.phone,
       required this.agentId,
       required this.sellerId,
@@ -411,7 +411,7 @@ class _TrackServicesState extends State<TrackServices> {
                                             subtitle: CustomText(
                                               textAlign: TextAlign.left,
                                               maxLines: 2,
-                                              text: userType == 'user' ? widget.sellerName.capitalizeFirstOfEach : widget.customerName.capitalizeFirstOfEach,
+                                              text: userType == 'user' ? widget.agentName.capitalizeFirstOfEach : widget.customerName.capitalizeFirstOfEach,
                                               weight: FontWeight.w700,
                                               size: 12,
                                               fontFamily: AppStrings.interSans,
@@ -431,12 +431,12 @@ class _TrackServicesState extends State<TrackServices> {
                                                           sessionTypeName:    sessionType.name ??
                                                                   '',
                                                           phone:  userType == 'user' ?  widget.phone  : widget.customerPhone,
-                                                           name: userType == 'user' ?  widget.sellerName : widget.customerName,
+                                                           customerName: widget.customerName,
                                                               
                                                           picture:   userType == 'user' ? widget
                                                                   .sellerPhoto : widget.customerImage,
                                                           firebaseId:  userType == 'user' ?  widget.agentId : widget.customerFireBaseId,
-                                                          username:  userType == 'user' ? widget.sellerName : widget.customerName),
+                                                          agentName:  widget.agentName),
                                                       ],
                                                     )
                                                    

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
@@ -22,38 +23,49 @@ import '../../widgets/profile_image.dart';
 import 'widget/message_tile.dart';
 
 class ChatPage extends StatefulWidget {
-  final String username;
+  final String customerName;
+  final String agentName;
+
   final String userImage;
   final String uid;
 
   const ChatPage(
       {super.key,
-      required this.username,
+      required this.customerName,
+      required this.agentName,
       required this.userImage,
       required this.uid});
   @override
-  State<ChatPage> createState() => _ChatPageState(username, userImage, uid);
+  State<ChatPage> createState() => _ChatPageState(   customerName: customerName, agentName: agentName, userImage: userImage, uid: uid);
 }
 
 class _ChatPageState extends State<ChatPage> {
-  final String username;
+  final String customerName;
+  final String agentName;
   final String userImage;
   final String uid;
 
   TextEditingController messageController = TextEditingController();
   final _scrollController = ScrollController();
   String admin = "";
+  String userType = "";
 
   String groupChatId = "";
   String currentUserId = "";
   String peerId = "";
 
+  getUserType()async{
+    userType = await StorageHandler.getUserType();
+  }
+
    final _firebaseAuth = FirebaseAuth.instance;
 
-  _ChatPageState(this.username, this.userImage, this.uid);
+  _ChatPageState({required this.customerName,required this.agentName,required this.userImage,required this.uid});
 
   @override
   void initState() {
+
+    getUserType();
     updateOnlineStatus(true);
 
     generateGroupId();
@@ -190,7 +202,7 @@ class _ChatPageState extends State<ChatPage> {
                         CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 2,
-                          text: '$username'.capitalizeFirstOfEach,
+                          text: (userType == 'user') ? '$agentName'.capitalizeFirstOfEach : '$customerName'.capitalizeFirstOfEach ,
                           weight: FontWeight.w700,
                           size: 14,
                           fontFamily: AppStrings.interSans,
@@ -240,7 +252,7 @@ class _ChatPageState extends State<ChatPage> {
                           GestureDetector(
                               onTap: (() {
                                 AppNavigator.pushAndStackPage(context,
-                                    page: VideoCall(user1: username, user2: user.username,));
+                                    page: VideoCall(customerName: customerName, agentName: agentName,));
                               }),
                               child: ImageView.svg(AppImages.videoIcon)),
                         ],
@@ -362,7 +374,7 @@ class _ChatPageState extends State<ChatPage> {
 
               return MessageTile(
                   message: chat.content,
-                  sender: username,
+                  sender: userType == 'user' ? customerName : agentName,
                   timeStamp: 0,
                   sentByMe: chat.idFrom == currentUserId ? true : false);
             },

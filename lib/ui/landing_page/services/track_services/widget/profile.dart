@@ -7,6 +7,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 
 import '../../../../../res/app_strings.dart';
 import '../../../../../utils/navigator/page_navigator.dart';
+ 
 import '../../../../video.dart';
 import '../../../../widgets/custom_text.dart';
 import '../../../../widgets/modals.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 Widget serviceProfile(
   BuildContext context, {
   bool hideImage = false,
-  required String sellerName,
+  required String agentName,
   required String sellerImage,
   required String sellerId,
   required String userName,
@@ -58,7 +59,7 @@ Widget serviceProfile(
           subtitle: CustomText(
             textAlign: TextAlign.left,
             maxLines: 2,
-            text: sellerName,
+            text: agentName,
             weight: FontWeight.w700,
             size: 12,
             fontFamily: AppStrings.interSans,
@@ -87,9 +88,9 @@ Widget serviceProfile(
                             } else {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                      username: sellerName,
+                                      customerName: customerName,
                                       userImage: sellerImage,
-                                      uid: sellerId));
+                                      uid: sellerId, agentName: agentName,));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
@@ -100,8 +101,8 @@ Widget serviceProfile(
                           onTap: () {
                             AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
-                                  user1: sellerName,
-                                  user2: userName,
+                                  customerName: customerName,
+                                  agentName: agentName,
                                 ));
                           },
                           child: ImageView.svg(AppImages.videoBorder)),
@@ -173,9 +174,9 @@ Widget serviceProfile(
                             } else {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                      username: customerName,
+                                      customerName: customerName,
                                       userImage: customerImage,
-                                      uid: customerFireBaseId));
+                                      uid: customerFireBaseId, agentName: agentName,));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
@@ -186,8 +187,8 @@ Widget serviceProfile(
                           onTap: () {
                             AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
-                                  user1: sellerName,
-                                  user2: customerName,
+                                  customerName: customerName,
+                                  agentName: agentName,
                                 ));
                           },
                           child: ImageView.svg(AppImages.videoBorder)),

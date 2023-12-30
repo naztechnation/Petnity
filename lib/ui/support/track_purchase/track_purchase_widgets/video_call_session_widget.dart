@@ -32,9 +32,8 @@ class VideoCallSessionWidget extends StatefulWidget {
 class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
   String username = '';
 
-    List<SessionTypes> contacts = [];
-    List<SessionTypes> sessions = [];
-
+  List<SessionTypes> contacts = [];
+  List<SessionTypes> sessions = [];
 
   getUserName() async {
     username = await StorageHandler.getUserName();
@@ -174,14 +173,17 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                       for (var sessionType
                           in widget.vetOrders.vetService?.contactMediums ?? [])
                         ImageWidget(
-                            
-                            
-                            
-                            
-                            
-                              sessionTypeName: sessionType.name, picture: widget.vetOrders.agent?.picture ?? '', name: widget.vetOrders.agent?.profile?.user?.username ?? '', firebaseId: widget.vetOrders.agent?.profile?.firebaseId ?? '', phone:widget.vetOrders.agent?.profile?.phoneNumber ?? '',
- username: '',
-                            ),
+                          sessionTypeName: sessionType.name,
+                          picture: widget.vetOrders.agent?.picture ?? '',
+                          agentName:
+                              widget.vetOrders.agent?.profile?.user?.username ??
+                                  '',
+                          firebaseId:
+                              widget.vetOrders.agent?.profile?.firebaseId ?? '',
+                          phone: widget.vetOrders.agent?.profile?.phoneNumber ??
+                              '',
+                          customerName: widget.vetOrders.profile?.user?.username ?? '',
+                        ),
                     ],
                   ),
                   ButtonView(
@@ -195,7 +197,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: TrackVetServicesScreen(
-                            sellerName: widget.vetOrders.agent?.name ?? '',
+                            agentName: widget.vetOrders.agent?.name ?? '',
                             phone:
                                 widget.vetOrders.agent?.profile?.phoneNumber ??
                                     '',
@@ -228,7 +230,8 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                                 widget.vetOrders.userMarkedDelivered ?? false,
                             isAgentMarkedService:
                                 widget.vetOrders.agentMarkedDelivered ?? false,
-                                 contactMediums: contacts, sessionMediums: sessions,
+                            contactMediums: contacts,
+                            sessionMediums: sessions,
                           ));
                     },
                   )
@@ -244,13 +247,18 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
 class ImageWidget extends StatelessWidget {
   final String sessionTypeName;
   final String phone;
-  final String name;
-  final String username;
+  final String customerName;
+  final String agentName;
   final String picture;
   final String firebaseId;
 
-  ImageWidget({required this.sessionTypeName,required this.phone,required this.name,required this.picture,
-     required this.firebaseId,required this.username});
+  ImageWidget(
+      {required this.sessionTypeName,
+      required this.phone,
+      required this.customerName,
+      required this.picture,
+      required this.firebaseId,
+      required this.agentName});
 
   @override
   Widget build(BuildContext context) {
@@ -275,7 +283,11 @@ class ImageWidget extends StatelessWidget {
               } else {
                 AppNavigator.pushAndStackPage(context,
                     page: ChatPage(
-                        username: name, userImage: picture, uid: firebaseId));
+                      customerName: customerName,
+                      userImage: picture,
+                      uid: firebaseId,
+                      agentName: agentName,
+                    ));
               }
             },
             child: Padding(
@@ -288,8 +300,8 @@ class ImageWidget extends StatelessWidget {
             onTap: () {
               AppNavigator.pushAndStackPage(context,
                   page: VideoCall(
-                    customerName: username,
-                    agentName: username,
+                    customerName: customerName,
+                    agentName: agentName,
                   ));
             },
             child: Padding(

@@ -29,8 +29,8 @@ import '../../../widgets/loading_page.dart';
 import '../../../widgets/modals.dart';
 
 class PurchaseRequest extends StatelessWidget {
-  final String ownerName;
-  final String buyerName;
+  final String customerName;
+  final String agentName;
   final String ownerImage;
   final String ownerNumber;
   final String ownerNormalId;
@@ -49,7 +49,7 @@ class PurchaseRequest extends StatelessWidget {
 
   const PurchaseRequest(
       {super.key,
-      required this.ownerName,
+      required this.customerName,
       required this.productName,
       required this.productImage,
       required this.quantity,
@@ -60,7 +60,7 @@ class PurchaseRequest extends StatelessWidget {
       required this.ownerImage,
       required this.ownerNumber,
       required this.ownerFirebaseId,
-      required this.buyerName,
+      required this.agentName,
       required this.isUserMarkedOrder,
       required this.isAgentMarkedOrder,
       required this.orderId,
@@ -74,7 +74,7 @@ class PurchaseRequest extends StatelessWidget {
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
       child: Purchase(
-        ownerName: ownerName,
+        customerName: customerName,
         productName:productName,
         productImage: productImage,
         quantity: quantity,
@@ -85,7 +85,7 @@ class PurchaseRequest extends StatelessWidget {
         ownerImage: ownerImage,
         ownerNumber: ownerNumber,
         ownerFirebaseId: ownerFirebaseId,
-        buyerName: buyerName,
+        agentName: agentName,
         isUserMarkedOrder: isUserMarkedOrder,
         isAgentMarkedOrder: isAgentMarkedOrder,
         orderId: orderId,
@@ -96,8 +96,8 @@ class PurchaseRequest extends StatelessWidget {
 }
 
 class Purchase extends StatefulWidget {
-  final String ownerName;
-  final String buyerName;
+  final String customerName;
+  final String agentName;
   final String ownerImage;
   final String ownerNumber;
   final String ownerNormalId;
@@ -116,7 +116,7 @@ class Purchase extends StatefulWidget {
 
   const Purchase(
       {super.key,
-      required this.ownerName,
+      required this.customerName,
       required this.productName,
       required this.productImage,
       required this.quantity,
@@ -127,7 +127,7 @@ class Purchase extends StatefulWidget {
       required this.ownerImage,
       required this.ownerNumber,
       required this.ownerFirebaseId,
-      required this.buyerName,
+      required this.agentName,
       required this.isUserMarkedOrder,
       required this.isAgentMarkedOrder,
       required this.orderId,
@@ -278,9 +278,9 @@ class _PurchaseState extends State<Purchase> {
                                             ),
                                             CustomText(
                                               text: (userType == 'user')
-                                                  ? widget.ownerName
+                                                  ? widget.agentName
                                                       .capitalizeFirstOfEach
-                                                  : widget.buyerName
+                                                  : widget.customerName
                                                       .capitalizeFirstOfEach,
                                               weight: FontWeight.bold,
                                               size: 13,
@@ -311,12 +311,12 @@ class _PurchaseState extends State<Purchase> {
                                               AppNavigator.pushAndStackPage(
                                                   context,
                                                   page: ChatPage(
-                                                      username:
-                                                          widget.ownerName,
+                                                      customerName:
+                                                          widget.customerName,
                                                       userImage:
                                                           widget.ownerImage,
                                                       uid: widget
-                                                          .ownerFirebaseId));
+                                                          .ownerFirebaseId, agentName: widget.agentName,));
                                             }
                                           },
                                           child: ImageView.svg(
@@ -329,8 +329,8 @@ class _PurchaseState extends State<Purchase> {
                                             AppNavigator.pushAndStackPage(
                                                 context,
                                                 page: VideoCall(
-                                                  user1: widget.ownerName,
-                                                  user2: widget.buyerName,
+                                                  customerName: widget.customerName,
+                                                  agentName: widget.agentName,
                                                 ));
                                           },
                                           child: ImageView.svg(

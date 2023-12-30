@@ -483,7 +483,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               // if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackServicesScreen(
-                    sellerName: order.agent?.name ?? '',
+                    agentName: order.agent?.profile?.user?.username ?? '',
                     phone: order.agent?.profile?.phoneNumber ?? '',
                     serviceOffered:
                         order.package?.service?.serviceType?.name ?? '',
@@ -630,7 +630,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               // if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackVetServicesScreen(
-                    sellerName: order.agent?.name ?? '',
+                    agentName: order.agent?.name ?? '',
                     phone: order.agent?.profile?.phoneNumber ?? '',
                     agentId: order.agent?.profile?.firebaseId ?? '',
                     sellerId: order.agent?.id.toString() ?? '',
@@ -748,8 +748,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
               // if (order.isPaid ?? false) {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return PurchaseRequest(
-                  ownerName: '${order.product?.agent?.name}',
-                  buyerName: '${order.profile?.user?.username}',
+                  agentName: '${order.product?.agent?.name}',
+                  customerName: '${order.profile?.user?.username}',
                   productName: '${order.product?.name}',
                   productImage: '${order.product?.image}',
                   quantity: '${order.quantity}',

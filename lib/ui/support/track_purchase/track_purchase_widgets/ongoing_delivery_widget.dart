@@ -63,23 +63,33 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(50),
-                    child: ImageView.network(widget.services.package?.service?.serviceType?.image, height: 60,width: 60, fit: BoxFit.cover,),
+                    child: ImageView.network(
+                      widget.services.package?.service?.serviceType?.image,
+                      height: 60,
+                      width: 60,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  const SizedBox(width: 10,),
+                  const SizedBox(
+                    width: 10,
+                  ),
                   Container(
-                     
                     child: Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.services.profile?.user?.username.toString().capitalizeFirstOfEach ?? '',
+                            widget.services.profile?.user?.username
+                                    .toString()
+                                    .capitalizeFirstOfEach ??
+                                '',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                              '${widget.services.package?.service?.serviceType?.name}', ),
+                            '${widget.services.package?.service?.serviceType?.name}',
+                          ),
                         ],
                       ),
                     ),
@@ -151,8 +161,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       GestureDetector(
                           onTap: () {
                             _callNumber(
-                                widget.services.profile?.phoneNumber ??
-                                    '');
+                                widget.services.profile?.phoneNumber ?? '');
                           },
                           child: ImageView.svg(AppImages.callBorder)),
                       const SizedBox(
@@ -160,21 +169,24 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (widget.services.profile?.firebaseId ==
-                                    '' ||
-                                widget.services.profile?.firebaseId ==
-                                    null) {
+                            if (widget.services.profile?.firebaseId == '' ||
+                                widget.services.profile?.firebaseId == null) {
                               Modals.showToast(
                                   'Can\'t communicate with this agent at the moment. Please');
                             } else {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                      username:
-                                          widget.services.agent?.name ?? '',
-                                      userImage:
-                                          widget.services.agent?.picture ?? '',
-                                      uid: widget.services.profile?.firebaseId ??
-                                          ''));
+                                    agentName: widget.services.agent?.profile
+                                            ?.user?.username ??
+                                        '',
+                                    userImage:
+                                        widget.services.agent?.picture ?? '',
+                                    uid: widget.services.profile?.firebaseId ??
+                                        '',
+                                    customerName: widget
+                                            .services.profile?.user?.username ??
+                                        '',
+                                  ));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
@@ -183,11 +195,14 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       ),
                       GestureDetector(
                           onTap: () {
-                             
                             AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
-                                  user1: widget.services.agent?.name ?? '',
-                                  user2: widget.services.profile?.user?.username ?? '',
+                                  agentName: widget.services.agent?.profile
+                                          ?.user?.username ??
+                                      '',
+                                  customerName:
+                                      widget.services.profile?.user?.username ??
+                                          '',
                                 ));
                           },
                           child: ImageView.svg(AppImages.videoBorder)),
@@ -198,10 +213,12 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                     child: ButtonView(
                       color: Colors.blue,
                       onPressed: () {
-                          //  if(widget.services.isPaid ?? false) {
+                        //  if(widget.services.isPaid ?? false) {
                         AppNavigator.pushAndStackPage(context,
                             page: TrackServicesScreen(
-                              sellerName: widget.services.agent?.name ?? '',
+                              agentName: widget.services.agent?.profile?.user
+                                      ?.username ??
+                                  '',
                               phone:
                                   widget.services.agent?.profile?.phoneNumber ??
                                       '',
@@ -223,20 +240,30 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               isOngoingService:
                                   widget.services.isOngoing ?? false,
                               isCompletedService:
-                                  widget.services.isCompleted ?? false, orderId: widget.services.id.toString(),
-                                   customerName: widget.services.profile?.user?.username?? '', 
-                                   customerPhone: widget.services.profile?.phoneNumber ?? '',
-                                    customerImage: widget.services.profile?.profileImage ?? '', 
-                                    customerFireBaseId: widget.services.profile?.firebaseId ?? '',
-                                     isRejected: widget.services.isRejected ?? false,
-                                      isUserMarkedService: widget.services.userMarkedDelivered ?? false,
-                                       isAgentMarkedService: widget.services.agentMarkedDelivered ?? false,
+                                  widget.services.isCompleted ?? false,
+                              orderId: widget.services.id.toString(),
+                              customerName:
+                                  widget.services.profile?.user?.username ?? '',
+                              customerPhone:
+                                  widget.services.profile?.phoneNumber ?? '',
+                              customerImage:
+                                  widget.services.profile?.profileImage ?? '',
+                              customerFireBaseId:
+                                  widget.services.profile?.firebaseId ?? '',
+                              isRejected: widget.services.isRejected ?? false,
+                              isUserMarkedService:
+                                  widget.services.userMarkedDelivered ?? false,
+                              isAgentMarkedService:
+                                  widget.services.agentMarkedDelivered ?? false,
                             ));
-                          // }else{
+                        // }else{
                         Modals.showToast('This Service has not been paid for.');
-                          // }
+                        // }
                       },
-                      child: Text(widget.label, style: TextStyle(color: Colors.white),),
+                      child: Text(
+                        widget.label,
+                        style: TextStyle(color: Colors.white),
+                      ),
                       borderRadius: 30,
                     ),
                   ),

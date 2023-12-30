@@ -7,8 +7,7 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_strings.dart';
 import '../../../widgets/back_button.dart';
-import '../../../widgets/custom_text.dart';
-import '../track_services/widget/profile.dart';
+import '../../../widgets/custom_text.dart'; 
 
 class PurchaseRequests extends StatelessWidget {
   const PurchaseRequests({super.key});
@@ -72,7 +71,7 @@ class PurchaseRequests extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      serviceProfile(context, hideImage: true, sellerName: 'hhh', sellerImage: 'jjj', sellerId: 'kkk', userName: '', phone: '', userType: '', customerName: '', customerImage: '', customerPhone: '', customerFireBaseId: ''),
+                    //  serviceProfile(context, hideImage: true, sellerName: 'hhh', sellerImage: 'jjj', sellerId: 'kkk', userName: '', phone: '', userType: '', customerName: '', customerImage: '', customerPhone: '', customerFireBaseId: ''),
                       const SizedBox(
                         height: 20,
                       ),

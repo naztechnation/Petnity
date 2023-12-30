@@ -16,18 +16,19 @@ import '../../notfications_pages/chat_pages/chat_page.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
-import '../../widgets/modals.dart';
+ 
 import '../../widgets/profile_image.dart';
 import 'agent_packages.dart';
 import 'pet_sellers.dart/pet_on_sale.dart'; 
 import 'vets/book_pet/booking_page.dart';
 import 'widgets/gallery_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
-import './vets/vet_service.dart';
+ 
 
 class ServiceProviderProfile extends StatefulWidget {
   final Agents? agents;
-  ServiceProviderProfile({super.key, this.agents});
+  ServiceProviderProfile({super.key, this.agents,
+    });
 
   @override
   State<ServiceProviderProfile> createState() => _ServiceProviderProfileState();
@@ -232,34 +233,34 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      width: 14,
-                    ),
-                    Expanded(
-                        flex: 2,
-                        child: ButtonView(
-                          color: Color(0xFFEAF0FF),
-                          onPressed: () {
-                            if (widget.agents?.profile?.firebaseId != null ||
-                                widget.agents?.profile?.firebaseId.toString() !=
-                                    "null") {
-                              AppNavigator.pushAndStackPage(context,
-                                  page: ChatPage(
-                                    username: widget.agents?.profile?.user?.username ?? '',
-                                    userImage: widget.agents!.picture ?? '',
-                                    uid: widget.agents?.profile?.firebaseId ??
-                                        '',
-                                  ));
-                            } else {
-                              Modals.showToast(
-                                  'This agent is not accessible at the moment');
-                            }
-                          },
-                          child: ImageView.svg(
-                            AppImages.messageArrow,
-                          ),
-                          expanded: false,
-                        ))
+                    // const SizedBox(
+                    //   width: 14,
+                    // ),
+                    // Expanded(
+                    //     flex: 2,
+                    //     child: ButtonView(
+                    //       color: Color(0xFFEAF0FF),
+                    //       onPressed: () {
+                    //         if (widget.agents?.profile?.firebaseId != null ||
+                    //             widget.agents?.profile?.firebaseId.toString() !=
+                    //                 "null") {
+                    //           AppNavigator.pushAndStackPage(context,
+                    //               page: ChatPage(
+                    //                 agentName: widget.agents?.profile?.user?.username ?? '',
+                    //                 userImage: widget.agents?.picture ?? '',
+                    //                 uid: widget.agents?.profile?.firebaseId ??
+                    //                     '', customerName: widget.,
+                    //               ));
+                    //         } else {
+                    //           Modals.showToast(
+                    //               'This agent is not accessible at the moment');
+                    //         }
+                    //       },
+                    //       child: ImageView.svg(
+                    //         AppImages.messageArrow,
+                    //       ),
+                    //       expanded: false,
+                    //     ))
                   ],
                 ),
               ),

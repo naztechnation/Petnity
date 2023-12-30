@@ -166,10 +166,10 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                           } else {
                             AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
-                                    username: allOrders.agent?.name ?? '',
+                                    agentName: allOrders.agent?.profile?.user?.username ?? '',
                                     userImage: allOrders.agent?.picture ?? '',
                                     uid: allOrders.agent?.profile?.firebaseId ??
-                                        ''));
+                                        '', customerName: allOrders.agent?.profile?.user?.username ?? '',));
                           }
                         },
                         child: ImageView.svg(AppImages.messageBorder)),
@@ -180,8 +180,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
-                                user1: allOrders.agent?.name ?? '',
-                                user2: username,
+                                customerName: allOrders.agent?.profile?.user?.username ?? '',
+                                agentName: allOrders.agent?.profile?.user?.username ?? '',
                               ));
                         },
                         child: ImageView.svg(AppImages.videoBorder)),
@@ -194,7 +194,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: TrackServicesScreen(
-                            sellerName: allOrders.agent?.name ?? '',
+                            agentName: allOrders.agent?.profile?.user?.username ?? '',
                             phone: allOrders.agent?.profile?.phoneNumber ?? '',
                             serviceOffered:
                                 allOrders.package?.service?.serviceType?.name ??

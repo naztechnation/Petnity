@@ -7,8 +7,7 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_strings.dart';
 import '../../../widgets/back_button.dart';
-import '../../../widgets/custom_text.dart';
-import '../track_services/widget/profile.dart';
+import '../../../widgets/custom_text.dart'; 
 import 'purchase_requests.dart';
 
 class TrackServices extends StatefulWidget {
@@ -111,7 +110,6 @@ class _TrackServicesState extends State<TrackServices> {
                   const SizedBox(
                     height: 20,
                   ),
-                  serviceProfile(context, sellerName: 'nnmm', sellerImage: 'vvv', sellerId: 'weer', userName: '', phone: '', userType: '', customerName: '', customerImage: '', customerPhone: '', customerFireBaseId: ''),
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
                     child: Container(
