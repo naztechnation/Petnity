@@ -1,5 +1,7 @@
-import '../service_provider_models/create_shop_products_model.dart';
-import 'order_list.dart';
+ 
+
+import '../product/product.dart';
+import '../profile/profile.dart';
 
 class UserShopData {
   bool? status;
@@ -99,73 +101,3 @@ class UserShopList {
 
 
 
-class User {
-  int? id;
-  String? username;
-  String? email;
-  String? firstName;
-  String? lastName;
-
-  User({this.id, this.username, this.email, this.firstName, this.lastName});
-
-  User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    username = json['username'];
-    email = json['email'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['email'] = this.email;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    return data;
-  }
-}
-
-
-
-class Services {
-  int? id;
-  String? name;
-  String? image;
-
-  Services({this.id, this.name, this.image});
-
-  Services.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    image = json['image'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
-    return data;
-  }
-}
-
-class PetTypes {
-  int? id;
-  String? name;
-
-  PetTypes({this.id, this.name});
-
-  PetTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}

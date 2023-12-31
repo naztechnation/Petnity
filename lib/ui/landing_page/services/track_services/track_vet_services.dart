@@ -15,6 +15,7 @@ import '../../../../blocs/user/user.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/order_list.dart';
 
+import '../../../../model/user_models/vet_services.dart';
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';

@@ -7,7 +7,7 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/user_models/service_provider_lists.dart';
+import '../../../model/services/services.dart'; 
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../utils/navigator/page_navigator.dart';
@@ -16,7 +16,7 @@ import '../../widgets/modals.dart';
 import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {
-  final List<ServicesDetails> services;
+  final List<Services> services;
   ServicesList({super.key, required this.services});
 
   @override

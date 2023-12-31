@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user_cubit.dart';
 import '../../../blocs/user/user_states.dart';
+import '../../../model/agent/agent.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_strings.dart';
@@ -75,7 +76,7 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
     'Birds'
   ];
 
-  List<Agents> agentList = [];
+  List<Agent> agentList = [];
 
   late UserCubit _userCubit;
 

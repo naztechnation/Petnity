@@ -15,8 +15,8 @@ import 'package:uuid/uuid.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
-import '../../../model/user_models/get_product_reviews.dart';
-import '../../../model/user_models/products_detail.dart';
+import '../../../model/product/product.dart';
+import '../../../model/user_models/get_product_reviews.dart'; 
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';

@@ -1,31 +1,8 @@
 
+
 import '../agent/agent.dart';
 import '../packages/packages.dart';
 import '../profile/profile.dart';
-
-class CreateOrder {
-  bool? status;
-  String? message;
-  Order? order;
-
-  CreateOrder({this.status, this.message, this.order});
-
-  CreateOrder.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    order = json['order'] != null ? new Order.fromJson(json['order']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.order != null) {
-      data['order'] = this.order!.toJson();
-    }
-    return data;
-  }
-}
 
 class Order {
   int? id;
@@ -82,7 +59,7 @@ class Order {
     dateCreated = json['date_created'];
     profile =
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
-     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+      agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
    package =
         json['package'] != null ? new Package.fromJson(json['package']) : null;
   }

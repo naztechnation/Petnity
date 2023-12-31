@@ -13,6 +13,8 @@ import '../../../res/app_images.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../blocs/user/user.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/agent/agent.dart';
+import '../../model/services/services.dart';
 import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/user_view_model.dart';
@@ -207,9 +209,9 @@ class _HomepageBarState extends State<HomepageBar> {
   bool isLoading = false;
   String agentId = "";
 
-  List<ServicesDetails> services = [];
+  List<Services> services = [];
 
-  Agents? agents;
+  Agent? agents;
 
   getServicesTypes() async {
     agentId = await StorageHandler.getAgentId();

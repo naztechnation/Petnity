@@ -8,10 +8,9 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
-import '../../../model/user_models/service_provider_lists.dart';
+import '../../../model/agent/agent.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
-import '../../../model/view_models/service_provider_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
@@ -69,7 +68,7 @@ class _AgentProfileState extends State<AgentProfile> {
     return Future.value(false);
   }
 
-  Agents? agents;
+  Agent? agents;
 
   late UserCubit _userCubit;
 

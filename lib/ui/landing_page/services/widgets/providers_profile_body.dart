@@ -8,7 +8,7 @@ import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/user_models/service_provider_lists.dart';
+import '../../../../model/agent/agent.dart';
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -22,7 +22,7 @@ import '../../../widgets/ratings_views.dart';
 import '../../../widgets/text_edit_view.dart';
 
 class ProviderProfileBody extends StatelessWidget {
-  final Agents? agents;
+  final Agent? agents;
   const ProviderProfileBody({
     super.key,
     required this.agents,
@@ -42,7 +42,7 @@ class ProviderProfileBody extends StatelessWidget {
 }
 
 class ProviderProfile extends StatefulWidget {
-  final Agents? agents;
+  final Agent? agents;
 
   ProviderProfile({super.key, this.agents});
 

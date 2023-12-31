@@ -6,13 +6,12 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/user_models/service_provider_lists.dart';
+import '../../../model/agent/agent.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
-import '../../notfications_pages/chat_pages/chat_page.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
@@ -26,7 +25,7 @@ import 'widgets/providers_profile_body.dart';
  
 
 class ServiceProviderProfile extends StatefulWidget {
-  final Agents? agents;
+  final Agent? agents;
   ServiceProviderProfile({super.key, this.agents,
     });
 

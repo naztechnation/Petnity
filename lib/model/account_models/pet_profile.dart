@@ -1,4 +1,5 @@
-import 'package:petnity/model/user_models/order_list.dart';
+
+import '../profile/profile.dart';
 
 class PetProfile {
   bool? status;

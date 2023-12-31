@@ -15,6 +15,7 @@ import '../../../../blocs/service_provider/service_provider_cubit.dart';
 import '../../../../model/service_provider_models/all_agent_orders.dart';
 import '../../../../model/user_models/agent_services_lists.dart';
 import '../../../../model/user_models/order_list.dart';
+import '../../../../model/user_models/vet_services.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/enum.dart';

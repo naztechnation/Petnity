@@ -13,14 +13,14 @@ import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/user/user.dart';
-import '../../../model/user_models/shopping_lists.dart';
+import '../../../blocs/user/user.dart'; 
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
 import '../../../utils/app_utils.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/product/product.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../widgets/text_edit_view.dart';
 import 'create_shop_product/create_shop_products.dart';
@@ -47,8 +47,8 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   late UserCubit _userCubit;
 
-  List<Products> products = [];
-  List<Products> filteredProducts = [];
+  List<Product> products = [];
+  List<Product> filteredProducts = [];
   final searchController = TextEditingController();
 
   String agentId = "";
