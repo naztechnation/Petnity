@@ -21,6 +21,7 @@ enum ViewState { idle, loading, processing, success, failed }
 
 enum sessionMedium { chat, call, video }
 enum requestsType { services, vets, products }
+enum OngoingServicesType { services, vets, }
 
 enum UserType {none, user, serviceProvider}
 enum OrderType {none, services, shop, vet}

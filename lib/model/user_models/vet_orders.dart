@@ -1,14 +1,13 @@
 
 
+import 'package:petnity/model/user_models/vet_services.dart';
+
 import '../agent/agent.dart';
-import '../packages/packages.dart';
 import '../profile/profile.dart';
 
-class Order {
+class VetOrders {
   int? id;
-  String? pickupLocation;
-  String? pickupTime;
-  String? dropoffTime;
+  String? sessionTime;
   bool? shouldNotify;
   String? fee;
   String? purchaseId;
@@ -23,13 +22,11 @@ class Order {
   String? dateCreated;
   Profile? profile;
   Agent? agent;
-  Package? package;
+  VetService? vetService;
 
-  Order(
+   VetOrders(
       {this.id,
-      this.pickupLocation,
-      this.pickupTime,
-      this.dropoffTime,
+      this.sessionTime,
       this.shouldNotify,
       this.fee,
       this.purchaseId,
@@ -44,13 +41,11 @@ class Order {
       this.dateCreated,
       this.profile,
       this.agent,
-      this.package});
+      this.vetService});
 
-  Order.fromJson(Map<String, dynamic> json) {
+   VetOrders.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    pickupLocation = json['pickup_location'];
-    pickupTime = json['pickup_time'];
-    dropoffTime = json['dropoff_time'];
+    sessionTime = json['session_time'];
     shouldNotify = json['should_notify'];
     fee = json['fee'];
     purchaseId = json['purchase_id'];
@@ -66,16 +61,15 @@ class Order {
     profile =
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
-    package =
-        json['package'] != null ? new Package.fromJson(json['package']) : null;
+    vetService = json['vet_service'] != null
+        ? new VetService.fromJson(json['vet_service'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['pickup_location'] = this.pickupLocation;
-    data['pickup_time'] = this.pickupTime;
-    data['dropoff_time'] = this.dropoffTime;
+    data['session_time'] = this.sessionTime;
     data['should_notify'] = this.shouldNotify;
     data['fee'] = this.fee;
     data['purchase_id'] = this.purchaseId;
@@ -94,9 +88,13 @@ class Order {
     if (this.agent != null) {
       data['agent'] = this.agent!.toJson();
     }
-    if (this.package != null) {
-      data['package'] = this.package!.toJson();
+    if (this.vetService != null) {
+      data['vet_service'] = this.vetService!.toJson();
     }
     return data;
   }
 }
+
+
+
+ 

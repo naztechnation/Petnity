@@ -10,7 +10,7 @@ import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/user_models/agent_services_lists.dart';
+import '../../../../model/order/order.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
@@ -22,7 +22,7 @@ import '../widget/progressbar.dart';
 
 class OngoingDeliveryWidget extends StatefulWidget {
   final String label;
-  final AgentServicesListOrders services;
+  final Order services;
   OngoingDeliveryWidget({this.label = 'Details', required this.services});
 
   @override

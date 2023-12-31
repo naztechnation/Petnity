@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:number_paginator/number_paginator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; 
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import 'package:petnity/res/app_colors.dart';
@@ -15,8 +14,8 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
 import '../../../handlers/secure_handler.dart';
+import '../../../model/order/order.dart';
 import '../../../model/service_provider_models/all_agent_orders.dart';
-import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../widgets/modals.dart';
 
@@ -54,7 +53,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   final TextEditingController searchField = TextEditingController();
 
   List<ShopOrders> orders = [];
-  List<AgentServicesListOrders> availableServices = [];
+  List<Order> availableServices = [];
 
   late ServiceProviderCubit _serviceProviderCubit;
  

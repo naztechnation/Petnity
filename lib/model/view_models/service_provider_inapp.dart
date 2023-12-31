@@ -7,9 +7,10 @@ import 'package:http/http.dart' as http;
 
 import '../../res/app_colors.dart';
 import '../../res/enum.dart';
-import '../../ui/widgets/modals.dart';
+import '../order/order.dart';
 import '../service_provider_models/all_agent_orders.dart';
 import '../user_models/agent_services_lists.dart';
+import '../user_models/vet_orders.dart';
 import 'base_viewmodel.dart';
 
 class ServiceProviderInAppViewModel extends BaseViewModel {
@@ -23,8 +24,8 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   File? _imageURl1;
   List<ShopOrders> _orders = [];
 
-  List<AgentServicesListOrders> _availableServices = [];
-  List<AgentServicesListVetOrders> _vetOrders = [];
+  List<Order> _availableServices = [];
+  List<VetOrders> _vetOrders = [];
 
 
   final List<int> _serviceSelectedIndexes = [];
@@ -261,8 +262,8 @@ addContactType(int index, var item, var image) {
   String get amountController => _amountController;
 
   List<ShopOrders> get order => _orders;
-  List<AgentServicesListOrders> get availableServices => _availableServices;
-  List<AgentServicesListVetOrders> get vetOrders => _vetOrders;
+  List<Order> get availableServices => _availableServices;
+  List<VetOrders> get vetOrders => _vetOrders;
 
   List<String> _banksAndInstitutions = [
     "Access Bank",
@@ -324,12 +325,26 @@ addContactType(int index, var item, var image) {
   int get pageIndex => _orderPageNumber;
   int get currentPage => _currentPage;
 
-  List<AgentServicesListOrders> get onGoingOrdersList => onGoingServices();
+  List<Order> get onGoingOrdersList => onGoingServices();
 
-  List<AgentServicesListOrders> onGoingServices() {
-    List<AgentServicesListOrders> list = [];
+  List<VetOrders> get vetOnGoingOrdersList => vetOnGoingOrdersServices();
+
+  List<Order> onGoingServices() {
+    List<Order> list = [];
 
     for (var order in _availableServices) {
+      if (order.isOngoing == true && order.isCompleted != true) {
+        list.add(order);
+      }
+    }
+
+    return list;
+  }
+
+  List<VetOrders> vetOnGoingOrdersServices() {
+    List<VetOrders> list = [];
+
+    for (var order in _vetOrders) {
       if (order.isOngoing == true && order.isCompleted != true) {
         list.add(order);
       }

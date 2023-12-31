@@ -12,10 +12,10 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/service_provider/service_provider_cubit.dart';
+import '../../../../model/order/order.dart';
 import '../../../../model/service_provider_models/all_agent_orders.dart';
-import '../../../../model/user_models/agent_services_lists.dart';
-import '../../../../model/user_models/order_list.dart';
-import '../../../../model/user_models/vet_services.dart';
+import '../../../../model/session_types/session_types.dart';
+import '../../../../model/user_models/vet_orders.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/enum.dart';
@@ -23,6 +23,7 @@ import '../../../../utils/app_utils.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
 import '../../../landing_page/services/track_services/track_vet_services.dart';
+import '../../../support/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
 import '../../../widgets/modals.dart';
 import 'product_shopping_details.dart';
 import 'widgets/all_ongoing_page.dart';
@@ -42,6 +43,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
     extends State<ServiceProviderPetDeliveryHomeBody>
     with SingleTickerProviderStateMixin {
   requestsType isServices = requestsType.services;
+  OngoingServicesType isVetServices = OngoingServicesType.services;
 
   List<SessionTypes> contacts = [];
   List<SessionTypes> sessions = [];
@@ -51,6 +53,12 @@ class _ServiceProviderPetDeliveryHomeBodyState
   changePage(requestsType serve) {
     setState(() {
       isServices = serve;
+    });
+  }
+
+  changeVetPage(OngoingServicesType serve) {
+    setState(() {
+      isVetServices = serve;
     });
   }
 
@@ -95,6 +103,79 @@ class _ServiceProviderPetDeliveryHomeBodyState
               ),
             ],
           ),
+
+          Container(
+          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 1.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    changeVetPage(OngoingServicesType.services);
+                  });
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: isVetServices.name == 'services'
+                            ? AppColors.lightSecondary
+                            : Colors.transparent,
+                        width: 5.0,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'Other Services',
+                    style: TextStyle(
+                      color: isVetServices.name == 'services'
+                          ? AppColors.lightSecondary
+                          : Colors.black,
+                          fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    changeVetPage(OngoingServicesType.vets);
+                  });
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: isVetServices.name == 'vets'
+                            ? AppColors.lightSecondary
+                            : Colors.transparent,
+                        width: 5.0,
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'Vet Services',
+                    style: TextStyle(
+                      color: isServices.name == 'vets'
+                          ? AppColors.lightSecondary
+                          : Colors.black,
+                          fontSize: 12,
+
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              
+            ],
+          ),
+        ),
         if (serviceProvider.onGoingOrdersList.isNotEmpty)
           SizedBox(
             height: 10,
@@ -120,7 +201,34 @@ class _ServiceProviderPetDeliveryHomeBodyState
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children:
-              _buildPageIndicator(serviceProvider.onGoingOrdersList.length),
+              _buildPageIndicator(serviceProvider.vetOnGoingOrdersList.length),
+        ),
+        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty)
+          SizedBox(
+            height: 10,
+          ),
+        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty)
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: serviceProvider.vetOnGoingOrdersList.length,
+                itemBuilder: (context, index) {
+                  return VideoCallSessionWidget(
+                    buttonText: 'Track',
+                    vetOrders: serviceProvider.vetOnGoingOrdersList[index],
+                  );
+                }),
+          ),
+        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty)
+          SizedBox(
+            height: 10,
+          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children:
+              _buildPageIndicator(serviceProvider.vetOnGoingOrdersList.length),
         ),
         SizedBox(
           height: 20,
@@ -160,7 +268,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Services',
+                    'Other Services',
                     style: TextStyle(
                       color: isServices.name == 'services'
                           ? AppColors.lightSecondary
@@ -381,7 +489,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
   }
 
   Widget _newRequestWidget(
-      BuildContext context, AgentServicesListOrders order, userModel) {
+      BuildContext context, Order order, userModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -528,7 +636,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
   }
 
   Widget _newVetRequestWidget(
-      BuildContext context, AgentServicesListVetOrders order, userModel) {
+      BuildContext context, VetOrders order, userModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15),

@@ -69,13 +69,13 @@ required Function onTap4}){
                               borderColor: Colors.white,
                               borderRadius: 40,
                               onPressed: () {
-                                onTap3();
+                                onTap1();
 
                               },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: date2,
+                                text: date1,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,
@@ -118,13 +118,13 @@ required Function onTap4}){
                               borderColor: Colors.white,
                               borderRadius: 40,
                               onPressed: () {
-                                onTap4();
+                                onTap2();
 
                               },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: time2,
+                                text: time1,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,
@@ -183,12 +183,12 @@ required Function onTap4}){
                               borderColor: Colors.white,
                               borderRadius: 40,
                               onPressed: () {
-                                onTap1();
+                                onTap3();
                               },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: date1,
+                                text: date2,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,
@@ -230,13 +230,13 @@ required Function onTap4}){
                               borderColor: Colors.white,
                               borderRadius: 40,
                               onPressed: () {
-                                onTap2();
+                                onTap4();
 
                               },
                               child: CustomText(
                                 textAlign: TextAlign.left,
                                 maxLines: 2,
-                                text: time1,
+                                text: time2,
                                 weight: FontWeight.w500,
                                 size: 16,
                                 color: Colors.black,

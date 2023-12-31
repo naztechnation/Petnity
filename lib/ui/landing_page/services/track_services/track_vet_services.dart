@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
@@ -13,9 +12,7 @@ import '../../../../blocs/location/location_cubit.dart';
 import '../../../../blocs/service_provider/service_provider.dart';
 import '../../../../blocs/user/user.dart';
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/user_models/order_list.dart';
-
-import '../../../../model/user_models/vet_services.dart';
+import '../../../../model/session_types/session_types.dart';
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
@@ -30,9 +27,7 @@ import '../../../../res/app_strings.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../location/widgets/map_view.dart';
-import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../support/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
-import '../../../video.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/image_view.dart';

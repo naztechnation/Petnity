@@ -1,4 +1,6 @@
 
+import '../session_types/session_types.dart';
+
 class VetsServices {
   bool? status;
   String? message;
@@ -34,7 +36,7 @@ class VetService {
   ServiceType? serviceType;
   int? agent;
   List<SessionTypes>? sessionTypes;
-  List<ServiceType>? contactMediums;
+  List<SessionTypes>? contactMediums;
 
   VetService(
       {this.id,
@@ -64,9 +66,9 @@ class VetService {
       });
     }
     if (json['contact_mediums'] != null) {
-      contactMediums = <ServiceType>[];
+      contactMediums = <SessionTypes>[];
       json['contact_mediums'].forEach((v) {
-        contactMediums!.add(new ServiceType.fromJson(v));
+        contactMediums!.add(new SessionTypes.fromJson(v));
       });
     }
   }
@@ -116,21 +118,4 @@ class ServiceType {
   }
 }
 
-class SessionTypes {
-  int? id;
-  String? name;
 
-  SessionTypes({this.id, this.name});
-
-  SessionTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}

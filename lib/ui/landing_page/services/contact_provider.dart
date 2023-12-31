@@ -187,15 +187,15 @@ class _ContactProviderState extends State<ContactProvider> {
   }
 
   Future<void> _selectDate(BuildContext context, bool isFirst) async {
-    DateTime selectedDate = DateTime.now();
+    DateTime selected = DateTime.now();
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
+      initialDate: selected,
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
 
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != selected) {
       setState(() {
         if (isFirst) {
           selectedDate = picked;
@@ -204,6 +204,7 @@ class _ContactProviderState extends State<ContactProvider> {
         }
       });
     }
+
   }
 
   Future<void> _selectTime(BuildContext context, bool isFirst) async {
@@ -223,13 +224,16 @@ class _ContactProviderState extends State<ContactProvider> {
         } else {
           selectedTime1 = picked;
 
-          selectedTimeMain2 = '${selectedTime.hour}:${selectedTime.minute}';
+          selectedTimeMain2 = '${selectedTime1.hour}:${selectedTime1.minute}';
 
-          String formattedTime = selectedTime.format(context);
+          String formattedTime = selectedTime1.format(context);
           selectedTimeMain2 = formattedTime;
         }
       });
     }
+
+
+    Modals.showToast(selectedTimeMain2.toString());
   }
 
   void checkDatesValidity(String startDateString, String endDateString, agent) {
