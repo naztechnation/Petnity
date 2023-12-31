@@ -6,7 +6,7 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import './widgets/confirm_OTP.dart';
+import 'widgets/confirm_otp.dart';
 
 class ChangeEmail extends StatelessWidget {
   final TextEditingController number = TextEditingController();

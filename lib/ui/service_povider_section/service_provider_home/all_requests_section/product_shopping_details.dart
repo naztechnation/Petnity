@@ -372,7 +372,9 @@ class _PurchaseState extends State<Purchase> {
                                     borderRadius: BorderRadius.circular(30),
                                     child: ImageView.network(
                                       widget.productImage,
-                                      height: 150,
+                                       height: 160,
+                                  width: 160,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),

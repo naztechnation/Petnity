@@ -7,7 +7,6 @@ import 'package:petnity/ui/auth/sign_up_screen.dart';
 import 'package:petnity/ui/user/user_kyc/kyc_screen_one.dart';
 import 'package:petnity/ui/user/shop_screen/cart.dart';
 import 'package:petnity/ui/user/shop_screen/product_detail_screen.dart';
-import 'package:petnity/ui/settings/acount_deleted.dart';
 import 'package:petnity/ui/settings/change_email.dart';
 import 'package:petnity/ui/settings/change_email_&_number_option.dart';
 import 'package:petnity/ui/settings/change_number.dart';
@@ -96,7 +95,6 @@ class AppRoutes {
     changeEmailandNumber: (context) => ChangeEmailAndNumber(),
     paymentAndCard: (context) => PaymentAndCard(),
     changePassword: (context) => ChangePassword(),
-    accountDeleted: (context) => AccountDeleted(),
     settingsScreen: (context) => SettingsScreen(),
     liveSupport: (context) => LiveSupportPage(),
     reportBug: (context) => ReportBug(),
@@ -169,10 +167,10 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (context) => ChangePassword(),
         );
-      case accountDeleted:
-        return MaterialPageRoute(
-          builder: (context) => AccountDeleted(),
-        );
+      // case accountDeleted:
+      //   return MaterialPageRoute(
+      //     builder: (context) => AccountDeleted(),
+      //   );
       case settingsScreen:
         return MaterialPageRoute(
           builder: (context) => SettingsScreen(),
