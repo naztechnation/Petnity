@@ -522,8 +522,8 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     required String agentId,
     required String serviceId,
     required String amount,
-    required var contactMedium,
-    required var sessionType,
+    required List<String> contactMedium,
+    required List<String> sessionType,
   }) async {
     try {
       emit(CreateServicesLoading());

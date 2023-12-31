@@ -258,8 +258,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<CreateVetServices> createVetServices({
     required String agentId,
     required String serviceId,
-    required var sessionType,
-    required var contactMedium,
+    required List<String> sessionType,
+    required List<String> contactMedium,
     required String amount,
   }) async {
     var payload = {

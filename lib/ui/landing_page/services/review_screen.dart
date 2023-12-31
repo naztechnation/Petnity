@@ -30,7 +30,8 @@ import '../../widgets/modals.dart';
 import 'payment_success_screen.dart';
 
 class ReviewScreen extends StatelessWidget {
-  final String date1, date2, time1, time2, amount, orderId, username;
+  final String date1, date2, time1, time2, amount, orderId, username, serverDate, serverDate1;
+  
   const ReviewScreen(
       {super.key,
       required this.date1,
@@ -39,7 +40,8 @@ class ReviewScreen extends StatelessWidget {
       required this.time2,
       required this.amount,
       required this.orderId,
-      required this.username});
+      required this.username, required this.serverDate,
+       required this.serverDate1,});
 
   @override
   Widget build(BuildContext context) {
@@ -55,13 +57,16 @@ class ReviewScreen extends StatelessWidget {
         time2: time2,
         orderId: orderId,
         username: username,
+        serverDate: serverDate,
+        serverDate1: serverDate1,
+         
       ),
     );
   }
 }
 
 class Review extends StatefulWidget {
-  final String date1, date2, time1, time2, amount, orderId, username;
+  final String date1, date2, time1, time2, amount, orderId, username, serverDate, serverDate1;
   const Review(
       {super.key,
       required this.date1,
@@ -70,7 +75,7 @@ class Review extends StatefulWidget {
       required this.time2,
       required this.amount,
       required this.orderId,
-      required this.username});
+      required this.username, required this.serverDate, required this.serverDate1,});
 
   @override
   State<Review> createState() => _ReviewState();
@@ -186,12 +191,12 @@ class _ReviewState extends State<Review> {
               );
             } else if (state is ConfirmPaymentLoaded) {
               Modals.showToast(state.packages.message ?? '');
-             Future.delayed(Duration(seconds: 2), (){
-               AppNavigator.pushAndReplacePage(context,
-                  page: PaymentSuccessScreen(
-                    txId: txId,
-                  ));
-             });
+              Future.delayed(Duration(seconds: 2), () {
+                AppNavigator.pushAndReplacePage(context,
+                    page: PaymentSuccessScreen(
+                      txId: txId,
+                    ));
+              });
             } else if (state is CreateOrderLoaded) {
               _handlePaymentInitialization(
                   state.createOrder.order!.id.toString());
@@ -434,17 +439,16 @@ class _ReviewState extends State<Review> {
                           borderRadius: 40,
                           onPressed: () {
 
-                            // Modals.showToast('${widget.date2} ${formatTime(widget.time2)}');
-                            // Modals.showToast('${widget.date1} ${formatTime(widget.time1)}');
-
-                            _userCubit.createOrder(
-                                packageId: agent.packageId,
-                                username: widget.username,
-                                pickupTime:
-                                    '${widget.date2} ${formatTime(widget.time2)}',
-                                dropOffTime:
-                                    '${widget.date1} ${formatTime(widget.time1)}',
-                                pickUpLocation: agent.location);
+                            Modals.showToast(widget.serverDate);
+                            Modals.showToast(widget.serverDate1);
+                            // _userCubit.createOrder(
+                            //     packageId: agent.packageId,
+                            //     username: widget.username,
+                            //     pickupTime:
+                            //         '${widget.serverDate}',
+                            //     dropOffTime:
+                            //         '${widget.serverDate1}',
+                            //     pickUpLocation: agent.location);
                           },
                           child: CustomText(
                             textAlign: TextAlign.left,
@@ -466,7 +470,6 @@ class _ReviewState extends State<Review> {
   }
 
   String formatTime(String time) {
-    // Replace non-breaking spaces with regular spaces
     String inputTime = time.replaceAll(RegExp(r'[\sA-Za-z]'), '');
     print(inputTime);
 

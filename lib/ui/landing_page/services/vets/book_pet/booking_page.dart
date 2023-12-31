@@ -79,7 +79,7 @@ class VetBooking extends StatefulWidget {
 }
 
 class _VetBookingState extends State<VetBooking> {
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate1 = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   String selectedTime1 = 'Select Time';
   late ServiceProviderCubit _serviceProviderCubit;
@@ -365,7 +365,7 @@ class _VetBookingState extends State<VetBooking> {
                                             BorderRadius.circular(150),
                                         child: ImageView.network(
                                           vetServices
-                                              ?.vetService?.serviceType?.image,
+                                              ?.vetService?.serviceType?.image ?? '',
                                           fit: BoxFit.cover,
                                         )),
                                   ),
@@ -510,7 +510,7 @@ class _VetBookingState extends State<VetBooking> {
                                     child: CustomText(
                                       textAlign: TextAlign.left,
                                       maxLines: 2,
-                                      text: selectedDate
+                                      text: selectedDate1
                                           .toString()
                                           .split(' ')
                                           .first,
@@ -579,9 +579,9 @@ class _VetBookingState extends State<VetBooking> {
                                     state is VetsConfirmOrderLoading,
                                 onPressed: () {
                                   DateTime combinedDateTime = DateTime(
-                                    selectedDate.year,
-                                    selectedDate.month,
-                                    selectedDate.day,
+                                    selectedDate1.year,
+                                    selectedDate1.month,
+                                    selectedDate1.day,
                                     selectedTime.hour,
                                     selectedTime.minute,
                                   );
@@ -650,7 +650,7 @@ class _VetBookingState extends State<VetBooking> {
     );
     if (picked != null && picked != selectedDate) {
       setState(() {
-        selectedDate = picked;
+        selectedDate1 = picked;
       });
     }
   }

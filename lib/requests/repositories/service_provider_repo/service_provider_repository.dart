@@ -33,7 +33,8 @@ abstract class ServiceProviderRepository {
     Future<AuthData> agentRejectServiceOrder({required String agentId, required String orderId,}); 
     Future<AuthData> userAcceptOrderDelivered({required String username, required String orderId,}); 
     Future<AgentBalance> agentBalance({ required String agentId,}); 
-    Future<CreateVetServices> createVetServices({ required String agentId,required String serviceId, required var sessionType, required var contactMedium ,required String amount, }); 
+    Future<CreateVetServices> createVetServices({ required String agentId,required String serviceId, 
+    required List<String> sessionType, required List<String> contactMedium ,required String amount, }); 
     Future<AuthData> publishVetServices({ required String agentId,required String serviceId,}); 
     Future<VetsServices> vetServices({ required String agentId,}); 
     Future<CreateVetOrder> createVetOrder({ required String agentId,required String  username, required String  vetService,required String  sessionTime}); 
