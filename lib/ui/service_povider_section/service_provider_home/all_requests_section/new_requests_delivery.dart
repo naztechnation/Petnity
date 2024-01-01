@@ -50,6 +50,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
 
   int _currentPage = 0;
 
+  int _vetCurrentPage = 0;
+
   changePage(requestsType serve) {
     setState(() {
       isServices = serve;
@@ -103,8 +105,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               ),
             ],
           ),
-
-          Container(
+        Container(
           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 1.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -134,7 +135,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                       color: isVetServices.name == 'services'
                           ? AppColors.lightSecondary
                           : Colors.black,
-                          fontSize: 12,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -165,70 +166,92 @@ class _ServiceProviderPetDeliveryHomeBodyState
                       color: isServices.name == 'vets'
                           ? AppColors.lightSecondary
                           : Colors.black,
-                          fontSize: 12,
-
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              
             ],
           ),
         ),
-        if (serviceProvider.onGoingOrdersList.isNotEmpty)
+        if (serviceProvider.onGoingOrdersList.isNotEmpty &&
+            isVetServices.name == 'services')
           SizedBox(
             height: 10,
           ),
         if (serviceProvider.onGoingOrdersList.isNotEmpty)
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: serviceProvider.onGoingOrdersList.length,
-                itemBuilder: (context, index) {
-                  return OngoingDeliveryWidget(
-                    label: 'Track',
-                    services: serviceProvider.onGoingOrdersList[index],
-                  );
-                }),
+          Visibility(
+            visible: isVetServices.name == 'services',
+            child: SizedBox(
+              height: 300,
+              child: PageView.builder(
+                  onPageChanged: (index) {
+                    setState(() {
+                      _vetCurrentPage = index;
+                    });
+                  },
+                  scrollDirection: Axis.horizontal,
+                  itemCount: serviceProvider.onGoingOrdersList.length,
+                  itemBuilder: (context, index) {
+                    return OngoingDeliveryWidget(
+                      label: 'Track',
+                      services: serviceProvider.onGoingOrdersList[index],
+                    );
+                  }),
+            ),
           ),
-        if (serviceProvider.onGoingOrdersList.isNotEmpty)
+        if (serviceProvider.onGoingOrdersList.isNotEmpty &&
+            isVetServices.name == 'services')
           SizedBox(
             height: 10,
           ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:
-              _buildPageIndicator(serviceProvider.vetOnGoingOrdersList.length),
+        Visibility(
+          visible: isVetServices.name == 'services',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _buildPageIndicator(
+                serviceProvider.onGoingOrdersList.length, _currentPage),
+          ),
         ),
-        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty)
+        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty &&
+            isVetServices.name == 'vets')
           SizedBox(
             height: 10,
           ),
         if (serviceProvider.vetOnGoingOrdersList.isNotEmpty)
-          SizedBox(
-            height: 300,
-            child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: serviceProvider.vetOnGoingOrdersList.length,
-                itemBuilder: (context, index) {
-                  return VideoCallSessionWidget(
-                    buttonText: 'Track',
-                    vetOrders: serviceProvider.vetOnGoingOrdersList[index],
-                  );
-                }),
+          Visibility(
+            visible: isVetServices.name == 'vets',
+            child: SizedBox(
+              height: 300,
+              child: PageView.builder(
+                  onPageChanged: (index) {
+                    setState(() {
+                      _vetCurrentPage = index;
+                    });
+                  },
+                  scrollDirection: Axis.horizontal,
+                  itemCount: serviceProvider.vetOnGoingOrdersList.length,
+                  itemBuilder: (context, index) {
+                    return VideoCallSessionWidget(
+                      buttonText: 'Track',
+                      vetOrders: serviceProvider.vetOnGoingOrdersList[index],
+                    );
+                  }),
+            ),
           ),
-        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty)
+        if (serviceProvider.vetOnGoingOrdersList.isNotEmpty &&
+            isVetServices.name == 'vets')
           SizedBox(
             height: 10,
           ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:
-              _buildPageIndicator(serviceProvider.vetOnGoingOrdersList.length),
+        Visibility(
+          visible: isVetServices.name == 'vets',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: _buildPageIndicator(
+                serviceProvider.vetOnGoingOrdersList.length, _vetCurrentPage),
+          ),
         ),
         SizedBox(
           height: 20,
@@ -488,8 +511,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
     );
   }
 
-  Widget _newRequestWidget(
-      BuildContext context, Order order, userModel) {
+  Widget _newRequestWidget(BuildContext context, Order order, userModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -894,23 +916,26 @@ class _ServiceProviderPetDeliveryHomeBodyState
     );
   }
 
-  List<Widget> _buildPageIndicator(int length) {
+  List<Widget> _buildPageIndicator(int length, int currentPage) {
     List<Widget> reverseIndicators = [];
     for (int i = length - 1; i >= 0; i--) {
-      reverseIndicators.add(
-        Container(
-          width: 8.0,
-          height: 8.0,
-          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: _currentPage == (length - 1 - i)
-                ? AppColors.lightSecondary
-                : Colors.grey,
+      setState(() {
+        reverseIndicators.add(
+          Container(
+            width: 8.0,
+            height: 8.0,
+            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: currentPage == (length - 1 - i)
+                  ? AppColors.lightSecondary
+                  : Colors.grey,
+            ),
           ),
-        ),
-      );
+        );
+      });
     }
+
     return reverseIndicators;
   }
 }
