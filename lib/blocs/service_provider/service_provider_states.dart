@@ -265,6 +265,30 @@ class  VetsConfirmOrderLoaded extends ServiceProviderState {
   List<Object> get props => [vetService];
 }
 
+class   VetsCreateWithdrawalRequestLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  VetsCreateWithdrawalRequestLoaded extends ServiceProviderState {
+  final AuthData  requests;
+  const  VetsCreateWithdrawalRequestLoaded(this.requests);
+  @override
+  List<Object> get props => [requests];
+}
+
+class   VetsApproveWithdrawalRequestLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  VetsApproveWithdrawalRequestLoaded extends ServiceProviderState {
+  final AuthData  requests;
+  const  VetsApproveWithdrawalRequestLoaded(this.requests);
+  @override
+  List<Object> get props => [requests];
+}
+
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;
   const CreateServiceNetworkErr(this.message);

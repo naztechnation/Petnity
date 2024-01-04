@@ -186,36 +186,41 @@ class AppStrings {
   static String updateNumber(String username) =>
       '${_baseUrl}users/change-email-and-phone/$username';
 
-   static String privacy =
-      '${_baseUrl}get-privacy-policy';    
-    
-    static String deleteUser(String username) =>
-      '${_baseUrl}users/delete-user/$username'; 
+  static String privacy = '${_baseUrl}get-privacy-policy';
 
-      static String reportBug(String username) =>
-      '${_baseUrl}report-bug/$username'; 
+  static String deleteUser(String username) =>
+      '${_baseUrl}users/delete-user/$username';
 
-      static String reportAgent(String username,  String agentId) =>
-      '${_baseUrl}report-agent/$username/$agentId'; 
-static String getUserNotifications(String username,) =>
-      '${_baseUrl}notification/get-user-notifications/$username'; 
+  static String reportBug(String username) => '${_baseUrl}report-bug/$username';
 
-  static String createVetService(String agentId, String serviceTypeId,) =>
-      '${_baseUrl}services/create-vet-service/$agentId/$serviceTypeId'; 
+  static String reportAgent(String username, String agentId) =>
+      '${_baseUrl}report-agent/$username/$agentId';
+  static String getUserNotifications(
+    String username,
+  ) =>
+      '${_baseUrl}notification/get-user-notifications/$username';
 
-      static String publishVetService(String agentId, String serviceTypeId) =>
-      '${_baseUrl}services/publish-vet-service/$agentId/$serviceTypeId'; 
+  static String createVetService(
+    String agentId,
+    String serviceTypeId,
+  ) =>
+      '${_baseUrl}services/create-vet-service/$agentId/$serviceTypeId';
 
- static String getVetService(String agentId,) =>
-      '${_baseUrl}users/get-vet-service/$agentId'; 
+  static String publishVetService(String agentId, String serviceTypeId) =>
+      '${_baseUrl}services/publish-vet-service/$agentId/$serviceTypeId';
 
-  static String createVetOrder(String agentId,String username) =>
-      '${_baseUrl}order/create-vet-order/$username/$agentId'; 
-  static String confirmVetPaymentOrder(String orderId,String username) =>
-      '${_baseUrl}order/vet-order-payment/$username/$orderId'; 
+  static String getVetService(
+    String agentId,
+  ) =>
+      '${_baseUrl}users/get-vet-service/$agentId';
 
-      //Agent accept order
-    
+  static String createVetOrder(String agentId, String username) =>
+      '${_baseUrl}order/create-vet-order/$username/$agentId';
+  static String confirmVetPaymentOrder(String orderId, String username) =>
+      '${_baseUrl}order/vet-order-payment/$username/$orderId';
+
+  //Agent accept order
+
   static String agentAcceptVetOrder(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/agent-accept-vet-order/$agentId/$orderId';
@@ -228,13 +233,17 @@ static String getUserNotifications(String username,) =>
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/agent-complete-vet-order/$agentId/$orderId';
 
-      static String agentRejectServiceVetOrder(
+  static String agentRejectServiceVetOrder(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/agent-reject-vet-order/$agentId/$orderId';
- 
- 
 
-      static String userMarkVetOrderDelivered(
+  static String userMarkVetOrderDelivered(
           {required String username, required String orderId}) =>
       '${_baseUrl}order/user-complete-vet-order/$username/$orderId';
+
+  static String agentCreateWithdrawal({required String agentId}) =>
+      '${_baseUrl}users/create-withdrawal-request/$agentId';
+
+  static String agentApproveWithdrawal({required String agentId}) =>
+      '${_baseUrl}users/approve-withdrawal-request/$agentId';
 }

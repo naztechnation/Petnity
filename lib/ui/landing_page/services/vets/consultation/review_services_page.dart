@@ -216,9 +216,9 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                               _serviceProviderCubit.createAgentServices(
                                 agentId: agentId,
                                 serviceId: serviceAccount.serviceId,
-                                amount: serviceProvider.amountController,
-                                contactMedium: serviceProvider.contactType,
-                                sessionType: serviceProvider.servicesType,
+                                amount: int.parse(serviceProvider.amountController),
+                                contactMedium: serviceProvider.contactIndex,
+                                sessionType: serviceProvider.servicesIndex,
                               );
                             },
                             child: Text(

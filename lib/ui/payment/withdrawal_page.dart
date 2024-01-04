@@ -14,7 +14,6 @@ import '../../model/view_models/service_provider_inapp.dart';
 import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../res/app_colors.dart';
 import '../../res/app_constants.dart';
-import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/navigator/page_navigator.dart';
@@ -27,7 +26,9 @@ import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
 
 class WithdrawalPage extends StatelessWidget {
-  const WithdrawalPage();
+
+  final String  withdrawableAmount;
+  const WithdrawalPage({required this.withdrawableAmount});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +37,15 @@ class WithdrawalPage extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: Withdrawal(),
+      child: Withdrawal(withdrawableAmount: withdrawableAmount,),
     );
   }
 }
 
 class Withdrawal extends StatefulWidget {
-  const Withdrawal({super.key});
+  final String  withdrawableAmount;
+
+  const Withdrawal({super.key, required this.withdrawableAmount});
 
   @override
   State<Withdrawal> createState() => _WithdrawalState();
@@ -55,6 +58,8 @@ class _WithdrawalState extends State<Withdrawal> {
   final amountController = TextEditingController();
 
   List<AgentBankDetails> accountList = [];
+
+  bool isSufficient  = false;
 
   String agentId = "";
 
@@ -85,13 +90,14 @@ class _WithdrawalState extends State<Withdrawal> {
     _debounce = Timer(const Duration(milliseconds: 500), () {
       setState(() {
         double enteredAmount = double.tryParse(amountController.text) ?? 0;
-        double staticAmount = double.tryParse( amount) ?? 0;
+        double staticAmount = double.tryParse( widget.withdrawableAmount) ?? 0;
 
         amountColor = enteredAmount > staticAmount ? Colors.red : Colors.black;
-      //   if(amountController.text.isNotEmpty){
-      //   amountController.text = AppUtils.convertPrice(amountController.text);
-
-      //   }
+        if(amountController.text.isNotEmpty){
+          isSufficient = enteredAmount > staticAmount ? true : false;
+        }else{
+          isSufficient = false;
+        }
        });
     });
   }
@@ -105,6 +111,8 @@ class _WithdrawalState extends State<Withdrawal> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: screenSize(context) * .08,
@@ -182,7 +190,7 @@ class _WithdrawalState extends State<Withdrawal> {
                               ),
                             ),
                             CustomText(
-                              text: 'NGN ${AppUtils.convertPrice('9500')}',
+                              text: 'NGN ${AppUtils.convertPrice(widget.withdrawableAmount)}',
                               weight: FontWeight.bold,
                               fontFamily: AppStrings.montserrat,
                               size: 13,
@@ -211,6 +219,15 @@ class _WithdrawalState extends State<Withdrawal> {
                           borderRadius: 30,
                         ),
                       ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Visibility(
+                        visible: isSufficient,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Text('Insufficient funds', style: TextStyle(color: Colors.red, fontSize: 10),),
+                        )), 
                       const SizedBox(
                         height: 30,
                       ),
@@ -295,7 +312,7 @@ class _WithdrawalState extends State<Withdrawal> {
                             vertical: 0.0, horizontal: 0),
                         child: ButtonView(
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate() && !isSufficient && double.parse(widget.withdrawableAmount) > 0) {
                               AppNavigator.pushAndStackPage(context,
                                   page: PaymentReview(
                                     amount: amountController.text,
@@ -303,6 +320,8 @@ class _WithdrawalState extends State<Withdrawal> {
                                     accountNumber: accountNumber,
                                     bankName: bankName,
                                   ));
+                            }else {
+                              Modals.showToast('Enter a valid amount');
                             }
                           },
                           color: AppColors.lightSecondary,

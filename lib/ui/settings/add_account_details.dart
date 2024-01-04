@@ -66,6 +66,8 @@ class _AddAccountState extends State<AddAccount> {
 
   List<AgentBankDetails> accountList = [];
 
+  String amount = '0';
+
   String agentId = "";
 
   getAgentId() async {
@@ -83,7 +85,7 @@ class _AddAccountState extends State<AddAccount> {
 
   Future<bool> onBackPress() {
     if (isWithdraw) {
-      AppNavigator.pushAndReplacePage(context, page: WithdrawalPage());
+      AppNavigator.pushAndReplacePage(context, page: WithdrawalPage(withdrawableAmount: amount,));
     } else {
       Navigator.pop(context);
     }
@@ -97,6 +99,8 @@ class _AddAccountState extends State<AddAccount> {
   Widget build(BuildContext context) {
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
+
+        amount = serviceProvider.withdrawableBalance;
 
     return BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
       listener: (context, state) {
@@ -152,7 +156,7 @@ class _AddAccountState extends State<AddAccount> {
                           onTap: () {
                             if (isWithdraw) {
                               AppNavigator.pushAndReplacePage(context,
-                                  page: WithdrawalPage());
+                                  page: WithdrawalPage(withdrawableAmount: serviceProvider.withdrawableBalance,));
                             } else {
                               Navigator.pop(context);
                             }
@@ -251,7 +255,7 @@ class _AddAccountState extends State<AddAccount> {
                                 onPressed: () {
                                   _submit(context: context, agentId: agentId);
                                 },
-                                child: Text('Update Account'),
+                                child: Text('Update Account', style: TextStyle(color: Colors.white),),
                               ),
                             ],
                           ),

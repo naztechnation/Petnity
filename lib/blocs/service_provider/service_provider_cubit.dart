@@ -299,7 +299,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
         orderId: orderId,
       );
 
-      
       emit(AcceptOngoingOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -316,7 +315,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-   Future<void> markCompleteAgentOrder({
+  Future<void> markCompleteAgentOrder({
     required String agentId,
     required String orderId,
   }) async {
@@ -328,7 +327,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
         orderId: orderId,
       );
 
-      
       emit(AcceptCompletedOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -345,20 +343,19 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  
-   Future<void> agentDeliveredOrder({
+  Future<void> agentDeliveredOrder({
     required String agentId,
     required String orderId,
   }) async {
     try {
       emit(AcceptShopOrderLoading());
 
-      final services = await serviceProviderRepository.agentAcceptDeliveredShopOrder(
+      final services =
+          await serviceProviderRepository.agentAcceptDeliveredShopOrder(
         agentId: agentId,
         orderId: orderId,
       );
 
-      
       emit(AgentDeliveredShopOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -375,19 +372,19 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-     Future<void> agentAcceptDeliveredServiceOrder({
+  Future<void> agentAcceptDeliveredServiceOrder({
     required String agentId,
     required String orderId,
   }) async {
     try {
       emit(AcceptShopOrderLoading());
 
-      final services = await serviceProviderRepository.agentAcceptDeliveredShopOrder(
+      final services =
+          await serviceProviderRepository.agentAcceptDeliveredShopOrder(
         agentId: agentId,
         orderId: orderId,
       );
 
-      
       emit(DeliveredShopOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -404,19 +401,19 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
- Future<void> userDeliveredOrder({
+  Future<void> userDeliveredOrder({
     required String username,
     required String orderId,
   }) async {
     try {
       emit(AcceptShopOrderLoading());
 
-      final services = await serviceProviderRepository.userAcceptDeliveredShopOrder(
+      final services =
+          await serviceProviderRepository.userAcceptDeliveredShopOrder(
         username: username,
         orderId: orderId,
       );
 
-      
       emit(DeliveredShopOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -445,7 +442,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
         orderId: orderId,
       );
 
-      
       emit(RejectOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -462,7 +458,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-   Future<void> userAcknowledgeOrderDelivered({
+  Future<void> userAcknowledgeOrderDelivered({
     required String username,
     required String orderId,
   }) async {
@@ -474,7 +470,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
         orderId: orderId,
       );
 
-      
       emit(UserAcceptOrderDeliveredOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -501,7 +496,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
         agentId: agentId,
       );
 
-      
       emit(AgentBalanceLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -518,21 +512,24 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-   Future<void> createAgentServices({
+  Future<void> createAgentServices({
     required String agentId,
     required String serviceId,
-    required String amount,
-    required List<String> contactMedium,
-    required List<String> sessionType,
+    required int amount,
+    required List<int> contactMedium,
+    required List<int> sessionType,
   }) async {
     try {
       emit(CreateServicesLoading());
 
       final services = await serviceProviderRepository.createVetServices(
-        agentId: agentId, serviceId: serviceId, sessionType: sessionType, contactMedium: contactMedium, amount: amount,
+        agentId: agentId,
+        serviceId: serviceId,
+        sessionType: sessionType,
+        contactMedium: contactMedium,
+        amount: amount,
       );
 
-      
       emit(CreateServicesLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -549,18 +546,18 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-   Future<void> publishAgentServices({
+  Future<void> publishAgentServices({
     required String agentId,
     required String serviceId,
-      
   }) async {
     try {
       emit(PublishServicesLoading());
 
       final services = await serviceProviderRepository.publishVetServices(
-        agentId: agentId, serviceId: serviceId, );
+        agentId: agentId,
+        serviceId: serviceId,
+      );
 
-      
       emit(PublishServicesLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -577,18 +574,16 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-
-   Future<void> vetServices({
+  Future<void> vetServices({
     required String agentId,
-      
   }) async {
     try {
       emit(VetsServicesLoading());
 
       final services = await serviceProviderRepository.vetServices(
-        agentId: agentId, );
+        agentId: agentId,
+      );
 
-      
       emit(VetsServicesLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -605,18 +600,21 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void> vetServicesOrder({
-    required String agentId,
-    required String username,
-    required String  vetService,required String  sessionTime
-  }) async {
+  Future<void> vetServicesOrder(
+      {required String agentId,
+      required String username,
+      required String vetService,
+      required String sessionTime}) async {
     try {
       emit(VetsServicesOrderLoading());
 
       final services = await serviceProviderRepository.createVetOrder(
-        agentId: agentId, username: username, vetService: vetService, sessionTime: sessionTime, );
+        agentId: agentId,
+        username: username,
+        vetService: vetService,
+        sessionTime: sessionTime,
+      );
 
-      
       emit(VetsServicesOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -633,17 +631,21 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void> verifyVetOrder({
-    required String orderId,
-   required String username, required String vetServiceId, required String purchaseId
-  }) async {
+  Future<void> verifyVetOrder(
+      {required String orderId,
+      required String username,
+      required String vetServiceId,
+      required String purchaseId}) async {
     try {
       emit(VetsConfirmOrderLoading());
 
       final services = await serviceProviderRepository.confirmVetPaymentOrder(
-          username: username, orderId: orderId, vetServiceId: vetServiceId, purchaseId: purchaseId,  );
+        username: username,
+        orderId: orderId,
+        vetServiceId: vetServiceId,
+        purchaseId: purchaseId,
+      );
 
-      
       emit(VetsConfirmOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -660,19 +662,19 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-Future<void> rejectUserVetOrder({
+  Future<void> rejectUserVetOrder({
     required String agentId,
     required String orderId,
   }) async {
     try {
       emit(RejectOrderLoading());
 
-      final services = await serviceProviderRepository.agentRejectServiceVetOrder(
+      final services =
+          await serviceProviderRepository.agentRejectServiceVetOrder(
         agentId: agentId,
         orderId: orderId,
       );
 
-      
       emit(RejectOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -689,19 +691,19 @@ Future<void> rejectUserVetOrder({
     }
   }
 
-   Future<void> userAcknowledgeVetOrderDelivered({
+  Future<void> userAcknowledgeVetOrderDelivered({
     required String username,
     required String orderId,
   }) async {
     try {
       emit(AcceptShopOrderLoading());
 
-      final services = await serviceProviderRepository.userAcceptVetOrderDelivered(
+      final services =
+          await serviceProviderRepository.userAcceptVetOrderDelivered(
         username: username,
         orderId: orderId,
       );
 
-      
       emit(UserAcceptOrderDeliveredOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -718,7 +720,7 @@ Future<void> rejectUserVetOrder({
     }
   }
 
-Future<void> acceptAgentVetOrder({
+  Future<void> acceptAgentVetOrder({
     required String agentId,
     required String orderId,
   }) async {
@@ -758,7 +760,6 @@ Future<void> acceptAgentVetOrder({
         orderId: orderId,
       );
 
-      
       emit(AcceptOngoingOrderLoaded(services));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
@@ -775,7 +776,7 @@ Future<void> acceptAgentVetOrder({
     }
   }
 
-   Future<void> markCompleteAgentVetOrder({
+  Future<void> markCompleteAgentVetOrder({
     required String agentId,
     required String orderId,
   }) async {
@@ -787,8 +788,59 @@ Future<void> acceptAgentVetOrder({
         orderId: orderId,
       );
 
-      
       emit(AcceptCompletedOrderLoaded(services));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> vetsCreateWithdrawalRequest({
+    required String agentId,
+  }) async {
+    try {
+      emit(VetsCreateWithdrawalRequestLoading());
+
+      final requests = await serviceProviderRepository.agentCreateWithdrawal(
+        agentId: agentId,
+      );
+
+      emit(VetsCreateWithdrawalRequestLoaded(requests));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> vetsApproveWithdrawalRequest({
+    required String agentId,
+  }) async {
+    try {
+      emit(VetsApproveWithdrawalRequestLoading());
+
+      final requests = await serviceProviderRepository.agentApproveWithdrawal(
+        agentId: agentId,
+      );
+
+      emit(VetsApproveWithdrawalRequestLoaded(requests));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
     } catch (e) {

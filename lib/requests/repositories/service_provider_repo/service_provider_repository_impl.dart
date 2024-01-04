@@ -258,9 +258,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<CreateVetServices> createVetServices({
     required String agentId,
     required String serviceId,
-    required List<String> sessionType,
-    required List<String> contactMedium,
-    required String amount,
+    required List<int> sessionType,
+    required List<int> contactMedium,
+    required int amount,
   }) async {
     var payload = {
       "session_types": sessionType,
@@ -402,4 +402,28 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
     return AuthData.fromJson(map);
   }
+
+   @override
+  Future<AuthData> agentCreateWithdrawal({required String agentId}) async {
+    final map = await Requests().post(
+        AppStrings.agentCreateWithdrawal(agentId: agentId,),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
+  @override
+  Future<AuthData> agentApproveWithdrawal({required String agentId}) async {
+    final map = await Requests().patch(
+        AppStrings.agentApproveWithdrawal(agentId: agentId,),
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
+ 
 }

@@ -30,7 +30,9 @@ class PaymentPage extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: Payment(mainPage: mainPage,),
+      child: Payment(
+        mainPage: mainPage,
+      ),
     );
   }
 }
@@ -39,7 +41,8 @@ class Payment extends StatefulWidget {
   final bool mainPage;
 
   const Payment({
-    super.key, required this.mainPage,
+    super.key,
+    required this.mainPage,
   });
 
   @override
@@ -49,7 +52,7 @@ class Payment extends StatefulWidget {
 class _PaymentState extends State<Payment> {
   late ServiceProviderCubit _serviceProviderCubit;
 
-     var withdrawableAmount = '0';
+  var withdrawableAmount = '0';
 
   String email = '';
 
@@ -78,170 +81,204 @@ class _PaymentState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
+    final service =
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
+
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: (!widget.mainPage) ? screenSize(context) * 0 :screenSize(context) * .1,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: AppColors.lightBackground,
-            leading: backButton(context),
-            title: Text(
-              'Payments',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+        appBar: PreferredSize(
+          preferredSize: (!widget.mainPage)
+              ? screenSize(context) * 0
+              : screenSize(context) * .1,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: AppBar(
+              elevation: 0,
+              backgroundColor: AppColors.lightBackground,
+              leading: backButton(context),
+              title: Text(
+                'Payments',
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+              centerTitle: true,
             ),
-            centerTitle: true,
           ),
         ),
-      ),
-      body: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
+        body: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
             listener: (context, state) {
           if (state is CreateServiceNetworkErr) {
             Modals.showToast(state.message ?? '');
           } else if (state is CreateServiceNetworkErrApiErr) {
             Modals.showToast(state.message ?? '');
           } else if (state is AgentBalanceLoaded) {
-            withdrawableAmount = state.balance.balance.toString() ;
-          } 
-        }, builder: (context, state) {
-          
+            withdrawableAmount = state.balance.balance.toString();
 
-             return (state is AgentBalanceLoading)
+            service.setWithdrawableBalance(withdrawableAmount);
+          }
+        }, builder: (context, state) {
+          return (state is AgentBalanceLoading)
               ? LoadingPage()
               : Container(
-          height: screenSize(context).height,
-          width: screenSize(context).width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                  begin: Alignment.topRight,
-                  end: Alignment.topLeft)),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: 'Lifetime earnings -',
-                        weight: FontWeight.bold,
-                        maxLines: 2,
-                        size: 13,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      CustomText(
-                        text: 'NGN ${AppUtils.convertPrice('20000')}',
-                        weight: FontWeight.w900,
-                        fontFamily: AppStrings.montserrat,
-                        maxLines: 2,
-                        size: 12,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      AppNavigator.pushAndStackPage(context,
-                          page: WithdrawalPage());
-                    },
-                    child: Container(
-                      width: screenSize(context).width,
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  height: screenSize(context).height,
+                  width: screenSize(context).width,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                          begin: Alignment.topRight,
+                          end: Alignment.topLeft)),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: CustomText(
-                              text: 'Withdrawable balance',
-                              weight: FontWeight.bold,
-                              color: AppColors.lightSecondary,
-                              maxLines: 2,
-                              size: 13,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: 'Lifetime earnings -',
+                                weight: FontWeight.bold,
+                                maxLines: 2,
+                                size: 13,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              CustomText(
+                                text: 'NGN ${AppUtils.convertPrice('20000')}',
+                                weight: FontWeight.w900,
+                                fontFamily: AppStrings.montserrat,
+                                maxLines: 2,
+                                size: 12,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              AppNavigator.pushAndStackPage(context,
+                                  page: WithdrawalPage(
+                                    withdrawableAmount: withdrawableAmount,
+                                  ));
+                            },
+                            child: Container(
+                              width: screenSize(context).width,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 20),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: CustomText(
+                                          text: 'Withdrawable balance',
+                                          weight: FontWeight.bold,
+                                          color: AppColors.lightSecondary,
+                                          maxLines: 2,
+                                          size: 13,
+                                        ),
+                                      ),
+                                      CustomText(
+                                        text: (withdrawableAmount != 'null')
+                                            ? 'NGN ${AppUtils.convertPrice('$withdrawableAmount')} '
+                                            : '0.00',
+                                        weight: FontWeight.bold,
+                                        color: AppColors.lightSecondary,
+                                        fontFamily: AppStrings.montserrat,
+                                        size: 13,
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.lightSecondary,
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                      child: CustomText(
+                                        text: 'withdraw',
+                                        weight: FontWeight.bold,
+                                        color: AppColors.lightPrimary,
+                                        maxLines: 2,
+                                        size: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          // Container(
+                          //   width: screenSize(context).width,
+                          //   margin: const EdgeInsets.symmetric(horizontal: 10),
+                          //   padding:
+                          //       const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                          //   decoration: BoxDecoration(
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.circular(20),
+                          //   ),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Expanded(
+                          //         child: CustomText(
+                          //           text: 'Pending balance',
+                          //           weight: FontWeight.bold,
+                          //           maxLines: 2,
+                          //           size: 13,
+                          //         ),
+                          //       ),
+                          //       CustomText(
+                          //         text: 'NGN ${AppUtils.convertPrice('950')}',
+                          //         weight: FontWeight.bold,
+                          //         fontFamily: AppStrings.montserrat,
+                          //         size: 13,
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
                           CustomText(
-                            text: (withdrawableAmount != 'null') ?'NGN ${AppUtils.convertPrice('$withdrawableAmount')} ' : '0.00',
+                            text: 'Analytics',
                             weight: FontWeight.bold,
-                            color: AppColors.lightSecondary,
                             fontFamily: AppStrings.montserrat,
                             size: 13,
                           ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: 4,
+                              shrinkWrap: true,
+                              itemBuilder: ((context, index) {
+                                return PaymentBox();
+                              }))
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    width: screenSize(context).width,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: CustomText(
-                            text: 'Pending balance',
-                            weight: FontWeight.bold,
-                            maxLines: 2,
-                            size: 13,
-                          ),
-                        ),
-                        CustomText(
-                          text: 'NGN ${AppUtils.convertPrice('950')}',
-                          weight: FontWeight.bold,
-                          fontFamily: AppStrings.montserrat,
-                          size: 13,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  CustomText(
-                    text: 'Analytics',
-                    weight: FontWeight.bold,
-                    fontFamily: AppStrings.montserrat,
-                    size: 13,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: 4,
-                      shrinkWrap: true,
-                      itemBuilder: ((context, index) {
-                        return PaymentBox();
-                      }))
-                ],
-              ),
-            ),
-          ),
-        );
-  } 
-      ));
+                );
+        }));
   }
 }

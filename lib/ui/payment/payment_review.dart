@@ -12,6 +12,10 @@ import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
 import '../../../utils/validator.dart';
+import '../../blocs/service_provider/service_provider.dart';
+import '../../handlers/secure_handler.dart';
+import '../../model/view_models/service_provider_inapp.dart';
+import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../res/app_routes.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/navigator/page_navigator.dart';
@@ -22,7 +26,7 @@ import '../widgets/custom_text.dart';
 import '../widgets/modals.dart';
 import '../widgets/text_edit_view.dart';
 
-class PaymentReview extends StatefulWidget {
+class PaymentReview extends StatelessWidget {
   final String amount;
   final String accountName;
   final String accountNumber;
@@ -37,10 +41,41 @@ class PaymentReview extends StatefulWidget {
   });
 
   @override
-  State<PaymentReview> createState() => _PaymentReviewState();
+  Widget build(BuildContext context) {
+    return BlocProvider<ServiceProviderCubit>(
+      create: (BuildContext context) => ServiceProviderCubit(
+          serviceProviderRepository: ServiceProviderRepositoryImpl(),
+          viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
+              listen: false)),
+      child: Payment(
+        amount: amount,
+        accountName: accountName,
+        accountNumber: accountNumber,
+        bankName: bankName,
+      ),
+    );
+  }
 }
 
-class _PaymentReviewState extends State<PaymentReview> {
+class Payment extends StatefulWidget {
+  final String amount;
+  final String accountName;
+  final String accountNumber;
+  final String bankName;
+
+  Payment({
+    super.key,
+    required this.amount,
+    required this.accountName,
+    required this.accountNumber,
+    required this.bankName,
+  });
+
+  @override
+  State<Payment> createState() => _PaymentReviewState();
+}
+
+class _PaymentReviewState extends State<Payment> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _amountController = TextEditingController();
@@ -49,17 +84,25 @@ class _PaymentReviewState extends State<PaymentReview> {
 
   Color amountColor = Colors.black;
 
+  late ServiceProviderCubit _serviceProviderCubit;
+
+  String agentId = "";
+
+  getAgentId() async {
+    agentId = await StorageHandler.getAgentId();
+
+    _serviceProviderCubit = context.read<ServiceProviderCubit>();
+  }
+
   @override
   void initState() {
     _bankDetailsController.text = widget.accountName;
     _amountController.text = widget.amount;
 
     _amountController.text = AppUtils.convertPrice(_amountController.text);
-    
+
     super.initState();
   }
-
-   
 
   @override
   Widget build(BuildContext context) {
@@ -74,28 +117,41 @@ class _PaymentReviewState extends State<PaymentReview> {
               colors: [AppColors.scaffoldColor, Colors.red.shade50],
               begin: Alignment.topRight,
               end: Alignment.topLeft)),
-      child: BlocProvider<AccountCubit>(
+      child: BlocProvider<ServiceProviderCubit>(
         lazy: false,
-        create: (_) => AccountCubit(
-            accountRepository: AccountRepositoryImpl(),
-            viewModel: Provider.of<AccountViewModel>(context, listen: false)),
-        child: BlocConsumer<AccountCubit, AccountStates>(
+        create: (_) => ServiceProviderCubit(
+            serviceProviderRepository: ServiceProviderRepositoryImpl(),
+            viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
+                listen: false)),
+        child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
           listener: (context, state) {
-            if (state is AccountLoaded) {
-              if (state.userData.status!) {
-                Modals.showToast(state.userData.message!,
+            if (state is VetsApproveWithdrawalRequestLoaded) {
+              if (state.requests.status!) {
+                Modals.showToast(state.requests.message!,
                     messageType: MessageType.success);
+
+                Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  return UpdateSuccessfulScreen(
+                      notetext:
+                          'Payment speed is subject to bans internal network',
+                      buttonText: 'Back Home',
+                      onPressed: () {
+                        AppNavigator.pushAndReplaceName(context,
+                            name: AppRoutes.serviceProviderLandingPage);
+                      },
+                      successMessage:
+                          'Amount of NGN${AppUtils.convertPrice(widget.amount)} has been sent to you saved bank account Payment should arrive in an hour');
+                }));
               }
-            } else if (state is AccountApiErr) {
-              if (state.message != null) {
-                Modals.showToast(state.message!,
-                    messageType: MessageType.error);
+            } else if (state is VetsCreateWithdrawalRequestLoaded) {
+              if (state.requests.status!) {
+                _serviceProviderCubit.vetsApproveWithdrawalRequest(
+                    agentId: agentId);
               }
-            } else if (state is AccountNetworkErr) {
-              if (state.message != null) {
-                Modals.showToast(state.message!,
-                    messageType: MessageType.error);
-              }
+            } else if (state is CreateServiceNetworkErr) {
+              Modals.showToast(state.message ?? '');
+            } else if (state is CreateServiceNetworkErrApiErr) {
+              Modals.showToast(state.message ?? '');
             }
           },
           builder: (context, state) => SingleChildScrollView(
@@ -141,7 +197,6 @@ class _PaymentReviewState extends State<PaymentReview> {
                               return Validator.validate(value, 'amount');
                             },
                             controller: _amountController,
-                             
                             filled: true,
                             textColor: amountColor,
                             fillColor: AppColors.lightPrimary,
@@ -158,13 +213,9 @@ class _PaymentReviewState extends State<PaymentReview> {
                             isDense: true,
                             readOnly: true,
                             keyboardType: TextInputType.number,
-
                             maxLines: 1,
                             controller: _bankDetailsController,
-                            onChanged: (value){
-                              
-
-                            },
+                            onChanged: (value) {},
                             validator: (value) {
                               return Validator.validate(value, 'Account');
                             },
@@ -197,20 +248,11 @@ class _PaymentReviewState extends State<PaymentReview> {
                     padding: const EdgeInsets.symmetric(
                         vertical: 0.0, horizontal: 20),
                     child: ButtonView(
-                      processing: state is AccountProcessing,
+                      processing: state is VetsApproveWithdrawalRequestLoading || state is VetsCreateWithdrawalRequestLoading,
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (_) {
-                          return UpdateSuccessfulScreen(
-                              notetext:
-                                  'Payment speed is subject to bans internal network',
-                              buttonText: 'Back Home',
-                              onPressed: () {
-                                AppNavigator.pushAndReplaceName(context,
-                                    name: AppRoutes.serviceProviderLandingPage);
-                              },
-                              successMessage:
-                                  'Amount of NGN${AppUtils.convertPrice(widget.amount)} has been sent to you saved bank account Payment should arrive in an hour');
-                        }));
+                        _serviceProviderCubit.vetsCreateWithdrawalRequest(
+                          agentId: agentId,
+                        );
                       },
                       color: AppColors.lightSecondary,
                       borderRadius: 30,

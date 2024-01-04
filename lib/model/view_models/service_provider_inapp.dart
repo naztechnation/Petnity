@@ -19,6 +19,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   }
   int _selectedIndex = -1;
   int _orderPageNumber = 1;
+  String _withDrawableBalance = '0';
   int _currentPage = 1;
   File? _imageURl;
   File? _imageURl1;
@@ -96,7 +97,11 @@ addContactType(int index, var item, var image) {
   setViewState(ViewState.success);
 }
 
+  setWithdrawableBalance(String balance){
+    _withDrawableBalance = balance;
+    setViewState(ViewState.success);
 
+  }
   updateAmountController(String amount) {
     _amountController = amount;
 
@@ -250,6 +255,8 @@ addContactType(int index, var item, var image) {
   int get selectedIndex => _selectedIndex;
   File? get imageURl => _imageURl;
   File? get imageURl1 => _imageURl1;
+
+  String get withdrawableBalance => _withDrawableBalance;
 
   List<String> get servicesType => _servicesType;
   List<int> get servicesIndex => _servicesIndex;

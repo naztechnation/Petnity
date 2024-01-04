@@ -20,7 +20,6 @@ import '../../res/app_routes.dart';
 import '../../res/enum.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../widgets/filter_search_section.dart';
-import '../widgets/modals.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
