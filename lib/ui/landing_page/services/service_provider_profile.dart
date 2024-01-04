@@ -314,7 +314,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         break;
       case 'vets':
         AppNavigator.pushAndStackPage(context,
-            page: VetBookingPage(name: widget.agents?.profile?.user?.username ?? '', image: '${widget.agents?.picture}', gender: widget.agents?.gender ?? '', location: '${widget.agents?.city}, ${widget.agents?.country}'.replaceAll('?', ''), about: widget.agents?.about ?? '',
+            page: VetBookingPage(name: widget.agents?.profile?.user?.username ?? '', image: '${widget.agents?.picture}', gender: widget.agents?.gender ?? '', location: '${widget.agents?.city}, ${widget.agents?.country}'.replaceAll('?', ''), about: widget.agents?.about ?? '', agentId: widget.agents?.id.toString() ?? '',
                
             ));
         break;

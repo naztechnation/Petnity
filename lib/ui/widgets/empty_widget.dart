@@ -41,7 +41,7 @@ class EmptyWidget extends StatelessWidget {
                     onPressed: onRefresh!,
                     child: const Text('Refresh',
                         style: TextStyle(fontWeight: FontWeight.w600,
-                            fontSize: 18)))
+                            fontSize: 18, color: Colors.white)))
               ]
             ],
           ),

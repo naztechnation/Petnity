@@ -10,6 +10,7 @@ import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/vet_services.dart';
+import '../../../model/withdrawal/withdrawal.dart';
 
 
 abstract class ServiceProviderRepository {
@@ -44,7 +45,7 @@ abstract class ServiceProviderRepository {
     Future<AuthData> acceptCompleteVetOrder({required String agentId, required String orderId,}); 
     Future<AuthData> agentRejectServiceVetOrder({required String agentId, required String orderId,}); 
     Future<AuthData> userAcceptVetOrderDelivered({required String username, required String orderId,}); 
-    Future<AuthData> agentCreateWithdrawal({required String agentId,}); 
-    Future<AuthData> agentApproveWithdrawal({required String agentId,}); 
+    Future<CreateWithrawal> agentCreateWithdrawal({required String agentId, required String amount,}); 
+    Future<AuthData> agentApproveWithdrawal({required String withdrawalId,}); 
 
 }

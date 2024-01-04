@@ -320,6 +320,8 @@ class _WithdrawalState extends State<Withdrawal> {
                                     accountNumber: accountNumber,
                                     bankName: bankName,
                                   ));
+
+                                  
                             }else {
                               Modals.showToast('Enter a valid amount');
                             }

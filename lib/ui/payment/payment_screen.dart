@@ -145,7 +145,9 @@ class _PaymentState extends State<Payment> {
                                 width: 10,
                               ),
                               CustomText(
-                                text: 'NGN ${AppUtils.convertPrice('20000')}',
+                                text: (withdrawableAmount != 'null')
+                                            ? 'NGN ${AppUtils.convertPrice('$withdrawableAmount')} '
+                                            : '0.00',
                                 weight: FontWeight.w900,
                                 fontFamily: AppStrings.montserrat,
                                 maxLines: 2,
@@ -162,6 +164,8 @@ class _PaymentState extends State<Payment> {
                                   page: WithdrawalPage(
                                     withdrawableAmount: withdrawableAmount,
                                   ));
+
+                              
                             },
                             child: Container(
                               width: screenSize(context).width,

@@ -11,6 +11,7 @@ import 'package:petnity/model/user_models/vet_services.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
+import '../../../model/withdrawal/withdrawal.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
 import 'service_provider_repository.dart';
@@ -404,20 +405,25 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
    @override
-  Future<AuthData> agentCreateWithdrawal({required String agentId}) async {
+  Future<CreateWithrawal> agentCreateWithdrawal({required String agentId, required String amount,}) async {
     final map = await Requests().post(
-        AppStrings.agentCreateWithdrawal(agentId: agentId,),
+        AppStrings.agentCreateWithdrawal(agentId: agentId,
+        
+        ),
+        body: {
+          'amount': amount
+        },
         headers: {
           'Authorization': AppStrings.token,
         });
 
-    return AuthData.fromJson(map);
+    return CreateWithrawal.fromJson(map);
   }
   
   @override
-  Future<AuthData> agentApproveWithdrawal({required String agentId}) async {
+  Future<AuthData> agentApproveWithdrawal({required String withdrawalId}) async {
     final map = await Requests().patch(
-        AppStrings.agentApproveWithdrawal(agentId: agentId,),
+        AppStrings.agentApproveWithdrawal(withdrawalId: withdrawalId,),
         headers: {
           'Authorization': AppStrings.token,
         });

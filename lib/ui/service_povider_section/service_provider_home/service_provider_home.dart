@@ -145,10 +145,10 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
                         fontWeight: FontWeight.w800,
                         fontSize: 22),
                   ),
-                  FilterSearchView(
-                    showFilter: false,
-                    controller: search,
-                  ),
+                  // FilterSearchView(
+                  //   showFilter: false,
+                  //   controller: search,
+                  // ),
                   SizedBox(
                     height: 20,
                   ),

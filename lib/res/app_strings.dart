@@ -244,6 +244,6 @@ class AppStrings {
   static String agentCreateWithdrawal({required String agentId}) =>
       '${_baseUrl}users/create-withdrawal-request/$agentId';
 
-  static String agentApproveWithdrawal({required String agentId}) =>
-      '${_baseUrl}users/approve-withdrawal-request/$agentId';
+  static String agentApproveWithdrawal({required String withdrawalId}) =>
+      '${_baseUrl}users/approve-withdrawal-request/$withdrawalId';
 }

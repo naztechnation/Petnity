@@ -163,7 +163,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   child: Text(
                     'Vet Services',
                     style: TextStyle(
-                      color: isServices.name == 'vets'
+                      color: isVetServices.name == 'vets'
                           ? AppColors.lightSecondary
                           : Colors.black,
                       fontSize: 12,
