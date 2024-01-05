@@ -15,7 +15,6 @@ import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
-import '../../../../res/app_images.dart';
 import '../../../../res/app_routes.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';

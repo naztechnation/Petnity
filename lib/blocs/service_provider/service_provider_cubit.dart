@@ -859,4 +859,33 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+  Future<void>  editPackage({
+    required String agentId,
+    required String price,
+    required String packageId
+
+  }) async {
+    try {
+      emit(EditPackageLoading());
+
+      final edit = await serviceProviderRepository.editPackagePricing(
+        agentId: agentId, packageId: packageId, price: price,
+      );
+
+      emit(EditPackageLoaded(edit));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

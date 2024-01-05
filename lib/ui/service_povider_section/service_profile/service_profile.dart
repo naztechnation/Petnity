@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/agent/agent.dart';
+import '../../../model/services/services.dart';
+import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../model/view_models/user_view_model.dart';
@@ -20,6 +22,7 @@ import '../../../res/app_strings.dart';
 import '../../landing_page/services/agent_packages.dart';
 import '../../landing_page/services/pet_sellers.dart/pet_on_sale.dart';
 import '../../landing_page/services/pet_trainers/training_packages.dart';
+import '../../landing_page/services/services_lists.dart';
 import '../../landing_page/services/vets/vet_service.dart';
 import '../../landing_page/services/widgets/gallery_rating_section.dart';
 import '../../landing_page/services/widgets/providers_profile_body.dart';
@@ -34,7 +37,8 @@ import '../../widgets/profile_image.dart';
 class AgentProfileScreen extends StatelessWidget {
   final String? agentId;
   const AgentProfileScreen({
-    super.key,   this.agentId,
+    super.key,
+    this.agentId,
   });
 
   @override
@@ -43,7 +47,9 @@ class AgentProfileScreen extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: AgentProfile(agentId: agentId,),
+      child: AgentProfile(
+        agentId: agentId,
+      ),
     );
   }
 }
@@ -52,7 +58,8 @@ class AgentProfile extends StatefulWidget {
   final String? agentId;
 
   AgentProfile({
-    super.key, this.agentId,
+    super.key,
+    this.agentId,
   });
 
   @override
@@ -72,18 +79,20 @@ class _AgentProfileState extends State<AgentProfile> {
 
   late UserCubit _userCubit;
 
+  List<ServiceTypes> service = [];
+
+  List<Services> services = [];
+
   String agentId = "";
   String userType = '';
   bool isLoading = false;
 
   getAgentId() async {
     userType = await StorageHandler.getUserType();
-   if (userType == 'user'){
+    if (userType == 'user') {
       agentId = widget.agentId ?? '';
-      
-    }else{
-    agentId = await StorageHandler.getAgentId();
-        
+    } else {
+      agentId = await StorageHandler.getUserId();
     }
     setState(() {});
   }
@@ -195,7 +204,8 @@ class _AgentProfileState extends State<AgentProfile> {
                                         textAlign: TextAlign.start,
                                         maxLines: 2,
                                         text:
-                                            '${agents?.city}, ${agents?.country}',
+                                            '${agents?.city}, ${agents?.country}'
+                                                .replaceAll('?', ''),
                                         weight: FontWeight.w300,
                                         size: 14,
                                         color: Colors.black,
@@ -222,7 +232,8 @@ class _AgentProfileState extends State<AgentProfile> {
                                     CustomText(
                                       textAlign: TextAlign.start,
                                       maxLines: 2,
-                                      text: '${agents?.profile?.user?.username}',
+                                      text:
+                                          '${agents?.profile?.user?.username}',
                                       weight: FontWeight.w700,
                                       size: 14,
                                       fontFamily: AppStrings.interSans,
@@ -270,108 +281,191 @@ class _AgentProfileState extends State<AgentProfile> {
                         ],
                       ),
                     ),
-                    if (userType != 'user')
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 40),
-                          color: Colors.white,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (serviceProvider.imageURl1 != null)
-                                GestureDetector(
-                                  onTap: () {
-                                    serviceProvider.resetImage();
-                                  },
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 26.0),
-                                      child: const Text(
-                                        'Cancel',
-                                        textAlign: TextAlign.end,
-                                        style: TextStyle(
-                                            color: AppColors.lightSecondary,
-                                            fontFamily: AppStrings.interSans,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              if (serviceProvider.imageURl1 != null)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Container(
-                                    height: 130,
-                                    width: 130,
-                                    child: ImageView.file(
-                                      File(serviceProvider.imageURl1!.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0,
-                                ),
-                                child: ButtonView(
-                                  borderRadius: 30,
-                                  processing: (isLoading ||
-                                      state is UploadAgentGalleryLoading),
-                                  onPressed: () async {
-                                    String imgUrl = '';
-                                    if (serviceProvider.imageURl1 != null) {
-                                      setState(() {
-                                        isLoading = true;
-                                      });
-
-                                      imgUrl =
-                                          await serviceProvider.uploadImage(
-                                              serviceProvider.imageURl1!.path,
-                                              'petnity_service_provider');
-                                      setState(() {
-                                        isLoading = false;
-                                      });
-                                      if (imgUrl != null || imgUrl != "") {
-                                        submit(context, imgUrl);
-                                      }
-                                    } else {
-                                      serviceProvider.loadImage(
-                                          context: context, isProfile: true);
-                                    }
-                                  },
-                                  child: CustomText(
-                                    textAlign: TextAlign.start,
-                                    maxLines: 2,
-                                    text: (serviceProvider.imageURl1 == null)
-                                        ? 'Add photo'
-                                        : 'Upload photo',
-                                    weight: FontWeight.w500,
-                                    size: 15,
-                                    // fontFamily: AppStrings.interSans,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
                   ],
                 );
               }),
+          bottomNavigationBar: (userType != 'user')
+              ? Container(
+                  height: serviceProvider.imageURl1 == null ? 200 : 370,
+                  padding: EdgeInsets.symmetric(vertical: 40),
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (serviceProvider.imageURl1 != null)
+                        GestureDetector(
+                          onTap: () {
+                            serviceProvider.resetImage();
+                          },
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 26.0),
+                              child: const Text(
+                                'Cancel',
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                    color: AppColors.lightSecondary,
+                                    fontFamily: AppStrings.interSans,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (serviceProvider.imageURl1 != null)
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            height: 130,
+                            width: 130,
+                            child: ImageView.file(
+                              File(serviceProvider.imageURl1!.path),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                        ),
+                        child: ButtonView(
+                          borderRadius: 30,
+                          processing: (isLoading),
+                          onPressed: () async {
+                            String imgUrl = '';
+                            if (serviceProvider.imageURl1 != null) {
+                              setState(() {
+                                isLoading = true;
+                              });
+
+                              imgUrl = await serviceProvider.uploadImage(
+                                  serviceProvider.imageURl1!.path,
+                                  'petnity_service_provider');
+                              setState(() {
+                                isLoading = false;
+                              });
+                              if (imgUrl != null || imgUrl != "") {
+                                submit(context, imgUrl);
+                              }
+                            } else {
+                              serviceProvider.loadImage(
+                                  context: context, isProfile: true);
+                            }
+                          },
+                          child: CustomText(
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            text: (serviceProvider.imageURl1 == null)
+                                ? 'Add photo'
+                                : 'Upload photo',
+                            weight: FontWeight.w500,
+                            size: 15,
+                            // fontFamily: AppStrings.interSans,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      BlocConsumer<UserCubit, UserStates>(
+                        listener: (context, state) {
+                          if (state is ServicesLoaded) {
+                            if (state.services.status!) {
+                              service = _userCubit.viewModel.services;
+                            } else {}
+                          } else if (state is ServiceProviderListLoaded) {
+                            for (var item in state.userData.agents!) {
+                              if (item.id.toString() == agentId) {
+                                agents = item;
+                                break;
+                              }
+                            }
+                            services = agents?.services ?? [];
+                          } else if (state is UserNetworkErrApiErr) {
+                          } else if (state is UserNetworkErr) {}
+                        },
+                        builder: (context, state) => GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20.0),
+                                    topRight: Radius.circular(20.0),
+                                  ),
+                                ),
+                                isDismissible: true,
+                                context: context,
+                                builder: (context) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 20),
+                                    height: screenSize(context).height * .8,
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        CustomText(
+                                          size: 16,
+                                          text: 'Your Active Services',
+                                          weight: FontWeight.bold,
+                                        ),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        (state is ServiceProviderListLoading)
+                                            ? Align(
+                                                child: ImageView.asset(
+                                                AppImages.loading,
+                                                height: 50,
+                                              ))
+                                            : ServicesList(
+                                                services: services,
+                                                isAgent: true,
+                                                agentId: agentId,
+                                              ),
+                                      ],
+                                    )),
+                                  );
+                                });
+                          },
+                          child: CustomText(
+                            textAlign: TextAlign.start,
+                            maxLines: 2,
+                            text: 'Edit Packages',
+                            weight: FontWeight.w400,
+                            size: 15,
+                            fontFamily: AppStrings.interSans,
+                            color: AppColors.lightSecondary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox.shrink(),
         ));
   }
 
-  submit(BuildContext context, String imageURl) {
-    context.read<UserCubit>().uploadGallery(agentId: agentId, image: imageURl);
+  submit(BuildContext context, String imageURl) async {
+    setState(() {
+      isLoading = true;
+    });
+    await _userCubit.uploadGallery(agentId: agentId, image: imageURl);
+
+    setState(() {
+      isLoading = false;
+    });
   }
 }
 

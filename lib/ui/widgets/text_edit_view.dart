@@ -34,6 +34,7 @@ class TextEditView extends StatelessWidget {
   final String? helperText;
   final Color? iconColor;
   final Color? textColor;
+  final double boxHeight;
   final Iterable<String>? autofillHints;
   final FocusNode? focusNode;
   final List<TextInputFormatter>? inputFormatters;
@@ -69,7 +70,7 @@ class TextEditView extends StatelessWidget {
       this.maxLength,
       this.maxLines = 1,
       this.textViewTitle = '',
-      this.inputFormatters})
+      this.inputFormatters,   this.boxHeight = 20})
       : super(key: key);
 
   OutlineInputBorder _border(BuildContext context) => OutlineInputBorder(
@@ -97,7 +98,7 @@ class TextEditView extends StatelessWidget {
           //   color: Colors.black,
           // ),
           SizedBox(
-            height: 20,
+            height: boxHeight,
           ),
           TextFormField(
             controller: controller,

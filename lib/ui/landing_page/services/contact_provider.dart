@@ -165,8 +165,8 @@ class _ContactProviderState extends State<ContactProvider> {
               onPressed: () {
                 if (selectedTimeMain1 != 'Select Time' ||
                     selectedTimeMain2 != 'Select Time') {
-                  checkDatesValidity(selectedDate1.toString().split(' ').first,
-                      selectedDate.toString().split(' ').first, agent);
+                  checkDatesValidity(selectedDate.toString().split(' ').first,
+                      selectedDate1.toString().split(' ').first, agent);
                 } else {
                   Modals.showToast('please select time');
                 }
@@ -233,7 +233,7 @@ class _ContactProviderState extends State<ContactProvider> {
     }
 
 
-    Modals.showToast(selectedTimeMain2.toString());
+   
   }
 
   void checkDatesValidity(String startDateString, String endDateString, agent) {

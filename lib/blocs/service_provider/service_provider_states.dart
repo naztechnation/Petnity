@@ -291,6 +291,18 @@ class  AgentWithdrawalHistoryLoaded extends ServiceProviderState {
   List<Object> get props => [requests];
 }
 
+class  EditPackageLoaded extends ServiceProviderState {
+  final AuthData data;
+  const  EditPackageLoaded(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
+  class   EditPackageLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;
   const CreateServiceNetworkErr(this.message);

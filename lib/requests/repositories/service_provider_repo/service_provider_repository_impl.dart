@@ -432,5 +432,20 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     return WithrawalHistory.fromJson(map);
   }
   
+  @override
+  Future<AuthData> editPackagePricing({required String agentId, required String packageId, 
+  required String price}) async {
+    final map = await Requests().patch(
+        AppStrings.updatePackagePricing(agentId: agentId, packageId: packageId,),
+        body: {
+          'price': packageId
+        },
+        headers: {
+          'Authorization': AppStrings.token,
+        });
+
+    return AuthData.fromJson(map);
+  }
+  
  
 }

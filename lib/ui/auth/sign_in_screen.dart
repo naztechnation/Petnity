@@ -121,7 +121,10 @@ class SignInScreen extends StatelessWidget {
                         context: context,
                         message: state.userData.message!,
                         isAgent: !state.userData.isAgent!);
+
                   }
+
+                  
                 } else {
                   Modals.showToast(state.userData.message,
                       messageType: MessageType.error);
@@ -129,6 +132,12 @@ class SignInScreen extends StatelessWidget {
                     resendCode(context);
                   }
                 }
+
+               
+
+               
+
+                
               }else if (state is OTPResent) {
                     if (state.user.status == true) {
                       Modals.showToast(state.user.message ?? '',
@@ -282,7 +291,9 @@ class SignInScreen extends StatelessWidget {
                             firebaseUser.status == Status.authenticating ||
                             state is AccountProcessing),
                         onPressed: () {
-                          _submit(context);
+                           _submit(context);
+ 
+
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(
@@ -344,6 +355,8 @@ class SignInScreen extends StatelessWidget {
       ),
     ));
   }
+
+  
 
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {

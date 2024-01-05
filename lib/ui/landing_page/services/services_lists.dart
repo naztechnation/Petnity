@@ -7,17 +7,21 @@ import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
-import '../../../model/services/services.dart'; 
+import '../../../model/services/services.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../service_povider_section/create_package/select_level_amount.dart';
+import '../../service_povider_section/service_profile/agents_packages.dart';
 import '../../widgets/modals.dart';
 import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {
   final List<Services> services;
-  ServicesList({super.key, required this.services});
+
+  final bool isAgent;
+  final String agentId;
+  ServicesList({super.key, required this.services, this.isAgent = false,  this.agentId = '0'});
 
   @override
   Widget build(BuildContext context) {
@@ -50,21 +54,23 @@ class ServicesList extends StatelessWidget {
                         '${masterItem.image}', () {
                       agent.setServiceId('${user.services[index].id}');
 
-                      if(masterItem.name == 'Vets'){
-
-
+                      if (masterItem.name == 'Vets'&& !isAgent) {
                         AppNavigator.pushAndReplacePage(context,
-                          page: VetService(
-                              ));
-
-                      }else{
-                         AppNavigator.pushAndReplacePage(context,
-                          page: SelectPackageLevelAmount(
-                              serviceType: '${user.services[index].name}',
-                              serviceId: '${user.services[index].id}'));
+                            page: VetService());
+                      } else {
+                        if (isAgent) {
+                          AppNavigator.pushAndReplacePage(context,
+                              page: AgentPackagesScreen(
+                                  agentId: agentId,
+                                  serviceId: '${user.services[index].id}',
+                                  serviceType: masterItem.name ?? '',));
+                        } else {
+                          AppNavigator.pushAndReplacePage(context,
+                              page: SelectPackageLevelAmount(
+                                  serviceType: '${user.services[index].name}',
+                                  serviceId: '${user.services[index].id}'));
+                        }
                       }
-                      
-                     
                     }, true);
                   } else {
                     return Item(context, Colors.grey.shade50,
@@ -109,8 +115,7 @@ Widget Item(BuildContext context, Color color, String title, String image,
               // height: screenSize(context).height * .06,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
               decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: BorderRadius.circular(60)),
+                  color: color, borderRadius: BorderRadius.circular(60)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -142,7 +147,8 @@ Widget Item(BuildContext context, Color color, String title, String image,
                   // height: screenSize(context).height * .06,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                   decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.7), borderRadius: BorderRadius.circular(60)),
+                      color: Colors.grey.withOpacity(0.7),
+                      borderRadius: BorderRadius.circular(60)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

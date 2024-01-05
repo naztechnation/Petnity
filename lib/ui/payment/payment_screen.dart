@@ -57,7 +57,6 @@ class _PaymentState extends State<Payment> {
 
   List<AgentWithdrawals> agentWithdrawals = [];
 
-
   String email = '';
 
   String transactionId = '';
@@ -72,7 +71,7 @@ class _PaymentState extends State<Payment> {
     agentId = await StorageHandler.getUserId();
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
-   await _serviceProviderCubit.getAgentBalance(
+    await _serviceProviderCubit.getAgentBalance(
       agentId: agentId,
     );
 
@@ -122,13 +121,13 @@ class _PaymentState extends State<Payment> {
             withdrawableAmount = state.balance.balance.toString();
 
             service.setWithdrawableBalance(withdrawableAmount);
-          }else if (state is AgentWithdrawalHistoryLoaded) {
-            agentWithdrawals = state.requests.agentWithdrawals?.reversed.toList() ?? [];
-
-            
+          } else if (state is AgentWithdrawalHistoryLoaded) {
+            agentWithdrawals =
+                state.requests.agentWithdrawals?.reversed.toList() ?? [];
           }
         }, builder: (context, state) {
-          return (state is AgentBalanceLoading || state is AgentWithdrawalHistoryLoading)
+          return (state is AgentBalanceLoading ||
+                  state is AgentWithdrawalHistoryLoading)
               ? LoadingPage()
               : Container(
                   height: screenSize(context).height,
@@ -158,8 +157,8 @@ class _PaymentState extends State<Payment> {
                               ),
                               CustomText(
                                 text: (withdrawableAmount != 'null')
-                                            ? 'NGN ${AppUtils.convertPrice('$withdrawableAmount')} '
-                                            : '0.00',
+                                    ? 'NGN ${AppUtils.convertPrice('$withdrawableAmount')} '
+                                    : '0.00',
                                 weight: FontWeight.w900,
                                 fontFamily: AppStrings.montserrat,
                                 maxLines: 2,
@@ -176,8 +175,6 @@ class _PaymentState extends State<Payment> {
                                   page: WithdrawalPage(
                                     withdrawableAmount: withdrawableAmount,
                                   ));
-
-                              
                             },
                             child: Container(
                               width: screenSize(context).width,
@@ -221,7 +218,8 @@ class _PaymentState extends State<Payment> {
                                   Align(
                                     alignment: Alignment.centerRight,
                                     child: Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 6),
                                       decoration: BoxDecoration(
                                           color: AppColors.lightSecondary,
                                           borderRadius:
@@ -283,39 +281,41 @@ class _PaymentState extends State<Payment> {
                           const SizedBox(
                             height: 30,
                           ),
-                         if(agentWithdrawals.isNotEmpty)...[
-                          ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: agentWithdrawals.length,
-                              shrinkWrap: true,
-                              itemBuilder: ((context, index) {
-                                return PaymentBox(history: agentWithdrawals[index],);
-                              }))
-                         ]else ...[
-                           Container(
-              height: 300,
-              child: Align(
-                  child: Card(
-                elevation: 0.5,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  height: 120,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        'You have\'nt made any withdrawals yet',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: AppColors.lightSecondary,
-                             fontWeight: FontWeight.w300),
-                      ),
-                    ),
-                  ),
-                ),
-              ))),
-                         ] 
+                          if (agentWithdrawals.isNotEmpty) ...[
+                            ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: agentWithdrawals.length,
+                                shrinkWrap: true,
+                                itemBuilder: ((context, index) {
+                                  return PaymentBox(
+                                    history: agentWithdrawals[index],
+                                  );
+                                }))
+                          ] else ...[
+                            Container(
+                                height: 300,
+                                child: Align(
+                                    child: Card(
+                                  elevation: 0.5,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Container(
+                                    height: 120,
+                                    child: Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Text(
+                                          'You have\'nt made any withdrawals yet',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: AppColors.lightSecondary,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ))),
+                          ]
                         ],
                       ),
                     ),

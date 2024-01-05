@@ -120,75 +120,86 @@ class _ProviderProfileState extends State<ProviderProfile> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: CustomText(
-                    textAlign: TextAlign.start,
-                    maxLines: 2,
-                    text: 'Service',
-                    weight: FontWeight.w700,
-                    size: 16,
-                    fontFamily: AppStrings.interSans,
-                    color: Colors.black,
-                  ),
-                ),
-                InkWell(
-                  onTap: () => AppNavigator.pushAndStackPage(context, page: ReportVendor(widget.agents?.id.toString() ?? '')),
-                  child: Align(
-                    alignment: Alignment.centerRight,
+            if (userType == 'user')
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
                     child: CustomText(
                       textAlign: TextAlign.start,
                       maxLines: 2,
-                      text: 'Report ${widget.agents?.name ?? ''}',
-                      weight: FontWeight.w500,
-                      size: 13,
+                      text: 'Services',
+                      weight: FontWeight.w700,
+                      size: 16,
                       fontFamily: AppStrings.interSans,
-                      color: Colors.red,
+                      color: Colors.black,
                     ),
                   ),
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: ButtonView(
-                onPressed: () {},
-                borderRadius: 30,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: Text(
-                  '${user.selectedService}',
-                  style: TextStyle(color: AppColors.lightSecondary),
-                ),
-                expanded: false,
-                color: AppColors.lightSecondary.withOpacity(0.3),
+                  InkWell(
+                    onTap: () => AppNavigator.pushAndStackPage(context,
+                        page: ReportVendor(widget.agents?.id.toString() ?? '')),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: CustomText(
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        text:
+                            'Report ${widget.agents?.profile?.user?.username ?? ''}',
+                        weight: FontWeight.w500,
+                        size: 13,
+                        fontFamily: AppStrings.interSans,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 20,),
+            if (userType == 'user')
+              Align(
+                alignment: Alignment.centerLeft,
+                child: ButtonView(
+                  onPressed: () {},
+                  borderRadius: 30,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  child: Text(
+                    '${user.selectedService}',
+                    style: TextStyle(color: AppColors.lightSecondary),
+                  ),
+                  expanded: false,
+                  color: AppColors.lightSecondary.withOpacity(0.3),
+                ),
+              ),
+            if (userType != 'service_provider')
+              const SizedBox(
+                height: 20,
+              ),
 
             Align(
               alignment: Alignment.centerLeft,
               child: CustomText(
                 textAlign: TextAlign.start,
                 maxLines: 2,
-                text: 'Other Services',
+                text: (userType != 'service_provider')
+                    ? 'Other Services'
+                    : 'Services',
                 weight: FontWeight.w700,
                 size: 16,
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             CustomMultiToggle(
               title: services,
               fontSize: 14,
               selectedColor: AppColors.lightPrimary,
-                  color: AppColors.lightPrimary,
-                  selectedTextColor: Colors.black,
-                  textColor: Colors.black,
+              color: AppColors.lightPrimary,
+              selectedTextColor: Colors.black,
+              textColor: Colors.black,
               height: 40,
               contentMargin: const EdgeInsets.all(0),
               onSelected: (index) {
@@ -197,29 +208,33 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 });
               },
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
 
             Align(
               alignment: Alignment.centerLeft,
               child: CustomText(
                 textAlign: TextAlign.start,
                 maxLines: 2,
-                text: 'Animals',
+                text: 'Pets',
                 weight: FontWeight.w600,
                 size: 16,
                 fontFamily: AppStrings.interSans,
                 color: Colors.black,
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
 
             CustomMultiToggle(
               title: animals,
               fontSize: 11,
               selectedColor: AppColors.lightPrimary,
-                  color: AppColors.lightPrimary,
-                  selectedTextColor: Colors.black,
-                  textColor: Colors.black,
+              color: AppColors.lightPrimary,
+              selectedTextColor: Colors.black,
+              textColor: Colors.black,
               height: 35,
               contentMargin: const EdgeInsets.all(0),
               onSelected: null,
@@ -240,23 +255,34 @@ class _ProviderProfileState extends State<ProviderProfile> {
                   color: Colors.black,
                 ),
 
-           if (userType == 'user')   ButtonView(
-            color: AppColors.lightSecondary,
-                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                  expanded: false,
-                  borderRadius: 30,
-                  onPressed: () {
-                    Modals.showBottomSheetModal(context,
-                        isDissmissible: true,
-                        heightFactor: 1,
-                        page: Ratings(
-                            ctxt: context,
-                            username: user.username,
-                            agentName: widget.agents?.name ?? '',
-                            agentId: widget.agents?.id.toString() ?? ''));
-                  },
-                  child: Text('Add Review', style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),),
-                ),
+                if (userType == 'user') ...[
+                  ButtonView(
+                    color: AppColors.lightSecondary,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                    expanded: false,
+                    borderRadius: 30,
+                    onPressed: () {
+                      Modals.showBottomSheetModal(context,
+                          isDissmissible: true,
+                          heightFactor: 1,
+                          page: Ratings(
+                              ctxt: context,
+                              username: user.username,
+                              agentName: widget.agents?.name ?? '',
+                              agentId: widget.agents?.id.toString() ?? ''));
+                    },
+                    child: Text(
+                      'Add Review',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: Colors.white),
+                    ),
+                  ),
+                ] else ...[
+                  SizedBox.shrink()
+                ]
+
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.end,
                 //   children: [
@@ -277,18 +303,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
               ],
             ),
             const SizedBox(
-              height: 20,
-            ),
-            CustomText(
-              textAlign: TextAlign.start,
-              maxLines: 2,
-              text: '${widget.agents?.gender}',
-              weight: FontWeight.w500,
-              size: 14,
-              color: Colors.black,
-            ),
-            const SizedBox(
-              height: 20,
+              height: 12,
             ),
             CustomText(
               textAlign: TextAlign.start,
@@ -298,6 +313,21 @@ class _ProviderProfileState extends State<ProviderProfile> {
               size: 14,
               color: Colors.black,
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            CustomText(
+              textAlign: TextAlign.start,
+              maxLines: 2,
+              text: '${widget.agents?.gender}'.toUpperCase(),
+              weight: FontWeight.w500,
+              size: 14,
+              color: Colors.black,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+
             // contactInfo(
             //     phone: widget.agents?.profile?.phoneNumber,
             //     email: widget.agents?.profile?.user?.email),
@@ -367,8 +397,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
               if (commentController.text.isEmpty)
                 Center(
                   child: InkWell(
-                  onTap: () => AppNavigator.pushAndStackPage(context, page: ReportVendor(widget.agents?.id.toString() ?? '')),
-
+                    onTap: () => AppNavigator.pushAndStackPage(context,
+                        page: ReportVendor(widget.agents?.id.toString() ?? '')),
                     child: Text(
                       'Report ${agentName.capitalizeFirstOfEach}',
                       style: TextStyle(

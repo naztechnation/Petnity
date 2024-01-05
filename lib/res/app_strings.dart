@@ -247,6 +247,8 @@ class AppStrings {
   static String agentWithdrawalHistory({required String agentId}) =>
       '${_baseUrl}users/get-agent-withdrawals/$agentId';
 
+static String updatePackagePricing({required String agentId, required String packageId}) =>
+      '${_baseUrl}services/update-package-price/$agentId/$packageId';
 
       
 }

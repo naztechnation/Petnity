@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:petnity/extentions/custom_string_extension.dart'; 
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
@@ -15,19 +15,20 @@ import '../../../res/app_strings.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/image_view.dart';
- 
+
 import '../../widgets/profile_image.dart';
 import 'agent_packages.dart';
-import 'pet_sellers.dart/pet_on_sale.dart'; 
+import 'pet_sellers.dart/pet_on_sale.dart';
 import 'vets/book_pet/booking_page.dart';
 import 'widgets/gallery_rating_section.dart';
 import 'widgets/providers_profile_body.dart';
- 
 
 class ServiceProviderProfile extends StatefulWidget {
   final Agent? agents;
-  ServiceProviderProfile({super.key, this.agents,
-    });
+  ServiceProviderProfile({
+    super.key,
+    this.agents,
+  });
 
   @override
   State<ServiceProviderProfile> createState() => _ServiceProviderProfileState();
@@ -104,8 +105,8 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                                 textAlign: TextAlign.start,
                                 maxLines: 2,
                                 text:
-                                    '${widget.agents!.city}, ${widget.agents!.country}'.replaceAll('?', ''),
-     
+                                    '${widget.agents!.city}, ${widget.agents!.country}'
+                                        .replaceAll('?', ''),
                                 weight: FontWeight.w600,
                                 size: 16,
                                 color: Colors.black,
@@ -132,7 +133,8 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                             CustomText(
                               textAlign: TextAlign.start,
                               maxLines: 2,
-                              text: '${widget.agents?.profile?.user?.username}'.capitalizeFirstOfEach,
+                              text: '${widget.agents?.profile?.user?.username}'
+                                  .capitalizeFirstOfEach,
                               weight: FontWeight.w700,
                               size: 16,
                               fontFamily: AppStrings.interSans,
@@ -153,13 +155,16 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Align(
-                              alignment: Alignment.center,
-                              child: ImageView.svg(
-                                AppImages.verified,
-                                color: widget.agents?.isVerified ?? false
-                          ? Colors.green : Colors.red,
-                              )),
-                              const SizedBox(width: 10,),
+                                alignment: Alignment.center,
+                                child: ImageView.svg(
+                                  AppImages.verified,
+                                  color: widget.agents?.isVerified ?? false
+                                      ? Colors.green
+                                      : Colors.red,
+                                )),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             CustomText(
                               textAlign: TextAlign.start,
                               maxLines: 2,
@@ -201,37 +206,36 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
               right: 0,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(
-                      flex: 6,
-                      child: ButtonView(
-                        color: AppColors.lightSecondary,
-                        onPressed: () {
-                          Provider.of<AccountViewModel>(context, listen: false)
-                              .setAgentName(widget.agents!.name ?? '');
+                    ButtonView(
+                      color: AppColors.lightSecondary,
+                      onPressed: () {
+                        Provider.of<AccountViewModel>(context, listen: false)
+                            .setAgentName(widget.agents?.name ?? '');
 
-                          Provider.of<AccountViewModel>(context, listen: false)
-                              .setAgentId(widget.agents!.id.toString());
+                        Provider.of<AccountViewModel>(context, listen: false)
+                            .setAgentId(widget.agents?.id.toString() ?? '');
 
-                          openServices(
-                              Provider.of<AccountViewModel>(context,
-                                      listen: false)
-                                  .selectedService
-                                  .toLowerCase(),
-                              context);
-                        },
-                        child: CustomText(
-                          textAlign: TextAlign.start,
-                          maxLines: 2,
-                          text: 'Book Session',
-                          weight: FontWeight.w400,
-                          size: 15,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.white,
-                        ),
+                        openServices(
+                            Provider.of<AccountViewModel>(context,
+                                    listen: false)
+                                .selectedService
+                                .toLowerCase(),
+                            context);
+                      },
+                      child: CustomText(
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                        text: 'Book Session',
+                        weight: FontWeight.w400,
+                        size: 15,
+                        fontFamily: AppStrings.interSans,
+                        color: Colors.white,
                       ),
                     ),
+                    
                     // const SizedBox(
                     //   width: 14,
                     // ),
@@ -314,8 +318,14 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
         break;
       case 'vets':
         AppNavigator.pushAndStackPage(context,
-            page: VetBookingPage(name: widget.agents?.profile?.user?.username ?? '', image: '${widget.agents?.picture}', gender: widget.agents?.gender ?? '', location: '${widget.agents?.city}, ${widget.agents?.country}'.replaceAll('?', ''), about: widget.agents?.about ?? '', agentId: widget.agents?.id.toString() ?? '',
-               
+            page: VetBookingPage(
+              name: widget.agents?.profile?.user?.username ?? '',
+              image: '${widget.agents?.picture}',
+              gender: widget.agents?.gender ?? '',
+              location: '${widget.agents?.city}, ${widget.agents?.country}'
+                  .replaceAll('?', ''),
+              about: widget.agents?.about ?? '',
+              agentId: widget.agents?.id.toString() ?? '',
             ));
         break;
       case 'grooming':
