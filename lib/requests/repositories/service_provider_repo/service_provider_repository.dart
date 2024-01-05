@@ -49,5 +49,6 @@ abstract class ServiceProviderRepository {
     Future<CreateWithrawal> agentCreateWithdrawal({required String agentId, required String amount,}); 
     Future<WithrawalHistory> agentWithdrawalHistory({required String agentId,}); 
     Future<AuthData> editPackagePricing({required String agentId,required String packageId,required String price,}); 
+    Future<AuthData> editVetPackagePricing({required String agentId,required String serviceId,required String price,}); 
 
 }

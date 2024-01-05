@@ -253,15 +253,14 @@ class _PackagesState extends State<PackagePage> {
                                                 packages[index].description ??
                                                     '',
                                             packageId:
-                                                packages[index].id.toString() ??
-                                                    '',
+                                                packages[index].id.toString(),
                                           ));
                                     },
                                     child: Container(
                                         margin:
                                             const EdgeInsets.only(bottom: 20),
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 20),
+                                            horizontal: 8, vertical: 10),
                                         decoration: BoxDecoration(
                                             color: Colors.white,
                                             borderRadius:
@@ -302,7 +301,7 @@ class _PackagesState extends State<PackagePage> {
                                                 color: Colors.black,
                                               ),
                                               CustomText(
-                                                textAlign: TextAlign.left,
+                                                textAlign: TextAlign.justify,
                                                 maxLines: 2,
                                                 text:
                                                     packages[index].description,

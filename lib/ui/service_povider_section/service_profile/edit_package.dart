@@ -120,8 +120,7 @@ class _ReviewState extends State<Edit> {
                
             } else if (state is EditPackageLoaded) {
               Modals.showToast(state.data.message ?? '');
-            } else if (state is CreateOrderLoaded) {}
-
+            }  
             return Stack(
               children: [
                 Container(
