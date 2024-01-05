@@ -281,7 +281,7 @@ class _ReviewState extends State<Edit> {
                                 borderRadius: 30,
                                 readOnly: false,
                                       boxHeight: 8,
-
+                                keyboardType: TextInputType.number,
                                 borderColor: Colors.white,
                                 filled: true,
                                 fillColor: Colors.white,
@@ -303,8 +303,8 @@ class _ReviewState extends State<Edit> {
                               onPressed: () {
 
                                 if(_amountController.text != AppUtils.convertPrice(widget.packagePrice)){
-                               _userCubit.editPackage(agentId: agentId, price: _amountController.text, packageId: widget.packageId);
-
+                                _userCubit.editPackage(agentId: agentId, price: _amountController.text.trim(), packageId: widget.packageId);
+                                  // Modals.showToast(_amountController.text);
                                 }else{
                                   Modals.showToast('Please enter a price different from the former');
                                 }

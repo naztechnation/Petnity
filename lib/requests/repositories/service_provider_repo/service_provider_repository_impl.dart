@@ -7,6 +7,7 @@ import 'package:petnity/model/service_provider_models/create_services_amount.dar
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/vet_services.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
@@ -435,10 +436,11 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<AuthData> editPackagePricing({required String agentId, required String packageId, 
   required String price}) async {
+ 
     final map = await Requests().patch(
         AppStrings.updatePackagePricing(agentId: agentId, packageId: packageId,),
         body: {
-          'price': packageId
+          'price': price
         },
         headers: {
           'Authorization': AppStrings.token,

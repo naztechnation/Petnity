@@ -86,6 +86,7 @@ class _AgentProfileState extends State<AgentProfile> {
   String agentId = "";
   String userType = '';
   bool isLoading = false;
+  bool isLoading1 = true;
 
   getAgentId() async {
     userType = await StorageHandler.getUserType();
@@ -94,15 +95,22 @@ class _AgentProfileState extends State<AgentProfile> {
     } else {
       agentId = await StorageHandler.getUserId();
     }
-    setState(() {});
+
+    _userCubit = context.read<UserCubit>();
+    setState(() {
+      isLoading1 = true;
+    });
+      await _userCubit.getServiceTypes( );
+
+    await _userCubit.getAgentProfile();
+    setState(() {
+      isLoading1 = false;
+    });
   }
 
   @override
   void initState() {
     getAgentId();
-
-    _userCubit = context.read<UserCubit>();
-    _userCubit.getAgentProfile();
 
     super.initState();
   }
@@ -111,6 +119,7 @@ class _AgentProfileState extends State<AgentProfile> {
   Widget build(BuildContext context) {
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
+
 
     return WillPopScope(
         onWillPop: onBackPress,
@@ -128,7 +137,20 @@ class _AgentProfileState extends State<AgentProfile> {
                       onRefresh: () => _userCubit.getAgentProfile(),
                     ),
                   );
-                } else if (state is UserNetworkErrApiErr) {
+                }else if (state is ServicesLoaded) {
+                                if (state.services.status!) {
+                                  service = _userCubit.viewModel.services;
+                                } else {}
+                              } else if (state is ServiceProviderListLoaded) {
+                                for (var item in state.userData.agents!) {
+                                  if (item.id.toString() == agentId) {
+                                    agents = item;
+                                    break;
+                                  }
+                                }
+                                services = agents?.services ?? [];
+
+                              }  else if (state is UserNetworkErrApiErr) {
                   return EmptyWidget(
                     title: 'Network error',
                     description: state.message,
@@ -273,7 +295,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                 //
                                 GalleryRatingSection(userId: agentId),
                                 const SizedBox(
-                                  height: 150,
+                                  height: 50,
                                 ),
                               ],
                             )),
@@ -285,174 +307,177 @@ class _AgentProfileState extends State<AgentProfile> {
                 );
               }),
           bottomNavigationBar: (userType != 'user')
-              ? Container(
-                  height: serviceProvider.imageURl1 == null ? 200 : 370,
-                  padding: EdgeInsets.symmetric(vertical: 40),
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (serviceProvider.imageURl1 != null)
-                        GestureDetector(
-                          onTap: () {
-                            serviceProvider.resetImage();
-                          },
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 26.0),
-                              child: const Text(
-                                'Cancel',
-                                textAlign: TextAlign.end,
-                                style: TextStyle(
-                                    color: AppColors.lightSecondary,
-                                    fontFamily: AppStrings.interSans,
-                                    fontWeight: FontWeight.w900),
+              ? (isLoading1)
+                  ? SizedBox.shrink()
+                  : Container(
+                      height: serviceProvider.imageURl1 == null ? 200 : 370,
+                      padding: EdgeInsets.symmetric(vertical: 40),
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (serviceProvider.imageURl1 != null)
+                            GestureDetector(
+                              onTap: () {
+                                serviceProvider.resetImage();
+                              },
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 26.0),
+                                  child: const Text(
+                                    'Cancel',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                        color: AppColors.lightSecondary,
+                                        fontFamily: AppStrings.interSans,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (serviceProvider.imageURl1 != null)
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Container(
+                                height: 130,
+                                width: 130,
+                                child: ImageView.file(
+                                  File(serviceProvider.imageURl1!.path),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                            ),
+                            child: ButtonView(
+                              borderRadius: 30,
+                              processing: (isLoading),
+                              onPressed: () async {
+                                String imgUrl = '';
+                                if (serviceProvider.imageURl1 != null) {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+
+                                  imgUrl = await serviceProvider.uploadImage(
+                                      serviceProvider.imageURl1!.path,
+                                      'petnity_service_provider');
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                  if (imgUrl != null || imgUrl != "") {
+                                    submit(context, imgUrl);
+                                  }
+                                } else {
+                                  serviceProvider.loadImage(
+                                      context: context, isProfile: true);
+                                }
+                              },
+                              child: CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                text: (serviceProvider.imageURl1 == null)
+                                    ? 'Add photo'
+                                    : 'Upload photo',
+                                weight: FontWeight.w500,
+                                size: 15,
+                                // fontFamily: AppStrings.interSans,
+                                color: Colors.white,
                               ),
                             ),
                           ),
-                        ),
-                      if (serviceProvider.imageURl1 != null)
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            height: 130,
-                            width: 130,
-                            child: ImageView.file(
-                              File(serviceProvider.imageURl1!.path),
-                              fit: BoxFit.cover,
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          BlocConsumer<UserCubit, UserStates>(
+                            listener: (context, state) {
+                              if (state is ServicesLoaded) {
+                                if (state.services.status!) {
+                                  service = _userCubit.viewModel.services;
+                                } else {}
+                              } else if (state is ServiceProviderListLoaded) {
+                                for (var item in state.userData.agents!) {
+                                  if (item.id.toString() == agentId) {
+                                    agents = item;
+                                    break;
+                                  }
+                                }
+                                services = agents?.services ?? [];
+                              } else if (state is UserNetworkErrApiErr) {
+                              } else if (state is UserNetworkErr) {}
+                            },
+                            builder: (context, state) => GestureDetector(
+                              onTap: () {
+       
+                                showModalBottomSheet(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20.0),
+                                        topRight: Radius.circular(20.0),
+                                      ),
+                                    ),
+                                    isDismissible: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10, vertical: 20),
+                                        height: screenSize(context).height * .8,
+                                        child: SingleChildScrollView(
+                                            child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            CustomText(
+                                              size: 16,
+                                              text: 'Your Active Services',
+                                              weight: FontWeight.bold,
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            (state is ServiceProviderListLoading)
+                                                ? Align(
+                                                    child: ImageView.asset(
+                                                    AppImages.loading,
+                                                    height: 50,
+                                                  ))
+                                                : ServicesList(
+                                                    services: services,
+                                                    isAgent: true,
+                                                    agentId: agentId,
+                                                  ),
+                                          ],
+                                        )),
+                                      );
+                                    });
+                              },
+                              child: CustomText(
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                text: 'Edit Packages',
+                                weight: FontWeight.w400,
+                                size: 15,
+                                fontFamily: AppStrings.interSans,
+                                color: AppColors.lightSecondary,
+                              ),
                             ),
                           ),
-                        ),
-                      const SizedBox(
-                        height: 20,
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0,
-                        ),
-                        child: ButtonView(
-                          borderRadius: 30,
-                          processing: (isLoading),
-                          onPressed: () async {
-                            String imgUrl = '';
-                            if (serviceProvider.imageURl1 != null) {
-                              setState(() {
-                                isLoading = true;
-                              });
-
-                              imgUrl = await serviceProvider.uploadImage(
-                                  serviceProvider.imageURl1!.path,
-                                  'petnity_service_provider');
-                              setState(() {
-                                isLoading = false;
-                              });
-                              if (imgUrl != null || imgUrl != "") {
-                                submit(context, imgUrl);
-                              }
-                            } else {
-                              serviceProvider.loadImage(
-                                  context: context, isProfile: true);
-                            }
-                          },
-                          child: CustomText(
-                            textAlign: TextAlign.start,
-                            maxLines: 2,
-                            text: (serviceProvider.imageURl1 == null)
-                                ? 'Add photo'
-                                : 'Upload photo',
-                            weight: FontWeight.w500,
-                            size: 15,
-                            // fontFamily: AppStrings.interSans,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      BlocConsumer<UserCubit, UserStates>(
-                        listener: (context, state) {
-                          if (state is ServicesLoaded) {
-                            if (state.services.status!) {
-                              service = _userCubit.viewModel.services;
-                            } else {}
-                          } else if (state is ServiceProviderListLoaded) {
-                            for (var item in state.userData.agents!) {
-                              if (item.id.toString() == agentId) {
-                                agents = item;
-                                break;
-                              }
-                            }
-                            services = agents?.services ?? [];
-                          } else if (state is UserNetworkErrApiErr) {
-                          } else if (state is UserNetworkErr) {}
-                        },
-                        builder: (context, state) => GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(20.0),
-                                    topRight: Radius.circular(20.0),
-                                  ),
-                                ),
-                                isDismissible: true,
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 20),
-                                    height: screenSize(context).height * .8,
-                                    child: SingleChildScrollView(
-                                        child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        CustomText(
-                                          size: 16,
-                                          text: 'Your Active Services',
-                                          weight: FontWeight.bold,
-                                        ),
-                                        const SizedBox(
-                                          height: 15,
-                                        ),
-                                        (state is ServiceProviderListLoading)
-                                            ? Align(
-                                                child: ImageView.asset(
-                                                AppImages.loading,
-                                                height: 50,
-                                              ))
-                                            : ServicesList(
-                                                services: services,
-                                                isAgent: true,
-                                                agentId: agentId,
-                                              ),
-                                      ],
-                                    )),
-                                  );
-                                });
-                          },
-                          child: CustomText(
-                            textAlign: TextAlign.start,
-                            maxLines: 2,
-                            text: 'Edit Packages',
-                            weight: FontWeight.w400,
-                            size: 15,
-                            fontFamily: AppStrings.interSans,
-                            color: AppColors.lightSecondary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                    )
               : SizedBox.shrink(),
         ));
   }
