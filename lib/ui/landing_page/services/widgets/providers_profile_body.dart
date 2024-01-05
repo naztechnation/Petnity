@@ -90,11 +90,11 @@ class _ProviderProfileState extends State<ProviderProfile> {
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: false);
     user.getUsername();
-    services = widget.agents!.services != null
+    services = widget.agents?.services != null
         ? widget.agents!.services!.map((service) => service.name ?? '').toList()
         : <String>[];
 
-    animals = widget.agents!.petTypes != null
+    animals = widget.agents?.petTypes != null
         ? widget.agents!.petTypes!
             .map((petTypes) => petTypes.name ?? '')
             .toList()

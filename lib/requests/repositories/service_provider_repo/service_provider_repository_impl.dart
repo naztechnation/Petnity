@@ -464,9 +464,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       required String serviceId,
       required String price}) async {
     final map = await Requests().patch(
-        AppStrings.updatePackagePricing(
+        AppStrings.updateVetPackagePricing(
           agentId: agentId,
-          packageId: serviceId,
+          serviceId: serviceId,
         ),
         body: {
           'price': price

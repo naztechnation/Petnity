@@ -253,5 +253,5 @@ class AppStrings {
 
       static String updateVetPackagePricing(
           {required String agentId, required String serviceId}) =>
-      '${_baseUrl}services/update-package-price/$agentId/$serviceId';
+      '${_baseUrl}services/update-vet-service-price/$agentId/$serviceId';
 }

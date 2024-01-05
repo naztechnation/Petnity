@@ -334,8 +334,7 @@ class _VetBookingState extends State<VetBooking> {
                                                   state is EditPackageLoading,
                                               onPressed: () {
                                                 if (_amountController.text !=
-                                                    AppUtils.convertPrice(
-                                                        amount)) {
+                                                    amount) {
                                                   _serviceProviderCubit
                                                       .editVetPackage(
                                                           agentId: agentId,
