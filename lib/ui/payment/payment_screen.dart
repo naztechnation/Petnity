@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../blocs/service_provider/service_provider.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/user_models/withdrawal_history.dart';
 import '../../model/view_models/service_provider_inapp.dart';
 import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../res/app_colors.dart';
@@ -54,6 +55,9 @@ class _PaymentState extends State<Payment> {
 
   var withdrawableAmount = '0';
 
+  List<AgentWithdrawals> agentWithdrawals = [];
+
+
   String email = '';
 
   String transactionId = '';
@@ -65,10 +69,14 @@ class _PaymentState extends State<Payment> {
   String agentId = "";
 
   getBalance() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
-    _serviceProviderCubit.getAgentBalance(
+   await _serviceProviderCubit.getAgentBalance(
+      agentId: agentId,
+    );
+
+    await _serviceProviderCubit.agentWithdrawalHistory(
       agentId: agentId,
     );
   }
@@ -114,9 +122,13 @@ class _PaymentState extends State<Payment> {
             withdrawableAmount = state.balance.balance.toString();
 
             service.setWithdrawableBalance(withdrawableAmount);
+          }else if (state is AgentWithdrawalHistoryLoaded) {
+            agentWithdrawals = state.requests.agentWithdrawals?.reversed.toList() ?? [];
+
+            
           }
         }, builder: (context, state) {
-          return (state is AgentBalanceLoading)
+          return (state is AgentBalanceLoading || state is AgentWithdrawalHistoryLoading)
               ? LoadingPage()
               : Container(
                   height: screenSize(context).height,
@@ -271,13 +283,39 @@ class _PaymentState extends State<Payment> {
                           const SizedBox(
                             height: 30,
                           ),
+                         if(agentWithdrawals.isNotEmpty)...[
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 4,
+                              itemCount: agentWithdrawals.length,
                               shrinkWrap: true,
                               itemBuilder: ((context, index) {
-                                return PaymentBox();
+                                return PaymentBox(history: agentWithdrawals[index],);
                               }))
+                         ]else ...[
+                           Container(
+              height: 300,
+              child: Align(
+                  child: Card(
+                elevation: 0.5,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                child: Container(
+                  height: 120,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        'You have\'nt made any withdrawals yet',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: AppColors.lightSecondary,
+                             fontWeight: FontWeight.w300),
+                      ),
+                    ),
+                  ),
+                ),
+              ))),
+                         ] 
                         ],
                       ),
                     ),

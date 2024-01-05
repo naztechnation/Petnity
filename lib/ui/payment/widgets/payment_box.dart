@@ -2,38 +2,31 @@
 
 import 'package:flutter/material.dart';
 
+import '../../../model/user_models/withdrawal_history.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../../utils/app_utils.dart';
-import '../../widgets/image_view.dart';
 
 class PaymentBox extends StatelessWidget {
-  const PaymentBox({super.key});
+
+  final AgentWithdrawals history;
+  const PaymentBox({super.key, required this.history});
 
   @override
   Widget build(BuildContext context) {
+
+    
     return Container(
                 width: screenSize(context).width,
                 margin: const EdgeInsets.only(left: 10, right: 10, bottom: 14),
-                padding: const EdgeInsets.only(right: 12, top: 15, bottom: 15),
+                padding: const EdgeInsets.only(right: 12, top: 15, bottom: 15, left: 15),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: ImageView.network(
-                            'https://img.freepik.com/free-photo/isolated-happy-smiling-dog-white-background-portrait-4_1562-693.jpg',
-                            height: 60,
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
+                    
                     Expanded(
                       flex: 6,
                       child: Row(
@@ -42,37 +35,41 @@ class PaymentBox extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Sandra Lee',
-                                style: TextStyle(color: Colors.black),
+                             Text(
+                                'NGN ${AppUtils.convertPrice(history.amount)}',
+                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontFamily: AppStrings.montserrat),
                               ),
                               const SizedBox(height: 10,),
 
+                            if(history.status == 'pending')...[
                               Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.orangeAccent.withOpacity(0.1)),
+                                child: Text(
+                                  'Pending',
+                                  style: TextStyle(color: Colors.orangeAccent, fontSize: 12),
+                                ),
+                              ),
+                            ]else if(history.status == 'approved')...[
+                                 Container(
                                 padding: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                     color: Colors.greenAccent.withOpacity(0.1)),
                                 child: Text(
                                   'Withdrawn',
-                                  style: TextStyle(color: Colors.greenAccent),
+                                  style: TextStyle(color: Colors.greenAccent, fontSize: 12),
                                 ),
                               ),
+                            ]  
                             ],
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'NGN ${AppUtils.convertPrice('950')}',
-                                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontFamily: AppStrings.montserrat),
-                              ),
-                              const SizedBox(height: 10,),
-                              Text(
-                                '23/08/09',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
+                          const SizedBox(height: 10,),
+                          Text(
+                            AppUtils.formatComplexDate(dateTime: history.createdAt ?? ''),
+                            style: TextStyle(color: Colors.black, fontSize: 11),
                           )
                         ],
                       ),

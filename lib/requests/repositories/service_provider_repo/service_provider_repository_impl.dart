@@ -11,6 +11,7 @@ import 'package:petnity/model/user_models/vet_services.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/user_models/agent_services_lists.dart';
+import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/withdrawal/withdrawal.dart';
 import '../../../res/app_strings.dart';
 import '../../setup/requests.dart';
@@ -421,14 +422,14 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
   
   @override
-  Future<AuthData> agentApproveWithdrawal({required String withdrawalId}) async {
-    final map = await Requests().patch(
-        AppStrings.agentApproveWithdrawal(withdrawalId: withdrawalId,),
+  Future<WithrawalHistory> agentWithdrawalHistory({required String agentId}) async {
+    final map = await Requests().get(
+        AppStrings.agentWithdrawalHistory(agentId: agentId,),
         headers: {
           'Authorization': AppStrings.token,
         });
 
-    return AuthData.fromJson(map);
+    return WithrawalHistory.fromJson(map);
   }
   
  

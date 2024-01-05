@@ -103,7 +103,7 @@ class _PaymentReviewState extends State<Payment> {
 
     _amountController.text = AppUtils.convertPrice(_amountController.text);
 
-    mainAmount =   widget.amount;
+    mainAmount = widget.amount;
 
     super.initState();
   }
@@ -123,11 +123,14 @@ class _PaymentReviewState extends State<Payment> {
               end: Alignment.topLeft)),
       child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
         listener: (context, state) {
-          if (state is VetsApproveWithdrawalRequestLoaded) {
+          if (state is VetsCreateWithdrawalRequestLoaded) {
             if (state.requests.status!) {
+              // _serviceProviderCubit.vetsApproveWithdrawalRequest(
+              //     withdrawalId: state.requests.agentWithdrawal?.id.toString() ?? '');
+
               Modals.showToast(state.requests.message!,
                   messageType: MessageType.success);
-      
+
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return UpdateSuccessfulScreen(
                     notetext:
@@ -140,11 +143,6 @@ class _PaymentReviewState extends State<Payment> {
                     successMessage:
                         'Amount of NGN${AppUtils.convertPrice(widget.amount)} has been sent to you saved bank account Payment should arrive in an hour');
               }));
-            }
-          } else if (state is VetsCreateWithdrawalRequestLoaded) {
-            if (state.requests.status!) {
-              _serviceProviderCubit.vetsApproveWithdrawalRequest(
-                  withdrawalId: state.requests.agentWithdrawal?.id.toString() ?? '');
             }
           } else if (state is CreateServiceNetworkErr) {
             Modals.showToast(state.message ?? '');
@@ -179,8 +177,7 @@ class _PaymentReviewState extends State<Payment> {
                   ],
                 ),
                 Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),
+                  padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 10),
                   child: Column(
                     children: [
                       const SizedBox(
@@ -224,8 +221,7 @@ class _PaymentReviewState extends State<Payment> {
                               children: [
                                 Text(
                                   '${widget.bankName}',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text('${widget.accountNumber}'),
                               ],
@@ -243,17 +239,13 @@ class _PaymentReviewState extends State<Payment> {
                   height: 180,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 0.0, horizontal: 20),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
                   child: ButtonView(
-                    processing:
-                        state is VetsApproveWithdrawalRequestLoading ||
-                            state is VetsCreateWithdrawalRequestLoading,
+                    processing: state is VetsCreateWithdrawalRequestLoading,
                     onPressed: () {
                       _serviceProviderCubit.vetsCreateWithdrawalRequest(
                           agentId: agentId, amount: mainAmount);
-      
-                       
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 30,

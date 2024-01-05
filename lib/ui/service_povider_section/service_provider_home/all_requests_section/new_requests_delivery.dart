@@ -368,7 +368,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
         if (serviceProvider.availableServices.isEmpty &&
             isServices.name == 'services') ...[
           Container(
-              height: 400,
+              height: 300,
               child: Align(
                   child: Card(
                 elevation: 0.5,

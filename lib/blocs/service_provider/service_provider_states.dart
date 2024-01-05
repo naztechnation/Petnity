@@ -11,6 +11,7 @@ import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
 import '../../model/user_models/vet_services.dart';
+import '../../model/user_models/withdrawal_history.dart';
 import '../../model/withdrawal/withdrawal.dart';
 
 abstract class ServiceProviderState extends Equatable {
@@ -278,14 +279,14 @@ class  VetsCreateWithdrawalRequestLoaded extends ServiceProviderState {
   List<Object> get props => [requests];
 }
 
-class   VetsApproveWithdrawalRequestLoading extends ServiceProviderState {
+class   AgentWithdrawalHistoryLoading extends ServiceProviderState {
   @override
   List<Object> get props => [];
 }
 
-class  VetsApproveWithdrawalRequestLoaded extends ServiceProviderState {
-  final AuthData  requests;
-  const  VetsApproveWithdrawalRequestLoaded(this.requests);
+class  AgentWithdrawalHistoryLoaded extends ServiceProviderState {
+  final WithrawalHistory  requests;
+  const  AgentWithdrawalHistoryLoaded(this.requests);
   @override
   List<Object> get props => [requests];
 }

@@ -834,17 +834,17 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void> vetsApproveWithdrawalRequest({
-    required String withdrawalId,
+  Future<void>  agentWithdrawalHistory({
+    required String agentId,
   }) async {
     try {
-      emit(VetsApproveWithdrawalRequestLoading());
+      emit(AgentWithdrawalHistoryLoading());
 
-      final requests = await serviceProviderRepository.agentApproveWithdrawal(
-        withdrawalId: withdrawalId,
+      final requests = await serviceProviderRepository.agentWithdrawalHistory(
+        agentId: agentId,
       );
 
-      emit(VetsApproveWithdrawalRequestLoaded(requests));
+      emit(AgentWithdrawalHistoryLoaded(requests));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
     } catch (e) {
