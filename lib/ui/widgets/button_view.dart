@@ -49,7 +49,7 @@ class ButtonView extends StatelessWidget {
             primary: disabled
                 ? Theme.of(context).backgroundColor
                 : (color ?? AppColors.lightSecondary),
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: EdgeInsets.symmetric(vertical: 10),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 side: BorderSide(
