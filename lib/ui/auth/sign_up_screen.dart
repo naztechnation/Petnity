@@ -342,6 +342,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             firebaseAuth.status == Status.authenticating ||
                             isLoading),
                         onPressed: () async {
+
                           if (serviceProvider1.imageURl != null) {
                             if (_formKey.currentState!.validate()) {
                               RegistrationOptions(
@@ -425,7 +426,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             username: _usernameController.text.trim());
 
         if (firebaseAuth.status == Status.authenticated) {
-          _submit(context, imageUrl);
+          _registerUser(context, imageUrl);
         } else if (firebaseAuth.status == Status.authenticateError) {
           Modals.showToast(firebaseAuth.message);
         }
@@ -433,8 +434,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  _submit(BuildContext ctx, imageUrl) {
-    if (_formKey.currentState!.validate()) {
+  _registerUser(BuildContext ctx, imageUrl) {
+    // if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
@@ -446,7 +447,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             password: _passwordController.text.trim(),
           );
       FocusScope.of(ctx).unfocus();
-    }
+    // }
   }
 
   RegistrationOptions(

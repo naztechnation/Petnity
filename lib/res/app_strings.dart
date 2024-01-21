@@ -18,7 +18,7 @@ class AppStrings {
 
   ///base url
 
-  static const String _baseUrl = 'https://api.lucacify.com/';
+  static const String _baseUrl = 'https://lucacify.onrender.com/';
 
   static const String _androidKey = 'AIzaSyCGhgIA6avmf0LRLakXaAama2vRnBsyL_Q';
   static const String _iosKey = 'Google Maps API key';

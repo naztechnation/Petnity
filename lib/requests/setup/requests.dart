@@ -68,7 +68,7 @@ class Requests {
         await client
             .post(
           Uri.parse(route),
-          body: body,
+          body: json.encode(body),
           headers: headers ?? await formDataHeader(),
         )
             .then((response) {

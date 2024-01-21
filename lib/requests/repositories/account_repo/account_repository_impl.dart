@@ -18,14 +18,16 @@ class AccountRepositoryImpl implements AccountRepository {
       required String deviceId,
       required String profileImage,
       required String phone}) async {
+
+        
     final map = await Requests().post(AppStrings.otpUrl(url), body: {
       "username": username,
       "email": email,
       "password": password,
-      "phone_number": phone,
-      "firebase_id": firebaseId,
-      "profile_image": profileImage,
-      "device_id": profileImage,
+      "phoneNumber": phone,
+      "firebaseId": firebaseId,
+      "profileImage": profileImage,
+      "deviceId": deviceId,
     });
     return AuthData.fromJson(map);
   }
@@ -36,7 +38,7 @@ class AccountRepositoryImpl implements AccountRepository {
     required String password,
   }) async {
     final map = await Requests().post(AppStrings.loginUrl, body: {
-      "username_or_email": username,
+      "emailOrUsername": username,
       "password": password,
     });
     return AuthData.fromJson(map);

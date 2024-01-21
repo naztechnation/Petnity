@@ -80,8 +80,11 @@ class SignInScreen extends StatelessWidget {
                         state.userData.profile?.user?.username.toString());
                     StorageHandler.saveUserPicture(
                         state.userData.profile?.profileImage.toString());
- 
-                        user.setUserData(username:state.userData.profile?.user?.username.toString() ?? '');
+
+                    user.setUserData(
+                        username:
+                            state.userData.profile?.user?.username.toString() ??
+                                '');
                     loginUser(
                         firebaseUser: firebaseUser,
                         context: context,
@@ -111,20 +114,17 @@ class SignInScreen extends StatelessWidget {
                         .userData.agent?.profile?.user?.username
                         .toString());
 
-                        user.setUserData(username:state
-                        .userData.agent?.profile?.user?.username
-                        .toString() ?? '');
-
+                    user.setUserData(
+                        username: state.userData.agent?.profile?.user?.username
+                                .toString() ??
+                            '');
 
                     loginUser(
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
                         isAgent: !state.userData.isAgent!);
-
                   }
-
-                  
                 } else {
                   Modals.showToast(state.userData.message,
                       messageType: MessageType.error);
@@ -132,27 +132,20 @@ class SignInScreen extends StatelessWidget {
                     resendCode(context);
                   }
                 }
-
-               
-
-               
-
-                
-              }else if (state is OTPResent) {
-                    if (state.user.status == true) {
-                      Modals.showToast(state.user.message ?? '',
-                          messageType: MessageType.success);
-                      AppNavigator.pushAndReplacePage(context,
+              } else if (state is OTPResent) {
+                if (state.user.status == true) {
+                  Modals.showToast(state.user.message ?? '',
+                      messageType: MessageType.success);
+                  AppNavigator.pushAndReplacePage(context,
                       page: OtpScreen(
                         email: _usernameController.text,
-                        
                         username: _usernameController.text,
                       ));
-                    } else {
-                      Modals.showToast(state.user.message ?? '',
-                          messageType: MessageType.success);
-                    }
-                  } else if (state is AccountApiErr) {
+                } else {
+                  Modals.showToast(state.user.message ?? '',
+                      messageType: MessageType.success);
+                }
+              } else if (state is AccountApiErr) {
                 if (state.message != null) {
                   Modals.showToast(state.message!,
                       messageType: MessageType.error);
@@ -291,9 +284,7 @@ class SignInScreen extends StatelessWidget {
                             firebaseUser.status == Status.authenticating ||
                             state is AccountProcessing),
                         onPressed: () {
-                           _submit(context);
- 
-
+                          _submit(context);
                         },
                         color: AppColors.lightSecondary,
                         child: CustomText(
@@ -356,8 +347,6 @@ class SignInScreen extends StatelessWidget {
     ));
   }
 
-  
-
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().loginUser(
@@ -372,7 +361,6 @@ class SignInScreen extends StatelessWidget {
       required BuildContext context,
       required String message,
       required bool isAgent}) async {
-    
     await firebaseUser.loginUserWithEmailAndPassword(
         email: _usernameController.text.trim(),
         password: _passwordController.text.trim());
@@ -390,7 +378,7 @@ class SignInScreen extends StatelessWidget {
         AppNavigator.pushAndReplaceName(context,
             name: AppRoutes.serviceProviderLandingPage);
       }
-    }else if(firebaseUser.status == Status.authenticateError){
+    } else if (firebaseUser.status == Status.authenticateError) {
       Modals.showToast(message, messageType: MessageType.error);
 
       Modals.showToast(firebaseUser.message);
