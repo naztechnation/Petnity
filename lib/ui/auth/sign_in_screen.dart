@@ -57,81 +57,81 @@ class SignInScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                if (state.userData.status!) {
-                  StorageHandler.saveIsLoggedIn('true');
+                // if (state.userData.status!) {
+                //   StorageHandler.saveIsLoggedIn('true');
 
-                  StorageHandler.saveUserPassword(_passwordController.text);
+                //   StorageHandler.saveUserPassword(_passwordController.text);
 
-                  if (!state.userData.isAgent!) {
-                    if (state.userData.profile?.hasPets ?? false) {
-                      StorageHandler.saveUserPetState('true');
-                    } else {
-                      StorageHandler.saveUserPetState('');
-                    }
-                    StorageHandler.saveIsUserType('user');
-                    StorageHandler.saveEmail(
-                        state.userData.profile?.user?.email.toString());
-                    StorageHandler.saveUserPhone(
-                        state.userData.profile?.phoneNumber.toString());
+                //   if (!state.userData.isAgent!) {
+                //     if (state.userData.profile?.hasPets ?? false) {
+                //       StorageHandler.saveUserPetState('true');
+                //     } else {
+                //       StorageHandler.saveUserPetState('');
+                //     }
+                //     StorageHandler.saveIsUserType('user');
+                //     StorageHandler.saveEmail(
+                //         state.userData.profile?.user?.email.toString());
+                //     StorageHandler.saveUserPhone(
+                //         state.userData.profile?.phoneNumber.toString());
 
-                    StorageHandler.saveUserId(
-                        state.userData.profile?.user?.id.toString());
-                    StorageHandler.saveUserName(
-                        state.userData.profile?.user?.username.toString());
-                    StorageHandler.saveUserPicture(
-                        state.userData.profile?.profileImage.toString());
+                //     StorageHandler.saveUserId(
+                //         state.userData.profile?.user?.id.toString());
+                //     StorageHandler.saveUserName(
+                //         state.userData.profile?.user?.username.toString());
+                //     StorageHandler.saveUserPicture(
+                //         state.userData.profile?.profileImage.toString());
 
-                    user.setUserData(
-                        username:
-                            state.userData.profile?.user?.username.toString() ??
-                                '');
-                    loginUser(
-                        firebaseUser: firebaseUser,
-                        context: context,
-                        message: state.userData.message!,
-                        isAgent: !state.userData.isAgent!);
-                  } else {
-                    StorageHandler.saveIsUserType('service_provider');
-                    StorageHandler.saveAgentId(
-                        state.userData.agent!.id.toString());
+                //     user.setUserData(
+                //         username:
+                //             state.userData.profile?.user?.username.toString() ??
+                //                 '');
+                //     loginUser(
+                //         firebaseUser: firebaseUser,
+                //         context: context,
+                //         message: state.userData.message!,
+                //         isAgent: !state.userData.isAgent!);
+                //   } else {
+                //     StorageHandler.saveIsUserType('service_provider');
+                //     StorageHandler.saveAgentId(
+                //         state.userData.agent!.id.toString());
 
-                    if (state.userData.agent?.profile?.hasPets ?? false) {
-                      StorageHandler.saveUserPetState('true');
-                    } else {
-                      StorageHandler.saveUserPetState('');
-                    }
+                //     if (state.userData.agent?.profile?.hasPets ?? false) {
+                //       StorageHandler.saveUserPetState('true');
+                //     } else {
+                //       StorageHandler.saveUserPetState('');
+                //     }
 
-                    StorageHandler.saveEmail(
-                        state.userData.agent?.profile?.user?.email.toString());
-                    StorageHandler.saveUserPhone(
-                        state.userData.agent?.profile?.phoneNumber.toString());
-                    StorageHandler.saveUserPicture(
-                        state.userData.agent?.picture.toString());
+                //     StorageHandler.saveEmail(
+                //         state.userData.agent?.profile?.user?.email.toString());
+                //     StorageHandler.saveUserPhone(
+                //         state.userData.agent?.profile?.phoneNumber.toString());
+                //     StorageHandler.saveUserPicture(
+                //         state.userData.agent?.picture.toString());
 
-                    StorageHandler.saveUserId(
-                        state.userData.agent?.id.toString());
-                    StorageHandler.saveUserName(state
-                        .userData.agent?.profile?.user?.username
-                        .toString());
+                //     StorageHandler.saveUserId(
+                //         state.userData.agent?.id.toString());
+                //     StorageHandler.saveUserName(state
+                //         .userData.agent?.profile?.user?.username
+                //         .toString());
 
-                    user.setUserData(
-                        username: state.userData.agent?.profile?.user?.username
-                                .toString() ??
-                            '');
+                //     user.setUserData(
+                //         username: state.userData.agent?.profile?.user?.username
+                //                 .toString() ??
+                //             '');
 
-                    loginUser(
-                        firebaseUser: firebaseUser,
-                        context: context,
-                        message: state.userData.message!,
-                        isAgent: !state.userData.isAgent!);
-                  }
-                } else {
-                  Modals.showToast(state.userData.message,
-                      messageType: MessageType.error);
-                  if (state.userData.message == 'Profile is not verified') {
-                    resendCode(context);
-                  }
-                }
+                //     loginUser(
+                //         firebaseUser: firebaseUser,
+                //         context: context,
+                //         message: state.userData.message!,
+                //         isAgent: !state.userData.isAgent!);
+                //   }
+                // } else {
+                //   Modals.showToast(state.userData.message,
+                //       messageType: MessageType.error);
+                //   if (state.userData.message == 'Profile is not verified') {
+                //     resendCode(context);
+                //   }
+                // }
               } else if (state is OTPResent) {
                 if (state.user.status == true) {
                   Modals.showToast(state.user.message ?? '',
@@ -349,10 +349,10 @@ class SignInScreen extends StatelessWidget {
 
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
-      ctx.read<AccountCubit>().loginUser(
-          username: _usernameController.text.trim(),
-          password: _passwordController.text.trim());
-      FocusScope.of(ctx).unfocus();
+      // ctx.read<AccountCubit>().loginUser(
+      //     username: _usernameController.text.trim(),
+      //     password: _passwordController.text.trim());
+      // FocusScope.of(ctx).unfocus();
     }
   }
 

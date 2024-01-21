@@ -64,8 +64,11 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
       if (state is ReportBugLoaded) {
         if (state.reportBug.status!) {
-          Modals.showToast(state.reportBug.message,
-              messageType: MessageType.success);
+
+          ///Todo:
+
+          // Modals.showToast(state.reportBug.message,
+          //     messageType: MessageType.success);
 
               bug.clear();
               title.clear();

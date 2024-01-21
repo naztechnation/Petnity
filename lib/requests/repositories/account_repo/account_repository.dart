@@ -21,7 +21,7 @@ abstract class AccountRepository {
       required String prescription,
       required String url});
   Future<AuthData> loginUser({
-    required String username,
+    required String email,
     required String password,
   });
   Future<AuthData> logoutUser({
@@ -33,7 +33,7 @@ abstract class AccountRepository {
   });
   Future<AuthData> verifyUser({
     required String code,
-    required String username,
+    required String email,
   });
   Future<AuthData> uploadPhotoUrl(
       {required String agentId,

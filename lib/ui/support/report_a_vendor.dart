@@ -76,8 +76,10 @@ final TextEditingController vendorName = TextEditingController();
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
       if (state is ReportAgentLoaded) {
         if (state.reportAgent.status!) {
-          Modals.showToast(state.reportAgent.message,
-              messageType: MessageType.success);
+
+          ///Todo:
+          // Modals.showToast(state.reportAgent.message,
+          //     messageType: MessageType.success);
 
               vendorName.clear();
               vendorTitle.clear();

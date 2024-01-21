@@ -39,8 +39,8 @@ class AppStrings {
       '${_baseUrl}auth/resend-code/$username';
   static String getServiceProvidersList(String serviceId) =>
       '${_baseUrl}users/get-service-agents/$serviceId';
-  static String verifyUserProfileUrl(String username) =>
-      '${_baseUrl}auth/verify-profile/$username';
+  static String verifyUserProfileUrl =
+      '${_baseUrl}auth/verify-user';
 
   static String resetPasswordUrl(String email) =>
       '${_baseUrl}auth/change-password/$email';
@@ -96,8 +96,8 @@ class AppStrings {
   static String petHealthUrl({required url}) => '${_baseUrl + url}';
   static String registerUserPetProfileUrl({required username}) =>
       '${_baseUrl}pets/add-pet/$username';
-  static String registerServiceProviderProfileUrl({required username}) =>
-      '${_baseUrl}auth/create-agent/$username';
+  static String registerServiceProviderProfileUrl =
+      '${_baseUrl}auth/create-agent';
 
   static String getProductReview({required String productId}) =>
       '${_baseUrl}shop/get-product-reviews/$productId';

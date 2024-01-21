@@ -204,7 +204,7 @@ class _OtpScreenState extends State<OtpScreen> {
   _submit(BuildContext ctx, user) {
     if (_pinController.text.isNotEmpty && _pinController.text.length == 6) {
       ctx.read<AccountCubit>().verifyOTP(
-            user.username,
+            widget.email ?? '',
             _pinController.text.trim(),
           );
       FocusScope.of(ctx).unfocus();

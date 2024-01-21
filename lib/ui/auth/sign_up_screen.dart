@@ -103,9 +103,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       messageType: MessageType.success);
                   serviceProvider1.resetImage();
                   StorageHandler.saveUserName(_usernameController.text.trim());
-                } else if (state.userData.message.username != null) {
-                  Modals.showToast(state.userData.message.username[0] ?? '',
-                      messageType: MessageType.success);
                 }
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
@@ -435,7 +432,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   _registerUser(BuildContext ctx, imageUrl) {
-    // if (_formKey.currentState!.validate()) {
+     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
@@ -447,7 +444,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             password: _passwordController.text.trim(),
           );
       FocusScope.of(ctx).unfocus();
-    // }
+     }
   }
 
   RegistrationOptions(

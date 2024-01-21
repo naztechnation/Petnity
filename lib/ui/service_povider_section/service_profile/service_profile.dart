@@ -143,7 +143,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
                                 for (var item in state.userData.agents!) {
-                                  if (item.id.toString() == agentId) {
+                                  if (item.sId.toString() == agentId) {
                                     agents = item;
                                     break;
                                   }
@@ -158,7 +158,7 @@ class _AgentProfileState extends State<AgentProfile> {
                   );
                 } else if (state is ServiceProviderListLoaded) {
                   for (var item in state.userData.agents!) {
-                    if (item.id.toString() == agentId) {
+                    if (item.sId.toString() == agentId) {
                       agents = item;
                       break;
                     }
@@ -255,7 +255,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                       textAlign: TextAlign.start,
                                       maxLines: 2,
                                       text:
-                                          '${agents?.profile?.user?.username}',
+                                          '${agents?.name}',
                                       weight: FontWeight.w700,
                                       size: 14,
                                       fontFamily: AppStrings.interSans,
@@ -403,7 +403,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
                                 for (var item in state.userData.agents!) {
-                                  if (item.id.toString() == agentId) {
+                                  if (item.sId.toString() == agentId) {
                                     agents = item;
                                     break;
                                   }

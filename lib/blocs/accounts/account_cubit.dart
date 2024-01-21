@@ -107,12 +107,12 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> loginUser(
-      {required String password, required String username}) async {
+      {required String password, required String email}) async {
     try {
       emit(AccountLoading());
 
       final userData = await accountRepository.loginUser(
-          username: username, password: password);
+          email: email, password: password);
 
       // await viewModel.setUser(userData);
       emit(AccountLoaded(userData));
@@ -260,12 +260,12 @@ class AccountCubit extends Cubit<AccountStates> {
     }
   }
 
-  Future<void> verifyOTP(String username, String code) async {
+  Future<void> verifyOTP(String email, String code) async {
     try {
       emit(AccountProcessing());
 
       final user =
-          await accountRepository.verifyUser(username: username, code: code);
+          await accountRepository.verifyUser(email: email, code: code);
 
       // await viewModel.updateUser(user);
       emit(AccountUpdated(user));
