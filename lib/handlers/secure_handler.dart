@@ -53,6 +53,10 @@ class StorageHandler {
     await storage.write(key: 'AGENT_ID', value: id);
   }
 
+  static Future<void> saveUserToken([String? token]) async {
+    if (token != null) await storage.write(key: 'TOKEN', value: token);
+  }
+
   static Future<String> getUserName() async {
     String? value = await storage.read(key: 'USER');
     String? username;
@@ -63,6 +67,18 @@ class StorageHandler {
       username = '';
     }
     return username;
+  }
+
+   static Future<String> getUserToken() async {
+    String? value = await storage.read(key: 'TOKEN');
+    String? token;
+    String? data = value;
+    if (data != null) {
+      token = data;
+    } else {
+      token = '';
+    }
+    return token;
   }
 
     static Future<String> getFirebaseToken() async {

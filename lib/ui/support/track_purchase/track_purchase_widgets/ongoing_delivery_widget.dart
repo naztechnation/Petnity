@@ -177,9 +177,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                             } else {
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
-                                    agentName: widget.services.agent?.profile
-                                            ?.user?.username ??
-                                        '',
+                                    agentName: widget.services.agent?.user?.username ??
+                                        ''
+                                           ,
                                     userImage:
                                         widget.services.agent?.picture ?? '',
                                     uid: widget.services.profile?.firebaseId ??
@@ -198,7 +198,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                           onTap: () {
                             AppNavigator.pushAndStackPage(context,
                                 page: VideoCall(
-                                  agentName: widget.services.agent?.profile
+                                  agentName: widget.services.agent
                                           ?.user?.username ??
                                       '',
                                   customerName:
@@ -217,20 +217,20 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                         //  if(widget.services.isPaid ?? false) {
                         AppNavigator.pushAndStackPage(context,
                             page: TrackServicesScreen(
-                              agentName: widget.services.agent?.profile?.user
+                              agentName: widget.services.agent?.user
                                       ?.username ??
                                   '',
                               phone:
-                                  widget.services.agent?.profile?.phoneNumber ??
+                                  widget.services.agent?.user?.phoneNumber ??
                                       '',
                               serviceOffered: widget.services.package?.service
                                       ?.serviceType?.name ??
                                   '',
                               agentId:
-                                  widget.services.agent?.profile?.firebaseId ??
+                                  widget.services.agent?.user?.firebaseId ??
                                       '',
                               sellerId:
-                                  widget.services.agent?.id.toString() ?? '',
+                                  widget.services.agent?.sId.toString() ?? '',
                               startDate1: widget.services.pickupTime ?? '0',
                               startDate2: widget.services.dropoffTime ?? '0',
                               amount: widget.services.fee ?? '',

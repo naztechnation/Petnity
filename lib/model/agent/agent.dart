@@ -1,5 +1,6 @@
+import 'package:petnity/model/user/user.dart';
+
 import '../pet_types.dart/pet_types.dart';
-import '../profile/profile.dart';
 import '../services/services.dart';
 
 class Agent {
@@ -8,7 +9,7 @@ class Agent {
   bool? isVerified;
   bool? isReachable;
   String? sId;
-  String? user;
+  User? user;
   String? name;
   String? gender;
   String? dateOfBirth;

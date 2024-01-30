@@ -80,7 +80,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: widget.vetOrders.agent?.profile?.user?.username ?? '',
+                          text: widget.vetOrders.agent?.user?.username ?? '',
                           size: 14,
                           weight: FontWeight.bold,
                         ),
@@ -179,11 +179,11 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                           sessionTypeName: sessionType.name,
                           picture: widget.vetOrders.agent?.picture ?? '',
                           agentName:
-                              widget.vetOrders.agent?.profile?.user?.username ??
+                              widget.vetOrders.agent?.user?.username ??
                                   '',
                           firebaseId:
-                              widget.vetOrders.agent?.profile?.firebaseId ?? '',
-                          phone: widget.vetOrders.agent?.profile?.phoneNumber ??
+                              widget.vetOrders.agent?.user?.firebaseId ?? '',
+                          phone: widget.vetOrders.agent?.user?.phoneNumber ??
                               '',
                           customerName: widget.vetOrders.profile?.user?.username ?? '',
                         ),
@@ -200,15 +200,15 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: TrackVetServicesScreen(
-                            agentName: widget.vetOrders.agent?.profile?.user?.username ?? '',
+                            agentName: widget.vetOrders.agent?.user?.username ?? '',
                             phone:
-                                widget.vetOrders.agent?.profile?.phoneNumber ??
+                                widget.vetOrders.agent?.user?.phoneNumber ??
                                     '',
                             agentId:
-                                widget.vetOrders.agent?.profile?.firebaseId ??
+                                widget.vetOrders.agent?.user?.firebaseId ??
                                     '',
                             sellerId:
-                                widget.vetOrders.agent?.id.toString() ?? '',
+                                widget.vetOrders.agent?.sId.toString() ?? '',
                             startDate1: widget.vetOrders.sessionTime ?? '',
                             amount: widget.vetOrders.fee ?? '',
                             paymentId: widget.vetOrders.purchaseId ?? '',

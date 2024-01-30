@@ -8,7 +8,6 @@ import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
 import '../../../../res/app_images.dart';
 import '../../../../res/app_strings.dart';
-import '../../../../utils/navigator/page_navigator.dart';
 import '../../../user/user_kyc/widgets/pet_type_container.dart';
 import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_text.dart';

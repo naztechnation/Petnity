@@ -1,4 +1,4 @@
-import '../withdrawal/withdrawal.dart';
+import 'package:petnity/model/agent/agent.dart';
 
 class CreateAgents {
   bool? status;

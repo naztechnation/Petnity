@@ -78,7 +78,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.product?.agent?.profile?.user?.username ?? '',
+                        allOrders.product?.agent?.user?.username ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
@@ -141,7 +141,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     GestureDetector(
                         onTap: () {
                           _callNumber(
-                              allOrders.product?.agent?.profile?.phoneNumber ??
+                              allOrders.product?.agent?.user?.phoneNumber ??
                                   '');
                         },
                         child: ImageView.svg(AppImages.callBorder)),
@@ -150,9 +150,9 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          if (allOrders.product?.agent?.profile?.firebaseId ==
+                          if (allOrders.product?.agent?.user?.firebaseId ==
                                   '' ||
-                              allOrders.product?.agent?.profile?.firebaseId ==
+                              allOrders.product?.agent?.user?.firebaseId ==
                                   null) {
                             Modals.showToast(
                                 'Can\'t communicate with this agent at the moment. Please');
@@ -163,7 +163,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                                         allOrders.product?.agent?.name ?? '',
                                     userImage:
                                         allOrders.product?.agent?.picture ?? '',
-                                    uid: allOrders.product?.agent?.profile
+                                    uid: allOrders.product?.agent?.user
                                             ?.firebaseId ??
                                         '', customerName: '',));
                           }
@@ -177,7 +177,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
                                 customerName: allOrders.profile?.user?.username ?? '',
-                                agentName: allOrders.product?.agent?.profile?.user?.username ?? '',
+                                agentName: allOrders.product?.agent?.user?.username ?? '',
                               ));
                         },
                         child: ImageView.svg(AppImages.videoBorder)),
@@ -191,7 +191,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                      // if (order.isPaid ?? false) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return PurchaseRequest(
-                    agentName: '${allOrders.product?.agent?.profile?.user?.username}',
+                    agentName: '${allOrders.product?.agent?.user?.username}',
                     customerName: '${allOrders.profile?.user?.username}',
                      
                     productName: '${allOrders.product?.name}',
@@ -202,12 +202,12 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     deliveryDate: today,
                     deliveryLocation: ' ', 
                     ownerImage: '${allOrders.product?.agent?.picture}',
-                     ownerNumber: '${allOrders.product?.agent?.profile?.phoneNumber}',
-                      ownerFirebaseId: '${allOrders.product?.agent?.profile?.firebaseId}', 
+                     ownerNumber: '${allOrders.product?.agent?.user?.phoneNumber}',
+                      ownerFirebaseId: '${allOrders.product?.agent?.user?.firebaseId}', 
                       isUserMarkedOrder: allOrders.userMarkedDelivered ?? false, 
                       isAgentMarkedOrder: allOrders.agentMarkedDelivered ?? false,
                        orderId: allOrders.product?.id.toString() ?? '',
-                       ownerNormalId: allOrders.product?.agent?.id.toString() ?? '',
+                       ownerNormalId: allOrders.product?.agent?.sId.toString() ?? '',
                   );
                 }));
               // } else {

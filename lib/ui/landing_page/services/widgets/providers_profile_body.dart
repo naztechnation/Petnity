@@ -104,7 +104,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
       if (state is PostProductReviewsLoaded) {
         if (state.postReview.status!) {
           Modals.showToast(state.postReview.message ?? '');
-          _userCubit.getReviews(userId: widget.agents?.id.toString() ?? '');
+          _userCubit.getReviews(userId: widget.agents?.sId.toString() ?? '');
           setState(() {
             isProcessing = false;
           });
@@ -138,14 +138,14 @@ class _ProviderProfileState extends State<ProviderProfile> {
                   ),
                   InkWell(
                     onTap: () => AppNavigator.pushAndStackPage(context,
-                        page: ReportVendor(widget.agents?.id.toString() ?? '')),
+                        page: ReportVendor(widget.agents?.sId.toString() ?? '')),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: CustomText(
                         textAlign: TextAlign.start,
                         maxLines: 2,
                         text:
-                            'Report ${widget.agents?.profile?.user?.username ?? ''}',
+                            'Report ${widget.agents?.user?.username ?? ''}',
                         weight: FontWeight.w500,
                         size: 13,
                         fontFamily: AppStrings.interSans,
@@ -269,7 +269,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                               ctxt: context,
                               username: user.username,
                               agentName: widget.agents?.name ?? '',
-                              agentId: widget.agents?.id.toString() ?? ''));
+                              agentId: widget.agents?.sId.toString() ?? ''));
                     },
                     child: Text(
                       'Add Review',
@@ -398,7 +398,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                 Center(
                   child: InkWell(
                     onTap: () => AppNavigator.pushAndStackPage(context,
-                        page: ReportVendor(widget.agents?.id.toString() ?? '')),
+                        page: ReportVendor(widget.agents?.sId.toString() ?? '')),
                     child: Text(
                       'Report ${agentName.capitalizeFirstOfEach}',
                       style: TextStyle(
@@ -417,7 +417,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                     _postProductReviews(
                       ctx: ctxt,
                       username: username,
-                      agentId: widget.agents?.id.toString() ?? "",
+                      agentId: widget.agents?.sId.toString() ?? "",
                       rating: ratingNumber.toString(),
                       comment: commentController.text,
                     );

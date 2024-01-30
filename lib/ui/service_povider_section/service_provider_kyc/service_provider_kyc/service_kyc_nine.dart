@@ -11,7 +11,6 @@ import '../../../../model/view_models/account_view_model.dart';
 import '../../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
-import '../../../../res/app_images.dart';
 import '../../../../res/app_strings.dart';
 import '../../../../res/enum.dart';
 import '../../../../utils/navigator/page_navigator.dart';

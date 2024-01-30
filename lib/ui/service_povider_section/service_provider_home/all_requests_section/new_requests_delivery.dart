@@ -614,12 +614,12 @@ class _ServiceProviderPetDeliveryHomeBodyState
               // if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackServicesScreen(
-                    agentName: order.agent?.profile?.user?.username ?? '',
-                    phone: order.agent?.profile?.phoneNumber ?? '',
+                    agentName: order.agent?.user?.username ?? '',
+                    phone: order.agent?.user?.phoneNumber ?? '',
                     serviceOffered:
                         order.package?.service?.serviceType?.name ?? '',
-                    agentId: order.agent?.profile?.firebaseId ?? '',
-                    sellerId: order.agent?.id.toString() ?? '',
+                    agentId: order.agent?.user?.firebaseId ?? '',
+                    sellerId: order.agent?.sId.toString() ?? '',
                     startDate1: order.pickupTime ?? '0',
                     startDate2: order.dropoffTime ?? '0',
                     amount: order.fee ?? '',
@@ -761,10 +761,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
               // if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackVetServicesScreen(
-                    agentName: order.agent?.profile?.user?.username ?? '',
-                    phone: order.agent?.profile?.phoneNumber ?? '',
-                    agentId: order.agent?.profile?.firebaseId ?? '',
-                    sellerId: order.agent?.id.toString() ?? '',
+                    agentName: order.agent?.user?.username ?? '',
+                    phone: order.agent?.user?.phoneNumber ?? '',
+                    agentId: order.agent?.user?.firebaseId ?? '',
+                    sellerId: order.agent?.sId.toString() ?? '',
                     startDate1: order.sessionTime ?? '0',
                     amount: order.fee ?? '',
                     paymentId: order.purchaseId ?? '',
@@ -894,7 +894,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   isUserMarkedOrder: order.userMarkedDelivered ?? false,
                   isAgentMarkedOrder: order.agentMarkedDelivered ?? false,
                   orderId: order.product?.id.toString() ?? '',
-                  ownerNormalId: order.product?.agent?.id.toString() ?? '',
+                  ownerNormalId: order.product?.agent?.sId.toString() ?? '',
                 );
               }));
               // } else {

@@ -256,7 +256,7 @@ class _HomepageBarState extends State<HomepageBar> {
               } else {}
             }else if (state is ServiceProviderListLoaded) {
                   for (var item in state.userData.agents!) {
-                    if (item.id.toString() == agentId) {
+                    if (item.sId.toString() == agentId) {
                       agents = item;
                       break;
                     }

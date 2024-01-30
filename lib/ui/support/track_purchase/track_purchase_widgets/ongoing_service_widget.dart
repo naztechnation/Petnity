@@ -78,7 +78,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.agent?.profile?.user?.username ?? '',
+                        allOrders.agent?.user?.username ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
@@ -152,7 +152,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     GestureDetector(
                         onTap: () {
                           _callNumber(
-                              allOrders.agent?.profile?.phoneNumber ?? '');
+                              allOrders.agent?.user?.phoneNumber ?? '');
                         },
                         child: ImageView.svg(AppImages.callBorder)),
                     const SizedBox(
@@ -160,16 +160,16 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          if (allOrders.agent?.profile?.firebaseId == '' ||
-                              allOrders.agent?.profile?.firebaseId == null) {
+                          if (allOrders.agent?.user?.firebaseId == '' ||
+                              allOrders.agent?.user?.firebaseId == null) {
                             Modals.showToast(
                                 'Can\'t communicate with this agent at the moment. Please');
                           } else {
                             AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
-                                    agentName: allOrders.agent?.profile?.user?.username ?? '',
+                                    agentName: allOrders.agent?.user?.username ?? '',
                                     userImage: allOrders.agent?.picture ?? '',
-                                    uid: allOrders.agent?.profile?.firebaseId ??
+                                    uid: allOrders.agent?.user?.firebaseId ??
                                         '', customerName: allOrders.profile?.user?.username ?? '',));
                           }
                         },
@@ -182,7 +182,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
                                 customerName: allOrders.profile?.user?.username ?? '',
-                                agentName: allOrders.agent?.profile?.user?.username ?? '',
+                                agentName: allOrders.agent?.user?.username ?? '',
                               ));
                         },
                         child: ImageView.svg(AppImages.videoBorder)),
@@ -195,13 +195,13 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
                           page: TrackServicesScreen(
-                            agentName: allOrders.agent?.profile?.user?.username ?? '',
-                            phone: allOrders.agent?.profile?.phoneNumber ?? '',
+                            agentName: allOrders.agent?.user?.username ?? '',
+                            phone: allOrders.agent?.user?.phoneNumber ?? '',
                             serviceOffered:
                                 allOrders.package?.service?.serviceType?.name ??
                                     '',
-                            agentId: allOrders.agent?.profile?.firebaseId ?? '',
-                            sellerId: allOrders.agent?.id.toString() ?? '',
+                            agentId: allOrders.agent?.user?.firebaseId ?? '',
+                            sellerId: allOrders.agent?.sId.toString() ?? '',
                             startDate1: allOrders.pickupTime ?? '0',
                             startDate2: allOrders.dropoffTime ?? '0',
                             amount: allOrders.fee ?? '',

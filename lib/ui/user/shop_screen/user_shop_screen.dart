@@ -177,7 +177,7 @@ class _ShopState extends State<Shop> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (_) {
                                       return ProductDetailScreen(filteredProducts[index].id.toString(), 
-                                      filteredProducts[index].price.toString(), user.username, filteredProducts[index].agent?.id.toString() ?? '');
+                                      filteredProducts[index].price.toString(), user.username, filteredProducts[index].agent?.sId.toString() ?? '');
                                     }));
                                   },
                                   child: Column(

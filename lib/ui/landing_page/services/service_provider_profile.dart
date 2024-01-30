@@ -133,7 +133,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                             CustomText(
                               textAlign: TextAlign.start,
                               maxLines: 2,
-                              text: '${widget.agents?.profile?.user?.username}'
+                              text: '${widget.agents?.user?.username}'
                                   .capitalizeFirstOfEach,
                               weight: FontWeight.w700,
                               size: 16,
@@ -190,7 +190,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                           agents: widget.agents,
                         ),
                         GalleryRatingSection(
-                            userId: widget.agents!.id.toString()),
+                            userId: widget.agents!.sId.toString()),
                         const SizedBox(
                           height: 150,
                         ),
@@ -216,7 +216,7 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
                             .setAgentName(widget.agents?.name ?? '');
 
                         Provider.of<AccountViewModel>(context, listen: false)
-                            .setAgentId(widget.agents?.id.toString() ?? '');
+                            .setAgentId(widget.agents?.sId.toString() ?? '');
 
                         openServices(
                             Provider.of<AccountViewModel>(context,
@@ -319,13 +319,13 @@ class _ServiceProviderProfileState extends State<ServiceProviderProfile> {
       case 'vets':
         AppNavigator.pushAndStackPage(context,
             page: VetBookingPage(
-              name: widget.agents?.profile?.user?.username ?? '',
+              name: widget.agents?.user?.username ?? '',
               image: '${widget.agents?.picture}',
               gender: widget.agents?.gender ?? '',
               location: '${widget.agents?.city}, ${widget.agents?.country}'
                   .replaceAll('?', ''),
               about: widget.agents?.about ?? '',
-              agentId: widget.agents?.id.toString() ?? '',
+              agentId: widget.agents?.sId.toString() ?? '',
             ));
         break;
       case 'grooming':

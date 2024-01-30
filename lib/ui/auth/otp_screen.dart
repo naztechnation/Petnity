@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:provider/provider.dart';
 import '../../blocs/accounts/account.dart';
+import '../../handlers/secure_handler.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../res/app_constants.dart';
@@ -19,9 +20,12 @@ import '../widgets/pin_code_view.dart';
 class OtpScreen extends StatefulWidget {
   final String? email;
   final String? username;
-  
-  const OtpScreen(
-      {super.key, this.email, this.username, });
+
+  const OtpScreen({
+    super.key,
+    this.email,
+    this.username,
+  });
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -56,30 +60,35 @@ class _OtpScreenState extends State<OtpScreen> {
       child: BlocConsumer<AccountCubit, AccountStates>(
         listener: (context, state) {
           if (state is AccountUpdated) {
-            
-            if(state.user.status!){
-              Modals.showToast(state.user.message!,
-                messageType: MessageType.success);
+            if (state.user.status ?? false) {
+              Modals.showToast(state.user.message ?? '',
+                  messageType: MessageType.success);
 
-            AppNavigator.pushAndReplaceName(context,
-                name: AppRoutes.successScreen);
-            }else{
-              Modals.showToast(state.user.message!,
-                messageType: MessageType.success);
+              Modals.showToast(state.user.data?.token ?? '',
+                  messageType: MessageType.success);
+
+              
+              AppNavigator.pushAndReplaceName(context,
+                  name: AppRoutes.successScreen);
+            } else {
+              Modals.showToast(state.user.message ?? '',
+                  messageType: MessageType.error);
             }
           } else if (state is OTPResent) {
-            Modals.showToast(state.user.message!,
+            Modals.showToast(state.user.message ?? '',
                 messageType: MessageType.success);
 
             isCountdownComplete = false;
             startCountdown();
           } else if (state is AccountApiErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '',
+                  messageType: MessageType.error);
             }
           } else if (state is AccountNetworkErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '',
+                  messageType: MessageType.error);
             }
           }
         },
@@ -134,8 +143,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black,
-                              fontFamily: AppStrings.montserrat,
-
+                                    fontFamily: AppStrings.montserrat,
                                     fontWeight: FontWeight.w500,
                                   )),
                             if (isCountdownComplete)
@@ -145,8 +153,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: Colors.black,
-                              fontFamily: AppStrings.montserrat,
-
+                                        fontFamily: AppStrings.montserrat,
                                         fontWeight: FontWeight.w500,
                                       ))
                                   : TextSpan(
@@ -175,9 +182,9 @@ class _OtpScreenState extends State<OtpScreen> {
                 child: ButtonView(
                   processing: state is AccountProcessing,
                   onPressed: () {
-                      _submit(context, user);
-                  //  AppNavigator.pushAndReplaceName(context,
-                      // name: AppRoutes.successScreen);
+                    _submit(context, user);
+                    //  AppNavigator.pushAndReplaceName(context,
+                    // name: AppRoutes.successScreen);
                   },
                   color: AppColors.lightSecondary,
                   child: CustomText(
@@ -226,7 +233,7 @@ class _OtpScreenState extends State<OtpScreen> {
   _resendCode(BuildContext ctx, user) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().resendCode(
-          username: AppStrings.resendCodeUrl(user.username),
+            username: AppStrings.resendCodeUrl(user.username),
           );
       FocusScope.of(ctx).unfocus();
     }

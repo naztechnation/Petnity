@@ -19,7 +19,7 @@ class Requests {
     final client = RetryClient(http.Client());
     try {
       await client
-          .get(Uri.parse(route), headers: headers ?? await rawDataHeader())
+          .get(Uri.parse(route), headers: headers ?? await formDataHeader())
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
       });
@@ -151,7 +151,7 @@ class Requests {
           .patch(
         Uri.parse(route),
         body: json.encode(body),
-        headers: headers ?? await rawDataHeader(),
+        headers: headers ?? await formDataHeader(),
       )
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
@@ -174,7 +174,7 @@ class Requests {
     final client = RetryClient(http.Client());
     try {
       await client
-          .delete(Uri.parse(route), headers: headers ?? await rawDataHeader())
+          .delete(Uri.parse(route), headers: headers ?? await formDataHeader())
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
       });

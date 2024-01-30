@@ -92,21 +92,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                if (state.userData.status!) {
+                if (state.userData.status ?? false) {
                   AppNavigator.pushAndReplacePage(context,
                       page: OtpScreen(
                         email: _emailController.text,
-                        
                         username: _usernameController.text,
                       ));
                   Modals.showToast(state.userData.message ?? '',
                       messageType: MessageType.success);
                   serviceProvider1.resetImage();
                   StorageHandler.saveUserName(_usernameController.text.trim());
+                } else {
+                  Modals.showToast(state.userData.message ?? '',
+                      messageType: MessageType.error);
                 }
               } else if (state is AccountApiErr) {
                 if (state.message != null) {
-                  Modals.showToast(state.message!,
+                  Modals.showToast(state.message ?? '',
                       messageType: MessageType.error);
                 }
               } else if (state is AccountNetworkErr) {
@@ -339,7 +341,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             firebaseAuth.status == Status.authenticating ||
                             isLoading),
                         onPressed: () async {
-
                           if (serviceProvider1.imageURl != null) {
                             if (_formKey.currentState!.validate()) {
                               RegistrationOptions(
@@ -432,7 +433,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   _registerUser(BuildContext ctx, imageUrl) {
-     if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
@@ -444,7 +445,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             password: _passwordController.text.trim(),
           );
       FocusScope.of(ctx).unfocus();
-     }
+    }
   }
 
   RegistrationOptions(

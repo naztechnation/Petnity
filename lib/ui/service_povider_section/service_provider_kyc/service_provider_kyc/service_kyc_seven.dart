@@ -56,7 +56,7 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
           listener: (context, state) {
             if (state is AgentResLoaded) {
               if (state.agents.status!) {
-                StorageHandler.saveAgentId(state.agents.agent!.id.toString());
+                StorageHandler.saveAgentId(state.agents.data?.agent?.sId.toString() ?? '');
 
                  
                 AppNavigator.pushAndStackPage(context,

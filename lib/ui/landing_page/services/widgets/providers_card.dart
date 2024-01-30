@@ -85,7 +85,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                           child: CustomText(
                             textAlign: TextAlign.start,
                             maxLines: 2,
-                            text: user.agents[widget.index].profile?.user?.username.toString().capitalizeFirstOfEach,
+                            text: user.agents[widget.index].user?.username.toString().capitalizeFirstOfEach,
                             weight: FontWeight.w700,
                             size: 16,
                             fontFamily: AppStrings.interSans,

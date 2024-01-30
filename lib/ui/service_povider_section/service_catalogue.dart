@@ -213,7 +213,7 @@ class _ShopState extends State<Shop> {
                                             filteredProducts[index]
                                                 .price
                                                 .toString(),
-                                            user.username, filteredProducts[index].agent?.id.toString() ?? '');
+                                            user.username, filteredProducts[index].agent?.sId.toString() ?? '');
                                       }));
                                     },
                                     child: Column(
