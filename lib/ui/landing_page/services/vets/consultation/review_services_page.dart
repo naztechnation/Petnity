@@ -91,7 +91,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
         } else if (state is CreateServicesLoaded) {
           _serviceProviderCubit.publishAgentServices(
               agentId: agentId,
-              serviceId: state.data.vetService?.id.toString() ?? '');
+              serviceId: state.data.data?.vetService?.sId.toString() ?? '');
         } else if (state is PublishServicesLoaded) {
           Modals.showToast(state.data.message ?? '');
         }

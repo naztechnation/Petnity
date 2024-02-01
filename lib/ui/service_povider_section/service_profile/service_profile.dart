@@ -102,7 +102,7 @@ class _AgentProfileState extends State<AgentProfile> {
     });
       await _userCubit.getServiceTypes( );
 
-    await _userCubit.getAgentProfile();
+    await _userCubit.getAgentProfile(agentId);
     setState(() {
       isLoading1 = false;
     });
@@ -134,7 +134,7 @@ class _AgentProfileState extends State<AgentProfile> {
                     body: EmptyWidget(
                       title: 'Network error',
                       description: state.message,
-                      onRefresh: () => _userCubit.getAgentProfile(),
+                      onRefresh: () => _userCubit.getAgentProfile(agentId),
                     ),
                   );
                 }else if (state is ServicesLoaded) {
@@ -154,7 +154,7 @@ class _AgentProfileState extends State<AgentProfile> {
                   return EmptyWidget(
                     title: 'Network error',
                     description: state.message,
-                    onRefresh: () => _userCubit.getAgentProfile(),
+                    onRefresh: () => _userCubit.getAgentProfile(agentId),
                   );
                 } else if (state is ServiceProviderListLoaded) {
                   ///TODO 
@@ -167,7 +167,7 @@ class _AgentProfileState extends State<AgentProfile> {
                 } else if (state is UploadAgentGalleryLoaded) {
                   serviceProvider.resetImage();
                   Modals.showToast(state.gallery.message!);
-                  _userCubit.getAgentProfile();
+                  _userCubit.getAgentProfile(agentId);
                 }
 
                 return Stack(
@@ -190,20 +190,24 @@ class _AgentProfileState extends State<AgentProfile> {
                             color: AppColors.cardColor,
                             padding: const EdgeInsets.only(bottom: 20, top: 10),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 backButton(context),
                                 const SizedBox(
                                   width: 40,
                                 ),
-                                CustomText(
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  text: 'Service profile',
-                                  weight: FontWeight.w700,
-                                  size: 20,
-                                  fontFamily: AppStrings.interSans,
-                                  color: Colors.black,
+                                Align(
+                                  child: CustomText(
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    text: 'Service profile',
+                                    weight: FontWeight.w500,
+                                    size: 20,
+                                    fontFamily: AppStrings.interSans,
+                                    color: Colors.black,
+                                  ),
                                 ),
+                                Expanded(child: SizedBox(width: 30,)),
                               ],
                             ),
                           ),

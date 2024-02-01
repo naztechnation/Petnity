@@ -1,135 +1,129 @@
 class CreateVetServices {
   bool? status;
   String? message;
-  VetService? vetService;
+  CreateVetServicesData? data;
 
-  CreateVetServices({this.status, this.message, this.vetService});
+  CreateVetServices({this.status, this.message, this.data});
 
   CreateVetServices.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    vetService = json['vet_service'] != null
-        ? new VetService.fromJson(json['vet_service'])
-        : null;
+    data = json['data'] != null ? new CreateVetServicesData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class CreateVetServicesData {
+  VetService? vetService;
+
+  CreateVetServicesData({this.vetService});
+
+  CreateVetServicesData.fromJson(Map<String, dynamic> json) {
+    vetService = json['vetService'] != null
+        ? new VetService.fromJson(json['vetService'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.vetService != null) {
-      data['vet_service'] = this.vetService!.toJson();
+      data['vetService'] = this.vetService!.toJson();
     }
     return data;
   }
 }
 
 class VetService {
-  int? id;
-  String? price;
-  bool? isLive;
-  String? createdAt;
-  String? updatedAt;
-  ServiceType? serviceType;
-  int? agent;
   List<SessionTypes>? sessionTypes;
   List<SessionTypes>? contactMediums;
+  bool? isLive;
+  String? sId;
+  String? serviceType;
+  String? agent;
+  int? price;
+  String? createdAt;
+  String? updatedAt;
 
   VetService(
-      {this.id,
-      this.price,
+      {this.sessionTypes,
+      this.contactMediums,
       this.isLive,
-      this.createdAt,
-      this.updatedAt,
+      this.sId,
       this.serviceType,
       this.agent,
-      this.sessionTypes,
-      this.contactMediums});
+      this.price,
+      this.createdAt,
+      this.updatedAt});
 
   VetService.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    price = json['price'];
-    isLive = json['is_live'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    serviceType = json['service_type'] != null
-        ? new ServiceType.fromJson(json['service_type'])
-        : null;
-    agent = json['agent'];
-    if (json['session_types'] != null) {
+    if (json['sessionTypes'] != null) {
       sessionTypes = <SessionTypes>[];
-      json['session_types'].forEach((v) {
+      json['sessionTypes'].forEach((v) {
         sessionTypes!.add(new SessionTypes.fromJson(v));
       });
     }
-    if (json['contact_mediums'] != null) {
+    if (json['contactMediums'] != null) {
       contactMediums = <SessionTypes>[];
-      json['contact_mediums'].forEach((v) {
+      json['contactMediums'].forEach((v) {
         contactMediums!.add(new SessionTypes.fromJson(v));
       });
     }
+    isLive = json['isLive'];
+    sId = json['_id'];
+    serviceType = json['serviceType'];
+    agent = json['agent'];
+    price = json['price'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['price'] = this.price;
-    data['is_live'] = this.isLive;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.serviceType != null) {
-      data['service_type'] = this.serviceType!.toJson();
-    }
-    data['agent'] = this.agent;
     if (this.sessionTypes != null) {
-      data['session_types'] =
-          this.sessionTypes!.map((v) => v.toJson()).toList();
+      data['sessionTypes'] = this.sessionTypes!.map((v) => v.toJson()).toList();
     }
     if (this.contactMediums != null) {
-      data['contact_mediums'] =
+      data['contactMediums'] =
           this.contactMediums!.map((v) => v.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class ServiceType {
-  int? id;
-  String? name;
-  String? image;
-
-  ServiceType({this.id, this.name, this.image});
-
-  ServiceType.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    image = json['image'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
+    data['isLive'] = this.isLive;
+    data['_id'] = this.sId;
+    data['serviceType'] = this.serviceType;
+    data['agent'] = this.agent;
+    data['price'] = this.price;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
 
 class SessionTypes {
-  int? id;
+  String? sId;
   String? name;
+  int? iV;
 
-  SessionTypes({this.id, this.name});
+  SessionTypes({this.sId, this.name, this.iV});
 
   SessionTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    sId = json['_id'];
     name = json['name'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['_id'] = this.sId;
     data['name'] = this.name;
+    data['__v'] = this.iV;
     return data;
   }
 }

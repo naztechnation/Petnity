@@ -118,7 +118,10 @@ class _PaymentState extends State<Payment> {
           } else if (state is CreateServiceNetworkErrApiErr) {
             Modals.showToast(state.message ?? '');
           } else if (state is AgentBalanceLoaded) {
-            withdrawableAmount = state.balance.balance.toString();
+            withdrawableAmount = state.balance.data?.balance.toString() ?? '';
+
+            
+
 
             service.setWithdrawableBalance(withdrawableAmount);
           } else if (state is AgentWithdrawalHistoryLoaded) {

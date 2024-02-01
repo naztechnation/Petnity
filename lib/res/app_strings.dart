@@ -57,7 +57,7 @@ class AppStrings {
   static String getIndividualAgentService(String agentId) =>
       '${_baseUrl}users/get-agent-services/$agentId';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
-  static String agentProfile = '${_baseUrl}users/get-agents';
+  static String agentProfile(String userId) => '${_baseUrl}user/get-user-profile/$userId';
 
   static String userOrders(String username) =>
       '${_baseUrl}order/get-user-orders/$username';
@@ -71,18 +71,18 @@ class AppStrings {
       '${_baseUrl}order/create-order/$username/$packageId';
   static String getReviewUrl(String userId) =>
       '${_baseUrl}users/get-reviews/$userId';
-  static String getGalleryUrl(String userId) =>
-      '${_baseUrl}users/get-gallery-elements/$userId';
-  static String setServiceAmountUrl(String agentId, String serviceId) =>
-      '${_baseUrl}services/create-service/$agentId/$serviceId';
-  static String agentOrderUrl(String agentId, String pageIndex) =>
-      '${_baseUrl}shop/get-agent-shop-orders/$agentId/$pageIndex';
+  static String getGalleryUrl =
+      '${_baseUrl}user/get-gallery-elements';
+  static String setServiceAmountUrl = 
+      '${_baseUrl}service/create-service';
+  static String agentOrderUrl =
+      '${_baseUrl}shop/get-agent-shop-orders';
 
-  static String createPackageUrl(String agentId, String serviceId) =>
-      '${_baseUrl}services/create-package/$agentId/$serviceId';
+  static String createPackageUrl(String serviceId) =>
+      '${_baseUrl}service/create-package/$serviceId';
 
-  static String publishPackageUrl(String agentId, String serviceId) =>
-      '${_baseUrl}services/publish-service/$agentId/$serviceId';
+  static String publishPackageUrl( String serviceId) =>
+      '${_baseUrl}service/publish-service/$serviceId';
 
   static String confirmPaymentUrl(String username, String agentId) =>
       '${_baseUrl}order/order-payment/$username/$agentId';
@@ -97,8 +97,8 @@ class AppStrings {
   static String petAlergeyDataUrl({String? petId = '2'}) =>
       '${_baseUrl}pets/add-allergies/$petId';
   static String petHealthUrl({required url}) => '${_baseUrl + url}';
-  static String registerUserPetProfileUrl({required username}) =>
-      '${_baseUrl}pets/add-pet/$username';
+  static String registerUserPetProfileUrl =
+      '${_baseUrl}pets/add-pet';
   static String registerServiceProviderProfileUrl =
       '${_baseUrl}auth/create-agent';
 
@@ -108,8 +108,8 @@ class AppStrings {
       '${_baseUrl}users/add-agent-bank-details/$agentId';
   static String getAccountDetailsUrl({required String agentId}) =>
       '${_baseUrl}users/get-agent-bank-details/$agentId';
-  static String uploadAgentGallery({required String agentId}) =>
-      '${_baseUrl}users/add-gallery-element/$agentId';
+  static String uploadAgentGallery =
+      '${_baseUrl}user/add-gallery-element';
 
   static String publishProductReview({
     required String url,
@@ -120,10 +120,8 @@ class AppStrings {
           {required String username, required String shopOrderId}) =>
       '${_baseUrl}shop/shop-order-payment/$username/$shopOrderId';
 
-  static String getAgentServicesLists({
-    required String agentId,
-  }) =>
-      '${_baseUrl}order/get-agent-orders/$agentId';
+  static String getAgentServicesLists =
+      '${_baseUrl}order/get-agent-orders';
 
   static String agentAcceptOrder(
           {required String agentId, required String orderId}) =>
@@ -163,7 +161,7 @@ class AppStrings {
   static String getAgentsBalance({
     required String agentId,
   }) =>
-      '${_baseUrl}users/get-agent-balance/$agentId';
+      '${_baseUrl}user/get-user-wallet-balance';
 
   static String getUserOrderedProducts({
     required String username,
@@ -198,19 +196,16 @@ class AppStrings {
 
   static String reportAgent(String username, String agentId) =>
       '${_baseUrl}report-agent/$username/$agentId';
-  static String getUserNotifications(
-    String username,
-  ) =>
-      '${_baseUrl}notification/get-user-notifications/$username';
+  static String getUserNotifications =
+      '${_baseUrl}user/get-agent-notifications';
 
   static String createVetService(
-    String agentId,
     String serviceTypeId,
   ) =>
-      '${_baseUrl}services/create-vet-service/$agentId/$serviceTypeId';
+      '${_baseUrl}service/create-vet-service';
 
-  static String publishVetService(String agentId, String serviceTypeId) =>
-      '${_baseUrl}services/publish-vet-service/$agentId/$serviceTypeId';
+  static String publishVetService( String serviceTypeId) =>
+      '${_baseUrl}service/publish-vet-service/$serviceTypeId';
 
   static String getVetService(
     String agentId,
@@ -248,11 +243,11 @@ class AppStrings {
       '${_baseUrl}users/create-withdrawal-request/$agentId';
 
   static String agentWithdrawalHistory({required String agentId}) =>
-      '${_baseUrl}users/get-agent-withdrawals/$agentId';
+      '${_baseUrl}users/get-agent-withdrawals';
 
   static String updatePackagePricing(
-          {required String agentId, required String packageId}) =>
-      '${_baseUrl}services/update-package-price/$agentId/$packageId';
+          { required String packageId}) =>
+      '${_baseUrl}service/update-package-price/$packageId';
 
       static String updateVetPackagePricing(
           {required String agentId, required String serviceId}) =>

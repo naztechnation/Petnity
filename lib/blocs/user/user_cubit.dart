@@ -40,11 +40,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> getAgentProfile() async {
+  Future<void> getAgentProfile(String userId) async {
     try {
       emit(ServiceProviderListLoading());
 
-      final agents = await userRepository.getAgentProfile();
+      final agents = await userRepository.getAgentProfile(userId);
       ///TODO
      /// await viewModel.setAgentDetails(agents: agents.agents ?? []);
 

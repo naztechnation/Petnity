@@ -4,7 +4,7 @@ import '../../res/app_colors.dart';
 
 class ProgressIndicators{
 
-  static Widget circularProgressBar(BuildContext context,
+  static Widget circularProgressBar(
       {double? value, double strokeWidth=2.5}) {
     return CircularProgressIndicator(
         value: value,

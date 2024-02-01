@@ -53,8 +53,8 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
         child: BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
             if (state is PetProfileLoaded) {
-              if (state.petData.status!) {
-                  petProfile.setPetId(state.petData.pet!.id.toString());
+              if (state.petData.status ?? false) {
+                  petProfile.setPetId(state.petData.pet?.id.toString() ?? '');
                   StorageHandler.saveUserPetState('true');
 
                   AppNavigator.pushAndStackPage(context,

@@ -7,7 +7,6 @@ import 'package:petnity/model/service_provider_models/create_services_amount.dar
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/vet_services.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
@@ -24,12 +23,13 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId,
       required String servicesId,
       required String levelAmount}) async {
+
+        var payload = {
+           "serviceTypeId": servicesId,
+      'levelsAmount': levelAmount
+    };
     final map = await Requests()
-        .post(AppStrings.setServiceAmountUrl(agentId, servicesId), headers: {
-      'Authorization': AppStrings.token,
-    }, body: {
-      'levels_amount': levelAmount
-    });
+        .post(AppStrings.setServiceAmountUrl, body: json.encode(payload));
     return ServiceAmount.fromJson(map);
   }
 
@@ -42,16 +42,16 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       required String description,
       required String duration,
       required String pricing}) async {
-    final map = await Requests()
-        .post(AppStrings.createPackageUrl(agentId, servicesId), headers: {
-      'Authorization': AppStrings.token,
-    }, body: {
+
+        var payload = {
       'level': levelAmount,
       'name': name,
       'description': description,
       'duration': duration,
       'price': pricing,
-    });
+    };
+    final map = await Requests()
+        .post(AppStrings.createPackageUrl( servicesId), body: json.encode(payload));
 
     return AuthData.fromJson(map);
   }
@@ -60,10 +60,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> publishPackage(
       {required String agentId, required String servicesId}) async {
     final map = await Requests().patch(
-      AppStrings.publishPackageUrl(agentId, servicesId),
-      headers: {
-        'Authorization': AppStrings.token,
-      },
+      AppStrings.publishPackageUrl(servicesId),
+      
     );
     return AuthData.fromJson(map);
   }
@@ -93,10 +91,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AgentsOrderRequests> agentOrders(
       {required String agentId, required String page}) async {
     final map = await Requests().get(
-      AppStrings.agentOrderUrl(agentId, page),
-      headers: {
-        'Authorization': AppStrings.token,
-      },
+      AppStrings.agentOrderUrl,
+       
     );
     return AgentsOrderRequests.fromJson(map);
   }
@@ -138,9 +134,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AgentServicesList> getAgentServicesList(
       {required String agentId}) async {
     final map = await Requests()
-        .get(AppStrings.getAgentServicesLists(agentId: agentId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getAgentServicesLists, );
 
     return AgentServicesList.fromJson(map);
   }
@@ -250,9 +244,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         AppStrings.getAgentsBalance(
           agentId: agentId,
         ),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        );
 
     return AgentBalance.fromJson(map);
   }
@@ -266,17 +258,15 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     required int amount,
   }) async {
     var payload = {
-      "session_types": sessionType,
-      "contact_mediums": contactMedium,
-      "price": amount
-    };
+    "serviceId": serviceId,
+    "vetSessionTypes": sessionType,
+    "vetContactMediums": contactMedium,
+    "price": amount
+};
     final map = await Requests().post(
-        AppStrings.createVetService(agentId, serviceId),
+        AppStrings.createVetService( serviceId),
         body: json.encode(payload),
-        headers: {
-          'Content-type': 'application/json',
-          'Authorization': AppStrings.token,
-        });
+        );
 
     return CreateVetServices.fromJson(map);
   }
@@ -287,9 +277,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     required String serviceId,
   }) async {
     final map = await Requests()
-        .patch(AppStrings.publishVetService(agentId, serviceId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .patch(AppStrings.publishVetService( serviceId),);
 
     return AuthData.fromJson(map);
   }
@@ -430,9 +418,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         AppStrings.agentWithdrawalHistory(
           agentId: agentId,
         ),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        );
 
     return WithrawalHistory.fromJson(map);
   }
@@ -442,18 +428,16 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId,
       required String packageId,
       required String price}) async {
+        var payload = {
+          'price': price
+        };
     final map = await Requests().patch(
         AppStrings.updatePackagePricing(
-          agentId: agentId,
+          
           packageId: packageId,
         ),
-        body: {
-          'price': price
-        },
-        headers: {
-          'Authorization': AppStrings.token,
-          'Content-type': 'application/json',
-        });
+        body: json.encode(payload),
+        );
 
     return AuthData.fromJson(map);
   }

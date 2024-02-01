@@ -64,7 +64,7 @@ class _SelectPackageLevelAmountState extends State<SelectPackageLevelAmount> {
                 AppNavigator.pushAndStackPage(context,
                     page: CreatePackageScreen(
                       serviceName: widget.serviceType,
-                      serviceId: state.serviceAmount.service!.id!.toString(),
+                      serviceId: state.serviceAmount.data?.service?.sId ?? '',
                     ));
               } else {
                 Modals.showToast(

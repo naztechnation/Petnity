@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:petnity/model/account_models/agents_packages.dart';
 import 'package:petnity/model/account_models/confirm_payment.dart';
 import 'package:petnity/model/user_models/confirm_shop_payment.dart';
@@ -71,9 +73,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<GalleryAgents> getGallery({required String userId}) async {
     final map =
-        await Requests().get(AppStrings.getGalleryUrl(userId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        await Requests().get(AppStrings.getGalleryUrl,);
     return GalleryAgents.fromJson(map);
   }
 
@@ -213,22 +213,20 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<ServiceProvidersList> getAgentProfile() async {
-    final map = await Requests().get(AppStrings.agentProfile, headers: {
-      'Authorization': AppStrings.token,
-    });
+  Future<ServiceProvidersList> getAgentProfile(String userId) async {
+    final map = await Requests().get(AppStrings.agentProfile(userId), );
     return ServiceProvidersList.fromJson(map);
   }
 
   @override
   Future<AuthData> uploadGallery(
       {required String agentId, required String image}) async {
-    final map = await Requests()
-        .post(AppStrings.uploadAgentGallery(agentId: agentId), body: {
+
+        var payload = {
       "image": image,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+    };
+    final map = await Requests()
+        .post(AppStrings.uploadAgentGallery, body: json.encode(payload));
     return AuthData.fromJson(map);
   }
 
@@ -346,9 +344,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Notifications> getNotification({required String username}) async {
     final map = await Requests()
-        .get(AppStrings.getUserNotifications(username), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getUserNotifications, );
     return Notifications.fromJson(map);
   }
 }

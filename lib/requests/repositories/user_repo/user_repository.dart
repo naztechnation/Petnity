@@ -30,7 +30,7 @@ abstract class UserRepository {
     });   
 
 
-    Future<ServiceProvidersList> getAgentProfile();   
+    Future<ServiceProvidersList> getAgentProfile(String userId);   
     Future<GetServiceTypes> getServiceTypes([String? agentId]); 
     Future<ShoppingList> shoppingList(); 
     Future<ShoppingList> agentShoppingList({required String agentId}); 

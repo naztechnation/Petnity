@@ -214,13 +214,13 @@ class _HomepageBarState extends State<HomepageBar> {
   Agent? agents;
 
   getServicesTypes() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
 
     _userCubit = context.read<UserCubit>();
 
     try {
       await _userCubit.getServiceTypes( );
-   await _userCubit.getAgentProfile();
+   await _userCubit.getAgentProfile(agentId);
 
     } catch (e) {}
   }

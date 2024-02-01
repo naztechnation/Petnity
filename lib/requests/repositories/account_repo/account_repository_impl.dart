@@ -89,8 +89,8 @@ Future<PetProfile> registerUserPetProfile(
     required String size,
     required String about,
     required String picture}) async {
-  final map = await Requests()
-      .post(AppStrings.registerUserPetProfileUrl(username: username), body: {
+
+      var payload = {
     "type": type,
     "name": petname,
     "gender": gender,
@@ -98,7 +98,11 @@ Future<PetProfile> registerUserPetProfile(
     "size": size,
     "about": about,
     'picture': picture
-  });
+  };
+  final map = await Requests()
+      .post(AppStrings.registerUserPetProfileUrl, body: json.encode(payload), headers: {
+      'Content-type': 'application/json',
+    });
   return PetProfile.fromJson(map);
 }
 

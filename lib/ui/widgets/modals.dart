@@ -19,7 +19,7 @@ class Modals {
                 ? const Duration(seconds: 30)
                 : const Duration(seconds: 2),
             content: messageType == MessageType.progress
-                ? ProgressIndicators.circularProgressBar(context)
+                ? ProgressIndicators.circularProgressBar( )
                 : Text(message, textAlign: TextAlign.center),
             backgroundColor: messageType == MessageType.success
                 ? Colors.green

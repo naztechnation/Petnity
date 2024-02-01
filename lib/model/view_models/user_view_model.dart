@@ -91,7 +91,7 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setGallery({required GalleryAgents gallery}) async {
     _galleryStatus = gallery.status ?? false;
-    _gallery = gallery.galleryElements ?? [];
+    _gallery = gallery.data?.galleryElements ?? [];
     setViewState(ViewState.success);
   }
 

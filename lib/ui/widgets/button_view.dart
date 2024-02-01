@@ -10,6 +10,8 @@ class ButtonView extends StatelessWidget {
   final Gradient? gradient;
   final Color? color;
   final Color? borderColor;
+  final String title ;
+  
   final double borderWidth;
   final double borderRadius;
   final bool disabled;
@@ -22,6 +24,8 @@ class ButtonView extends StatelessWidget {
       required this.child,
       this.fontSize = 16,
       this.gradient,
+    this.title = 'Loading...',
+
       this.color,
       this.borderColor,
       this.borderWidth = 0.0,
@@ -42,9 +46,19 @@ class ButtonView extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () {},
           child: Align(
-            alignment: Alignment.bottomCenter,
-            child: ProgressIndicators.circularProgressBar(context),
-          ),
+              alignment: Alignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      height: 15,
+                      width: 15,
+                      child: ProgressIndicators.circularProgressBar()),
+                      const SizedBox(width: 13,),
+                  Text(title, style: TextStyle(color: Colors.white),)
+                ],
+              ),
+            ),
           style: ElevatedButton.styleFrom(
             primary: disabled
                 ? Theme.of(context).backgroundColor

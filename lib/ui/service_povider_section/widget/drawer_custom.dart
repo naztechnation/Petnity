@@ -75,9 +75,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
     _userCubit = context.read<UserCubit>();
 
     try {
-      agentId = await StorageHandler.getAgentId();
+      agentId = await StorageHandler.getUserId();
       await _userCubit.getServiceTypes();
-      await _userCubit.getAgentProfile();
+      await _userCubit.getAgentProfile(agentId);
     } catch (e) {}
   }
 

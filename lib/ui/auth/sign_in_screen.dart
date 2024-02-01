@@ -57,8 +57,9 @@ class SignInScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                if (state.userData.status!) {
+                if (state.userData.status ?? false) {
                   StorageHandler.saveIsLoggedIn('true');
+                  StorageHandler.saveUserToken(state.userData.data?.token);
 
                   StorageHandler.saveUserPassword(_passwordController.text);
 
@@ -290,6 +291,7 @@ class SignInScreen extends StatelessWidget {
                           _submit(context);
                         },
                         color: AppColors.lightSecondary,
+                        title: 'authentication...',
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 2,
