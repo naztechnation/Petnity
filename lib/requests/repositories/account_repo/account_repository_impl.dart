@@ -100,9 +100,7 @@ Future<PetProfile> registerUserPetProfile(
     'picture': picture
   };
   final map = await Requests()
-      .post(AppStrings.registerUserPetProfileUrl, body: json.encode(payload), headers: {
-      'Content-type': 'application/json',
-    });
+      .post(AppStrings.registerUserPetProfileUrl, body: json.encode(payload), );
   return PetProfile.fromJson(map);
 }
 
@@ -111,11 +109,13 @@ Future<AuthData> sendPetHealth(
     required String drug,
     required String prescription,
     required String url}) async {
-  final map = await Requests().post(AppStrings.petHealthUrl(url: url), body: {
+
+      var payload = {
     "name": name,
     "drug": drug,
     "prescription": prescription,
-  });
+  };
+  final map = await Requests().post(AppStrings.petHealthUrl(url: url), body: json.encode(payload));
   return AuthData.fromJson(map);
 }
 
@@ -158,10 +158,11 @@ Future<CreateAgents> servicePetNames(
 }
 
 @override
-Future<AuthData> resendCode({required String username}) async {
-  final map = await Requests().get(AppStrings.otpUrl(username), headers: {
-    'Authorization': AppStrings.token,
-  });
+Future<AuthData> resendCode({required String email}) async {
+  var payload = {
+    "email": email
+};
+  final map = await Requests().post(AppStrings.resendCodeUrl, body: json.encode(payload));
   return AuthData.fromJson(map);
 }
 
@@ -188,9 +189,7 @@ Future<PetTypesModel> petTypeList() async {
 @override
 Future<AuthData> forgetPassword({required String email}) async {
   final map =
-      await Requests().get(AppStrings.forgotPasswordUrl(email), headers: {
-    'Authorization': AppStrings.token,
-  });
+      await Requests().get(AppStrings.forgotPasswordUrl(email), );
   return AuthData.fromJson(map);
 }
 
@@ -200,12 +199,13 @@ Future<AuthData> resetPassword({
   required String password,
   required String email,
 }) async {
-  final map = await Requests().post(AppStrings.resetPasswordUrl(email), body: {
+
+  var payload = {
     "code": token,
     "password": password,
-  }, headers: {
-    'Authorization': AppStrings.token,
-  });
+  };
+  final map = await Requests().post(AppStrings.resetPasswordUrl(email),
+   body: json.encode(payload), );
 
   return AuthData.fromJson(map);
 }

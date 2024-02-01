@@ -5,6 +5,7 @@ import '../../res/enum.dart';
 import '../account_models/agents_packages.dart';
 import '../agent/agent.dart';
 import '../user_models/order_list.dart';
+import '../user_models/orders.dart';
 import '../user_models/pet_profile_details.dart';
 import '../user_models/pets_profile.dart';
 import '../user_models/reviews_data.dart';
@@ -18,7 +19,7 @@ class UserViewModel extends BaseViewModel {
   List<Agent> _agents = [];
   List<Reviews> _reviews = [];
   List<GalleryElements> _gallery = [];
-  List<UserOrders> _ordersList = [];
+  List<Orders> _ordersList = [];
 
   String _petPicture = '';
 
@@ -35,7 +36,7 @@ class UserViewModel extends BaseViewModel {
   Future<void> setOrderList({required UserOrderList orders}) async {
     _userOrder = orders;
 
-    _ordersList = orders.orders ?? [];
+    _ordersList = orders.data?.orders ?? [];
     setViewState(ViewState.success);
   }
 
@@ -230,12 +231,12 @@ class UserViewModel extends BaseViewModel {
   List<ServicesType> get servicesItems => servicesResults();
   List<Pets> get servicesPetList => servicesPets();
 
-  List<UserOrders> get ordersList => _ordersList;
+  List<Orders> get ordersList => _ordersList;
 
-  List<UserOrders> get onGoingOrdersList => onGoingServices();
-  List<UserOrders> get onPendingOrderList => onPendingServices();
-  List<UserOrders> get onCompletedOrdersList => onCompletedOrderServices();
-  List<UserOrders> get onRejectedOrdersList => onRejectedServices();
+  List<Orders> get onGoingOrdersList => onGoingServices();
+  List<Orders> get onPendingOrderList => onPendingServices();
+  List<Orders> get onCompletedOrdersList => onCompletedOrderServices();
+  List<Orders> get onRejectedOrdersList => onRejectedServices();
 
   List<ServicesType> servicesResults() {
     List<ServicesType> list = [];
@@ -247,8 +248,8 @@ class UserViewModel extends BaseViewModel {
     return list;
   }
 
-  List<UserOrders> onRejectedServices() {
-    List<UserOrders> list = [];
+  List<Orders> onRejectedServices() {
+    List<Orders> list = [];
 
     for (var order in _ordersList) {
       if (order.isRejected == true) {
@@ -259,8 +260,8 @@ class UserViewModel extends BaseViewModel {
     return list;
   }
 
-  List<UserOrders> onGoingServices() {
-    List<UserOrders> list = [];
+  List<Orders> onGoingServices() {
+    List<Orders> list = [];
 
     for (var order in _ordersList) {
       if (order.isOngoing == true && order.isCompleted != true) {
@@ -271,8 +272,8 @@ class UserViewModel extends BaseViewModel {
     return list;
   }
 
-  List<UserOrders> onPendingServices() {
-    List<UserOrders> list = [];
+  List<Orders> onPendingServices() {
+    List<Orders> list = [];
 
     for (var order in _ordersList) {
       if (order.isPaid == true && order.isAccepted == false) {
@@ -283,8 +284,8 @@ class UserViewModel extends BaseViewModel {
     return list;
   }
 
-  List<UserOrders> onCompletedOrderServices() {
-    List<UserOrders> list = [];
+  List<Orders> onCompletedOrderServices() {
+    List<Orders> list = [];
 
     for (var order in _ordersList) {
       if (order.isPaid == true &&

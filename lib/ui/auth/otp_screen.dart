@@ -231,7 +231,7 @@ class _OtpScreenState extends State<OtpScreen> {
   _resendCode(BuildContext ctx, user) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().resendCode(
-            username: AppStrings.resendCodeUrl(user.username),
+            email: widget.email ?? '',
           );
       FocusScope.of(ctx).unfocus();
     }

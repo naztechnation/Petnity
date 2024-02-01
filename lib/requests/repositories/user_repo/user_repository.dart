@@ -53,7 +53,7 @@ abstract class UserRepository {
     Future<PetProfileDetails> getUserPetDetails({required String petId});
     Future<FAQ> getFaq();
     Future<AuthData> updateNumber({required String username,required String email,required String number,}); 
-    Future<PrivacyPolicy> privacy(); 
+    Future<PrivacyPolicies> privacy(); 
     Future<AuthData> deleteUser({required String username}); 
     Future<AuthData> reportBug({required String username, required String title, required String description, }); 
     Future<AuthData> reportAgent({required String username, required String description, required String title,required String agentId, }); 

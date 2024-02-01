@@ -8,8 +8,9 @@ import '../../../model/service_provider_models/create_shop_products_model.dart';
 import '../../../model/service_provider_models/create_vet_services.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
+import '../../../model/service_provider_models/vetservices_model.dart';
 import '../../../model/user_models/agent_services_lists.dart';
-import '../../../model/user_models/vet_services.dart';
+import '../../../model/user_models/vet_service.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/withdrawal/withdrawal.dart';
 
@@ -38,7 +39,7 @@ abstract class ServiceProviderRepository {
     Future<CreateVetServices> createVetServices({ required String agentId,required String serviceId, 
     required List<int> sessionType, required List<int> contactMedium ,required int amount, }); 
     Future<AuthData> publishVetServices({ required String agentId,required String serviceId,}); 
-    Future<VetsServices> vetServices({ required String agentId,}); 
+    Future<VetServices> vetServices({ required String agentId,}); 
     Future<CreateVetOrder> createVetOrder({ required String agentId,required String  username, required String  vetService,required String  sessionTime}); 
     Future<CreateVetOrder> confirmVetPaymentOrder({ required String orderId,required String  username, required String  vetServiceId,required String  purchaseId}); 
      Future<AuthData> acceptAgentVetOrder({required String agentId, required String orderId,}); 

@@ -78,8 +78,8 @@ class _FAQsScreenState extends State<FAQsScreen> {
       ),
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is FaqLoaded) {
-          if (state.faq.status!) {
-            faqs = state.faq.faqs ?? [];
+          if (state.faq.status ?? false) {
+            faqs = state.faq.data?.faqs ?? [];
           }
         } else if (state is UserNetworkErrApiErr) {
           Modals.showToast(state.message ?? '');

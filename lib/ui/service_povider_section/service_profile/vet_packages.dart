@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/model/user_models/vet_services.dart';
+import 'package:petnity/model/user_models/vet_service.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -11,6 +11,7 @@ import '../../../../../requests/repositories/service_provider_repo/service_provi
 import '../../../../../res/app_colors.dart';
 import '../../../../../res/app_constants.dart';
 import '../../../../../utils/app_utils.dart';
+import '../../../model/service_provider_models/vetservices_model.dart';
 import '../../../res/app_strings.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
@@ -53,7 +54,7 @@ class _VetBookingState extends State<VetBooking> {
   final _amountController = TextEditingController();
   late ServiceProviderCubit _serviceProviderCubit;
 
-  VetsServices? vetServices;
+  VetServices? vetServices;
 
   String amount = "";
 
@@ -110,11 +111,11 @@ class _VetBookingState extends State<VetBooking> {
           } else if (state is VetsServicesLoaded) {
             vetServices = state.vetService;
 
-            amount = vetServices?.vetService?.price ?? '';
-            _amountController.text = vetServices?.vetService?.price ?? '';
-            vetServiceId = vetServices?.vetService?.id.toString() ?? '';
+            amount = vetServices?.data?.vetService?.price.toString() ?? '';
+            _amountController.text = vetServices?.data?.vetService?.price.toString() ?? '';
+            vetServiceId = vetServices?.data?.vetService?.sId.toString() ?? '';
 
-            isLive = vetServices?.vetService?.isLive ?? false;
+            isLive = vetServices?.data?.vetService?.isLive ?? false;
           } else if (state is EditPackageLoaded) {
             Modals.showToast(state.data.message ?? '');
           }
@@ -193,12 +194,13 @@ class _VetBookingState extends State<VetBooking> {
                                                             BorderRadius
                                                                 .circular(150),
                                                         child:
+                                                        ///TODO
                                                             ImageView.network(
-                                                          vetServices
-                                                                  ?.vetService
-                                                                  ?.serviceType
-                                                                  ?.image ??
-                                                              '',
+                                                          // vetServices
+                                                          //         ?.data?.vetService
+                                                          //         ?.serviceType.image
+                                                              ''    
+                                                               ,
                                                           fit: BoxFit.cover,
                                                         )),
                                                   ),
@@ -208,7 +210,7 @@ class _VetBookingState extends State<VetBooking> {
                                                 ),
                                                 CustomText(
                                                   text:
-                                                      'Service Amount: NGN ${AppUtils.convertPrice(vetServices?.vetService?.price ?? '0')}',
+                                                      'Service Amount: NGN ${AppUtils.convertPrice(vetServices?.data?.vetService?.price ?? '0')}',
                                                   size: 13,
                                                   weight: FontWeight.w600,
                                                   color:
@@ -243,7 +245,7 @@ class _VetBookingState extends State<VetBooking> {
                                                   Colors.white.withOpacity(0.8),
                                             ),
                                             child: ListView.builder(
-                                              itemCount: vetServices?.vetService
+                                              itemCount: vetServices?.data?.vetService
                                                       ?.sessionTypes?.length ??
                                                   0,
                                               shrinkWrap: true,
@@ -254,10 +256,10 @@ class _VetBookingState extends State<VetBooking> {
                                                     index,
                                                     '',
                                                     vetServices
-                                                            ?.vetService
+                                                            ?.data?.vetService
                                                             ?.sessionTypes?[
-                                                                index]
-                                                            .name ??
+                                                                index].name
+                                                            ??
                                                         '',
                                                     context);
                                               },
@@ -286,8 +288,8 @@ class _VetBookingState extends State<VetBooking> {
                                                   Colors.white.withOpacity(0.8),
                                             ),
                                             child: ListView.builder(
-                                              itemCount: vetServices
-                                                      ?.vetService
+                                              itemCount: vetServices?.data?.
+                                                      vetService
                                                       ?.contactMediums
                                                       ?.length ??
                                                   0,
@@ -298,11 +300,12 @@ class _VetBookingState extends State<VetBooking> {
                                                 return buildSessionTypeWidget(
                                                     index,
                                                     '',
-                                                    vetServices
+                                                    /// TODO NAME
+                                                    vetServices?.data
                                                             ?.vetService
                                                             ?.contactMediums?[
-                                                                index]
-                                                            .name ??
+                                                                index].name
+                                                             ??
                                                         '',
                                                     context);
                                               },

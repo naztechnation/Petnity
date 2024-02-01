@@ -1,7 +1,7 @@
 
 import '../agent/agent.dart';
 import '../profile/profile.dart';
-import '../user_models/vet_services.dart';
+import '../user_models/vet_service.dart';
 
 class CreateVetOrder {
   bool? status;

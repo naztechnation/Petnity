@@ -27,7 +27,7 @@ class AppStrings {
   static const String networkErrorMessage = "Network error, try again later";
   static const String registerUrl = "auth/register";
   static const String petTypesUrl = "${_baseUrl}home/get-pet-types";
-  static String resendCodeUrl(String username) => "auth/resend-code/$username";
+  static String resendCodeUrl = "auth/resend-code";
 
   static String googlePlaceUrl(String query) =>
       'https://maps.googleapis.com/maps/api/place/autocomplete/json'
@@ -59,8 +59,8 @@ class AppStrings {
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
   static String agentProfile(String userId) => '${_baseUrl}user/get-user-profile/$userId';
 
-  static String userOrders(String username) =>
-      '${_baseUrl}order/get-user-orders/$username';
+  static String userOrders =
+      '${_baseUrl}order/get-user-orders';
   static String createOrderPayment(String username) =>
       '${_baseUrl}shop/create-shop-order/$username';
   static String uploadIdUrl =
@@ -124,16 +124,16 @@ class AppStrings {
       '${_baseUrl}order/get-agent-orders';
 
   static String agentAcceptOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-accept-order/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-accept-order/$orderId';
 
   static String agentMarkOngoingOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/order-ongoing/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/order-ongoing/$orderId';
 
   static String agentMarkCompletedOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-complete-order/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-complete-order/$orderId';
 
   static String userMarkDeliveredShopOrder(
           {required String username, required String orderId}) =>
@@ -144,8 +144,8 @@ class AppStrings {
       '${_baseUrl}shop/agent-marked-delivered/$agentId/$orderId';
 
   static String agentRejectServiceOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-reject-order/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-reject-order/$orderId';
 
   static String userMarkOrderDelivered(
           {required String username, required String orderId}) =>
@@ -173,21 +173,19 @@ class AppStrings {
   }) =>
       '${_baseUrl}users/get-profile/$username';
 
-  static String getUserPets({
-    required String username,
-  }) =>
-      '${_baseUrl}pets/get-user-pets/$username';
+  static String getUserPets =
+      '${_baseUrl}pet/get-user-pets';
 
   static String getUserPetDetails({
     required String petId,
   }) =>
-      '${_baseUrl}pets/get-pet-details/$petId';
-  static const String getFaq = '${_baseUrl}get-faqs';
+      '${_baseUrl}pet/get-pet-details/$petId';
+  static const String getFaq = '${_baseUrl}home/get-faqs';
 
   static String updateNumber(String username) =>
       '${_baseUrl}users/change-email-and-phone/$username';
 
-  static String privacy = '${_baseUrl}get-privacy-policy';
+  static String privacy = '${_baseUrl}home/get-privacy-policy';
 
   static String deleteUser(String username) =>
       '${_baseUrl}users/delete-user/$username';
@@ -210,7 +208,7 @@ class AppStrings {
   static String getVetService(
     String agentId,
   ) =>
-      '${_baseUrl}users/get-vet-service/$agentId';
+      '${_baseUrl}user/get-vet-service/$agentId';
 
   static String createVetOrder(String agentId, String username) =>
       '${_baseUrl}order/create-vet-order/$username/$agentId';
@@ -220,20 +218,20 @@ class AppStrings {
   //Agent accept order
 
   static String agentAcceptVetOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-accept-vet-order/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-accept-vet-order/$orderId';
 
   static String agentMarkOngoingVetOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/vet-order-ongoing/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/vet-order-ongoing/$orderId';
 
   static String agentMarkCompletedVetOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-complete-vet-order/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-complete-vet-order/$orderId';
 
   static String agentRejectServiceVetOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}order/agent-reject-vet-order/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-reject-vet-order/$orderId';
 
   static String userMarkVetOrderDelivered(
           {required String username, required String orderId}) =>
@@ -250,6 +248,6 @@ class AppStrings {
       '${_baseUrl}service/update-package-price/$packageId';
 
       static String updateVetPackagePricing(
-          {required String agentId, required String serviceId}) =>
-      '${_baseUrl}services/update-vet-service-price/$agentId/$serviceId';
+          { required String serviceId}) =>
+      '${_baseUrl}service/update-vet-service-price/$serviceId';
 }

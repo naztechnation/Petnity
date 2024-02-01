@@ -393,7 +393,7 @@ class SignInScreen extends StatelessWidget {
   resendCode(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().resendCode(
-            username: AppStrings.resendCodeUrl(_emailController.text),
+            email: _emailController.text.trim(),
           );
       FocusScope.of(ctx).unfocus();
     }

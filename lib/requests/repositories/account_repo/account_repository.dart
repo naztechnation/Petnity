@@ -30,7 +30,7 @@ abstract class AccountRepository {
     required String password,
   });
   Future<AuthData> resendCode({
-    required String username,
+    required String email,
   });
   Future<AuthData> verifyUser({
     required String code,

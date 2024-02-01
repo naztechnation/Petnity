@@ -289,7 +289,7 @@ class PrivacyLoading extends UserStates {
 }
  
 class PrivacyLoaded extends UserStates {
-  final PrivacyPolicy privacyPolicy;
+  final PrivacyPolicies privacyPolicy;
   const PrivacyLoaded(this.privacyPolicy);
   @override
   List<Object> get props => [privacyPolicy];

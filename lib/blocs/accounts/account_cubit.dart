@@ -52,16 +52,16 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> resendCode({
-    required String username,
+    required String email,
   }) async {
     try {
       emit(AccountProcessing());
 
       final user = await accountRepository.resendCode(
-        username: username,
+        email: email,
       );
 
-      await viewModel.setUserData(username: username);
+      await viewModel.setUserData(username: email);
       emit(OTPResent(user));
     } on ApiException catch (e) {
       emit(AccountApiErr(e.message));

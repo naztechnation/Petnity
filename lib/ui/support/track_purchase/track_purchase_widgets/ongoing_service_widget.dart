@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/order_list.dart';
+import '../../../../model/user_models/orders.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../utils/navigator/page_navigator.dart';
@@ -20,7 +21,7 @@ import '../../../widgets/modals.dart';
 import '../widget/progressbar.dart';
 
 class OngoingServiceWidget extends StatefulWidget {
-  final UserOrders allOrders;
+  final Orders allOrders;
 
   final String label;
   OngoingServiceWidget({this.label = 'Details', required this.allOrders});
@@ -31,7 +32,7 @@ class OngoingServiceWidget extends StatefulWidget {
 }
 
 class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
-  final UserOrders allOrders;
+  final Orders allOrders;
 
   _OngoingServiceWidgetState(this.allOrders);
 
@@ -170,7 +171,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                                     agentName: allOrders.agent?.user?.username ?? '',
                                     userImage: allOrders.agent?.picture ?? '',
                                     uid: allOrders.agent?.user?.firebaseId ??
-                                        '', customerName: allOrders.profile?.user?.username ?? '',));
+                                        '', customerName: allOrders.user?.username ?? '',));
                           }
                         },
                         child: ImageView.svg(AppImages.messageBorder)),
@@ -181,7 +182,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
-                                customerName: allOrders.profile?.user?.username ?? '',
+                                customerName: allOrders.user?.username ?? '',
                                 agentName: allOrders.agent?.user?.username ?? '',
                               ));
                         },
@@ -204,17 +205,17 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             sellerId: allOrders.agent?.sId.toString() ?? '',
                             startDate1: allOrders.pickupTime ?? '0',
                             startDate2: allOrders.dropoffTime ?? '0',
-                            amount: allOrders.fee ?? '',
-                            paymentId: allOrders.purchaseId ?? '',
+                            amount: allOrders.fee.toString(),
+                            paymentId: allOrders.transactionId ?? '',
                             sellerImage: allOrders.agent?.picture ?? '',
                             isAcceptedService: allOrders.isAccepted ?? false,
                             isOngoingService: allOrders.isOngoing ?? false,
                             isCompletedService: allOrders.isCompleted ?? false,
-                            orderId: allOrders.id.toString(),
-                            customerName: allOrders.profile?.user?.username ?? '',
-                            customerPhone: allOrders.profile?.phoneNumber ?? '',
-                            customerImage: allOrders.profile?.profileImage ?? '',
-                            customerFireBaseId: allOrders.profile?.firebaseId ?? '',
+                            orderId: allOrders.sId.toString(),
+                            customerName: allOrders.user?.username ?? '',
+                            customerPhone: allOrders.user?.phoneNumber ?? '',
+                            customerImage: allOrders.user?.profileImage ?? '',
+                            customerFireBaseId: allOrders.user?.firebaseId ?? '',
                             isRejected: allOrders.isRejected ?? false,
                             isUserMarkedService:
                                 allOrders.userMarkedDelivered ?? false,

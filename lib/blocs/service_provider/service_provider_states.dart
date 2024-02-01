@@ -8,9 +8,10 @@ import '../../model/service_provider_models/create_shop_products_model.dart';
 import '../../model/service_provider_models/create_vet_services.dart';
 import '../../model/service_provider_models/get_vet_services.dart';
 import '../../model/service_provider_models/get_agent_balance.dart';
+import '../../model/service_provider_models/vetservices_model.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
-import '../../model/user_models/vet_services.dart';
+import '../../model/user_models/vet_service.dart';
 import '../../model/user_models/withdrawal_history.dart';
 import '../../model/withdrawal/withdrawal.dart';
 
@@ -237,7 +238,7 @@ class  PublishServicesLoaded extends ServiceProviderState {
 }
 
 class  VetsServicesLoaded extends ServiceProviderState {
-  final VetsServices  vetService;
+  final VetServices  vetService;
   const  VetsServicesLoaded(this.vetService);
   @override
   List<Object> get props => [vetService];

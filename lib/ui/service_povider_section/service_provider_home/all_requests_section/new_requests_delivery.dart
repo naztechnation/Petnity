@@ -673,7 +673,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
           child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: ImageView.network(
-                order.profile?.profileImage,
+               
+                  order.user?.profileImage,
                 fit: BoxFit.cover,
               )),
         ),
@@ -684,7 +685,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(
-                    text: order.profile?.user?.username
+                    text: order.user?.username
                         .toString()
                         .capitalizeFirstOfEach,
                     weight: FontWeight.bold,
@@ -766,17 +767,18 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     agentId: order.agent?.user?.firebaseId ?? '',
                     sellerId: order.agent?.sId.toString() ?? '',
                     startDate1: order.sessionTime ?? '0',
-                    amount: order.fee ?? '',
-                    paymentId: order.purchaseId ?? '',
+                    amount: order.fee.toString() ,
+                    ///TODO purchase Id
+                    paymentId: '',
                     sellerImage: order.agent?.picture ?? '',
                     isAcceptedService: order.isAccepted ?? false,
                     isOngoingService: order.isOngoing ?? false,
                     isCompletedService: order.isCompleted ?? false,
-                    orderId: order.id.toString(),
-                    customerName: order.profile?.user?.username ?? '',
-                    customerFireBaseId: order.profile?.firebaseId ?? '',
-                    customerImage: order.profile?.profileImage ?? '',
-                    customerPhone: order.profile?.phoneNumber ?? '',
+                    orderId: order.sId.toString(),
+                    customerName: order.user?.username ?? '',
+                    customerFireBaseId: order.user?.firebaseId ?? '',
+                    customerImage: order.user?.profileImage ?? '',
+                    customerPhone: order.user?.phoneNumber ?? '',
                     isRejected: order.isRejected ?? false,
                     isUserMarkedService: order.userMarkedDelivered ?? false,
                     isAgentMarkedService: order.agentMarkedDelivered ?? false,

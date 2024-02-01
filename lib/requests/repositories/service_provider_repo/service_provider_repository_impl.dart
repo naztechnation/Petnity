@@ -6,10 +6,11 @@ import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
-import 'package:petnity/model/user_models/vet_services.dart';
+import 'package:petnity/model/user_models/vet_service.dart';
 
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
+import '../../../model/service_provider_models/vetservices_model.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/withdrawal/withdrawal.dart';
@@ -143,10 +144,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> acceptAgentOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentAcceptOrder(agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.agentAcceptOrder( orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -155,10 +154,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> acceptCompleteOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentMarkCompletedOrder(agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.agentMarkCompletedOrder( orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -167,10 +164,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> acceptOngoingOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentMarkOngoingOrder(agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.agentMarkOngoingOrder( orderId: orderId),
+       );
 
     return AuthData.fromJson(map);
   }
@@ -206,10 +201,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> agentRejectServiceOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentRejectServiceOrder(agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.agentRejectServiceOrder( orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -283,7 +276,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
   @override
-  Future<VetsServices> vetServices({required String agentId}) async {
+  Future<VetServices> vetServices({required String agentId}) async {
     final map = await Requests().get(
         AppStrings.getVetService(
           agentId,
@@ -292,7 +285,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
           'Authorization': AppStrings.token,
         });
 
-    return VetsServices.fromJson(map);
+    return VetServices.fromJson(map);
   }
 
   @override
@@ -333,10 +326,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> acceptAgentVetOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentAcceptVetOrder(agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.agentAcceptVetOrder( orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -346,10 +337,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.agentMarkCompletedVetOrder(
-            agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+             orderId: orderId),
+       );
 
     return AuthData.fromJson(map);
   }
@@ -358,10 +347,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> acceptOngoingVetOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentMarkOngoingVetOrder(agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.agentMarkOngoingVetOrder( orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -371,10 +358,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.agentRejectServiceVetOrder(
-            agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+             orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -447,18 +432,16 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId,
       required String serviceId,
       required String price}) async {
+         var payload = {
+          'price': price
+        };
     final map = await Requests().patch(
         AppStrings.updateVetPackagePricing(
-          agentId: agentId,
           serviceId: serviceId,
         ),
-        body: {
-          'price': price
-        },
-        headers: {
-          'Authorization': AppStrings.token,
-          'Content-type': 'application/json',
-        });
+               body: json.encode(payload),
+
+      );
 
     return AuthData.fromJson(map);
   }

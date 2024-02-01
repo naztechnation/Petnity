@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -37,7 +36,7 @@ class PrivacyPolicyScreen extends StatefulWidget {
 class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   late UserCubit _userCubit;
 
-  content.Content? privacy;
+  content.PrivacyPolicy? privacy;
 
   String username = '';
 
@@ -81,7 +80,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
       body: BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
         if (state is PrivacyLoaded) {
           if (state.privacyPolicy.status ?? false) {
-            privacy = state.privacyPolicy.privacyPolicy;
+            privacy = state.privacyPolicy.data?.privacyPolicy;
 
            // Modals.showToast(state.privacyPolicy.message ?? '');
           } else {

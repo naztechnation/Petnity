@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/user_models/order_list.dart';
+import '../../../model/user_models/orders.dart';
 import '../../../model/user_models/user_shopping_data.dart';
 import '../../../model/user_models/vet_orders.dart';
 import '../../../model/view_models/user_view_model.dart';
@@ -45,12 +46,12 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
 
   _TrackPurchaseScreenState();
 
-  List<UserOrders> allUserOrder = [];
-  List<UserOrders> completedUserOrder = [];
-  List<UserOrders> pendingUserOrder = [];
+  List<Orders> allUserOrder = [];
+  List<Orders> completedUserOrder = [];
+  List<Orders> pendingUserOrder = [];
   List<UserShopList> userShopOrder = [];
-  List<UserOrders> ongoingUserOrder = [];
-  List<UserOrders> rejectedUserOrder = [];
+  List<Orders> ongoingUserOrder = [];
+  List<Orders> rejectedUserOrder = [];
 
    List<VetOrders> vetOrders  = [];
 
@@ -87,7 +88,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
       listener: (context, state) {
         if (state is OrderListLoaded) {
           if (state.orderList.status!) {
-            allUserOrder = state.orderList.orders?.reversed.toList() ?? [];
+            allUserOrder = state.orderList.data?.orders?.reversed.toList() ?? [];
             ongoingUserOrder =
                 _userCubit.viewModel.onGoingOrdersList.reversed.toList();
             completedUserOrder =
@@ -97,7 +98,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
             rejectedUserOrder =
                 _userCubit.viewModel.onRejectedOrdersList.reversed.toList();
 
-             vetOrders =    state.orderList.vetOrders?.reversed.toList()  ?? [];
+             vetOrders =    state.orderList.data?.vetOrders?.reversed.toList()  ?? [];
                  
           } else {}
         }else if(state is UserShopListLoaded){

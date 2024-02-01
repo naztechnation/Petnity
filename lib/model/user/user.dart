@@ -9,6 +9,7 @@ class User {
   String? username;
   String? email;
   String? phoneNumber;
+  String? profileImage;
   String? firebaseId;
   String? deviceId;
 
@@ -23,6 +24,7 @@ class User {
       this.username,
       this.email,
       this.phoneNumber,
+      this.profileImage,
       this.firebaseId,
       this.deviceId});
 
@@ -37,6 +39,7 @@ class User {
     username = json['username'];
     email = json['email'];
     phoneNumber = json['phoneNumber'];
+    profileImage = json['profileImage'];
     firebaseId = json['firebaseId'];
     deviceId = json['deviceId'];
   }

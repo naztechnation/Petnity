@@ -195,7 +195,7 @@ class KycScreenEleven extends StatelessWidget {
           name: _illnessNameController.text.trim(),
           drug: _drugNameController.text.trim(),
           prescription: _prescribeNameController.text.trim(),
-          url: 'pets/add-allergies/$petId');
+          url: 'pet/add-allergy/$petId');
       FocusScope.of(ctx).unfocus();
     }
   }

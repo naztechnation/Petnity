@@ -122,9 +122,7 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<UserOrderList> orderList({required String username}) async {
-    final map = await Requests().get(AppStrings.userOrders(username), headers: {
-      'Authorization': AppStrings.token,
-    });
+    final map = await Requests().get(AppStrings.userOrders, );
     return UserOrderList.fromJson(map);
   }
 
@@ -251,26 +249,20 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<PetProfile> getUserPet({required String username}) async {
     final map = await Requests()
-        .get(AppStrings.getUserPets(username: username), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getUserPets, );
     return PetProfile.fromJson(map);
   }
 
   @override
   Future<PetProfileDetails> getUserPetDetails({required String petId}) async {
     final map = await Requests()
-        .get(AppStrings.getUserPetDetails(petId: petId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getUserPetDetails(petId: petId), );
     return PetProfileDetails.fromJson(map);
   }
 
   @override
   Future<FAQ> getFaq() async {
-    final map = await Requests().get(AppStrings.getFaq, headers: {
-      'Authorization': AppStrings.token,
-    });
+    final map = await Requests().get(AppStrings.getFaq,);
     return FAQ.fromJson(map);
   }
 
@@ -295,13 +287,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<PrivacyPolicy> privacy(
+  Future<PrivacyPolicies> privacy(
      )async {
     final map = await Requests()
-        .get(AppStrings.privacy, headers: {
-      'Authorization': AppStrings.token,
-    });
-    return PrivacyPolicy.fromJson(map);
+        .get(AppStrings.privacy, );
+    return PrivacyPolicies.fromJson(map);
   }
   
   @override

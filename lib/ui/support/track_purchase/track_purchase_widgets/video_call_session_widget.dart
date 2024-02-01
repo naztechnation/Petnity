@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../../../../model/session_types/session_types.dart';
 import '../../../../model/user_models/order_list.dart';
 import '../../../../model/user_models/vet_orders.dart';
-import '../../../../model/user_models/vet_services.dart';
+import '../../../../model/user_models/vet_service.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_vet_services.dart';
@@ -185,7 +185,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                               widget.vetOrders.agent?.user?.firebaseId ?? '',
                           phone: widget.vetOrders.agent?.user?.phoneNumber ??
                               '',
-                          customerName: widget.vetOrders.profile?.user?.username ?? '',
+                          customerName: widget.vetOrders.user?.username ?? '',
                         ),
                     ],
                   ),
@@ -210,8 +210,8 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                             sellerId:
                                 widget.vetOrders.agent?.sId.toString() ?? '',
                             startDate1: widget.vetOrders.sessionTime ?? '',
-                            amount: widget.vetOrders.fee ?? '',
-                            paymentId: widget.vetOrders.purchaseId ?? '',
+                            amount: widget.vetOrders.fee.toString() ?? '',
+                            paymentId: widget.vetOrders.sId ?? '',
                             sellerImage: widget.vetOrders.agent?.picture ?? '',
                             isAcceptedService:
                                 widget.vetOrders.isAccepted ?? false,
@@ -219,15 +219,15 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                                 widget.vetOrders.isOngoing ?? false,
                             isCompletedService:
                                 widget.vetOrders.isCompleted ?? false,
-                            orderId: widget.vetOrders.id.toString(),
+                            orderId: widget.vetOrders.sId.toString(),
                             customerName:
-                                widget.vetOrders.profile?.user?.username ?? '',
+                                widget.vetOrders.user?.username ?? '',
                             customerPhone:
-                                widget.vetOrders.profile?.phoneNumber ?? '',
+                                widget.vetOrders.user?.phoneNumber ?? '',
                             customerImage:
-                                widget.vetOrders.profile?.profileImage ?? '',
+                                widget.vetOrders.user?.profileImage ?? '',
                             customerFireBaseId:
-                                widget.vetOrders.profile?.firebaseId ?? '',
+                                widget.vetOrders.user?.firebaseId ?? '',
                             isRejected: widget.vetOrders.isRejected ?? false,
                             isUserMarkedService:
                                 widget.vetOrders.userMarkedDelivered ?? false,

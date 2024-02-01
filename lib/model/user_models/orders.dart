@@ -1,8 +1,8 @@
 import '../agent/agent.dart';
+import '../packages/packages.dart';
 import '../user/user.dart';
-import 'vet_service.dart';
 
-class VetOrders {
+class Orders {
   bool? shouldNotify;
   bool? isPaid;
   bool? isAccepted;
@@ -13,15 +13,18 @@ class VetOrders {
   bool? isCompleted;
   bool? paymentReleased;
   String? sId;
+  String? transactionId;
   User? user;
   Agent? agent;
-  VetService? vetService;
-  String? sessionTime;
+  Package? package;
+  String? pickupLocation;
+  String? pickupTime;
+  String? dropoffTime;
   int? fee;
   String? createdAt;
   String? updatedAt;
 
-  VetOrders(
+  Orders(
       {this.shouldNotify,
       this.isPaid,
       this.isAccepted,
@@ -32,15 +35,18 @@ class VetOrders {
       this.isCompleted,
       this.paymentReleased,
       this.sId,
+      this.transactionId,
       this.user,
       this.agent,
-      this.vetService,
-      this.sessionTime,
+      this.package,
+      this.pickupLocation,
+      this.pickupTime,
+      this.dropoffTime,
       this.fee,
       this.createdAt,
       this.updatedAt});
 
-  VetOrders.fromJson(Map<String, dynamic> json) {
+  Orders.fromJson(Map<String, dynamic> json) {
     shouldNotify = json['shouldNotify'];
     isPaid = json['isPaid'];
     isAccepted = json['isAccepted'];
@@ -50,13 +56,15 @@ class VetOrders {
     agentMarkedDelivered = json['agentMarkedDelivered'];
     isCompleted = json['isCompleted'];
     paymentReleased = json['paymentReleased'];
+    transactionId = json['transactionId'];
     sId = json['_id'];
-    user = json['user'];
+     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
-    vetService = json['vetService'] != null
-        ? new VetService.fromJson(json['vetService'])
-        : null;
-    sessionTime = json['sessionTime'];
+    package =
+        json['package'] != null ? new Package.fromJson(json['package']) : null;
+    pickupLocation = json['pickupLocation'];
+    pickupTime = json['pickupTime'];
+    dropoffTime = json['dropoffTime'];
     fee = json['fee'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -78,13 +86,16 @@ class VetOrders {
     if (this.agent != null) {
       data['agent'] = this.agent!.toJson();
     }
-    if (this.vetService != null) {
-      data['vetService'] = this.vetService!.toJson();
+    if (this.package != null) {
+      data['package'] = this.package!.toJson();
     }
-    data['sessionTime'] = this.sessionTime;
+    data['pickupLocation'] = this.pickupLocation;
+    data['pickupTime'] = this.pickupTime;
+    data['dropoffTime'] = this.dropoffTime;
     data['fee'] = this.fee;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
+
