@@ -19,7 +19,7 @@ class Requests {
     final client = RetryClient(http.Client());
     try {
       await client
-          .get(Uri.parse(route), headers: headers ?? await formDataHeader())
+          .get(Uri.parse(route), headers:  await formDataHeader())
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));
       });
@@ -46,7 +46,7 @@ class Requests {
     try {
       if (files != null) {
         final request = http.MultipartRequest('POST', Uri.parse(route));
-        request.headers.addAll(headers ?? await formDataHeader());
+        request.headers.addAll( await formDataHeader());
         request.fields.addAll(body as Map<String, String>);
         files.forEach((key, value) async {
           request.files.add(await http.MultipartFile.fromPath(

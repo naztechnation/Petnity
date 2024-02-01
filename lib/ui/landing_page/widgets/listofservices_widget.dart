@@ -39,11 +39,11 @@ class ListOfServices extends StatelessWidget {
                     Provider.of<AccountViewModel>(context, listen: false)
                         .setSelectedService(user.services[index].name!);
                          Provider.of<AccountViewModel>(context, listen: false)
-                                  .setServiceId(user.services[index].id.toString());
+                                  .setServiceId(user.services[index].sId.toString());
                     AppNavigator.pushAndStackPage(context,
                         page: ServiceProvidersDetails(
                           petProvider: '${user.services[index].name}',
-                          serviceId: '${user.services[index].id}',
+                          serviceId: '${user.services[index].sId}',
                         ));
                   });
                 },

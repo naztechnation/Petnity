@@ -1,5 +1,6 @@
 
 import 'package:petnity/model/account_models/auth_data.dart';
+import 'package:petnity/model/user_models/id_types.dart';
 
 import '../../../model/account_models/create_agent.dart';
 import '../../../model/account_models/pet_profile.dart';
@@ -74,4 +75,6 @@ abstract class AccountRepository {
     required String password,
     required String email,
   });
+
+   Future<IdTypeList> idTypeList();
 }

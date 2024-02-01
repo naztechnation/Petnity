@@ -64,9 +64,7 @@ class _OtpScreenState extends State<OtpScreen> {
               Modals.showToast(state.user.message ?? '',
                   messageType: MessageType.success);
 
-              Modals.showToast(state.user.data?.token ?? '',
-                  messageType: MessageType.success);
-
+             
               
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.successScreen);

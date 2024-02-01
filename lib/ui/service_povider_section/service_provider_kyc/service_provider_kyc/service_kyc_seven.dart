@@ -57,6 +57,7 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
             if (state is AgentResLoaded) {
               if (state.agents.status!) {
                 StorageHandler.saveAgentId(state.agents.data?.agent?.sId.toString() ?? '');
+                StorageHandler.saveUserToken(state.agents.data?.token.toString() ?? '');
 
                  
                 AppNavigator.pushAndStackPage(context,
@@ -182,7 +183,8 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
                         onPressed: () async {
                           if (user.imageURl != null) {
                                  
-                           
+                            AppNavigator.pushAndStackPage(context,
+                    page: KycServiceScreenEight());
 
                             userDetails.getUserId();
                               setState(() {

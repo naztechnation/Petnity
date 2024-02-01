@@ -49,7 +49,7 @@ class Agent {
     isVerified = json['isVerified'];
     isReachable = json['isReachable'];
     sId = json['_id'];
-    user = json['user'];
+   user = json['user'] != null ? new User.fromJson(json['user']) : null;
     name = json['name'];
     gender = json['gender'];
     dateOfBirth = json['dateOfBirth'];

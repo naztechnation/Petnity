@@ -142,12 +142,12 @@ class _AgentProfileState extends State<AgentProfile> {
                                   service = _userCubit.viewModel.services;
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
-                                for (var item in state.userData.agents!) {
-                                  if (item.sId.toString() == agentId) {
-                                    agents = item;
-                                    break;
-                                  }
-                                }
+                                // for (var item in state.userData.agents!) {
+                                //   if (item.sId.toString() == agentId) {
+                                //     agents = item;
+                                //     break;
+                                //   }
+                                // }
                                 services = agents?.services ?? [];
 
                               }  else if (state is UserNetworkErrApiErr) {
@@ -157,12 +157,13 @@ class _AgentProfileState extends State<AgentProfile> {
                     onRefresh: () => _userCubit.getAgentProfile(),
                   );
                 } else if (state is ServiceProviderListLoaded) {
-                  for (var item in state.userData.agents!) {
-                    if (item.sId.toString() == agentId) {
-                      agents = item;
-                      break;
-                    }
-                  }
+                  ///TODO 
+                  // for (var item in state.userData.agents!) {
+                  //   if (item.sId.toString() == agentId) {
+                  //     agents = item;
+                  //     break;
+                  //   }
+                  // }
                 } else if (state is UploadAgentGalleryLoaded) {
                   serviceProvider.resetImage();
                   Modals.showToast(state.gallery.message!);
@@ -402,12 +403,13 @@ class _AgentProfileState extends State<AgentProfile> {
                                   service = _userCubit.viewModel.services;
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
-                                for (var item in state.userData.agents!) {
-                                  if (item.sId.toString() == agentId) {
-                                    agents = item;
-                                    break;
-                                  }
-                                }
+                                ///TODO
+                                // for (var item in state.userData.agents!) {
+                                //   if (item.sId.toString() == agentId) {
+                                //     agents = item;
+                                //     break;
+                                //   }
+                                // }
                                 services = agents?.services ?? [];
                               } else if (state is UserNetworkErrApiErr) {
                               } else if (state is UserNetworkErr) {}

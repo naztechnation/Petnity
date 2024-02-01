@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:petnity/model/user_models/id_types.dart';
 import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/account_models/create_agent.dart';
@@ -146,12 +147,9 @@ Future<CreateAgents> servicePetNames(
     required String username,
     required String agentId}) async {
   final map =
-      await Requests().patch(AppStrings.selectPetTypeUrl(agentId), body: {
-    "pet_types": petnames,
-  }, headers: {
-    'Authorization': AppStrings.token,
-    "Content-type": "application/json"
-  });
+      await Requests().patch(AppStrings.selectPetTypeUrl, body: {
+    "petTypes": petnames,
+  }, );
   return CreateAgents.fromJson(map);
 }
 
@@ -170,21 +168,16 @@ Future<AuthData> uploadPhotoUrl(
     required String idType,
     required String id}) async {
   final map =
-      await Requests().patch(AppStrings.uploadIdUrl(agentId, id), body: {
-    "id_photo": photoUrl,
-    "id_type": idType,
-  }, headers: {
-    'Authorization': AppStrings.token,
-    "Content-type": "application/json"
-  });
+      await Requests().patch(AppStrings.uploadIdUrl, body: {
+    "idPhoto": photoUrl,
+    "idType": idType,
+  }, );
   return AuthData.fromJson(map);
 }
 
 @override
 Future<PetTypesModel> petTypeList() async {
-  final map = await Requests().get(AppStrings.petTypesUrl, headers: {
-    'Authorization': AppStrings.token,
-  });
+  final map = await Requests().get(AppStrings.petTypesUrl, );
   return PetTypesModel.fromJson(map);
 }
 
@@ -211,5 +204,12 @@ Future<AuthData> resetPassword({
   });
 
   return AuthData.fromJson(map);
+}
+
+  @override
+  Future<IdTypeList> idTypeList() async {
+  final map = await Requests().get(AppStrings.getIdTypeListUrl, );
+
+  return IdTypeList.fromJson(map);
 }
 }

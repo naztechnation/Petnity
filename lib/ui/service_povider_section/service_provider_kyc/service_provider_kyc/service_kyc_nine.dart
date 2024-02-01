@@ -87,7 +87,7 @@ class _KycScreenNineState extends State<KycScreenNine> {
             AppNavigator.pushAndStackPage(context, page: KycServiceScreenTen());
           } else if (state is PetTypesLoaded) {
             if (state.services.status!) {
-               petTypes = state.services.petTypes ?? [];
+               petTypes = state.services.data?.petTypes ?? [];
             } else {}
           } else if (state is AccountApiErr) {
             if (state.message != null) {

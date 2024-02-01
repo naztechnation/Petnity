@@ -1,16 +1,36 @@
 class GetServiceTypes {
   bool? status;
   String? message;
-  List<ServiceTypes>? serviceTypes;
+  GetServiceTypesData? data;
 
-  GetServiceTypes({this.status, this.message, this.serviceTypes});
+  GetServiceTypes({this.status, this.message, this.data});
 
   GetServiceTypes.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    if (json['service_types'] != null) {
+    data = json['data'] != null ? new GetServiceTypesData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class GetServiceTypesData {
+  List<ServiceTypes>? serviceTypes;
+
+  GetServiceTypesData({this.serviceTypes});
+
+  GetServiceTypesData.fromJson(Map<String, dynamic> json) {
+    if (json['serviceTypes'] != null) {
       serviceTypes = <ServiceTypes>[];
-      json['service_types'].forEach((v) {
+      json['serviceTypes'].forEach((v) {
         serviceTypes!.add(new ServiceTypes.fromJson(v));
       });
     }
@@ -18,32 +38,29 @@ class GetServiceTypes {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
     if (this.serviceTypes != null) {
-      data['service_types'] =
-          this.serviceTypes!.map((v) => v.toJson()).toList();
+      data['serviceTypes'] = this.serviceTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class ServiceTypes {
-  int? id;
+  String? sId;
   String? name;
   String? image;
 
-  ServiceTypes({this.id, this.name, this.image});
+  ServiceTypes({this.sId, this.name, this.image});
 
   ServiceTypes.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    sId = json['_id'];
     name = json['name'];
     image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['_id'] = this.sId;
     data['name'] = this.name;
     data['image'] = this.image;
     return data;

@@ -26,7 +26,7 @@ class AppStrings {
 
   static const String networkErrorMessage = "Network error, try again later";
   static const String registerUrl = "auth/register";
-  static const String petTypesUrl = "${_baseUrl}get-pet-types";
+  static const String petTypesUrl = "${_baseUrl}home/get-pet-types";
   static String resendCodeUrl(String username) => "auth/resend-code/$username";
 
   static String googlePlaceUrl(String query) =>
@@ -44,13 +44,16 @@ class AppStrings {
 
   static String resetPasswordUrl(String email) =>
       '${_baseUrl}auth/change-password/$email';
+
+      static String getIdTypeListUrl =
+      '${_baseUrl}auth/get-id-types';
   static String forgotPasswordUrl(String email) =>
       '${_baseUrl}auth/request-password-change/$email';
 
   static const String loginUrl = '${_baseUrl}auth/login';
   static const String logoutUrl = '${_baseUrl}auth/logout';
   static const String shoppingList = '${_baseUrl}shop/get-products/1';
-  static const String getServiceTypes = '${_baseUrl}get-service-types';
+  static const String getServiceTypes = '${_baseUrl}home/get-service-types';
   static String getIndividualAgentService(String agentId) =>
       '${_baseUrl}users/get-agent-services/$agentId';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
@@ -60,8 +63,8 @@ class AppStrings {
       '${_baseUrl}order/get-user-orders/$username';
   static String createOrderPayment(String username) =>
       '${_baseUrl}shop/create-shop-order/$username';
-  static String uploadIdUrl(String agentId, String photoId) =>
-      '${_baseUrl}auth/upload-id-photo/$agentId';
+  static String uploadIdUrl =
+      '${_baseUrl}auth/upload-id-photo';
   static String productDetailsUrl(String productId) =>
       '${_baseUrl}shop/get-product/$productId';
   static String createOrder(String packageId, String username) =>
@@ -85,10 +88,10 @@ class AppStrings {
       '${_baseUrl}order/order-payment/$username/$agentId';
   static String getAgentPackagesUrl(String agentId, String serviceId) =>
       '${_baseUrl}users/get-agent-service-packages/$agentId/$serviceId';
-  static String selectPetTypeUrl(String agentId) =>
-      '${_baseUrl}auth/select-pet-types/$agentId';
-  static String selectServiceTypeUrl(String agentId) =>
-      '${_baseUrl}auth/select-service-types/$agentId';
+  static String selectPetTypeUrl  =
+      '${_baseUrl}auth/select-pet-types';
+  static String selectServiceTypeUrl =
+      '${_baseUrl}auth/select-service-types';
   static String petHealthStatusUrl({String? petId}) =>
       '${_baseUrl}pets/add-health-issue/$petId';
   static String petAlergeyDataUrl({String? petId = '2'}) =>

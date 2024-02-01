@@ -52,14 +52,11 @@ class UserRepositoryImpl implements UserRepository {
       {required List<String> services,
       required String username,
       required String agentId}) async {
-    final map = await Requests().patch(AppStrings.selectServiceTypeUrl(agentId),
+    final map = await Requests().patch(AppStrings.selectServiceTypeUrl,
         body: {
-          "service_types": services
+          "serviceTypes": services
         },
-        headers: {
-          'Authorization': AppStrings.token,
-          "Content-type": "application/json"
-        });
+       );
     return ServiceProvidersList.fromJson(map);
   }
 

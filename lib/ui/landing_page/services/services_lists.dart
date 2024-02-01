@@ -48,12 +48,12 @@ class ServicesList extends StatelessWidget {
                   ServiceTypes masterItem = user.services[index];
 
                   bool isActive =
-                      services.any((subItem) => subItem.id == masterItem.id);
+                      services.any((subItem) => subItem.id == masterItem.sId);
 
                   if (isActive) {
                     return Item(context, randomColor, '${masterItem.name}',
                         '${masterItem.image}', () {
-                      agent.setServiceId('${user.services[index].id}');
+                      agent.setServiceId('${user.services[index].sId}');
 
                       if (masterItem.name == 'Vets'&& !isAgent) {
                         AppNavigator.pushAndStackPage(context,
@@ -66,13 +66,13 @@ class ServicesList extends StatelessWidget {
                           AppNavigator.pushAndReplacePage(context,
                               page: AgentPackagesScreen(
                                   agentId: agentId,
-                                  serviceId: '${user.services[index].id}',
+                                  serviceId: '${user.services[index].sId}',
                                   serviceType: masterItem.name ?? '',));
                         } else {
                           AppNavigator.pushAndReplacePage(context,
                               page: SelectPackageLevelAmount(
                                   serviceType: '${user.services[index].name}',
-                                  serviceId: '${user.services[index].id}'));
+                                  serviceId: '${user.services[index].sId}'));
                         }
                       }
                     }, true);

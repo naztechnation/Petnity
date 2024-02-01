@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:petnity/model/account_models/pet_types.dart';
+import 'package:petnity/model/user_models/id_types.dart';
 
 import '../../model/account_models/create_agent.dart';
 import '../../model/account_models/auth_data.dart';
@@ -64,6 +65,13 @@ class AccountUpdated extends AccountStates {
   const AccountUpdated(this.user);
   @override
   List<Object> get props => [user];
+}
+
+class IdTypeUpdated extends AccountStates {
+  final IdTypeList id;
+  const IdTypeUpdated(this.id);
+  @override
+  List<Object> get props => [id];
 }
 
 class AccountPinChanged extends AccountStates {

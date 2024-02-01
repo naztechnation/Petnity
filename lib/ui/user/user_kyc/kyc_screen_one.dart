@@ -6,6 +6,7 @@ import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/accounts/account.dart';
+import '../../../model/pet_types.dart/pet_types.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../res/app_colors.dart';
@@ -84,7 +85,7 @@ class _KycScreenState extends State<KycScreen> {
           BlocConsumer<AccountCubit, AccountStates>(listener: (context, state) {
         if (state is PetTypesLoaded) {
           if (state.services.status!) {
-            petTypes = state.services.petTypes ?? [];
+            petTypes = state.services.data?.petTypes ?? [];
           } else {}
         } else if (state is AccountApiErr) {
         } else if (state is AccountNetworkErr) {}

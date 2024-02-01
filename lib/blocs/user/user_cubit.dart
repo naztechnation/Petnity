@@ -21,7 +21,8 @@ class UserCubit extends Cubit<UserStates> {
         serviceId: serviceId,
       );
 
-      await viewModel.setAgentDetails(agents: agents.agents ?? []);
+      ///TODO
+      //await viewModel.setAgentDetails(agents: agents.agents ?? []);
 
       emit(ServiceProviderListLoaded(agents));
     } on ApiException catch (e) {
@@ -44,8 +45,8 @@ class UserCubit extends Cubit<UserStates> {
       emit(ServiceProviderListLoading());
 
       final agents = await userRepository.getAgentProfile();
-
-      await viewModel.setAgentDetails(agents: agents.agents ?? []);
+      ///TODO
+     /// await viewModel.setAgentDetails(agents: agents.agents ?? []);
 
       emit(ServiceProviderListLoaded(agents));
     } on ApiException catch (e) {
@@ -69,7 +70,7 @@ class UserCubit extends Cubit<UserStates> {
 
       final service = await userRepository.getServiceTypes(agentId);
 
-      await viewModel.setServicesList(services: service.serviceTypes ?? []);
+      await viewModel.setServicesList(services: service.data?.serviceTypes ?? []);
 
       emit(ServicesLoaded(service));
     } on ApiException catch (e) {

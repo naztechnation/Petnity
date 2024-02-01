@@ -106,12 +106,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
             service = _userCubit.viewModel.services;
           } else {}
         } else if (state is ServiceProviderListLoaded) {
-          for (var item in state.userData.agents!) {
-            if (item.sId.toString() == agentId) {
-              agents = item;
-              break;
-            }
-          }
+          ///TODO
+          // for (var item in state.userData.agents!) {
+          //   if (item.sId.toString() == agentId) {
+          //     agents = item;
+          //     break;
+          //   }
+          // }
           services = agents?.services ?? [];
         } else if (state is UserNetworkErrApiErr) {
         } else if (state is UserNetworkErr) {}

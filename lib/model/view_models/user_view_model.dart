@@ -6,6 +6,7 @@ import '../account_models/agents_packages.dart';
 import '../agent/agent.dart';
 import '../user_models/order_list.dart';
 import '../user_models/pet_profile_details.dart';
+import '../user_models/pets_profile.dart';
 import '../user_models/reviews_data.dart';
 import '../user_models/service_provider_lists.dart';
 import '../user_models/service_type.dart';
@@ -226,7 +227,7 @@ class UserViewModel extends BaseViewModel {
   String get petPicture => _petPicture;
   bool get galleryStatus => _galleryStatus;
   PetProfileDetails? get petDetails => _petProfile;
-  List<ServicesDetails> get servicesItems => servicesResults();
+  List<ServicesType> get servicesItems => servicesResults();
   List<Pets> get servicesPetList => servicesPets();
 
   List<UserOrders> get ordersList => _ordersList;
@@ -236,8 +237,8 @@ class UserViewModel extends BaseViewModel {
   List<UserOrders> get onCompletedOrdersList => onCompletedOrderServices();
   List<UserOrders> get onRejectedOrdersList => onRejectedServices();
 
-  List<ServicesDetails> servicesResults() {
-    List<ServicesDetails> list = [];
+  List<ServicesType> servicesResults() {
+    List<ServicesType> list = [];
 
     for (var service in _agents ?? []) {
       list.addAll(service.services);

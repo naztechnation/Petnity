@@ -1,5 +1,6 @@
 class User {
   bool? isAdmin;
+  bool? isAgent;
   bool? isReachable;
   bool? hasPets;
   bool? isVerified;
@@ -10,13 +11,10 @@ class User {
   String? phoneNumber;
   String? firebaseId;
   String? deviceId;
-  String? password;
-  String? createdAt;
-  String? updatedAt;
-  int? iV;
 
   User(
       {this.isAdmin,
+      this.isAgent,
       this.isReachable,
       this.hasPets,
       this.isVerified,
@@ -26,14 +24,11 @@ class User {
       this.email,
       this.phoneNumber,
       this.firebaseId,
-      this.deviceId,
-      this.password,
-      this.createdAt,
-      this.updatedAt,
-      this.iV});
+      this.deviceId});
 
   User.fromJson(Map<String, dynamic> json) {
     isAdmin = json['isAdmin'];
+    isAgent = json['isAgent'];
     isReachable = json['isReachable'];
     hasPets = json['hasPets'];
     isVerified = json['isVerified'];
@@ -44,15 +39,12 @@ class User {
     phoneNumber = json['phoneNumber'];
     firebaseId = json['firebaseId'];
     deviceId = json['deviceId'];
-    password = json['password'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['isAdmin'] = this.isAdmin;
+    data['isAgent'] = this.isAgent;
     data['isReachable'] = this.isReachable;
     data['hasPets'] = this.hasPets;
     data['isVerified'] = this.isVerified;
@@ -63,10 +55,6 @@ class User {
     data['phoneNumber'] = this.phoneNumber;
     data['firebaseId'] = this.firebaseId;
     data['deviceId'] = this.deviceId;
-    data['password'] = this.password;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }

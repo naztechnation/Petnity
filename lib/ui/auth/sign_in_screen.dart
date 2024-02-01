@@ -30,7 +30,7 @@ class SignInScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
 
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,89 +57,92 @@ class SignInScreen extends StatelessWidget {
           child: BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
-                // if (state.userData.status!) {
-                //   StorageHandler.saveIsLoggedIn('true');
+                if (state.userData.status!) {
+                  StorageHandler.saveIsLoggedIn('true');
 
-                //   StorageHandler.saveUserPassword(_passwordController.text);
+                  StorageHandler.saveUserPassword(_passwordController.text);
 
-                //   if (!state.userData.isAgent!) {
-                //     if (state.userData.profile?.hasPets ?? false) {
-                //       StorageHandler.saveUserPetState('true');
-                //     } else {
-                //       StorageHandler.saveUserPetState('');
-                //     }
-                //     StorageHandler.saveIsUserType('user');
-                //     StorageHandler.saveEmail(
-                //         state.userData.profile?.user?.email.toString());
-                //     StorageHandler.saveUserPhone(
-                //         state.userData.profile?.phoneNumber.toString());
+                  if (state.userData.data?.user?.isAgent ?? false) {
+                    StorageHandler.saveIsUserType('service_provider');
+                    StorageHandler.saveAgentId(
+                        state.userData.data?.user?.sId.toString() ?? '');
 
-                //     StorageHandler.saveUserId(
-                //         state.userData.profile?.user?.id.toString());
-                //     StorageHandler.saveUserName(
-                //         state.userData.profile?.user?.username.toString());
-                //     StorageHandler.saveUserPicture(
-                //         state.userData.profile?.profileImage.toString());
+                    if (state.userData.data?.user?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
+                    }
 
-                //     user.setUserData(
-                //         username:
-                //             state.userData.profile?.user?.username.toString() ??
-                //                 '');
-                //     loginUser(
-                //         firebaseUser: firebaseUser,
-                //         context: context,
-                //         message: state.userData.message!,
-                //         isAgent: !state.userData.isAgent!);
-                //   } else {
-                //     StorageHandler.saveIsUserType('service_provider');
-                //     StorageHandler.saveAgentId(
-                //         state.userData.agent!.id.toString());
+                    StorageHandler.saveEmail(
+                        state.userData.data?.user?.email.toString());
+                    StorageHandler.saveUserPhone(
+                        state.userData.data?.user?.phoneNumber.toString());
+                    // StorageHandler.saveUserPicture(
+                    //     state.userData.data?.user?.picture.toString());
 
-                //     if (state.userData.agent?.profile?.hasPets ?? false) {
-                //       StorageHandler.saveUserPetState('true');
-                //     } else {
-                //       StorageHandler.saveUserPetState('');
-                //     }
+                    StorageHandler.saveUserId(
+                        state.userData.data?.user?.sId.toString());
+                    StorageHandler.saveUserName(state
+                        .userData.data?.user?.username
+                        .toString());
 
-                //     StorageHandler.saveEmail(
-                //         state.userData.agent?.profile?.user?.email.toString());
-                //     StorageHandler.saveUserPhone(
-                //         state.userData.agent?.profile?.phoneNumber.toString());
-                //     StorageHandler.saveUserPicture(
-                //         state.userData.agent?.picture.toString());
+                    user.setUserData(
+                        username: state.userData.data?.user?.username
+                                .toString() ??
+                            '');
 
-                //     StorageHandler.saveUserId(
-                //         state.userData.agent?.id.toString());
-                //     StorageHandler.saveUserName(state
-                //         .userData.agent?.profile?.user?.username
-                //         .toString());
+                    loginUser(
+                        firebaseUser: firebaseUser,
+                        context: context,
+                        message: state.userData.message!,
+                        isAgent: true );
+                    
+                  } else {
+                    
 
-                //     user.setUserData(
-                //         username: state.userData.agent?.profile?.user?.username
-                //                 .toString() ??
-                //             '');
+                        if (state.userData.data?.user?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
+                    }
+                    StorageHandler.saveIsUserType('user');
+                    StorageHandler.saveEmail(
+                        state.userData.data?.user?.email.toString());
+                    StorageHandler.saveUserPhone(
+                        state.userData.data?.user?.phoneNumber.toString());
 
-                //     loginUser(
-                //         firebaseUser: firebaseUser,
-                //         context: context,
-                //         message: state.userData.message!,
-                //         isAgent: !state.userData.isAgent!);
-                //   }
-                // } else {
-                //   Modals.showToast(state.userData.message,
-                //       messageType: MessageType.error);
-                //   if (state.userData.message == 'Profile is not verified') {
-                //     resendCode(context);
-                //   }
-                // }
+                    StorageHandler.saveUserId(
+                        state.userData.data?.user?.sId.toString());
+                    StorageHandler.saveUserName(
+                        state.userData.data?.user?.username.toString());
+                    // StorageHandler.saveUserPicture(
+                    //     state.userData.profile?.profileImage.toString());
+
+                    user.setUserData(
+                        username:
+                            state.userData.data?.user?.username.toString() ??
+                                '');
+                    loginUser(
+                        firebaseUser: firebaseUser,
+                        context: context,
+                        message: state.userData.message!,
+                        isAgent: false);
+                  }
+                } else {
+                  Modals.showToast(state.userData.message ?? '',
+                      messageType: MessageType.error);
+                  if (state.userData.message == 'Profile is not verified') {
+                    resendCode(context);
+                  }
+                }
               } else if (state is OTPResent) {
                 if (state.user.status == true) {
                   Modals.showToast(state.user.message ?? '',
                       messageType: MessageType.success);
                   AppNavigator.pushAndReplacePage(context,
                       page: OtpScreen(
-                        email: _usernameController.text,
-                        username: _usernameController.text,
+                        email: _emailController.text,
+                        username: _emailController.text,
                       ));
                 } else {
                   Modals.showToast(state.user.message ?? '',
@@ -190,7 +193,7 @@ class SignInScreen extends StatelessWidget {
                       height: 24,
                     ),
                     TextEditView(
-                      controller: _usernameController,
+                      controller: _emailController,
                       validator: (value) {
                         return Validator.validate(value, 'Email');
                       },
@@ -349,10 +352,10 @@ class SignInScreen extends StatelessWidget {
 
   _submit(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
-      // ctx.read<AccountCubit>().loginUser(
-      //     username: _usernameController.text.trim(),
-      //     password: _passwordController.text.trim());
-      // FocusScope.of(ctx).unfocus();
+      ctx.read<AccountCubit>().loginUser(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim());
+      FocusScope.of(ctx).unfocus();
     }
   }
 
@@ -362,7 +365,7 @@ class SignInScreen extends StatelessWidget {
       required String message,
       required bool isAgent}) async {
     await firebaseUser.loginUserWithEmailAndPassword(
-        email: _usernameController.text.trim(),
+        email: _emailController.text.trim(),
         password: _passwordController.text.trim());
 
     if (firebaseUser.status == Status.authenticated) {
@@ -388,7 +391,7 @@ class SignInScreen extends StatelessWidget {
   resendCode(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().resendCode(
-            username: AppStrings.resendCodeUrl(_usernameController.text),
+            username: AppStrings.resendCodeUrl(_emailController.text),
           );
       FocusScope.of(ctx).unfocus();
     }
