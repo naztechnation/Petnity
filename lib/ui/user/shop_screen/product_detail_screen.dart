@@ -586,7 +586,7 @@ class _ProductDetailState extends State<ProductDetail> {
         isProcessing = true;
       });
       await ctx.read<UserCubit>().postProductReviews(
-            url: 'shop/review-product/$username/$productId',
+            url: 'shop/review-product/$productId',
             rating: rating,
             comment: comment,
           );

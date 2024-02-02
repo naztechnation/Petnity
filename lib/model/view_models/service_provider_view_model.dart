@@ -31,7 +31,7 @@ class ServiceProviderViewModel extends BaseViewModel {
 
   ImagePicker picker = ImagePicker();
 
-  Services _selectedService = Services.none;
+  Service _selectedService = Service.none;
   UploadType _uploadType = UploadType.none;
 
   setServiceProviderAge(String age) {
@@ -220,7 +220,7 @@ class ServiceProviderViewModel extends BaseViewModel {
         });
   }
 
-  Future<void> setSelectedService(Services selectedService) async {
+  Future<void> setSelectedService(Service selectedService) async {
     _selectedService = selectedService;
     setViewState(ViewState.success);
   }
@@ -255,7 +255,7 @@ class ServiceProviderViewModel extends BaseViewModel {
      return image;
   }
 
-  Services get selectedService => _selectedService;
+  Service get selectedService => _selectedService;
   UploadType get uploadType => _uploadType;
 
   

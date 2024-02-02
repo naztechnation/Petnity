@@ -26,7 +26,7 @@ enum OngoingServicesType { services, vets, }
 enum UserType {none, user, serviceProvider}
 enum OrderType {none, services, shop, vet}
 
-enum Services {
+enum Service {
   none,
   dogwalkers,
   petdate,

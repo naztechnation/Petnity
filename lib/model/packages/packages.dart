@@ -9,7 +9,7 @@ class Package {
   String? price;
   String? createdAt;
   String? updatedAt;
-  Service? service;
+  Services? service;
 
   Package(
       {this.id,
@@ -32,7 +32,7 @@ class Package {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     service =
-        json['service'] != null ? new Service.fromJson(json['service']) : null;
+        json['service'] != null ? new Services.fromJson(json['service']) : null;
   }
 
   Map<String, dynamic> toJson() {

@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import '../../blocs/user/user.dart';
 import '../../handlers/secure_handler.dart';
+import '../../model/services/services.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
@@ -43,7 +44,7 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   final TextEditingController search = TextEditingController();
 
-  List<ServiceTypes> service = [];
+  List<Services> service = [];
 
   late UserCubit _userCubit;
 

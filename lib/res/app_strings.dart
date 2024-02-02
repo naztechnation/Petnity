@@ -38,7 +38,7 @@ class AppStrings {
   static String verifyCodeUr(String username) =>
       '${_baseUrl}auth/resend-code/$username';
   static String getServiceProvidersList(String serviceId) =>
-      '${_baseUrl}users/get-service-agents/$serviceId';
+      '${_baseUrl}user/get-service-agents/$serviceId';
   static String verifyUserProfileUrl =
       '${_baseUrl}auth/verify-user';
 
@@ -55,7 +55,7 @@ class AppStrings {
   static const String shoppingList = '${_baseUrl}shop/get-products/1';
   static const String getServiceTypes = '${_baseUrl}home/get-service-types';
   static String getIndividualAgentService(String agentId) =>
-      '${_baseUrl}users/get-agent-services/$agentId';
+      '${_baseUrl}user/get-agent-services/$agentId';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
   static String agentProfile(String userId) => '${_baseUrl}user/get-user-profile/$userId';
 
@@ -70,7 +70,7 @@ class AppStrings {
   static String createOrder(String packageId, String username) =>
       '${_baseUrl}order/create-order/$username/$packageId';
   static String getReviewUrl(String userId) =>
-      '${_baseUrl}users/get-reviews/$userId';
+      '${_baseUrl}user/get-reviews$userId';
   static String getGalleryUrl =
       '${_baseUrl}user/get-gallery-elements';
   static String setServiceAmountUrl = 
@@ -148,8 +148,8 @@ class AppStrings {
       '${_baseUrl}order/agent-reject-order/$orderId';
 
   static String userMarkOrderDelivered(
-          {required String username, required String orderId}) =>
-      '${_baseUrl}order/user-complete-order/$username/$orderId';
+          {required String orderId}) =>
+      '${_baseUrl}order/user-complete-order$orderId';
   static String agentMarkOrderDelivered(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/user-complete-order/$agentId/$orderId';
@@ -234,8 +234,8 @@ class AppStrings {
       '${_baseUrl}order/agent-reject-vet-order/$orderId';
 
   static String userMarkVetOrderDelivered(
-          {required String username, required String orderId}) =>
-      '${_baseUrl}order/user-complete-vet-order/$username/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}order/user-complete-vet-order/$orderId';
 
   static String agentCreateWithdrawal({required String agentId}) =>
       '${_baseUrl}users/create-withdrawal-request/$agentId';

@@ -50,7 +50,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  List<ServiceTypes> service = [];
+  List<Services> service = [];
 
   late UserCubit _userCubit;
 

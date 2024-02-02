@@ -1,69 +1,50 @@
-
-
-
-class Service {
-  int? id;
-  int? levelsAmount;
-  bool? isLive;
-  String? createdAt;
-  String? updatedAt;
-  Services? serviceType;
-  int? agent;
-
-  Service(
-      {this.id,
-      this.levelsAmount,
-      this.isLive,
-      this.createdAt,
-      this.updatedAt,
-      this.serviceType,
-      this.agent});
-
-  Service.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    levelsAmount = json['levels_amount'];
-    isLive = json['is_live'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    serviceType = json['service_type'] != null
-        ? new Services.fromJson(json['service_type'])
-        : null;
-    agent = json['agent'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['levels_amount'] = this.levelsAmount;
-    data['is_live'] = this.isLive;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.serviceType != null) {
-      data['service_type'] = this.serviceType!.toJson();
-    }
-    data['agent'] = this.agent;
-    return data;
-  }
-}
+import '../agent/agent.dart';
+import '../user_models/service_type.dart';
 
 class Services {
-  int? id;
-  String? name;
-  String? image;
+  bool? isLive;
+  String? sId;
+  ServiceType? serviceType;
+  Agent? agent;
+  int? levelsAmount;
+  String? createdAt;
+  String? updatedAt;
 
-  Services({this.id, this.name, this.image});
+  Services(
+      {this.isLive,
+      this.sId,
+      this.serviceType,
+      this.agent,
+      this.levelsAmount,
+      this.createdAt,
+      this.updatedAt});
 
   Services.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    image = json['image'];
+    isLive = json['isLive'];
+    sId = json['_id'];
+    serviceType = json['serviceType'] != null
+        ? new ServiceType.fromJson(json['serviceType'])
+        : null;
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+    levelsAmount = json['levelsAmount'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['image'] = this.image;
+    data['isLive'] = this.isLive;
+    data['_id'] = this.sId;
+    if (this.serviceType != null) {
+      data['serviceType'] = this.serviceType!.toJson();
+    }
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
+    }
+    data['levelsAmount'] = this.levelsAmount;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
+

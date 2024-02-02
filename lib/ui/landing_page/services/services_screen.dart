@@ -7,6 +7,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
+import '../../../model/services/services.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -20,18 +21,18 @@ class ServicesScreen extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: Services(),
+      child: ServicesP(),
     );
   }
 }
 
-class Services extends StatefulWidget {
+class ServicesP extends StatefulWidget {
   @override
-  State<Services> createState() => _ServicesState();
+  State<ServicesP> createState() => _ServicesState();
 }
 
-class _ServicesState extends State<Services> {
-  List<ServiceTypes> service = [];
+class _ServicesState extends State<ServicesP> {
+  List<Services> service = [];
 
   late UserCubit _userCubit;
 

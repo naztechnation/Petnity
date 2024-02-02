@@ -45,20 +45,20 @@ class ServicesList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   Color randomColor = getRandomColor();
 
-                  ServiceTypes masterItem = user.services[index];
+                  Services masterItem = user.services[index];
 
                   bool isActive =
-                      services.any((subItem) => subItem.id == masterItem.sId);
+                      services.any((subItem) => subItem.sId == masterItem.sId);
 
                   if (isActive) {
-                    return Item(context, randomColor, '${masterItem.name}',
-                        '${masterItem.image}', () {
+                    return Item(context, randomColor, '${masterItem.serviceType?.image}',
+                        '${masterItem.serviceType?.image}', () {
                       agent.setServiceId('${user.services[index].sId}');
 
-                      if (masterItem.name == 'Vets'&& !isAgent) {
+                      if (masterItem.serviceType?.name == 'Vets'&& !isAgent) {
                         AppNavigator.pushAndStackPage(context,
                             page: VetService());
-                      }else if(masterItem.name == 'Vets'&& isAgent){
+                      }else if(masterItem.serviceType?.name == 'Vets'&& isAgent){
                         AppNavigator.pushAndStackPage(context,
                             page: VetPackages(agentId: agentId,));
                       } else {
@@ -67,18 +67,18 @@ class ServicesList extends StatelessWidget {
                               page: AgentPackagesScreen(
                                   agentId: agentId,
                                   serviceId: '${user.services[index].sId}',
-                                  serviceType: masterItem.name ?? '',));
+                                  serviceType: masterItem.serviceType?.name ?? '',));
                         } else {
                           AppNavigator.pushAndReplacePage(context,
                               page: SelectPackageLevelAmount(
-                                  serviceType: '${user.services[index].name}',
+                                  serviceType: '${user.services[index].serviceType?.name}',
                                   serviceId: '${user.services[index].sId}'));
                         }
                       }
                     }, true);
                   } else {
                     return Item(context, Colors.grey.shade50,
-                        '${masterItem.name}', '${masterItem.image}', () {
+                        '${masterItem.serviceType?.name}', '${masterItem.serviceType?.image}', () {
                       Modals.showToast(
                           'You do not offer this service at the moment. please add to your services if you want to');
                     }, false);

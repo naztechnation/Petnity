@@ -35,14 +35,14 @@ class ListOfServices extends StatelessWidget {
                   Color randomColor = getRandomColor();
 
                   return Item(context, randomColor,
-                      '${user.services[index].name}',  '${user.services[index].image}', () {
+                      '${user.services[index].serviceType?.name}',  '${user.services[index].serviceType?.image}', () {
                     Provider.of<AccountViewModel>(context, listen: false)
-                        .setSelectedService(user.services[index].name!);
+                        .setSelectedService(user.services[index].serviceType?.name ?? '');
                          Provider.of<AccountViewModel>(context, listen: false)
                                   .setServiceId(user.services[index].sId.toString());
                     AppNavigator.pushAndStackPage(context,
                         page: ServiceProvidersDetails(
-                          petProvider: '${user.services[index].name}',
+                          petProvider: '${user.services[index].serviceType?.name}',
                           serviceId: '${user.services[index].sId}',
                         ));
                   });

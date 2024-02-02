@@ -8,6 +8,7 @@ import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/user/user.dart';
+import '../../../../model/services/services.dart';
 import '../../../../model/user_models/service_type.dart';
 import '../../../../model/view_models/service_provider_view_model.dart';
 import '../../../../model/view_models/account_view_model.dart';
@@ -53,7 +54,7 @@ class KycServiceEight extends StatefulWidget {
 }
 
 class _KycServiceEightState extends State<KycServiceEight> {
-  List<ServiceTypes> service = [];
+  List<Services> service = [];
   late UserCubit _userCubit;
 
   int _index = -1;
@@ -173,10 +174,10 @@ class _KycServiceEightState extends State<KycServiceEight> {
                               itemCount: services.services.length,
                               itemBuilder: (context, index) {
                                 String serviceName =
-                                    services.services[index].name ?? '';
+                                    services.services[index].serviceType?.name ?? '';
                                 return ServiceProviderChoice(
                                   imageUrl:
-                                      services.services[index].image ?? '',
+                                      services.services[index].serviceType?.image ?? '',
                                   serviceName: serviceName,
                                   isSelected: user.selectedServiceItems
                                       .contains(serviceName),

@@ -14,6 +14,7 @@ import 'package:petnity/model/user_models/user_shopping_data.dart';
 import '../../../model/account_models/auth_data.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
+import '../../../model/user_models/get_services.dart';
 import '../../../model/user_models/order_list.dart';
 import '../../../model/user_models/pet_profile_details.dart';
 import '../../../model/user_models/pets_profile.dart';
@@ -31,9 +32,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<ServiceProvidersList> getServiceProviderList(
       {required String serviceId}) async {
     final map = await Requests()
-        .get(AppStrings.getServiceProvidersList(serviceId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getServiceProvidersList(serviceId),);
     return ServiceProvidersList.fromJson(map);
   }
 
@@ -43,9 +42,7 @@ class UserRepositoryImpl implements UserRepository {
         (agentId == null)
             ? AppStrings.getServiceTypes
             : AppStrings.getIndividualAgentService(agentId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        );
     return GetServiceTypes.fromJson(map);
   }
 
@@ -54,26 +51,24 @@ class UserRepositoryImpl implements UserRepository {
       {required List<String> services,
       required String username,
       required String agentId}) async {
-    final map = await Requests().patch(AppStrings.selectServiceTypeUrl,
-        body: {
-          "serviceTypes": services
-        },
-       );
+    final map = await Requests().patch(
+      AppStrings.selectServiceTypeUrl,
+      body: {"serviceTypes": services},
+    );
     return ServiceProvidersList.fromJson(map);
   }
 
   @override
   Future<GetReviews> getReviews({required String userId}) async {
-    final map = await Requests().get(AppStrings.getReviewUrl(userId), headers: {
-      'Authorization': AppStrings.token,
-    });
+    final map = await Requests().get(AppStrings.getReviewUrl(userId), );
     return GetReviews.fromJson(map);
   }
 
   @override
   Future<GalleryAgents> getGallery({required String userId}) async {
-    final map =
-        await Requests().get(AppStrings.getGalleryUrl,);
+    final map = await Requests().get(
+      AppStrings.getGalleryUrl,
+    );
     return GalleryAgents.fromJson(map);
   }
 
@@ -122,7 +117,9 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<UserOrderList> orderList({required String username}) async {
-    final map = await Requests().get(AppStrings.userOrders, );
+    final map = await Requests().get(
+      AppStrings.userOrders,
+    );
     return UserOrderList.fromJson(map);
   }
 
@@ -200,27 +197,29 @@ class UserRepositoryImpl implements UserRepository {
       {required String url,
       required String comment,
       required String rating}) async {
-    final map =
-        await Requests().post(AppStrings.publishProductReview(url: url), body: {
+    var payload = {
       "rating": rating,
       "comment": comment,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+    };
+    final map = await Requests().post(
+      AppStrings.publishProductReview(url: url),
+      body: json.encode(payload),
+    );
     return AuthData.fromJson(map);
   }
 
   @override
   Future<ServiceProvidersList> getAgentProfile(String userId) async {
-    final map = await Requests().get(AppStrings.agentProfile(userId), );
+    final map = await Requests().get(
+      AppStrings.agentProfile(userId),
+    );
     return ServiceProvidersList.fromJson(map);
   }
 
   @override
   Future<AuthData> uploadGallery(
       {required String agentId, required String image}) async {
-
-        var payload = {
+    var payload = {
       "image": image,
     };
     final map = await Requests()
@@ -248,21 +247,25 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<PetProfile> getUserPet({required String username}) async {
-    final map = await Requests()
-        .get(AppStrings.getUserPets, );
+    final map = await Requests().get(
+      AppStrings.getUserPets,
+    );
     return PetProfile.fromJson(map);
   }
 
   @override
   Future<PetProfileDetails> getUserPetDetails({required String petId}) async {
-    final map = await Requests()
-        .get(AppStrings.getUserPetDetails(petId: petId), );
+    final map = await Requests().get(
+      AppStrings.getUserPetDetails(petId: petId),
+    );
     return PetProfileDetails.fromJson(map);
   }
 
   @override
   Future<FAQ> getFaq() async {
-    final map = await Requests().get(AppStrings.getFaq,);
+    final map = await Requests().get(
+      AppStrings.getFaq,
+    );
     return FAQ.fromJson(map);
   }
 
@@ -287,29 +290,31 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<PrivacyPolicies> privacy(
-     )async {
-    final map = await Requests()
-        .get(AppStrings.privacy, );
+  Future<PrivacyPolicies> privacy() async {
+    final map = await Requests().get(
+      AppStrings.privacy,
+    );
     return PrivacyPolicies.fromJson(map);
   }
-  
+
   @override
   Future<AuthData> deleteUser({required String username}) async {
-    final map = await Requests()
-        .patch(AppStrings.deleteUser(username), headers: {
-      'Authorization': AppStrings.token,
-        "Content-type": "application/json"
-
-    });
+    final map = await Requests().patch(AppStrings.deleteUser(username),
+        headers: {
+          'Authorization': AppStrings.token,
+          "Content-type": "application/json"
+        });
     return AuthData.fromJson(map);
   }
-  
+
   @override
-  Future<AuthData> reportAgent({required String username, 
-  required String description, required String title,required String agentId}) async {
-    final map = await Requests()
-        .post(AppStrings.reportAgent(username, agentId), body: {
+  Future<AuthData> reportAgent(
+      {required String username,
+      required String description,
+      required String title,
+      required String agentId}) async {
+    final map =
+        await Requests().post(AppStrings.reportAgent(username, agentId), body: {
       "title": title,
       "description": description,
     }, headers: {
@@ -318,11 +323,12 @@ class UserRepositoryImpl implements UserRepository {
     return AuthData.fromJson(map);
   }
 
-  
   @override
-  Future<AuthData> reportBug({required String username, required String title, required String description}) async {
-    final map = await Requests()
-        .post(AppStrings.reportBug(username), body: {
+  Future<AuthData> reportBug(
+      {required String username,
+      required String title,
+      required String description}) async {
+    final map = await Requests().post(AppStrings.reportBug(username), body: {
       "title": title,
       "description": description,
     }, headers: {
@@ -333,8 +339,9 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<Notifications> getNotification({required String username}) async {
-    final map = await Requests()
-        .get(AppStrings.getUserNotifications, );
+    final map = await Requests().get(
+      AppStrings.getUserNotifications,
+    );
     return Notifications.fromJson(map);
   }
 }

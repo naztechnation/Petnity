@@ -211,7 +211,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> userAcceptOrderDelivered(
       {required String username, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.userMarkOrderDelivered(username: username, orderId: orderId),
+        AppStrings.userMarkOrderDelivered( orderId: orderId),
         headers: {
           'Authorization': AppStrings.token,
         });
@@ -223,10 +223,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> agentAcceptDeliveredServiceOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.userMarkOrderDelivered(username: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        AppStrings.userMarkOrderDelivered( orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -369,10 +367,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String username, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.userMarkVetOrderDelivered(
-            username: username, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+             orderId: orderId),
+       );
 
     return AuthData.fromJson(map);
   }
