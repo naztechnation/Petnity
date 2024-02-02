@@ -136,16 +136,28 @@ class AppStrings {
       '${_baseUrl}order/agent-complete-order/$orderId';
 
   static String userMarkDeliveredShopOrder(
-          {required String username, required String orderId}) =>
-      '${_baseUrl}shop/user-marked-delivered/$username/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}shop/user-marked-delivered/$orderId';
 
   static String agentMarkDeliveredShopOrder(
-          {required String agentId, required String orderId}) =>
-      '${_baseUrl}shop/agent-marked-delivered/$agentId/$orderId';
+          { required String orderId}) =>
+      '${_baseUrl}shop/agent-marked-delivered/$orderId';
 
   static String agentRejectServiceOrder(
           { required String orderId}) =>
       '${_baseUrl}order/agent-reject-order/$orderId';
+static String productReviewUrl(
+          { required String productId}) =>
+      '${_baseUrl}shop/review-product/$productId';
+
+static String agentRejectShopOrder(
+          { required String orderId}) =>
+      '${_baseUrl}order/agent-reject-order/$orderId';
+
+  static String agentAcceptShopOrder(
+          { required String orderId}) =>
+      '${_baseUrl}shop/agent-accept-shop-order/$orderId';
+    
 
   static String userMarkOrderDelivered(
           {required String orderId}) =>
@@ -163,10 +175,8 @@ class AppStrings {
   }) =>
       '${_baseUrl}user/get-user-wallet-balance';
 
-  static String getUserOrderedProducts({
-    required String username,
-  }) =>
-      '${_baseUrl}shop/get-user-shop-orders/$username';
+  static String getUserOrderedProducts =
+      '${_baseUrl}shop/get-user-shop-orders';
 
   static String getUserProfile({
     required String username,

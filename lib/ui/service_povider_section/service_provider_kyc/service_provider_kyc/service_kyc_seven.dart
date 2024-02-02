@@ -55,8 +55,8 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
         child: BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
             if (state is AgentResLoaded) {
-              if (state.agents.status!) {
-                StorageHandler.saveAgentId(state.agents.data?.agent?.sId.toString() ?? '');
+              if (state.agents.status ?? false) {
+                StorageHandler.saveUserId(state.agents.data?.agent?.sId.toString() ?? '');
                 StorageHandler.saveUserToken(state.agents.data?.token.toString() ?? '');
 
                  

@@ -22,7 +22,7 @@ class ReviewWidget extends StatelessWidget {
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(40),
                   child: SizedBox(height: 60, width: 50,child: ImageView.network('', height: 60,))),
-                title: Text(reviews.profile?.user?.username ?? ""),
+                title: Text(reviews.user?.username ?? ""),
                 subtitle: RatingWidget(coloredStars: reviews.rating!, size: 20,),
               ),
               

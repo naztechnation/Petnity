@@ -12,9 +12,9 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/service_provider/service_provider_cubit.dart';
-import '../../../../model/order/order.dart';
-import '../../../../model/service_provider_models/all_agent_orders.dart';
 import '../../../../model/session_types/session_types.dart';
+import '../../../../model/user_models/orders.dart';
+import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
@@ -511,7 +511,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
     );
   }
 
-  Widget _newRequestWidget(BuildContext context, Order order, userModel) {
+  Widget _newRequestWidget(BuildContext context, Orders order, userModel) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -539,7 +539,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 children: [
                   CustomText(
                     text:
-                        '${order.profile?.user?.username.toString().capitalizeFirstOfEach}',
+                        '${order.user?.username.toString().capitalizeFirstOfEach}',
                     weight: FontWeight.bold,
                   ),
                   CustomText(
@@ -622,17 +622,17 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     sellerId: order.agent?.sId.toString() ?? '',
                     startDate1: order.pickupTime ?? '0',
                     startDate2: order.dropoffTime ?? '0',
-                    amount: order.fee ?? '',
-                    paymentId: order.purchaseId ?? '',
+                    amount: order.fee.toString() ?? '',
+                    paymentId:  '',
                     sellerImage: order.agent?.picture ?? '',
                     isAcceptedService: order.isAccepted ?? false,
                     isOngoingService: order.isOngoing ?? false,
                     isCompletedService: order.isCompleted ?? false,
-                    orderId: order.id.toString(),
-                    customerName: order.profile?.user?.username ?? '',
-                    customerFireBaseId: order.profile?.firebaseId ?? '',
-                    customerImage: order.profile?.profileImage ?? '',
-                    customerPhone: order.profile?.phoneNumber ?? '',
+                    orderId: order.sId.toString(),
+                    customerName: order.user?.username ?? '',
+                    customerFireBaseId: order.user?.firebaseId ?? '',
+                    customerImage: order.user?.profileImage ?? '',
+                    customerPhone: order.user?.phoneNumber ?? '',
                     isRejected: order.isRejected ?? false,
                     isUserMarkedService: order.userMarkedDelivered ?? false,
                     isAgentMarkedService: order.agentMarkedDelivered ?? false,
@@ -828,7 +828,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
           children: [
             Expanded(
               child: CustomText(
-                text: order.profile?.user?.username
+                text: order.user?.username
                     .toString()
                     .capitalizeFirstOfEach,
                 size: 14,
@@ -862,7 +862,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: CustomText(
-                text: 'Purchase ID  ${order.paymentId}',
+                text: 'Purchase ID  ',
                 size: 12,
                 weight: FontWeight.w400,
               ),
@@ -882,17 +882,17 @@ class _ServiceProviderPetDeliveryHomeBodyState
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return PurchaseRequest(
                   agentName: '${order.product?.agent?.name}',
-                  customerName: '${order.profile?.user?.username}',
+                  customerName: '${order.user?.username}',
                   productName: '${order.product?.name}',
                   productImage: '${order.product?.images?[0]}',
                   quantity: '${order.quantity}',
                   price: '${order.product?.price}',
-                  purchaseId: '${order.paymentId}',
+                  purchaseId: '',
                   deliveryDate: today,
                   deliveryLocation: ' ',
-                  ownerImage: '${order.profile?.profileImage}',
-                  ownerNumber: '${order.profile?.phoneNumber}',
-                  ownerFirebaseId: '${order.profile?.firebaseId}',
+                  ownerImage: '${order.user?.profileImage}',
+                  ownerNumber: '${order.user?.phoneNumber}',
+                  ownerFirebaseId: '${order.user?.firebaseId}',
                   isUserMarkedOrder: order.userMarkedDelivered ?? false,
                   isAgentMarkedOrder: order.agentMarkedDelivered ?? false,
                   orderId: order.product?.sId.toString() ?? '',

@@ -147,12 +147,13 @@ class UserRepositoryImpl implements UserRepository {
       {required String address,
       required String productId,
       required String quantity}) async {
-    final map =
-        await Requests().post(AppStrings.createOrderPayment, body: {
+        var payload = {
       "productId": productId,
       "quantity": quantity,
       "address": address
-    },);
+    };
+    final map =
+        await Requests().post(AppStrings.createOrderPayment, body: json.encode(payload),);
     return CreatePaymentOrder.fromJson(map);
   }
 
@@ -178,9 +179,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<GetProductReviews> getProductReviews(
       {required String productId}) async {
     final map = await Requests()
-        .get(AppStrings.getProductReview(productId: productId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getProductReview(productId: productId),);
     return GetProductReviews.fromJson(map);
   }
 
@@ -222,9 +221,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<UserShopData> shopOrderData({required String username}) async {
     final map = await Requests()
-        .get(AppStrings.getUserOrderedProducts(username: username), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getUserOrderedProducts,);
     return UserShopData.fromJson(map);
   }
 

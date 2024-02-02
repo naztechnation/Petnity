@@ -63,7 +63,7 @@ class SignInScreen extends StatelessWidget {
 
                   StorageHandler.saveUserPassword(_passwordController.text);
 
-                  if (state.userData.data?.user?.isAgent ?? false) {
+                  if (state.userData.data!.user!.isAgent!) {
                     StorageHandler.saveIsUserType('service_provider');
                     StorageHandler.saveAgentId(
                         state.userData.data?.user?.sId.toString() ?? '');
@@ -374,14 +374,15 @@ class SignInScreen extends StatelessWidget {
       Modals.showToast(message, messageType: MessageType.success);
 
       if (isAgent) {
-        StorageHandler.saveIsUserType('user');
-
-        AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
-      } else {
         StorageHandler.saveIsUserType('service_provider');
 
         AppNavigator.pushAndReplaceName(context,
             name: AppRoutes.serviceProviderLandingPage);
+       
+      } else {
+         StorageHandler.saveIsUserType('user');
+
+        AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
       }
     } else if (firebaseUser.status == Status.authenticateError) {
       Modals.showToast(message, messageType: MessageType.error);

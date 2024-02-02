@@ -8,14 +8,14 @@ import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/service_povider_section/service_provider_home/all_requests_section/new_requests_delivery.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/filter_search_section.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
 import '../../../handlers/secure_handler.dart';
-import '../../../model/order/order.dart';
 import '../../../model/service_provider_models/all_agent_orders.dart';
+import '../../../model/user_models/orders.dart';
+import '../../../model/user_models/shop_order.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../widgets/modals.dart';
 
@@ -53,7 +53,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   final TextEditingController searchField = TextEditingController();
 
   List<ShopOrders> orders = [];
-  List<Order> availableServices = [];
+  List<Orders> availableServices = [];
 
   late ServiceProviderCubit _serviceProviderCubit;
  

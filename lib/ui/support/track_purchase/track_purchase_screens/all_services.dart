@@ -3,16 +3,16 @@ import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
-import '../../../../model/user_models/order_list.dart';
+
 import '../../../../model/user_models/orders.dart';
-import '../../../../model/user_models/user_shopping_data.dart';
+import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../res/enum.dart';
 import '../track_purchase_widgets/ongoing_purchase_widget.dart';
 
 class AllServices extends StatelessWidget {
   final List<Orders>? allOrders;
-  final List<UserShopList>? userShopOrder;
+  final List<ShopOrders>? userShopOrder;
   final List<VetOrders>? vetOrders;
 
   final String emptyListTitle;

@@ -163,7 +163,7 @@ class _ProductDetailState extends State<ProductDetail> {
         } else {}
       } else if (state is GetProductReviewsLoaded) {
         if (state.getAgentPayment.status!) {
-          reviews = state.getAgentPayment.reviews ?? [];
+          reviews = state.getAgentPayment.data?.reviews ?? [];
         } else {}
       } else if (state is ProductOrderLoaded) {
         if (state.createPaymentOrder.status!) {

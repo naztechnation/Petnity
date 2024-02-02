@@ -168,10 +168,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.agentMarkDeliveredShopOrder(
-            agentId: agentId, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+             orderId: orderId),
+        );
 
     return AuthData.fromJson(map);
   }
@@ -181,11 +179,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String username, required String orderId}) async {
     final map = await Requests().patch(
         AppStrings.userMarkDeliveredShopOrder(
-            username: username, orderId: orderId),
-        headers: {
-          'Authorization': AppStrings.token,
-          'Content-Type': 'application/json',
-        });
+             orderId: orderId),
+       );
 
     return AuthData.fromJson(map);
   }

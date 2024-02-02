@@ -1,10 +1,11 @@
  
-import '../order/order.dart';
+import 'package:petnity/model/user_models/orders.dart';
+
 import 'vet_orders.dart'; 
 
 class AgentServicesList {
   bool? status;
-  List<Order>? orders;
+  List<Orders>? orders;
   List<VetOrders>? vetOrders;
 
   AgentServicesList({this.status, this.orders, this.vetOrders});
@@ -12,9 +13,9 @@ class AgentServicesList {
   AgentServicesList.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['orders'] != null) {
-      orders = <Order>[];
+      orders = <Orders>[];
       json['orders'].forEach((v) {
-        orders!.add(new Order.fromJson(v));
+        orders!.add(new Orders.fromJson(v));
       });
     }
     if (json['vet_orders'] != null) {

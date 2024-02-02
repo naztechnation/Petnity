@@ -10,7 +10,7 @@ import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/order/order.dart';
+import '../../../../model/user_models/orders.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
@@ -22,7 +22,7 @@ import '../widget/progressbar.dart';
 
 class OngoingDeliveryWidget extends StatefulWidget {
   final String label;
-  final Order services;
+  final Orders services;
   OngoingDeliveryWidget({this.label = 'Details', required this.services});
 
   @override
@@ -80,7 +80,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.services.profile?.user?.username
+                            widget.services.user?.username
                                     .toString()
                                     .capitalizeFirstOfEach ??
                                 '',
@@ -162,7 +162,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       GestureDetector(
                           onTap: () {
                             _callNumber(
-                                widget.services.profile?.phoneNumber ?? '');
+                                widget.services.user?.phoneNumber ?? '');
                           },
                           child: ImageView.svg(AppImages.callBorder)),
                       const SizedBox(
@@ -170,8 +170,8 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (widget.services.profile?.firebaseId == '' ||
-                                widget.services.profile?.firebaseId == null) {
+                            if (widget.services.user?.firebaseId == '' ||
+                                widget.services.user?.firebaseId == null) {
                               Modals.showToast(
                                   'Can\'t communicate with this agent at the moment. Please');
                             } else {
@@ -182,10 +182,10 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                            ,
                                     userImage:
                                         widget.services.agent?.picture ?? '',
-                                    uid: widget.services.profile?.firebaseId ??
+                                    uid: widget.services.user?.firebaseId ??
                                         '',
                                     customerName: widget
-                                            .services.profile?.user?.username ??
+                                            .services.user?.username ??
                                         '',
                                   ));
                             }
@@ -202,7 +202,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                           ?.user?.username ??
                                       '',
                                   customerName:
-                                      widget.services.profile?.user?.username ??
+                                      widget.services.user?.username ??
                                           '',
                                 ));
                           },
@@ -233,8 +233,8 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                   widget.services.agent?.sId.toString() ?? '',
                               startDate1: widget.services.pickupTime ?? '0',
                               startDate2: widget.services.dropoffTime ?? '0',
-                              amount: widget.services.fee ?? '',
-                              paymentId: widget.services.purchaseId ?? '',
+                              amount: widget.services.fee.toString() ?? '',
+                              paymentId:  '',
                               sellerImage: widget.services.agent?.picture ?? '',
                               isAcceptedService:
                                   widget.services.isAccepted ?? false,
@@ -242,15 +242,15 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                   widget.services.isOngoing ?? false,
                               isCompletedService:
                                   widget.services.isCompleted ?? false,
-                              orderId: widget.services.id.toString(),
+                              orderId: widget.services.sId.toString(),
                               customerName:
-                                  widget.services.profile?.user?.username ?? '',
+                                  widget.services.user?.username ?? '',
                               customerPhone:
-                                  widget.services.profile?.phoneNumber ?? '',
+                                  widget.services.user?.phoneNumber ?? '',
                               customerImage:
-                                  widget.services.profile?.profileImage ?? '',
+                                  widget.services.user?.profileImage ?? '',
                               customerFireBaseId:
-                                  widget.services.profile?.firebaseId ?? '',
+                                  widget.services.user?.firebaseId ?? '',
                               isRejected: widget.services.isRejected ?? false,
                               isUserMarkedService:
                                   widget.services.userMarkedDelivered ?? false,

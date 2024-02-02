@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/enum.dart';
-import '../order/order.dart';
 import '../service_provider_models/all_agent_orders.dart';
 import '../user_models/agent_services_lists.dart';
+import '../user_models/orders.dart';
+import '../user_models/shop_order.dart';
 import '../user_models/vet_orders.dart';
 import 'base_viewmodel.dart';
 
@@ -26,7 +26,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   File? _imageURl1;
   List<ShopOrders> _orders = [];
 
-  List<Order> _availableServices = [];
+  List<Orders> _availableServices = [];
   List<VetOrders> _vetOrders = [];
 
   final List<int> _serviceSelectedIndexes = [];
@@ -282,7 +282,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   String get amountController => _amountController;
 
   List<ShopOrders> get order => _orders;
-  List<Order> get availableServices => _availableServices;
+  List<Orders> get availableServices => _availableServices;
   List<VetOrders> get vetOrders => _vetOrders;
 
   List<String> _banksAndInstitutions = [
@@ -345,12 +345,12 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   int get pageIndex => _orderPageNumber;
   int get currentPage => _currentPage;
 
-  List<Order> get onGoingOrdersList => onGoingServices();
+  List<Orders> get onGoingOrdersList => onGoingServices();
 
   List<VetOrders> get vetOnGoingOrdersList => vetOnGoingOrdersServices();
 
-  List<Order> onGoingServices() {
-    List<Order> list = [];
+  List<Orders> onGoingServices() {
+    List<Orders> list = [];
 
     for (var order in _availableServices) {
       if (order.isOngoing == true && order.isCompleted != true) {

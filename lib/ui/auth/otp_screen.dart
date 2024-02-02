@@ -65,7 +65,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   messageType: MessageType.success);
 
              
-              
+              StorageHandler.saveUserToken(state.user.data?.token);
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.successScreen);
             } else {

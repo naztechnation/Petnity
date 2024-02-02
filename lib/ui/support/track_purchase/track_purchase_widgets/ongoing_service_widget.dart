@@ -9,7 +9,6 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/user_models/order_list.dart';
 import '../../../../model/user_models/orders.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
@@ -205,8 +204,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             sellerId: allOrders.agent?.sId.toString() ?? '',
                             startDate1: allOrders.pickupTime ?? '0',
                             startDate2: allOrders.dropoffTime ?? '0',
-                            amount: allOrders.fee.toString(),
-                            paymentId: allOrders.transactionId ?? '',
+                            amount: allOrders.fee.toString() ?? '',
+                            paymentId:  '',
                             sellerImage: allOrders.agent?.picture ?? '',
                             isAcceptedService: allOrders.isAccepted ?? false,
                             isOngoingService: allOrders.isOngoing ?? false,

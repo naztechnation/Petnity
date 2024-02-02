@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/model/user_models/shop_order.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_screens/all_services.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
-import '../../../model/user_models/order_list.dart';
 import '../../../model/user_models/orders.dart';
-import '../../../model/user_models/user_shopping_data.dart';
 import '../../../model/user_models/vet_orders.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -49,7 +47,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
   List<Orders> allUserOrder = [];
   List<Orders> completedUserOrder = [];
   List<Orders> pendingUserOrder = [];
-  List<UserShopList> userShopOrder = [];
+  List<ShopOrders> userShopOrder = [];
   List<Orders> ongoingUserOrder = [];
   List<Orders> rejectedUserOrder = [];
 
@@ -102,7 +100,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                  
           } else {}
         }else if(state is UserShopListLoaded){
-          userShopOrder = state.userShopData.shopOrders ?? [];
+          userShopOrder = state.userShopData.data?.shopOrders ?? [];
         } 
         else if (state is UserNetworkErrApiErr) {
         } else if (state is UserNetworkErr) {}

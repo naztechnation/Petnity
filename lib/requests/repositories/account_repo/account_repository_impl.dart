@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:petnity/model/user_models/id_types.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/account_models/create_agent.dart';
 import '../../../model/account_models/auth_data.dart';
@@ -28,13 +27,12 @@ class AccountRepositoryImpl implements AccountRepository {
       'phoneNumber': phone,
       'firebaseId': firebaseId,
       'deviceId': deviceId,
-      'password': password
+      'password': password,
+      'profileImage': profileImage,
     };
 
     final map = await Requests()
-        .post(AppStrings.otpUrl(url), body: json.encode(payload), headers: {
-      'Content-type': 'application/json',
-    });
+        .post(AppStrings.otpUrl(url), body: json.encode(payload), );
     return AuthData.fromJson(map);
   }
 

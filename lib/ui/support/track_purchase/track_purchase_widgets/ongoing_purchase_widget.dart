@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
+import 'package:petnity/model/user_models/confirm_shop_payment.dart';
+import 'package:petnity/model/user_models/orders.dart';
 import 'package:petnity/res/app_colors.dart';
 
 import 'package:petnity/res/app_constants.dart';
@@ -10,6 +12,8 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart'; 
 
 import '../../../../handlers/secure_handler.dart'; 
+import '../../../../model/user_models/create_payment_order.dart';
+import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/user_shopping_data.dart'; 
 import '../../../../utils/navigator/page_navigator.dart'; 
 import '../../../notfications_pages/chat_pages/chat_page.dart';
@@ -19,7 +23,7 @@ import '../../../widgets/modals.dart';
 import '../widget/sellers_progress_bar.dart';
 
 class OngoingPurchaseWidget extends StatefulWidget {
-  final UserShopList allOrders;
+  final ShopOrders allOrders;
 
   final String label;
   OngoingPurchaseWidget({this.label = 'Details', required this.allOrders});
@@ -30,7 +34,7 @@ class OngoingPurchaseWidget extends StatefulWidget {
 }
 
 class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
-  final UserShopList allOrders;
+  final ShopOrders allOrders;
 
   _OngoingServiceWidgetState(this.allOrders);
 
@@ -67,7 +71,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                 ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: ImageView.network(
-                      '${allOrders.product?.agent?.picture}',
+                      '${allOrders.agent?.picture}',
                       height: 50,
                       width: 50,
                       fit: BoxFit.cover,
@@ -78,7 +82,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.product?.agent?.user?.username ?? '',
+                        allOrders.agent?.user?.username ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(
@@ -176,7 +180,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
                               page: VideoCall(
-                                customerName: allOrders.profile?.user?.username ?? '',
+                                customerName: allOrders.user?.username ?? '',
                                 agentName: allOrders.product?.agent?.user?.username ?? '',
                               ));
                         },
@@ -192,13 +196,13 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return PurchaseRequest(
                     agentName: '${allOrders.product?.agent?.user?.username}',
-                    customerName: '${allOrders.profile?.user?.username}',
+                    customerName: '${allOrders.user?.username}',
                      
                     productName: '${allOrders.product?.name}',
                     productImage: '${allOrders.product?.images?[0]}',
                     quantity: '${allOrders.quantity}',
                     price: '${allOrders.product?.price}',
-                    purchaseId: '${allOrders.paymentId}',
+                    purchaseId: '',
                     deliveryDate: today,
                     deliveryLocation: ' ', 
                     ownerImage: '${allOrders.product?.agent?.picture}',
