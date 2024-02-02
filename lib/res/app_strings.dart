@@ -67,8 +67,8 @@ class AppStrings {
       '${_baseUrl}auth/upload-id-photo';
   static String productDetailsUrl(String productId) =>
       '${_baseUrl}shop/get-product/$productId';
-  static String createOrder(String packageId, String username) =>
-      '${_baseUrl}order/create-order/$username/$packageId';
+  static String createOrder(String packageId,) =>
+      '${_baseUrl}order/create-order/$packageId';
   static String getReviewUrl(String userId) =>
       '${_baseUrl}user/get-reviews$userId';
   static String getGalleryUrl =
@@ -86,8 +86,8 @@ class AppStrings {
 
   static String confirmPaymentUrl(String username, String agentId) =>
       '${_baseUrl}order/order-payment/$username/$agentId';
-  static String getAgentPackagesUrl(String agentId, String serviceId) =>
-      '${_baseUrl}users/get-agent-service-packages/$agentId/$serviceId';
+  static String getAgentPackagesUrl( String serviceId) =>
+      '${_baseUrl}user/get-agent-service-packages/$serviceId';
   static String selectPetTypeUrl  =
       '${_baseUrl}auth/select-pet-types';
   static String selectServiceTypeUrl =
@@ -210,8 +210,8 @@ class AppStrings {
   ) =>
       '${_baseUrl}user/get-vet-service/$agentId';
 
-  static String createVetOrder(String agentId, String username) =>
-      '${_baseUrl}order/create-vet-order/$username/$agentId';
+  static String createVetOrder(String agentId,) =>
+      '${_baseUrl}order/create-vet-order/$agentId';
   static String confirmVetPaymentOrder(String orderId, String username) =>
       '${_baseUrl}order/vet-order-payment/$username/$orderId';
 

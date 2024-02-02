@@ -76,9 +76,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<GetAgentsPackages> getAgentPackages(
       {required String agentId, required String serviceId}) async {
     final map = await Requests()
-        .get(AppStrings.getAgentPackagesUrl(agentId, serviceId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getAgentPackagesUrl( serviceId), );
     return GetAgentsPackages.fromJson(map);
   }
 
@@ -100,18 +98,19 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<CreateOrder> createOrder(
       {required String packageId,
-      required String username,
       required String pickupTime,
       required String dropOffTime,
+      required String fee,
       required String pickUpLocation}) async {
+
+        var payload = {
+      "pickupTime": pickupTime,
+      "dropoffTime": dropOffTime,
+      "pickupLocation": pickUpLocation,
+      "fee": fee,
+    };
     final map = await Requests()
-        .post(AppStrings.createOrder(packageId, username), body: {
-      "pickup_time": pickupTime,
-      "dropoff_time": dropOffTime,
-      "pickup_location": pickUpLocation,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+        .post(AppStrings.createOrder(packageId,), body: json.encode(payload), );
     return CreateOrder.fromJson(map);
   }
 

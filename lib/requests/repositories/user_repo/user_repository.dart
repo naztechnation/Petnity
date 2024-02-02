@@ -48,7 +48,7 @@ abstract class UserRepository {
     Future<ConfirmShopPayment> confirmShoppingPayment({required String username, required String purchaseId, required String shopOrderId}); 
     Future<CreatePaymentOrder> createOrderPayment({required String username, required String productId, required String quantity}); 
     Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
-    Future<CreateOrder> createOrder({required String packageId,required String username,required String pickupTime, required String dropOffTime, required String pickUpLocation});
+    Future<CreateOrder> createOrder({required String packageId,required String fee,required String pickupTime, required String dropOffTime, required String pickUpLocation});
     Future<UserProfile> getUserProfile({required String username});
     Future<PetProfile> getUserPet({required String username});
     Future<PetProfileDetails> getUserPetDetails({required String petId});

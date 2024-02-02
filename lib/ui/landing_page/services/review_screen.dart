@@ -173,7 +173,7 @@ class _ReviewState extends State<Review> {
                   description: state.message,
                   onRefresh: () => _userCubit.createOrder(
                       packageId: agent.packageId,
-                      username: widget.username,
+                      fee: widget.amount,
                       pickupTime: '${widget.date1} ${formatTime(widget.time1)}',
                       dropOffTime:
                           '${widget.date2} ${formatTime(widget.time2)}',
@@ -184,7 +184,7 @@ class _ReviewState extends State<Review> {
                 description: state.message,
                 onRefresh: () => _userCubit.createOrder(
                     packageId: agent.packageId,
-                    username: widget.username,
+                    fee: widget.amount,
                     pickupTime: '${widget.date1} ${formatTime(widget.time1)}',
                     dropOffTime: '${widget.date2} ${formatTime(widget.time2)}',
                     pickUpLocation: agent.location),
@@ -198,8 +198,10 @@ class _ReviewState extends State<Review> {
                     ));
               });
             } else if (state is CreateOrderLoaded) {
-              _handlePaymentInitialization(
-                  state.createOrder.order!.id.toString());
+
+              Modals.showToast(state.createOrder.message ?? '', messageType: MessageType.success);
+              // _handlePaymentInitialization(
+              //     state.createOrder.order!.id.toString());
             }
 
             return Stack(
@@ -443,7 +445,7 @@ class _ReviewState extends State<Review> {
                             // Modals.showToast(widget.serverDate1);
                             _userCubit.createOrder(
                                 packageId: agent.packageId,
-                                username: widget.username,
+                                fee: widget.amount,
                                 pickupTime:
                                     '${widget.serverDate}',
                                 dropOffTime:

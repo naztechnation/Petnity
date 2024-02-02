@@ -40,7 +40,7 @@ abstract class ServiceProviderRepository {
     required List<int> sessionType, required List<int> contactMedium ,required int amount, }); 
     Future<AuthData> publishVetServices({ required String agentId,required String serviceId,}); 
     Future<VetServices> vetServices({ required String agentId,}); 
-    Future<CreateVetOrder> createVetOrder({ required String agentId,required String  username, required String  vetService,required String  sessionTime}); 
+    Future<CreateVetOrder> createVetOrder({ required String agentId,required String  fee, required String  vetService,required String  sessionTime}); 
     Future<CreateVetOrder> confirmVetPaymentOrder({ required String orderId,required String  username, required String  vetServiceId,required String  purchaseId}); 
      Future<AuthData> acceptAgentVetOrder({required String agentId, required String orderId,}); 
     Future<AuthData> acceptOngoingVetOrder({required String agentId, required String orderId,}); 

@@ -602,7 +602,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
 
   Future<void> vetServicesOrder(
       {required String agentId,
-      required String username,
+      required String fee,
       required String vetService,
       required String sessionTime}) async {
     try {
@@ -610,7 +610,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
 
       final services = await serviceProviderRepository.createVetOrder(
         agentId: agentId,
-        username: username,
+        fee: fee,
         vetService: vetService,
         sessionTime: sessionTime,
       );

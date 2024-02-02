@@ -619,7 +619,7 @@ class _VetBookingState extends State<VetBooking> {
                                           _serviceProviderCubit
                                               .vetServicesOrder(
                                                   agentId: widget.agentId,
-                                                  username: username,
+                                                  fee: amount,
                                                   vetService: vetServiceId,
                                                   sessionTime:
                                                       formattedDateTime);

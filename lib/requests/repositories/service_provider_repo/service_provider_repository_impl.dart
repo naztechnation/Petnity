@@ -279,9 +279,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         AppStrings.getVetService(
           agentId,
         ),
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        );
 
     return VetServices.fromJson(map);
   }
@@ -289,16 +287,15 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   @override
   Future<CreateVetOrder> createVetOrder(
       {required String agentId,
-      required String username,
+      required String fee,
       required String vetService,
       required String sessionTime}) async {
+        var payload = {
+      'fee': fee,
+      'sessionTime': sessionTime,
+    };
     final map = await Requests()
-        .post(AppStrings.createVetOrder(agentId, username), body: {
-      'vet_service': vetService,
-      'session_time': sessionTime,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+        .post(AppStrings.createVetOrder(agentId,), body: json.encode(payload),);
 
     return CreateVetOrder.fromJson(map);
   }

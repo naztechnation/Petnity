@@ -213,7 +213,7 @@ class UserCubit extends Cubit<UserStates> {
 
   Future<void> createOrder(
       {required String packageId,
-      required String username,
+      required String fee,
       required String pickupTime,
       required String dropOffTime,
       required String pickUpLocation}) async {
@@ -222,7 +222,7 @@ class UserCubit extends Cubit<UserStates> {
 
       final order = await userRepository.createOrder(
           packageId: packageId,
-          username: username,
+          fee: fee,
           pickupTime: pickupTime,
           dropOffTime: dropOffTime,
           pickUpLocation: pickUpLocation);
