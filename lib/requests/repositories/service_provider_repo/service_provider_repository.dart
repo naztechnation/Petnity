@@ -25,7 +25,7 @@ abstract class ServiceProviderRepository {
     Future<AccountDetailsList> accountDetails({required String agentId,});
     Future<AuthData> updateAccountDetails({required String agentId,required String accountName,required String accountNumber,required String bankName,});
     Future<AuthData> createServicePackage({required String agentId,required String servicesId,required String levelAmount,required String name,required String description, required String duration,required String pricing});
-    Future<CreateShopProduct> createShopProduct({required String agentId,required String name,required String pricing,required String image,required String description,});
+    Future<CreateShopProduct> createShopProduct({required String quantity,required String name,required String pricing,required List<String> image,required String description,});
     Future<AgentServicesList> getAgentServicesList({required String agentId}); 
     Future<AuthData> acceptAgentOrder({required String agentId, required String orderId,}); 
     Future<AuthData> acceptOngoingOrder({required String agentId, required String orderId,}); 

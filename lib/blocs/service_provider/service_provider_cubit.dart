@@ -112,17 +112,17 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
   }
 
   Future<void> createShoppingProduct({
-    required String agentId,
+    required String quantity,
     required String name,
     required String pricing,
-    required String image,
+    required List<String> image,
     required String description,
   }) async {
     try {
       emit(CreateShopProductsLoading());
 
       final services = await serviceProviderRepository.createShopProduct(
-        agentId: agentId,
+        quantity: quantity,
         name: name,
         pricing: pricing,
         image: image,

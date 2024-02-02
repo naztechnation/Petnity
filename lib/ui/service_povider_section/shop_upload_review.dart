@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/enum.dart';
@@ -24,27 +25,34 @@ class ProductReviewDetail extends StatefulWidget {
   final String productName;
   final String price;
   final String aboutProduct;
-
+  final String quantity;
+  final List<String> images;
   const ProductReviewDetail(
       {super.key,
       required this.productName,
       required this.price,
-      required this.aboutProduct});
+      required this.quantity,
+      required this.aboutProduct,
+      required this.images});
 
   @override
   State<ProductReviewDetail> createState() =>
-      _ProductDetailState(productName, price, aboutProduct);
+      _ProductDetailState(productName, price, aboutProduct, quantity, images);
 }
 
 class _ProductDetailState extends State<ProductReviewDetail> {
   final String productName;
   final String price;
   final String aboutProduct;
+  final String quantity;
+  final List<String> images;
 
   _ProductDetailState(
     this.productName,
     this.price,
     this.aboutProduct,
+    this.quantity,
+    this.images,
   );
 
   bool isChecked = false;
@@ -82,18 +90,16 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                 messageType: MessageType.success);
 
             AppNavigator.pushAndStackPage(context,
-                page: ShopUploadSuccessful(
-                   
-                ));
+                page: ShopUploadSuccessful());
           } else {
             Modals.showToast(
               state.createShopProduct.message ?? '',
             );
           }
         } else if (state is CreateServiceNetworkErrApiErr) {
-           Modals.showToast(
-              state.message ?? '',
-            );
+          Modals.showToast(
+            state.message ?? '',
+          );
         } else if (state is CreateServiceNetworkErr) {}
       }, builder: (context, state) {
         return Scaffold(
@@ -127,43 +133,38 @@ class _ProductDetailState extends State<ProductReviewDetail> {
               height: screenSize(context).height,
               width: screenSize(context).width,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                      begin: Alignment.topRight,
-                      end: Alignment.topLeft)),
+                  gradient: LinearGradient(colors: [
+                AppColors.scaffoldColor,
+                AppColors.scaffoldColor
+              ], begin: Alignment.topRight, end: Alignment.topLeft)),
               child: ListView(
                 children: [
                   SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
-                    ),
-                    margin: const EdgeInsets.symmetric(horizontal:100),
-                    padding: const EdgeInsets.symmetric(horizontal:0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-
-                      child: ImageView.file(
-                          File(
-                            serviceProvider.imageURl!.path,
-                          ),
-                          height: 150,
-                      width: MediaQuery.sizeOf(context).width * 0.5,
-                    
-                          fit: BoxFit.cover),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 0.0,
+                        mainAxisSpacing: 8.0,
+                      ),
+                      itemCount: images.length,
+                      itemBuilder: (context, index) {
+                        return imageWidget(
+                            context, images, index, serviceProvider);
+                      },
                     ),
                   ),
                   SizedBox(
                     height: 30,
                   ),
                   Container(
-                    color: Colors.yellow.withOpacity(0.1),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+                    color: Colors.blue.withOpacity(0.05),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -172,7 +173,7 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  productName,
+                                  productName.capitalizeFirstOfEach,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 18),
@@ -218,18 +219,49 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                           SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            'Price',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'NGN${AppUtils.convertPrice(price)}',
-                            style: TextStyle(
-                                fontSize: 15, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Price',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    'NGN${AppUtils.convertPrice(price)}',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Quantity',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    quantity,
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ]),
                   ),
@@ -241,17 +273,29 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                         vertical: 0.0, horizontal: 20),
                     child: ButtonView(
                       onPressed: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        String imgUrl = await serviceProvider.uploadImage(
-                            serviceProvider.imageURl!.path,
-                            'petnity_service_provider');
-                        setState(() {
-                          isLoading = false;
-                        });
+                        List<String> uploadedImages = [];
 
-                        _submit(context, imgUrl);
+                        for (int i = 0; i < images.length; i++) {
+                          String image = images[i];
+
+                          if (image.isNotEmpty) {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            String imgUrl = await serviceProvider.uploadImage(
+                                serviceProvider.imageURl!.path,
+                                'petnity_service_provider');
+                                uploadedImages.add(imgUrl);
+
+                            if (i == images.length - 1) {
+                              Modals.showToast("I am the last.");
+                              setState(() {
+                                isLoading = false;
+                              });
+                               _submit(context, uploadedImages);
+                            }
+                          }
+                        }
                       },
                       processing:
                           (state is CreateShopProductsLoading || isLoading),
@@ -268,7 +312,7 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                       ),
                     ),
                   ),
-                   SizedBox(
+                  SizedBox(
                     height: 50,
                   ),
                 ],
@@ -280,12 +324,33 @@ class _ProductDetailState extends State<ProductReviewDetail> {
     );
   }
 
-  _submit(BuildContext ctx, String image) {
+  _submit(BuildContext ctx, List<String> image) {
     ctx.read<ServiceProviderCubit>().createShoppingProduct(
-        agentId: agentId,
+        quantity: quantity,
         name: productName,
         pricing: price,
         image: image,
         description: aboutProduct);
+  }
+
+  Widget imageWidget(BuildContext context, image, index, services) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(22),
+          child: ImageView.file(
+              File(
+                image[index],
+              ),
+              fit: BoxFit.cover),
+        ),
+      ),
+    );
   }
 }

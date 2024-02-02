@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/enum.dart';
@@ -28,7 +29,6 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   List<Order> _availableServices = [];
   List<VetOrders> _vetOrders = [];
 
-
   final List<int> _serviceSelectedIndexes = [];
   final List<int> _contactSelectedIndexes = [];
   String _amountController = '';
@@ -41,67 +41,68 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
 
   List<String> filterBankList = [];
 
+  var addProductImage = [
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ];
+
   addServiceType(int index, var item, var image) {
-  if (_servicesType.length > 3) {
-    _serviceSelectedIndexes.clear();
-    _servicesType.clear();
-    _servicesIndex.clear();
-
-     
-
-
-  } else {
-    String serviceKey = '${item[index]}-${image[index]}';
-
-    if (_serviceSelectedIndexes.contains(index)) {
-      _serviceSelectedIndexes.remove(index);
-
-      _servicesType.remove(serviceKey);
-
-      _servicesIndex.remove(index + 1);
+    if (_servicesType.length > 3) {
+      _serviceSelectedIndexes.clear();
+      _servicesType.clear();
+      _servicesIndex.clear();
     } else {
-      _serviceSelectedIndexes.add(index);
+      String serviceKey = '${item[index]}-${image[index]}';
 
-      _servicesType.add(serviceKey);
-      _servicesIndex.add(index + 1);
+      if (_serviceSelectedIndexes.contains(index)) {
+        _serviceSelectedIndexes.remove(index);
+
+        _servicesType.remove(serviceKey);
+
+        _servicesIndex.remove(index + 1);
+      } else {
+        _serviceSelectedIndexes.add(index);
+
+        _servicesType.add(serviceKey);
+        _servicesIndex.add(index + 1);
+      }
     }
+    setViewState(ViewState.success);
   }
-  setViewState(ViewState.success);
-}
 
-addContactType(int index, var item, var image) {
-  if (contactType.length > 3) {
-    _contactSelectedIndexes.clear();
-    _contactType.clear();
-    _contactIndex.clear();
-
-     
-
-
-  } else {
-    String contactKey = '${item[index]}-${image[index]}';
-
-    if (_contactSelectedIndexes.contains(index)) {
-      _contactSelectedIndexes.remove(index);
-
-      _contactType.remove(contactKey);
-
-      _contactIndex.remove(index + 1);
+  addContactType(int index, var item, var image) {
+    if (contactType.length > 3) {
+      _contactSelectedIndexes.clear();
+      _contactType.clear();
+      _contactIndex.clear();
     } else {
-      _contactSelectedIndexes.add(index);
+      String contactKey = '${item[index]}-${image[index]}';
 
-      _contactType.add(contactKey);
-      _contactIndex.add(index + 1);
+      if (_contactSelectedIndexes.contains(index)) {
+        _contactSelectedIndexes.remove(index);
+
+        _contactType.remove(contactKey);
+
+        _contactIndex.remove(index + 1);
+      } else {
+        _contactSelectedIndexes.add(index);
+
+        _contactType.add(contactKey);
+        _contactIndex.add(index + 1);
+      }
     }
+    setViewState(ViewState.success);
   }
-  setViewState(ViewState.success);
-}
 
-  setWithdrawableBalance(String balance){
+  setWithdrawableBalance(String balance) {
     _withDrawableBalance = balance;
     setViewState(ViewState.success);
-
   }
+
   updateAmountController(String amount) {
     _amountController = amount;
 
@@ -154,7 +155,15 @@ addContactType(int index, var item, var image) {
     setViewState(ViewState.success);
   }
 
-  loadImage({required BuildContext context, bool isProfile = false}) async {
+  removeImageFromList(int index) {
+    addProductImage[index] = '';
+    setViewState(ViewState.success);
+  }
+
+  loadImage(
+      {required BuildContext context,
+      bool isProfile = false,
+      int index = 0}) async {
     await showModalBottomSheet<dynamic>(
         context: context,
         shape: const RoundedRectangleBorder(
@@ -194,6 +203,8 @@ addContactType(int index, var item, var image) {
                     _imageURl1 = File(image!.path);
                   } else {
                     _imageURl = File(image!.path);
+
+                    addProductImage[index] = _imageURl!.path;
                   }
 
                   setViewState(ViewState.success);
@@ -217,6 +228,8 @@ addContactType(int index, var item, var image) {
                     _imageURl1 = File(image!.path);
                   } else {
                     _imageURl = File(image!.path);
+
+                    addProductImage[index] = _imageURl!.path;
                   }
                   setViewState(ViewState.success);
                 },
@@ -262,7 +275,7 @@ addContactType(int index, var item, var image) {
   List<int> get servicesIndex => _servicesIndex;
   List<int> get serviceSelectedIndexes => _serviceSelectedIndexes;
 
-   List<String> get contactType => _contactType;
+  List<String> get contactType => _contactType;
   List<int> get contactIndex => _contactIndex;
   List<int> get contactSelectedIndexes => _contactSelectedIndexes;
 

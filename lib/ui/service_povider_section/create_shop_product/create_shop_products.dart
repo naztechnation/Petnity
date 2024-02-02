@@ -1,14 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
-import 'package:petnity/res/enum.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../blocs/service_provider/service_provider.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
@@ -32,10 +28,10 @@ class CreateShopProducts extends StatefulWidget {
 }
 
 class _CreateShopProductsState extends State<CreateShopProducts> {
-
   final _formKey = GlobalKey<FormState>();
 
   final productName = TextEditingController();
+  final quantity = TextEditingController();
 
   final productPrice = TextEditingController();
 
@@ -43,243 +39,276 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
 
   bool isLoading = false;
 
-
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
     return Scaffold(
-      body:  Container(
-          height: screenSize(context).height,
-          width: screenSize(context).width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                  begin: Alignment.topRight,
-                  end: Alignment.topLeft)),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SafeArea(
-                    child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
-                Row(
+      body: Container(
+        height: screenSize(context).height,
+        width: screenSize(context).width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                begin: Alignment.topRight,
+                end: Alignment.topLeft)),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
+              Row(
+                children: [
+                  backButton(context),
+                  const SizedBox(
+                    width: 40,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    text: 'Add Products',
+                    weight: FontWeight.w800,
+                    size: 16,
+                    fontFamily: AppStrings.interSans,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Expanded(
+                child: ListView(
+                  shrinkWrap: true,
                   children: [
-                    backButton(context),
-                    const SizedBox(
-                      width: 40,
-                    ),
-                    CustomText(
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      text: 'Add Products',
-                      weight: FontWeight.w800,
-                      size: 16,
-                      fontFamily: AppStrings.interSans,
-                      color: Colors.black,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    children: [
                     Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: TextEditView(
-                      isDense: true,
-                      validator: (value) {
-                        return Validator.validate(value, 'Product name');
-                      },
-                      controller: productName,
-                      filled: true,
-                      fillColor: AppColors.lightPrimary,
-                      borderRadius: 30,
-                      hintText: 'Product name',
-                      textViewTitle: '',
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: TextEditView(
+                        isDense: true,
+                        validator: (value) {
+                          return Validator.validate(value, 'Product name');
+                        },
+                        controller: productName,
+                        filled: true,
+                        fillColor: AppColors.lightPrimary,
+                        borderRadius: 30,
+                        hintText: 'Product name',
+                        textViewTitle: '',
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  if (serviceProvider.imageURl == null) ...[
-                    GestureDetector(
-                      onTap: () {
-                        serviceProvider.loadImage(
-                          context: context,
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                        child: Center(
-                          child: Container(
-                            width: screenSize(context).width,
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(22),
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ImageView.svg(
-                                    AppImages.cross,
-                                    height: 18,
-                                  ),
-                                  SizedBox(height: 10),
-                                  Text(
-                                    'Add display image',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: AppStrings.interSans,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 0.0,
+                          mainAxisSpacing: 8.0,
+                        ),
+                        itemCount: serviceProvider.addProductImage.length,
+                        itemBuilder: (context, index) {
+                          return imageWidget(
+                              context,
+                              serviceProvider.addProductImage[index],
+                              index,
+                              serviceProvider);
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: TextEditView(
+                        isDense: true,
+                        validator: (value) {
+                          return Validator.validate(value, 'Product price');
+                        },
+                        controller: productPrice,
+                        keyboardType: TextInputType.number,
+                        filled: true,
+                        fillColor: AppColors.lightPrimary,
+                        borderRadius: 30,
+                        hintText: 'input amount',
+                        textViewTitle: 'Product price',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: TextEditView(
+                        isDense: true,
+                        validator: (value) {
+                          return Validator.validate(value, 'Product quantity');
+                        },
+                        controller: quantity,
+                        keyboardType: TextInputType.number,
+                        filled: true,
+                        fillColor: AppColors.lightPrimary,
+                        borderRadius: 30,
+                        hintText: 'input quantity',
+                        textViewTitle: 'Product quantity',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: TextEditView(
+                        isDense: true,
+                        validator: (value) {
+                          return Validator.validate(value, 'About product');
+                        },
+                        controller: aboutProduct,
+                        filled: true,
+                        fillColor: AppColors.lightPrimary,
+                        borderRadius: 30,
+                        maxLines: 5,
+                        hintText: 'Tell your buyers about the product',
+                        textViewTitle: 'About product',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0.0, horizontal: 20),
+                      child: ButtonView(
+                        onPressed: () async {
+                          List<String> selectedImages = serviceProvider
+                              .addProductImage
+                              .where((image) => image.isNotEmpty)
+                              .toList();
+
+                          if (selectedImages.isEmpty) {
+                             Modals.showToast('please select at least one image');
+                          } else {
+                           _submit(context, selectedImages);
+                          }
+                          
+                        },
+                        color: AppColors.lightSecondary,
+                        borderRadius: 22,
+                        borderColor: Colors.white,
+                        child: CustomText(
+                          textAlign: TextAlign.center,
+                          maxLines: 5,
+                          text: 'Review & publish',
+                          weight: FontWeight.w400,
+                          size: 16,
+                          color: Colors.white,
                         ),
                       ),
                     ),
-                  ] else ...[
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: Container(
-                              height: 200,
-                              width: screenSize(context).width,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(22),
-                                child: ImageView.file(
-                                    File(
-                                      serviceProvider.imageURl!.path,
-                                    ),
-                                    fit: BoxFit.cover),
-                              )),
-                        ),
-                        Positioned(
-                          top: 80,
-                          child: GestureDetector(
-                            onTap: (){
-                              serviceProvider.loadImage(
-                          context: context,
-                        );
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: Colors.white,
-                              ),
-                              child:  Padding(
-                                padding: const EdgeInsets.all(14.0),
-                                child: ImageView.svg(
-                                        AppImages.cross,
-                                        height: 12,
-                                      ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    const SizedBox(
+                      height: 60,
                     ),
                   ],
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: TextEditView(
-                      isDense: true,
-                      validator: (value) {
-                        return Validator.validate(value, 'Product price');
-                      },
-                      controller: productPrice,
-                      keyboardType: TextInputType.number,
-                      filled: true,
-                      fillColor: AppColors.lightPrimary,
-                      borderRadius: 30,
-                      hintText: 'input amount',
-                      textViewTitle: 'Product price',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: TextEditView(
-                      isDense: true,
-                      validator: (value) {
-                        return Validator.validate(value, 'About product');
-                      },
-                      controller: aboutProduct,
-                      filled: true,
-                      fillColor: AppColors.lightPrimary,
-                      borderRadius: 30,
-                      maxLines: 5,
-                      hintText: 'Tell your buyers about the product',
-                      textViewTitle: 'About product',
-                    ),
-                  ),
-                   const SizedBox(
-                    height: 60,
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 0.0, horizontal: 20),
-                    child: ButtonView(
-                      onPressed: () async{
-                      
-                       
-                      
-                      if(serviceProvider.imageURl != null){
-                         _submit(context);
-                      }else{
-                        Modals.showToast('please select an image first');
-                      }
-                      },
-                      color: AppColors.lightSecondary,
-                      borderRadius: 22,
-                      borderColor: Colors.white,
-                      child: CustomText(
-                        textAlign: TextAlign.center,
-                        maxLines: 5,
-                        text: 'Review & publish',
-                        weight: FontWeight.w400,
-                        size: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                  ],),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
-      
+      ),
     );
   }
 
-  _submit(BuildContext context){
-    if(_formKey.currentState!.validate()){
-                      AppNavigator.pushAndStackPage(context, page: ProductReviewDetail(productName: productName.text, price: productPrice.text, aboutProduct: aboutProduct.text,));
-
+  _submit(BuildContext context, List<String> image) {
+    if (_formKey.currentState!.validate()) {
+      AppNavigator.pushAndStackPage(context,
+          page: ProductReviewDetail(
+            productName: productName.text,
+            price: productPrice.text,
+            aboutProduct: aboutProduct.text,
+            quantity: quantity.text, images: image,
+          ));
     }
+  }
+
+  Widget imageWidget(BuildContext context, image, index, services) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+        ),
+        child: (image.isEmpty)
+            ? GestureDetector(
+                onTap: () {
+                  services.loadImage(context: context, index: index);
+                },
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ImageView.svg(
+                        AppImages.cross,
+                        height: 18,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Add display image',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: AppStrings.interSans,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            : Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(22),
+                    child: ImageView.file(
+                        File(
+                          image,
+                        ),
+                        fit: BoxFit.cover),
+                  ),
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        services.removeImageFromList(index);
+                      },
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.black.withOpacity(0.7),
+                        ),
+                        child: Align(
+                            child: Icon(
+                          Icons.delete_forever,
+                          color: Colors.red[900],
+                        )),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+      ),
+    );
   }
 }
