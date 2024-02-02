@@ -52,7 +52,7 @@ class AppStrings {
 
   static const String loginUrl = '${_baseUrl}auth/login';
   static const String logoutUrl = '${_baseUrl}auth/logout';
-  static const String shoppingList = '${_baseUrl}shop/get-products/1';
+  static   String shoppingList(String index) => '${_baseUrl}shop/get-products/$index';
   static const String getServiceTypes = '${_baseUrl}home/get-service-types';
   static String getIndividualAgentService(String agentId) =>
       '${_baseUrl}user/get-agent-services/$agentId';
@@ -61,8 +61,8 @@ class AppStrings {
 
   static String userOrders =
       '${_baseUrl}order/get-user-orders';
-  static String createOrderPayment(String username) =>
-      '${_baseUrl}shop/create-shop-order/$username';
+  static String createOrderPayment =
+      '${_baseUrl}shop/create-shop-order';
   static String uploadIdUrl =
       '${_baseUrl}auth/upload-id-photo';
   static String productDetailsUrl(String productId) =>

@@ -1,55 +1,55 @@
+import '../agent/agent.dart';
 
-
-
-import 'package:petnity/model/agent/agent.dart';
-
-class Product {
-  int? id;
-  String? name;
-  String? price;
+class Products {
   bool? inStock;
-  String? image;
+  List<String>? images;
+  String? sId;
+  Agent? agent;
+  String? name;
+  int? price;
   String? description;
+  int? quantity;
   String? createdAt;
   String? updatedAt;
-  Agent? agent;
 
-  Product(
-      {this.id,
+  Products(
+      {this.inStock,
+      this.images,
+      this.sId,
+      this.agent,
       this.name,
       this.price,
-      this.inStock,
-      this.image,
       this.description,
+      this.quantity,
       this.createdAt,
-      this.updatedAt,
-      this.agent});
+      this.updatedAt});
 
-  Product.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  Products.fromJson(Map<String, dynamic> json) {
+    inStock = json['inStock'];
+    images = json['images'].cast<String>();
+    sId = json['_id'];
+         agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+
     name = json['name'];
     price = json['price'];
-    inStock = json['in_stock'];
-    image = json['image'];
     description = json['description'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+    quantity = json['quantity'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['inStock'] = this.inStock;
+    data['images'] = this.images;
+    data['_id'] = this.sId;
+    data['agent'] = this.agent;
     data['name'] = this.name;
     data['price'] = this.price;
-    data['in_stock'] = this.inStock;
-    data['image'] = this.image;
     data['description'] = this.description;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    if (this.agent != null) {
-      data['agent'] = this.agent!.toJson();
-    }
+    data['quantity'] = this.quantity;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }

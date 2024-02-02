@@ -47,8 +47,8 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   late UserCubit _userCubit;
 
-  List<Product> products = [];
-  List<Product> filteredProducts = [];
+  List<Products> products = [];
+  List<Products> filteredProducts = [];
   final searchController = TextEditingController();
 
   String agentId = "";
@@ -86,7 +86,7 @@ class _ShopState extends State<Shop> {
           listener: (context, state) {
             if (state is ShoppingListLoaded) {
               if (state.shoppingList.status!) {
-                products = state.shoppingList.products ?? [];
+                products = state.shoppingList.data?.products ?? [];
                 filteredProducts = products;
               } else {}
             } else if (state is UserNetworkErrApiErr) {
@@ -208,7 +208,7 @@ class _ShopState extends State<Shop> {
                                           MaterialPageRoute(builder: (_) {
                                         return ProductDetailScreen(
                                             filteredProducts[index]
-                                                .id
+                                                .sId
                                                 .toString(),
                                             filteredProducts[index]
                                                 .price
@@ -220,6 +220,7 @@ class _ShopState extends State<Shop> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -232,7 +233,7 @@ class _ShopState extends State<Shop> {
                                                 borderRadius:
                                                     BorderRadius.circular(20),
                                                 child: ImageView.network(
-                                                  filteredProducts[index].image,
+                                                  filteredProducts[index].images?[0],
                                                   placeholder:
                                                       AppImages.appLogo,
                                                   fit: BoxFit.cover,

@@ -33,7 +33,7 @@ abstract class UserRepository {
 
     Future<ServiceProvidersList> getAgentProfile(String userId);   
     Future<GetServiceTypes> getServiceTypes([String? agentId]); 
-    Future<ShoppingList> shoppingList(); 
+    Future<ShoppingList> shoppingList({required String index}); 
     Future<ShoppingList> agentShoppingList({required String agentId}); 
     Future<GetReviews> getReviews({required String userId}); 
     Future<GalleryAgents> getGallery({required String userId}); 
@@ -46,7 +46,7 @@ abstract class UserRepository {
     Future<AuthData> sendReviews({required String url,  required String comment, required String rating}); 
     Future<PaymentResponse> confirmPayment({required String username, required String purchaseId, required String orderId}); 
     Future<ConfirmShopPayment> confirmShoppingPayment({required String username, required String purchaseId, required String shopOrderId}); 
-    Future<CreatePaymentOrder> createOrderPayment({required String username, required String productId, required String quantity}); 
+    Future<CreatePaymentOrder> createOrderPayment({required String address, required String productId, required String quantity}); 
     Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
     Future<CreateOrder> createOrder({required String packageId,required String fee,required String pickupTime, required String dropOffTime, required String pickUpLocation});
     Future<UserProfile> getUserProfile({required String username});

@@ -267,11 +267,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> shoppingList() async {
+  Future<void> shoppingList([String index = '0'] ) async {
     try {
       emit(ShoppingListLoading());
 
-      final shoppingList = await userRepository.shoppingList();
+      final shoppingList = await userRepository.shoppingList(index: index);
 
       emit(ShoppingListLoaded(shoppingList));
     } on ApiException catch (e) {
@@ -336,7 +336,7 @@ class UserCubit extends Cubit<UserStates> {
   }
 
   Future<void> createOrderPayment({
-    required String username,
+    required String address,
     required String productId,
     required String quantity,
   }) async {
@@ -344,7 +344,7 @@ class UserCubit extends Cubit<UserStates> {
       emit(ProductOrderLoading());
 
       final productOrder = await userRepository.createOrderPayment(
-        username: username,
+        address: address,
         productId: productId,
         quantity: quantity,
       );

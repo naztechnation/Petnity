@@ -81,7 +81,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   List<ProductReviews> reviews = [];
 
-  Product? _products;
+  Products? _products;
 
   double totalAmount = 0;
 
@@ -159,7 +159,7 @@ class _ProductDetailState extends State<ProductDetail> {
       if (state is ProductDetailsLoaded) {
         if (state.productDetails.status!) {
           _products = state.productDetails.product;
-          totalAmount = double.parse(_products?.price ?? '0.0');
+          totalAmount = double.parse(_products?.price.toString() ?? '0.0');
         } else {}
       } else if (state is GetProductReviewsLoaded) {
         if (state.getAgentPayment.status!) {
@@ -167,8 +167,10 @@ class _ProductDetailState extends State<ProductDetail> {
         } else {}
       } else if (state is ProductOrderLoaded) {
         if (state.createPaymentOrder.status!) {
-          _handlePaymentInitialization(
-              state.createPaymentOrder.shopOrder!.id.toString());
+          Modals.showToast(state.createPaymentOrder.message ?? '');
+
+          // _handlePaymentInitialization(
+          //     state.createPaymentOrder.shopOrder!.id.toString());
         } else {}
       } else if (state is ConfirmShoppingOrderLoaded) {
         if (state.confirmPaymentOrder.status!) {
@@ -272,7 +274,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: ImageView.network(
-                        _products?.image ?? '',
+                        _products?.images?[0] ?? '',
                         fit: BoxFit.cover,
                         height: 150,
                         width: 150,
@@ -374,7 +376,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                       username: user.username,
                                       agentName: _products?.agent?.name ?? '',
                                       productId:
-                                          _products?.id.toString() ?? ''));
+                                          _products?.sId.toString() ?? ''));
                             },
                             child: Text(
                               'Add Review',
@@ -452,7 +454,7 @@ class _ProductDetailState extends State<ProductDetail> {
   createOrder(BuildContext ctx, user, String productId, String quantity) {
     if (count != 0) {
       ctx.read<UserCubit>().createOrderPayment(
-            username: user.username,
+            address: user.address,
             quantity: quantity,
             productId: productId,
           );
@@ -608,7 +610,7 @@ class _ProductDetailState extends State<ProductDetail> {
         count -= 1;
       }
     }
-    totalAmount = count * double.parse(_products?.price ?? '0.0') ;  
+    totalAmount = count * double.parse(_products?.price.toString() ?? '0.0') ;  
   });
 }
 

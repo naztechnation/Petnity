@@ -4,7 +4,7 @@ import '../product/product.dart';
 class CreateShopProduct {
   bool? status;
   String? message;
-  Product? product;
+  Products? product;
 
   CreateShopProduct({this.status, this.message, this.product});
 
@@ -12,7 +12,7 @@ class CreateShopProduct {
     status = json['status'];
     message = json['message'];
     product =
-        json['product'] != null ? new Product.fromJson(json['product']) : null;
+        json['product'] != null ? new Products.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {

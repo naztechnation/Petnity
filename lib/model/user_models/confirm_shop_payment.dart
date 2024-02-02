@@ -39,7 +39,7 @@ class ShopOrder {
   String? updatedAt;
   Profile? profile;
   int? agent;
-  Product? product;
+  Products? product;
 
   ShopOrder(
       {this.id,
@@ -69,7 +69,7 @@ class ShopOrder {
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
     agent = json['agent'];
     product =
-        json['product'] != null ? new Product.fromJson(json['product']) : null;
+        json['product'] != null ? new Products.fromJson(json['product']) : null;
   }
 
   Map<String, dynamic> toJson() {

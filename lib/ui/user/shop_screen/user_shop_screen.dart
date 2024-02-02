@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
-import 'package:petnity/ui/user/shop_screen/product_detail_screen.dart';
 
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -15,13 +14,13 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../model/product/product.dart';
-import '../../../model/user_models/shopping_lists.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
 import '../../../utils/app_utils.dart';
 import '../../widgets/text_edit_view.dart';
+import 'product_detail_screen.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen();
@@ -45,15 +44,15 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   late UserCubit _userCubit;
 
-  List<Product> products = [];
-  List<Product> filteredProducts = [];
+  List<Products> products = [];
+  List<Products> filteredProducts = [];
   final searchController = TextEditingController();
 
   @override
   void initState() {
     _userCubit = context.read<UserCubit>();
 
-    _userCubit.shoppingList();
+    _userCubit.shoppingList('0');
     super.initState();
   }
 
@@ -76,7 +75,7 @@ class _ShopState extends State<Shop> {
           listener: (context, state) {
             if (state is ShoppingListLoaded) {
               if (state.shoppingList.status!) {
-                products = state.shoppingList.products ?? [];
+                products = state.shoppingList.data?.products ?? [];
                 filteredProducts = products;
               } else {}
             } else if (state is UserNetworkErrApiErr) {
@@ -176,7 +175,7 @@ class _ShopState extends State<Shop> {
                                   onTap: () {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (_) {
-                                      return ProductDetailScreen(filteredProducts[index].id.toString(), 
+                                      return ProductDetailScreen(filteredProducts[index].sId.toString(), 
                                       filteredProducts[index].price.toString(), user.username, filteredProducts[index].agent?.sId.toString() ?? '');
                                     }));
                                   },
@@ -195,7 +194,7 @@ class _ShopState extends State<Shop> {
                                                   BorderRadius.circular(20),
                                               child: ImageView.network(
                                                 
-                                                filteredProducts[index].image,
+                                                filteredProducts[index].images?[0],
                                                 placeholder: AppImages.appLogo,
                                                 fit: BoxFit.cover,
                                                 color: randomColor,

@@ -123,43 +123,36 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<ShoppingList> shoppingList() async {
-    final map = await Requests().get(AppStrings.shoppingList, headers: {
-      'Authorization': AppStrings.token,
-    });
+  Future<ShoppingList> shoppingList({required String index}) async {
+    final map = await Requests().get(AppStrings.shoppingList(index),);
     return ShoppingList.fromJson(map);
   }
 
   @override
   Future<ShoppingList> agentShoppingList({required String agentId}) async {
     final map = await Requests()
-        .get(AppStrings.getAgentsProducts(agentId: agentId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getAgentsProducts(agentId: agentId), );
     return ShoppingList.fromJson(map);
   }
 
   @override
   Future<ProductDetails> productDetails({required String productId}) async {
     final map =
-        await Requests().get(AppStrings.productDetailsUrl(productId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        await Requests().get(AppStrings.productDetailsUrl(productId),);
     return ProductDetails.fromJson(map);
   }
 
   @override
   Future<CreatePaymentOrder> createOrderPayment(
-      {required String username,
+      {required String address,
       required String productId,
       required String quantity}) async {
     final map =
-        await Requests().post(AppStrings.createOrderPayment(username), body: {
-      "product_id": productId,
+        await Requests().post(AppStrings.createOrderPayment, body: {
+      "productId": productId,
       "quantity": quantity,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+      "address": address
+    },);
     return CreatePaymentOrder.fromJson(map);
   }
 

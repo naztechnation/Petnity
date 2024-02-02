@@ -283,12 +283,11 @@ class _ProductDetailState extends State<ProductReviewDetail> {
                               isLoading = true;
                             });
                             String imgUrl = await serviceProvider.uploadImage(
-                                serviceProvider.imageURl!.path,
+                                images[i],
                                 'petnity_service_provider');
                                 uploadedImages.add(imgUrl);
 
                             if (i == images.length - 1) {
-                              Modals.showToast("I am the last.");
                               setState(() {
                                 isLoading = false;
                               });

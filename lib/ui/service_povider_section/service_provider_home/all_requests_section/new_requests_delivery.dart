@@ -819,7 +819,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
           child: ClipRRect(
               borderRadius: BorderRadius.circular(60),
               child: ImageView.network(
-                order.product?.image,
+                order.product?.images?[0],
                 fit: BoxFit.cover,
                 height: 80,
               )),
@@ -884,7 +884,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   agentName: '${order.product?.agent?.name}',
                   customerName: '${order.profile?.user?.username}',
                   productName: '${order.product?.name}',
-                  productImage: '${order.product?.image}',
+                  productImage: '${order.product?.images?[0]}',
                   quantity: '${order.quantity}',
                   price: '${order.product?.price}',
                   purchaseId: '${order.paymentId}',
@@ -895,7 +895,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   ownerFirebaseId: '${order.profile?.firebaseId}',
                   isUserMarkedOrder: order.userMarkedDelivered ?? false,
                   isAgentMarkedOrder: order.agentMarkedDelivered ?? false,
-                  orderId: order.product?.id.toString() ?? '',
+                  orderId: order.product?.sId.toString() ?? '',
                   ownerNormalId: order.product?.agent?.sId.toString() ?? '',
                 );
               }));

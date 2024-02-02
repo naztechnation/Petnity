@@ -195,7 +195,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     customerName: '${allOrders.profile?.user?.username}',
                      
                     productName: '${allOrders.product?.name}',
-                    productImage: '${allOrders.product?.image}',
+                    productImage: '${allOrders.product?.images?[0]}',
                     quantity: '${allOrders.quantity}',
                     price: '${allOrders.product?.price}',
                     purchaseId: '${allOrders.paymentId}',
@@ -206,7 +206,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                       ownerFirebaseId: '${allOrders.product?.agent?.user?.firebaseId}', 
                       isUserMarkedOrder: allOrders.userMarkedDelivered ?? false, 
                       isAgentMarkedOrder: allOrders.agentMarkedDelivered ?? false,
-                       orderId: allOrders.product?.id.toString() ?? '',
+                       orderId: allOrders.product?.sId.toString() ?? '',
                        ownerNormalId: allOrders.product?.agent?.sId.toString() ?? '',
                   );
                 }));
