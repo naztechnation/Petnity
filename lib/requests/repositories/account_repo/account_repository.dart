@@ -42,7 +42,7 @@ abstract class AccountRepository {
       required String idType,
       required String id});
   Future<PetProfile> registerUserPetProfile(
-      {required String username,
+      {
       required String type,
       required String petname,
       required String gender,

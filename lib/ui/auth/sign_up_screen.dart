@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -434,6 +435,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   _registerUser(BuildContext ctx, imageUrl) {
     if (_formKey.currentState!.validate()) {
+
+   
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
@@ -535,6 +538,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     userTypes('Service Provider', () async {
                       Navigator.pop(context);
+
+                      StorageHandler.saveUserName(
+                          _usernameController.text.trim());
+
 
                       user.setUserType(UserType.serviceProvider);
 

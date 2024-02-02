@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-import '../../../blocs/accounts/account.dart';
 import '../../../model/view_models/account_view_model.dart';
-import '../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
@@ -90,7 +88,7 @@ class _PaymentReviewState extends State<Payment> {
   String mainAmount = "0";
 
   getAgentId() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
   }

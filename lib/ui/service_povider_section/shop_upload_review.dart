@@ -62,7 +62,7 @@ class _ProductDetailState extends State<ProductReviewDetail> {
   String agentId = "";
 
   getAgentId() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
   }
 
   @override

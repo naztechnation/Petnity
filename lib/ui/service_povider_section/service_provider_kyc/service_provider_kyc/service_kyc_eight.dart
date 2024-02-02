@@ -78,8 +78,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
     final userData = Provider.of<AccountViewModel>(context, listen: true);
     final services = Provider.of<UserViewModel>(context, listen: true);
-    userData.getUserId();
-
+    
     return Scaffold(
         body: BlocProvider<UserCubit>(
       lazy: false,
@@ -199,7 +198,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
                                 vertical: 0.0, horizontal: 0),
                             child: ButtonView(
                               onPressed: () {
-                                userData.getUserId();
+                                
                                 _submit(context, user, userData);
                               },
                               color: AppColors.lightSecondary,
@@ -231,6 +230,6 @@ class _KycServiceEightState extends State<KycServiceEight> {
     ctx.read<UserCubit>().serviceProvided(
         services: user.selectedServiceItems,
         username: userData.username,
-        agentId: userData.serviceProviderId);
+        agentId: agentId);
   }
 }

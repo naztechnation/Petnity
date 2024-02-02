@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/model/view_models/account_view_model.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/settings/update_successful_page.dart';
@@ -71,7 +70,7 @@ class _AddAccountState extends State<AddAccount> {
   String agentId = "";
 
   getAgentId() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
     _userCubit = context.read<ServiceProviderCubit>();
 
     _userCubit.getAccount(agentId: agentId);

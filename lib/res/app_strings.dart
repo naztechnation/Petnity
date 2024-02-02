@@ -98,7 +98,7 @@ class AppStrings {
       '${_baseUrl}pets/add-allergies/$petId';
   static String petHealthUrl({required url}) => '${_baseUrl + url}';
   static String registerUserPetProfileUrl =
-      '${_baseUrl}pets/add-pet';
+      '${_baseUrl}pet/add-pet';
   static String registerServiceProviderProfileUrl =
       '${_baseUrl}auth/create-agent';
 

@@ -156,7 +156,7 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> registerUserPetProfile(
-      {required String username,
+      {
       required String type,
       required String petname,
       required String gender,
@@ -168,7 +168,7 @@ class AccountCubit extends Cubit<AccountStates> {
       emit(PetProfileLoading());
 
       final pet = await accountRepository.registerUserPetProfile(
-          username: username,
+           
           type: type,
           petname: petname,
           size: size,

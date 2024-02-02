@@ -145,7 +145,7 @@ class _KycScreenState extends State<KycScreen> {
 
                                 petProfile
                                     .setPetType(petTypes[index].name ?? '');
-                                petProfile.setPetTypeIndex('${index + 1}');
+                                petProfile.setPetTypeIndex(petTypes[index].sId ?? '');
                               });
                             },
                           );

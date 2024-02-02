@@ -186,7 +186,6 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
                             AppNavigator.pushAndStackPage(context,
                     page: KycServiceScreenEight());
 
-                            userDetails.getUserId();
                               setState(() {
                                 isLoading = true;
                               });

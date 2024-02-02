@@ -1,4 +1,4 @@
-import 'package:petnity/ui/widgets/modals.dart';
+
 
 import '../../handlers/secure_handler.dart';
 
@@ -17,6 +17,8 @@ Future<Map<String, String>> formDataHeader([String? token]) async {
  
 
   return {
+     
+      'Content-type': 'application/json',
     
     'token': 'Bearer $accessToken',
   };

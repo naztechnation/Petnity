@@ -35,7 +35,7 @@ class _SelectPackageLevelAmountState extends State<SelectPackageLevelAmount> {
       String agentId = "";
 
   getAgentId() async{
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
   }
 
   @override

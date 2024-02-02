@@ -49,9 +49,7 @@ class StorageHandler {
       await storage.write(key: 'USERTYPE', value: isUserType);
   }
 
-  static Future<void> saveAgentId(String id) async {
-    await storage.write(key: 'AGENT_ID', value: id);
-  }
+
 
   static Future<void> saveUserToken([String? token]) async {
     if (token != null) await storage.write(key: 'TOKEN', value: token);
@@ -201,17 +199,7 @@ class StorageHandler {
     return password;
   }
 
-  static Future<String> getAgentId() async {
-    String? value = await storage.read(key: 'AGENT_ID');
-    String? id;
-    String? data = value;
-    if (data != null) {
-      id = data;
-    } else {
-      id = '';
-    }
-    return id;
-  }
+ 
 
   static Future<void> clearCache() async {
     await storage.deleteAll();

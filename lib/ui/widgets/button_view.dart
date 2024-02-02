@@ -64,7 +64,7 @@ class ButtonView extends StatelessWidget {
             primary: disabled
                 ? Theme.of(context).backgroundColor
                 : (color ?? AppColors.lightSecondary),
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 side: BorderSide(
@@ -90,7 +90,8 @@ class ButtonView extends StatelessWidget {
               primary: disabled
                   ? Theme.of(context).backgroundColor
                   : (color ?? AppColors.lightSecondary),
-              padding: padding,
+                          padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(borderRadius),
                   side: BorderSide(
@@ -116,7 +117,8 @@ class ButtonView extends StatelessWidget {
             primary: disabled
                 ? Theme.of(context).backgroundColor
                 : (color ?? AppColors.lightSecondary),
-            padding: padding,
+                        padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
+
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
                 side: BorderSide(

@@ -54,7 +54,7 @@ class _ShopState extends State<Shop> {
   String agentId = "";
 
   getAgentId() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
 
     _userCubit = context.read<UserCubit>();
 

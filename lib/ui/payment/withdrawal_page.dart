@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/ui/payment/payment_review.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +72,7 @@ class _WithdrawalState extends State<Withdrawal> {
 
 
   getAgentId() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
     _userCubit = context.read<ServiceProviderCubit>();
 
     _userCubit.getAccount(agentId: agentId);

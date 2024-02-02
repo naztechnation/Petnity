@@ -43,7 +43,7 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
     final serviceProvider =
         Provider.of<ServiceProviderViewModel>(context, listen: true);
     final userDetails = Provider.of<AccountViewModel>(context, listen: true);
-    userDetails.getUserId();
+    
 
     return Scaffold(
         body: Container(

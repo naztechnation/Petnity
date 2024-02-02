@@ -63,26 +63,17 @@ class SignInScreen extends StatelessWidget {
 
                   StorageHandler.saveUserPassword(_passwordController.text);
 
-                  if (state.userData.data!.user!.isAgent!) {
-                    StorageHandler.saveIsUserType('service_provider');
-                    StorageHandler.saveAgentId(
-                        state.userData.data?.user?.sId.toString() ?? '');
+                   StorageHandler.saveUserId(
+                        state.userData.data?.user?.sId.toString());
 
-                    if (state.userData.data?.user?.hasPets ?? false) {
-                      StorageHandler.saveUserPetState('true');
-                    } else {
-                      StorageHandler.saveUserPetState('');
-                    }
-
-                    StorageHandler.saveEmail(
+                         StorageHandler.saveEmail(
                         state.userData.data?.user?.email.toString());
                     StorageHandler.saveUserPhone(
                         state.userData.data?.user?.phoneNumber.toString());
-                    // StorageHandler.saveUserPicture(
-                    //     state.userData.data?.user?.picture.toString());
+                    StorageHandler.saveUserPicture(
+                        state.userData.data?.user?.profileImage.toString());
 
-                    StorageHandler.saveUserId(
-                        state.userData.data?.user?.sId.toString());
+                   
                     StorageHandler.saveUserName(state
                         .userData.data?.user?.username
                         .toString());
@@ -91,6 +82,17 @@ class SignInScreen extends StatelessWidget {
                         username: state.userData.data?.user?.username
                                 .toString() ??
                             '');
+
+                  if (state.userData.data?.user?.isAgent ?? false) {
+                    StorageHandler.saveIsUserType('service_provider');
+                   
+                    if (state.userData.data?.user?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
+                    }
+
+                   
 
                     loginUser(
                         firebaseUser: firebaseUser,
@@ -112,13 +114,10 @@ class SignInScreen extends StatelessWidget {
                     StorageHandler.saveUserPhone(
                         state.userData.data?.user?.phoneNumber.toString());
 
-                    StorageHandler.saveUserId(
-                        state.userData.data?.user?.sId.toString());
+                  
                     StorageHandler.saveUserName(
                         state.userData.data?.user?.username.toString());
-                    // StorageHandler.saveUserPicture(
-                    //     state.userData.profile?.profileImage.toString());
-
+                   
                     user.setUserData(
                         username:
                             state.userData.data?.user?.username.toString() ??

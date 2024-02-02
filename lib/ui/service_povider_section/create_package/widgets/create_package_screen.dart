@@ -51,7 +51,7 @@ class _CreatePackageScreenState extends State<CreatePackageScreen> {
       String agentId = "";
 
   getAgentId() async{
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
   }
 
   @override

@@ -60,7 +60,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
   String agentId = "";
 
   fetchOrders() async {
-    agentId = await StorageHandler.getAgentId();
+    agentId = await StorageHandler.getUserId();
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
     await _serviceProviderCubit.getAllAgentOrder(agentId: agentId, pageIndex: '1');
     await _serviceProviderCubit.getAgentsAvailableServices(agentId: agentId,);

@@ -215,9 +215,17 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
       required String type,
       required String about,
       required String picture}) {
+
+        // print(petname);
+        // print(gender);
+        // print(breed);
+        // print(size);
+        // print(type);
+        // print(about);
+        // print(picture);
+        
     ctx.read<AccountCubit>().registerUserPetProfile(
         petname: petname,
-        username: username,
         gender: gender,
         breed: breed,
         size: size,

@@ -105,10 +105,7 @@ class AccountViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  getUserId() async {
-    _agentId = await StorageHandler.getAgentId();
-    setViewState(ViewState.success);
-  }
+
 
   showPassword() {
     _showPassword = !_showPassword;

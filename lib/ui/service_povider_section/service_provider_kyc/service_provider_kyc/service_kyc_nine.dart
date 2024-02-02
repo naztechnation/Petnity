@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/accounts/account.dart';
@@ -49,11 +50,13 @@ class _KycScreenNineState extends State<KycScreenNine> {
 
   int _index = -1;
 
-
+  String agentId = '';
   late AccountCubit _accountCubit;
  
 
   getServicesTypes() async {
+
+    agentId = await StorageHandler.getUserId();
     _accountCubit = context.read<AccountCubit>();
 
     setState(() {
@@ -75,7 +78,6 @@ class _KycScreenNineState extends State<KycScreenNine> {
   Widget build(BuildContext context) {
     final user = Provider.of<ServiceProviderViewModel>(context, listen: true);
     final userData = Provider.of<AccountViewModel>(context, listen: true);
-    userData.getUserId();
 
     return Scaffold(
         body:  BlocConsumer<AccountCubit, AccountStates>(
@@ -202,7 +204,7 @@ class _KycScreenNineState extends State<KycScreenNine> {
   _submit(BuildContext ctx, var user, var userData) {
     ctx.read<AccountCubit>().servicePetType(
           petnames: user.selectedPetType,
-          agentId: userData.serviceProviderId,
+          agentId: agentId,
           username: userData.username,
         );
   }

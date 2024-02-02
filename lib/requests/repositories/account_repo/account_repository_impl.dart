@@ -32,7 +32,9 @@ class AccountRepositoryImpl implements AccountRepository {
     };
 
     final map = await Requests()
-        .post(AppStrings.otpUrl(url), body: json.encode(payload), );
+        .post(AppStrings.otpUrl(url), body: json.encode(payload), headers: {
+      'Content-type': 'application/json',
+    });
     return AuthData.fromJson(map);
   }
 
@@ -79,7 +81,7 @@ Future<AuthData> logoutUser({
 
 @override
 Future<PetProfile> registerUserPetProfile(
-    {required String username,
+    {
     required String type,
     required String petname,
     required String gender,
@@ -89,8 +91,9 @@ Future<PetProfile> registerUserPetProfile(
     required String picture}) async {
 
       var payload = {
-    "type": type,
     "name": petname,
+
+    "type": type,
     "gender": gender,
     "breed": breed,
     "size": size,
@@ -98,7 +101,7 @@ Future<PetProfile> registerUserPetProfile(
     'picture': picture
   };
   final map = await Requests()
-      .post(AppStrings.registerUserPetProfileUrl, body: json.encode(payload), );
+      .post('https://lucacify.onrender.com/pet/add-pet', body: json.encode(payload), );
   return PetProfile.fromJson(map);
 }
 

@@ -262,7 +262,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           name: AppRoutes.kycScreenOne);
                     }
                   },
-                  child: Text((isPetRegistered) ? 'Shop now' : 'Begin now', style: TextStyle(color: Colors.white),),
+                  child: Text((isPetRegistered) ? 'Shop now' : 'Begin nows', style: TextStyle(color: Colors.white),),
                   expanded: false,
                 ),
               ],
