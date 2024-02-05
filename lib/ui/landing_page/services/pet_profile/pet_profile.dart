@@ -104,7 +104,7 @@ class _PetProfileState extends State<PetProfileScreen> {
                 if (state is PetProfileLoaded) {
                   if (state.petData.status!) {
                     petProfile = state.petData;
-                    var petId = state.petData.pets?.first.id ?? "";
+                    var petId = state.petData.pets?.first.sId ?? "";
 
                   
                     getUserPetDetails(petId.toString(),);

@@ -179,9 +179,9 @@ static String agentRejectShopOrder(
       '${_baseUrl}shop/get-user-shop-orders';
 
   static String getUserProfile({
-    required String username,
+    required String userId,
   }) =>
-      '${_baseUrl}users/get-profile/$username';
+      '${_baseUrl}user/get-user-profile/$userId';
 
   static String getUserPets =
       '${_baseUrl}pet/get-user-pets';

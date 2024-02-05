@@ -54,7 +54,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
           listener: (context, state) {
             if (state is PetProfileLoaded) {
               if (state.petData.status ?? false) {
-                  petProfile.setPetId(state.petData.pet?.id.toString() ?? '');
+                  petProfile.setPetId(state.petData.data?.pet?.sId.toString() ?? '');
                   StorageHandler.saveUserPetState('true');
 
                   AppNavigator.pushAndStackPage(context,
@@ -216,13 +216,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
       required String about,
       required String picture}) {
 
-        // print(petname);
-        // print(gender);
-        // print(breed);
-        // print(size);
-        // print(type);
-        // print(about);
-        // print(picture);
+       
         
     ctx.read<AccountCubit>().registerUserPetProfile(
         petname: petname,

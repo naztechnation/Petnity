@@ -1,48 +1,8 @@
-class PetProfile {
-  bool? status;
-  String? message;
-  PetProfileData? data;
+import 'health_issues.dart';
 
-  PetProfile({this.status, this.message, this.data});
-
-  PetProfile.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    message = json['message'];
-    data = json['data'] != null ? new PetProfileData.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
-  }
-}
-
-class PetProfileData {
-  Pet? pet;
-
-  PetProfileData({this.pet});
-
-  PetProfileData.fromJson(Map<String, dynamic> json) {
-    pet = json['pet'] != null ? new Pet.fromJson(json['pet']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.pet != null) {
-      data['pet'] = this.pet!.toJson();
-    }
-    return data;
-  }
-}
-
-class Pet {
-  List<Null>? healthIssues;
-  List<Null>? allergies;
+class Pets {
+  List<HealthIssues>? healthIssues;
+  List<HealthIssues>? allergies;
   bool? isHidden;
   String? sId;
   String? user;
@@ -56,7 +16,7 @@ class Pet {
   String? createdAt;
   String? updatedAt;
 
-  Pet(
+  Pets(
       {this.healthIssues,
       this.allergies,
       this.isHidden,
@@ -72,17 +32,17 @@ class Pet {
       this.createdAt,
       this.updatedAt});
 
-  Pet.fromJson(Map<String, dynamic> json) {
+  Pets.fromJson(Map<String, dynamic> json) {
     if (json['healthIssues'] != null) {
-      healthIssues = <Null>[];
+      healthIssues = <HealthIssues>[];
       json['healthIssues'].forEach((v) {
-        // healthIssues!.add(new Null.fromJson(v));
+        healthIssues!.add(new HealthIssues.fromJson(v));
       });
     }
     if (json['allergies'] != null) {
-      allergies = <Null>[];
+      allergies = <HealthIssues>[];
       json['allergies'].forEach((v) {
-        // allergies!.add(new Null.fromJson(v));
+        allergies!.add(new HealthIssues.fromJson(v));
       });
     }
     isHidden = json['isHidden'];
@@ -102,10 +62,10 @@ class Pet {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.healthIssues != null) {
-      // data['healthIssues'] = this.healthIssues!.map((v) => v.toJson()).toList();
+      data['healthIssues'] = this.healthIssues!.map((v) => v.toJson()).toList();
     }
     if (this.allergies != null) {
-      // data['allergies'] = this.allergies!.map((v) => v.toJson()).toList();
+      data['allergies'] = this.allergies!.map((v) => v.toJson()).toList();
     }
     data['isHidden'] = this.isHidden;
     data['_id'] = this.sId;

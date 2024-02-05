@@ -8,13 +8,13 @@ import '../services/services.dart';
 import '../user_models/order_list.dart';
 import '../user_models/orders.dart';
 import '../user_models/pet_profile_details.dart';
-import '../user_models/pets_profile.dart';
+import '../user_models/pets.dart';
 import '../user_models/reviews_data.dart';
-import '../user_models/service_provider_lists.dart';
+import '../user_models/service_type.dart';
 import 'base_viewmodel.dart';
 
 class UserViewModel extends BaseViewModel {
-  List<Services>? _services = [];
+  List<ServiceType>? _services = [];
   List<Packages> _packages = [];
   List<Agent> _agents = [];
   List<Reviews> _reviews = [];
@@ -45,7 +45,7 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  Future<void> setServicesList({required List<Services>? services}) async {
+  Future<void> setServicesList({required List<ServiceType>? services}) async {
     _services = services;
     setViewState(ViewState.success);
   }
@@ -219,7 +219,7 @@ class UserViewModel extends BaseViewModel {
     return _remainingHours / _totalHours;
   }
 
-  List<Services> get services => _services ?? [];
+  List<ServiceType> get services => _services ?? [];
   List<Agent> get agents => _agents;
   List<Packages> get packages => _packages;
   List<Reviews> get reviews => _reviews;
@@ -228,7 +228,7 @@ class UserViewModel extends BaseViewModel {
   String get petPicture => _petPicture;
   bool get galleryStatus => _galleryStatus;
   PetProfileDetails? get petDetails => _petProfile;
-  List<ServicesType> get servicesItems => servicesResults();
+  List<ServiceType> get servicesItems => servicesResults();
   List<Pets> get servicesPetList => servicesPets();
 
   List<Orders> get ordersList => _ordersList;
@@ -238,8 +238,8 @@ class UserViewModel extends BaseViewModel {
   List<Orders> get onCompletedOrdersList => onCompletedOrderServices();
   List<Orders> get onRejectedOrdersList => onRejectedServices();
 
-  List<ServicesType> servicesResults() {
-    List<ServicesType> list = [];
+  List<ServiceType> servicesResults() {
+    List<ServiceType> list = [];
 
     for (var service in _agents ?? []) {
       list.addAll(service.services);

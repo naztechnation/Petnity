@@ -202,7 +202,7 @@ class HomepageBar extends StatefulWidget {
 }
 
 class _HomepageBarState extends State<HomepageBar> {
-  List<Services> service = [];
+  List<ServiceType> service = [];
 
   late UserCubit _userCubit;
 

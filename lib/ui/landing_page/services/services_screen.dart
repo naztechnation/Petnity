@@ -32,7 +32,7 @@ class ServicesP extends StatefulWidget {
 }
 
 class _ServicesState extends State<ServicesP> {
-  List<Services> service = [];
+  List<ServiceType> service = [];
 
   late UserCubit _userCubit;
 

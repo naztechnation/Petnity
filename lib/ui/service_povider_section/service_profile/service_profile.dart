@@ -79,7 +79,7 @@ class _AgentProfileState extends State<AgentProfile> {
 
   late UserCubit _userCubit;
 
-  List<Services> service = [];
+  List<ServiceType> service = [];
 
   List<Services> services = [];
 

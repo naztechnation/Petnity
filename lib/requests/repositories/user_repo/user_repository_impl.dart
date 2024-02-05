@@ -226,11 +226,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<UserProfile> getUserProfile({required String username}) async {
+  Future<UserProfile> getUserProfile({required String userId}) async {
     final map = await Requests()
-        .get(AppStrings.getUserProfile(username: username), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .get(AppStrings.getUserProfile(userId: userId), );
     return UserProfile.fromJson(map);
   }
 

@@ -54,7 +54,7 @@ class KycServiceEight extends StatefulWidget {
 }
 
 class _KycServiceEightState extends State<KycServiceEight> {
-  List<Services> service = [];
+  List<ServiceType> service = [];
   late UserCubit _userCubit;
 
   int _index = -1;
@@ -173,10 +173,10 @@ class _KycServiceEightState extends State<KycServiceEight> {
                               itemCount: services.services.length,
                               itemBuilder: (context, index) {
                                 String serviceName =
-                                    services.services[index].serviceType?.name ?? '';
+                                    services.services[index].name ?? '';
                                 return ServiceProviderChoice(
                                   imageUrl:
-                                      services.services[index].serviceType?.image ?? '',
+                                      services.services[index].image ?? '',
                                   serviceName: serviceName,
                                   isSelected: user.selectedServiceItems
                                       .contains(serviceName),

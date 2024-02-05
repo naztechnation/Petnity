@@ -41,14 +41,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   UserProfile? userProfile;
 
-  String username = '';
+  String userId = '';
 
   getUsername() async {
-    username = await StorageHandler.getUserName();
+    userId = await StorageHandler.getUserId();
 
     _userCubit = context.read<UserCubit>();
 
-    _userCubit.getUserProfile(username);
+    _userCubit.getUserProfile(userId);
   }
 
   TextEditingController bug = TextEditingController();
@@ -111,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return Scaffold(body: LoadingPage());
         }
 
-        return (userProfile?.profile?.hasPets ?? false)
+        return (userProfile?.data?.user?.hasPets ?? false)
             ? Container(
                 height: screenSize(context).height * .9,
                 width: screenSize(context).width,
@@ -127,7 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(30),
                             child: ImageView.network(
-                              userProfile?.profile?.profileImage ?? '',
+                              userProfile?.data?.user?.profileImage ?? '',
                               //userProfile?.profile?.profileImage,
                               fit: BoxFit.cover,
                             )),
@@ -139,14 +139,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Pet name: ${userProfile?.pet?.name ?? 'Nill'}'.capitalizeFirstOfEach,
+                              'Pet name: ${userProfile?.data?.pets?[0].name ?? 'Nill'}'.capitalizeFirstOfEach,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: AppStrings.interSans),
                             ),
                             Text(
-                              'Pet Gender: ${userProfile?.pet?.gender ?? 'Nill'}'.capitalizeFirstOfEach,
+                              'Pet Gender: ${userProfile?.data?.pets?[0].gender ?? 'Nill'}'.capitalizeFirstOfEach,
                               style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w600,
@@ -167,7 +167,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               width: 55,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
-                                child: ImageView.network(userProfile?.profile?.profileImage, fit: BoxFit.cover,),
+                                child: ImageView.network(userProfile?.data?.user?.profileImage, fit: BoxFit.cover,),
                               ),
                             ),
                             Container(
@@ -176,13 +176,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${userProfile?.profile?.user?.username }'.capitalizeFirstOfEach,
+                                    '${userProfile?.data?.user?.username }'.capitalizeFirstOfEach,
                                     style: TextStyle(
                                         fontSize: 14.0,
                                         fontWeight: FontWeight.w800,
                                         fontFamily: AppStrings.interSans),
                                   ),
-                                  Text('${userProfile?.profile?.user?.email}'.capitalizeFirstOfEach,
+                                  Text('${userProfile?.data?.user?.email}'.capitalizeFirstOfEach,
                                       textAlign: TextAlign.justify,
                                       maxLines: 2,
                                       style: TextStyle(
@@ -193,7 +193,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Row(
                               children: [
-                                Text(userProfile?.profile?.phoneNumber ?? "",
+                                Text(userProfile?.data?.user?.phoneNumber ?? "",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontSize: 14.0,
@@ -238,7 +238,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   color: Color(0xff8DADFF).withOpacity(0.1),
                                   borderRadius: BorderRadius.circular(30)),
                               child: Text(
-                          userProfile?.pet?.about ?? '',
+                          userProfile?.data?.pets?[0].about ?? '',
                           textAlign: TextAlign.justify,
                           maxLines: 5,
                           overflow: TextOverflow.ellipsis,

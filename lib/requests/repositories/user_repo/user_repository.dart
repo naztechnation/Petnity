@@ -49,7 +49,7 @@ abstract class UserRepository {
     Future<CreatePaymentOrder> createOrderPayment({required String address, required String productId, required String quantity}); 
     Future<ServiceProvidersList> serviceProvided({required List<String> services,required String username,required String agentId});   
     Future<CreateOrder> createOrder({required String packageId,required String fee,required String pickupTime, required String dropOffTime, required String pickUpLocation});
-    Future<UserProfile> getUserProfile({required String username});
+    Future<UserProfile> getUserProfile({required String userId});
     Future<PetProfile> getUserPet({required String username});
     Future<PetProfileDetails> getUserPetDetails({required String petId});
     Future<FAQ> getFaq();

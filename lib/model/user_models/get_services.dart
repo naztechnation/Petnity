@@ -1,16 +1,16 @@
-import '../services/services.dart';
+import 'package:petnity/model/user_models/service_type.dart';
 
 class GetServiceTypes {
   bool? status;
   String? message;
-  GetServicesData? data;
+  GetServiceTypesData? data;
 
   GetServiceTypes({this.status, this.message, this.data});
 
   GetServiceTypes.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new GetServicesData.fromJson(json['data']) : null;
+    data = json['data'] != null ? new GetServiceTypesData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,24 +24,24 @@ class GetServiceTypes {
   }
 }
 
-class GetServicesData {
-  List<Services>? services;
+class GetServiceTypesData {
+  List<ServiceType>? serviceTypes;
 
-  GetServicesData({this.services});
+  GetServiceTypesData({this.serviceTypes});
 
-  GetServicesData.fromJson(Map<String, dynamic> json) {
-    if (json['services'] != null) {
-      services = <Services>[];
-      json['services'].forEach((v) {
-        services!.add(new Services.fromJson(v));
+  GetServiceTypesData.fromJson(Map<String, dynamic> json) {
+    if (json['serviceTypes'] != null) {
+      serviceTypes = <ServiceType>[];
+      json['serviceTypes'].forEach((v) {
+        serviceTypes!.add(new ServiceType.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.services != null) {
-      data['services'] = this.services!.map((v) => v.toJson()).toList();
+    if (this.serviceTypes != null) {
+      data['serviceTypes'] = this.serviceTypes!.map((v) => v.toJson()).toList();
     }
     return data;
   }

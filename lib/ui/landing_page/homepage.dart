@@ -44,7 +44,7 @@ class HomePageScreen extends StatefulWidget {
 class _HomePageScreenState extends State<HomePageScreen> {
   final TextEditingController search = TextEditingController();
 
-  List<Services> service = [];
+  List<ServiceType> service = [];
 
   late UserCubit _userCubit;
 
