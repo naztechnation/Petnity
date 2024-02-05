@@ -196,7 +196,9 @@ class _SupportScreenState extends State<SupportScreen> {
                         ),
                       ),
                       Text('Report a bug/issue'),
-                      ImageView.svg(AppImages.arrowDown)
+                      Spacer(),
+                      ImageView.svg(AppImages.arrowDown),
+                      const SizedBox(width: 14,)
                     ],
                   ),
                 ),

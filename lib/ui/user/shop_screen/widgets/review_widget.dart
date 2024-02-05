@@ -5,7 +5,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import '../../../../model/user_models/get_product_reviews.dart';
 
 class ReviewWidget extends StatelessWidget {
-  final ProductReviews reviews;
+  final Reviews reviews;
   const ReviewWidget({super.key, required this.reviews,});
 
   @override

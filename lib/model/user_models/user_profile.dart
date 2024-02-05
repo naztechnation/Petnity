@@ -1,5 +1,4 @@
 import '../user/user.dart';
-import 'pets.dart';
 import 'pets_profile.dart';
 
 class UserProfile {

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
-import 'package:provider/provider.dart';
+import 'package:petnity/model/user_models/pets_profile.dart';
 
-import '../../../../../model/view_models/user_view_model.dart';
 import '../../../../../res/app_strings.dart';
 import '../../../../widgets/custom_text.dart';
 
 class PetBio extends StatelessWidget {
-  const PetBio({Key? key}) : super(key: key);
+  final Pets pets;
+
+  const PetBio({Key? key, required this.pets}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var petDetails = Provider.of<UserViewModel>(context, listen: true);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,7 +25,7 @@ class PetBio extends StatelessWidget {
           height: 10,
         ),
         Text(
-          petDetails.petDetails?.pet?.about ?? '',
+          pets.about ?? '',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
@@ -53,11 +53,11 @@ class PetBio extends StatelessWidget {
             children: [
               ListTile(
                 title: CustomText(
-                  text: '${petDetails.petDetails?.pet?.type?.name ?? 'None'} Illness',
+                  text: '${'petDetails.petDetails?.pets.type?.name' ?? 'None'} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('${petDetails.petDetails?.petHealthIssue?.name ?? 'None'}'
+                subtitle: Text('${'petDetails.petDetails?.petHealthIssue?.name' ?? 'None'}'
                     .capitalizeFirstOfEach),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
@@ -68,7 +68,7 @@ class PetBio extends StatelessWidget {
                       weight: FontWeight.w700,
                     ),
                     subtitle: Text(
-                        '${petDetails.petDetails?.petHealthIssue?.drug ?? 'None'}'
+                        '${'petDetails.petDetails?.petHealthIssue?.drug' ?? 'None'}'
                             .capitalizeFirstOfEach),
                   ),
                 ),
@@ -92,7 +92,7 @@ class PetBio extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        '${petDetails.petDetails?.petHealthIssue?.prescription ?? 'None'}'
+                        '${'petDetails.petDetails?.petHealthIssue?.prescription' ?? 'None'}'
                             .capitalizeFirstOfEach)),
               ),
               const SizedBox(
@@ -100,11 +100,11 @@ class PetBio extends StatelessWidget {
               ),
               ListTile(
                 title: CustomText(
-                  text: '${petDetails.petDetails?.pet?.type?.name ?? 'None'} Illness',
+                  text: '${'petDetails.petDetails?.pet?.type?.name' ?? 'None'} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('${petDetails.petDetails?.petAllergy?.name ?? 'None'}'
+                subtitle: Text('${'petDetails.petDetails?.petAllergy?.name' ?? 'None'}'
                     .capitalizeFirstOfEach),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
@@ -114,7 +114,7 @@ class PetBio extends StatelessWidget {
                       fontFamily: AppStrings.interSans,
                       weight: FontWeight.w700,
                     ),
-                    subtitle: Text('${petDetails.petDetails?.petAllergy?.drug ?? 'None'}'
+                    subtitle: Text('${'petDetails.petDetails?.petAllergy?.drug' ?? 'None'}'
                         .capitalizeFirstOfEach),
                   ),
                 ),
@@ -138,7 +138,7 @@ class PetBio extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                        '${petDetails.petDetails?.petAllergy?.prescription ?? 'None'}'
+                        '${'petDetails.petDetails?.petAllergy?.prescription' ?? 'None'}'
                             .capitalizeFirstOfEach)),
               ),
               const SizedBox(

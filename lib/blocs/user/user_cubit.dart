@@ -555,7 +555,7 @@ class UserCubit extends Cubit<UserStates> {
 
       final petProfile = await userRepository.getUserPet(username: username);
 
-       viewModel.setPetPicture(petPicture: petProfile.pets?[0].picture ?? '');
+       viewModel.setPetPicture(petPicture: petProfile.data?.pets?[0].picture ?? '');
 
       emit(PetProfileLoaded(petProfile));
     } on ApiException catch (e) {

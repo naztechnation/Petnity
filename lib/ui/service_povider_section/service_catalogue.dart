@@ -21,6 +21,7 @@ import '../../../res/app_images.dart';
 import '../../../utils/app_utils.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/product/product.dart';
+import '../../model/user_models/shopping_lists.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../widgets/text_edit_view.dart';
 import 'create_shop_product/create_shop_products.dart';
@@ -47,8 +48,8 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   late UserCubit _userCubit;
 
-  List<Products> products = [];
-  List<Products> filteredProducts = [];
+  List<Product> products = [];
+  List<Product> filteredProducts = [];
   final searchController = TextEditingController();
 
   String agentId = "";

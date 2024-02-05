@@ -94,14 +94,14 @@ class ImageView extends StatelessWidget {
         width: width,
         fadeInDuration: const Duration(seconds: 5),
         fadeInCurve: Curves.easeInCirc,
-        placeholder: placeholder ?? AppImages.appLogo,
+        placeholder: placeholder ?? AppImages.appLogo1,
         image: url!,
         imageErrorBuilder: imageErrorBuilder ??
             (context, error, stackTrace) => Container(
               decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
               height: 40,
               padding: const EdgeInsets.all(8),
-              child: Image.asset(placeholder ?? AppImages.appLogo1, fit: BoxFit.cover,height: 25,)),
+              child: Image.asset(placeholder ?? AppImages.appLogo, fit: BoxFit.contain,height: 25,)),
       );
     } else if (type == ImageType.asset) {
       return Image.asset(

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
-import 'package:provider/provider.dart';
+import 'package:petnity/model/user_models/pets_profile.dart';
 
-import '../../../../../model/view_models/user_view_model.dart';
 import '../../../../../res/app_constants.dart';
 import '../../../../widgets/image_view.dart';
 
 class PetStatus extends StatelessWidget {
-  const PetStatus({super.key});
+  final Pets pets;
+  const PetStatus({super.key, required this.pets});
 
   @override
   Widget build(BuildContext context) {
-    var petDetails = Provider.of<UserViewModel>(context, listen: true);
 
     return Column(
       children: [
@@ -21,7 +20,7 @@ class PetStatus extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(30),
                             child: ImageView.network(
-                              petDetails.petDetails?.pet?.picture,
+                              pets.picture,
                               
                               fit: BoxFit.cover,
                             )),
@@ -33,11 +32,11 @@ class PetStatus extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              petDetails.petDetails?.pet?.name.toString().capitalizeFirstOfEach ?? "",
+              pets.name.toString().capitalizeFirstOfEach ?? "",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
             Text(
-              'Sex: ${petDetails.petDetails?.pet?.gender ?? ""}'.capitalizeFirstOfEach,
+              'Sex: ${pets.gender ?? ""}'.capitalizeFirstOfEach,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
           ],

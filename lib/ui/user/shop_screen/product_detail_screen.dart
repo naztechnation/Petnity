@@ -17,6 +17,7 @@ import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/product/product.dart';
 import '../../../model/user_models/get_product_reviews.dart'; 
+import '../../../model/user_models/products_detail.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -79,9 +80,9 @@ class _ProductDetailState extends State<ProductDetail> {
 
   late UserCubit _userCubit;
 
-  List<ProductReviews> reviews = [];
+  List<Reviews> reviews = [];
 
-  Products? _products;
+  Productss? _products;
 
   double totalAmount = 0;
 
@@ -158,7 +159,7 @@ class _ProductDetailState extends State<ProductDetail> {
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
       if (state is ProductDetailsLoaded) {
         if (state.productDetails.status!) {
-          _products = state.productDetails.product;
+          _products = state.productDetails.data?.product;
           totalAmount = double.parse(_products?.price.toString() ?? '0.0');
         } else {}
       } else if (state is GetProductReviewsLoaded) {

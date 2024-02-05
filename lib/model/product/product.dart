@@ -1,6 +1,6 @@
 import '../agent/agent.dart';
 
-class Products {
+class   Products {
   bool? inStock;
   List<String>? images;
   String? sId;

@@ -200,7 +200,7 @@ static String agentRejectShopOrder(
   static String deleteUser(String username) =>
       '${_baseUrl}users/delete-user/$username';
 
-  static String reportBug(String username) => '${_baseUrl}report-bug/$username';
+  static String reportBug(String username) => '${_baseUrl}report-bug';
 
   static String reportAgent(String username, String agentId) =>
       '${_baseUrl}report-agent/$username/$agentId';

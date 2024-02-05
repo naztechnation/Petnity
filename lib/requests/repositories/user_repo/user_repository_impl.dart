@@ -20,7 +20,6 @@ import '../../../model/user_models/pet_profile_details.dart';
 import '../../../model/user_models/pets_profile.dart';
 import '../../../model/user_models/reviews_data.dart';
 import '../../../model/user_models/service_provider_lists.dart';
-import '../../../model/user_models/service_type.dart';
 import '../../../model/user_models/shopping_lists.dart';
 import '../../../model/user_models/user_profile.dart';
 import '../../../res/app_strings.dart';
@@ -315,10 +314,11 @@ class UserRepositoryImpl implements UserRepository {
       {required String username,
       required String title,
       required String description}) async {
-    final map = await Requests().post(AppStrings.reportBug(username), body: {
+        var payload = {
       "title": title,
       "description": description,
-    }, headers: {
+    };
+    final map = await Requests().post(AppStrings.reportBug(username), body: json.encode(payload), headers: {
       'Authorization': AppStrings.token,
     });
     return AuthData.fromJson(map);

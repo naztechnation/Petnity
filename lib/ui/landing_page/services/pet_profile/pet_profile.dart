@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/model/user_models/pets_profile.dart'; 
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_bio.dart';
 import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_image_status.dart';
@@ -11,6 +12,8 @@ import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/pet_profile_details.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart'; 
+import '../../../../res/app_routes.dart';
+import '../../../../utils/navigator/page_navigator.dart';
 import '../../../widgets/back_button.dart';
 import '../../../widgets/image_view.dart';
 import '../../../widgets/modals.dart';
@@ -50,7 +53,7 @@ class PetProfileScreen extends StatefulWidget {
 class _PetProfileState extends State<PetProfileScreen> {
   late UserCubit _userCubit;
 
-  pet.PetProfile? petProfile;
+  List<Pets>? petProfile;
   PetProfileDetails? petProfileDetails;
 
   String username = '';
@@ -77,8 +80,7 @@ class _PetProfileState extends State<PetProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    var petDetails = Provider.of<UserViewModel>(context, listen: true);
+ 
 
     return Scaffold(
       body: Stack(
@@ -97,20 +99,28 @@ class _PetProfileState extends State<PetProfileScreen> {
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                     ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: (() {
+                         AppNavigator.pushAndStackNamed(context,
+                          name: AppRoutes.kycScreenOne);
+                      }),
+                      child: ImageView.svg(AppImages.addIcon, height: 25,)),
+                    const SizedBox(width: 20,)
                   ],
                 ),
               ),
               BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
                 if (state is PetProfileLoaded) {
                   if (state.petData.status!) {
-                    petProfile = state.petData;
-                    var petId = state.petData.pets?.first.sId ?? "";
+                    petProfile = state.petData.data?.pets?.reversed.toList();
+                    var petId = state.petData.data?.pets?.first.sId ?? "";
 
                   
-                    getUserPetDetails(petId.toString(),);
+                    // getUserPetDetails(petId.toString(),);
                   } else {
                     Modals.showToast('Failed to load pet profile');
-                    petDetails.clearPetDetails();
+                   
                   }
                 } else if (state is UserNetworkErrApiErr) {
                   Modals.showToast(state.message ?? '');
@@ -126,20 +136,24 @@ class _PetProfileState extends State<PetProfileScreen> {
                         AppImages.loading,
                         height: 50,
                       )))
-                    : (petDetails.petDetails != null )?  Expanded(
-                        child: SingleChildScrollView(
+                    : (petProfile != null )?  Expanded(
+                        child: ListView.builder(
+                          itemCount: petProfile?.length,
+                          shrinkWrap: true,
+                          itemBuilder: ((context, index) {
+                          return SingleChildScrollView(
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 20),
                             child: Column(
                               children: [
-                                PetStatus(),
+                                PetStatus(pets: petProfile![index] ,),
                                 const SizedBox(height: 15),
                                 if (widget.isUser) PetOwner(),
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                PetBio(),
+                                PetBio(pets: petProfile![index] ,),
                                 // ClipRRect(
                                 //   borderRadius: BorderRadius.circular(40),
                                 //   child: Container(
@@ -192,7 +206,8 @@ class _PetProfileState extends State<PetProfileScreen> {
                               ],
                             ),
                           ),
-                        ),
+                        );
+                        }))
                       ): Expanded(
                         child: Container(
                                       height: MediaQuery.sizeOf(context).height,

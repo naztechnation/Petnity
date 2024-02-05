@@ -89,13 +89,13 @@ class _ReportBugScreenState extends State<ReportBugScreen> {
             onPressed: () {
               if (_formKey.currentState!.validate()) {
                 _userCubit.reportBug(
-                  username: username,
+                  username: '',
                   title: title.text,
                   description: bug.text,
                 );
               }
             },
-            child: Text('Done'),
+            child: Text('Done', style: TextStyle(color: Colors.white),),
           ),
         ),
         resizeToAvoidBottomInset: true,

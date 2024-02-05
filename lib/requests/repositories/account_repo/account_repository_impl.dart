@@ -205,8 +205,8 @@ Future<AuthData> resetPassword({
     "code": token,
     "password": password,
   };
-  final map = await Requests().post(AppStrings.resetPasswordUrl(email),
-   body: json.encode(payload), );
+  final map = await Requests().patch(AppStrings.resetPasswordUrl(email),
+   body: payload, );
 
   return AuthData.fromJson(map);
 }
