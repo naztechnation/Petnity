@@ -8,7 +8,6 @@ import 'package:petnity/ui/settings/settings.dart';
 import 'package:petnity/ui/support/support.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../handlers/secure_handler.dart';
@@ -17,6 +16,7 @@ import '../../../res/app_routes.dart';
 import '../../../res/enum.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../notfications_pages/notifications_session.dart';
+import '../../user/wallet/wallet_dashboard.dart';
 
 class customDrawer extends StatefulWidget {
   final VoidCallback onLogOutPressesd;
@@ -133,6 +133,24 @@ class _customDrawerState extends State<customDrawer> {
                     ),
                     title: Text(
                       'Profile',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontFamily: AppStrings.interSans),
+                    ),
+                  ),
+                   ListTile(
+                     onTap: () {
+                      AppNavigator.pushAndStackPage(context,
+                          page: UserWalletPage());
+                    },
+                   
+                    leading: ImageView.asset(
+                      AppImages.walletIcon,
+                      width: 25,
+                      height: 25,
+                    ),
+                    title: Text(
+                      'Wallet',
                       style: TextStyle(
                           fontWeight: FontWeight.w800,
                           fontFamily: AppStrings.interSans),
