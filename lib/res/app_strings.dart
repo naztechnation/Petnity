@@ -10,7 +10,7 @@ class AppStrings {
 
   ///flutterwave api
   static const String flutterwaveApiKey =
-      "FLWPUBK_TEST-2685ec5e008c45c4eeb28b2401b5b26e-X";
+      " ";
 
   ///app tokens
 
@@ -260,4 +260,7 @@ static String agentRejectShopOrder(
       static String updateVetPackagePricing(
           { required String serviceId}) =>
       '${_baseUrl}service/update-vet-service-price/$serviceId';
+
+       static String creditWalletUrl =
+      '${_baseUrl}user/credit-wallet';
 }

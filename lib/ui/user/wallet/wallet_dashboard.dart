@@ -1,20 +1,24 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:petnity/ui/payment/withdrawal_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
+import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
+import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
+import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
+import '../../../res/enum.dart';
 import '../../../utils/app_utils.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../payment/widgets/payment_box.dart';
@@ -22,11 +26,10 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/loading_page.dart';
 import '../../widgets/modals.dart';
 
-
-
 class UserWalletPage extends StatelessWidget {
-  
-  const UserWalletPage({Key? key, }) : super(key: key);
+  const UserWalletPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +38,12 @@ class UserWalletPage extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: Payment(
-      ),
+      child: Payment(),
     );
   }
 }
 
 class Payment extends StatefulWidget {
-
   const Payment({
     super.key,
   });
@@ -53,6 +54,8 @@ class Payment extends StatefulWidget {
 
 class _PaymentState extends State<Payment> {
   late ServiceProviderCubit _serviceProviderCubit;
+
+  final amountController = TextEditingController();
 
   var withdrawableAmount = '0';
 
@@ -68,8 +71,11 @@ class _PaymentState extends State<Payment> {
 
   String agentId = "";
 
+  bool isPageLoading = false;
+
   getBalance() async {
     agentId = await StorageHandler.getUserId();
+    email = await StorageHandler.getUserEmail();
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
     await _serviceProviderCubit.getAgentBalance(
@@ -79,6 +85,39 @@ class _PaymentState extends State<Payment> {
     await _serviceProviderCubit.agentWithdrawalHistory(
       agentId: agentId,
     );
+  }
+
+  _handlePaymentInitialization() async {
+    final Customer customer = Customer(email: email);
+
+    final Flutterwave flutterwave = Flutterwave(
+        context: context,
+        publicKey: AppStrings.flutterwaveApiKey,
+        currency: 'NGN',
+        redirectUrl: 'https://lucacify.com',
+        txRef: uuid.v1(),
+        amount: amountController.text,
+        customer: customer,
+        paymentOptions: "card",
+        customization: Customization(
+          title: "Lucacify",
+          logo: AppImages.logo,
+        ),
+        isTestMode: true);
+    final ChargeResponse response = await flutterwave.charge();
+
+    if (response != null) {
+      txId = response.transactionId ?? '';
+      print(txId);
+      if (txId != '') {
+        creditWallet(
+          txId: txId,
+        );
+      }
+    } else {
+      Modals.showToast('Unable to make payment Successfully.',
+          messageType: MessageType.error);
+    }
   }
 
   @override
@@ -94,8 +133,7 @@ class _PaymentState extends State<Payment> {
 
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: 
-               screenSize(context) * .1,
+          preferredSize: screenSize(context) * .1,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: AppBar(
@@ -117,11 +155,21 @@ class _PaymentState extends State<Payment> {
             Modals.showToast(state.message ?? '');
           } else if (state is CreateServiceNetworkErrApiErr) {
             Modals.showToast(state.message ?? '');
+          } else if (state is CreditWalletLoaded) {
+            if (state.data.status ?? false) {
+              Modals.showToast(state.data.message ?? '',
+                  messageType: MessageType.success);
+            } else if (state.data.error != null) {
+              Modals.showToast(
+                state.data.error?.message ?? '',
+              );
+            } else if (state.data.status ?? false) {
+              Modals.showToast(
+                state.data.message ?? '',
+              );
+            }
           } else if (state is AgentBalanceLoaded) {
             withdrawableAmount = state.balance.data?.balance.toString() ?? '';
-
-            
-
 
             service.setWithdrawableBalance(withdrawableAmount);
           } else if (state is AgentWithdrawalHistoryLoaded) {
@@ -130,7 +178,8 @@ class _PaymentState extends State<Payment> {
           }
         }, builder: (context, state) {
           return (state is AgentBalanceLoading ||
-                  state is AgentWithdrawalHistoryLoading)
+                  state is AgentWithdrawalHistoryLoading ||
+                  state is CreditWalletLoading)
               ? LoadingPage()
               : Container(
                   height: screenSize(context).height,
@@ -146,16 +195,15 @@ class _PaymentState extends State<Payment> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          
                           const SizedBox(
                             height: 30,
                           ),
                           GestureDetector(
                             onTap: () {
-                              AppNavigator.pushAndStackPage(context,
-                                  page: WithdrawalPage(
-                                    withdrawableAmount: withdrawableAmount,
-                                  ));
+                              // AppNavigator.pushAndStackPage(context,
+                              //     page: WithdrawalPage(
+                              //       withdrawableAmount: withdrawableAmount,
+                              //     ));
                             },
                             child: Container(
                               width: screenSize(context).width,
@@ -196,21 +244,114 @@ class _PaymentState extends State<Payment> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 6),
-                                      decoration: BoxDecoration(
-                                          color: AppColors.lightSecondary,
-                                          borderRadius:
-                                              BorderRadius.circular(30)),
-                                      child: CustomText(
-                                        text: 'Top Up',
-                                        weight: FontWeight.bold,
-                                        color: AppColors.lightPrimary,
-                                        maxLines: 2,
-                                        size: 13,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Modals.showDialogModal(context,
+                                          page: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 20, horizontal: 20),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Enter amount to top up.',
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextEditView(
+                                                  isDense: true,
+                                                  controller: amountController,
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  hintText: 'Enter amount',
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Expanded(
+                                                      child: ButtonView(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        expanded: false,
+                                                        color: Colors.white,
+                                                        borderColor: AppColors
+                                                            .lightSecondary,
+                                                        child: Text(
+                                                          'Cancel',
+                                                          style: TextStyle(
+                                                              fontSize: 14),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Expanded(
+                                                      child: ButtonView(
+                                                        onPressed: () {
+                                                          if (amountController
+                                                              .text
+                                                              .isNotEmpty) {
+                                                            Navigator.pop(
+                                                                context);
+                                                            // creditWallet(
+                                                            //   txId: '4832288',
+                                                            // );
+                                                            _handlePaymentInitialization();
+                                                          } else {
+                                                            Modals.showToast(
+                                                                'Please enter amount');
+                                                          }
+                                                        },
+                                                        expanded: false,
+                                                        color: AppColors
+                                                            .lightSecondary,
+                                                        borderColor: AppColors
+                                                            .lightSecondary,
+                                                        child: Text(
+                                                          'Continue',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 14),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                          ));
+                                      // AppNavigator.pushAndStackPage(context, page: page)
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 12, vertical: 6),
+                                        decoration: BoxDecoration(
+                                            color: AppColors.lightSecondary,
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        child: CustomText(
+                                          text: 'Top Up',
+                                          weight: FontWeight.bold,
+                                          color: AppColors.lightPrimary,
+                                          maxLines: 2,
+                                          size: 13,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -254,7 +395,7 @@ class _PaymentState extends State<Payment> {
                           //   height: 20,
                           // ),
                           CustomText(
-                            text: 'Analytics',
+                            text: 'Wallet Activities',
                             weight: FontWeight.bold,
                             fontFamily: AppStrings.montserrat,
                             size: 13,
@@ -303,5 +444,11 @@ class _PaymentState extends State<Payment> {
                   ),
                 );
         }));
+  }
+
+  creditWallet({required String txId}) async {
+    await _serviceProviderCubit.creditWallet(
+      txId: txId,
+    );
   }
 }

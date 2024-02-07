@@ -6,7 +6,8 @@ import 'package:petnity/model/service_provider_models/all_agent_orders.dart';
 import 'package:petnity/model/service_provider_models/create_services_amount.dart';
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
-import 'package:petnity/model/user_models/vet_service.dart';
+import 'package:petnity/model/user_models/credit_wallet.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
@@ -400,7 +401,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       AppStrings.updatePackagePricing(
         packageId: packageId,
       ),
-      body: json.encode(payload),
+      body: payload,
     );
 
     return AuthData.fromJson(map);
@@ -416,9 +417,22 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       AppStrings.updateVetPackagePricing(
         serviceId: serviceId,
       ),
-      body: json.encode(payload),
+      body: payload,
     );
 
     return AuthData.fromJson(map);
+  }
+
+  @override
+  Future<CreditedWallet> creditWallet({required String txId}) async {
+
+    Modals.showToast(txId);
+    var payload = {'transactionId': txId};
+    final map = await Requests().post(
+      AppStrings.creditWalletUrl,
+      body: json.encode(payload),
+    );
+
+    return CreditedWallet.fromJson(map);
   }
 }

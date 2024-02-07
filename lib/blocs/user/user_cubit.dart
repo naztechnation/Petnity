@@ -21,8 +21,8 @@ class UserCubit extends Cubit<UserStates> {
         serviceId: serviceId,
       );
 
-      ///TODO
-      //await viewModel.setAgentDetails(agents: agents.agents ?? []);
+     
+      await viewModel.setAgentDetails(agents: agents.data?.agents ?? []);
 
       emit(ServiceProviderListLoaded(agents));
     } on ApiException catch (e) {

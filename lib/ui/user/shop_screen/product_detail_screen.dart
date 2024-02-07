@@ -101,42 +101,7 @@ class _ProductDetailState extends State<ProductDetail> {
     userType = await StorageHandler.getUserType();
   }
 
-  _handlePaymentInitialization(String shopOrder) async {
-    final Customer customer = Customer(email: email);
-
-    final Flutterwave flutterwave = Flutterwave(
-        context: context,
-        publicKey: AppStrings.flutterwaveApiKey,
-        currency: 'NGN',
-        redirectUrl: 'https://lucacify.com',
-        txRef: uuid.v1(),
-        amount: totalAmount.toString(),
-        customer: customer,
-        paymentOptions: "card",
-        customization: Customization(
-          title: "Lucacify",
-          logo: AppImages.logo,
-        ),
-        isTestMode: true);
-    final ChargeResponse response = await flutterwave.charge();
-
-    if (response != null) {
-      txId = response.transactionId ?? '';
-      if (txId != '') {
-        String message = 'Payment Ref: ${response.txRef}';
-
-        confirmPaymentOrder(
-          context,
-          widget.username,
-          txId,
-          shopOrder,
-        );
-      }
-    } else {
-      Modals.showToast('Unable to make payment Successfully.',
-          messageType: MessageType.error);
-    }
-  }
+  
 
   @override
   void initState() {
@@ -466,15 +431,7 @@ class _ProductDetailState extends State<ProductDetail> {
     }
   }
 
-  confirmPaymentOrder(BuildContext ctx, String username, String purchaseId,
-      String shopOrderId) {
-    ctx.read<UserCubit>().confirmShoppingOrderPay(
-          username: username,
-          purchaseId: purchaseId,
-          shopOrderId: shopOrderId,
-        );
-    FocusScope.of(ctx).unfocus();
-  }
+ 
 
   Ratings({
     required String username,

@@ -43,7 +43,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
     
        services = user.agents[widget.index].services != null
     ? user.agents[widget.index].services!
-        .map((service) => service.serviceType?.name ?? '')
+        .map((service) => service.name ?? '')
         .toList()
     : <String>[];
 

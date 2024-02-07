@@ -18,7 +18,7 @@ import '../../widgets/modals.dart';
 import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {
-  final List<Services> services;
+  final List<ServiceType> services;
 
   final bool isAgent;
   final String agentId;
@@ -50,7 +50,7 @@ class ServicesList extends StatelessWidget {
                   bool isActive =
                       services.any((subItem) => subItem.sId == masterItem.sId);
 
-                  if (isActive) {
+                  if (!isActive) {
                     return Item(context, randomColor, '${masterItem.image}',
                         '${masterItem.image}', () {
                       agent.setServiceId('${user.services[index].sId}');

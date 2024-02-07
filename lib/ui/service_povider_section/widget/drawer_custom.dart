@@ -69,7 +69,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
     }
   }
 
-  List<Services> services = [];
+  List<ServiceType> services = [];
 
   getServicesTypes() async {
     _userCubit = context.read<UserCubit>();
@@ -107,12 +107,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
           } else {}
         } else if (state is ServiceProviderListLoaded) {
           ///TODO
-          // for (var item in state.userData.agents!) {
-          //   if (item.sId.toString() == agentId) {
-          //     agents = item;
-          //     break;
-          //   }
-          // }
+            for (var item in state.userData.data?.agents ?? []) {
+                    if (item.sId.toString() == agentId) {
+                      agents = item;
+                      break;
+                    }
+                  }
           services = agents?.services ?? [];
         } else if (state is UserNetworkErrApiErr) {
         } else if (state is UserNetworkErr) {}

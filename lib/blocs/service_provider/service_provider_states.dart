@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:petnity/model/account_models/auth_data.dart';
+import 'package:petnity/model/user_models/credit_wallet.dart';
 
 import '../../model/service_provider_models/account_details.dart';
 import '../../model/service_provider_models/all_agent_orders.dart';
@@ -300,6 +301,18 @@ class  EditPackageLoaded extends ServiceProviderState {
 }
 
   class   EditPackageLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  CreditWalletLoaded extends ServiceProviderState {
+  final CreditedWallet data;
+  const  CreditWalletLoaded(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
+  class   CreditWalletLoading extends ServiceProviderState {
   @override
   List<Object> get props => [];
 }

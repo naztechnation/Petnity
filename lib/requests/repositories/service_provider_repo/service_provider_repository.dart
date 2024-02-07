@@ -1,5 +1,6 @@
  
 import 'package:petnity/model/account_models/auth_data.dart';
+import 'package:petnity/model/user_models/credit_wallet.dart';
 
 import '../../../model/service_provider_models/account_details.dart';
 import '../../../model/service_provider_models/all_agent_orders.dart';
@@ -51,5 +52,6 @@ abstract class ServiceProviderRepository {
     Future<WithrawalHistory> agentWithdrawalHistory({required String agentId,}); 
     Future<AuthData> editPackagePricing({required String agentId,required String packageId,required String price,}); 
     Future<AuthData> editVetPackagePricing({required String agentId,required String serviceId,required String price,}); 
+    Future<CreditedWallet> creditWallet({required String txId,}); 
 
 }

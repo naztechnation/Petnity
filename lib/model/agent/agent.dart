@@ -2,9 +2,10 @@ import 'package:petnity/model/user/user.dart';
 
 import '../pet_types.dart/pet_types.dart';
 import '../services/services.dart';
+import '../user_models/service_type.dart';
 
 class Agent {
-  List<Services>? services;
+  List<ServiceType>? services;
   List<PetTypes>? petTypes;
   bool? isVerified;
   bool? isReachable;
@@ -35,9 +36,9 @@ class Agent {
 
   Agent.fromJson(Map<String, dynamic> json) {
     if (json['services'] != null) {
-      services = <Services>[];
+      services = <ServiceType>[];
       json['services'].forEach((v) {
-        services!.add(new Services.fromJson(v));
+        services!.add(new ServiceType.fromJson(v));
       });
     }
     if (json['petTypes'] != null) {

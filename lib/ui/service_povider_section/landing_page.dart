@@ -14,8 +14,6 @@ import '../../../utils/navigator/page_navigator.dart';
 import '../../blocs/user/user.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/agent/agent.dart';
-import '../../model/services/services.dart';
-import '../../model/user_models/service_provider_lists.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -209,7 +207,7 @@ class _HomepageBarState extends State<HomepageBar> {
   bool isLoading = false;
   String agentId = "";
 
-  List<Services> services = [];
+  List<ServiceType> services = [];
 
   Agent? agents;
 
@@ -256,12 +254,12 @@ class _HomepageBarState extends State<HomepageBar> {
               } else {}
             }else if (state is ServiceProviderListLoaded) {
               ///TODO
-                  // for (var item in state.userData.data?.user!) {
-                  //   if (item.sId.toString() == agentId) {
-                  //     agents = item;
-                  //     break;
-                  //   }
-                  // }
+                  for (var item in state.userData.data?.agents ?? []) {
+                    if (item.sId.toString() == agentId) {
+                      agents = item;
+                      break;
+                    }
+                  }
                    services = agents?.services ?? []; 
                 } else if (state is UserNetworkErrApiErr) {
             } else if (state is UserNetworkErr) {}

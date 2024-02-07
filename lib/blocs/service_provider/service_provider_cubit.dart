@@ -917,4 +917,32 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       }
     }
   }
+
+  Future<void>  creditWallet({
+    required String txId,
+    
+
+  }) async {
+    try {
+      emit(CreditWalletLoading());
+
+      final txid = await serviceProviderRepository.creditWallet(
+        txId: txId, 
+      );
+
+      emit(CreditWalletLoaded(txid));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

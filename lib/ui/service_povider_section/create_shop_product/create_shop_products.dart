@@ -77,7 +77,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                 ],
               ),
               const SizedBox(
-                height: 30,
+                height: 15,
               ),
               Expanded(
                 child: ListView(
@@ -276,13 +276,16 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
               )
             : Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(22),
-                    child: ImageView.file(
-                        File(
-                          image,
-                        ),
-                        fit: BoxFit.cover),
+                  Container(
+                    width: MediaQuery.of(context).size.width/3,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(22),
+                      child: ImageView.file(
+                          File(
+                            image,
+                          ),
+                          fit: BoxFit.cover),
+                    ),
                   ),
                   Positioned(
                     top: 0,
@@ -301,7 +304,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                         child: Align(
                             child: Icon(
                           Icons.delete_forever,
-                          color: Colors.red[900],
+                          color: Color.fromARGB(255, 230, 130, 130),
                         )),
                       ),
                     ),

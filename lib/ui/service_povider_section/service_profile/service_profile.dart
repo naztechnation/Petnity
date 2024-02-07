@@ -81,7 +81,7 @@ class _AgentProfileState extends State<AgentProfile> {
 
   List<ServiceType> service = [];
 
-  List<Services> services = [];
+  List<ServiceType> services = [];
 
   String agentId = "";
   String userType = '';
@@ -142,12 +142,12 @@ class _AgentProfileState extends State<AgentProfile> {
                                   service = _userCubit.viewModel.services;
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
-                                // for (var item in state.userData.agents!) {
-                                //   if (item.sId.toString() == agentId) {
-                                //     agents = item;
-                                //     break;
-                                //   }
-                                // }
+                                 for (var item in state.userData.data?.agents ?? []) {
+                    if (item.sId.toString() == agentId) {
+                      agents = item;
+                      break;
+                    }
+                  }
                                 services = agents?.services ?? [];
 
                               }  else if (state is UserNetworkErrApiErr) {
