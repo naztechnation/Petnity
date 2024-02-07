@@ -20,6 +20,7 @@ import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
 import '../payment/payment_screen.dart';
 import '../widgets/custom_text.dart';
+import '../widgets/modals.dart';
 import 'create_shop_product/create_shop_products.dart';
 import 'service_catalogue.dart';
 import 'service_provider_kyc/service_provider_kyc/service_kyc_eight.dart';
@@ -212,13 +213,15 @@ class _HomepageBarState extends State<HomepageBar> {
   Agent? agents;
 
   getServicesTypes() async {
-    agentId = await StorageHandler.getUserId();
+    agentId = await StorageHandler.getAgentId();
+
+    Modals.showToast(agentId);
 
     _userCubit = context.read<UserCubit>();
 
     try {
       await _userCubit.getServiceTypes( );
-   await _userCubit.getAgentProfile(agentId);
+   await _userCubit.getAgentProfile('65970b6ffa22b23bb484036d');
 
     } catch (e) {}
   }

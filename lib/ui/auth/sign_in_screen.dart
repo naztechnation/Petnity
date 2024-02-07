@@ -58,52 +58,46 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status ?? false) {
-                  StorageHandler.saveIsLoggedIn('true');
+                 
                   StorageHandler.saveUserToken(state.userData.data?.token);
 
                   StorageHandler.saveUserPassword(_passwordController.text);
 
-                   StorageHandler.saveUserId(
-                        state.userData.data?.user?.sId.toString());
+                  StorageHandler.saveUserId(
+                      state.userData.data?.user?.sId.toString());
 
-                         StorageHandler.saveEmail(
-                        state.userData.data?.user?.email.toString());
-                    StorageHandler.saveUserPhone(
-                        state.userData.data?.user?.phoneNumber.toString());
-                    StorageHandler.saveUserPicture(
-                        state.userData.data?.user?.profileImage.toString());
+                  StorageHandler.saveEmail(
+                      state.userData.data?.user?.email.toString());
+                  StorageHandler.saveUserPhone(
+                      state.userData.data?.user?.phoneNumber.toString());
+                  StorageHandler.saveUserPicture(
+                      state.userData.data?.user?.profileImage.toString());
 
-                   
-                    StorageHandler.saveUserName(state
-                        .userData.data?.user?.username
-                        .toString());
+                  StorageHandler.saveUserName(
+                      state.userData.data?.user?.username.toString());
 
-                    user.setUserData(
-                        username: state.userData.data?.user?.username
-                                .toString() ??
-                            '');
+                  user.setUserData(
+                      username:
+                          state.userData.data?.user?.username.toString() ?? '');
 
                   if (state.userData.data?.user?.isAgent ?? false) {
                     StorageHandler.saveIsUserType('service_provider');
-                   
+                    StorageHandler.saveAgentId('65bcb103ebc96e00353e0185');
+
+
                     if (state.userData.data?.user?.hasPets ?? false) {
                       StorageHandler.saveUserPetState('true');
                     } else {
                       StorageHandler.saveUserPetState('');
                     }
 
-                   
-
                     loginUser(
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
-                        isAgent: true );
-                    
+                        isAgent: true);
                   } else {
-                    
-
-                        if (state.userData.data?.user?.hasPets ?? false) {
+                    if (state.userData.data?.user?.hasPets ?? false) {
                       StorageHandler.saveUserPetState('true');
                     } else {
                       StorageHandler.saveUserPetState('');
@@ -114,10 +108,9 @@ class SignInScreen extends StatelessWidget {
                     StorageHandler.saveUserPhone(
                         state.userData.data?.user?.phoneNumber.toString());
 
-                  
                     StorageHandler.saveUserName(
                         state.userData.data?.user?.username.toString());
-                   
+
                     user.setUserData(
                         username:
                             state.userData.data?.user?.username.toString() ??
@@ -372,14 +365,15 @@ class SignInScreen extends StatelessWidget {
     if (firebaseUser.status == Status.authenticated) {
       Modals.showToast(message, messageType: MessageType.success);
 
+       StorageHandler.saveIsLoggedIn('true');
+
       if (isAgent) {
         StorageHandler.saveIsUserType('service_provider');
 
         AppNavigator.pushAndReplaceName(context,
             name: AppRoutes.serviceProviderLandingPage);
-       
       } else {
-         StorageHandler.saveIsUserType('user');
+        StorageHandler.saveIsUserType('user');
 
         AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
       }

@@ -31,6 +31,10 @@ class StorageHandler {
     if (userId != null) await storage.write(key: 'ID', value: userId);
   }
 
+   static Future<void> saveAgentId([String? username]) async {
+    if (username != null) await storage.write(key: 'AGENTID', value: username);
+  }
+
   static Future<void> saveUserPassword([String? password]) async {
     if (password != null) await storage.write(key: 'PASSWORD', value: password);
   }
@@ -77,6 +81,18 @@ class StorageHandler {
       token = '';
     }
     return token;
+  }
+
+   static Future<String> getAgentId() async {
+    String? value = await storage.read(key: 'AGENTID');
+    String? agentId;
+    String? data = value;
+    if (data != null) {
+      agentId = data;
+    } else {
+      agentId = '';
+    }
+    return agentId;
   }
 
     static Future<String> getFirebaseToken() async {
