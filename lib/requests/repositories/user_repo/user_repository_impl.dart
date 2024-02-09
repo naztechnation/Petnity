@@ -15,6 +15,7 @@ import '../../../model/account_models/auth_data.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_services.dart';
+import '../../../model/user_models/get_services_type.dart';
 import '../../../model/user_models/order_list.dart';
 import '../../../model/user_models/pet_profile_details.dart';
 import '../../../model/user_models/pets_profile.dart';
@@ -36,13 +37,22 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<GetServiceTypes> getServiceTypes([String? agentId]) async {
+  Future<GetServiceTypes> getServiceTypes() async {
     final map = await Requests().get(
-        (agentId == null)
-            ? AppStrings.getServiceTypes
-            : AppStrings.getIndividualAgentService(agentId),
+         
+             AppStrings.getServiceTypes
+            
         );
     return GetServiceTypes.fromJson(map);
+  }
+
+   @override
+  Future<GetServices> getIndividualAgentService(String agentId) async {
+    final map = await Requests().get(
+         
+              AppStrings.getIndividualAgentService(agentId),
+        );
+    return GetServices.fromJson(map);
   }
 
   @override

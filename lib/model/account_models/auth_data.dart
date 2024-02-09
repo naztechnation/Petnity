@@ -1,3 +1,4 @@
+import '../agent/agent.dart';
 import '../user/user.dart';
 
 class AuthData {
@@ -27,11 +28,14 @@ class AuthData {
 class UserData {
   User? user;
   String? token;
+  Agent? agent;
 
   UserData({this.user, this.token});
 
   UserData.fromJson(Map<String, dynamic> json) {
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
+     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+     
     token = json['token'];
   }
 
@@ -39,6 +43,9 @@ class UserData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.user != null) {
       data['user'] = this.user!.toJson();
+    }
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
     }
     data['token'] = this.token;
     return data;

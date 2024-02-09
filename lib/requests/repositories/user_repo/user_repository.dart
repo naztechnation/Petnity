@@ -10,6 +10,7 @@ import '../../../model/user_models/faq.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_product_reviews.dart';
 import '../../../model/user_models/get_services.dart';
+import '../../../model/user_models/get_services_type.dart';
 import '../../../model/user_models/notifications.dart';
 import '../../../model/user_models/order_list.dart'; 
 import '../../../model/user_models/pet_profile_details.dart';
@@ -32,7 +33,8 @@ abstract class UserRepository {
 
 
     Future<ServiceProvidersList> getAgentProfile(String userId);   
-    Future<GetServiceTypes> getServiceTypes([String? agentId]); 
+    Future<GetServiceTypes> getServiceTypes(); 
+    Future<GetServices> getIndividualAgentService(String agent); 
     Future<ShoppingList> shoppingList({required String index}); 
     Future<ShoppingList> agentShoppingList({required String agentId}); 
     Future<GetReviews> getReviews({required String userId}); 

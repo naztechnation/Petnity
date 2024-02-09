@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository.dart';
@@ -64,15 +65,38 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> getServiceTypes([String? agentId]) async {
+  Future<void> getServiceTypes() async {
     try {
       emit(ServiceProviderListLoading());
 
-      final services = await userRepository.getServiceTypes(agentId);
+      final services = await userRepository.getServiceTypes();
 
       await viewModel.setServicesList(services: services.data?.serviceTypes);
 
       emit(ServicesLoaded(services));
+    } on ApiException catch (e) {
+      emit(UserNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(UserNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> getServices(String agentId) async {
+    try {
+      emit(ServicesTypeLoading());
+
+      final services = await userRepository.getIndividualAgentService(agentId);
+
+       
+      emit(ServicesTypeLoaded(services));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {
@@ -120,6 +144,7 @@ class UserCubit extends Cubit<UserStates> {
 
       final reviews = await userRepository.getReviews(userId: userId);
       await viewModel.setReviews(reviews: reviews);
+
 
       emit(ReviewLoaded(reviews));
     } on ApiException catch (e) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
-import 'package:petnity/model/user_models/pets_profile.dart';
 
+import '../../../../../model/user_models/pets.dart';
 import '../../../../../res/app_constants.dart';
 import '../../../../widgets/image_view.dart';
 

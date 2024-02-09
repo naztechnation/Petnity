@@ -11,11 +11,14 @@ import 'package:provider/provider.dart';
 
 import '../../../res/app_images.dart';
 import '../../../utils/navigator/page_navigator.dart';
+import '../../blocs/accounts/account.dart';
 import '../../blocs/user/user.dart';
 import '../../handlers/secure_handler.dart';
 import '../../model/agent/agent.dart';
 import '../../model/user_models/service_type.dart';
+import '../../model/view_models/account_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
 import '../payment/payment_screen.dart';
@@ -39,7 +42,9 @@ class _ServiceProviderLandingPageState
   List<Widget> _widgetOptions = <Widget>[
     ServiceProviderHomePage(),
     ServiceProviderCatalogueScreen(),
-    PaymentPage(mainPage: false,),
+    PaymentPage(
+      mainPage: false,
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -186,10 +191,10 @@ class HomepageAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserCubit>(
-      create: (BuildContext context) => UserCubit(
-          userRepository: UserRepositoryImpl(),
-          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+    return BlocProvider<AccountCubit>(
+      create: (BuildContext context) => AccountCubit(
+          accountRepository: AccountRepositoryImpl(),
+          viewModel: Provider.of<AccountViewModel>(context, listen: false)),
       child: HomepageBar(),
     );
   }
@@ -203,9 +208,11 @@ class HomepageBar extends StatefulWidget {
 class _HomepageBarState extends State<HomepageBar> {
   List<ServiceType> service = [];
 
-  late UserCubit _userCubit;
+  late AccountCubit _userCubit;
 
   bool isLoading = false;
+  String password = '';
+  String email = '';
   String agentId = "";
 
   List<ServiceType> services = [];
@@ -214,15 +221,15 @@ class _HomepageBarState extends State<HomepageBar> {
 
   getServicesTypes() async {
     agentId = await StorageHandler.getAgentId();
+    email = await StorageHandler.getUserEmail();
+    password = await StorageHandler.getUserPassword();
 
-    Modals.showToast(agentId);
 
-    _userCubit = context.read<UserCubit>();
+    _userCubit = context.read<AccountCubit>();
 
     try {
-      await _userCubit.getServiceTypes( );
-   await _userCubit.getAgentProfile('65970b6ffa22b23bb484036d');
-
+      await _userCubit.loginUser(password: password, email: email);
+     // await _userCubit.getAgentProfile(agentId);
     } catch (e) {}
   }
 
@@ -233,9 +240,12 @@ class _HomepageBarState extends State<HomepageBar> {
     super.initState();
   }
 
+   
+
   @override
   Widget build(BuildContext context) {
- 
+    final user = Provider.of<UserViewModel>(context, listen: false);
+
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
@@ -249,25 +259,58 @@ class _HomepageBarState extends State<HomepageBar> {
             fontSize: 18),
       ),
       actions: [
-        BlocConsumer<UserCubit, UserStates>(
-          listener: (context, state) {
-            if (state is ServicesLoaded) {
-              if (state.services.status!) {
-                service = _userCubit.viewModel.services;
-              } else {}
-            }else if (state is ServiceProviderListLoaded) {
-              ///TODO
-                  for (var item in state.userData.data?.agents ?? []) {
-                    if (item.sId.toString() == agentId) {
-                      agents = item;
-                      break;
+        BlocConsumer<AccountCubit, AccountStates>(
+            listener: (context, state) {
+              if (state is AccountLoaded) {
+                if (state.userData.status ?? false) {
+                
+                  if (state.userData.data?.user == null) {
+                    if (state.userData.data?.agent?.user?.isAgent ?? false) {
+                      StorageHandler.saveIsUserType('service_provider');
+                      StorageHandler.saveUserToken(state.userData.data?.token);
+
+                      StorageHandler.saveAgentId(
+                          state.userData.data?.agent?.sId);
+                      StorageHandler.saveUserId(
+                          state.userData.data?.agent?.user?.sId.toString());
+
+                      StorageHandler.saveEmail(
+                          state.userData.data?.agent?.user?.email.toString());
+                      StorageHandler.saveUserPhone(state
+                          .userData.data?.agent?.user?.phoneNumber
+                          .toString());
+                      StorageHandler.saveUserPicture(state
+                          .userData.data?.agent?.user?.profileImage
+                          .toString());
+
+                      StorageHandler.saveUserName(state
+                          .userData.data?.agent?.user?.username
+                          .toString());
+
+                      user.setServicesList(services: state
+                          .userData.data?.agent?.services ?? []) ; 
+
+                      if (state.userData.data?.agent?.user?.hasPets ?? false) {
+                        StorageHandler.saveUserPetState('true');
+                      } else {
+                        StorageHandler.saveUserPetState('');
+                      }
+
+                      
                     }
-                  }
-                   services = agents?.services ?? []; 
-                } else if (state is UserNetworkErrApiErr) {
-            } else if (state is UserNetworkErr) {}
-          },
-          builder: (context, state) => GestureDetector(
+                  } 
+                } 
+              } else if (state is AccountApiErr) {
+                if (state.message != null) {
+                  
+                }
+              } else if (state is AccountNetworkErr) {
+                if (state.message != null) {
+                 
+                }
+              }
+            },
+            builder: (context, state) => GestureDetector(
               onTap: () {
                 showModalBottomSheet(
                     shape: RoundedRectangleBorder(
@@ -291,35 +334,42 @@ class _HomepageBarState extends State<HomepageBar> {
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                CustomText(
-                                                  text: 'Your services',
-                                                  weight: FontWeight.bold,
-                                                  size: 17,
-                                                ),
-                                                GestureDetector(
-                                                  onTap: (){
-                                                    AppNavigator.pushAndStackPage(context, page: KycServiceScreenEight(isRedo: true,));
-                                                  },
-                                                  child: Row(
-                                                    children: [
-                                                      ImageView.svg(AppImages.addIcon, height: 15,
-                                                      
-                                                      ),
-                                                      const SizedBox(width: 10,),
-                                                      CustomText(
-                                                        text: 'add more',
-                                                        weight: FontWeight.w400,
-                                                        size: 14,
-                                                        color: AppColors.lightSecondary,
-                                                      ),
-                                                      const SizedBox(width: 10,),
-                                                
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                              children: [
+                                CustomText(
+                                  text: 'Your services',
+                                  weight: FontWeight.bold,
+                                  size: 17,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    AppNavigator.pushAndStackPage(context,
+                                        page: KycServiceScreenEight(
+                                          isRedo: true,
+                                        ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      ImageView.svg(
+                                        AppImages.addIcon,
+                                        height: 15,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      CustomText(
+                                        text: 'add more',
+                                        weight: FontWeight.w400,
+                                        size: 14,
+                                        color: AppColors.lightSecondary,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                             const SizedBox(
                               height: 15,
                             ),
@@ -330,9 +380,15 @@ class _HomepageBarState extends State<HomepageBar> {
                             const SizedBox(
                               height: 15,
                             ),
-                          (state is ServiceProviderListLoading ) ?
-                           Align(child: ImageView.asset(AppImages.loading, height: 50,))
-                            : ServicesList(services: services,),
+                            (state is ServiceProviderListLoading)
+                                ? Align(
+                                    child: ImageView.asset(
+                                    AppImages.loading,
+                                    height: 50,
+                                  ))
+                                : ServicesList(
+                                    services: services,
+                                  ),
                           ],
                         )),
                       );
@@ -362,7 +418,9 @@ class _HomepageBarState extends State<HomepageBar> {
         ),
       ],
     );
+  
   }
+  
 }
 
 class simpleAppbar extends StatelessWidget {

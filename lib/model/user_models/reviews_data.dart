@@ -1,13 +1,35 @@
-import '../profile/profile.dart';
+import '../user/user.dart';
 
 class GetReviews {
   bool? status;
-  List<Reviews>? reviews;
+  String? message;
+  Data? data;
 
-  GetReviews({this.status, this.reviews});
+  GetReviews({this.status, this.message, this.data});
 
   GetReviews.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+    message = json['message'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
+  List<Reviews>? reviews;
+
+  Data({this.reviews});
+
+  Data.fromJson(Map<String, dynamic> json) {
     if (json['reviews'] != null) {
       reviews = <Reviews>[];
       json['reviews'].forEach((v) {
@@ -18,7 +40,6 @@ class GetReviews {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
     if (this.reviews != null) {
       data['reviews'] = this.reviews!.map((v) => v.toJson()).toList();
     }
@@ -27,45 +48,44 @@ class GetReviews {
 }
 
 class Reviews {
-  int? id;
+  String? sId;
+  User? user;
+  String? agent;
   int? rating;
   String? comment;
   String? createdAt;
   String? updatedAt;
-  int? agent;
-  Profile? profile;
 
   Reviews(
-      {this.id,
+      {this.sId,
+      this.user,
+      this.agent,
       this.rating,
       this.comment,
       this.createdAt,
-      this.updatedAt,
-      this.agent,
-      this.profile});
+      this.updatedAt});
 
   Reviews.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    sId = json['_id'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    agent = json['agent'];
     rating = json['rating'];
     comment = json['comment'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    agent = json['agent'];
-    profile =
-        json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    data['_id'] = this.sId;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    data['agent'] = this.agent;
     data['rating'] = this.rating;
     data['comment'] = this.comment;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['agent'] = this.agent;
-    if (this.profile != null) {
-      data['profile'] = this.profile!.toJson();
-    }
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }

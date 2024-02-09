@@ -1,8 +1,8 @@
 import 'package:petnity/model/user/user.dart';
 
 import '../pet_types.dart/pet_types.dart';
-import '../services/services.dart';
 import '../user_models/service_type.dart';
+
 
 class Agent {
   List<ServiceType>? services;
@@ -18,6 +18,8 @@ class Agent {
   String? picture;
   String? country;
   String? city;
+  String? idPhoto;
+  String? idType;
 
   Agent(
       {this.services,
@@ -32,7 +34,9 @@ class Agent {
       this.about,
       this.picture,
       this.country,
-      this.city});
+      this.city,
+      this.idPhoto,
+      this.idType});
 
   Agent.fromJson(Map<String, dynamic> json) {
     if (json['services'] != null) {
@@ -50,7 +54,7 @@ class Agent {
     isVerified = json['isVerified'];
     isReachable = json['isReachable'];
     sId = json['_id'];
-   user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
     name = json['name'];
     gender = json['gender'];
     dateOfBirth = json['dateOfBirth'];
@@ -58,6 +62,8 @@ class Agent {
     picture = json['picture'];
     country = json['country'];
     city = json['city'];
+    idPhoto = json['idPhoto'];
+    idType = json['idType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -71,7 +77,9 @@ class Agent {
     data['isVerified'] = this.isVerified;
     data['isReachable'] = this.isReachable;
     data['_id'] = this.sId;
-    data['user'] = this.user;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
     data['name'] = this.name;
     data['gender'] = this.gender;
     data['dateOfBirth'] = this.dateOfBirth;
@@ -79,6 +87,8 @@ class Agent {
     data['picture'] = this.picture;
     data['country'] = this.country;
     data['city'] = this.city;
+    data['idPhoto'] = this.idPhoto;
+    data['idType'] = this.idType;
     return data;
   }
 }

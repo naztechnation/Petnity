@@ -58,10 +58,11 @@ class _ProviderProfileState extends State<ProviderProfile> {
   String servicesInfo = '';
   String animalsInfo = '';
   String userType = '';
+  String username = '';
 
   getUserDetails() async {
     userType = await StorageHandler.getUserType();
-
+username = await StorageHandler.getUserName();
     setState(() {
       
     });
@@ -88,8 +89,8 @@ class _ProviderProfileState extends State<ProviderProfile> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AccountViewModel>(context, listen: false);
-    user.getUsername();
+     final user = Provider.of<AccountViewModel>(context, listen: false);
+    
     services = widget.agents?.services != null
         ? widget.agents!.services!.map((service) => service.name ?? '').toList()
         : <String>[];
@@ -267,7 +268,7 @@ class _ProviderProfileState extends State<ProviderProfile> {
                           heightFactor: 1,
                           page: Ratings(
                               ctxt: context,
-                              username: user.username,
+                              username: username,
                               agentName: widget.agents?.name ?? '',
                               agentId: widget.agents?.sId.toString() ?? ''));
                     },

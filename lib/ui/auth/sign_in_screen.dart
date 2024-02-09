@@ -58,55 +58,62 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status ?? false) {
-                 
-                  StorageHandler.saveUserToken(state.userData.data?.token);
-
                   StorageHandler.saveUserPassword(_passwordController.text);
 
-                  StorageHandler.saveUserId(
-                      state.userData.data?.user?.sId.toString());
+                  if (state.userData.data?.user == null) {
+                    if (state.userData.data?.agent?.user?.isAgent ?? false) {
+                      StorageHandler.saveIsUserType('service_provider');
+                      StorageHandler.saveUserToken(state.userData.data?.token);
 
-                  StorageHandler.saveEmail(
-                      state.userData.data?.user?.email.toString());
-                  StorageHandler.saveUserPhone(
-                      state.userData.data?.user?.phoneNumber.toString());
-                  StorageHandler.saveUserPicture(
-                      state.userData.data?.user?.profileImage.toString());
+                      StorageHandler.saveAgentId(
+                          state.userData.data?.agent?.sId);
+                      StorageHandler.saveUserId(
+                          state.userData.data?.agent?.user?.sId.toString());
 
-                  StorageHandler.saveUserName(
-                      state.userData.data?.user?.username.toString());
+                      StorageHandler.saveEmail(
+                          state.userData.data?.agent?.user?.email.toString());
+                      StorageHandler.saveUserPhone(state
+                          .userData.data?.agent?.user?.phoneNumber
+                          .toString());
+                      StorageHandler.saveUserPicture(state
+                          .userData.data?.agent?.user?.profileImage
+                          .toString());
 
-                  user.setUserData(
-                      username:
-                          state.userData.data?.user?.username.toString() ?? '');
+                      StorageHandler.saveUserName(state
+                          .userData.data?.agent?.user?.username
+                          .toString());
 
-                  if (state.userData.data?.user?.isAgent ?? false) {
-                    StorageHandler.saveIsUserType('service_provider');
-                    StorageHandler.saveAgentId('65bcb103ebc96e00353e0185');
+                      user.setUserData(
+                          username: state.userData.data?.agent?.user?.username
+                                  .toString() ??
+                              '');
 
+                      if (state.userData.data?.agent?.user?.hasPets ?? false) {
+                        StorageHandler.saveUserPetState('true');
+                      } else {
+                        StorageHandler.saveUserPetState('');
+                      }
 
-                    if (state.userData.data?.user?.hasPets ?? false) {
-                      StorageHandler.saveUserPetState('true');
-                    } else {
-                      StorageHandler.saveUserPetState('');
+                      loginUser(
+                          firebaseUser: firebaseUser,
+                          context: context,
+                          message: state.userData.message ?? '',
+                          isAgent: true);
                     }
-
-                    loginUser(
-                        firebaseUser: firebaseUser,
-                        context: context,
-                        message: state.userData.message!,
-                        isAgent: true);
                   } else {
-                    if (state.userData.data?.user?.hasPets ?? false) {
-                      StorageHandler.saveUserPetState('true');
-                    } else {
-                      StorageHandler.saveUserPetState('');
-                    }
+                    StorageHandler.saveUserToken(state.userData.data?.token);
+
                     StorageHandler.saveIsUserType('user');
+
+                    StorageHandler.saveUserId(
+                        state.userData.data?.user?.sId.toString());
+
                     StorageHandler.saveEmail(
                         state.userData.data?.user?.email.toString());
                     StorageHandler.saveUserPhone(
                         state.userData.data?.user?.phoneNumber.toString());
+                    StorageHandler.saveUserPicture(
+                        state.userData.data?.user?.profileImage.toString());
 
                     StorageHandler.saveUserName(
                         state.userData.data?.user?.username.toString());
@@ -115,6 +122,12 @@ class SignInScreen extends StatelessWidget {
                         username:
                             state.userData.data?.user?.username.toString() ??
                                 '');
+                    if (state.userData.data?.user?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
+                    }
+
                     loginUser(
                         firebaseUser: firebaseUser,
                         context: context,
@@ -280,7 +293,7 @@ class SignInScreen extends StatelessWidget {
                             firebaseUser.status == Status.authenticating ||
                             state is AccountProcessing),
                         onPressed: () {
-                          _submit(context);
+                          _loginUser(context);
                         },
                         color: AppColors.lightSecondary,
                         title: 'authentication...',
@@ -344,7 +357,7 @@ class SignInScreen extends StatelessWidget {
     ));
   }
 
-  _submit(BuildContext ctx) {
+  _loginUser(BuildContext ctx) {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().loginUser(
           email: _emailController.text.trim(),
@@ -365,7 +378,7 @@ class SignInScreen extends StatelessWidget {
     if (firebaseUser.status == Status.authenticated) {
       Modals.showToast(message, messageType: MessageType.success);
 
-       StorageHandler.saveIsLoggedIn('true');
+      StorageHandler.saveIsLoggedIn('true');
 
       if (isAgent) {
         StorageHandler.saveIsUserType('service_provider');

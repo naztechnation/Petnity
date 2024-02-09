@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_colors.dart';
-import 'package:petnity/model/user_models/pets_profile.dart';
 
+import '../../../../../model/user_models/pets.dart';
 import '../../../../../res/app_strings.dart';
 import '../../../../widgets/custom_text.dart';
 
@@ -13,7 +13,6 @@ class PetBio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -53,12 +52,18 @@ class PetBio extends StatelessWidget {
             children: [
               ListTile(
                 title: CustomText(
-                  text: '${'petDetails.petDetails?.pets.type?.name' ?? 'None'} Illness',
+                  text: '${pets.type?.name ?? 'None'} Illness',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('${'petDetails.petDetails?.petHealthIssue?.name' ?? 'None'}'
-                    .capitalizeFirstOfEach),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (pets.healthIssues ?? [])
+                      .map((health) => Text(
+                            '${health.name ?? 'None'}'.capitalizeFirstOfEach,
+                          ))
+                      .toList(),
+                ),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
                   child: ListTile(
@@ -67,9 +72,14 @@ class PetBio extends StatelessWidget {
                       fontFamily: AppStrings.interSans,
                       weight: FontWeight.w700,
                     ),
-                    subtitle: Text(
-                        '${'petDetails.petDetails?.petHealthIssue?.drug' ?? 'None'}'
-                            .capitalizeFirstOfEach),
+                    subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (pets.healthIssues ?? [])
+                      .map((health) => Text(
+                            '${health.drug ?? 'None'}'.capitalizeFirstOfEach,
+                          ))
+                      .toList(),
+                ),
                   ),
                 ),
               ),
@@ -91,21 +101,32 @@ class PetBio extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 14.0),
                 child: Align(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                        '${'petDetails.petDetails?.petHealthIssue?.prescription' ?? 'None'}'
-                            .capitalizeFirstOfEach)),
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (pets.healthIssues ?? [])
+                      .map((health) => Text(
+                            '${health.prescription ?? 'None'}'.capitalizeFirstOfEach,
+                          ))
+                      .toList(),
+                ),),
               ),
               const SizedBox(
                 height: 10,
               ),
               ListTile(
                 title: CustomText(
-                  text: '${'petDetails.petDetails?.pet?.type?.name' ?? 'None'} Illness',
+                  text: '${pets.type?.name ?? 'None'} Allergies',
                   fontFamily: AppStrings.interSans,
                   weight: FontWeight.w700,
                 ),
-                subtitle: Text('${'petDetails.petDetails?.petAllergy?.name' ?? 'None'}'
-                    .capitalizeFirstOfEach),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (pets.allergies ?? [])
+                      .map((allergy) => Text(
+                            '${allergy.name ?? 'None'}'.capitalizeFirstOfEach,
+                          ))
+                      .toList(),
+                ),
                 trailing: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.38,
                   child: ListTile(
@@ -114,8 +135,14 @@ class PetBio extends StatelessWidget {
                       fontFamily: AppStrings.interSans,
                       weight: FontWeight.w700,
                     ),
-                    subtitle: Text('${'petDetails.petDetails?.petAllergy?.drug' ?? 'None'}'
-                        .capitalizeFirstOfEach),
+                    subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (pets.allergies ?? [])
+                      .map((allergy) => Text(
+                            '${allergy.drug ?? 'None'}'.capitalizeFirstOfEach,
+                          ))
+                      .toList(),
+                ),
                   ),
                 ),
               ),
@@ -135,11 +162,18 @@ class PetBio extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 14.0),
-                child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                        '${'petDetails.petDetails?.petAllergy?.prescription' ?? 'None'}'
-                            .capitalizeFirstOfEach)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (pets.allergies ?? [])
+                      .map((allergy) => Align(
+                  alignment: Alignment.centerLeft,
+
+                        child: Text(
+                              '${allergy.prescription ?? 'None'}'.capitalizeFirstOfEach,
+                            ),
+                      ))
+                      .toList(),
+                ),
               ),
               const SizedBox(
                 height: 10,

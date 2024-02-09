@@ -13,6 +13,7 @@ import '../../../../utils/navigator/page_navigator.dart';
 import '../../../widgets/button_view.dart';
 import '../../../widgets/custom_multi_toogle.dart';
 import '../../../widgets/custom_text.dart';
+import '../../../widgets/modals.dart';
 import '../../../widgets/profile_image.dart';
 import '../../../widgets/ratings_views.dart';
 import '../service_provider_profile.dart';

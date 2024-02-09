@@ -86,7 +86,7 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setReviews({required GetReviews reviews}) async {
     _reviewStatus = reviews.status ?? false;
-    _reviews = reviews.reviews ?? [];
+    _reviews = reviews.data?.reviews ?? [];
     setViewState(ViewState.success);
   }
 

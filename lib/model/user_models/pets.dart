@@ -1,3 +1,5 @@
+import '../pet_types.dart/pet_types.dart';
+import '../user/user.dart';
 import 'health_issues.dart';
 
 class Pets {
@@ -5,8 +7,8 @@ class Pets {
   List<HealthIssues>? allergies;
   bool? isHidden;
   String? sId;
-  String? user;
-  String? type;
+  User? user;
+  PetTypes? type;
   String? name;
   String? gender;
   String? breed;
@@ -47,8 +49,8 @@ class Pets {
     }
     isHidden = json['isHidden'];
     sId = json['_id'];
-    user = json['user'];
-    type = json['type'];
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    type = json['type'] != null ? new PetTypes.fromJson(json['type']) : null;
     name = json['name'];
     gender = json['gender'];
     breed = json['breed'];
@@ -69,8 +71,12 @@ class Pets {
     }
     data['isHidden'] = this.isHidden;
     data['_id'] = this.sId;
-    data['user'] = this.user;
-    data['type'] = this.type;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    if (this.type != null) {
+      data['type'] = this.type!.toJson();
+    }
     data['name'] = this.name;
     data['gender'] = this.gender;
     data['breed'] = this.breed;

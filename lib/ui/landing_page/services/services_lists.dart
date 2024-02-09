@@ -50,8 +50,8 @@ class ServicesList extends StatelessWidget {
                   bool isActive =
                       services.any((subItem) => subItem.sId == masterItem.sId);
 
-                  if (!isActive) {
-                    return Item(context, randomColor, '${masterItem.image}',
+                 
+                    return Item(context, randomColor, '${masterItem.name}',
                         '${masterItem.image}', () {
                       agent.setServiceId('${user.services[index].sId}');
 
@@ -76,13 +76,7 @@ class ServicesList extends StatelessWidget {
                         }
                       }
                     }, true);
-                  } else {
-                    return Item(context, Colors.grey.shade50,
-                        '${masterItem.name}', '${masterItem.image}', () {
-                      Modals.showToast(
-                          'You do not offer this service at the moment. please add to your services if you want to');
-                    }, false);
-                  }
+                   
                 },
                 staggeredTileBuilder: (index) {
                   return StaggeredTile.count(1, 0.35);

@@ -29,7 +29,7 @@ class ReviewContainer extends StatelessWidget {
           ListTile(
             leading: ProfileImage(
               placeHolder: AppImages.person,
-              '',
+              review.user?.profileImage ?? '',
               height: 75,
               width: 55,
               radius: 20,
@@ -37,9 +37,9 @@ class ReviewContainer extends StatelessWidget {
             title: CustomText(
               textAlign: TextAlign.left,
               maxLines: 1,
-              text: 'user',
+              text: review.user?.username,
               weight: FontWeight.w700,
-              size: 16,
+              size: 14,
               fontFamily: AppStrings.interSans,
               color: Colors.black,
             ),
