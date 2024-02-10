@@ -80,6 +80,7 @@ class _AgentProfileState extends State<AgentProfile> {
   late UserCubit _userCubit;
 
   List<ServiceType> service = [];
+  List<Services>? agentServices = [];
 
   List<ServiceType> services = [];
 
@@ -93,14 +94,14 @@ class _AgentProfileState extends State<AgentProfile> {
     if (userType == 'user') {
       agentId = widget.agentId ?? '';
     } else {
-      agentId = await StorageHandler.getUserId();
+      agentId = await StorageHandler.getAgentId();
     }
 
     _userCubit = context.read<UserCubit>();
     setState(() {
       isLoading1 = true;
     });
-      await _userCubit.getServiceTypes( );
+    await _userCubit.getServices(agentId);
 
     await _userCubit.getAgentProfile(agentId);
     setState(() {
@@ -120,7 +121,6 @@ class _AgentProfileState extends State<AgentProfile> {
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
-
     return WillPopScope(
         onWillPop: onBackPress,
         child: Scaffold(
@@ -137,27 +137,26 @@ class _AgentProfileState extends State<AgentProfile> {
                       onRefresh: () => _userCubit.getAgentProfile(agentId),
                     ),
                   );
-                }else if (state is ServicesLoaded) {
-                                if (state.services.status!) {
-                                  service = _userCubit.viewModel.servicesType;
-                                } else {}
-                              } else if (state is ServiceProviderListLoaded) {
-                                 for (var item in state.userData.data?.agents ?? []) {
+                } else if (state is ServicesLoaded) {
+                  if (state.services.status!) {
+                    service = _userCubit.viewModel.servicesType;
+                  } else {}
+                } else if (state is ServiceProviderListLoaded) {
+                  for (var item in state.userData.data?.agents ?? []) {
                     if (item.sId.toString() == agentId) {
                       agents = item;
                       break;
                     }
                   }
-                                services = agents?.services ?? [];
-
-                              }  else if (state is UserNetworkErrApiErr) {
+                  services = agents?.services ?? [];
+                } else if (state is UserNetworkErrApiErr) {
                   return EmptyWidget(
                     title: 'Network error',
                     description: state.message,
                     onRefresh: () => _userCubit.getAgentProfile(agentId),
                   );
                 } else if (state is ServiceProviderListLoaded) {
-                  ///TODO 
+                  ///TODO
                   // for (var item in state.userData.agents!) {
                   //   if (item.sId.toString() == agentId) {
                   //     agents = item;
@@ -207,7 +206,10 @@ class _AgentProfileState extends State<AgentProfile> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                Expanded(child: SizedBox(width: 30,)),
+                                Expanded(
+                                    child: SizedBox(
+                                  width: 30,
+                                )),
                               ],
                             ),
                           ),
@@ -259,8 +261,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                     CustomText(
                                       textAlign: TextAlign.start,
                                       maxLines: 2,
-                                      text:
-                                          '${agents?.name}',
+                                      text: '${agents?.name}',
                                       weight: FontWeight.w700,
                                       size: 14,
                                       fontFamily: AppStrings.interSans,
@@ -420,7 +421,6 @@ class _AgentProfileState extends State<AgentProfile> {
                             },
                             builder: (context, state) => GestureDetector(
                               onTap: () {
-       
                                 showModalBottomSheet(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(

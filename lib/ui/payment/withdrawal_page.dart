@@ -56,7 +56,7 @@ class _WithdrawalState extends State<Withdrawal> {
 
   final amountController = TextEditingController();
 
-  List<AgentBankDetails> accountList = [];
+  List<BankDetails> accountList = [];
 
   bool isSufficient  = false;
 
@@ -65,7 +65,7 @@ class _WithdrawalState extends State<Withdrawal> {
   String accountName = '';
   String accountNumber = '';
   String bankName = '';
-  String amount = '95000';
+  String amount = '';
   Color amountColor = Colors.black;
 
   Timer? _debounce;
@@ -136,11 +136,11 @@ class _WithdrawalState extends State<Withdrawal> {
           listener: (context, state) {
         if (state is AccountDetailsLoaded) {
           if (state.account.status!) {
-            accountList = state.account.agentBankDetails ?? [];
+            accountList = state.account.data?.bankDetails ?? [];
 
             if (accountList.isNotEmpty) {
               accountName = accountList.last.accountName ?? "";
-              accountNumber = accountList.last.accountNumber ?? "";
+              accountNumber = accountList.last.accountNumber.toString();
               bankName = accountList.last.bank ?? "";
             }
           }

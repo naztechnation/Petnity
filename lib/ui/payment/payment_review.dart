@@ -123,9 +123,7 @@ class _PaymentReviewState extends State<Payment> {
         listener: (context, state) {
           if (state is VetsCreateWithdrawalRequestLoaded) {
             if (state.requests.status!) {
-              // _serviceProviderCubit.vetsApproveWithdrawalRequest(
-              //     withdrawalId: state.requests.agentWithdrawal?.id.toString() ?? '');
-
+             
               Modals.showToast(state.requests.message!,
                   messageType: MessageType.success);
 
@@ -243,7 +241,10 @@ class _PaymentReviewState extends State<Payment> {
                     processing: state is VetsCreateWithdrawalRequestLoading,
                     onPressed: () {
                       _serviceProviderCubit.vetsCreateWithdrawalRequest(
-                          agentId: agentId, amount: mainAmount);
+                           amount: mainAmount);
+
+                          Modals.showToast(mainAmount,
+                  messageType: MessageType.success);
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 30,

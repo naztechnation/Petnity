@@ -1,69 +1,88 @@
-
-
 import '../agent/agent.dart';
 
 class WithrawalHistory {
   bool? status;
-  List<AgentWithdrawals>? agentWithdrawals;
+  String? message;
+  WithrawalHistoryData? data;
 
-  WithrawalHistory({this.status, this.agentWithdrawals});
+  WithrawalHistory({this.status, this.message, this.data});
 
   WithrawalHistory.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    if (json['agent_withdrawals'] != null) {
-      agentWithdrawals = <AgentWithdrawals>[];
-      json['agent_withdrawals'].forEach((v) {
-        agentWithdrawals!.add(new AgentWithdrawals.fromJson(v));
+    message = json['message'];
+    data = json['data'] != null ? new WithrawalHistoryData.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class WithrawalHistoryData {
+  List<WithdrawalRequests>? withdrawalRequests;
+
+  WithrawalHistoryData({this.withdrawalRequests});
+
+  WithrawalHistoryData.fromJson(Map<String, dynamic> json) {
+    if (json['withdrawalRequests'] != null) {
+      withdrawalRequests = <WithdrawalRequests>[];
+      json['withdrawalRequests'].forEach((v) {
+        withdrawalRequests!.add(new WithdrawalRequests.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['status'] = this.status;
-    if (this.agentWithdrawals != null) {
-      data['agent_withdrawals'] =
-          this.agentWithdrawals!.map((v) => v.toJson()).toList();
+    if (this.withdrawalRequests != null) {
+      data['withdrawalRequests'] =
+          this.withdrawalRequests!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class AgentWithdrawals {
-  int? id;
-  String? amount;
+class WithdrawalRequests {
   String? status;
+  String? sId;
+  Agent? agent;
+  int? amount;
   String? createdAt;
   String? updatedAt;
-  Agent? agent;
 
-  AgentWithdrawals(
-      {this.id,
+  WithdrawalRequests(
+      {this.status,
+      this.sId,
+      this.agent,
       this.amount,
-      this.status,
       this.createdAt,
-      this.updatedAt,
-      this.agent});
+      this.updatedAt});
 
-  AgentWithdrawals.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    amount = json['amount'];
+  WithdrawalRequests.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    sId = json['_id'];
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
+    amount = json['amount'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['amount'] = this.amount;
     data['status'] = this.status;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['_id'] = this.sId;
     if (this.agent != null) {
       data['agent'] = this.agent!.toJson();
     }
+    data['amount'] = this.amount;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }

@@ -14,7 +14,7 @@ import '../../../utils/navigator/page_navigator.dart';
 import '../../service_povider_section/create_package/select_level_amount.dart';
 import '../../service_povider_section/service_profile/agents_packages.dart';
 import '../../service_povider_section/service_profile/vet_packages.dart';
-import '../../widgets/modals.dart';
+
 import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {

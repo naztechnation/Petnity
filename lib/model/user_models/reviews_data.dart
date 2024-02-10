@@ -1,16 +1,17 @@
+import '../agent/agent.dart';
 import '../user/user.dart';
 
 class GetReviews {
   bool? status;
   String? message;
-  Data? data;
+  GetReviewsData? data;
 
   GetReviews({this.status, this.message, this.data});
 
   GetReviews.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new GetReviewsData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -24,12 +25,12 @@ class GetReviews {
   }
 }
 
-class Data {
+class GetReviewsData {
   List<Reviews>? reviews;
 
-  Data({this.reviews});
+  GetReviewsData({this.reviews});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  GetReviewsData.fromJson(Map<String, dynamic> json) {
     if (json['reviews'] != null) {
       reviews = <Reviews>[];
       json['reviews'].forEach((v) {
@@ -50,7 +51,7 @@ class Data {
 class Reviews {
   String? sId;
   User? user;
-  String? agent;
+  Agent? agent;
   int? rating;
   String? comment;
   String? createdAt;
@@ -68,7 +69,7 @@ class Reviews {
   Reviews.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
-    agent = json['agent'];
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
     rating = json['rating'];
     comment = json['comment'];
     createdAt = json['createdAt'];
@@ -81,7 +82,9 @@ class Reviews {
     if (this.user != null) {
       data['user'] = this.user!.toJson();
     }
-    data['agent'] = this.agent;
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
+    }
     data['rating'] = this.rating;
     data['comment'] = this.comment;
     data['createdAt'] = this.createdAt;

@@ -14,7 +14,6 @@ import '../../model/service_provider_models/account_details.dart';
 import '../../model/view_models/service_provider_inapp.dart';
 import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../res/app_images.dart';
-import '../../res/app_routes.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../../utils/validator.dart';
 import '../payment/withdrawal_page.dart';
@@ -63,7 +62,7 @@ class _AddAccountState extends State<AddAccount> {
 
   late ServiceProviderCubit _userCubit;
 
-  List<AgentBankDetails> accountList = [];
+  List<BankDetails> accountList = [];
 
   String amount = '0';
 
@@ -89,8 +88,7 @@ class _AddAccountState extends State<AddAccount> {
       Navigator.pop(context);
     }
 
-    Modals.showToast(isWithdraw.toString());
-
+    
     return Future.value(false);
   }
 
@@ -106,28 +104,32 @@ class _AddAccountState extends State<AddAccount> {
         if (state is UpdateAccountDetailsLoaded) {
           if (state.account.status!) {
             Modals.showToast(state.account.message ?? "");
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return UpdateSuccessfulScreen(
-                  buttonText: 'Done',
-                  onPressed: () {
-                    AppNavigator.pushAndReplaceName(context,
-                        name: AppRoutes.serviceProviderLandingPage);
-                  },
-                  successMessage: 'Your account details have been updated');
-            }));
+            Modals.showToast(state.account.data?.bankDetails?.accountName ?? "");
+
+
+            // Navigator.push(context, MaterialPageRoute(builder: (_) {
+            //   return UpdateSuccessfulScreen(
+            //       buttonText: 'Done',
+            //       onPressed: () {
+            //         AppNavigator.pushAndReplaceName(context,
+            //             name: AppRoutes.serviceProviderLandingPage);
+            //       },
+            //       successMessage: 'Your account details have been updated');
+            // }));
           } else {
             Modals.showToast(state.account.message ?? "");
           }
         }
         if (state is AccountDetailsLoaded) {
           if (state.account.status!) {
-            accountList = state.account.agentBankDetails ?? [];
+            accountList = state.account.data?.bankDetails?.reversed.toList() ?? [];
+
 
             if (accountList.isNotEmpty) {
-              accountNameController.text = accountList.last.accountName ?? "";
+              accountNameController.text = accountList[0].accountName ?? "";
               accountNumberController.text =
-                  accountList.last.accountNumber ?? "";
-              bankNameController.text = accountList.last.bank ?? "";
+                  accountList[0].accountNumber.toString() ;
+              bankNameController.text = accountList[0].bank ?? "";
             }
           }
         } else if (state is CreateServiceNetworkErrApiErr) {
@@ -344,7 +346,7 @@ class _AddAccountState extends State<AddAccount> {
   _submit({required BuildContext context, required String agentId}) {
     if (_formKey.currentState!.validate()) {
       context.read<ServiceProviderCubit>().updateAccount(
-          agentId: agentId,
+          bankCode: '303',
           bankName: bankNameController.text,
           accountName: accountNameController.text,
           accountNumber: accountNumberController.text);

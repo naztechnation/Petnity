@@ -1,14 +1,16 @@
-class AccountDetailsList {
+
+
+class AddBank {
   bool? status;
   String? message;
-  AccountDetailsListData? data;
+  Data? data;
 
-  AccountDetailsList({this.status, this.message, this.data});
+  AddBank({this.status, this.message, this.data});
 
-  AccountDetailsList.fromJson(Map<String, dynamic> json) {
+  AddBank.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new AccountDetailsListData.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,24 +24,21 @@ class AccountDetailsList {
   }
 }
 
-class AccountDetailsListData {
-  List<BankDetails>? bankDetails;
+class Data {
+  BankDetails? bankDetails;
 
-  AccountDetailsListData({this.bankDetails});
+  Data({this.bankDetails});
 
-  AccountDetailsListData.fromJson(Map<String, dynamic> json) {
-    if (json['bankDetails'] != null) {
-      bankDetails = <BankDetails>[];
-      json['bankDetails'].forEach((v) {
-        bankDetails!.add(new BankDetails.fromJson(v));
-      });
-    }
+  Data.fromJson(Map<String, dynamic> json) {
+    bankDetails = json['bankDetails'] != null
+        ? new BankDetails.fromJson(json['bankDetails'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.bankDetails != null) {
-      data['bankDetails'] = this.bankDetails!.map((v) => v.toJson()).toList();
+      data['bankDetails'] = this.bankDetails!.toJson();
     }
     return data;
   }

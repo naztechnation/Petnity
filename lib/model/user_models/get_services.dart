@@ -1,3 +1,4 @@
+import '../agent/agent.dart';
 import 'service_type.dart';
 
 class GetServices {
@@ -96,21 +97,4 @@ class Services {
 
 
 
-class Agent {
-  String? sId;
-  String? user;
 
-  Agent({this.sId, this.user});
-
-  Agent.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    user = json['user'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['user'] = this.user;
-    return data;
-  }
-}

@@ -175,7 +175,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
   }
 
   Future<void> updateAccount(
-      {required String agentId,
+      {required String bankCode,
       required String bankName,
       required String accountName,
       required String accountNumber}) async {
@@ -183,7 +183,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       emit(UpdateAccountDetailsLoading());
 
       final account = await serviceProviderRepository.updateAccountDetails(
-        agentId: agentId,
+        bankCode: bankCode,
         accountName: accountName,
         accountNumber: accountNumber,
         bankName: bankName,
@@ -805,7 +805,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
   }
 
   Future<void> vetsCreateWithdrawalRequest({
-    required String agentId,
     required String amount,
 
   }) async {
@@ -813,7 +812,6 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
       emit(VetsCreateWithdrawalRequestLoading());
 
       final requests = await serviceProviderRepository.agentCreateWithdrawal(
-        agentId: agentId,
         amount: amount,
 
       );

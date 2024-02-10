@@ -11,14 +11,14 @@ Future<Map<String, String>> rawDataHeader([String? token]) async {
   };
 }
 
-Future<Map<String, String>> formDataHeader([String? token]) async {
+Future<Map<String, String>> formDataHeader([bool useCtype  = true]) async {
   final accessToken = await StorageHandler.getUserToken();
 
  
 
   return {
      
-    'Content-type': 'application/json',
+   if(useCtype) 'Content-type': 'application/json',
     
     'token': 'Bearer $accessToken',
   };

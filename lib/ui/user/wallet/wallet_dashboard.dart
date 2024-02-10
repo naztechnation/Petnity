@@ -57,7 +57,7 @@ class _PaymentState extends State<Payment> {
 
   var withdrawableAmount = '0';
 
-  List<AgentWithdrawals> agentWithdrawals = [];
+  List<WithdrawalRequests> agentWithdrawals = [];
 
   String email = '';
 
@@ -172,7 +172,7 @@ class _PaymentState extends State<Payment> {
             service.setWithdrawableBalance(withdrawableAmount);
           } else if (state is AgentWithdrawalHistoryLoaded) {
             agentWithdrawals =
-                state.requests.agentWithdrawals?.reversed.toList() ?? [];
+                state.requests.data?.withdrawalRequests?.reversed.toList() ?? [];
           }
         }, builder: (context, state) {
           return (state is AgentBalanceLoading ||

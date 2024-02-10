@@ -18,8 +18,11 @@ class Agent {
   String? picture;
   String? country;
   String? city;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
   String? idPhoto;
-  String? idType;
+  PetTypes? idType;
 
   Agent(
       {this.services,
@@ -35,6 +38,9 @@ class Agent {
       this.picture,
       this.country,
       this.city,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
       this.idPhoto,
       this.idType});
 
@@ -62,8 +68,12 @@ class Agent {
     picture = json['picture'];
     country = json['country'];
     city = json['city'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
     idPhoto = json['idPhoto'];
-    idType = json['idType'];
+    idType =
+        json['idType'] != null ? new PetTypes.fromJson(json['idType']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -87,8 +97,13 @@ class Agent {
     data['picture'] = this.picture;
     data['country'] = this.country;
     data['city'] = this.city;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
     data['idPhoto'] = this.idPhoto;
-    data['idType'] = this.idType;
+    if (this.idType != null) {
+      data['idType'] = this.idType!.toJson();
+    }
     return data;
   }
 }

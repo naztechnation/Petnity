@@ -13,7 +13,7 @@ import '../../utils/exceptions.dart';
 import 'headers.dart';
 
 class Requests {
-  Future<dynamic> get(String route, {Map<String, String>? headers}) async {
+  Future<dynamic> get(String route, {Map<String, String>? headers,}) async {
     late dynamic map;
     debugPrint(route);
     final client = RetryClient(http.Client());
@@ -40,6 +40,7 @@ class Requests {
       var body,
       Map<String, File>? files,
       Encoding? encoding,
+      bool useApp = true,
       RetryOptions? retryOption}) async {
     late dynamic map;
     debugPrint(route);
@@ -69,7 +70,7 @@ class Requests {
             .post(
           Uri.parse(route),
           body: body,
-          headers: headers ?? await formDataHeader(),
+          headers: headers ?? await formDataHeader(useApp),
         )
             .then((response) {
           map = json.decode(RequestHandler.handleServerError(response));

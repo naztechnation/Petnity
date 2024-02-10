@@ -7,8 +7,8 @@ import 'package:petnity/model/service_provider_models/create_services_amount.dar
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/credit_wallet.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 
+import '../../../model/account_models/add_bank.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/service_provider_models/vetservices_model.dart';
@@ -92,21 +92,21 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
   @override
-  Future<AuthData> updateAccountDetails(
-      {required String agentId,
+  Future<AddBank> updateAccountDetails(
+      {required String bankCode,
       required String accountName,
       required String accountNumber,
       required String bankName}) async {
+    var payload = {
+      "bank": bankName,
+      "bankCode": bankCode,
+      "accountName": accountName,
+      "accountNumber": accountNumber
+    };
     final map = await Requests()
-        .post(AppStrings.updateAccountDetailsUrl(agentId: agentId), headers: {
-      'Authorization': AppStrings.token,
-    }, body: {
-      'bank': bankName,
-      'account_name': accountName,
-      'account_number': accountNumber,
-    });
+        .post(AppStrings.updateAccountDetailsUrl, body: payload, useApp: false);
 
-    return AuthData.fromJson(map);
+    return AddBank.fromJson(map);
   }
 
   @override
@@ -114,12 +114,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     required String agentId,
   }) async {
     final map = await Requests().get(
-      AppStrings.getAccountDetailsUrl(
-        agentId: agentId,
-      ),
-      headers: {
-        'Authorization': AppStrings.token,
-      },
+      AppStrings.getAccountDetailsUrl,
     );
     return AccountDetailsList.fromJson(map);
   }
@@ -168,9 +163,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> agentAcceptDeliveredShopOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.agentMarkDeliveredShopOrder(
-             orderId: orderId),
-        );
+      AppStrings.agentMarkDeliveredShopOrder(orderId: orderId),
+    );
 
     return AuthData.fromJson(map);
   }
@@ -179,9 +173,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> userAcceptDeliveredShopOrder(
       {required String username, required String orderId}) async {
     final map = await Requests().patch(
-        AppStrings.userMarkDeliveredShopOrder(
-             orderId: orderId),
-       );
+      AppStrings.userMarkDeliveredShopOrder(orderId: orderId),
+    );
 
     return AuthData.fromJson(map);
   }
@@ -219,10 +212,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
   @override
   Future<AgentBalance> agentBalance({required String url}) async {
-    final map = await Requests().get(
-      url
-      );
-    
+    final map = await Requests().get(url);
 
     return AgentBalance.fromJson(map);
   }
@@ -361,30 +351,28 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
   @override
   Future<CreateWithrawal> agentCreateWithdrawal({
-    required String agentId,
     required String amount,
   }) async {
-    final map = await Requests().post(
-        AppStrings.agentCreateWithdrawal(
-          agentId: agentId,
-        ),
-        body: {
+
+    var payload = {
           'amount': amount
-        },
-        headers: {
-          'Authorization': AppStrings.token,
-        });
+        };
+    final map = await Requests().post(
+        AppStrings.agentCreateWithdrawal,
+        useApp: false,
+        body: payload,
+        );
 
     return CreateWithrawal.fromJson(map);
   }
+
+  
 
   @override
   Future<WithrawalHistory> agentWithdrawalHistory(
       {required String agentId}) async {
     final map = await Requests().get(
-      AppStrings.agentWithdrawalHistory(
-        agentId: agentId,
-      ),
+      AppStrings.agentWithdrawalHistory
     );
 
     return WithrawalHistory.fromJson(map);
@@ -424,8 +412,6 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
   @override
   Future<CreditedWallet> creditWallet({required String txId}) async {
-
-    Modals.showToast(txId);
     var payload = {'transactionId': txId};
     final map = await Requests().post(
       AppStrings.creditWalletUrl,

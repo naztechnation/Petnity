@@ -9,7 +9,7 @@ import '../../../utils/app_utils.dart';
 
 class PaymentBox extends StatelessWidget {
 
-  final AgentWithdrawals history;
+  final WithdrawalRequests history;
   const PaymentBox({super.key, required this.history});
 
   @override
@@ -35,7 +35,7 @@ class PaymentBox extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                             Text(
+                           if(history.amount != null)  Text(
                                 'NGN ${AppUtils.convertPrice(history.amount)}',
                                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontFamily: AppStrings.montserrat),
                               ),

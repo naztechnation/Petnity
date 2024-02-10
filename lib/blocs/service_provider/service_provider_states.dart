@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:petnity/model/account_models/auth_data.dart';
 import 'package:petnity/model/user_models/credit_wallet.dart';
 
+import '../../model/account_models/add_bank.dart';
 import '../../model/service_provider_models/account_details.dart';
 import '../../model/service_provider_models/all_agent_orders.dart';
 import '../../model/service_provider_models/create_services_amount.dart';
@@ -104,7 +105,7 @@ class  UpdateAccountDetailsLoading extends ServiceProviderState {
 }
 
 class  UpdateAccountDetailsLoaded extends ServiceProviderState {
-  final AuthData account;
+  final AddBank account;
   const  UpdateAccountDetailsLoaded(this.account);
   @override
   List<Object> get props => [account];

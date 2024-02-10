@@ -1,3 +1,5 @@
+import '../agent/agent.dart';
+
 class GalleryAgents {
   bool? status;
   String? message;
@@ -48,7 +50,7 @@ class GalleryAgentsData {
 
 class GalleryElements {
   String? sId;
-  String? agent;
+  Agent? agent;
   String? image;
   String? createdAt;
   String? updatedAt;
@@ -58,7 +60,7 @@ class GalleryElements {
 
   GalleryElements.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    agent = json['agent'];
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
     image = json['image'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
@@ -67,10 +69,13 @@ class GalleryElements {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    data['agent'] = this.agent;
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
+    }
     data['image'] = this.image;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
+
