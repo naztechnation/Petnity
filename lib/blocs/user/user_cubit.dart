@@ -71,7 +71,7 @@ class UserCubit extends Cubit<UserStates> {
 
       final services = await userRepository.getServiceTypes();
 
-      await viewModel.setServicesList(services: services.data?.serviceTypes);
+      await viewModel.setServicesTypeList(services: services.data?.serviceTypes);
 
       emit(ServicesLoaded(services));
     } on ApiException catch (e) {
@@ -95,8 +95,11 @@ class UserCubit extends Cubit<UserStates> {
 
       final services = await userRepository.getIndividualAgentService(agentId);
 
-       
-      emit(ServicesTypeLoaded(services));
+
+      await viewModel.setServicesList(services: services);
+
+      emit(ServicesTypesLoaded(services));
+         
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {

@@ -30,20 +30,20 @@ class ListOfServices extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 14,
                 mainAxisSpacing: 12,
-                itemCount: user.services.length,
+                itemCount: user.servicesType.length,
                 itemBuilder: (context, index) {
                   Color randomColor = getRandomColor();
 
                   return Item(context, randomColor,
-                      '${user.services[index].name}',  '${user.services[index].image}', () {
+                      '${user.servicesType[index].name}',  '${user.servicesType[index].image}', () {
                     Provider.of<AccountViewModel>(context, listen: false)
-                        .setSelectedService(user.services[index].name ?? '');
+                        .setSelectedService(user.servicesType[index].name ?? '');
                          Provider.of<AccountViewModel>(context, listen: false)
-                                  .setServiceId(user.services[index].sId.toString());
+                                  .setServiceId(user.servicesType[index].sId.toString());
                     AppNavigator.pushAndStackPage(context,
                         page: ServiceProvidersDetails(
-                          petProvider: '${user.services[index].name}',
-                          serviceId: '${user.services[index].sId}',
+                          petProvider: '${user.servicesType[index].name}',
+                          serviceId: '${user.servicesType[index].sId}',
                         ));
                   });
                 },

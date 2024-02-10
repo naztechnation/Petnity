@@ -41,6 +41,11 @@ class _ProvidersCardState extends State<ProvidersCard> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: true);
+
+    final acct = Provider.of<AccountViewModel>(context, listen: true);
+
+    String constantString = acct.selectedService;
+     
     
        services = user.agents[widget.index].services != null
     ? user.agents[widget.index].services!
@@ -275,7 +280,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                   child: ButtonView(
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
-                          page: ServiceProviderProfile(agents: user.agents[widget.index], ));
+                          page: ServiceProviderProfile(agents: user.agents[widget.index],selectedServices: constantString, ));
                     },
                     expanded: true,
                     borderRadius: 41,

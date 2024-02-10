@@ -231,7 +231,7 @@ class _PackagesState extends State<PackagePage> {
                                       agent.setServiceDuration(
                                           packages[index].duration ?? '');
                                       agent.setPackageId(
-                                          packages[index].id.toString());
+                                          packages[index].sId.toString());
                                       AppNavigator.pushAndStackPage(context,
                                           page: SetLocationScreen());
                                     },

@@ -72,8 +72,8 @@ class AppStrings {
       '${_baseUrl}order/create-order/$packageId';
   static String getReviewUrl(String agentId) =>
       '${_baseUrl}user/get-reviews/$agentId';
-  static String getGalleryUrl =
-      '${_baseUrl}user/get-gallery-elements';
+  static String getGalleryUrl(String agentId) =>
+      '${_baseUrl}user/get-gallery-elements/$agentId';
   static String setServiceAmountUrl = 
       '${_baseUrl}service/create-service';
   static String agentOrderUrl =

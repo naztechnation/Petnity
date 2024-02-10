@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
-import '../../../model/agent/agent.dart';
 import '../../../model/agent/agent.dart' as agent;
 import '../../../model/user_models/get_services.dart';
 import '../../../model/view_models/account_view_model.dart';
@@ -32,9 +32,11 @@ import 'widgets/providers_profile_body.dart';
 
 class ServiceProviderProfile extends StatelessWidget {
   final agent.Agent? agents;
+  final String selectedServices;
   ServiceProviderProfile({
     super.key,
     this.agents,
+    required this.selectedServices,
   });
 
   @override
@@ -43,16 +45,20 @@ class ServiceProviderProfile extends StatelessWidget {
       create: (BuildContext context) => UserCubit(
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: ServiceProvider(),
+      child:
+          ServiceProvider(agents: agents, selectedServices: selectedServices),
     );
   }
 }
 
 class ServiceProvider extends StatefulWidget {
   final agent.Agent? agents;
+  final String selectedServices;
+
   ServiceProvider({
     super.key,
     this.agents,
+    required this.selectedServices,
   });
 
   @override
@@ -72,16 +78,29 @@ class _ServiceProviderState extends State<ServiceProvider> {
 
   String serviceId = '';
 
-  
-
-  getServicesTypes() async {
+  getServices() async {
     agentId = await StorageHandler.getAgentId();
     _userCubit = context.read<UserCubit>();
 
     setState(() {
       isLoading = true;
     });
-    await _userCubit.getServices(agentId);
+    await _userCubit.getServices(widget.agents?.sId ?? '');
+
+    service = _userCubit.viewModel.services?.data?.services;
+    String constantString = widget.selectedServices;
+
+
+    if (service != []) {
+
+      for (var services in service ?? []) {
+        if (services.serviceType?.name == constantString) {
+          serviceId = services.sId ?? '';
+
+          break;
+        }
+      }
+    }
     setState(() {
       isLoading = false;
     });
@@ -95,15 +114,15 @@ class _ServiceProviderState extends State<ServiceProvider> {
 
   @override
   void initState() {
-    getServicesTypes();
+    getServices();
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-  final user =  Provider.of<AccountViewModel>(context,
-                                      listen: true);
+    
+
     return WillPopScope(
         onWillPop: onBackPress,
         child: (isLoading)
@@ -117,25 +136,18 @@ class _ServiceProviderState extends State<ServiceProvider> {
             : Scaffold(
                 body: BlocConsumer<UserCubit, UserStates>(
                   listener: (context, state) {
-                    if (state is ServicesTypeLoaded) {
+                    if (state is ServicesTypesLoaded) {
+                      
                       if (state.services.status ?? false) {
                         service = state.services.data?.services;
-
-                          String constantString = 
-                                  user.selectedService;
-
-                        if (service != null) {
-                          for (var services in service!) {
-                            if (services.serviceType?.name == constantString) {
-                              serviceId = services.sId ?? '';
-
-                              break;
-                            }
-                          }
-                        }
-                      } else {}
+                      } else {
+                        Modals.showToast(state.services.message ?? '');
+                      }
                     } else if (state is UserNetworkErrApiErr) {
-                    } else if (state is UserNetworkErr) {}
+                      Modals.showToast(state.message ?? '');
+                    } else if (state is UserNetworkErr) {
+                      Modals.showToast(state.message ?? '');
+                    }
                   },
                   builder: (context, state) => Stack(
                     children: [
@@ -196,7 +208,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
                                           textAlign: TextAlign.start,
                                           maxLines: 2,
                                           text:
-                                              '${widget.agents!.city}, ${widget.agents!.country}'
+                                              '${widget.agents?.city}, ${widget.agents?.country}'
                                                   .replaceAll('?', ''),
                                           weight: FontWeight.w600,
                                           size: 16,
@@ -234,7 +246,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
                                       const SizedBox(
                                         width: 12,
                                       ),
-                                      widget.agents!.isVerified!
+                                      widget.agents?.isVerified ?? false
                                           ? ImageView.svg(AppImages.verified)
                                           : SizedBox.shrink(),
                                     ],
@@ -266,9 +278,10 @@ class _ServiceProviderState extends State<ServiceProvider> {
                                         weight: FontWeight.w300,
                                         size: 11,
                                         fontFamily: AppStrings.interSans,
-                                        color: widget.agents!.isVerified!
-                                            ? Colors.green
-                                            : Colors.red,
+                                        color:
+                                            widget.agents?.isVerified ?? false
+                                                ? Colors.green
+                                                : Colors.red,
                                       ),
                                     ],
                                   ),
@@ -282,7 +295,8 @@ class _ServiceProviderState extends State<ServiceProvider> {
                                     agents: widget.agents,
                                   ),
                                   GalleryRatingSection(
-                                      userId: widget.agents!.sId.toString()),
+                                      agentId:
+                                          widget.agents?.sId.toString() ?? ''),
                                   const SizedBox(
                                     height: 150,
                                   ),
@@ -312,6 +326,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
                                           listen: false)
                                       .setAgentId(
                                           widget.agents?.sId.toString() ?? '');
+
 
                                   openServices(
                                       Provider.of<AccountViewModel>(context,
@@ -384,7 +399,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
       case 'pet date':
         AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
-              serviceId:  serviceId,
+              serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
                   .agentId2,
             ));
@@ -441,7 +456,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
       case 'boarding':
         AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
-              serviceId:serviceId,
+              serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
                   .agentId2,
             ));

@@ -88,7 +88,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
       child: BlocConsumer<UserCubit, UserStates>(
         listener: (context, state) {
           if (state is ServiceProviderListLoaded) {
-            if (state.userData.status!) {
+            if (state.userData.status ?? false) {
               Modals.showToast('Processed Successfully',
                   messageType: MessageType.success);
               if (widget.isRedo) {
@@ -103,16 +103,16 @@ class _KycServiceEightState extends State<KycServiceEight> {
                   messageType: MessageType.error);
             }
           } else if (state is ServicesLoaded) {
-            if (state.services.status!) {
-              service = _userCubit.viewModel.services;
+            if (state.services.status ?? false) {
+              service = _userCubit.viewModel.servicesType;
             } else {}
           } else if (state is UserNetworkErrApiErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           } else if (state is UserNetworkErr) {
             if (state.message != null) {
-              Modals.showToast(state.message!, messageType: MessageType.error);
+              Modals.showToast(state.message ?? '', messageType: MessageType.error);
             }
           }
         },
@@ -170,19 +170,21 @@ class _KycServiceEightState extends State<KycServiceEight> {
                               crossAxisCount: 2,
                               crossAxisSpacing: 14,
                               mainAxisSpacing: 12,
-                              itemCount: services.services.length,
+                              itemCount: services.servicesType.length,
                               itemBuilder: (context, index) {
                                 String serviceName =
-                                    services.services[index].name ?? '';
+                                    services.servicesType[index].name ?? '';
+                                    String serviceId =
+                                    services.servicesType[index].sId ?? '';
                                 return ServiceProviderChoice(
                                   imageUrl:
-                                      services.services[index].image ?? '',
+                                      services.servicesType[index].image ?? '',
                                   serviceName: serviceName,
                                   isSelected: user.selectedServiceItems
-                                      .contains(serviceName),
+                                      .contains(serviceId),
                                   onPressed: () {
                                     setState(() {
-                                      user.addService(serviceName);
+                                      user.addService(serviceId);
                                     });
                                   },
                                 );
@@ -227,6 +229,7 @@ class _KycServiceEightState extends State<KycServiceEight> {
   }
 
   _submit(BuildContext ctx, var user, var userData) {
+
     ctx.read<UserCubit>().serviceProvided(
         services: user.selectedServiceItems,
         username: userData.username,

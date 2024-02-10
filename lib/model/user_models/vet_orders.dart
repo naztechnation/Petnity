@@ -1,6 +1,6 @@
+import 'package:petnity/model/user_models/vet_service.dart';
+
 import '../agent/agent.dart';
-import '../user/user.dart';
-import 'vet_service.dart';
 
 class VetOrders {
   bool? shouldNotify;
@@ -13,7 +13,7 @@ class VetOrders {
   bool? isCompleted;
   bool? paymentReleased;
   String? sId;
-  User? user;
+  String? user;
   Agent? agent;
   VetService? vetService;
   String? sessionTime;

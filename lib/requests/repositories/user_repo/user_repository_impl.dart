@@ -17,6 +17,7 @@ import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_services.dart';
 import '../../../model/user_models/get_services_type.dart';
 import '../../../model/user_models/order_list.dart';
+import '../../../model/user_models/orders.dart';
 import '../../../model/user_models/pet_profile_details.dart';
 import '../../../model/user_models/pets_profile.dart';
 import '../../../model/user_models/reviews_data.dart';
@@ -74,9 +75,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<GalleryAgents> getGallery({required String userId}) async {
+  Future<GalleryAgents> getGallery({required String agentId}) async {
     final map = await Requests().get(
-      AppStrings.getGalleryUrl,
+      AppStrings.getGalleryUrl(agentId),
     );
     return GalleryAgents.fromJson(map);
   }
@@ -124,11 +125,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<UserOrderList> orderList({required String username}) async {
+  Future<UserOrders> orderList({required String username}) async {
     final map = await Requests().get(
       AppStrings.userOrders,
     );
-    return UserOrderList.fromJson(map);
+    return UserOrders.fromJson(map);
   }
 
   @override

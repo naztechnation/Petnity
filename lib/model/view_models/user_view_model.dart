@@ -3,8 +3,8 @@ import 'package:petnity/model/user_models/gallery_data.dart';
 
 import '../../res/enum.dart';
 import '../account_models/agents_packages.dart';
-import '../agent/agent.dart';
-import '../services/services.dart';
+import '../agent/agent.dart' as agent;
+import '../user_models/get_services.dart';
 import '../user_models/order_list.dart';
 import '../user_models/orders.dart';
 import '../user_models/pet_profile_details.dart';
@@ -14,18 +14,20 @@ import '../user_models/service_type.dart';
 import 'base_viewmodel.dart';
 
 class UserViewModel extends BaseViewModel {
-  List<ServiceType>? _services = [];
+  List<ServiceType>? _servicesType = [];
   List<Packages> _packages = [];
-  List<Agent> _agents = [];
+  List<agent.Agent> _agents = [];
   List<Reviews> _reviews = [];
   List<GalleryElements> _gallery = [];
   List<Orders> _ordersList = [];
+
+   GetServices? _services;
 
   String _petPicture = '';
 
   PetProfileDetails? _petProfile;
 
-  UserOrderList? _userOrder;
+  UserOrders? _userOrder;
 
   bool _reviewStatus = false;
   bool _galleryStatus = false;
@@ -33,7 +35,7 @@ class UserViewModel extends BaseViewModel {
   double _totalHours = 0;
   double _remainingHours = 0;
 
-  Future<void> setOrderList({required UserOrderList orders}) async {
+  Future<void> setOrderList({required UserOrders orders}) async {
     _userOrder = orders;
 
     _ordersList = orders.data?.orders ?? [];
@@ -45,12 +47,17 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
-  Future<void> setServicesList({required List<ServiceType>? services}) async {
+  Future<void> setServicesTypeList({required List<ServiceType>? services}) async {
+    _servicesType = services;
+    setViewState(ViewState.success);
+  }
+
+   Future<void> setServicesList({required GetServices? services}) async {
     _services = services;
     setViewState(ViewState.success);
   }
 
-  Future<void> setAgentDetails({required List<Agent> agents}) async {
+  Future<void> setAgentDetails({required List<agent.Agent> agents}) async {
     _agents = agents;
     setViewState(ViewState.success);
   }
@@ -68,7 +75,7 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setAgentPackages(
       {required GetAgentsPackages agentPackage}) async {
-    _packages = agentPackage.packages ?? [];
+    _packages = agentPackage.data?.packages ?? [];
     setViewState(ViewState.success);
   }
 
@@ -219,8 +226,9 @@ class UserViewModel extends BaseViewModel {
     return _remainingHours / _totalHours;
   }
 
-  List<ServiceType> get services => _services ?? [];
-  List<Agent> get agents => _agents;
+  List<ServiceType> get servicesType => _servicesType ?? [];
+  GetServices? get services => _services;
+  List<agent.Agent> get agents => _agents;
   List<Packages> get packages => _packages;
   List<Reviews> get reviews => _reviews;
   List<GalleryElements> get gallery => _gallery;

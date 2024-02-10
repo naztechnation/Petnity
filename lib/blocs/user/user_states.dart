@@ -14,6 +14,7 @@ import '../../model/user_models/get_product_reviews.dart';
 import '../../model/user_models/get_services.dart';
 import '../../model/user_models/get_services_type.dart';
 import '../../model/user_models/order_list.dart';
+import '../../model/user_models/orders.dart';
 import '../../model/user_models/pet_profile_details.dart';
 import '../../model/user_models/pets_profile.dart';
 import '../../model/user_models/privacy_policy.dart';
@@ -46,9 +47,9 @@ class ServicesLoading extends UserStates {
   List<Object> get props => [];
 }
  
-class ServicesTypeLoaded extends UserStates {
+class ServicesTypesLoaded extends UserStates {
   final GetServices services;
-  const ServicesTypeLoaded(this.services);
+  const ServicesTypesLoaded(this.services);
   @override
   List<Object> get props => [services];
 }
@@ -147,7 +148,7 @@ class OrderListLoading extends UserStates {
 }
  
 class OrderListLoaded extends UserStates {
-  final UserOrderList orderList;
+  final UserOrders orderList;
   const OrderListLoaded(this.orderList);
   @override
   List<Object> get props => [orderList];

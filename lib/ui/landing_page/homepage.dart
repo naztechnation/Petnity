@@ -108,7 +108,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 listener: (context, state) {
                   if (state is ServicesLoaded) {
                     if (state.services.status!) {
-                      service = _userCubit.viewModel.services;
+                      service = _userCubit.viewModel.servicesType;
                     } else {}
                   }
                   

@@ -7,9 +7,9 @@ import 'gallery_rating_body.dart';
 
 class GalleryRatingSection extends StatefulWidget {
 
-  final String userId; 
+  final String agentId; 
 
-  GalleryRatingSection({super.key, required this.userId});
+  GalleryRatingSection({super.key, required this.agentId});
 
   @override
   State<GalleryRatingSection> createState() => _GalleryRatingSectionState();
@@ -65,7 +65,7 @@ class _GalleryRatingSectionState extends State<GalleryRatingSection> {
           ),
         ),
         const SizedBox(height: 30,),
-        GalleryRatingBody(isGallery:type == gallery.GalleryRating.gallery, userId: widget.userId,),
+        GalleryRatingBody(isGallery:type == gallery.GalleryRating.gallery, agentId: widget.agentId,),
       ],
     );
   }

@@ -26,16 +26,16 @@ class UserOrderList {
 }
 
 class UserOrderListData {
-  List<Orders>? orders;
+  List<UserOrders>? orders;
   List<VetOrders>? vetOrders;
 
   UserOrderListData({this.orders, this.vetOrders});
 
   UserOrderListData.fromJson(Map<String, dynamic> json) {
     if (json['orders'] != null) {
-      orders = <Orders>[];
+      orders = <UserOrders>[];
       json['orders'].forEach((v) {
-        orders!.add(new Orders.fromJson(v));
+        orders!.add(new UserOrders.fromJson(v));
       });
     }
     if (json['vetOrders'] != null) {

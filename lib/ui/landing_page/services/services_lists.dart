@@ -41,11 +41,11 @@ class ServicesList extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 14,
                 mainAxisSpacing: 12,
-                itemCount: user.services.length,
+                itemCount: user.servicesType.length,
                 itemBuilder: (context, index) {
                   Color randomColor = getRandomColor();
 
-                  ServiceType masterItem = user.services[index];
+                  ServiceType masterItem = user.servicesType[index];
 
                   bool isActive =
                       services.any((subItem) => subItem.sId == masterItem.sId);
@@ -53,7 +53,7 @@ class ServicesList extends StatelessWidget {
                  
                     return Item(context, randomColor, '${masterItem.name}',
                         '${masterItem.image}', () {
-                      agent.setServiceId('${user.services[index].sId}');
+                      agent.setServiceId('${user.servicesType[index].sId}');
 
                       if (masterItem.name == 'Vets'&& !isAgent) {
                         AppNavigator.pushAndStackPage(context,
@@ -66,13 +66,13 @@ class ServicesList extends StatelessWidget {
                           AppNavigator.pushAndReplacePage(context,
                               page: AgentPackagesScreen(
                                   agentId: agentId,
-                                  serviceId: '${user.services[index].sId}',
+                                  serviceId: '${user.servicesType[index].sId}',
                                   serviceType: masterItem.name ?? '',));
                         } else {
                           AppNavigator.pushAndReplacePage(context,
                               page: SelectPackageLevelAmount(
-                                  serviceType: '${user.services[index].name}',
-                                  serviceId: '${user.services[index].sId}'));
+                                  serviceType: '${user.servicesType[index].name}',
+                                  serviceId: '${user.servicesType[index].sId}'));
                         }
                       }
                     }, true);

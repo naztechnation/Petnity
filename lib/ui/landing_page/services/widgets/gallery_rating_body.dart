@@ -16,8 +16,9 @@ import 'review_container.dart';
 
 class GalleryRatingBody extends StatelessWidget {
   final bool isGallery;
-  final String? userId;
-  GalleryRatingBody({super.key, required this.isGallery, this.userId});
+  final String? agentId;
+  
+  GalleryRatingBody({super.key, required this.isGallery,required this.agentId});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class GalleryRatingBody extends StatelessWidget {
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: GalleryRating(
         isGallery: isGallery,
-        userId: userId ?? '',
+        agentId: agentId ?? '',
       ),
     );
   }
@@ -35,8 +36,10 @@ class GalleryRatingBody extends StatelessWidget {
 
 class GalleryRating extends StatefulWidget {
   final bool isGallery;
-  final String userId;
-  GalleryRating({super.key, required this.isGallery, required this.userId});
+  
+  final String agentId;
+
+  GalleryRating({super.key, required this.isGallery,required   this.agentId});
 
   @override
   State<GalleryRating> createState() => _GalleryRatingState();
@@ -53,7 +56,7 @@ class _GalleryRatingState extends State<GalleryRating> {
     userId = await StorageHandler.getUserId();
     _userCubit = context.read<UserCubit>();
     await _userCubit.viewModel.emptyGallery();
-    await _userCubit.getGallery(userId: widget.userId);
+    await _userCubit.getGallery(userId: widget.agentId);
 
     if (_userCubit.viewModel.galleryStatus) {
       galleryList = _userCubit.viewModel.gallery;
@@ -64,7 +67,7 @@ class _GalleryRatingState extends State<GalleryRating> {
     setState(() {});
 
     await _userCubit.viewModel.emptyReviews();
-    await _userCubit.getReviews(userId: widget.userId);
+    await _userCubit.getReviews(userId: widget.agentId);
 
     if (_userCubit.viewModel.reviewStatus) {
       reviewsList = _userCubit.viewModel.reviews;

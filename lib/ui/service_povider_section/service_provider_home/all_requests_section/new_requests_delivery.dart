@@ -539,7 +539,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 children: [
                   CustomText(
                     text:
-                        '${order.user?.username.toString().capitalizeFirstOfEach}',
+                        '${order.user?..username.toString().capitalizeFirstOfEach}',
                     weight: FontWeight.bold,
                   ),
                   CustomText(

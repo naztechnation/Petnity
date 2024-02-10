@@ -139,7 +139,7 @@ class _AgentProfileState extends State<AgentProfile> {
                   );
                 }else if (state is ServicesLoaded) {
                                 if (state.services.status!) {
-                                  service = _userCubit.viewModel.services;
+                                  service = _userCubit.viewModel.servicesType;
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
                                  for (var item in state.userData.data?.agents ?? []) {
@@ -298,7 +298,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                   agents: agents,
                                 ),
                                 //
-                                GalleryRatingSection(userId: agentId),
+                                GalleryRatingSection(agentId: agentId),
                                 const SizedBox(
                                   height: 50,
                                 ),
@@ -404,7 +404,7 @@ class _AgentProfileState extends State<AgentProfile> {
                             listener: (context, state) {
                               if (state is ServicesLoaded) {
                                 if (state.services.status!) {
-                                  service = _userCubit.viewModel.services;
+                                  service = _userCubit.viewModel.servicesType;
                                 } else {}
                               } else if (state is ServiceProviderListLoaded) {
                                 ///TODO

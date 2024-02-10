@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +18,6 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_images.dart';
 import '../../../utils/app_utils.dart';
-import '../../location/set_location_screen.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/empty_widget.dart';
@@ -248,12 +246,12 @@ class _PackagesState extends State<PackagePage> {
                                             packageDuration:
                                                 packages[index].duration ?? '',
                                             packagePrice:
-                                                packages[index].price ?? '',
+                                                packages[index].price.toString() ?? '',
                                             packageDescription:
                                                 packages[index].description ??
                                                     '',
                                             packageId:
-                                                packages[index].id.toString(),
+                                                packages[index].sId.toString(),
                                           ));
                                     },
                                     child: Container(

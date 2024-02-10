@@ -287,7 +287,7 @@ class _HomepageBarState extends State<HomepageBar> {
                           .userData.data?.agent?.user?.username
                           .toString());
 
-                      user.setServicesList(services: state
+                      user.setServicesTypeList(services: state
                           .userData.data?.agent?.services ?? []) ; 
 
                       if (state.userData.data?.agent?.user?.hasPets ?? false) {

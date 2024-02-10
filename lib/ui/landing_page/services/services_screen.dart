@@ -73,7 +73,7 @@ class _ServicesState extends State<ServicesP> {
               listener: (context, state) {
                 if (state is ServicesLoaded) {
                   if (state.services.status!) {
-                    service = _userCubit.viewModel.services;
+                    service = _userCubit.viewModel.servicesType;
                   } else {}
                 } else if (state is UserNetworkErrApiErr) {
                 } else if (state is UserNetworkErr) {}
