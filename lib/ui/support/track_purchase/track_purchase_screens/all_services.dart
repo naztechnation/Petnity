@@ -4,7 +4,7 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/ongoing_service_widget.dart';
 import 'package:petnity/ui/support/track_purchase/track_purchase_widgets/video_call_session_widget.dart';
 
-import '../../../../model/user_models/orders.dart';
+import '../../../../model/user_models/order.dart';
 import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../res/enum.dart';

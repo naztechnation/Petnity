@@ -1,6 +1,6 @@
  
-import 'package:petnity/model/user_models/orders.dart';
 
+import 'order.dart';
 import 'vet_orders.dart'; 
 
 class AgentServicesList {

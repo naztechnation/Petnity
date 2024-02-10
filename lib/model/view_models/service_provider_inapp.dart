@@ -9,7 +9,7 @@ import '../../res/app_colors.dart';
 import '../../res/enum.dart';
 import '../service_provider_models/all_agent_orders.dart';
 import '../user_models/agent_services_lists.dart';
-import '../user_models/orders.dart';
+import '../user_models/order.dart';
 import '../user_models/shop_order.dart';
 import '../user_models/vet_orders.dart';
 import 'base_viewmodel.dart';

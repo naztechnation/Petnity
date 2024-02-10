@@ -487,13 +487,13 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
   }
 
   Future<void> getAgentBalance({
-    required String agentId,
+    required String url,
   }) async {
     try {
       emit(AgentBalanceLoading());
 
       final services = await serviceProviderRepository.agentBalance(
-        agentId: agentId,
+        url: url,
       );
 
       emit(AgentBalanceLoaded(services));

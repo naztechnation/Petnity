@@ -9,7 +9,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
-import '../../../../model/user_models/orders.dart';
+import '../../../../model/user_models/order.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../utils/navigator/page_navigator.dart';

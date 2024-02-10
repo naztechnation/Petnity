@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../blocs/service_provider/service_provider_cubit.dart';
 import '../../../../model/session_types/session_types.dart';
-import '../../../../model/user_models/orders.dart';
+import '../../../../model/user_models/order.dart';
 import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
@@ -539,7 +539,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 children: [
                   CustomText(
                     text:
-                        '${order.user?..username.toString().capitalizeFirstOfEach}',
+                        '${order.user?.username.toString().capitalizeFirstOfEach}',
                     weight: FontWeight.bold,
                   ),
                   CustomText(

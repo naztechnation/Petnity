@@ -13,15 +13,13 @@ import '../../model/user_models/gallery_data.dart';
 import '../../model/user_models/get_product_reviews.dart';
 import '../../model/user_models/get_services.dart';
 import '../../model/user_models/get_services_type.dart';
-import '../../model/user_models/order_list.dart';
-import '../../model/user_models/orders.dart';
+import '../../model/user_models/order_lists.dart';
 import '../../model/user_models/pet_profile_details.dart';
 import '../../model/user_models/pets_profile.dart';
 import '../../model/user_models/privacy_policy.dart';
 import '../../model/user_models/products_detail.dart';
 import '../../model/user_models/reviews_data.dart';
 import '../../model/user_models/service_provider_lists.dart';
-import '../../model/user_models/service_type.dart';
 import '../../model/user_models/user_profile.dart';
 import '../../model/user_models/user_shopping_data.dart';
 

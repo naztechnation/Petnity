@@ -169,7 +169,7 @@ class UserCubit extends Cubit<UserStates> {
     try {
       emit(GalleryLoading());
 
-      final gallery = await userRepository.getGallery(userId: userId);
+      final gallery = await userRepository.getGallery(agentId: userId);
       await viewModel.setGallery(gallery: gallery);
 
       emit(GalleryLoaded(gallery));

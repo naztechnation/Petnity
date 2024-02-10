@@ -12,7 +12,7 @@ import 'package:petnity/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../model/session_types/session_types.dart';
-import '../../../../model/user_models/order_list.dart';
+import '../../../../model/user_models/order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../model/user_models/vet_service.dart';
 import '../../../../model/view_models/user_view_model.dart';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
-import 'package:petnity/model/user_models/confirm_shop_payment.dart';
-import 'package:petnity/model/user_models/orders.dart';
 import 'package:petnity/res/app_colors.dart';
 
 import 'package:petnity/res/app_constants.dart';
@@ -12,9 +10,7 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/image_view.dart'; 
 
 import '../../../../handlers/secure_handler.dart'; 
-import '../../../../model/user_models/create_payment_order.dart';
 import '../../../../model/user_models/shop_order.dart';
-import '../../../../model/user_models/user_shopping_data.dart'; 
 import '../../../../utils/navigator/page_navigator.dart'; 
 import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../service_povider_section/service_provider_home/all_requests_section/product_shopping_details.dart';

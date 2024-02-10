@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
-import '../../../model/user_models/orders.dart';
+import '../../../model/user_models/order.dart';
 import '../../../model/user_models/vet_orders.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';

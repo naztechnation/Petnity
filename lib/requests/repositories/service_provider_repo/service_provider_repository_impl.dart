@@ -218,12 +218,11 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }
 
   @override
-  Future<AgentBalance> agentBalance({required String agentId}) async {
+  Future<AgentBalance> agentBalance({required String url}) async {
     final map = await Requests().get(
-      AppStrings.getAgentsBalance(
-        agentId: agentId,
-      ),
-    );
+      url
+      );
+    
 
     return AgentBalance.fromJson(map);
   }

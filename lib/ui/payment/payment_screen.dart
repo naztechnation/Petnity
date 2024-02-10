@@ -72,7 +72,7 @@ class _PaymentState extends State<Payment> {
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
     await _serviceProviderCubit.getAgentBalance(
-      agentId: agentId,
+      url: AppStrings.getAgentsBalance,
     );
 
     await _serviceProviderCubit.agentWithdrawalHistory(

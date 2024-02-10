@@ -1,6 +1,7 @@
 
 
-import '../user_models/orders.dart';
+
+import '../user_models/order.dart';
 
 class PaymentResponse {
   bool? status;

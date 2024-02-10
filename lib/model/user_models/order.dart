@@ -1,9 +1,8 @@
-import 'package:petnity/model/user_models/vet_service.dart';
-
 import '../agent/agent.dart';
+import '../packages/packages.dart';
 import '../user/user.dart';
 
-class VetOrders {
+class Orders {
   bool? shouldNotify;
   bool? isPaid;
   bool? isAccepted;
@@ -16,13 +15,16 @@ class VetOrders {
   String? sId;
   User? user;
   Agent? agent;
-  VetService? vetService;
-  String? sessionTime;
+  Package? package;
+  String? pickupLocation;
+  String? pickupTime;
+  String? dropoffTime;
   int? fee;
+  String? purchaseId;
   String? createdAt;
   String? updatedAt;
 
-  VetOrders(
+  Orders(
       {this.shouldNotify,
       this.isPaid,
       this.isAccepted,
@@ -35,13 +37,16 @@ class VetOrders {
       this.sId,
       this.user,
       this.agent,
-      this.vetService,
-      this.sessionTime,
+      this.package,
+      this.pickupLocation,
+      this.pickupTime,
+      this.dropoffTime,
       this.fee,
+      this.purchaseId,
       this.createdAt,
       this.updatedAt});
 
-  VetOrders.fromJson(Map<String, dynamic> json) {
+  Orders.fromJson(Map<String, dynamic> json) {
     shouldNotify = json['shouldNotify'];
     isPaid = json['isPaid'];
     isAccepted = json['isAccepted'];
@@ -54,11 +59,13 @@ class VetOrders {
     sId = json['_id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
-    vetService = json['vetService'] != null
-        ? new VetService.fromJson(json['vetService'])
-        : null;
-    sessionTime = json['sessionTime'];
+    package =
+        json['package'] != null ? new Package.fromJson(json['package']) : null;
+    pickupLocation = json['pickupLocation'];
+    pickupTime = json['pickupTime'];
+    dropoffTime = json['dropoffTime'];
     fee = json['fee'];
+    purchaseId = json['purchaseId'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
@@ -75,15 +82,20 @@ class VetOrders {
     data['isCompleted'] = this.isCompleted;
     data['paymentReleased'] = this.paymentReleased;
     data['_id'] = this.sId;
-    data['user'] = this.user;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
     if (this.agent != null) {
       data['agent'] = this.agent!.toJson();
     }
-    if (this.vetService != null) {
-      data['vetService'] = this.vetService!.toJson();
+    if (this.package != null) {
+      data['package'] = this.package!.toJson();
     }
-    data['sessionTime'] = this.sessionTime;
+    data['pickupLocation'] = this.pickupLocation;
+    data['pickupTime'] = this.pickupTime;
+    data['dropoffTime'] = this.dropoffTime;
     data['fee'] = this.fee;
+    data['purchaseId'] = this.purchaseId;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     return data;

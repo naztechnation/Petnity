@@ -171,10 +171,14 @@ static String agentRejectShopOrder(
   }) =>
       '${_baseUrl}shop/get-agent-products/$agentId';
 
-  static String getAgentsBalance({
-    required String agentId,
-  }) =>
+  static String getUserBalance =
       '${_baseUrl}user/get-user-wallet-balance';
+
+
+ static String getAgentsBalance =
+      '${_baseUrl}user/get-agent-wallet-balance';
+
+      
 
   static String getUserOrderedProducts =
       '${_baseUrl}shop/get-user-shop-orders';

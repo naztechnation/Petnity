@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
-import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
@@ -20,7 +19,6 @@ import '../../../res/app_images.dart';
 import '../../../res/app_strings.dart';
 import '../../../res/enum.dart';
 import '../../../utils/app_utils.dart';
-import '../../../utils/navigator/page_navigator.dart';
 import '../../payment/widgets/payment_box.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/loading_page.dart';
@@ -79,7 +77,7 @@ class _PaymentState extends State<Payment> {
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
     await _serviceProviderCubit.getAgentBalance(
-      agentId: agentId,
+      url: AppStrings.getUserBalance,
     );
 
     await _serviceProviderCubit.agentWithdrawalHistory(

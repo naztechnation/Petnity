@@ -13,8 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
 import '../../../handlers/secure_handler.dart';
-import '../../../model/service_provider_models/all_agent_orders.dart';
-import '../../../model/user_models/orders.dart';
+import '../../../model/user_models/order.dart';
 import '../../../model/user_models/shop_order.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../widgets/modals.dart';
