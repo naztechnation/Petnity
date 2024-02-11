@@ -5,7 +5,6 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../widgets/image_view.dart';
 import 'consultation/consultation.dart';
@@ -17,7 +16,6 @@ class VetService extends StatefulWidget {
 
 class _VetServiceState extends State<VetService> {
   bool _isShowingNotification = false;
-  
 
   @override
   void initState() {
@@ -29,27 +27,34 @@ class _VetServiceState extends State<VetService> {
     AppImages.treat,
     AppImages.prescribe,
   ];
-  final List<String> item = [
-    'Consultation',
-    'Treatments',
-    'Prescription',
+  final List<Map<dynamic, dynamic>> item = [
+    {"_id": "659458e4b45cc82554bd0255", "name": "Consultations", "__v": 0},
+    {"_id": "659458eab45cc82554bd0259", "name": "Treatments", "__v": 0},
+    {"_id": "659458eab45cc82554bd0259", "name": "Prescription", "__v": 0}
   ];
+
+  List<Map<dynamic, dynamic>> selectedItems = [];
+
+  void toggleSelection(Map<dynamic, dynamic> selectedItem) {
+    setState(() {
+      if (selectedItems.contains(selectedItem)) {
+        selectedItems.remove(selectedItem);
+      } else {
+        selectedItems.add(selectedItem);
+      }
+    });
+  }
 
   bool showButton = false;
 
-
-
-
-  
-
   double screenSize(BuildContext context) {
-    
     return MediaQuery.of(context).size.height;
   }
 
   @override
   Widget build(BuildContext context) {
-    final serviceProvider = Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
+    final serviceProvider =
+        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +81,7 @@ class _VetServiceState extends State<VetService> {
                 SizedBox(
                   height: 10,
                 ),
-                 Text(
+                Text(
                   'Multiple medium can be selected',
                   style: TextStyle(
                     color: Colors.black,
@@ -91,34 +96,33 @@ class _VetServiceState extends State<VetService> {
                   child: ListView.builder(
                     itemCount: item.length,
                     shrinkWrap: true,
-                    itemBuilder: (
-                    
-                    context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                            
-                            serviceProvider.addServiceType(index, item, image);
-                              
-                            
+                    itemBuilder: (context, index) {
+                      final service = item[index];
+                      final isSelected = selectedItems.contains(service);
 
-                           
-                          },
-                      child: buildSessionTypeWidget(
-                      index,
-                      image[index], 
-                      item[index],
-                      serviceProvider
-                                        ),
-                    );
-                  },),
+                      return GestureDetector(
+                        onTap: () {
+                          toggleSelection(service);
+                        },
+                        child: buildSessionTypeWidget(
+                            index, image[index], item[index]['name'], isSelected),
+                      );
+                    },
+                  ),
                 ),
-                
                 const Spacer(),
-
-              if(serviceProvider.serviceSelectedIndexes.isNotEmpty)  ButtonView(onPressed: (){
-                AppNavigator.pushAndStackPage(context, page: Consultation());
-              }, child: Text('Continue', style: TextStyle(color: Colors.white),)),
-               
+                if (selectedItems.isNotEmpty)
+                  ButtonView(
+                      onPressed: () {
+                        AppNavigator.pushAndStackPage(context,
+                            page: Consultation(
+                              sessionTypesSelectedItems: selectedItems,
+                            ));
+                      },
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.white),
+                      )),
               ],
             ),
             if (_isShowingNotification)
@@ -152,33 +156,30 @@ class _VetServiceState extends State<VetService> {
     );
   }
 
-  Widget buildSessionTypeWidget(int index, String image, String label, var service) {
+  Widget buildSessionTypeWidget(
+      int index, String image, String label, bool isSelected) {
     return Card(
       elevation: 1,
-      color: service.serviceSelectedIndexes.contains(index)
-              ? AppColors.lightSecondary 
-              : Colors.white,
+      color: isSelected ? AppColors.lightSecondary : Colors.white,
       child: Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: service.serviceSelectedIndexes.contains(index)
-              ? AppColors.lightSecondary  
-              : Colors.white,
+          color: isSelected ? AppColors.lightSecondary : Colors.white,
         ),
         child: Row(
           children: [
             SizedBox(
               width: 10,
             ),
-            ImageView.asset(image), 
+            ImageView.asset(image),
             SizedBox(
               width: 20,
             ),
             Text(
               label,
               style: TextStyle(
-                color: service.serviceSelectedIndexes.contains(index) ? Colors.white : Colors.black,
+                color: isSelected ? Colors.white : Colors.black,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'InterSans',
               ),
@@ -189,5 +190,3 @@ class _VetServiceState extends State<VetService> {
     );
   }
 }
-
-

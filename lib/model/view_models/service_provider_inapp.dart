@@ -40,6 +40,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   final List<int> _contactIndex = [];
 
   List<String> filterBankList = [];
+  List<String> mediumIds = [];
 
   var addProductImage = [
     '',
@@ -56,10 +57,12 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
       _servicesType.clear();
       _servicesIndex.clear();
     } else {
-      String serviceKey = '${item[index]}-${image[index]}';
+      String serviceKey = '${item['name'][index]}-${image[index]}';
 
       if (_serviceSelectedIndexes.contains(index)) {
         _serviceSelectedIndexes.remove(index);
+        mediumIds.add(item['name'][index]);
+
 
         _servicesType.remove(serviceKey);
 

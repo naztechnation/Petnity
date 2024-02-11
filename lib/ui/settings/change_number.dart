@@ -126,7 +126,8 @@ class _ChangeNumberScreenState extends State<ChangeNumberScreen> {
                     //   },
                     // );
                   },
-                  child: Text('Verify'),
+                  child: Text('Verify',  style:
+                TextStyle(color: Colors.white, ),),
                 ),
               const SizedBox(height: 0,),
     

@@ -206,7 +206,7 @@ class HomepageBar extends StatefulWidget {
 }
 
 class _HomepageBarState extends State<HomepageBar> {
-  List<ServiceType> service = [];
+  // List<ServiceType> service = [];
 
   late AccountCubit _userCubit;
 
@@ -387,7 +387,7 @@ class _HomepageBarState extends State<HomepageBar> {
                                     height: 50,
                                   ))
                                 : ServicesList(
-                                    services: services,
+                                    
                                   ),
                           ],
                         )),

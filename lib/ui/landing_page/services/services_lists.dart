@@ -18,11 +18,11 @@ import '../../service_povider_section/service_profile/vet_packages.dart';
 import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {
-  final List<ServiceType> services;
 
   final bool isAgent;
   final String agentId;
-  ServicesList({super.key, required this.services, this.isAgent = false,  this.agentId = '0'});
+  final List<Services>? services;
+  ServicesList({super.key, this.isAgent = false,  this.agentId = '0', this.services});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,6 @@ class ServicesList extends StatelessWidget {
 
                   ServiceType masterItem = user.servicesType[index];
 
-                  bool isActive =
-                      services.any((subItem) => subItem.sId == masterItem.sId);
-
                  
                     return Item(context, randomColor, '${masterItem.name}',
                         '${masterItem.image}', () {
@@ -63,10 +60,26 @@ class ServicesList extends StatelessWidget {
                             page: VetPackages(agentId: agentId,));
                       } else {
                         if (isAgent) {
+
+                          String serviceId = '';
+
+                           String constantString = masterItem.name ?? '';
+
+
+    if (services != []) {
+
+      for (var service in services ?? []) {
+        if (service.serviceType?.name == constantString) {
+          serviceId = service?.sId ?? '';
+
+          break;
+        }
+      }
+    }
                           AppNavigator.pushAndReplacePage(context,
                               page: AgentPackagesScreen(
                                   agentId: agentId,
-                                  serviceId: '${user.servicesType[index].sId}',
+                                  serviceId: serviceId,
                                   serviceType: masterItem.name ?? '',));
                         } else {
                           AppNavigator.pushAndReplacePage(context,

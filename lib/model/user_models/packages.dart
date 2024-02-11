@@ -1,6 +1,8 @@
-class Package {
+import '../services/services.dart';
+
+class Packages {
   String? sId;
-  String? service;
+  Services? service;
   int? level;
   String? name;
   String? description;
@@ -8,9 +10,8 @@ class Package {
   String? duration;
   String? createdAt;
   String? updatedAt;
-  int? iV;
 
-  Package(
+  Packages(
       {this.sId,
       this.service,
       this.level,
@@ -19,12 +20,12 @@ class Package {
       this.price,
       this.duration,
       this.createdAt,
-      this.updatedAt,
-      this.iV});
+      this.updatedAt});
 
-  Package.fromJson(Map<String, dynamic> json) {
+  Packages.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    service = json['service'];
+    service =
+        json['service'] != null ? new Services.fromJson(json['service']) : null;
     level = json['level'];
     name = json['name'];
     description = json['description'];
@@ -32,13 +33,14 @@ class Package {
     duration = json['duration'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    data['service'] = this.service;
+    if (this.service != null) {
+      data['service'] = this.service!.toJson();
+    }
     data['level'] = this.level;
     data['name'] = this.name;
     data['description'] = this.description;
@@ -46,9 +48,6 @@ class Package {
     data['duration'] = this.duration;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
     return data;
   }
 }
-
-

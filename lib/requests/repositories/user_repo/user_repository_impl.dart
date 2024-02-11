@@ -328,9 +328,7 @@ class UserRepositoryImpl implements UserRepository {
       "title": title,
       "description": description,
     };
-    final map = await Requests().post(AppStrings.reportBug(username), body: json.encode(payload), headers: {
-      'Authorization': AppStrings.token,
-    });
+    final map = await Requests().post(AppStrings.reportBug(username), body: json.encode(payload),);
     return AuthData.fromJson(map);
   }
 

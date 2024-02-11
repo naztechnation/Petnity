@@ -6,6 +6,7 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../blocs/accounts/account.dart';
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/agent/agent.dart';
@@ -14,6 +15,7 @@ import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../model/view_models/user_view_model.dart';
+import '../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
@@ -86,11 +88,21 @@ class _AgentProfileState extends State<AgentProfile> {
 
   String agentId = "";
   String userType = '';
-  bool isLoading = false;
+  String email = '';
+  String password = '';
+  bool isLoading = true;
   bool isLoading1 = true;
 
+   BuildContext? contexting;
+
   getAgentId() async {
+     setState(() {
+      
+      isLoading = true;
+    });
     userType = await StorageHandler.getUserType();
+    email = await StorageHandler.getUserEmail();
+    password = await StorageHandler.getUserPassword();
     if (userType == 'user') {
       agentId = widget.agentId ?? '';
     } else {
@@ -98,15 +110,19 @@ class _AgentProfileState extends State<AgentProfile> {
     }
 
     _userCubit = context.read<UserCubit>();
-    setState(() {
-      isLoading1 = true;
-    });
+   
     await _userCubit.getServices(agentId);
+    agentServices = _userCubit.viewModel.services?.data?.services;
 
+ setState(() {
+      
+      isLoading = false;
+    });
     await _userCubit.getAgentProfile(agentId);
     setState(() {
       isLoading1 = false;
     });
+   
   }
 
   @override
@@ -118,12 +134,14 @@ class _AgentProfileState extends State<AgentProfile> {
 
   @override
   Widget build(BuildContext context) {
+
+    contexting = context;
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
     return WillPopScope(
         onWillPop: onBackPress,
-        child: Scaffold(
+        child: (isLoading) ?  LoadingPage(): Scaffold(
           body: BlocConsumer<UserCubit, UserStates>(
               listener: (context, state) {},
               builder: (context, state) {
@@ -401,26 +419,61 @@ class _AgentProfileState extends State<AgentProfile> {
                           const SizedBox(
                             height: 15,
                           ),
-                          BlocConsumer<UserCubit, UserStates>(
-                            listener: (context, state) {
-                              if (state is ServicesLoaded) {
-                                if (state.services.status!) {
-                                  service = _userCubit.viewModel.servicesType;
-                                } else {}
-                              } else if (state is ServiceProviderListLoaded) {
-                                ///TODO
-                                // for (var item in state.userData.agents!) {
-                                //   if (item.sId.toString() == agentId) {
-                                //     agents = item;
-                                //     break;
-                                //   }
-                                // }
-                                services = agents?.services ?? [];
-                              } else if (state is UserNetworkErrApiErr) {
-                              } else if (state is UserNetworkErr) {}
-                            },
-                            builder: (context, state) => GestureDetector(
+                          BlocProvider<AccountCubit>(
+          lazy: false,
+          create: (_) => AccountCubit(
+              accountRepository: AccountRepositoryImpl(),
+              viewModel: Provider.of<AccountViewModel>(context, listen: false)),
+          child: BlocConsumer<AccountCubit, AccountStates>(
+            listener: (contet, state) {
+              if (state is AccountLoaded) {
+                if (state.userData.status ?? false) {
+                 
+                  if (state.userData.data?.user == null) {
+                    if (state.userData.data?.agent?.user?.isAgent ?? false) {
+                      StorageHandler.saveIsUserType('service_provider');
+                      StorageHandler.saveUserToken(state.userData.data?.token);
+
+                      StorageHandler.saveAgentId(
+                          state.userData.data?.agent?.sId);
+                      StorageHandler.saveUserId(
+                          state.userData.data?.agent?.user?.sId.toString());
+
+                      StorageHandler.saveEmail(
+                          state.userData.data?.agent?.user?.email.toString());
+                      StorageHandler.saveUserPhone(state
+                          .userData.data?.agent?.user?.phoneNumber
+                          .toString());
+                      StorageHandler.saveUserPicture(state
+                          .userData.data?.agent?.user?.profileImage
+                          .toString());
+
+                      StorageHandler.saveUserName(state
+                          .userData.data?.agent?.user?.username
+                          .toString());
+
+                      
+
+                      if (state.userData.data?.agent?.user?.hasPets ?? false) {
+                        StorageHandler.saveUserPetState('true');
+                      } else {
+                        StorageHandler.saveUserPetState('');
+                      }
+
+                     
+                    }
+                  } 
+                } 
+              
+              } else if (state is AccountApiErr) {
+                
+              } else if (state is AccountNetworkErr) {
+                 
+              }
+            },
+            builder: (contxt, state) => GestureDetector(
                               onTap: () {
+                              //  loginUser(contexting!);
                                 showModalBottomSheet(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
@@ -461,7 +514,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                                     height: 50,
                                                   ))
                                                 : ServicesList(
-                                                    services: services,
+                                                    services: agentServices,
                                                     isAgent: true,
                                                     agentId: agentId,
                                                   ),
@@ -481,11 +534,21 @@ class _AgentProfileState extends State<AgentProfile> {
                               ),
                             ),
                           ),
-                        ],
+                      )],
                       ),
                     )
               : SizedBox.shrink(),
         ));
+  }
+
+  loginUser(BuildContext ctx) {
+    
+      ctx.read<AccountCubit>().loginUser(
+            email: email,
+            password: password,
+          );
+      FocusScope.of(ctx).unfocus();
+   
   }
 
   submit(BuildContext context, String imageURl) async {

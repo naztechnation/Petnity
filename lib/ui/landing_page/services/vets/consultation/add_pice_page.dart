@@ -10,6 +10,12 @@ import '../../../../widgets/text_edit_view.dart';
 import 'review_services_page.dart';
 
 class AddPricePage extends StatefulWidget {
+
+ final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
+ final List<Map<dynamic, dynamic>> contactMediumsSelectedItems;
+
+  const AddPricePage({super.key, required this.sessionTypesSelectedItems, required this.contactMediumsSelectedItems});
+
   @override
   _AddPricePageState createState() => _AddPricePageState();
 }
@@ -112,7 +118,7 @@ class _AddPricePageState extends State<AddPricePage> {
 
       serviceProvider.updateAmountController(amountController.text);
       AppNavigator.pushAndStackPage(context,
-                            page: ReviewServices());
+                            page: ReviewServices(sessionTypesSelectedItems: widget.sessionTypesSelectedItems, contactMediumsSelectedItems: widget.contactMediumsSelectedItems, ));
 
     }}
 }

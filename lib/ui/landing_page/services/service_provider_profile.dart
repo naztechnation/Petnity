@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
 import '../../../model/agent/agent.dart' as agent;
+import '../../../model/services/services.dart';
 import '../../../model/user_models/get_services.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';

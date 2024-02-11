@@ -1,3 +1,5 @@
+import '../user_models/packages.dart';
+
 class GetAgentsPackages {
   bool? status;
   String? message;
@@ -45,73 +47,5 @@ class GetAgentsPackagesData {
   }
 }
 
-class Packages {
-  String? sId;
-  Service? service;
-  int? level;
-  String? name;
-  String? description;
-  int? price;
-  String? duration;
-  String? createdAt;
-  String? updatedAt;
 
-  Packages(
-      {this.sId,
-      this.service,
-      this.level,
-      this.name,
-      this.description,
-      this.price,
-      this.duration,
-      this.createdAt,
-      this.updatedAt});
 
-  Packages.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    service =
-        json['service'] != null ? new Service.fromJson(json['service']) : null;
-    level = json['level'];
-    name = json['name'];
-    description = json['description'];
-    price = json['price'];
-    duration = json['duration'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    if (this.service != null) {
-      data['service'] = this.service!.toJson();
-    }
-    data['level'] = this.level;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['price'] = this.price;
-    data['duration'] = this.duration;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    return data;
-  }
-}
-
-class Service {
-  String? sId;
-  String? agent;
-
-  Service({this.sId, this.agent});
-
-  Service.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    agent = json['agent'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['agent'] = this.agent;
-    return data;
-  }
-}

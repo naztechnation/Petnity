@@ -13,13 +13,16 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/navigator/page_navigator.dart';
+import '../../../blocs/accounts/account.dart';
 import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/agent/agent.dart';
 import '../../../model/services/services.dart';
 import '../../../model/user_models/service_provider_lists.dart';
 import '../../../model/user_models/service_type.dart';
+import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
+import '../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_routes.dart';
@@ -33,10 +36,10 @@ class SPCustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UserCubit>(
-      create: (BuildContext context) => UserCubit(
-          userRepository: UserRepositoryImpl(),
-          viewModel: Provider.of<UserViewModel>(context, listen: false)),
+    return BlocProvider<AccountCubit>(
+        create: (BuildContext context) => AccountCubit(
+          accountRepository: AccountRepositoryImpl(),
+          viewModel: Provider.of<AccountViewModel>(context, listen: false)),
       child: CustomDrawer(),
     );
   }
@@ -52,11 +55,13 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   List<ServiceType> service = [];
 
-  late UserCubit _userCubit;
+  late AccountCubit _userCubit;
 
   bool isLoading = false;
   String agentId = "";
   Agent? agents;
+  String password = '';
+  String email = '';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -69,15 +74,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
     }
   }
 
-  List<ServiceType> services = [];
 
   getServicesTypes() async {
-    _userCubit = context.read<UserCubit>();
+    agentId = await StorageHandler.getAgentId();
+     email = await StorageHandler.getUserEmail();
+    password = await StorageHandler.getUserPassword();
+
+
+      _userCubit = context.read<AccountCubit>();
 
     try {
-      agentId = await StorageHandler.getUserId();
-      await _userCubit.getServiceTypes();
-      await _userCubit.getAgentProfile(agentId);
+      await _userCubit.loginUser(password: password, email: email);
+     // await _userCubit.getAgentProfile(agentId);
     } catch (e) {}
   }
 
@@ -87,6 +95,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
   getUserType() async {
     userType = await StorageHandler.getUserType();
     picture = await StorageHandler.getUserPicture();
+    setState(() {
+      
+    });
   }
 
   @override
@@ -99,25 +110,60 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<UserCubit, UserStates>(
-      listener: (context, state) {
-        if (state is ServicesLoaded) {
-          if (state.services.status!) {
-            service = _userCubit.viewModel.servicesType;
-          } else {}
-        } else if (state is ServiceProviderListLoaded) {
-          ///TODO
-            for (var item in state.userData.data?.agents ?? []) {
-                    if (item.sId.toString() == agentId) {
-                      agents = item;
-                      break;
+    final user = Provider.of<UserViewModel>(context, listen: false);
+
+    return  BlocConsumer<AccountCubit, AccountStates>(
+            listener: (context, state) {
+              if (state is AccountLoaded) {
+                if (state.userData.status ?? false) {
+                
+                  if (state.userData.data?.user == null) {
+                    if (state.userData.data?.agent?.user?.isAgent ?? false) {
+                      StorageHandler.saveIsUserType('service_provider');
+                      StorageHandler.saveUserToken(state.userData.data?.token);
+
+                      StorageHandler.saveAgentId(
+                          state.userData.data?.agent?.sId);
+                      StorageHandler.saveUserId(
+                          state.userData.data?.agent?.user?.sId.toString());
+
+                      StorageHandler.saveEmail(
+                          state.userData.data?.agent?.user?.email.toString());
+                      StorageHandler.saveUserPhone(state
+                          .userData.data?.agent?.user?.phoneNumber
+                          .toString());
+                      StorageHandler.saveUserPicture(state
+                          .userData.data?.agent?.user?.profileImage
+                          .toString());
+
+                      StorageHandler.saveUserName(state
+                          .userData.data?.agent?.user?.username
+                          .toString());
+
+                      user.setServicesTypeList(services: state
+                          .userData.data?.agent?.services ?? []) ; 
+
+                      if (state.userData.data?.agent?.user?.hasPets ?? false) {
+                        StorageHandler.saveUserPetState('true');
+                      } else {
+                        StorageHandler.saveUserPetState('');
+                      }
+
+                      
                     }
-                  }
-          services = agents?.services ?? [];
-        } else if (state is UserNetworkErrApiErr) {
-        } else if (state is UserNetworkErr) {}
-      },
-      builder: (context, state) => Drawer(
+                  } 
+                } 
+              } else if (state is AccountApiErr) {
+                if (state.message != null) {
+                  
+                }
+              } else if (state is AccountNetworkErr) {
+                if (state.message != null) {
+                 
+                }
+              }
+            },
+            builder: (context, state) => Drawer(
         child: Container(
           child: SingleChildScrollView(
             child: Column(
@@ -438,7 +484,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                               height: 50,
                                             ))
                                           : ServicesList(
-                                              services: services,
                                             ),
                                     ],
                                   )),

@@ -17,8 +17,10 @@ import '../../../../widgets/loading_page.dart';
 import '../../../../widgets/modals.dart';
 
 class ReviewServices extends StatelessWidget {
+  final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
+ final List<Map<dynamic, dynamic>> contactMediumsSelectedItems;
   const ReviewServices({
-    Key? key,
+    Key? key, required this.sessionTypesSelectedItems, required this.contactMediumsSelectedItems,
   }) : super(key: key);
 
   @override
@@ -28,12 +30,16 @@ class ReviewServices extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: ReviewServicesPage(),
+      child: ReviewServicesPage(sessionTypesSelectedItems: sessionTypesSelectedItems, contactMediumsSelectedItems: contactMediumsSelectedItems,),
     );
   }
 }
 
 class ReviewServicesPage extends StatefulWidget {
+  final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
+ final List<Map<dynamic, dynamic>> contactMediumsSelectedItems;
+
+  const ReviewServicesPage({super.key, required this.sessionTypesSelectedItems, required this.contactMediumsSelectedItems});
   @override
   State<ReviewServicesPage> createState() => _ReviewServicesPageState();
 }
@@ -54,11 +60,30 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
   }
 
+  List<String>  contactMediums = [];
+  List<String>  sessionTypes = [];
+
+
   @override
   void initState() {
     getAgentId();
+
+     contactMediums = extractIds(widget.contactMediumsSelectedItems);
+     sessionTypes = extractIds(widget.sessionTypesSelectedItems);
     super.initState();
   }
+
+  
+  
+
+  List<String> extractIds(List<Map<dynamic, dynamic>> itemList) {
+  List<String> ids = [];
+  for (var map in itemList) {
+    String id = map["_id"];
+    ids.add(id);
+  }
+  return ids;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -217,8 +242,8 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                                 agentId: agentId,
                                 serviceId: serviceAccount.serviceId,
                                 amount: int.parse(serviceProvider.amountController),
-                                contactMedium: serviceProvider.contactIndex,
-                                sessionType: serviceProvider.servicesIndex,
+                                contactMedium:contactMediums,
+                                sessionType: sessionTypes,
                               );
                             },
                             child: Text(

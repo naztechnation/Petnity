@@ -12,6 +12,9 @@ import '../../../../widgets/image_view.dart';
 import 'add_pice_page.dart';
 
 class Consultation extends StatefulWidget {
+ final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
+
+  const Consultation({super.key, required this.sessionTypesSelectedItems});
   @override
   State<Consultation> createState() => _ConsultationState();
 }
@@ -24,11 +27,35 @@ class _ConsultationState extends State<Consultation> {
     AppImages.phoneIcon,
     AppImages.videoIcon,
   ];
-  final List<String> item = [
-    'Chat',
-    'Voice call',
-    'Video',
-  ];
+  final List<Map<dynamic, dynamic>> item = [
+                {
+                    "_id": "6597e04e309a4c2018e880d2",
+                    "name": "Chat",
+                    "__v": 0
+                },
+                {
+                    "_id": "6597e04e309a4c2018e880d2",
+                    "name": "Video Call",
+                    "__v": 0
+                },
+                {
+                    "_id": "6597e04e309a4c2018e880d2",
+                    "name": "Message",
+                    "__v": 0
+                }
+            ];
+
+              List<Map<dynamic, dynamic>> contactMediumSelectedItems = [];
+
+  void toggleSelection(Map<dynamic, dynamic> selectedItem) {
+    setState(() {
+      if (contactMediumSelectedItems.contains(selectedItem)) {
+        contactMediumSelectedItems.remove(selectedItem);
+      } else {
+        contactMediumSelectedItems.add(selectedItem);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +77,7 @@ class _ConsultationState extends State<Consultation> {
               fontFamily: 'InterSans'),
         ),
       ),
-      bottomNavigationBar: (serviceProvider.contactSelectedIndexes.isNotEmpty)
+      bottomNavigationBar: (contactMediumSelectedItems.isNotEmpty)
           ? Container(
               height: screenSize(context).height * .12,
               padding: EdgeInsets.symmetric(vertical: 23, horizontal: 20),
@@ -58,7 +85,7 @@ class _ConsultationState extends State<Consultation> {
                   borderRadius: 50,
                   onPressed: () {
                     AppNavigator.pushAndStackPage(context,
-                        page: AddPricePage());
+                        page: AddPricePage(sessionTypesSelectedItems: widget.sessionTypesSelectedItems, contactMediumsSelectedItems: contactMediumSelectedItems,));
                   },
                   child: Text(
                     'Select',
@@ -104,12 +131,15 @@ class _ConsultationState extends State<Consultation> {
                 itemCount: item.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
+                   final service = item[index];
+                      final isSelected = contactMediumSelectedItems.contains(service);
+
                   return GestureDetector(
                     onTap: () {
-                      serviceProvider.addContactType(index, item, image);
+                       toggleSelection(service);
                     },
                     child: buildSessionTypeWidget(
-                        index, image[index], item[index], serviceProvider),
+                        index, image[index], item[index]['name'], isSelected),
                   );
                 },
               ),
@@ -124,10 +154,10 @@ class _ConsultationState extends State<Consultation> {
   }
 
   Widget buildSessionTypeWidget(
-      int index, String image, String label, var services) {
+      int index, String image, String label, bool isSelected) {
     return Card(
       elevation: 1,
-      color: services.contactSelectedIndexes.contains(index)
+      color: isSelected
           ? AppColors.lightSecondary
           : Colors.white,
       child: Container(
@@ -136,7 +166,7 @@ class _ConsultationState extends State<Consultation> {
         padding: EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: services.contactSelectedIndexes.contains(index)
+          color: isSelected
               ? AppColors.lightSecondary
               : Colors.white,
         ),
@@ -146,7 +176,7 @@ class _ConsultationState extends State<Consultation> {
             Text(
               label,
               style: TextStyle(
-                  color: services.contactSelectedIndexes.contains(index)
+                  color: isSelected
                       ? Colors.white
                       : Colors.black,
                   fontWeight: FontWeight.bold,
@@ -154,7 +184,7 @@ class _ConsultationState extends State<Consultation> {
             ),
             ImageView.svg(
               image,
-              color: services.contactSelectedIndexes.contains(index)
+              color: isSelected
                   ? Colors.white
                   : Colors.black,
             ),
