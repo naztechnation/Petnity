@@ -58,6 +58,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String servicesId}) async {
     final map = await Requests().patch(
       AppStrings.publishPackageUrl(servicesId),
+      useApp: false
     );
     return AuthData.fromJson(map);
   }
@@ -232,7 +233,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       "price": amount
     };
     final map = await Requests().post(
-      AppStrings.createVetService(serviceId),
+      AppStrings.createVetService,
       body: json.encode(payload),
     );
 

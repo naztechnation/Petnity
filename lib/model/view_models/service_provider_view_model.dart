@@ -106,6 +106,9 @@ class ServiceProviderViewModel extends BaseViewModel {
   }
 
   addPetServiceType(String service) {
+
+    
+
     if (_selectedPetType.contains(service)) {
       _selectedPetType.remove(service);
     } else {

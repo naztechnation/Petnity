@@ -611,7 +611,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               //   return ServiceRequest();
               // }));
 
-              // if (order.isPaid ?? false) {
+              if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackServicesScreen(
                     agentName: order.agent?.user?.username ?? '',
@@ -637,10 +637,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     isUserMarkedService: order.userMarkedDelivered ?? false,
                     isAgentMarkedService: order.agentMarkedDelivered ?? false,
                   ));
-              // }
-              // else {
+              }
+              else {
               Modals.showToast('This Service has not been paid for.');
-              //  }
+               }
             },
             child: Text(
               'view',
@@ -759,7 +759,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
               //   return ServiceRequest();
               // }));
 
-              // if (order.isPaid ?? false) {
+              if (order.isPaid ?? false) {
               AppNavigator.pushAndStackPage(context,
                   page: TrackVetServicesScreen(
                     agentName: order.agent?.user?.username ?? '',
@@ -785,10 +785,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     contactMediums: contacts,
                     sessionMediums: sessions,
                   ));
-              // }
-              // else {
+              }
+              else {
               Modals.showToast('This Service has not been paid for.');
-              //  }
+               }
             },
             child: Text(
               'view',

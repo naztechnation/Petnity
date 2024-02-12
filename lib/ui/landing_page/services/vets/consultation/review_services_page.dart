@@ -158,47 +158,54 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                       SizedBox(
                         height: 20,
                       ),
+                      Text(
+                        'Contact Medium',
+                        style: TextStyle(
+                          color: Colors.black,
+                           fontWeight: FontWeight.bold,
+                          fontFamily: 'InterSans',
+                        ),
+                      ),
                       ListView.builder(
-                        itemCount: serviceProvider.servicesType.length,
+                        itemCount: widget.contactMediumsSelectedItems.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          String item = serviceProvider.servicesType[index]
-                              .split('-')
-                              .first
-                              .trim();
-                          String image = serviceProvider.servicesType[index]
-                              .split('-')
-                              .last
-                              .trim();
+                          String item = widget.contactMediumsSelectedItems[index]['name'];
+                          
 
                           return buildServiceTypeWidget(
-                              index, image, item, serviceProvider);
+                              index, item,);
                         },
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       Divider(),
+                       SizedBox(
+                        height: 15,
+                      ),
+                       Text(
+                        'Session Type',
+                        style: TextStyle(
+                          color: Colors.black,
+                           fontWeight: FontWeight.bold,
+                          fontFamily: 'InterSans',
+                        ),
+                      ),
                       SizedBox(
                         height: 5,
                       ),
                       ListView.builder(
-                        itemCount: serviceProvider.contactType.length,
+                        itemCount: widget.sessionTypesSelectedItems.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          String item = serviceProvider.contactType[index]
-                              .split('-')
-                              .first
-                              .trim();
-                          String image = serviceProvider.contactType[index]
-                              .split('-')
-                              .last
-                              .trim();
+                          String item = widget.sessionTypesSelectedItems[index]['name'];
+                           
 
                           return buildSessionTypeWidget(
-                              index, image, item, serviceProvider);
+                              index, item);
                         },
                       ),
                       SizedBox(
@@ -206,12 +213,23 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                       ),
                       Divider(),
                       SizedBox(
+                        height: 15,
+                      ),
+                       Text(
+                        'Session Amount',
+                        style: TextStyle(
+                          color: Colors.black,
+                           fontWeight: FontWeight.bold,
+                          fontFamily: 'InterSans',
+                        ),
+                      ),
+                       SizedBox(
                         height: 5,
                       ),
                       Container(
                         padding: EdgeInsets.all(10),
                         height: screenSize(context).height * .07,
-                        width: screenSize(context).width * .9,
+                        width: screenSize(context).width ,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: AppColors.lightPrimary,
@@ -234,7 +252,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                       Container(
                         height: screenSize(context).height * .12,
                         padding:
-                            EdgeInsets.symmetric(vertical: 23, horizontal: 20),
+                            EdgeInsets.symmetric(vertical: 23, horizontal: 6),
                         child: ButtonView(
                             borderRadius: 50,
                             onPressed: () {
@@ -245,6 +263,10 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                                 contactMedium:contactMediums,
                                 sessionType: sessionTypes,
                               );
+
+                              Modals.showToast(contactMediums.toString());
+                              Modals.showToast(contactMediums.toString());
+                              Modals.showToast(serviceAccount.serviceId);
                             },
                             child: Text(
                               'Publish Session',
@@ -260,7 +282,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
   }
 
   Widget buildSessionTypeWidget(
-      int index, String image, String label, var services) {
+      int index, String label, ) {
     return Card(
       elevation: 1,
       color: AppColors.lightPrimary,
@@ -282,10 +304,10 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                   fontWeight: FontWeight.bold,
                   fontFamily: 'InterSans'),
             ),
-            ImageView.svg(
-              image,
-              color: Colors.black,
-            ),
+            // ImageView.svg(
+            //   image,
+            //   color: Colors.black,
+            // ),
           ],
         ),
       ),
@@ -293,7 +315,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
   }
 
   Widget buildServiceTypeWidget(
-      int index, String image, String label, var service) {
+      int index, String label,) {
     return Card(
       elevation: 1,
       color: AppColors.lightPrimary,
@@ -314,9 +336,9 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                   fontWeight: FontWeight.bold,
                   fontFamily: 'InterSans'),
             ),
-            ImageView.asset(
-              image,
-            ),
+            // ImageView.asset(
+            //   image,
+            // ),
           ],
         ),
       ),

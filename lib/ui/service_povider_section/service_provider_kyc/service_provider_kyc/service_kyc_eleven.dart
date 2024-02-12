@@ -185,10 +185,9 @@ class _KycServiceScreenElevenState extends State<KycServiceScreenEleven> {
                       child: ButtonView(
                         onPressed: () async {
                           if (serviceProvider.imageURl2 != null) {
-                            //      AppNavigator.pushAndStackPage(context,
-                            // page: KycServiceScreenTwelve(
 
-                            // ));
+                                 
+                         
                             setState(() {
                               isLoading = true;
                             });

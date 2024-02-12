@@ -1,7 +1,6 @@
-import 'package:petnity/model/user_models/vet_service.dart';
-
 import '../agent/agent.dart';
 import '../user/user.dart';
+import 'vet_service.dart';
 
 class VetOrders {
   bool? shouldNotify;
@@ -75,7 +74,9 @@ class VetOrders {
     data['isCompleted'] = this.isCompleted;
     data['paymentReleased'] = this.paymentReleased;
     data['_id'] = this.sId;
-    data['user'] = this.user;
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
     if (this.agent != null) {
       data['agent'] = this.agent!.toJson();
     }

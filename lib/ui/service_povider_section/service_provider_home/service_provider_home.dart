@@ -93,7 +93,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
           } else if (state is AgentOrdersLoaded) {
             orders = state.agentsOrderRequests.shopOrders ?? [];
           } else if (state is AgentServicesListLoaded) {
-            availableServices = state.services.orders ?? [];
+            availableServices = state.services.data?.orders ?? [];
 
             
           }
@@ -105,7 +105,7 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
               height: 50,
             ));
           }else if (state is AgentServicesListLoaded) {
-            availableServices = state.services.orders ?? [];
+            availableServices = state.services.data?.orders ?? [];
 
              return Container(
             // height: MediaQuery.of(context).size.height - kToolbarHeight,

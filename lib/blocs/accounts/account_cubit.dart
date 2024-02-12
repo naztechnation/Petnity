@@ -232,14 +232,14 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> servicePetType(
-      {required List<String> petnames,
+      {required List<String> petId,
       required String username,
       required String agentId}) async {
     try {
       emit(AgentResLoading());
 
       final user = await accountRepository.servicePetNames(
-        petnames: petnames,
+        petId: petId,
         agentId: agentId,
         username: username,
       );

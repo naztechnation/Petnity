@@ -1,4 +1,3 @@
-
 import 'package:petnity/model/account_models/auth_data.dart';
 import 'package:petnity/model/user_models/id_types.dart';
 
@@ -42,8 +41,7 @@ abstract class AccountRepository {
       required String idType,
       required String id});
   Future<PetProfile> registerUserPetProfile(
-      {
-      required String type,
+      {required String type,
       required String petname,
       required String gender,
       required String breed,
@@ -64,7 +62,7 @@ abstract class AccountRepository {
   Future<PetTypesModel> petTypeList();
 
   Future<CreateAgents> servicePetNames(
-      {required List<String> petnames,
+      {required List<String> petId,
       required String username,
       required String agentId});
   Future<AuthData> forgetPassword({
@@ -76,5 +74,5 @@ abstract class AccountRepository {
     required String email,
   });
 
-   Future<IdTypeList> idTypeList();
+  Future<IdTypeList> idTypeList();
 }

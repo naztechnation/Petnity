@@ -183,8 +183,8 @@ class _KycServiceScreenSevenState extends State<KycServiceScreenSeven> {
                         onPressed: () async {
                           if (user.imageURl != null) {
                                  
-                            AppNavigator.pushAndStackPage(context,
-                    page: KycServiceScreenEight());
+                    //         AppNavigator.pushAndStackPage(context,
+                    // page: KycServiceScreenEight());
 
                               setState(() {
                                 isLoading = true;

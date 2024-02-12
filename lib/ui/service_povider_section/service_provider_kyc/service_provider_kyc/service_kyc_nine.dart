@@ -148,17 +148,19 @@ class _KycScreenNineState extends State<KycScreenNine> {
                               itemCount: petTypes.length,
                               itemBuilder: (context, index) {
                                 String petName = petTypes[index].name;
+                                String petId = petTypes[index].sId;
                                 return ServiceProviderChoice(
                                   isShowImage: false,
                                    imageUrl: '',
                                   serviceName: petName,
                                   isSelected:
-                                      user.selectedPetType.contains(petName),
+                                      user.selectedPetType.contains(petId),
                                   onPressed: () {
                                     setState(() {
                                       _index = index;
 
-                                      user.addPetServiceType(petName);
+                                      user.addPetServiceType(petId);
+
                                     });
                                   },
                                 );
@@ -202,8 +204,9 @@ class _KycScreenNineState extends State<KycScreenNine> {
   }
 
   _submit(BuildContext ctx, var user, var userData) {
+
     ctx.read<AccountCubit>().servicePetType(
-          petnames: user.selectedPetType,
+          petId: user.selectedPetType,
           agentId: agentId,
           username: userData.username,
         );

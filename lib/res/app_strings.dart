@@ -183,9 +183,7 @@ class AppStrings {
   static String getUserNotifications =
       '${_baseUrl}user/get-agent-notifications';
 
-  static String createVetService(
-    String serviceTypeId,
-  ) =>
+  static String createVetService =
       '${_baseUrl}service/create-vet-service';
 
   static String publishVetService(String serviceTypeId) =>

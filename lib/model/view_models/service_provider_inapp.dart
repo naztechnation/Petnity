@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:petnity/model/user_models/order_lists.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/enum.dart';
@@ -151,8 +152,8 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   }
 
   setAgentServicesList(AgentServicesList orders) {
-    _availableServices = orders.orders ?? [];
-    _vetOrders = orders.vetOrders ?? [];
+    _availableServices = orders.data?.orders ?? [];
+    _vetOrders = orders.data?.vetOrders ?? [];
     // _orderPageNumber = orders.numPages ?? 1;
 
     setViewState(ViewState.success);

@@ -77,7 +77,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                 ListTile(
                   leading: ProfileImage(
                     
-                    user.agents[widget.index].picture!,
+                    user.agents[widget.index].picture ?? '',
                     placeHolder: AppImages.person,
                     radius: 25,
                     height: 100,

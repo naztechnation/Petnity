@@ -214,7 +214,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                     child: ButtonView(
                       color: AppColors.lightSecondary,
                       onPressed: () {
-                        //  if(widget.services.isPaid ?? false) {
+                          if(widget.services.isPaid ?? false) {
                         AppNavigator.pushAndStackPage(context,
                             page: TrackServicesScreen(
                               agentName: widget.services.agent?.user
@@ -257,9 +257,9 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               isAgentMarkedService:
                                   widget.services.agentMarkedDelivered ?? false,
                             ));
-                        // }else{
+                        }else{
                         Modals.showToast('This Service has not been paid for.');
-                        // }
+                        }
                       },
                       child: Text(
                         widget.label,

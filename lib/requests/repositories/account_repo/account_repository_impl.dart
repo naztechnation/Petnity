@@ -132,6 +132,7 @@ Future<CreateAgents> registerServiceProviderProfile(
     required String picture}) async {
   final map = await Requests().post(
       AppStrings.registerServiceProviderProfileUrl,
+      useApp: false,
       body: {
         "dateOfBirth": dob,
         "name": name,
@@ -148,12 +149,12 @@ Future<CreateAgents> registerServiceProviderProfile(
 
 
 Future<CreateAgents> servicePetNames(
-    {required List<String> petnames,
+    {required List<String> petId,
     required String username,
     required String agentId}) async {
   final map =
       await Requests().patch(AppStrings.selectPetTypeUrl, body: {
-    "petTypes": petnames,
+    "petTypes": petId,
   }, );
   return CreateAgents.fromJson(map);
 }
@@ -176,7 +177,7 @@ Future<AuthData> uploadPhotoUrl(
   final map =
       await Requests().patch(AppStrings.uploadIdUrl, body: {
     "idPhoto": photoUrl,
-    "idType": idType,
+    "idType": id,
   }, );
   return AuthData.fromJson(map);
 }

@@ -13,8 +13,7 @@ import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
-import '../../../model/product/product.dart';
-import '../../../model/user_models/shopping_lists.dart';
+import '../../../model/product/product.dart'; 
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -45,8 +44,8 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   late UserCubit _userCubit;
 
-  List<Product> products = [];
-  List<Product> filteredProducts = [];
+  List<Products> products = [];
+  List<Products> filteredProducts = [];
   final searchController = TextEditingController();
 
   @override

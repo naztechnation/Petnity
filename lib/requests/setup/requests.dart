@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:retry/retry.dart';
 import 'package:path/path.dart';
 
@@ -142,9 +143,12 @@ class Requests {
     Map<String, String>? headers,
     var body,
     Map<String, File>? files,
+      bool useApp = true,
+
     Encoding? encoding,
   }) async {
     debugPrint(route);
+
 
     late dynamic map;
     try {
@@ -152,7 +156,7 @@ class Requests {
           .patch(
         Uri.parse(route),
         body: json.encode(body),
-        headers: headers ?? await formDataHeader(),
+        headers: headers ?? await formDataHeader(useApp),
       )
           .then((response) {
         map = json.decode(RequestHandler.handleServerError(response));

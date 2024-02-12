@@ -48,14 +48,14 @@ class Shop extends StatefulWidget {
 class _ShopState extends State<Shop> {
   late UserCubit _userCubit;
 
-  List<Product> products = [];
-  List<Product> filteredProducts = [];
+  List<Products> products = [];
+  List<Products> filteredProducts = [];
   final searchController = TextEditingController();
 
   String agentId = "";
 
   getAgentId() async {
-    agentId = await StorageHandler.getUserId();
+    agentId = await StorageHandler.getAgentId();
 
     _userCubit = context.read<UserCubit>();
 

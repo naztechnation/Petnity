@@ -1,12 +1,12 @@
 import '../services/services.dart';
 
 class Package {
-  int? id;
-  int? level;
+  var id;
+  var level;
   String? name;
   String? description;
   String? duration;
-  String? price;
+  var price;
   String? createdAt;
   String? updatedAt;
   Services? service;

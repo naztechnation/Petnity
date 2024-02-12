@@ -107,7 +107,7 @@ class PurchaseRequests extends StatelessWidget {
                         child: CustomText(
                           textAlign: TextAlign.start,
                           maxLines: 2,
-                          text: 'View pet profile',
+                          text: 'View pet profiles',
                           weight: FontWeight.w700,
                           size: 13,
                           color: AppColors.lightSecondary,
