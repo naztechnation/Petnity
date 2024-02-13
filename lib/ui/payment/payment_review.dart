@@ -243,8 +243,7 @@ class _PaymentReviewState extends State<Payment> {
                       _serviceProviderCubit.vetsCreateWithdrawalRequest(
                            amount: mainAmount);
 
-                          Modals.showToast(mainAmount,
-                  messageType: MessageType.success);
+                          
                     },
                     color: AppColors.lightSecondary,
                     borderRadius: 30,

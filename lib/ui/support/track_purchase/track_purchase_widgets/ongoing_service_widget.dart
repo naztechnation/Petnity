@@ -222,7 +222,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                                 allOrders.agentMarkedDelivered ?? false,
                           ));
                     },
-                    child: Text(widget.label, style: TextStyle(color: Colors.white),),
+                    child: Text(widget.label, style: TextStyle(color: Colors.white, fontSize: 13),),
                     borderRadius: 30,
                   ),
                 ),

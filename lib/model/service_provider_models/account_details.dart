@@ -1,3 +1,5 @@
+import '../agent/agent.dart';
+
 class AccountDetailsList {
   bool? status;
   String? message;
@@ -48,7 +50,7 @@ class AccountDetailsListData {
 class BankDetails {
   bool? isDefault;
   String? sId;
-  String? agent;
+  Agent? agent;
   String? bank;
   String? bankCode;
   String? accountName;
@@ -66,7 +68,7 @@ class BankDetails {
   BankDetails.fromJson(Map<String, dynamic> json) {
     isDefault = json['isDefault'];
     sId = json['_id'];
-    agent = json['agent'];
+    agent = json['agent'] != null ? new Agent.fromJson(json['agent']) : null;
     bank = json['bank'];
     bankCode = json['bankCode'];
     accountName = json['accountName'];
@@ -77,7 +79,9 @@ class BankDetails {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['isDefault'] = this.isDefault;
     data['_id'] = this.sId;
-    data['agent'] = this.agent;
+    if (this.agent != null) {
+      data['agent'] = this.agent!.toJson();
+    }
     data['bank'] = this.bank;
     data['bankCode'] = this.bankCode;
     data['accountName'] = this.accountName;
@@ -85,3 +89,4 @@ class BankDetails {
     return data;
   }
 }
+

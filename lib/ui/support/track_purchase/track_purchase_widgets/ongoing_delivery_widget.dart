@@ -263,7 +263,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       },
                       child: Text(
                         widget.label,
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white, fontSize: 13),
                       ),
                       borderRadius: 30,
                     ),

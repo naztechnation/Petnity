@@ -134,7 +134,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> acceptAgentOrder(
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
+      
       AppStrings.agentAcceptOrder(orderId: orderId),
+      useApp: false
     );
 
     return AuthData.fromJson(map);
@@ -145,6 +147,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentMarkCompletedOrder(orderId: orderId),
+      useApp: false
+
     );
 
     return AuthData.fromJson(map);
@@ -155,6 +159,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentMarkOngoingOrder(orderId: orderId),
+      useApp: false
     );
 
     return AuthData.fromJson(map);
@@ -194,9 +199,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> userAcceptOrderDelivered(
       {required String username, required String orderId}) async {
     final map = await Requests()
-        .patch(AppStrings.userMarkOrderDelivered(orderId: orderId), headers: {
-      'Authorization': AppStrings.token,
-    });
+        .patch(AppStrings.userMarkOrderDelivered(orderId: orderId),
+        useApp: false
+        );
 
     return AuthData.fromJson(map);
   }
@@ -293,9 +298,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         .post(AppStrings.confirmVetPaymentOrder(orderId, username), body: {
       'purchase_id': purchaseId,
       'vet_service': vetServiceId,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+    }, );
 
     return CreateVetOrder.fromJson(map);
   }
@@ -305,6 +308,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentAcceptVetOrder(orderId: orderId),
+      useApp: false
+
     );
 
     return AuthData.fromJson(map);
@@ -315,6 +320,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentMarkCompletedVetOrder(orderId: orderId),
+      useApp: false
     );
 
     return AuthData.fromJson(map);
@@ -325,6 +331,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentMarkOngoingVetOrder(orderId: orderId),
+      useApp: false
+
     );
 
     return AuthData.fromJson(map);
@@ -335,6 +343,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentRejectServiceVetOrder(orderId: orderId),
+      useApp: false
+
     );
 
     return AuthData.fromJson(map);
@@ -345,6 +355,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String username, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.userMarkVetOrderDelivered(orderId: orderId),
+      useApp: false
+
     );
 
     return AuthData.fromJson(map);
@@ -352,11 +364,11 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
   @override
   Future<CreateWithrawal> agentCreateWithdrawal({
-    required String amount,
+    required var amount,
   }) async {
 
     var payload = {
-          'amount': amount
+          "amount": amount
         };
     final map = await Requests().post(
         AppStrings.agentCreateWithdrawal,

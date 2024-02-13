@@ -264,9 +264,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                                 sessionType: sessionTypes,
                               );
 
-                              Modals.showToast(contactMediums.toString());
-                              Modals.showToast(contactMediums.toString());
-                              Modals.showToast(serviceAccount.serviceId);
+                              
                             },
                             child: Text(
                               'Publish Session',

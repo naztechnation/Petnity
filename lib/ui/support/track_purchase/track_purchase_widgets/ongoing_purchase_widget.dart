@@ -188,7 +188,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                   child: ButtonView(
                     color: AppColors.lightSecondary,
                     onPressed: () {
-                     // if (order.isPaid ?? false) {
+                      if (allOrders.isPaid ?? false) {
                 Navigator.push(context, MaterialPageRoute(builder: (_) {
                   return PurchaseRequest(
                     agentName: '${allOrders.product?.agent?.user?.username}',
@@ -210,11 +210,11 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                        ownerNormalId: allOrders.product?.agent?.sId.toString() ?? '',
                   );
                 }));
-              // } else {
+                } else {
                 Modals.showToast('This product  has not been paid for.');
-              // }
+               }
                     },
-                    child: Text(widget.label, style: TextStyle(color: Colors.white),),
+                    child: Text(widget.label, style: TextStyle(color: Colors.white, fontSize: 13),),
                     borderRadius: 30,
                   ),
                 ),

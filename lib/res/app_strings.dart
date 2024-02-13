@@ -140,7 +140,7 @@ class AppStrings {
       '${_baseUrl}shop/agent-accept-shop-order/$orderId';
 
   static String userMarkOrderDelivered({required String orderId}) =>
-      '${_baseUrl}order/user-complete-order$orderId';
+      '${_baseUrl}order/user-complete-order/$orderId';
   static String agentMarkOrderDelivered(
           {required String agentId, required String orderId}) =>
       '${_baseUrl}order/user-complete-order/$agentId/$orderId';
@@ -231,4 +231,9 @@ class AppStrings {
       '${_baseUrl}service/update-vet-service-price/$serviceId';
 
   static String creditWalletUrl = '${_baseUrl}user/credit-wallet';
+  static String getVetSessionTypesUrl = '${_baseUrl}home/get-vet-session-types';
+  static String getVetMediumTypesUrl = '${_baseUrl}home/get-vet-contact-mediums';
+
+
+  
 }
