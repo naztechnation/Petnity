@@ -84,6 +84,8 @@ class _AgentProfileState extends State<AgentProfile> {
   List<ServiceType> service = [];
   List<Services>? agentServices = [];
 
+  
+
   List<ServiceType> services = [];
 
   String agentId = "";
@@ -109,14 +111,14 @@ class _AgentProfileState extends State<AgentProfile> {
       agentId = await StorageHandler.getAgentId();
     }
 
-    _userCubit = context.read<UserCubit>();
+    // _userCubit = context.read<UserCubit>();
    
-    await _userCubit.getServices(agentId);
-    agentServices = _userCubit.viewModel.services?.data?.services;
+    // await _userCubit.getServices(agentId);
+    // agentServices = _userCubit.viewModel.services?.data?.services;
 
  setState(() {
       
-      isLoading = false;
+      isLoading = true;
     });
     await _userCubit.getAgentProfile(agentId);
     setState(() {
@@ -143,7 +145,12 @@ class _AgentProfileState extends State<AgentProfile> {
         onWillPop: onBackPress,
         child: (isLoading) ?  LoadingPage(): Scaffold(
           body: BlocConsumer<UserCubit, UserStates>(
-              listener: (context, state) {},
+              listener: (context, state) {
+                  if (state is AgentProfileLoaded) {
+                agents = state.userData.data?.agent;
+                  services = agents?.services ?? [];
+                }
+              },
               builder: (context, state) {
                 if (state is ServiceProviderListLoading) {
                   return LoadingPage();
@@ -159,13 +166,8 @@ class _AgentProfileState extends State<AgentProfile> {
                   if (state.services.status!) {
                     service = _userCubit.viewModel.servicesType;
                   } else {}
-                } else if (state is ServiceProviderListLoaded) {
-                  for (var item in state.userData.data?.agents ?? []) {
-                    if (item.sId.toString() == agentId) {
-                      agents = item;
-                      break;
-                    }
-                  }
+                } else if (state is AgentProfileLoaded) {
+                agents = state.userData.data?.agent;
                   services = agents?.services ?? [];
                 } else if (state is UserNetworkErrApiErr) {
                   return EmptyWidget(
@@ -173,15 +175,7 @@ class _AgentProfileState extends State<AgentProfile> {
                     description: state.message,
                     onRefresh: () => _userCubit.getAgentProfile(agentId),
                   );
-                } else if (state is ServiceProviderListLoaded) {
-                  ///TODO
-                  // for (var item in state.userData.agents!) {
-                  //   if (item.sId.toString() == agentId) {
-                  //     agents = item;
-                  //     break;
-                  //   }
-                  // }
-                } else if (state is UploadAgentGalleryLoaded) {
+                }  else if (state is UploadAgentGalleryLoaded) {
                   serviceProvider.resetImage();
                   Modals.showToast(state.gallery.message!);
                   _userCubit.getAgentProfile(agentId);

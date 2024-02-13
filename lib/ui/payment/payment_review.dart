@@ -108,8 +108,7 @@ class _PaymentReviewState extends State<Payment> {
 
   @override
   Widget build(BuildContext context) {
-    final petProfile = Provider.of<AccountViewModel>(context, listen: false);
-
+     
     return Scaffold(
         body: Container(
       height: screenSize(context).height,
@@ -137,7 +136,7 @@ class _PaymentReviewState extends State<Payment> {
                           name: AppRoutes.serviceProviderLandingPage);
                     },
                     successMessage:
-                        'Amount of NGN${AppUtils.convertPrice(widget.amount)} has been sent to you saved bank account Payment should arrive in an hour');
+                        'The Amount of NGN${AppUtils.convertPrice(widget.amount)} has been sent to your saved bank account, Payment should arrive within 24 hours.');
               }));
             }
           } else if (state is CreateServiceNetworkErr) {
@@ -240,8 +239,12 @@ class _PaymentReviewState extends State<Payment> {
                   child: ButtonView(
                     processing: state is VetsCreateWithdrawalRequestLoading,
                     onPressed: () {
+                      String amount = mainAmount;
+                       if (amount.contains(',')) {
+                                  amount = amount.replaceAll(',', '');
+                                }
                       _serviceProviderCubit.vetsCreateWithdrawalRequest(
-                           amount: mainAmount);
+                           amount: amount);
 
                           
                     },

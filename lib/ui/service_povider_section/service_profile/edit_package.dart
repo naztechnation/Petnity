@@ -18,7 +18,7 @@ import '../../../res/app_strings.dart';
 import '../../../utils/app_utils.dart';
 import '../../widgets/back_button.dart';
 import '../../widgets/button_view.dart';
-import '../../widgets/custom_text.dart'; 
+import '../../widgets/custom_text.dart';
 import '../../widgets/modals.dart';
 
 class EditPackage extends StatelessWidget {
@@ -33,7 +33,8 @@ class EditPackage extends StatelessWidget {
     required this.packageName,
     required this.packageDuration,
     required this.packagePrice,
-    required this.packageDescription, required this.packageId,
+    required this.packageDescription,
+    required this.packageId,
   });
 
   @override
@@ -41,12 +42,14 @@ class EditPackage extends StatelessWidget {
     return BlocProvider<ServiceProviderCubit>(
       create: (BuildContext context) => ServiceProviderCubit(
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
-          viewModel: Provider.of<ServiceProviderInAppViewModel>(context, listen: false)),
+          viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
+              listen: false)),
       child: Edit(
         packageName: packageName,
         packageDuration: packageDuration,
         packagePrice: packagePrice,
-        packageDescription: packageDescription, packageId: packageId,
+        packageDescription: packageDescription,
+        packageId: packageId,
       ),
     );
   }
@@ -59,13 +62,13 @@ class Edit extends StatefulWidget {
   final String packageDescription;
   final String packageId;
 
-
   const Edit({
     super.key,
     required this.packageName,
     required this.packageDuration,
     required this.packagePrice,
-    required this.packageDescription, required this.packageId,
+    required this.packageDescription,
+    required this.packageId,
   });
 
   @override
@@ -104,23 +107,17 @@ class _ReviewState extends State<Edit> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return Scaffold(
       body: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
           listener: (context, state) {},
           builder: (context, state) {
-               if (state is CreateServiceNetworkErr) {
+            if (state is CreateServiceNetworkErr) {
               Modals.showToast(state.message ?? '');
-                
             } else if (state is CreateServiceNetworkErrApiErr) {
               Modals.showToast(state.message ?? '');
-               
             } else if (state is EditPackageLoaded) {
               Modals.showToast(state.data.message ?? '');
-            }  
+            }
             return Stack(
               children: [
                 Container(
@@ -162,8 +159,7 @@ class _ReviewState extends State<Edit> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SingleChildScrollView(
                                 child: Column(
@@ -198,7 +194,7 @@ class _ReviewState extends State<Edit> {
                                     const SizedBox(
                                       height: 20,
                                     ),
-                                     Padding(
+                                    Padding(
                                       padding:
                                           const EdgeInsets.only(left: 12.0),
                                       child: CustomText(
@@ -217,7 +213,6 @@ class _ReviewState extends State<Edit> {
                                       ),
                                       borderRadius: 30,
                                       boxHeight: 8,
-
                                       readOnly: true,
                                       borderColor: Colors.white,
                                       filled: true,
@@ -231,27 +226,25 @@ class _ReviewState extends State<Edit> {
                               const SizedBox(
                                 height: 20,
                               ),
-                               Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 12.0),
-                                      child: CustomText(
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        text: 'Description',
-                                        weight: FontWeight.w600,
-                                        size: 14,
-                                        fontFamily: AppStrings.montserrat,
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: CustomText(
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  text: 'Description',
+                                  weight: FontWeight.w600,
+                                  size: 14,
+                                  fontFamily: AppStrings.montserrat,
+                                  color: Colors.black,
+                                ),
+                              ),
                               TextEditView(
                                 controller: TextEditingController(
                                   text: widget.packageDescription,
                                 ),
                                 borderRadius: 30,
                                 readOnly: true,
-                                      boxHeight: 8,
-
+                                boxHeight: 8,
                                 borderColor: Colors.white,
                                 filled: true,
                                 maxLines: 5,
@@ -262,24 +255,23 @@ class _ReviewState extends State<Edit> {
                               const SizedBox(
                                 height: 20,
                               ),
-                               Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 12.0),
-                                      child: CustomText(
-                                        textAlign: TextAlign.center,
-                                        maxLines: 2,
-                                        text: 'Price',
-                                        weight: FontWeight.w600,
-                                        size: 14,
-                                        fontFamily: AppStrings.montserrat,
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 12.0),
+                                child: CustomText(
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  text: 'Price',
+                                  weight: FontWeight.w600,
+                                  size: 14,
+                                  fontFamily: AppStrings.montserrat,
+                                  color: Colors.black,
+                                ),
+                              ),
                               TextEditView(
                                 controller: _amountController,
                                 borderRadius: 30,
                                 readOnly: false,
-                                      boxHeight: 8,
+                                boxHeight: 8,
                                 keyboardType: TextInputType.number,
                                 borderColor: Colors.white,
                                 filled: true,
@@ -293,35 +285,41 @@ class _ReviewState extends State<Edit> {
                             ],
                           ),
                         ),
-
                         Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 30.0, horizontal: 15),
-                            child: ButtonView(
-                              processing: state is EditPackageLoading,
-                              onPressed: () {
-
-                                if(_amountController.text != AppUtils.convertPrice(widget.packagePrice)){
-                                _userCubit.editPackage(agentId: agentId, price: _amountController.text.trim(), packageId: widget.packageId);
-                                  // Modals.showToast(_amountController.text);
-                                }else{
-                                  Modals.showToast('Please enter a price different from the former');
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 30.0, horizontal: 15),
+                          child: ButtonView(
+                            processing: state is EditPackageLoading,
+                            onPressed: () {
+                              if (_amountController.text !=
+                                  AppUtils.convertPrice(widget.packagePrice)) {
+                                String amount = _amountController.text.trim();
+                                if (amount.contains(',')) {
+                                  amount = amount.replaceAll(',', '');
                                 }
-                                 
-                              },
-                              color: AppColors.lightSecondary,
-                              borderRadius: 22,
-                              child: CustomText(
-                                textAlign: TextAlign.center,
-                                maxLines: 1,
-                                text: 'Update Pricing',
-                                weight: FontWeight.w400,
-                                size: 15,
-                                fontFamily: AppStrings.interSans,
-                                color: Colors.white,
-                              ),
+
+                                _userCubit.editPackage(
+                                    agentId: agentId,
+                                    price: amount,
+                                    packageId: widget.packageId);
+                              } else {
+                                Modals.showToast(
+                                    'Please enter a price different from the former');
+                              }
+                            },
+                            color: AppColors.lightSecondary,
+                            borderRadius: 22,
+                            child: CustomText(
+                              textAlign: TextAlign.center,
+                              maxLines: 1,
+                              text: 'Update Pricing',
+                              weight: FontWeight.w400,
+                              size: 15,
+                              fontFamily: AppStrings.interSans,
+                              color: Colors.white,
                             ),
                           ),
+                        ),
                       ],
                     ),
                   ),

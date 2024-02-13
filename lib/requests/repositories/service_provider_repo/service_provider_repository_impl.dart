@@ -254,6 +254,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   }) async {
     final map = await Requests().patch(
       AppStrings.publishVetService(serviceId),
+      useApp: false
     );
 
     return AuthData.fromJson(map);
@@ -366,7 +367,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
 
   @override
   Future<CreateWithrawal> agentCreateWithdrawal({
-    required var amount,
+    required String amount,
   }) async {
 
     var payload = {
@@ -374,8 +375,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
         };
     final map = await Requests().post(
         AppStrings.agentCreateWithdrawal,
-        useApp: false,
-        body: payload,
+        // useApp: false,
+        body: json.encode(payload),
         );
 
     return CreateWithrawal.fromJson(map);

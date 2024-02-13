@@ -91,12 +91,14 @@ class _VetServiceScreenState extends State<VetServiceScreen> {
     return  Scaffold(
       appBar: AppBar(
         title: Text('Vets'),
+        centerTitle: true,
       ),
       body: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
             listener: (context, state) {
-          if (state is SessionTypeLoaded) {
-          
-          } else if (state is CreateServiceNetworkErrApiErr) {
+             if (state is SessionTypeLoaded) {
+              sessionType = state.data.data?.vetSessionTypes ?? [];
+
+             } else if (state is CreateServiceNetworkErrApiErr) {
             Modals.showToast(state.message ?? '');
           
           }else if(state is CreateServiceNetworkErr){
@@ -104,12 +106,8 @@ class _VetServiceScreenState extends State<VetServiceScreen> {
 
           }
         }, builder: (context, state) {
-              if (state is SessionTypeLoaded) {
-                return Container(
-                    color: Colors.white,
-                    height: AppUtils.deviceScreenSize(context).height,
-                    width: AppUtils.deviceScreenSize(context).width,
-                    child: const LoadingPage(length: 20));
+              if (state is SessionTypeLoading) {
+                return const LoadingPage(length: 20);
               }  else if (state is CreateServiceNetworkErr) {
                
                 return EmptyWidget(

@@ -12,6 +12,7 @@ import 'package:petnity/model/user_models/products_detail.dart';
 import 'package:petnity/model/user_models/user_shopping_data.dart';
 
 import '../../../model/account_models/auth_data.dart';
+import '../../../model/user_models/agent_profile.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/gallery_data.dart';
 import '../../../model/user_models/get_services.dart';
@@ -209,11 +210,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<ServiceProvidersList> getAgentProfile(String userId) async {
+  Future<AgentProfile> getAgentProfile(String agentId) async {
     final map = await Requests().get(
-      AppStrings.agentProfile(userId),
+      AppStrings.agentProfile(agentId),
     );
-    return ServiceProvidersList.fromJson(map);
+    return AgentProfile.fromJson(map);
   }
 
   @override

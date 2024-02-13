@@ -123,9 +123,14 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
         } else if (state is CreateServiceNetworkErrApiErr) {
           Modals.showToast(state.message ?? '');
         } else if (state is CreateServicesLoaded) {
-          _serviceProviderCubit.publishAgentServices(
+         if(state.data.status ?? false){
+           _serviceProviderCubit.publishAgentServices(
               agentId: agentId,
               serviceId: state.data.data?.vetService?.sId.toString() ?? '');
+         }else{
+          Modals.showToast(state.data.message ?? '');
+
+         }
         } else if (state is PublishServicesLoaded) {
           Modals.showToast(state.data.message ?? '');
         }
@@ -265,6 +270,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                         child: ButtonView(
                             borderRadius: 50,
                             onPressed: () {
+ 
                               _serviceProviderCubit.createAgentServices(
                                 agentId: agentId,
                                 serviceId: serviceAccount.serviceId,

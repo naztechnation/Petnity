@@ -41,15 +41,13 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-  Future<void> getAgentProfile(String userId) async {
+  Future<void> getAgentProfile(String agentId) async {
     try {
       emit(ServiceProviderListLoading());
 
-      final agents = await userRepository.getAgentProfile(userId);
-      ///TODO
-     /// await viewModel.setAgentDetails(agents: agents.agents ?? []);
-
-      emit(ServiceProviderListLoaded(agents));
+      final agents = await userRepository.getAgentProfile(agentId);
+       
+      emit(AgentProfileLoaded(agents));
     } on ApiException catch (e) {
       emit(UserNetworkErrApiErr(e.message));
     } catch (e) {

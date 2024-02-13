@@ -3,6 +3,7 @@
 import '../../../model/account_models/agents_packages.dart';
 import '../../../model/account_models/auth_data.dart';
 import '../../../model/account_models/confirm_payment.dart';
+import '../../../model/user_models/agent_profile.dart';
 import '../../../model/user_models/confirm_shop_payment.dart';
 import '../../../model/user_models/create_order.dart';
 import '../../../model/user_models/create_payment_order.dart';
@@ -31,7 +32,7 @@ abstract class UserRepository {
     });   
 
 
-    Future<ServiceProvidersList> getAgentProfile(String userId);   
+    Future<AgentProfile> getAgentProfile(String agentId);   
     Future<GetServiceTypes> getServiceTypes(); 
     Future<GetServices> getIndividualAgentService(String agent); 
     Future<ShoppingList> shoppingList({required String index}); 
