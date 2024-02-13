@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
@@ -6,48 +7,78 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../blocs/service_provider/service_provider.dart';
+import '../../../../../model/user_models/medium_types.dart';
+import '../../../../../model/user_models/session_types.dart';
 import '../../../../../model/view_models/service_provider_inapp.dart';
+import '../../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../../../res/app_images.dart';
+import '../../../../../utils/app_utils.dart';
+import '../../../../widgets/empty_widget.dart';
 import '../../../../widgets/image_view.dart';
+import '../../../../widgets/loading_page.dart';
+import '../../../../widgets/modals.dart';
 import 'add_pice_page.dart';
 
-class Consultation extends StatefulWidget {
- final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
 
-  const Consultation({super.key, required this.sessionTypesSelectedItems});
+class Consultation extends StatelessWidget {
+ final List<VetSessionTypes> sessionTypesSelectedItems;
+
+  const Consultation({Key? key, required this.sessionTypesSelectedItems}) : super(key: key);
+
   @override
-  State<Consultation> createState() => _ConsultationState();
+  Widget build(BuildContext context) =>  BlocProvider<ServiceProviderCubit>(
+      create: (BuildContext context) => ServiceProviderCubit(
+          serviceProviderRepository: ServiceProviderRepositoryImpl(),
+          viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
+              listen: false)),
+      child:    ConsultationScreen(sessionTypesSelectedItems: sessionTypesSelectedItems,));
 }
 
-class _ConsultationState extends State<Consultation> {
+
+class ConsultationScreen extends StatefulWidget {
+ final List<VetSessionTypes> sessionTypesSelectedItems;
+
+  const ConsultationScreen({super.key, required this.sessionTypesSelectedItems});
+  @override
+  State<ConsultationScreen> createState() => _ConsultationScreenState();
+}
+
+class _ConsultationScreenState extends State<ConsultationScreen> {
   bool showButton = false;
+
+  late ServiceProviderCubit _serviceProviderCubit;
+
+
+
+   List<VetContactMediums> mediumType = [];
+
+  getSessionMediums() async{
+
+      _serviceProviderCubit = context.read<ServiceProviderCubit>();
+    await _serviceProviderCubit.getMediumType(
+     
+    );
+
+  }
+
+
+  @override
+  void initState() {
+
+   getSessionMediums();
+    super.initState();
+  }
 
   final List<String> image = [
     AppImages.messageIcon,
     AppImages.phoneIcon,
     AppImages.videoIcon,
   ];
-  final List<Map<dynamic, dynamic>> item = [
-                {
-                    "_id": "6597e04e309a4c2018e880d2",
-                    "name": "Chat",
-                    "__v": 0
-                },
-                {
-                    "_id": "6597e04e309a4c2018e880d2",
-                    "name": "Video Call",
-                    "__v": 0
-                },
-                {
-                    "_id": "6597e04e309a4c2018e880d2",
-                    "name": "Message",
-                    "__v": 0
-                }
-            ];
+  
+              List<VetContactMediums> contactMediumSelectedItems = [];
 
-              List<Map<dynamic, dynamic>> contactMediumSelectedItems = [];
-
-  void toggleSelection(Map<dynamic, dynamic> selectedItem) {
+  void toggleSelection(VetContactMediums selectedItem) {
     setState(() {
       if (contactMediumSelectedItems.contains(selectedItem)) {
         contactMediumSelectedItems.remove(selectedItem);
@@ -59,9 +90,7 @@ class _ConsultationState extends State<Consultation> {
 
   @override
   Widget build(BuildContext context) {
-    final serviceProvider =
-        Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
-
+     
     return Scaffold(
       backgroundColor: AppColors.scaffoldColor,
       appBar: AppBar(
@@ -93,63 +122,105 @@ class _ConsultationState extends State<Consultation> {
                   )),
             )
           : SizedBox.shrink(),
-      body: Container(
-        height: screenSize(context).height * .9,
-        padding: EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: screenSize(context).width,
-              child: Text(
-                'Add Contact Medium',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'InterSans'),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Multiple medium can be selected',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'InterSans',
-              ),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: item.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                   final service = item[index];
-                      final isSelected = contactMediumSelectedItems.contains(service);
+      body: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
+            listener: (context, state) {
+          if (state is MediumTypeLoaded) {
+          mediumType = state.data.data?.vetContactMediums ?? [];
+          } else if (state is CreateServiceNetworkErrApiErr) {
+            Modals.showToast(state.message ?? '');
+          
+          }else if(state is CreateServiceNetworkErr){
+            Modals.showToast(state.message ?? '');
 
-                  return GestureDetector(
-                    onTap: () {
-                       toggleSelection(service);
-                    },
-                    child: buildSessionTypeWidget(
-                        index, image[index], item[index]['name'], isSelected),
-                  );
-                },
+          }
+        }, builder: (context, state) {
+              if (state is SessionTypeLoaded) {
+                return Container(
+                    color: Colors.white,
+                    height: AppUtils.deviceScreenSize(context).height,
+                    width: AppUtils.deviceScreenSize(context).width,
+                    child: const LoadingPage(length: 20));
+              }  else if (state is CreateServiceNetworkErr) {
+               
+                return EmptyWidget(
+                  title: 'Network error',
+                  description: state.message,
+                  onRefresh: () => _serviceProviderCubit
+                      .getMediumType()
+                     ,
+                );
+              } else if (state is CreateServiceNetworkErrApiErr) {
+                return EmptyWidget(
+                  title: 'Network error',
+                  description: state.message,
+                  onRefresh: () => _serviceProviderCubit
+                      .getMediumType()
+                     ,
+                );
+              }  else if (state is SessionTypeLoaded) {
+               
+                return (mediumType.isEmpty)
+                    ? const Center(child: Text('Failed to load sessionTypes'))
+                    : Container(
+          height: screenSize(context).height * .9,
+          padding: EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ),
+              Container(
+                width: screenSize(context).width,
+                child: Text(
+                  'Add Contact Medium',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'InterSans'),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Multiple medium can be selected',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'InterSans',
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: mediumType.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                     final service = mediumType[index];
+                        final isSelected = contactMediumSelectedItems.contains(service);
+        
+                    return GestureDetector(
+                      onTap: () {
+                         toggleSelection(service);
+                      },
+                      child: buildSessionTypeWidget(
+                          index, image[index], mediumType[index].name ?? '', isSelected),
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        );
+  }
+  
+  return SizedBox.shrink();}),
     );
   }
 

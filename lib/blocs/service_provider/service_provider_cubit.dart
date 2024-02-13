@@ -806,14 +806,12 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
 
   Future<void> vetsCreateWithdrawalRequest({
     required String amount,
-
   }) async {
     try {
       emit(VetsCreateWithdrawalRequestLoading());
 
       final requests = await serviceProviderRepository.agentCreateWithdrawal(
         amount: amount,
-
       );
 
       emit(VetsCreateWithdrawalRequestLoaded(requests));
@@ -832,7 +830,7 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void>  agentWithdrawalHistory({
+  Future<void> agentWithdrawalHistory({
     required String agentId,
   }) async {
     try {
@@ -858,17 +856,17 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void>  editPackage({
-    required String agentId,
-    required String price,
-    required String packageId
-
-  }) async {
+  Future<void> editPackage(
+      {required String agentId,
+      required String price,
+      required String packageId}) async {
     try {
       emit(EditPackageLoading());
 
       final edit = await serviceProviderRepository.editPackagePricing(
-        agentId: agentId, packageId: packageId, price: price,
+        agentId: agentId,
+        packageId: packageId,
+        price: price,
       );
 
       emit(EditPackageLoaded(edit));
@@ -887,17 +885,17 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void>  editVetPackage({
-    required String agentId,
-    required String price,
-    required String serviceId
-
-  }) async {
+  Future<void> editVetPackage(
+      {required String agentId,
+      required String price,
+      required String serviceId}) async {
     try {
       emit(EditPackageLoading());
 
       final edit = await serviceProviderRepository.editVetPackagePricing(
-        agentId: agentId, serviceId: serviceId, price: price,
+        agentId: agentId,
+        serviceId: serviceId,
+        price: price,
       );
 
       emit(EditPackageLoaded(edit));
@@ -916,19 +914,64 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
-  Future<void>  creditWallet({
+  Future<void> creditWallet({
     required String txId,
-    
-
   }) async {
     try {
       emit(CreditWalletLoading());
 
       final txid = await serviceProviderRepository.creditWallet(
-        txId: txId, 
+        txId: txId,
       );
 
       emit(CreditWalletLoaded(txid));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> getSessionType() async {
+    try {
+      emit(SessionTypeLoading());
+
+      final type = await serviceProviderRepository.getSessionTypes(
+         
+      );
+
+      emit(SessionTypeLoaded(type));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> getMediumType() async {
+    try {
+      emit(MediumTypeLoading());
+
+      final type = await serviceProviderRepository.getMediumTypes(
+      );
+
+      emit(MediumTypeLoaded(type));
     } on ApiException catch (e) {
       emit(CreateServiceNetworkErrApiErr(e.message));
     } catch (e) {

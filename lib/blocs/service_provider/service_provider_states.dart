@@ -13,6 +13,8 @@ import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/service_provider_models/vetservices_model.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
+import '../../model/user_models/medium_types.dart';
+import '../../model/user_models/session_types.dart';
 import '../../model/user_models/vet_service.dart';
 import '../../model/user_models/withdrawal_history.dart';
 import '../../model/withdrawal/withdrawal.dart';
@@ -317,6 +319,32 @@ class  CreditWalletLoaded extends ServiceProviderState {
   @override
   List<Object> get props => [];
 }
+
+class  SessionTypeLoaded extends ServiceProviderState {
+  final VetsSessionTypes data;
+  const  SessionTypeLoaded(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
+  class   SessionTypeLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+class  MediumTypeLoaded extends ServiceProviderState {
+  final VetMediumTypes data;
+  const  MediumTypeLoaded(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
+  class   MediumTypeLoading extends ServiceProviderState {
+  @override
+  List<Object> get props => [];
+}
+
+
 
 class CreateServiceNetworkErr extends ServiceProviderState {
   final String? message;

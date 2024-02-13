@@ -1,14 +1,14 @@
-class SessionTypes {
+class VetsSessionTypes {
   bool? status;
   String? message;
-  Data? data;
+  SessionTypesData? data;
 
-  SessionTypes({this.status, this.message, this.data});
+  VetsSessionTypes({this.status, this.message, this.data});
 
-  SessionTypes.fromJson(Map<String, dynamic> json) {
+  VetsSessionTypes.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new SessionTypesData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,12 +22,12 @@ class SessionTypes {
   }
 }
 
-class Data {
+class SessionTypesData {
   List<VetSessionTypes>? vetSessionTypes;
 
-  Data({this.vetSessionTypes});
+  SessionTypesData({this.vetSessionTypes});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  SessionTypesData.fromJson(Map<String, dynamic> json) {
     if (json['vetSessionTypes'] != null) {
       vetSessionTypes = <VetSessionTypes>[];
       json['vetSessionTypes'].forEach((v) {

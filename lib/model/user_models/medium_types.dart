@@ -1,14 +1,14 @@
-class MediumTypes {
+class VetMediumTypes {
   bool? status;
   String? message;
-  Data? data;
+  VetMediumTypesData? data;
 
-  MediumTypes({this.status, this.message, this.data});
+  VetMediumTypes({this.status, this.message, this.data});
 
-  MediumTypes.fromJson(Map<String, dynamic> json) {
+  VetMediumTypes.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? new VetMediumTypesData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,12 +22,12 @@ class MediumTypes {
   }
 }
 
-class Data {
+class VetMediumTypesData {
   List<VetContactMediums>? vetContactMediums;
 
-  Data({this.vetContactMediums});
+  VetMediumTypesData({this.vetContactMediums});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  VetMediumTypesData.fromJson(Map<String, dynamic> json) {
     if (json['vetContactMediums'] != null) {
       vetContactMediums = <VetContactMediums>[];
       json['vetContactMediums'].forEach((v) {

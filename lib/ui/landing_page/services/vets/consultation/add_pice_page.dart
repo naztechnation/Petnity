@@ -4,6 +4,8 @@ import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../model/user_models/medium_types.dart';
+import '../../../../../model/user_models/session_types.dart';
 import '../../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../../utils/validator.dart';
 import '../../../../widgets/text_edit_view.dart';
@@ -11,8 +13,8 @@ import 'review_services_page.dart';
 
 class AddPricePage extends StatefulWidget {
 
- final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
- final List<Map<dynamic, dynamic>> contactMediumsSelectedItems;
+ final List<VetSessionTypes> sessionTypesSelectedItems;
+ final List<VetContactMediums> contactMediumsSelectedItems;
 
   const AddPricePage({super.key, required this.sessionTypesSelectedItems, required this.contactMediumsSelectedItems});
 

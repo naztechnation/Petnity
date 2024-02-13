@@ -9,16 +9,17 @@ import 'package:provider/provider.dart';
 
 import '../../../../../blocs/service_provider/service_provider.dart';
 import '../../../../../handlers/secure_handler.dart';
+import '../../../../../model/user_models/medium_types.dart';
+import '../../../../../model/user_models/session_types.dart';
 import '../../../../../model/view_models/account_view_model.dart';
 import '../../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
-import '../../../../widgets/image_view.dart';
 import '../../../../widgets/loading_page.dart';
 import '../../../../widgets/modals.dart';
 
 class ReviewServices extends StatelessWidget {
-  final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
- final List<Map<dynamic, dynamic>> contactMediumsSelectedItems;
+  final List<VetSessionTypes> sessionTypesSelectedItems;
+ final List<VetContactMediums> contactMediumsSelectedItems;
   const ReviewServices({
     Key? key, required this.sessionTypesSelectedItems, required this.contactMediumsSelectedItems,
   }) : super(key: key);
@@ -36,9 +37,8 @@ class ReviewServices extends StatelessWidget {
 }
 
 class ReviewServicesPage extends StatefulWidget {
-  final List<Map<dynamic, dynamic>> sessionTypesSelectedItems;
- final List<Map<dynamic, dynamic>> contactMediumsSelectedItems;
-
+  final List<VetSessionTypes> sessionTypesSelectedItems;
+ final List<VetContactMediums> contactMediumsSelectedItems;
   const ReviewServicesPage({super.key, required this.sessionTypesSelectedItems, required this.contactMediumsSelectedItems});
   @override
   State<ReviewServicesPage> createState() => _ReviewServicesPageState();
@@ -69,17 +69,26 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
     getAgentId();
 
      contactMediums = extractIds(widget.contactMediumsSelectedItems);
-     sessionTypes = extractIds(widget.sessionTypesSelectedItems);
+     sessionTypes = extractIds1(widget.sessionTypesSelectedItems);
     super.initState();
   }
 
   
   
 
-  List<String> extractIds(List<Map<dynamic, dynamic>> itemList) {
+  List<String> extractIds(List<VetContactMediums> itemList) {
   List<String> ids = [];
   for (var map in itemList) {
-    String id = map["_id"];
+    String id = map.sId ?? '';
+    ids.add(id);
+  }
+  return ids;
+}
+
+  List<String> extractIds1(List<VetSessionTypes> itemList) {
+  List<String> ids = [];
+  for (var map in itemList) {
+    String id = map.sId ?? '';
     ids.add(id);
   }
   return ids;
@@ -171,7 +180,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          String item = widget.contactMediumsSelectedItems[index]['name'];
+                          String item = widget.contactMediumsSelectedItems[index].name ?? '';
                           
 
                           return buildServiceTypeWidget(
@@ -201,7 +210,7 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          String item = widget.sessionTypesSelectedItems[index]['name'];
+                          String item = widget.sessionTypesSelectedItems[index].name ?? '';
                            
 
                           return buildSessionTypeWidget(

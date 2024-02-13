@@ -94,7 +94,7 @@ class SignInScreen extends StatelessWidget {
                         StorageHandler.saveUserPetState('');
                       }
 
-                      loginUser(
+                      loginFirebaseUser(
                           firebaseUser: firebaseUser,
                           context: context,
                           message: state.userData.message ?? '',
@@ -128,7 +128,7 @@ class SignInScreen extends StatelessWidget {
                       StorageHandler.saveUserPetState('');
                     }
 
-                    loginUser(
+                    loginFirebaseUser(
                         firebaseUser: firebaseUser,
                         context: context,
                         message: state.userData.message!,
@@ -366,7 +366,7 @@ class SignInScreen extends StatelessWidget {
     }
   }
 
-  loginUser(
+  loginFirebaseUser(
       {final firebaseUser,
       required BuildContext context,
       required String message,

@@ -45,9 +45,7 @@ class AccountRepositoryImpl implements AccountRepository {
   }) async {
     var payload = {'emailOrUsername': email, 'password': password};
     final map = await Requests()
-        .post(AppStrings.loginUrl, body: json.encode(payload), headers: {
-      'Content-type': 'application/json',
-    });
+        .post(AppStrings.loginUrl, body: json.encode(payload),);
     return AuthData.fromJson(map);
   }
 

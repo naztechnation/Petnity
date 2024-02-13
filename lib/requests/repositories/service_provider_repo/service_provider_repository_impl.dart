@@ -7,12 +7,14 @@ import 'package:petnity/model/service_provider_models/create_services_amount.dar
 import 'package:petnity/model/service_provider_models/create_shop_products_model.dart';
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/credit_wallet.dart';
+import 'package:petnity/model/user_models/medium_types.dart';
 
 import '../../../model/account_models/add_bank.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/service_provider_models/vetservices_model.dart';
 import '../../../model/user_models/agent_services_lists.dart';
+import '../../../model/user_models/session_types.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/withdrawal/withdrawal.dart';
 import '../../../res/app_strings.dart';
@@ -432,5 +434,23 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     );
 
     return CreditedWallet.fromJson(map);
+  }
+
+  @override
+  Future<VetMediumTypes> getMediumTypes() async {
+    final map = await Requests().get(
+      AppStrings.getVetMediumTypesUrl,
+    );
+
+    return VetMediumTypes.fromJson(map);
+  }
+
+  @override
+  Future<VetsSessionTypes> getSessionTypes() async {
+    final map = await Requests().get(
+      AppStrings.getVetSessionTypesUrl,
+    );
+
+    return VetsSessionTypes.fromJson(map);
   }
 }

@@ -70,7 +70,7 @@ class Requests {
         await client
             .post(
           Uri.parse(route),
-          body: body as Map<String, dynamic>,
+          body: body,
           headers: headers ?? await formDataHeader(useApp),
         )
             .then((response) {
