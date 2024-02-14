@@ -1,11 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/app_strings.dart';
-import 'package:petnity/res/enum.dart';
 import 'package:petnity/ui/user/shop_screen/widgets/review_widget.dart';
 import 'package:petnity/ui/landing_page/widgets/rating_widget.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
@@ -23,7 +23,9 @@ import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../utils/app_utils.dart';
+import '../../../utils/navigator/page_navigator.dart';
 import '../../../utils/validator.dart';
+import '../../landing_page/services/single_image_view.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/loading_page.dart';
 import '../../widgets/modals.dart';
@@ -82,7 +84,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   List<Reviews> reviews = [];
 
-  Productss? _products;
+  Products? _products;
 
   double totalAmount = 0;
 
@@ -231,23 +233,29 @@ class _ProductDetailState extends State<ProductDetail> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Container(
-                    height: 160,
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    decoration: BoxDecoration(color: Colors.white),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: ImageView.network(
-                        _products?.images?[0] ?? '',
-                        fit: BoxFit.cover,
-                        height: 150,
-                        width: 150,
+
+                Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 0.0,
+                          mainAxisSpacing: 8.0,
+                        ),
+                        itemCount: _products?.images?.length,
+                        itemBuilder: (context, index) {
+                          return imageWidget(
+                              context,
+                              _products?.images?[index],
+                              index,
+                               );
+                        },
                       ),
                     ),
-                  ),
-                ),
+              
                 const SizedBox(
                   height: 20,
                 ),
@@ -572,4 +580,36 @@ class _ProductDetailState extends State<ProductDetail> {
   });
 }
 
+  Widget imageWidget(BuildContext context, image, index,  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(22),
+        ),
+        child: GestureDetector(
+                onTap: () {
+                  AppNavigator.pushAndStackPage(context,
+                              page: SingleImageView(
+                                image: image,
+                              ));
+                },
+                child: Container(
+                    width: MediaQuery.of(context).size.width/3,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(22),
+                      child: ImageView.network(
+                          image,
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+              
+          
+      ),
+    ));
+  }
 }
+
+

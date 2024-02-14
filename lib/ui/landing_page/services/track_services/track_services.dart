@@ -583,7 +583,29 @@ class _TrackServicesState extends State<TrackServices> {
                           ),
                         ),
                       ]
-                      //  else if (widget.isAcceptedService &&
+                     else if (widget.isAcceptedService &&
+                        widget.isOngoingService &&
+                        widget.isCompletedService &&
+                        widget.isAgentMarkedService &&
+                        widget.isUserMarkedService) ...[
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                            color: Colors.white,
+                            padding: const EdgeInsets.only(
+                                bottom: 50, top: 50, left: 20, right: 20),
+                            child: Center(
+                              child: CustomText(
+                                text: 'Service Completed',
+                                color: AppColors.lightSecondary,
+                                size: 14,
+                                weight: FontWeight.w700,
+                              ),
+                            )),
+                      )
+                    ]
                       //     widget.isOngoingService &&
                       //     !widget.isCompletedService) ...[
                       //   Positioned(
@@ -740,11 +762,17 @@ class _TrackServicesState extends State<TrackServices> {
       sessionStatus = 'Awaiting session';
     } else if (widget.isAcceptedService && !widget.isOngoingService) {
       sessionStatus = 'Session is Accepted';
-    } else if (widget.isAcceptedService && widget.isOngoingService) {
+    } else if (widget.isAcceptedService &&
+        widget.isOngoingService &&
+        !widget.isCompletedService &&
+        !widget.isAgentMarkedService &&
+        !widget.isUserMarkedService) {
       sessionStatus = 'Session is ongoing';
     } else if (widget.isAcceptedService &&
         widget.isOngoingService &&
-        widget.isCompletedService) {
+        widget.isCompletedService &&
+        widget.isAgentMarkedService &&
+        widget.isUserMarkedService) {
       sessionStatus = 'Session is completed';
     }
 

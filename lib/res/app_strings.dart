@@ -57,7 +57,7 @@ class AppStrings {
       '${_baseUrl}user/get-agent-services/$agentId';
   static const String publishShopProductUrl = '${_baseUrl}shop/create-product';
   static String agentProfile(String userId) =>
-      '${_baseUrl}user/get-user-profile/$userId';
+      '${_baseUrl}user/get-agent-profile/$userId';
 
   static String userOrders = '${_baseUrl}order/get-user-orders';
   static String createOrderPayment = '${_baseUrl}shop/create-shop-order';
@@ -176,12 +176,14 @@ class AppStrings {
   static String deleteUser(String username) =>
       '${_baseUrl}users/delete-user/$username';
 
-  static String reportBug(String username) => '${_baseUrl}report-bug';
+  static String  reportBug = '${_baseUrl}user/create-bug-report';
 
   static String reportAgent(String username, String agentId) =>
-      '${_baseUrl}report-agent/$username/$agentId';
-  static String getUserNotifications =
+      '${_baseUrl}user/create-agent-report/$agentId';
+  static String getAgentNotifications =
       '${_baseUrl}user/get-agent-notifications';
+static String getUserNotifications =
+      '${_baseUrl}notification/get-user-notifications';
 
   static String createVetService =
       '${_baseUrl}service/create-vet-service';

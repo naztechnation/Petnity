@@ -735,11 +735,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-    Future<void> reportBug({required String username,required String title,required String description}) async {
+    Future<void> reportBug({required String image,required String title,required String description}) async {
     try {
       emit(ReportBugLoading());
 
-      final user = await userRepository.reportBug(username: username, title: title, description: description);
+      final user = await userRepository.reportBug(image: image, title: title, description: description);
 
       emit(ReportBugLoaded(user));
     } on ApiException catch (e) {
@@ -757,11 +757,11 @@ class UserCubit extends Cubit<UserStates> {
     }
   }
 
-   Future<void> getNotification({required String username,}) async {
+   Future<void> getNotification({required String url,}) async {
     try {
       emit(NotificatonsLoading());
 
-      final notification = await userRepository.getNotification(username: username, );
+      final notification = await userRepository.getNotification(url: url, );
 
       emit(NotificatonsLoaded(notification));
     } on ApiException catch (e) {

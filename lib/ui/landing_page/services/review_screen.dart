@@ -6,6 +6,7 @@ import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:intl/intl.dart';
 import 'package:petnity/blocs/user/user_cubit.dart';
 import 'package:petnity/res/enum.dart';
+import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -30,18 +31,28 @@ import '../../widgets/modals.dart';
 import 'payment_success_screen.dart';
 
 class ReviewScreen extends StatelessWidget {
-  final String date1, date2, time1, time2, amount, orderId, username, serverDate, serverDate1;
-  
-  const ReviewScreen(
-      {super.key,
-      required this.date1,
-      required this.date2,
-      required this.time1,
-      required this.time2,
-      required this.amount,
-      required this.orderId,
-      required this.username, required this.serverDate,
-       required this.serverDate1,});
+  final String date1,
+      date2,
+      time1,
+      time2,
+      amount,
+      orderId,
+      username,
+      serverDate,
+      serverDate1;
+
+  const ReviewScreen({
+    super.key,
+    required this.date1,
+    required this.date2,
+    required this.time1,
+    required this.time2,
+    required this.amount,
+    required this.orderId,
+    required this.username,
+    required this.serverDate,
+    required this.serverDate1,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,23 +70,33 @@ class ReviewScreen extends StatelessWidget {
         username: username,
         serverDate: serverDate,
         serverDate1: serverDate1,
-         
       ),
     );
   }
 }
 
 class Review extends StatefulWidget {
-  final String date1, date2, time1, time2, amount, orderId, username, serverDate, serverDate1;
-  const Review(
-      {super.key,
-      required this.date1,
-      required this.date2,
-      required this.time1,
-      required this.time2,
-      required this.amount,
-      required this.orderId,
-      required this.username, required this.serverDate, required this.serverDate1,});
+  final String date1,
+      date2,
+      time1,
+      time2,
+      amount,
+      orderId,
+      username,
+      serverDate,
+      serverDate1;
+  const Review({
+    super.key,
+    required this.date1,
+    required this.date2,
+    required this.time1,
+    required this.time2,
+    required this.amount,
+    required this.orderId,
+    required this.username,
+    required this.serverDate,
+    required this.serverDate1,
+  });
 
   @override
   State<Review> createState() => _ReviewState();
@@ -85,6 +106,10 @@ class _ReviewState extends State<Review> {
   late UserCubit _userCubit;
 
   String email = '';
+
+  String mainAmount = '0';
+
+  TextEditingController bargainAmountController = TextEditingController();
 
   String transactionId = '';
   String txId = '';
@@ -97,6 +122,8 @@ class _ReviewState extends State<Review> {
   @override
   void initState() {
     getEmail();
+
+    mainAmount = widget.amount;
 
     _userCubit = context.read<UserCubit>();
 
@@ -198,8 +225,8 @@ class _ReviewState extends State<Review> {
                     ));
               });
             } else if (state is CreateOrderLoaded) {
-
-              Modals.showToast(state.createOrder.message ?? '', messageType: MessageType.success);
+              Modals.showToast(state.createOrder.message ?? '',
+                  messageType: MessageType.success);
               // _handlePaymentInitialization(
               //     state.createOrder.order!.id.toString());
             }
@@ -404,33 +431,118 @@ class _ReviewState extends State<Review> {
                           height: 20,
                         ),
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          height: 60,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          height: 68,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30)),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                CustomText(
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  text: 'Fee',
-                                  weight: FontWeight.w600,
-                                  size: 14,
-                                  fontFamily: AppStrings.interSans,
-                                  color: Colors.black,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomText(
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      text: 'Fee',
+                                      weight: FontWeight.w600,
+                                      size: 14,
+                                      fontFamily: AppStrings.interSans,
+                                      color: Colors.black,
+                                    ),
+                                    CustomText(
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      text:
+                                          'NGN ${AppUtils.convertPrice(mainAmount)}',
+                                      weight: FontWeight.w600,
+                                      size: 14,
+                                      color: Colors.black,
+                                    ),
+                                  ]),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Modals.showDialogModal(context,
+                                      page: Container(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text('Bargain Info'),
+                                               const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Divider(),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'N:B Any amount placed here on bargain can be rejected by this service provider and if this  occurs funds would be sent back to your wallet. Do you wish to continue...',
+                                                textAlign: TextAlign.justify,
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                              TextEditView(
+                                                fillColor: Colors.white,
+                                                controller:
+                                                    bargainAmountController,
+                                                isDense: true,
+                                                keyboardType: TextInputType.number,
+                                                hintText: 'Enter bargain fee',
+                                              ),
+                                              const SizedBox(
+                                                height: 15,
+                                              ),
+                                              ButtonView(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  setState(() {
+                                                    mainAmount =
+                                                        bargainAmountController
+                                                            .text;
+                                                  });
+                                                },
+                                                child: Text(
+                                                  'Proceed',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              )
+                                            ]),
+                                      ));
+                                },
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ImageView.svg(
+                                        AppImages.addIcon,
+                                        height: 22,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      CustomText(
+                                        textAlign: TextAlign.end,
+                                        maxLines: 2,
+                                        text: 'Bargain Fee >>>',
+                                        weight: FontWeight.w600,
+                                        size: 14,
+                                        fontFamily: AppStrings.interSans,
+                                        color: AppColors.lightSecondary,
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                CustomText(
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  text:
-                                      'NGN ${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)}',
-                                  weight: FontWeight.w600,
-                                  size: 14,
-                                  color: Colors.black,
-                                ),
-                              ]),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           height: 45,
@@ -440,16 +552,11 @@ class _ReviewState extends State<Review> {
                           borderColor: Colors.white,
                           borderRadius: 40,
                           onPressed: () {
-
-                            // Modals.showToast(widget.serverDate);
-                            // Modals.showToast(widget.serverDate1);
                             _userCubit.createOrder(
                                 packageId: agent.packageId,
-                                fee: widget.amount,
-                                pickupTime:
-                                    '${widget.serverDate}',
-                                dropOffTime:
-                                    '${widget.serverDate1}',
+                                fee: mainAmount,
+                                pickupTime: '${widget.serverDate}',
+                                dropOffTime: '${widget.serverDate1}',
                                 pickUpLocation: agent.location);
                           },
                           child: CustomText(

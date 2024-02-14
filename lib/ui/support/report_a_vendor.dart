@@ -77,9 +77,9 @@ final TextEditingController vendorName = TextEditingController();
       if (state is ReportAgentLoaded) {
         if (state.reportAgent.status!) {
 
-          ///Todo:
-          // Modals.showToast(state.reportAgent.message,
-          //     messageType: MessageType.success);
+           
+          Modals.showToast(state.reportAgent.message ?? '',
+              messageType: MessageType.success);
 
               vendorName.clear();
               vendorTitle.clear();

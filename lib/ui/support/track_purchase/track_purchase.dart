@@ -245,27 +245,27 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                       child: TabBarView(
                         children: [
                           AllServices.services(
-                            allOrders: allUserOrder,
+                            allOrders: allUserOrder, userShopOrder: [], vetOrders: [],
                           ),
                           AllServices.services(
-                            allOrders: ongoingUserOrder,
+                            allOrders: ongoingUserOrder, userShopOrder: [], vetOrders: [],
                           ),
                           AllServices.vet(
                             allOrders: ongoingUserOrder, userShopOrder: [], vetOrders: vetOrders,
                           ),
                           AllServices.shop(
                               userShopOrder: userShopOrder,
-                              emptyListTitle: 'No available purchases'),
+                              emptyListTitle: 'No available purchases', vetOrders: [], allOrders: [],),
 
                               
                           AllServices.services(
-                            allOrders: pendingUserOrder,
+                            allOrders: pendingUserOrder, vetOrders: [], userShopOrder: [],
                           ),
                           AllServices.services(
-                            allOrders: completedUserOrder,
+                            allOrders: completedUserOrder, vetOrders: [], userShopOrder: [],
                           ),
                           AllServices.services(
-                            allOrders: rejectedUserOrder,
+                            allOrders: rejectedUserOrder, vetOrders: [], userShopOrder: [],
                           ),
                         ],
                       ),

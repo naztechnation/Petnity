@@ -182,6 +182,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String username, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.userMarkDeliveredShopOrder(orderId: orderId),
+      useApp: false
+
     );
 
     return AuthData.fromJson(map);
@@ -192,6 +194,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       {required String agentId, required String orderId}) async {
     final map = await Requests().patch(
       AppStrings.agentRejectServiceOrder(orderId: orderId),
+      useApp: false
     );
 
     return AuthData.fromJson(map);

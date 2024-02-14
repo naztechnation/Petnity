@@ -384,7 +384,9 @@ class _TrackServicesState extends State<TrackServices> {
                                             borderRadius:
                                                 BorderRadius.circular(60),
                                             child: ImageView.network(
-                                            userType == 'user' ?   widget.sellerPhoto : widget.customerImage,
+                                              userType == 'user'
+                                                  ? widget.sellerPhoto
+                                                  : widget.customerImage,
                                               height: 50,
                                               width: 50,
                                               fit: BoxFit.cover,
@@ -398,7 +400,9 @@ class _TrackServicesState extends State<TrackServices> {
                                             title: CustomText(
                                               textAlign: TextAlign.left,
                                               maxLines: 2,
-                                              text: userType == 'user' ? 'Vet' :'Customer',
+                                              text: userType == 'user'
+                                                  ? 'Vet'
+                                                  : 'Customer',
                                               weight: FontWeight.w700,
                                               size: 12,
                                               fontFamily: AppStrings.interSans,
@@ -407,36 +411,53 @@ class _TrackServicesState extends State<TrackServices> {
                                             subtitle: CustomText(
                                               textAlign: TextAlign.left,
                                               maxLines: 2,
-                                              text: userType == 'user' ? widget.agentName.capitalizeFirstOfEach : widget.customerName.capitalizeFirstOfEach,
+                                              text: userType == 'user'
+                                                  ? widget.agentName
+                                                      .capitalizeFirstOfEach
+                                                  : widget.customerName
+                                                      .capitalizeFirstOfEach,
                                               weight: FontWeight.w700,
                                               size: 12,
                                               fontFamily: AppStrings.interSans,
                                               color: Colors.black,
                                             ),
                                             trailing: SizedBox(
-                                              width: screenSize(context).width *
-                                                  0.45,
-                                              child:   Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        for (var sessionType
-                                                            in widget
-                                                                .contactMediums)
-                                                          ImageWidget(
-                                                          sessionTypeName:    sessionType.name ??
+                                                width:
+                                                    screenSize(context).width *
+                                                        0.45,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    for (var sessionType in widget
+                                                        .contactMediums)
+                                                      ImageWidget(
+                                                          sessionTypeName:
+                                                              sessionType
+                                                                      .name ??
                                                                   '',
-                                                          phone:  userType == 'user' ?  widget.phone  : widget.customerPhone,
-                                                           customerName: widget.customerName,
-                                                              
-                                                          picture:   userType == 'user' ? widget
-                                                                  .sellerPhoto : widget.customerImage,
-                                                          firebaseId:  userType == 'user' ?  widget.agentId : widget.customerFireBaseId,
-                                                          agentName:  widget.agentName),
-                                                      ],
-                                                    )
-                                                   
-                                            ),
+                                                          phone: userType ==
+                                                                  'user'
+                                                              ? widget.phone
+                                                              : widget
+                                                                  .customerPhone,
+                                                          customerName: widget
+                                                              .customerName,
+                                                          picture: userType ==
+                                                                  'user'
+                                                              ? widget
+                                                                  .sellerPhoto
+                                                              : widget
+                                                                  .customerImage,
+                                                          firebaseId: userType ==
+                                                                  'user'
+                                                              ? widget.agentId
+                                                              : widget
+                                                                  .customerFireBaseId,
+                                                          agentName:
+                                                              widget.agentName),
+                                                  ],
+                                                )),
                                           ),
                                         ),
                                       ],
@@ -674,8 +695,7 @@ class _TrackServicesState extends State<TrackServices> {
                                   text:
                                       'This service has rejected by the service provider',
                                   color: Colors.red,
-                                maxLines: 2,
-
+                                  maxLines: 2,
                                   size: 14,
                                   weight: FontWeight.w700,
                                 ),
@@ -875,40 +895,29 @@ class _TrackServicesState extends State<TrackServices> {
                               ),
                             ),
                           ),
-                        ]
-                        //  else if (widget.isAcceptedService &&
-                        //     widget.isOngoingService &&
-                        //     !widget.isCompletedService) ...[
-                        //   Positioned(
-                        //     bottom: 30,
-                        //     left: 0,
-                        //     right: 0,
-                        //     child: Container(
-                        //       margin: const EdgeInsets.only(
-                        //           bottom: 50, left: 20, right: 20),
-                        //       child: ButtonView(
-                        //         borderRadius: 30,
-                        //         onPressed: () {
-                        //           markCompletedAccepted(
-                        //             ctx: context,
-                        //             agentId: widget.sellerId,
-                        //             orderId: widget.orderId,
-                        //           );
-                        //         },
-                        //         child: CustomText(
-                        //           textAlign: TextAlign.center,
-                        //           maxLines: 2,
-                        //           text: 'Mark as completed',
-                        //           weight: FontWeight.w400,
-                        //           size: 15,
-                        //           fontFamily: AppStrings.interSans,
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ]
-                        else if (widget.isAcceptedService &&
+                        ] else if (widget.isAcceptedService &&
+                            widget.isOngoingService &&
+                            widget.isCompletedService &&
+                            widget.isAgentMarkedService &&
+                            widget.isUserMarkedService) ...[
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                                color: Colors.white,
+                                padding: const EdgeInsets.only(
+                                    bottom: 50, top: 50, left: 20, right: 20),
+                                child: Center(
+                                  child: CustomText(
+                                    text: 'Service Completed',
+                                    color: AppColors.lightSecondary,
+                                    size: 14,
+                                    weight: FontWeight.w700,
+                                  ),
+                                )),
+                          )
+                        ] else if (widget.isAcceptedService &&
                             widget.isOngoingService &&
                             !widget.isCompletedService &&
                             widget.isUserMarkedService &&
@@ -1034,11 +1043,17 @@ class _TrackServicesState extends State<TrackServices> {
       sessionStatus = 'Awaiting session';
     } else if (widget.isAcceptedService && !widget.isOngoingService) {
       sessionStatus = 'Session is Accepted';
-    } else if (widget.isAcceptedService && widget.isOngoingService) {
+    } else if (widget.isAcceptedService &&
+        widget.isOngoingService &&
+        !widget.isCompletedService &&
+        !widget.isAgentMarkedService &&
+        !widget.isUserMarkedService) {
       sessionStatus = 'Session is ongoing';
     } else if (widget.isAcceptedService &&
         widget.isOngoingService &&
-        widget.isCompletedService) {
+        widget.isCompletedService &&
+        widget.isAgentMarkedService &&
+        widget.isUserMarkedService) {
       sessionStatus = 'Session is completed';
     }
 
@@ -1094,6 +1109,4 @@ class _TrackServicesState extends State<TrackServices> {
         .read<ServiceProviderCubit>()
         .rejectUserVetOrder(agentId: agentId, orderId: orderId);
   }
-
-   
 }

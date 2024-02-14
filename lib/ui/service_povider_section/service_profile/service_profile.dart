@@ -89,6 +89,7 @@ class _AgentProfileState extends State<AgentProfile> {
   List<ServiceType> services = [];
 
   String agentId = "";
+  String Id = "";
   String userType = '';
   String email = '';
   String password = '';
@@ -111,14 +112,15 @@ class _AgentProfileState extends State<AgentProfile> {
       agentId = await StorageHandler.getAgentId();
     }
 
-    // _userCubit = context.read<UserCubit>();
+    _userCubit = context.read<UserCubit>();
    
-    // await _userCubit.getServices(agentId);
-    // agentServices = _userCubit.viewModel.services?.data?.services;
+    await _userCubit.getServices(agentId);
+    agentServices = _userCubit.viewModel.services?.data?.services;
 
  setState(() {
       
-      isLoading = true;
+      isLoading = false;
+      isLoading1 = true;
     });
     await _userCubit.getAgentProfile(agentId);
     setState(() {
@@ -143,12 +145,14 @@ class _AgentProfileState extends State<AgentProfile> {
 
     return WillPopScope(
         onWillPop: onBackPress,
-        child: (isLoading) ?  LoadingPage(): Scaffold(
+        child: (isLoading || isLoading1) ?  LoadingPage(): Scaffold(
           body: BlocConsumer<UserCubit, UserStates>(
               listener: (context, state) {
                   if (state is AgentProfileLoaded) {
                 agents = state.userData.data?.agent;
                   services = agents?.services ?? [];
+
+                  Modals.showToast(agents?.user?.email ?? '');
                 }
               },
               builder: (context, state) {
@@ -283,7 +287,9 @@ class _AgentProfileState extends State<AgentProfile> {
                                       width: 12,
                                     ),
                                     agents?.isVerified ?? false
-                                        ? ImageView.svg(AppImages.verified)
+                                        ? ImageView.svg(AppImages.verified,  color: agents?.isVerified ?? false
+                                      ? Colors.green
+                                      : Colors.red,)
                                         : SizedBox.shrink(),
                                   ],
                                 ),
@@ -510,7 +516,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                                 : ServicesList(
                                                     services: agentServices,
                                                     isAgent: true,
-                                                    agentId: agentId,
+                                                    agentId: agents?.sId ?? '',
                                                   ),
                                           ],
                                         )),

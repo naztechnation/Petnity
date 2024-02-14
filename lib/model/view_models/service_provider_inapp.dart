@@ -152,8 +152,8 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   }
 
   setAgentServicesList(AgentServicesList orders) {
-    _availableServices = orders.data?.orders ?? [];
-    _vetOrders = orders.data?.vetOrders ?? [];
+    _availableServices = orders.data?.orders?.reversed.toList() ?? [];
+    _vetOrders = orders.data?.vetOrders?.reversed.toList() ?? [];
     // _orderPageNumber = orders.numPages ?? 1;
 
     setViewState(ViewState.success);

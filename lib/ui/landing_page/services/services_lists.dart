@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/model/view_models/user_view_model.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/services/services.dart';
@@ -18,11 +19,11 @@ import '../../service_povider_section/service_profile/vet_packages.dart';
 import 'vets/vet_service.dart';
 
 class ServicesList extends StatelessWidget {
-
   final bool isAgent;
   final String agentId;
   final List<Services>? services;
-  ServicesList({super.key, this.isAgent = false,  this.agentId = '0', this.services});
+  ServicesList(
+      {super.key, this.isAgent = false, this.agentId = '0', this.services});
 
   @override
   Widget build(BuildContext context) {
@@ -47,49 +48,65 @@ class ServicesList extends StatelessWidget {
 
                   ServiceType masterItem = user.servicesType[index];
 
-                 
-                    return Item(context, randomColor, '${masterItem.name}',
-                        '${masterItem.image}', () {
-                      agent.setServiceId('${user.servicesType[index].sId}');
+                  return Item(context, randomColor, '${masterItem.name}',
+                      '${masterItem.image}', () {
+                    agent.setServiceId('${user.servicesType[index].sId}');
 
-                      if (masterItem.name == 'Vets'&& !isAgent) {
-                        AppNavigator.pushAndStackPage(context,
-                            page: VetService());
-                      }else if(masterItem.name == 'Vets'&& isAgent){
-                        AppNavigator.pushAndStackPage(context,
-                            page: VetPackages(agentId: agentId,));
-                      } else {
-                        if (isAgent) {
+                    if (masterItem.name == 'Vets' && !isAgent) {
+                      AppNavigator.pushAndStackPage(context,
+                          page: VetService());
+                    } else if (masterItem.name == 'Vets' && isAgent) {
+                      String serviceId = '';
 
-                          String serviceId = '';
+                      String constantString = masterItem.name ?? '';
 
-                           String constantString = masterItem.name ?? '';
+                      if (services != []) {
+                        for (var service in services ?? []) {
+                          
+                            serviceId = service?.sId ?? '';
+                      Modals.showToast(service?.sId ?? '');
 
+                            break;
+                          
 
-    if (services != []) {
-
-      for (var service in services ?? []) {
-        if (service.serviceType?.name == constantString) {
-          serviceId = service?.sId ?? '';
-
-          break;
-        }
-      }
-    }
-                          AppNavigator.pushAndReplacePage(context,
-                              page: AgentPackagesScreen(
-                                  agentId: agentId,
-                                  serviceId: serviceId,
-                                  serviceType: masterItem.name ?? '',));
-                        } else {
-                          AppNavigator.pushAndReplacePage(context,
-                              page: SelectPackageLevelAmount(
-                                  serviceType: '${user.servicesType[index].name}',
-                                  serviceId: '${user.servicesType[index].sId}'));
                         }
+
+
+                      }else{
+
                       }
-                    }, true);
-                   
+
+                      // AppNavigator.pushAndStackPage(context,
+                      //     page: VetPackages(serviceId: agentId,));
+                    } else {
+                      if (isAgent) {
+                        String serviceId = '';
+
+                        String constantString = masterItem.name ?? '';
+
+                        if (services != []) {
+                          for (var service in services ?? []) {
+                            if (service.serviceType?.name == constantString) {
+                              serviceId = service?.sId ?? '';
+
+                              break;
+                            }
+                          }
+                        }
+                        AppNavigator.pushAndReplacePage(context,
+                            page: AgentPackagesScreen(
+                              agentId: agentId,
+                              serviceId: serviceId,
+                              serviceType: masterItem.name ?? '',
+                            ));
+                      } else {
+                        AppNavigator.pushAndReplacePage(context,
+                            page: SelectPackageLevelAmount(
+                                serviceType: '${user.servicesType[index].name}',
+                                serviceId: '${user.servicesType[index].sId}'));
+                      }
+                    }
+                  }, true);
                 },
                 staggeredTileBuilder: (index) {
                   return StaggeredTile.count(1, 0.35);

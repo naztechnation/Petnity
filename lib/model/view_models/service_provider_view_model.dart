@@ -34,6 +34,13 @@ class ServiceProviderViewModel extends BaseViewModel {
   Service _selectedService = Service.none;
   UploadType _uploadType = UploadType.none;
 
+
+  clearImage(){
+    _imageURl2 = null;
+    setViewState(ViewState.success);
+
+  }
+
   setServiceProviderAge(String age) {
     _serviceProviderAge = age;
     setViewState(ViewState.success);

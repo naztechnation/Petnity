@@ -310,33 +310,33 @@ class UserRepositoryImpl implements UserRepository {
       required String description,
       required String title,
       required String agentId}) async {
-    final map =
-        await Requests().post(AppStrings.reportAgent(username, agentId), body: {
+        var payload = {
       "title": title,
       "description": description,
-    }, headers: {
-      'Authorization': AppStrings.token,
-    });
+    };
+    final map =
+        await Requests().post(AppStrings.reportAgent(username, agentId), body: json.encode(payload), );
     return AuthData.fromJson(map);
   }
 
   @override
   Future<AuthData> reportBug(
-      {required String username,
+      {required String image,
       required String title,
       required String description}) async {
         var payload = {
       "title": title,
       "description": description,
+      "image": image
     };
-    final map = await Requests().post(AppStrings.reportBug(username), body: json.encode(payload),);
+    final map = await Requests().post(AppStrings.reportBug, body: json.encode(payload),);
     return AuthData.fromJson(map);
   }
 
   @override
-  Future<Notifications> getNotification({required String username}) async {
+  Future<Notifications> getNotification({required String url}) async {
     final map = await Requests().get(
-      AppStrings.getUserNotifications,
+      url,
     );
     return Notifications.fromJson(map);
   }

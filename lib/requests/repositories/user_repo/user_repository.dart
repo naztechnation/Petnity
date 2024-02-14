@@ -58,9 +58,9 @@ abstract class UserRepository {
     Future<AuthData> updateNumber({required String username,required String email,required String number,}); 
     Future<PrivacyPolicies> privacy(); 
     Future<AuthData> deleteUser({required String username}); 
-    Future<AuthData> reportBug({required String username, required String title, required String description, }); 
+    Future<AuthData> reportBug({required String image, required String title, required String description, }); 
     Future<AuthData> reportAgent({required String username, required String description, required String title,required String agentId, }); 
-    Future<Notifications> getNotification({required String username, }); 
+    Future<Notifications> getNotification({required String url, }); 
 
 
 }

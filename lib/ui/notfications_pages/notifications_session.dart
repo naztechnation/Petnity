@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/ui/notfications_pages/session_status.dart';
@@ -21,8 +20,6 @@ import '../widgets/back_button.dart';
 import '../widgets/custom_text.dart';
 import '../widgets/loading_page.dart';
 import '../widgets/modals.dart';
-import 'chat_pages/chat_page.dart';
-import 'tabs_header.dart';
 import 'widgets/requests_content.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -56,11 +53,14 @@ class _NotificationsState extends State<Notifications> {
   List<NotificationsList> notifications = [];
 
   String username = "";
+  String userType = "";
 
   getUserDetails() async {
     username = await StorageHandler.getUserName();
+    userType = await StorageHandler.getUserType();
+
     _userCubit = context.read<UserCubit>();
-    await _userCubit.getNotification(username: username);
+    await _userCubit.getNotification(url: (userType == 'user') ? AppStrings.getUserNotifications: AppStrings.getAgentNotifications);
 
     setState(() {});
   }
@@ -116,7 +116,7 @@ class _NotificationsState extends State<Notifications> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 44 : 0)),
+              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 30 : 0)),
               Row(
                 children: [
                   backButton(context),

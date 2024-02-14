@@ -8,7 +8,6 @@ import 'package:petnity/ui/widgets/loading_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../blocs/user/user.dart';
-import '../../../../model/services/services.dart';
 import '../../../../model/user_models/service_type.dart';
 import '../../../../model/view_models/service_provider_view_model.dart';
 import '../../../../model/view_models/account_view_model.dart';

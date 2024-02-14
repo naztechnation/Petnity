@@ -58,7 +58,7 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status ?? false) {
-                  StorageHandler.saveUserPassword(_passwordController.text);
+                  StorageHandler.saveUserPassword(_passwordController.text.trim());
 
                   if (state.userData.data?.user == null) {
                     if (state.userData.data?.agent?.user?.isAgent ?? false) {

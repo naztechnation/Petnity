@@ -11,9 +11,9 @@ import '../../../../res/enum.dart';
 import '../track_purchase_widgets/ongoing_purchase_widget.dart';
 
 class AllServices extends StatelessWidget {
-  final List<Orders>? allOrders;
-  final List<ShopOrders>? userShopOrder;
-  final List<VetOrders>? vetOrders;
+  final List<Orders> allOrders;
+  final List<ShopOrders> userShopOrder;
+  final List<VetOrders> vetOrders;
 
   final String emptyListTitle;
   final OrderType orderType;
@@ -22,31 +22,31 @@ class AllServices extends StatelessWidget {
       {super.key,
       required this.allOrders,
       this.emptyListTitle = 'No available service',
-      this.userShopOrder,
+     required this.userShopOrder,
       this.orderType = OrderType.services,
-      this.vetOrders});
+     required this.vetOrders});
   AllServices.shop(
       {super.key,
       required this.userShopOrder,
       this.emptyListTitle = 'No available purchases',
-      this.allOrders,
+     required this.allOrders,
       this.orderType = OrderType.shop,
-      this.vetOrders});
+     required this.vetOrders});
 
   AllServices.vet(
       {super.key,
-      this.userShopOrder,
+     required this.userShopOrder,
       this.emptyListTitle = 'No vet service available',
-      this.allOrders,
+     required this.allOrders,
       this.orderType = OrderType.vet,
       required this.vetOrders});
 
-  Orders? orderList;
+  // Orders? orderList;
 
   @override
   Widget build(BuildContext context) {
     if (orderType == OrderType.services) {
-      return (allOrders!.isEmpty)
+      return (allOrders.isEmpty)
           ? Center(child: Text(emptyListTitle))
           : Container(
               padding: EdgeInsets.all(10),
@@ -55,26 +55,26 @@ class AllServices extends StatelessWidget {
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: allOrders?.length,
+                      itemCount: allOrders.length,
                       itemBuilder: (BuildContext context, index) {
-                        orderList = allOrders?[index];
+                        // orderList = allOrders?[index];
                         return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              servicesTypes(),
+                              servicesTypes(index),
                               Container(
                                 margin: EdgeInsets.symmetric(
                                     horizontal:
                                         screenSize(context).width * 0.03),
                                 child: OngoingServiceWidget(
-                                  allOrders: allOrders![index],
+                                  allOrders: allOrders[index],
                                 ),
                               ),
                             ]);
                       })),
             );
     } else if (orderType == OrderType.shop) {
-      if (userShopOrder?.isEmpty ?? true) {
+      if (userShopOrder.isEmpty) {
         return Center(
           child: Text('You are yet to make a purchase.'),
         );
@@ -97,7 +97,7 @@ class AllServices extends StatelessWidget {
         );
       }
     } else if (orderType == OrderType.vet) {
-      if (vetOrders?.isEmpty ?? true) {
+      if (vetOrders.isEmpty) {
         return Center(
           child: Text('No vet order in session.'),
         );
@@ -109,17 +109,17 @@ class AllServices extends StatelessWidget {
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: vetOrders?.length ?? 0,
+                  itemCount: vetOrders.length,
                   itemBuilder: (BuildContext context, index) {
-                     var vetOrder = vetOrders?[index];
+                     var vetOrder = vetOrders[index];
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        servicesTypes(),
+                        servicesTypes(index),
                         Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenSize(context).width * 0.03),
-                            child: VideoCallSessionWidget(vetOrders: vetOrder!,)),
+                            child: VideoCallSessionWidget(vetOrders: vetOrder,)),
                         SizedBox(
                           height: 15,
                         ),
@@ -133,8 +133,8 @@ class AllServices extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
-  servicesTypes() {
-    if (orderList?.isOngoing ?? false) {
+  servicesTypes(int index) {
+    if (allOrders[index].isOngoing! && !allOrders[index].isCompleted!) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
@@ -143,7 +143,7 @@ class AllServices extends StatelessWidget {
               color: AppColors.lightSecondary, fontWeight: FontWeight.w700),
         ),
       );
-    } else if (orderList?.isCompleted ?? false) {
+    } else if (allOrders[index].isCompleted!)  {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
@@ -151,7 +151,7 @@ class AllServices extends StatelessWidget {
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.w700),
         ),
       );
-    } else if (orderList?.isRejected ?? false) {
+    } else if (allOrders[index].isRejected!) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
@@ -159,7 +159,7 @@ class AllServices extends StatelessWidget {
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.w700),
         ),
       );
-    } else if (orderList?.isPaid == true && orderList?.isAccepted == false) {
+    } else if (allOrders[index].isPaid == true && allOrders[index].isAccepted == false) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(

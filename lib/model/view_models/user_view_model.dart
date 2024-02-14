@@ -285,7 +285,7 @@ class UserViewModel extends BaseViewModel {
     List<Orders> list = [];
 
     for (var order in _ordersList) {
-      if (order.isPaid == true && order.isAccepted == false) {
+      if (order.isPaid == true && order.isAccepted == false && order.isRejected != true) {
         list.add(order);
       }
     }

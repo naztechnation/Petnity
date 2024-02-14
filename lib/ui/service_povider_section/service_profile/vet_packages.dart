@@ -22,10 +22,10 @@ import '../../widgets/modals.dart';
 import '../../widgets/text_edit_view.dart';
 
 class VetPackages extends StatelessWidget {
-  final String agentId;
+  final String serviceId;
   const VetPackages({
     Key? key,
-    required this.agentId,
+    required this.serviceId,
   }) : super(key: key);
 
   @override
@@ -36,16 +36,16 @@ class VetPackages extends StatelessWidget {
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
       child: VetBooking(
-        agentId: agentId,
+        serviceId: serviceId,
       ),
     );
   }
 }
 
 class VetBooking extends StatefulWidget {
-  final String agentId;
+  final String serviceId;
 
-  VetBooking({super.key, required this.agentId});
+  VetBooking({super.key, required this.serviceId});
   @override
   State<VetBooking> createState() => _VetBookingState();
 }
@@ -65,7 +65,7 @@ class _VetBookingState extends State<VetBooking> {
   bool isLive = false;
 
   getAgentId() async {
-    agentId = await StorageHandler.getUserId();
+    agentId = await StorageHandler.getAgentId();
 
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
 
@@ -73,7 +73,9 @@ class _VetBookingState extends State<VetBooking> {
       isLoading = true;
     });
 
-    await _serviceProviderCubit.vetServices(agentId: widget.agentId);
+    Modals.showToast(agentId);
+
+    await _serviceProviderCubit.vetServices(agentId: widget.serviceId);
     setState(() {
       isLoading = false;
     });
