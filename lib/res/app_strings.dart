@@ -197,9 +197,9 @@ static String getUserNotifications =
       '${_baseUrl}user/get-vet-service/$agentId';
 
   static String createVetOrder(
-    String agentId,
+    String serviceId
   ) =>
-      '${_baseUrl}order/create-vet-order/$agentId';
+      '${_baseUrl}order/create-vet-order/$serviceId';
   static String confirmVetPaymentOrder(String orderId, String username) =>
       '${_baseUrl}order/vet-order-payment/$username/$orderId';
 

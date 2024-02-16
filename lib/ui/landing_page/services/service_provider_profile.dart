@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import '../../../blocs/user/user.dart';
 import '../../../model/agent/agent.dart' as agent;
 import '../../../model/services/services.dart';
-import '../../../model/user_models/get_services.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -71,6 +70,8 @@ class _ServiceProviderState extends State<ServiceProvider> {
 
   List<Services>? service = [];
 
+  String vetId = '';
+
   late UserCubit _userCubit;
 
   bool isLoading = false;
@@ -90,6 +91,8 @@ class _ServiceProviderState extends State<ServiceProvider> {
 
     service = _userCubit.viewModel.services?.data?.services;
     String constantString = widget.selectedServices;
+
+      vetId = _userCubit.viewModel.services?.data?.vetServices?[0].sId ?? '';
 
 
     if (service != []) {
@@ -423,7 +426,9 @@ class _ServiceProviderState extends State<ServiceProvider> {
             ));
         break;
       case 'vets':
-        AppNavigator.pushAndStackPage(context,
+
+      if(vetId != ''){
+AppNavigator.pushAndStackPage(context,
             page: VetBookingPage(
               name: widget.agents?.user?.username ?? '',
               image: '${widget.agents?.picture}',
@@ -431,8 +436,10 @@ class _ServiceProviderState extends State<ServiceProvider> {
               location: '${widget.agents?.city}, ${widget.agents?.country}'
                   .replaceAll('?', ''),
               about: widget.agents?.about ?? '',
-              agentId: widget.agents?.sId.toString() ?? '',
+              agentId: widget.agents?.sId.toString() ?? '', vetId: vetId,
             ));
+      }
+        
         break;
       case 'grooming':
         AppNavigator.pushAndStackPage(context,

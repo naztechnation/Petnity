@@ -68,6 +68,8 @@ class _AddAccountState extends State<AddAccount> {
 
   String agentId = "";
 
+  String bankCode = "";
+
   getAgentId() async {
     agentId = await StorageHandler.getUserId();
     _userCubit = context.read<ServiceProviderCubit>();
@@ -321,12 +323,24 @@ class _AddAccountState extends State<AddAccount> {
               itemCount: user.filterBankList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  leading: Text(user.filterBankList[index]),
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(30),
+                    child: 
+                    Container(
+                      height: 40,
+                      width: 40,
+                      child: ImageView.network(
+                        user.filterBankList[index]['logo'],
+                      ),)
+                  ,),
+                  subtitle: Text(user.filterBankList[index]['name']),
                   onTap: () {
                     Navigator.pop(context);
-
+                    
                     setState(() {
-                      bankNameController.text = user.filterBankList[index];
+
+                      bankCode = user.filterBankList[index]['code'];
+                      bankNameController.text = user.filterBankList[index]['name'];
                     });
                   },
                 );
@@ -346,7 +360,7 @@ class _AddAccountState extends State<AddAccount> {
   _submit({required BuildContext context, required String agentId}) {
     if (_formKey.currentState!.validate()) {
       context.read<ServiceProviderCubit>().updateAccount(
-          bankCode: '303',
+          bankCode: bankCode,
           bankName: bankNameController.text,
           accountName: accountNameController.text,
           accountNumber: accountNumberController.text);

@@ -18,8 +18,7 @@ import '../../model/agent/agent.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repo/account_repository_impl.dart';
-import '../../requests/repositories/user_repo/user_repository_impl.dart';
+import '../../requests/repositories/account_repo/account_repository_impl.dart'; 
 import '../landing_page/services/services_lists.dart';
 import '../payment/payment_screen.dart';
 import '../widgets/custom_text.dart';
@@ -386,7 +385,7 @@ class _HomepageBarState extends State<HomepageBar> {
                                     AppImages.loading,
                                     height: 50,
                                   ))
-                                : ServicesList(
+                                : ServicesList(vetServiceId: '',
                                     
                                   ),
                           ],

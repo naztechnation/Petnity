@@ -73,7 +73,6 @@ class _VetBookingState extends State<VetBooking> {
       isLoading = true;
     });
 
-    Modals.showToast(agentId);
 
     await _serviceProviderCubit.vetServices(agentId: widget.serviceId);
     setState(() {

@@ -21,9 +21,10 @@ import 'vets/vet_service.dart';
 class ServicesList extends StatelessWidget {
   final bool isAgent;
   final String agentId;
+  final String vetServiceId;
   final List<Services>? services;
   ServicesList(
-      {super.key, this.isAgent = false, this.agentId = '0', this.services});
+      {super.key, this.isAgent = false, this.agentId = '0', this.services, required this.vetServiceId});
 
   @override
   Widget build(BuildContext context) {
@@ -56,28 +57,10 @@ class ServicesList extends StatelessWidget {
                       AppNavigator.pushAndStackPage(context,
                           page: VetService());
                     } else if (masterItem.name == 'Vets' && isAgent) {
-                      String serviceId = '';
+                      
 
-                      String constantString = masterItem.name ?? '';
-
-                      if (services != []) {
-                        for (var service in services ?? []) {
-                          
-                            serviceId = service?.sId ?? '';
-                      Modals.showToast(service?.sId ?? '');
-
-                            break;
-                          
-
-                        }
-
-
-                      }else{
-
-                      }
-
-                      // AppNavigator.pushAndStackPage(context,
-                      //     page: VetPackages(serviceId: agentId,));
+                      AppNavigator.pushAndStackPage(context,
+                          page: VetPackages(serviceId: vetServiceId,));
                     } else {
                       if (isAgent) {
                         String serviceId = '';

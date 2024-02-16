@@ -286,7 +286,7 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     };
     final map = await Requests().post(
       AppStrings.createVetOrder(
-        agentId,
+        vetService,
       ),
       body: json.encode(payload),
     );

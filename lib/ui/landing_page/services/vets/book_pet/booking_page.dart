@@ -31,13 +31,14 @@ class VetBookingPage extends StatelessWidget {
   final String gender;
   final String location;
   final String about;
+  final String vetId;
   const VetBookingPage({
     Key? key,
     required this.name,
     required this.image,
     required this.gender,
     required this.location,
-    required this.about, required this.agentId,
+    required this.about, required this.agentId, required this.vetId,
   }) : super(key: key);
 
   @override
@@ -49,7 +50,7 @@ class VetBookingPage extends StatelessWidget {
               listen: false)),
       child: VetBooking(
         name: name,
-        
+        vetId: vetId,
         image: image,
         gender: gender,
         location: location,
@@ -70,6 +71,7 @@ class VetBooking extends StatefulWidget {
   final String location;
 
   final String about;
+  final String vetId;
 
   VetBooking(
       {super.key,
@@ -77,7 +79,7 @@ class VetBooking extends StatefulWidget {
       required this.image,
       required this.gender,
       required this.location,
-      required this.about, required this.agentId});
+      required this.about, required this.agentId, required this.vetId});
   @override
   State<VetBooking> createState() => _VetBookingState();
 }
@@ -116,7 +118,7 @@ class _VetBookingState extends State<VetBooking> {
       isLoading = true;
     });
 
-    await _serviceProviderCubit.vetServices(agentId: widget.agentId);
+    await _serviceProviderCubit.vetServices(agentId: widget.vetId);
     setState(() {
       isLoading = false;
     });
@@ -620,7 +622,7 @@ class _VetBookingState extends State<VetBooking> {
                                               .vetServicesOrder(
                                                   agentId: widget.agentId,
                                                   fee: amount,
-                                                  vetService: vetServiceId,
+                                                  vetService: widget.vetId,
                                                   sessionTime:
                                                       formattedDateTime);
                                         } else {
