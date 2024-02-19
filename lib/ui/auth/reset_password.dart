@@ -78,8 +78,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           if (state is ResetPasswordLoaded) {
             if (state.userData.status == true) {
               resetFirebasePassword(_emailController.text);
+
+                
             } else {
-              Modals.showToast(state.userData.message!,
+              Modals.showToast(state.userData.message ?? '',
                   messageType: MessageType.error);
             }
           } else if (state is AccountApiErr) {

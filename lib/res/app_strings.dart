@@ -236,6 +236,6 @@ static String getUserNotifications =
   static String getVetSessionTypesUrl = '${_baseUrl}home/get-vet-session-types';
   static String getVetMediumTypesUrl = '${_baseUrl}home/get-vet-contact-mediums';
 
-
+  static String getCloudinaryUrl = 'https://api.cloudinary.com/v1_1/dmmudy12o/upload';
   
 }

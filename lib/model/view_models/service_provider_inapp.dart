@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:petnity/model/user_models/order_lists.dart';
 
 import '../../res/app_colors.dart';
+import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import '../service_provider_models/all_agent_orders.dart';
 import '../user_models/agent_services_lists.dart';
@@ -244,7 +245,7 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
   }
 
   Future<String> uploadImage(String imageUrl, String uploadPreset) async {
-    final url = Uri.parse('https://api.cloudinary.com/v1_1/do2z93mmw/upload');
+    final url = Uri.parse(AppStrings.getCloudinaryUrl);
 
     String image = '';
 

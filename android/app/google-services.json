@@ -1,22 +1,21 @@
 {
   "project_info": {
-    "project_number": "584893548247",
-    "firebase_url": "https://lucacity-fbe4a-default-rtdb.firebaseio.com",
-    "project_id": "lucacity-fbe4a",
-    "storage_bucket": "lucacity-fbe4a.appspot.com"
+    "project_number": "77888190743",
+    "project_id": "lucacify-60f0d",
+    "storage_bucket": "lucacify-60f0d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:584893548247:android:fad9010bd3b0eb152a1292",
+        "mobilesdk_app_id": "1:77888190743:android:f46008e1a1a70687571f52",
         "android_client_info": {
-          "package_name": "com.lucacity.lucacity"
+          "package_name": "com.lucacify.lucacify"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCHUxJuUNgqHoWqPGZcJ5zMUB9XVfGUUts"
+          "current_key": "AIzaSyCEP5cUT8V2nQpvKhs8tKd_olEoLQwnTwo"
         }
       ],
       "services": {

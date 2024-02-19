@@ -53,33 +53,34 @@
 	<true/>
 
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>App needs access to location</string>
+	<string>Your location is required for this app.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>App needs access to location</string>
+	<string>Your location is required for this app.</string>
+
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>App needs access to location</string>
 
 
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera for video calls.</string>
+	
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We need access to your microphone for audio calls.</string>
+
+	
 
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
 	<key>GoogleMapsApiKey</key>
 	<string>AIzaSyCGhgIA6avmf0LRLakXaAama2vRnBsyL_Q</string>
 
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location is required for this app.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Your location is required for this app.</string>
-
+	
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
   	<string>tel</string>

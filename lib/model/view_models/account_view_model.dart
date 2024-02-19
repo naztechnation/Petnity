@@ -11,6 +11,7 @@ import '../../handlers/location_handler.dart';
 import '../../handlers/secure_handler.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../res/app_colors.dart';
+import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
@@ -246,7 +247,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   Future<String> uploadImage(String imageUrl, String uploadPreset) async{
-    final url = Uri.parse('https://api.cloudinary.com/v1_1/do2z93mmw/upload');
+    final url = Uri.parse(AppStrings.getCloudinaryUrl);
 
     String image = '';
 

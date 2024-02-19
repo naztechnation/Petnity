@@ -161,7 +161,7 @@ class _KycScreenSevenState extends State<KycScreenSeven> {
                             isLoading = true;
                           });
                           String imgUrl = await petProfile.uploadImage(
-                              petProfile.imageURl!.path, 'petnity_user');
+                              petProfile.imageURl!.path, 'petnity_service_provider');
                           setState(() {
                             isLoading = false;
                           });

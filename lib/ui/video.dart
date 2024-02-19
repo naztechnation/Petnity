@@ -58,10 +58,16 @@ getUserDetails() async {
   void initAgora() async {
     client = AgoraClient(
       agoraConnectionData: AgoraConnectionData(
-        appId: "300ca74228b44a1f92c8927fabf14f07",
+        appId: "31b9f04609dc4c7793ac0d2ba6ccf664",
         channelName: channelName,  
         username: widget.customerName,
+        tempToken: ''
+        
       ),
+      enabledPermission: [ 
+      Permission.camera, 
+      Permission.microphone, 
+    ],
     );
 
     await client.initialize();
@@ -84,7 +90,7 @@ getUserDetails() async {
   @override
   Widget build(BuildContext context) {
 
-    Modals.showToast(channelName);
+    
 
     return WillPopScope(
       onWillPop: onBackPress,

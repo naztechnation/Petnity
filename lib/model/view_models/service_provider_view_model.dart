@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import '../../res/app_colors.dart';
+import '../../res/app_strings.dart';
 import '../../res/enum.dart';
 import 'base_viewmodel.dart';
 
@@ -237,7 +238,7 @@ class ServiceProviderViewModel extends BaseViewModel {
 
 
     Future<String> uploadImage(String imageUrl, String uploadPreset) async{
-    final url = Uri.parse('https://api.cloudinary.com/v1_1/do2z93mmw/upload');
+    final url = Uri.parse(AppStrings.getCloudinaryUrl);
 
     String image = '';
 

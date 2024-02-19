@@ -4,7 +4,7 @@ import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
-import 'package:petnity/ui/widgets/modals.dart';
+
 
 
 class LiveSupportPage extends StatefulWidget {
@@ -52,7 +52,7 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
           centerTitle: true,
         ),
         body: Tawk(
-          directChatLink: 'https://tawk.to/chat/656f12d9ff45ca7d4787040c/1hgsu39f4',
+          directChatLink: 'https://tawk.to/chat/65d1f07b9131ed19d96e4ae1/1hmu16rns',
           visitor: TawkVisitor(
             name: (userType == 'user') ? customerName.capitalizeFirstOfEach : '${customerName.capitalizeFirstOfEach}(Service Provider)',
             email: email,
