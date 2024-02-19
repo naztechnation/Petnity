@@ -251,7 +251,7 @@ class _TrackPurchaseScreenState extends State<TrackPurchaseScreen> {
                             allOrders: ongoingUserOrder, userShopOrder: [], vetOrders: [],
                           ),
                           AllServices.vet(
-                            allOrders: ongoingUserOrder, userShopOrder: [], vetOrders: vetOrders,
+                            allOrders: [], userShopOrder: [], vetOrders: vetOrders,
                           ),
                           AllServices.shop(
                               userShopOrder: userShopOrder,

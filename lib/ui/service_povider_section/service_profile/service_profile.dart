@@ -154,7 +154,6 @@ class _AgentProfileState extends State<AgentProfile> {
                 agents = state.userData.data?.agent;
                   services = agents?.services ?? [];
 
-                  Modals.showToast(agents?.user?.email ?? '');
                 }
               },
               builder: (context, state) {
@@ -397,8 +396,11 @@ class _AgentProfileState extends State<AgentProfile> {
                                   setState(() {
                                     isLoading = false;
                                   });
-                                  if (imgUrl != null || imgUrl != "") {
-                                    submit(context, imgUrl);
+                                  if (imgUrl != null || imgUrl.isEmpty) {
+
+                                    Modals.showToast(imgUrl);
+                                    print(imgUrl);
+                                    // submit(context, imgUrl);
                                   }
                                 } else {
                                   serviceProvider.loadImage(

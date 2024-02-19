@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:petnity/model/user_models/order_lists.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../res/app_colors.dart';
 import '../../res/app_strings.dart';
@@ -261,9 +262,14 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
         final resPonseString = String.fromCharCodes(responseData);
         final jsonMap = jsonDecode(resPonseString);
 
+        Modals.showToast('saved');
+
         image = jsonMap['url'];
 
         return image;
+      }else{
+        Modals.showToast('not saved');
+
       }
     } catch (e) {}
 

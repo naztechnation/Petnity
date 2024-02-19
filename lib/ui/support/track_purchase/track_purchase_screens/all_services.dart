@@ -8,9 +8,10 @@ import '../../../../model/user_models/order.dart';
 import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../res/enum.dart';
+import '../../../widgets/modals.dart';
 import '../track_purchase_widgets/ongoing_purchase_widget.dart';
 
-class AllServices extends StatelessWidget {
+class AllServices extends StatefulWidget {
   final List<Orders> allOrders;
   final List<ShopOrders> userShopOrder;
   final List<VetOrders> vetOrders;
@@ -22,32 +23,36 @@ class AllServices extends StatelessWidget {
       {super.key,
       required this.allOrders,
       this.emptyListTitle = 'No available service',
-     required this.userShopOrder,
+      required this.userShopOrder,
       this.orderType = OrderType.services,
-     required this.vetOrders});
+      required this.vetOrders});
   AllServices.shop(
       {super.key,
       required this.userShopOrder,
       this.emptyListTitle = 'No available purchases',
-     required this.allOrders,
+      required this.allOrders,
       this.orderType = OrderType.shop,
-     required this.vetOrders});
+      required this.vetOrders});
 
   AllServices.vet(
       {super.key,
-     required this.userShopOrder,
+      required this.userShopOrder,
       this.emptyListTitle = 'No vet service available',
-     required this.allOrders,
+      required this.allOrders,
       this.orderType = OrderType.vet,
       required this.vetOrders});
 
-  // Orders? orderList;
+  @override
+  State<AllServices> createState() => _AllServicesState();
+}
 
+class _AllServicesState extends State<AllServices> {
+  // Orders? orderList;
   @override
   Widget build(BuildContext context) {
-    if (orderType == OrderType.services) {
-      return (allOrders.isEmpty)
-          ? Center(child: Text(emptyListTitle))
+    if (widget.orderType == OrderType.services) {
+      return (widget.allOrders.isEmpty)
+          ? Center(child: Text(widget.emptyListTitle))
           : Container(
               padding: EdgeInsets.all(10),
               height: screenSize(context).height * .8,
@@ -55,7 +60,7 @@ class AllServices extends StatelessWidget {
                   child: ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: allOrders.length,
+                      itemCount: widget.allOrders.length,
                       itemBuilder: (BuildContext context, index) {
                         // orderList = allOrders?[index];
                         return Column(
@@ -67,14 +72,14 @@ class AllServices extends StatelessWidget {
                                     horizontal:
                                         screenSize(context).width * 0.03),
                                 child: OngoingServiceWidget(
-                                  allOrders: allOrders[index],
+                                  allOrders: widget.allOrders[index],
                                 ),
                               ),
                             ]);
                       })),
             );
-    } else if (orderType == OrderType.shop) {
-      if (userShopOrder.isEmpty) {
+    } else if (widget.orderType == OrderType.shop) {
+      if (widget.userShopOrder.isEmpty) {
         return Center(
           child: Text('You are yet to make a purchase.'),
         );
@@ -86,18 +91,18 @@ class AllServices extends StatelessWidget {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: userShopOrder?.length ?? 0,
+                itemCount: widget.userShopOrder.length,
                 itemBuilder: ((context, index) {
                   return OngoingPurchaseWidget(
-                    allOrders: userShopOrder![index],
+                    allOrders: widget.userShopOrder[index],
                     label: 'Track',
                   );
                 })),
           ),
         );
       }
-    } else if (orderType == OrderType.vet) {
-      if (vetOrders.isEmpty) {
+    } else if (widget.orderType == OrderType.vet) {
+      if (widget.vetOrders.isEmpty) {
         return Center(
           child: Text('No vet order in session.'),
         );
@@ -109,17 +114,74 @@ class AllServices extends StatelessWidget {
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: vetOrders.length,
+                  itemCount: widget.vetOrders.length,
                   itemBuilder: (BuildContext context, index) {
-                     var vetOrder = vetOrders[index];
+                    var vetOrder = widget.vetOrders[index];
+
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        servicesTypes(index),
+                        
+                        if (vetOrder.isRejected ?? false) ...[
+                          Text(
+                            'Service is Rejected',
+                            style: TextStyle(color: Colors.red),
+                          )
+                        ] else if (vetOrder.isPaid! && !vetOrder.isAccepted! && !vetOrder.userMarkedDelivered! && !vetOrder.agentMarkedDelivered!) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Text(
+                              'You have paid for this service. wait for acceptance.',
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          )
+                        ] else if (vetOrder.isAccepted! && !vetOrder.isOngoing! && !vetOrder.userMarkedDelivered! && !vetOrder.agentMarkedDelivered!) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Text(
+                              'Service is Accepted',
+                              style: TextStyle(color: Colors.blueGrey),
+                            ),
+                          )
+                        ] else if (vetOrder.isOngoing! && !vetOrder.isCompleted! && !vetOrder.userMarkedDelivered! && !vetOrder.agentMarkedDelivered!) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Text(
+                              'Service is ongoing',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          )
+                        ] else if (vetOrder.isOngoing!  && vetOrder.userMarkedDelivered! && !vetOrder.agentMarkedDelivered!) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Text(
+                              'You marked order as completed',
+                              style: TextStyle(color: Colors.greenAccent ),
+                            ),
+                          )
+                        ] else if (vetOrder.isCompleted! && vetOrder.userMarkedDelivered! && vetOrder.agentMarkedDelivered! && !vetOrder.paymentReleased!) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Text(
+                              'Service is completed',
+                              style: TextStyle(color: Colors.green[900]),
+                            ),
+                          )
+                        ]else if (vetOrder.isCompleted! && vetOrder.userMarkedDelivered! && vetOrder.agentMarkedDelivered! && vetOrder.paymentReleased!) ...[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Text(
+                              'Payment Released to service provider',
+                              style: TextStyle(color: Colors.green[900]),
+                            ),
+                          )
+                        ],
                         Container(
                             margin: EdgeInsets.symmetric(
                                 horizontal: screenSize(context).width * 0.03),
-                            child: VideoCallSessionWidget(vetOrders: vetOrder,)),
+                            child: VideoCallSessionWidget(
+                              vetOrders: vetOrder,
+                            )),
                         SizedBox(
                           height: 15,
                         ),
@@ -134,7 +196,8 @@ class AllServices extends StatelessWidget {
   }
 
   servicesTypes(int index) {
-    if (allOrders[index].isOngoing! && !allOrders[index].isCompleted!) {
+    if (widget.allOrders[index].isOngoing! &&
+        !widget.allOrders[index].isCompleted!) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
@@ -143,7 +206,7 @@ class AllServices extends StatelessWidget {
               color: AppColors.lightSecondary, fontWeight: FontWeight.w700),
         ),
       );
-    } else if (allOrders[index].isCompleted!)  {
+    } else if (widget.allOrders[index].isCompleted!) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
@@ -151,7 +214,7 @@ class AllServices extends StatelessWidget {
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.w700),
         ),
       );
-    } else if (allOrders[index].isRejected!) {
+    } else if (widget.allOrders[index].isRejected!) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
@@ -159,7 +222,8 @@ class AllServices extends StatelessWidget {
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.w700),
         ),
       );
-    } else if (allOrders[index].isPaid == true && allOrders[index].isAccepted == false) {
+    } else if (widget.allOrders[index].isPaid == true &&
+        widget.allOrders[index].isAccepted == false) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(

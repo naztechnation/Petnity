@@ -5,7 +5,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 import 'handlers/secure_handler.dart';
 import 'model/view_models/firebase_auth_viewmodel.dart';

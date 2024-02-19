@@ -876,6 +876,7 @@ class _TrackServicesState extends State<TrackServices> {
                                   bottom: 50, left: 20, right: 20),
                               child: ButtonView(
                                 borderRadius: 30,
+                                processing: state is AgentOrdersLoading,
                                 onPressed: () {
                                   markOngoingAccepted(
                                     ctx: context,

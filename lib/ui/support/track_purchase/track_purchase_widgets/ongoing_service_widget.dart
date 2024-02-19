@@ -165,6 +165,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             Modals.showToast(
                                 'Can\'t communicate with this agent at the moment. Please');
                           } else {
+                         
                             AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
                                     agentName: allOrders.agent?.user?.username ?? '',

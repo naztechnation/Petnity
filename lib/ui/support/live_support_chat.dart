@@ -46,10 +46,11 @@ class _LiveSupportPageState extends State<LiveSupportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Chat Our Support Team', style: TextStyle(fontSize: 16),),
+          title: const Text('Chat Our Support Team', style: TextStyle(fontSize: 16, color: Colors.white),),
           backgroundColor: AppColors.lightSecondary,
           elevation: 0,
           centerTitle: true,
+          
         ),
         body: Tawk(
           directChatLink: 'https://tawk.to/chat/65d1f07b9131ed19d96e4ae1/1hmu16rns',

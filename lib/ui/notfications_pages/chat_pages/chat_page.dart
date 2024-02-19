@@ -56,11 +56,16 @@ class _ChatPageState extends State<ChatPage> {
 
   getUserType()async{
     userType = await StorageHandler.getUserType();
+
+    setState(() {
+      
+    });
   }
 
    final _firebaseAuth = FirebaseAuth.instance;
 
-  _ChatPageState({required this.customerName,required this.agentName,required this.userImage,required this.uid});
+  _ChatPageState({required this.customerName,required this.agentName,
+  required this.userImage,required this.uid});
 
   @override
   void initState() {

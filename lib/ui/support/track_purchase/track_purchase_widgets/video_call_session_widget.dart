@@ -12,9 +12,7 @@ import 'package:petnity/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../model/session_types/session_types.dart';
-import '../../../../model/user_models/order.dart';
 import '../../../../model/user_models/vet_orders.dart';
-import '../../../../model/user_models/vet_service.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_vet_services.dart';
@@ -68,7 +66,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                 children: [
                   ClipRRect(
                     child: ImageView.network(
-                      widget.vetOrders.agent?.picture,
+                      widget.vetOrders.agent?.picture ??  '',
                       height: 60,
                       width: 60,
                     ),
