@@ -398,9 +398,9 @@ class _AgentProfileState extends State<AgentProfile> {
                                   });
                                   if (imgUrl != null || imgUrl.isEmpty) {
 
-                                    Modals.showToast(imgUrl);
-                                    print(imgUrl);
-                                    // submit(context, imgUrl);
+                                    
+                                    
+                                      submit(context, imgUrl);
                                   }
                                 } else {
                                   serviceProvider.loadImage(

@@ -46,6 +46,7 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   firebase_messaging: ^14.7.9
   flutter_local_notifications: ^16.2.0
+  url_launcher: ^6.2.4
   
     
 dev_dependencies:

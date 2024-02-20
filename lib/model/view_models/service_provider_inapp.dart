@@ -262,13 +262,12 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
         final resPonseString = String.fromCharCodes(responseData);
         final jsonMap = jsonDecode(resPonseString);
 
-        Modals.showToast('saved');
-
+       
         image = jsonMap['url'];
 
         return image;
       }else{
-        Modals.showToast('not saved');
+        
 
       }
     } catch (e) {}
