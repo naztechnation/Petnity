@@ -150,23 +150,15 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          if (allOrders.product?.agent?.user?.firebaseId ==
-                                  '' ||
-                              allOrders.product?.agent?.user?.firebaseId ==
-                                  null) {
-                            Modals.showToast(
-                                'Can\'t communicate with this agent at the moment. Please');
-                          } else {
-                            AppNavigator.pushAndStackPage(context,
+                          AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
                                     agentName:
                                         allOrders.product?.agent?.name ?? '',
                                     userImage:
                                         allOrders.product?.agent?.picture ?? '',
-                                    uid: allOrders.product?.agent?.user
-                                            ?.firebaseId ??
-                                        '', customerName: '',));
-                          }
+                                    agentId: allOrders.product?.agent?.user
+                                            ?.sId ??
+                                        '', customerName: '', orderId: allOrders.sId ?? '',));
                         },
                         child: ImageView.svg(AppImages.messageBorder)),
                     const SizedBox(

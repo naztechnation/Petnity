@@ -449,11 +449,9 @@ class _TrackServicesState extends State<TrackServices> {
                                                                   .sellerPhoto
                                                               : widget
                                                                   .customerImage,
-                                                          firebaseId: userType ==
-                                                                  'user'
-                                                              ? widget.agentId
-                                                              : widget
-                                                                  .customerFireBaseId,
+                                                          agentId:   widget.agentId,
+                                                          orderId:   widget.orderId,
+                                                              
                                                           agentName:
                                                               widget.agentName),
                                                   ],

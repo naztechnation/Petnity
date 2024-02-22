@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'handlers/secure_handler.dart';
+import 'model/view_models/chat_controller.dart';
 import 'model/view_models/firebase_auth_viewmodel.dart';
 import 'model/view_models/service_provider_inapp.dart';
 import 'model/view_models/service_provider_view_model.dart';
@@ -108,6 +109,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => FirebaseAuthProvider(), lazy: false),
       ChangeNotifierProvider(create: (_) => ServiceProviderInAppViewModel(), lazy: false),
+      ChangeNotifierProvider(create: (_) => MessageController(), lazy: false),
     ], 
     child: const Lucacify(),
   ));

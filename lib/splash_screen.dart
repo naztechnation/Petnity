@@ -6,6 +6,7 @@ import 'package:petnity/handlers/secure_handler.dart';
 import '../../res/app_images.dart';
 import '../res/app_routes.dart';
 import '../utils/navigator/page_navigator.dart';
+import 'location_permission_screen.dart';
 import 'res/app_colors.dart';
 import 'res/app_constants.dart';
 import 'res/app_strings.dart';
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> changeScreen() async {
     if (isonBoarding == '') {
-      AppNavigator.pushAndReplaceName(context, name: AppRoutes.welcomeScreen);
+      AppNavigator.pushAndStackPage(context, page: LocationPermissionScreen());
     } else if (userLoggedIn == '') {
       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } else if (userType != '') {

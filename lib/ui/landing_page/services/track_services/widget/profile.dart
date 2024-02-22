@@ -26,6 +26,7 @@ Widget serviceProfile(
   required String customerName,
   required String customerImage,
   required String customerPhone,
+  required String orderId,
   required String customerFireBaseId,
 }) {
   return    (userType == 'user') ? Row(
@@ -90,7 +91,7 @@ Widget serviceProfile(
                                   page: ChatPage(
                                       customerName: customerName,
                                       userImage: sellerImage,
-                                      uid: sellerId, agentName: agentName,));
+                                      orderId: orderId, agentId: sellerId, agentName: agentName,));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
@@ -176,7 +177,7 @@ Widget serviceProfile(
                                   page: ChatPage(
                                       customerName: customerName,
                                       userImage: customerImage,
-                                      uid: customerFireBaseId, agentName: agentName,));
+                                      orderId: orderId, agentId: sellerId, agentName: agentName,));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),

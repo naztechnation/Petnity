@@ -179,11 +179,11 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                           agentName:
                               widget.vetOrders.agent?.user?.username ??
                                   '',
-                          firebaseId:
-                              widget.vetOrders.agent?.user?.firebaseId ?? '',
+                          agentId:
+                              widget.vetOrders.agent?.user?.sId ?? '',
                           phone: widget.vetOrders.agent?.user?.phoneNumber ??
                               '',
-                          customerName: widget.vetOrders.user?.username ?? '',
+                          customerName: widget.vetOrders.user?.username ?? '', orderId: widget.vetOrders.sId ?? '',
                         ),
                     ],
                   ),
@@ -251,14 +251,16 @@ class ImageWidget extends StatelessWidget {
   final String customerName;
   final String agentName;
   final String picture;
-  final String firebaseId;
+  final String agentId;
+  final String orderId;
 
   ImageWidget(
       {required this.sessionTypeName,
       required this.phone,
       required this.customerName,
       required this.picture,
-      required this.firebaseId,
+      required this.agentId,
+      required this.orderId,
       required this.agentName});
 
   @override
@@ -278,18 +280,13 @@ class ImageWidget extends StatelessWidget {
       case 'Chat':
         image = GestureDetector(
             onTap: () {
-              if (firebaseId == '' || firebaseId == null) {
-                Modals.showToast(
-                    'Can\'t communicate with this agent at the moment. Please');
-              } else {
-                AppNavigator.pushAndStackPage(context,
+              AppNavigator.pushAndStackPage(context,
                     page: ChatPage(
                       customerName: customerName,
                       userImage: picture,
-                      uid: firebaseId,
-                      agentName: agentName,
+                      
+                      agentName: agentName, agentId: agentId, orderId: orderId,
                     ));
-              }
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 10.0),

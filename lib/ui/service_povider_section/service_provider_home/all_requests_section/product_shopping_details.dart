@@ -140,10 +140,12 @@ class Purchase extends StatefulWidget {
 class _PurchaseState extends State<Purchase> {
   String userType = '';
   String username = '';
-  String serviceCharge = '1000';
+  String serviceCharge = '';
 
   late ServiceProviderCubit _serviceProviderCubit;
   bool isLoading = false;
+
+     
 
   getUserDetails() async {
     _serviceProviderCubit = context.read<ServiceProviderCubit>();
@@ -315,8 +317,7 @@ class _PurchaseState extends State<Purchase> {
                                                           widget.customerName,
                                                       userImage:
                                                           widget.ownerImage,
-                                                      uid: widget
-                                                          .ownerFirebaseId, agentName: widget.agentName,));
+                                                      orderId: widget.orderId, agentId: widget.ownerNormalId, agentName: widget.agentName,));
                                             }
                                           },
                                           child: ImageView.svg(

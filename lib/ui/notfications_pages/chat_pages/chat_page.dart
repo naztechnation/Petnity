@@ -1,51 +1,81 @@
-import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:math';
+
+import 'package:chat_bubbles/chat_bubbles.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:petnity/extentions/custom_string_extension.dart';
-import 'package:petnity/handlers/secure_handler.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:petnity/utils/navigator/page_navigator.dart';
-import 'package:provider/provider.dart';
-import '../../../model/chat_model/chat.dart';
-import '../../../model/view_models/account_view_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart'; 
+import 'package:petnity/handlers/secure_handler.dart'; 
+import 'package:provider/provider.dart'; 
+import '../../../blocs/chats/chat.dart';
+import '../../../blocs/user/user.dart';
+import '../../../model/view_models/chat_controller.dart';
+import '../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
-import '../../../res/app_images.dart';
-import '../../../res/app_strings.dart';
-import '../../../res/app_theme.dart'; 
-import '../../constants/firebase_constants.dart';
-import '../../video.dart';
-import '../../widgets/back_button.dart';
-import '../../widgets/custom_text.dart';
-import '../../widgets/profile_image.dart';
+  
 import 'widget/message_tile.dart';
 
-class ChatPage extends StatefulWidget {
+class ChatPage extends StatelessWidget {
   final String customerName;
   final String agentName;
 
   final String userImage;
-  final String uid;
+  final String orderId;
+  final String agentId;
 
   const ChatPage(
       {super.key,
       required this.customerName,
       required this.agentName,
       required this.userImage,
-      required this.uid});
-  @override
-  State<ChatPage> createState() => _ChatPageState(   customerName: customerName, agentName: agentName, userImage: userImage, uid: uid);
-}
+      required this.agentId,
+      required this.orderId});
 
-class _ChatPageState extends State<ChatPage> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ChatCubit>(
+      create: (BuildContext context) => ChatCubit(
+          accountRepository: AccountRepositoryImpl(),
+          viewModel: Provider.of<MessageController>(context, listen: false)),
+      child: Chat(
+        agentName: agentName,
+        agentId: agentId,
+        orderId: orderId,
+        customerName: customerName, userImage: userImage,
+      ),
+    );
+  }
+}
+class Chat extends StatefulWidget {
   final String customerName;
   final String agentName;
+
   final String userImage;
-  final String uid;
+  final String orderId;
+  final String agentId;
+
+  const Chat(
+      {super.key,
+      required this.customerName,
+      required this.agentName,
+      required this.userImage,
+      required this.agentId,
+      required this.orderId});
+  @override
+  State<Chat> createState() => _ChatState(   );
+}
+
+class _ChatState extends State<Chat> {
+
+
 
   TextEditingController messageController = TextEditingController();
+  late ChatCubit _chatCubit;
+
   final _scrollController = ScrollController();
   String admin = "";
   String userType = "";
@@ -54,123 +84,61 @@ class _ChatPageState extends State<ChatPage> {
   String currentUserId = "";
   String peerId = "";
 
+    bool isSender = false;
+
+
+
   getUserType()async{
     userType = await StorageHandler.getUserType();
+      if(userType == 'user'){
+        isSender = true;
+      }else{
+        isSender = false;
+
+      }
+     _chatCubit = context.read<ChatCubit>();
 
     setState(() {
-      
+      _chatCubit.viewModel.updateRecieverDetails(receiverId: isSender ? widget.orderId : widget.agentId, receiverImage: isSender ? '' : '', receiverName: isSender ? widget.customerName : widget.agentName);
+         
+         _chatCubit.viewModel.selectedKey  = '';
+
     });
   }
 
    final _firebaseAuth = FirebaseAuth.instance;
 
-  _ChatPageState({required this.customerName,required this.agentName,
-  required this.userImage,required this.uid});
+   
 
   @override
   void initState() {
 
     getUserType();
-    updateOnlineStatus(true);
-
-    generateGroupId();
-    Future.delayed(
-        const Duration(
-          seconds: 1,
-        ), () {
-      _scrollDown();
-    });
+     
     super.initState();
   }
 
   @override
   void dispose() {
     messageController.dispose();
-    updateOnlineStatus(false);
+     
     super.dispose();
   }
 
-  generateGroupId() {
-    currentUserId = FirebaseAuth.instance.currentUser!.uid;
-    peerId = widget.uid;
+  
 
-    if (currentUserId.compareTo(peerId) > 0) {
-      groupChatId = '$currentUserId-$peerId';
-    } else {
-      groupChatId = '$peerId-$currentUserId';
-    }
+ 
 
-    updateDataFirestore(
-      FirestoreConstants.pathUserCollection,
-      currentUserId,
-      {FirestoreConstants.chattingWith: peerId},
-    );
-  }
-
-  Future<void> updateDataFirestore(String collectionPath, String docPath,
-      Map<String, dynamic> dataNeedUpdate) {
-    return FirebaseFirestore.instance
-        .collection(collectionPath)
-        .doc(docPath)
-        .update(dataNeedUpdate);
-  }
-
-  sendChat({required String message}) async {
-     
-    MessageChat chat = MessageChat(
-        content: message,
-        idFrom: currentUserId,
-        idTo: peerId,
-        timestamp: FieldValue.serverTimestamp());
-
-    await FirebaseFirestore.instance
-        .collection("groupMessages")
-        .doc(groupChatId)
-        .collection("messages")
-        .add(chat.toJson());
-
-    messageController.text = "";
-    
-  }
-
-  Future<bool> onBackPress() {
-    updateOnlineStatus(false);
-
-    updateDataFirestore(
-      FirestoreConstants.pathUserCollection,
-      currentUserId,
-      {FirestoreConstants.chattingWith: null},
-    );
-    Navigator.pop(context);
-
-    return Future.value(false);
-  }
-
-  Future<void> updateOnlineStatus(bool isOnline) async {
-    try {
-     
-      final _firebaseStorage = FirebaseFirestore.instance;
-      final currentUserUid = _firebaseAuth.currentUser!.uid;
-
-      await _firebaseStorage.collection('users').doc(currentUserUid).set(
-        {
-          'online': isOnline,
-        },
-        SetOptions(merge: true),
-      );
-    } catch (e) {
-      print("Error updating online status: $e");
-    }
-  }
+  
+ 
+ 
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AccountViewModel>(context, listen: false);
+    final msgCntrl = Provider.of<MessageController>(context, listen: false);
  
 
-    return WillPopScope(
-      onWillPop: onBackPress,
-      child: Scaffold(
+    return    Scaffold(
         body: Container(
           height: screenSize(context).height,
           width: screenSize(context).width,
@@ -179,168 +147,122 @@ class _ChatPageState extends State<ChatPage> {
                   colors: [AppColors.scaffoldColor, Colors.red.shade50],
                   begin: Alignment.topRight,
                   end: Alignment.topLeft)),
-          child: Column(
-            children: <Widget>[
-              SafeArea(child: SizedBox(height: (Platform.isAndroid) ? 20 : 0)),
-              Container(
-                width: screenSize(context).width,
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    backButton(context),
-                    const SizedBox(
-                      width: 19,
+          child: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.only(bottom: 70, top: 5),
+            child: FirebaseAnimatedList(
+                reverse: true,
+                sort: (DataSnapshot a, DataSnapshot b) =>
+                    b.key!.compareTo(a.key!),  
+ 
+                query: msgCntrl.dbChatMessage.child(msgCntrl.selectedKey),
+                controller: _scrollController,
+                itemBuilder: (context, snapshot, counter, index) {
+                  bool isUser = snapshot.child('userId').value.toString() ==
+                      currentUserId;
+                  bool isImage =
+                      snapshot.child('isImage').value.toString() == "true";
+                  
+                 
+                  return isImage
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            BubbleNormalImage(
+                              id: DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString(),
+                              image: Image.network(
+                                  snapshot.child('message').value.toString()),
+                              // color: Color(0xFF1B97F3),
+                              color: isUser
+                                  ? Colors.yellow
+                                  : Colors.purple[200]!,
+                              isSender: isUser,
+                              sent: true,
+                              seen: true,
+                              tail: false,
+                            ),
+                            Container(
+                              alignment: isUser
+                                  ? Alignment.centerRight
+                                  : Alignment.centerLeft,
+                              margin: const EdgeInsets.only(
+                                  right: 20, bottom: 2, top: 0),
+                              child: Text(
+                                  '${int.parse(snapshot.child('time').value.toString()).abs()}',
+                               
+                              ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            MessageTile(
+                  message: snapshot.child('message').value.toString(),
+                  sender: userType == 'user' ? widget.customerName : widget.agentName,
+                  timeStamp: int.parse(snapshot.child('time').value.toString()).abs(),
+                  sentByMe: isUser ? true : false),
+                           
+                            
+                          ],
+                        );
+                }),
+          ),
+          MessageBar(
+            replyIconColor: AppColors.lightSecondary,
+            sendButtonColor: AppColors.lightSecondary,
+            onSend: (val) {
+    Future.delayed(const Duration(milliseconds: 50)).then((_) => _scrollDown());
+
+              msgCntrl.sendChatMessages(
+                  userId: widget.orderId,
+                  receiverId: widget.agentId,
+                  message: msgCntrl.messageText, senderName: userType == 'user' ? widget.customerName : widget.agentName);
+            },
+            onTextChanged: (txt) {
+              msgCntrl.messageText = txt;
+            },
+            actions: [
+              InkWell(
+                child: Transform.rotate(
+                  angle: pi / 2,
+                  child: Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    child: const Icon(
+                      Icons.attach_file,
+                      color: Colors.black,
+                      size: 30,
                     ),
-                    ProfileImage(
-                      placeHolder: AppImages.person,
-                      '$userImage',
-                      height: 80,
-                      width: 80,
-                      radius: 23,
-                    ),
-                    const SizedBox(
-                      width: 19,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          text: (userType == 'user') ? '$agentName'.capitalizeFirstOfEach : '$customerName'.capitalizeFirstOfEach ,
-                          weight: FontWeight.w700,
-                          size: 14,
-                          fontFamily: AppStrings.interSans,
-                          color: Colors.black,
-                        ),
-                        StreamBuilder<bool>(
-                          stream: listenToOnlineStatus(
-                               uid),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Text('Loading...');
-                            }
-                            if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            }
-                            final isOnline = snapshot.data ?? false;
-                            final statusText = isOnline ? 'Online' : 'Offline';
-                            return CustomText(
-                              textAlign: TextAlign.center,
-                              maxLines: 2,
-                              text: '$statusText',
-                              weight: FontWeight.w500,
-                              size: 14,
-                              fontFamily: AppStrings.interSans,
-                              color: Colors.grey,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Container(
-                      height: 50,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 15),
-                      margin: const EdgeInsets.only(right: 20.0),
-                      decoration: BoxDecoration(
-                          color: AppColors.lightPrimary,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 14.0),
-                            child: ImageView.svg(AppImages.phoneIcon),
-                          ),
-                          GestureDetector(
-                              onTap: (() {
-                                AppNavigator.pushAndStackPage(context,
-                                    page: VideoCall(customerName: customerName, agentName: agentName,));
-                              }),
-                              child: ImageView.svg(AppImages.videoIcon)),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Expanded(
-                child: chatMessages(),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                        begin: Alignment.topRight,
-                        end: Alignment.topLeft)),
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 60,
-                  child: Row(
-                    children: <Widget>[
-                      // Expanded(
-                      //     flex: 1,
-                      //     child: Icon(
-                      //       Icons.attach_file,
-                      //       color: AppColors.lightSecondary,
-                      //     )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        flex: 8,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: TextField(
-                            controller: messageController,
-                            decoration: InputDecoration(
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 22),
-                                hintText: "Type a message...",
-                                hintStyle: TextStyle(
-                                    color: AppTheme.lightTheme.dividerColor),
-                                border: InputBorder.none),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: FloatingActionButton(
-                          mini: true,
-                          isExtended: false,
-                          onPressed: () {
-                            sendMessage();
-                          },
-                          backgroundColor: AppColors.lightSecondary,
-                          elevation: 0,
-                          child: const Icon(
-                            Icons.send,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
+                onTap: () {
+                  msgCntrl.ImagePicker();
+                },
               ),
-              const SizedBox(
-                height: 12,
-              )
+              Padding(
+                padding: EdgeInsets.only(left: 8, right: 8),
+                child: InkWell(
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: AppColors.lightSecondary,
+                    size: 24,
+                  ),
+                  onTap: () {
+                    msgCntrl.ImagePicker(source: ImageSource.camera);
+                  },
+                ),
+              ),
             ],
           ),
-        ),
+        ],
       ),
+        ),
+       
     );
   }
 
@@ -352,65 +274,9 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  chatMessages() {
-    return StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection("groupMessages")
-            .doc(groupChatId)
-            .collection("messages")
-            .orderBy(FirestoreConstants.timestamp, descending: false)
-            .snapshots(),
-        builder: (context,
-            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+   
 
-          return ListView.builder(
-            reverse: false,
-            shrinkWrap: true,
-            controller: _scrollController,
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              MessageChat chat =
-                  MessageChat.fromDocument(snapshot.data!.docs[index]);
+  
 
-              return MessageTile(
-                  message: chat.content,
-                  sender: userType == 'user' ? customerName : agentName,
-                  timeStamp: 0,
-                  sentByMe: chat.idFrom == currentUserId ? true : false);
-            },
-          );
-        });
-  }
-
-  sendMessage() {
-    Future.delayed(const Duration(milliseconds: 50)).then((_) => _scrollDown());
-
-    if (messageController.text.isNotEmpty) {
-      sendChat(message: messageController.text);
-      messageController.text = "";
-      _scrollDown();
-      FocusManager.instance.primaryFocus?.unfocus();
-
-      messageController.clear();
-    }
-  }
-
-  Stream<bool> listenToOnlineStatus(String uid) {
-    return FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .snapshots()
-        .map((snapshot) {
-      if (snapshot.exists) {
-        return snapshot.data()?['online'] ?? false;
-      } else {
-        return false;
-      }
-    });
-  }
+  
 }

@@ -37,6 +37,7 @@ class TrackServicesBody extends StatefulWidget {
   final String customerImage;
   final String customerPhone;
   final String customerFireBaseId;
+  final String orderId;
 
   const TrackServicesBody(
       {super.key,
@@ -53,7 +54,7 @@ class TrackServicesBody extends StatefulWidget {
       required this.customerName,
        required this.customerImage, 
        required this.customerPhone,
-        required this.customerFireBaseId});
+        required this.customerFireBaseId, required this.orderId});
 
   @override
   State<TrackServicesBody> createState() => _TrackServicesBodyState();
@@ -105,7 +106,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                   phone: widget.phone,
                   userType: userType,
                   customerName: widget.customerName, customerImage: widget.customerImage,
-                   customerPhone: widget.customerPhone, customerFireBaseId: widget.customerFireBaseId
+                   customerPhone: widget.customerPhone, customerFireBaseId: widget.customerFireBaseId, orderId: widget.orderId
                   ),
               if (userType == 'user') ...[
                 GestureDetector(

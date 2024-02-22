@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'res/app_routes.dart';
 import 'ui/widgets/button_view.dart';
+import 'utils/navigator/page_navigator.dart';
 
 
 
@@ -30,10 +32,8 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
     
     PermissionStatus _permission = await Permission.location.request();
     if (_permission.isGranted) {
-      // Navigator.pushAndRemoveUntil(context,
-      //               MaterialPageRoute(builder: (_) {
-      //             return const ContactPermissionScreen();
-      //           }), (route) => false);
+            AppNavigator.pushAndReplaceName(context, name: AppRoutes.welcomeScreen);
+
     } else {
       exit(0);
       //Modals.showToast('Permision Not Granted');
@@ -72,13 +72,12 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
                 height: 30,
               ),
               Text(
-                """This app collects your location information to enable a seamless pickup rider experience. We value your privacy and want to provide you with the best service possible. Here's how we use your location:
-        
-1. Pickup Coordination: By accessing your location, we can match you with the nearest available riders for quick and efficient pickups. This ensures that you receive timely service and reduces waiting times.
-        
-Please note that we respect your privacy and are committed to handling your location information responsibly.
+                """At Lucacify, we prioritize your privacy and aim to offer exceptional service while upholding the confidentiality of your personal information. Here's how we utilize your location data:
 
-You can learn more about choices regarding the collection and use of information in our privacy policy below
+        
+Direct Service Delivery: Your location information enables us to ensure that pet care professionals can efficiently deliver their services directly to your location. This means they can come directly to you to provide the care your pets need, ensuring convenience and efficiency in managing their well-being.
+
+We are dedicated to protecting your privacy. For further insights into how we handle your information, please review our detailed privacy policy linked below.
         """,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                 textAlign: TextAlign.justify,
@@ -90,14 +89,18 @@ You can learn more about choices regarding the collection and use of information
                 onTap: () async {
                   _launchUrl();
                 },
-                child: Text(
-                  'https://blopz.com/privacy',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline),
+                child: Align(
+                  child: Text(
+                    'https://lucacify.com/privacy',
+                    textAlign: TextAlign.center,
+                    
+                    style: TextStyle(
+                      decorationColor: Colors.blue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline),
+                  ),
                 ),
               ),
               const SizedBox(
@@ -119,7 +122,7 @@ You can learn more about choices regarding the collection and use of information
                 onPressed: () async {
                   exit(0);
                 },
-                child: Text('No Thanks'),
+                child: Text('No Thanks', style: TextStyle(color: Colors.white),),
                 expanded: false,
                 color: Colors.red,
                 borderColor: Colors.red,
@@ -130,7 +133,7 @@ You can learn more about choices regarding the collection and use of information
                 onPressed: () {
                   _getPerm();
                 },
-                child: Text('I Agree'),
+                child: Text('I Agree', style: TextStyle(color: Colors.white),),
                 expanded: false,
                 color: Colors.green,
                 borderColor: Colors.green,
