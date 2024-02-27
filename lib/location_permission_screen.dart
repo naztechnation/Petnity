@@ -2,7 +2,6 @@ import 'dart:io';
 
 
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'res/app_routes.dart';
@@ -29,15 +28,17 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   }
 
   _getPerm() async {
-    
-    PermissionStatus _permission = await Permission.location.request();
-    if (_permission.isGranted) {
             AppNavigator.pushAndReplaceName(context, name: AppRoutes.welcomeScreen);
+    
+    // PermissionStatus _permission = await Permission.location.request();
+    // if (_permission.isGranted) {
+    //         AppNavigator.pushAndReplaceName(context, name: AppRoutes.welcomeScreen);
 
-    } else {
-      exit(0);
-      //Modals.showToast('Permision Not Granted');
-    }
+    // } else {
+    //   Modals.showToast('Permision Not Granted');
+
+    //  exit(0);
+    // }
   }
 
   @override

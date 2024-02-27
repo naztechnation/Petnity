@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../res/enum.dart';
@@ -36,21 +37,29 @@ class MessageController extends BaseViewModel {
 
   }
 
-  // This is used to access a specific chat messages
-  var selectedKey = "";
+  String _selectedKey = ""; 
 
-  // This create chat Users for both the sender and the receiver side...
+  updateSelectedKey(String orderId, String recieverId){
+
+    _selectedKey = returnKey(orderId: orderId, receiverId: recieverId);
+
+    Modals.showToast(_selectedKey);
+
+    setViewState(ViewState.success);
+
+  }
+
   createChatUser(
-      {required String userId,
+      {required String orderId,
       required String receiverId,
       required String type,
       required String senderImage,
       required String senderName}) async {
-    String key = returnKey(userId: userId, receiverId: receiverId);
+    String key = returnKey(orderId: orderId, receiverId: receiverId);
     int timeStamp = DateTime.now().millisecondsSinceEpoch;
 
-    dbChatList.child(userId).child(receiverId).set({
-      "userId": userId,
+    dbChatList.child(orderId).child(receiverId).set({
+      "orderId": orderId,
       "receiverId": _receiverId,
       "message": messageText,
       "lastMessage": type == "image"
@@ -68,8 +77,8 @@ class MessageController extends BaseViewModel {
       "type": type
     });
 
-    dbChatList.child(receiverId).child(userId).set({
-      "userId": userId,
+    dbChatList.child(receiverId).child(orderId).set({
+      "orderId": orderId,
       "receiverId": _receiverId,
       "message": messageText,
       "lastMessage": type == "image"
@@ -92,40 +101,60 @@ class MessageController extends BaseViewModel {
   }
 
   updateChatUser({
-    String userId = "",
+    String orderId = "",
     String receiverId = "",
   }) async {
     // This is called to update when is recent message is viewed
-    await dbChatList.child(userId).child(receiverId).update({
+    await dbChatList.child(orderId).child(receiverId).update({
       "seen": "true",
     });
-    await dbChatList.child(receiverId).child(userId).update({
+    await dbChatList.child(receiverId).child(orderId).update({
       "seen": "true",
     });
     setViewState(ViewState.success);
 
   }
 
+    getUserId() async{
+
+    String userType = await StorageHandler.getUserType();
+    String userId = '';
+    if(userType == 'user'){
+     userId = await StorageHandler.getUserId();
+
+    }else{
+     userId = await StorageHandler.getAgentId();
+
+    }
+
+    return userId;
+  }
+
   sendChatMessages(
-      {String userId = "",
+      {String orderId = "",
       String receiverId = "",
       String isImage = "false",
       String message = "",
       required String senderName}) async {
     // This will be called when messages are to be sent
-    String key = returnKey(userId: userId, receiverId: receiverId);
+    String key = returnKey(orderId: orderId, receiverId: receiverId);
 
     String type = isImage == "true" ? "image" : "text";
     createChatUser(
-        userId: userId,
+        orderId: orderId,
         receiverId: receiverId,
         type: type,
         senderImage: '',
         senderName: senderName);
 
+      String userId =  await getUserId();
+
+       
+
     await dbChatMessage.child(key).push().set({
-      "userId": userId,
+      "orderId": orderId,
       "receiverId": receiverId,
+      "senderId": userId,
       "message": message,
       "isSender": "true",
       "senderName": senderName,
@@ -140,23 +169,19 @@ class MessageController extends BaseViewModel {
     // duration: Duration(milliseconds: 400), curve: Curves.easeIn);
   }
 
-  String returnKey({String userId = "", String receiverId = ""}) {
-    return (int.parse(userId) <= int.parse(receiverId))
-        ? "${userId}_$receiverId"
-        : "${receiverId}_$userId";
+  String returnKey({String orderId = "", String receiverId = ""}) {
+    return  "${orderId}_$receiverId";
   }
 
   uploadImage(
       {ImageSource source = ImageSource.gallery,
-      required String senderName,
-      required String senderId}) async {
+      required String recieverId,
+      required String orderId}) async {
     final _firebaseStorage = FirebaseStorage.instance;
 
-    await ImagePicker(source: source);
+    await ImagesPicker(source: source);
 
-    Modals.showToast(
-      "This is the uploaded image.${chatImageUpload.path}",
-    );
+     
 
     if (chatImageUpload != null) {
       String imageTitle = chatImageUpload.path.split("/").last;
@@ -175,11 +200,11 @@ class MessageController extends BaseViewModel {
           Modals.showToast("Image uploading started");
 
           sendChatMessages(
-            userId: senderId,
-            receiverId: _receiverId,
+            orderId: orderId,
+            receiverId: recieverId,
             isImage: "true",
             message: downloadUrl,
-            senderName: senderName,
+            senderName: '',
           );
           Modals.showToast("Image uploaded successfully");
         } else {
@@ -196,7 +221,7 @@ class MessageController extends BaseViewModel {
     }
   }
 
-  ImagePicker({
+  ImagesPicker({
     ImageSource source = ImageSource.gallery,
   }) async {
     // final _firebaseStorage = FirebaseStorage.instance;
@@ -206,7 +231,7 @@ class MessageController extends BaseViewModel {
     //Check Permissions
     await Permission.photos.request();
     print("This is the problem 2");
-    var permissionStatus = await Permission.mediaLibrary.status;
+     var permissionStatus = await Permission.mediaLibrary.status;
 
     print("This is the problem 3");
 
@@ -218,14 +243,15 @@ class MessageController extends BaseViewModel {
     // if (permissionStatus.isGranted) {
     //Select Image
     try {
-      image = await imagePicker.pickImage(source: source);
+      
+        image = await imagePicker.pickImage(source: source);
       // .pickImage(source: source);
       print("This is the problem 6");
 
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: image!.path,
         compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
+        compressQuality: 20,
         uiSettings: [
           AndroidUiSettings(
               toolbarTitle: 'Upload Image',
@@ -258,6 +284,7 @@ class MessageController extends BaseViewModel {
   }
 
   String get recieverId => _receiverId;
+  String get selectedKey => _selectedKey;
   String get recieverName => _receiverName;
   String get recieverImage => _receiverImage;
 

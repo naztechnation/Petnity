@@ -86,7 +86,6 @@ class TrackServicesScreen extends StatelessWidget {
         amount: amount,
         paymentId: paymentId,
         sellerPhoto: sellerImage,
-        sellerId: sellerId,
         isAcceptedService: isAcceptedService,
         isOngoingService: isOngoingService,
         isCompletedService: isCompletedService,
@@ -109,7 +108,6 @@ class TrackServices extends StatefulWidget {
   final String phone;
   final String serviceOffered;
   final String agentId;
-  final String sellerId;
   final String orderId;
   final String customerName;
   final String customerPhone;
@@ -134,7 +132,6 @@ class TrackServices extends StatefulWidget {
       required this.phone,
       required this.serviceOffered,
       required this.agentId,
-      required this.sellerId,
       required this.startDate1,
       required this.startDate2,
       required this.amount,
@@ -348,7 +345,6 @@ class _TrackServicesState extends State<TrackServices> {
                                 agentName: widget.agentName,
                                 phone: widget.phone,
                                 agentId: widget.agentId,
-                                sellerId: widget.sellerId,
                                 startDate1: widget.startDate1,
                                 startDate2: widget.startDate2,
                                 amount: widget.amount,
@@ -504,7 +500,7 @@ class _TrackServicesState extends State<TrackServices> {
                                   onPressed: () {
                                     markAccepted(
                                       ctx: context,
-                                      agentId: widget.sellerId,
+                                      agentId: widget.agentId,
                                       orderId: widget.orderId,
                                     );
                                   },
@@ -530,7 +526,7 @@ class _TrackServicesState extends State<TrackServices> {
                                         onTap: () {
                                       rejectUserOrder(
                                         ctx: context,
-                                        agentId: widget.sellerId,
+                                        agentId: widget.agentId,
                                         orderId: widget.orderId,
                                       );
                                     });
@@ -566,7 +562,7 @@ class _TrackServicesState extends State<TrackServices> {
                               onPressed: () {
                                 markOngoingAccepted(
                                   ctx: context,
-                                  agentId: widget.sellerId,
+                                  agentId: widget.agentId,
                                   orderId: widget.orderId,
                                 );
                               },
@@ -660,7 +656,7 @@ class _TrackServicesState extends State<TrackServices> {
                                   onPressed: () {
                                      markCompletedAccepted(
                                   ctx: context,
-                                  agentId: widget.sellerId,
+                                  agentId: widget.agentId,
                                   orderId: widget.orderId,
                                 );
                                   },

@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../../../../blocs/service_provider/service_provider.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/view_models/account_view_model.dart';
+import '../../../../model/view_models/chat_controller.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../requests/repositories/location_repo/location_repository_impl.dart';
 import '../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
@@ -164,6 +165,8 @@ class _PurchaseState extends State<Purchase> {
 
   @override
   Widget build(BuildContext context) {
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<LocationCubit>(
@@ -310,6 +313,8 @@ class _PurchaseState extends State<Purchase> {
                                               Modals.showToast(
                                                   'Can\'t communicate with this agent at the moment. Please');
                                             } else {
+                              msgCntrl.updateSelectedKey(widget.orderId, widget.ownerNormalId);
+
                                               AppNavigator.pushAndStackPage(
                                                   context,
                                                   page: ChatPage(

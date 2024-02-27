@@ -618,7 +618,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     phone: order.agent?.user?.phoneNumber ?? '',
                     serviceOffered:
                         order.package?.service?.serviceType?.name ?? '',
-                    agentId: order.agent?.user?.firebaseId ?? '',
+                    agentId: order.agent?.sId ?? '',
                     sellerId: order.agent?.sId.toString() ?? '',
                     startDate1: order.pickupTime ?? '0',
                     startDate2: order.dropoffTime ?? '0',

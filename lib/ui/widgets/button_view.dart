@@ -61,7 +61,7 @@ class ButtonView extends StatelessWidget {
               ),
             ),
           style: ElevatedButton.styleFrom(
-            primary: disabled
+            backgroundColor: disabled
                 ? Theme.of(context).backgroundColor
                 : (color ?? AppColors.lightSecondary),
             padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
@@ -87,7 +87,7 @@ class ButtonView extends StatelessWidget {
             onPressed: disabled ? null : onPressed,
             child: child,
             style: ElevatedButton.styleFrom(
-              primary: disabled
+              backgroundColor: disabled
                   ? Theme.of(context).backgroundColor
                   : (color ?? AppColors.lightSecondary),
                           padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),
@@ -114,7 +114,7 @@ class ButtonView extends StatelessWidget {
           child: child,
           style: ElevatedButton.styleFrom(
             elevation: 0,
-            primary: disabled
+            backgroundColor: disabled
                 ? Theme.of(context).backgroundColor
                 : (color ?? AppColors.lightSecondary),
                         padding: EdgeInsets.symmetric(vertical: 13, horizontal: 20),

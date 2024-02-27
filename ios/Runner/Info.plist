@@ -84,6 +84,9 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
   	<string>tel</string>
+	
+	
+<false />
 </array>
 </dict>
 </plist>

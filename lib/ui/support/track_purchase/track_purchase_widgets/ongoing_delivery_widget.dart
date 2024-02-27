@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/order.dart';
+import '../../../../model/view_models/chat_controller.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
@@ -45,6 +46,8 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
   @override
   Widget build(BuildContext context) {
     final userModel = Provider.of<UserViewModel>(context, listen: true);
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
+
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
@@ -170,6 +173,8 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                       ),
                       GestureDetector(
                           onTap: () {
+                              msgCntrl.updateSelectedKey(widget.services.sId ?? '' ?? '', widget.services.agent?.sId ?? '');
+
                             AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
                                     agentName: widget.services.agent?.user?.username ??
@@ -177,7 +182,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                            ,
                                     userImage:
                                         widget.services.agent?.picture ?? '',
-                                    orderId: widget.services.sId ?? '', agentId: widget.services.agent?.user?.sId ?? '',
+                                    orderId: widget.services.sId ?? '', agentId: widget.services.agent?.sId ?? '',
                                     customerName: widget
                                             .services.user?.username ??
                                         '',
@@ -220,7 +225,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                                       ?.serviceType?.name ??
                                   '',
                               agentId:
-                                  widget.services.agent?.user?.firebaseId ??
+                                  widget.services.agent?.sId ??
                                       '',
                               sellerId:
                                   widget.services.agent?.sId.toString() ?? '',

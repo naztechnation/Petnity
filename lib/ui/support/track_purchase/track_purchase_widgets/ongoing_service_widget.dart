@@ -10,13 +10,13 @@ import 'package:provider/provider.dart';
 
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/user_models/order.dart';
+import '../../../../model/view_models/chat_controller.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_services.dart';
 import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../video.dart';
-import '../../../widgets/modals.dart';
 import '../widget/progressbar.dart';
 
 class OngoingServiceWidget extends StatefulWidget {
@@ -50,6 +50,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
   @override
   Widget build(BuildContext context) {
     final services = Provider.of<UserViewModel>(context, listen: false);
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
 
     return Card(
       elevation: 1,
@@ -160,11 +161,14 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     ),
                     GestureDetector(
                         onTap: () {
+
+                              msgCntrl.updateSelectedKey(allOrders.sId ?? '', allOrders.agent?.sId ?? '');
+
                           AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
                                     agentName: allOrders.agent?.user?.username ?? '',
                                     userImage: allOrders.agent?.picture ?? '',
-                                     customerName: allOrders.user?.username ?? '', agentId: allOrders.agent?.user?.sId ?? '', orderId: allOrders.sId ?? '',));
+                                     customerName: allOrders.user?.username ?? '', agentId: allOrders.agent?.sId ?? '', orderId: allOrders.sId ?? '',));
                         },
                         child: ImageView.svg(AppImages.messageBorder)),
                     const SizedBox(
@@ -193,7 +197,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             serviceOffered:
                                 allOrders.package?.service?.serviceType?.name ??
                                     '',
-                            agentId: allOrders.agent?.user?.firebaseId ?? '',
+                            agentId: allOrders.agent?.sId ?? '',
                             sellerId: allOrders.agent?.sId.toString() ?? '',
                             startDate1: allOrders.pickupTime ?? '0',
                             startDate2: allOrders.dropoffTime ?? '0',

@@ -4,7 +4,9 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/notfications_pages/chat_pages/chat_page.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart';
 
+import '../../../../../model/view_models/chat_controller.dart';
 import '../../../../../res/app_strings.dart';
 import '../../../../../utils/navigator/page_navigator.dart';
  
@@ -19,7 +21,7 @@ Widget serviceProfile(
   bool hideImage = false,
   required String agentName,
   required String sellerImage,
-  required String sellerId,
+  required String agentId,
   required String userName,
   required String phone,
   required String userType,
@@ -29,6 +31,10 @@ Widget serviceProfile(
   required String orderId,
   required String customerFireBaseId,
 }) {
+    
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
+
+
   return    (userType == 'user') ? Row(
     children: [
       Expanded(
@@ -83,15 +89,17 @@ Widget serviceProfile(
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (sellerId == '') {
+                            if (agentId == '') {
                               Modals.showToast(
                                   'Can\'t communicate with this agent at the moment. Please');
                             } else {
+                              
+                              msgCntrl.updateSelectedKey(orderId, agentId);
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
                                       customerName: customerName,
                                       userImage: sellerImage,
-                                      orderId: orderId, agentId: sellerId, agentName: agentName,));
+                                      orderId: orderId, agentId: agentId, agentName: agentName,));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
@@ -173,11 +181,15 @@ Widget serviceProfile(
                               Modals.showToast(
                                   'Can\'t communicate with this buyer at the moment. Please');
                             } else {
+
+                           
+                                msgCntrl.updateSelectedKey(orderId, agentId);
+                       
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
                                       customerName: customerName,
                                       userImage: customerImage,
-                                      orderId: orderId, agentId: sellerId, agentName: agentName,));
+                                      orderId: orderId, agentId: agentId, agentName: agentName,));
                             }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),

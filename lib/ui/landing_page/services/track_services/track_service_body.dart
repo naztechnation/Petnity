@@ -27,7 +27,6 @@ class TrackServicesBody extends StatefulWidget {
   final String sellerPhoto;
   final String phone;
   final String agentId;
-  final String sellerId;
   final String startDate1;
   final String startDate2;
   final String paymentId;
@@ -44,7 +43,6 @@ class TrackServicesBody extends StatefulWidget {
       required this.agentName,
       required this.phone,
       required this.agentId,
-      required this.sellerId,
       required this.startDate1,
       required this.startDate2,
       required this.paymentId,
@@ -101,7 +99,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
               serviceProfile(context,
                   agentName: widget.agentName,
                   sellerImage: widget.sellerPhoto,
-                  sellerId: widget.agentId,
+                  agentId: widget.agentId,
                   userName: user.username,
                   phone: widget.phone,
                   userType: userType,
@@ -113,7 +111,7 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                   onTap: () {
                     AppNavigator.pushAndStackPage(context,
                         page: AgentProfileScreen(
-                          agentId: widget.sellerId,
+                          agentId: widget.agentId,
                         ));
                   },
                   child: Padding(

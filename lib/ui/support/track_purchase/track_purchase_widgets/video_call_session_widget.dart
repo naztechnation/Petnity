@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../model/session_types/session_types.dart';
 import '../../../../model/user_models/vet_orders.dart';
+import '../../../../model/view_models/chat_controller.dart';
 import '../../../../model/view_models/user_view_model.dart';
 import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_vet_services.dart';
@@ -52,6 +53,8 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
   @override
   Widget build(BuildContext context) {
     final services = Provider.of<UserViewModel>(context, listen: false);
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
+
 
     return Card(
         child: Container(
@@ -180,7 +183,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
                               widget.vetOrders.agent?.user?.username ??
                                   '',
                           agentId:
-                              widget.vetOrders.agent?.user?.sId ?? '',
+                              widget.vetOrders.agent?.sId ?? '',
                           phone: widget.vetOrders.agent?.user?.phoneNumber ??
                               '',
                           customerName: widget.vetOrders.user?.username ?? '', orderId: widget.vetOrders.sId ?? '',
@@ -265,6 +268,8 @@ class ImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
+
     Widget image;
     switch (sessionTypeName) {
       case 'Voice Call':
@@ -280,6 +285,8 @@ class ImageWidget extends StatelessWidget {
       case 'Chat':
         image = GestureDetector(
             onTap: () {
+                              msgCntrl.updateSelectedKey(orderId, agentId);
+
               AppNavigator.pushAndStackPage(context,
                     page: ChatPage(
                       customerName: customerName,

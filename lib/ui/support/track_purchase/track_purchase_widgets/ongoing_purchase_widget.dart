@@ -7,10 +7,12 @@ import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
 
 import 'package:petnity/ui/widgets/button_view.dart';
-import 'package:petnity/ui/widgets/image_view.dart'; 
+import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:provider/provider.dart'; 
 
 import '../../../../handlers/secure_handler.dart'; 
 import '../../../../model/user_models/shop_order.dart';
+import '../../../../model/view_models/chat_controller.dart';
 import '../../../../utils/navigator/page_navigator.dart'; 
 import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../service_povider_section/service_provider_home/all_requests_section/product_shopping_details.dart';
@@ -51,6 +53,8 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
 
   @override
   Widget build(BuildContext context) {
+       final msgCntrl = Provider.of<MessageController>(context, listen: true);
+
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       elevation: 1,
@@ -150,14 +154,15 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                     ),
                     GestureDetector(
                         onTap: () {
+                              msgCntrl.updateSelectedKey(allOrders.sId ?? '', allOrders.agent?.sId ?? '');
+
                           AppNavigator.pushAndStackPage(context,
                                 page: ChatPage(
                                     agentName:
                                         allOrders.product?.agent?.name ?? '',
                                     userImage:
                                         allOrders.product?.agent?.picture ?? '',
-                                    agentId: allOrders.product?.agent?.user
-                                            ?.sId ??
+                                    agentId: allOrders.product?.agent?.sId ??
                                         '', customerName: '', orderId: allOrders.sId ?? '',));
                         },
                         child: ImageView.svg(AppImages.messageBorder)),

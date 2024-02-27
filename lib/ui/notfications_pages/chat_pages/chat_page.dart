@@ -1,23 +1,29 @@
-
 import 'dart:math';
 
-import 'package:chat_bubbles/chat_bubbles.dart'; 
+import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart'; 
-import 'package:petnity/handlers/secure_handler.dart'; 
-import 'package:provider/provider.dart'; 
+import 'package:image_picker/image_picker.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
+import 'package:petnity/handlers/secure_handler.dart';
+import 'package:petnity/ui/widgets/modals.dart';
+import 'package:provider/provider.dart';
 import '../../../blocs/chats/chat.dart';
 import '../../../blocs/user/user.dart';
 import '../../../model/view_models/chat_controller.dart';
 import '../../../requests/repositories/account_repo/account_repository_impl.dart';
-import '../../../res/app_colors.dart';
+import '../../../res/app_colors.dart';  
 import '../../../res/app_constants.dart';
-  
-import 'widget/message_tile.dart';
+
+import '../../../res/app_images.dart';
+import '../../../res/app_strings.dart';
+import '../../widgets/back_button.dart';
+import '../../widgets/custom_text.dart';
+import '../../widgets/profile_image.dart';
+ 
 
 class ChatPage extends StatelessWidget {
   final String customerName;
@@ -45,11 +51,13 @@ class ChatPage extends StatelessWidget {
         agentName: agentName,
         agentId: agentId,
         orderId: orderId,
-        customerName: customerName, userImage: userImage,
+        customerName: customerName,
+        userImage: userImage,
       ),
     );
   }
 }
+
 class Chat extends StatefulWidget {
   final String customerName;
   final String agentName;
@@ -66,13 +74,10 @@ class Chat extends StatefulWidget {
       required this.agentId,
       required this.orderId});
   @override
-  State<Chat> createState() => _ChatState(   );
+  State<Chat> createState() => _ChatState();
 }
 
 class _ChatState extends State<Chat> {
-
-
-
   TextEditingController messageController = TextEditingController();
   late ChatCubit _chatCubit;
 
@@ -84,185 +89,214 @@ class _ChatState extends State<Chat> {
   String currentUserId = "";
   String peerId = "";
 
-    bool isSender = false;
+  bool isSender = false;
+  String userId = "";
 
-
-
-  getUserType()async{
+  getUserType() async {
     userType = await StorageHandler.getUserType();
-      if(userType == 'user'){
-        isSender = true;
-      }else{
-        isSender = false;
+    if (userType == 'user') {
+      isSender = true;
+      userId = await StorageHandler.getUserId();
+    } else {
+      isSender = false;
+      userId = await StorageHandler.getAgentId();
 
-      }
-     _chatCubit = context.read<ChatCubit>();
+       
+    }
+    _chatCubit = context.read<ChatCubit>();
 
     setState(() {
-      _chatCubit.viewModel.updateRecieverDetails(receiverId: isSender ? widget.orderId : widget.agentId, receiverImage: isSender ? '' : '', receiverName: isSender ? widget.customerName : widget.agentName);
-         
-         _chatCubit.viewModel.selectedKey  = '';
+      _chatCubit.viewModel.updateRecieverDetails(
+          receiverId: isSender ? widget.orderId : widget.agentId,
+          receiverImage: isSender ? '' : '',
+          receiverName: isSender ? widget.customerName : widget.agentName);
 
+      // _chatCubit.viewModel.selectedKey = '';
     });
   }
 
-   final _firebaseAuth = FirebaseAuth.instance;
-
-   
-
   @override
   void initState() {
-
     getUserType();
-     
+
     super.initState();
   }
 
   @override
   void dispose() {
     messageController.dispose();
-     
+
     super.dispose();
   }
 
-  
-
- 
-
-  
- 
- 
-
   @override
   Widget build(BuildContext context) {
-    final msgCntrl = Provider.of<MessageController>(context, listen: false);
- 
+    final msgCntrl = Provider.of<MessageController>(context, listen: true);
 
-    return    Scaffold(
-        body: Container(
-          height: screenSize(context).height,
-          width: screenSize(context).width,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [AppColors.scaffoldColor, Colors.red.shade50],
-                  begin: Alignment.topRight,
-                  end: Alignment.topLeft)),
-          child: Stack(
-        children: [
-          Container(
-            padding: EdgeInsets.only(bottom: 70, top: 5),
-            child: FirebaseAnimatedList(
-                reverse: true,
-                sort: (DataSnapshot a, DataSnapshot b) =>
-                    b.key!.compareTo(a.key!),  
- 
-                query: msgCntrl.dbChatMessage.child(msgCntrl.selectedKey),
-                controller: _scrollController,
-                itemBuilder: (context, snapshot, counter, index) {
-                  bool isUser = snapshot.child('userId').value.toString() ==
-                      currentUserId;
-                  bool isImage =
-                      snapshot.child('isImage').value.toString() == "true";
-                  
-                 
-                  return isImage
-                      ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            BubbleNormalImage(
-                              id: DateTime.now()
-                                  .millisecondsSinceEpoch
-                                  .toString(),
-                              image: Image.network(
-                                  snapshot.child('message').value.toString()),
-                              // color: Color(0xFF1B97F3),
-                              color: isUser
-                                  ? Colors.yellow
-                                  : Colors.purple[200]!,
-                              isSender: isUser,
-                              sent: true,
-                              seen: true,
-                              tail: false,
-                            ),
-                            Container(
-                              alignment: isUser
-                                  ? Alignment.centerRight
-                                  : Alignment.centerLeft,
-                              margin: const EdgeInsets.only(
-                                  right: 20, bottom: 2, top: 0),
-                              child: Text(
-                                  '${int.parse(snapshot.child('time').value.toString()).abs()}',
-                               
+    
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 55,
+        leading: backButton(context),
+        title: Row(
+          children: [
+            ProfileImage(
+              placeHolder: AppImages.person,
+              '${widget.userImage}',
+              height: 80,
+              width: 80,
+              radius: 23,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            CustomText(
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              text: (userType == 'user')
+                  ? '${widget.agentName.toString().capitalizeFirstOfEach}'
+                  : '${widget.customerName.capitalizeFirstOfEach}',
+              weight: FontWeight.w700,
+              size: 14,
+              fontFamily: AppStrings.interSans,
+              color: Colors.black,
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        height: screenSize(context).height,
+        width: screenSize(context).width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.red.shade50],
+                begin: Alignment.topRight,
+                end: Alignment.topLeft)),
+        child: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(bottom: 70, top: 5),
+              child: FirebaseAnimatedList(
+                  reverse: true,
+                  sort: (DataSnapshot a, DataSnapshot b) =>
+                      b.key!.compareTo(a.key!),
+                  query: msgCntrl.dbChatMessage.child(msgCntrl.selectedKey),
+                  controller: _scrollController,
+                  itemBuilder: (context, snapshot, counter, index) {
+                    bool isUser =
+                        snapshot.child('senderId').value.toString() == userId ;
+
+                    
+                    bool isImage =
+                        snapshot.child('isImage').value.toString() == "true";
+
+                    return isImage
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              BubbleNormalImage(
+                                id: DateTime.now()
+                                    .millisecondsSinceEpoch
+                                    .toString(),
+                                image: Image.network(
+                                    snapshot.child('message').value.toString()),
+                                // color: Color(0xFF1B97F3),
+                                color: isUser
+                                    ? Colors.yellow
+                                    : Colors.purple[200]!,
+                                isSender: isUser,
+                                sent: true,
+                                seen: true,
+                                tail: false,
                               ),
-                            ),
-                          ],
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            MessageTile(
-                  message: snapshot.child('message').value.toString(),
-                  sender: userType == 'user' ? widget.customerName : widget.agentName,
-                  timeStamp: int.parse(snapshot.child('time').value.toString()).abs(),
-                  sentByMe: isUser ? true : false),
-                           
-                            
-                          ],
-                        );
-                }),
-          ),
-          MessageBar(
-            replyIconColor: AppColors.lightSecondary,
-            sendButtonColor: AppColors.lightSecondary,
-            onSend: (val) {
-    Future.delayed(const Duration(milliseconds: 50)).then((_) => _scrollDown());
+                              // Container(
+                              //   alignment: isUser
+                              //       ? Alignment.centerRight
+                              //       : Alignment.centerLeft,
+                              //   margin: const EdgeInsets.only(
+                              //       right: 20, bottom: 2, top: 0),
+                              //   child: Text(
+                              //       '${int.parse(snapshot.child('time').value.toString()).abs()}',
 
-              msgCntrl.sendChatMessages(
-                  userId: widget.orderId,
-                  receiverId: widget.agentId,
-                  message: msgCntrl.messageText, senderName: userType == 'user' ? widget.customerName : widget.agentName);
-            },
-            onTextChanged: (txt) {
-              msgCntrl.messageText = txt;
-            },
-            actions: [
-              InkWell(
-                child: Transform.rotate(
-                  angle: pi / 2,
-                  child: Container(
-                    margin: const EdgeInsets.only(right: 10),
-                    child: const Icon(
-                      Icons.attach_file,
-                      color: Colors.black,
-                      size: 30,
+                              //   ),
+                              // ),
+                            ],
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                             BubbleSpecialThree(
+                                text:
+                                    snapshot.child('message').value.toString(),
+                                color: isUser
+                                    ? AppColors.lightSecondary
+                                    : Colors.white,
+                                isSender: isUser,
+                                textStyle: TextStyle(
+                                    color:
+                                        isUser ? Colors.white : Colors.black54,
+                                    fontSize: 16),
+                                tail: false,
+                              )
+                            ],
+                          );
+                  }),
+            ),
+            MessageBar(
+              replyIconColor: AppColors.lightSecondary,
+              sendButtonColor: AppColors.lightSecondary,
+              onSend: (val) {
+                Future.delayed(const Duration(milliseconds: 50))
+                    .then((_) => _scrollDown());
+
+                msgCntrl.sendChatMessages(
+                    orderId: widget.orderId,
+                    receiverId: widget.agentId,
+                    message: msgCntrl.messageText,
+                    senderName: userType == 'user'
+                        ? widget.customerName
+                        : widget.agentName);
+              },
+              onTextChanged: (txt) {
+                msgCntrl.messageText = txt;
+              },
+              actions: [
+                InkWell(
+                  child: Transform.rotate(
+                    angle: pi / 2,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      child: const Icon(
+                        Icons.attach_file,
+                        color: Colors.black,
+                        size: 30,
+                      ),
                     ),
                   ),
-                ),
-                onTap: () {
-                  msgCntrl.ImagePicker();
-                },
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                child: InkWell(
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: AppColors.lightSecondary,
-                    size: 24,
-                  ),
                   onTap: () {
-                    msgCntrl.ImagePicker(source: ImageSource.camera);
+                    msgCntrl.uploadImage(recieverId: widget.agentId, orderId: widget.orderId);
                   },
                 ),
-              ),
-            ],
-          ),
-        ],
-      ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: InkWell(
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: AppColors.lightSecondary,
+                      size: 24,
+                    ),
+                    onTap: () {
+                      msgCntrl.uploadImage(recieverId: widget.agentId, orderId: widget.orderId, source: ImageSource.camera);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
-       
+      ),
     );
   }
 
@@ -273,10 +307,4 @@ class _ChatState extends State<Chat> {
       curve: Curves.easeOut,
     );
   }
-
-   
-
-  
-
-  
 }
