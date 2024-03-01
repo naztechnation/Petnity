@@ -11,6 +11,7 @@ import '../../../model/service_provider_models/create_vet_services.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/service_provider_models/vetservices_model.dart';
+import '../../../model/user/transactions/transactions_list.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/medium_types.dart';
 import '../../../model/user_models/session_types.dart';
@@ -53,6 +54,7 @@ abstract class ServiceProviderRepository {
     Future<AuthData> userAcceptVetOrderDelivered({required String username, required String orderId,}); 
     Future<CreateWithrawal> agentCreateWithdrawal({required String amount,}); 
     Future<WithrawalHistory> agentWithdrawalHistory({required String agentId,}); 
+    Future<UserTransactionList> userWithdrawalHistory(); 
     Future<AuthData> editPackagePricing({required String agentId,required String packageId,required String price,}); 
     Future<AuthData> editVetPackagePricing({required String agentId,required String serviceId,required String price,}); 
     Future<CreditedWallet> creditWallet({required String txId,}); 

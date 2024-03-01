@@ -13,6 +13,7 @@ import '../../../model/account_models/add_bank.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
 import '../../../model/service_provider_models/get_agent_balance.dart';
 import '../../../model/service_provider_models/vetservices_model.dart';
+import '../../../model/user/transactions/transactions_list.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/session_types.dart';
 import '../../../model/user_models/withdrawal_history.dart';
@@ -395,6 +396,15 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
     );
 
     return WithrawalHistory.fromJson(map);
+  }
+   @override
+  Future<UserTransactionList> userWithdrawalHistory(
+       ) async {
+    final map = await Requests().get(
+      AppStrings.userWithdrawalHistory
+    );
+
+    return UserTransactionList.fromJson(map);
   }
 
   @override

@@ -856,6 +856,29 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
     }
   }
 
+  Future<void> userWithdrawalHistory() async {
+    try {
+      emit(AgentWithdrawalHistoryLoading());
+
+      final requests = await serviceProviderRepository.userWithdrawalHistory(
+      );
+
+      emit(UserWithdrawalHistoryLoaded(requests));
+    } on ApiException catch (e) {
+      emit(CreateServiceNetworkErrApiErr(e.message));
+    } catch (e) {
+      if (e is NetworkException ||
+          e is BadRequestException ||
+          e is UnauthorisedException ||
+          e is FileNotFoundException ||
+          e is AlreadyRegisteredException) {
+        emit(CreateServiceNetworkErr(e.toString()));
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   Future<void> editPackage(
       {required String agentId,
       required String price,

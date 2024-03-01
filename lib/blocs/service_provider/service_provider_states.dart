@@ -11,6 +11,7 @@ import '../../model/service_provider_models/create_vet_services.dart';
 import '../../model/service_provider_models/get_vet_services.dart';
 import '../../model/service_provider_models/get_agent_balance.dart';
 import '../../model/service_provider_models/vetservices_model.dart';
+import '../../model/user/transactions/transactions_list.dart';
 import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
 import '../../model/user_models/medium_types.dart';
@@ -292,6 +293,13 @@ class   AgentWithdrawalHistoryLoading extends ServiceProviderState {
 class  AgentWithdrawalHistoryLoaded extends ServiceProviderState {
   final WithrawalHistory  requests;
   const  AgentWithdrawalHistoryLoaded(this.requests);
+  @override
+  List<Object> get props => [requests];
+}
+
+class  UserWithdrawalHistoryLoaded extends ServiceProviderState {
+  final UserTransactionList  requests;
+  const  UserWithdrawalHistoryLoaded(this.requests);
   @override
   List<Object> get props => [requests];
 }

@@ -77,9 +77,10 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         listener: (context, state) {
           if (state is ResetPasswordLoaded) {
             if (state.userData.status == true) {
-              resetFirebasePassword(_emailController.text);
-
-                
+            Modals.showDialogModal(context, page: successWidget());
+      navigateToNextPage(context);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: SystemUiOverlay.values);
             } else {
               Modals.showToast(state.userData.message ?? '',
                   messageType: MessageType.error);
@@ -279,10 +280,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       setState(() {
         isLoading = false;
       });
-      Modals.showDialogModal(context, page: successWidget());
-      navigateToNextPage(context);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: SystemUiOverlay.values);
+      
     } catch (e) {
       setState(() {
         isLoading = false;
@@ -319,7 +317,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               height: 16,
             ),
             Text(
-              'A confirmation link has been sent to your mail please follow the link to confirm the previous password. make sure the password is same with the one you entered here.',
+              'Your password has been changed successfully you will be redirected to login shortly.',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -346,7 +344,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   navigateToNextPage(BuildContext context) async {
     Future.delayed(
         const Duration(
-          seconds: 25,
+          seconds: 5,
         ), () {
           _signOut(context);
       AppNavigator.pushAndReplacePage(context, page: SignInScreen());

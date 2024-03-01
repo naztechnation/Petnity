@@ -414,25 +414,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ));
   }
 
-  _firebaseRegUser(
-      final firebaseAuth, BuildContext context, String imageUrl) async {
-    if (_formKey.currentState!.validate()) {
-      if (deviceId != '') {
-        await firebaseAuth.registerUserWithEmailAndPassword(
-            email: _emailController.text.trim(),
-            password: _passwordController.text.trim(),
-            username: _usernameController.text.trim());
-
-        if (firebaseAuth.status == Status.authenticated) {
-          _registerUser(context, imageUrl);
-        } else if (firebaseAuth.status == Status.authenticateError) {
-          Modals.showToast(firebaseAuth.message);
-        }
-      }
-    }
-  }
-
-  _registerUser(BuildContext ctx, imageUrl) {
+    _registerUser(BuildContext ctx, imageUrl) {
     if (_formKey.currentState!.validate()) {
 
    
@@ -450,6 +432,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
+  _firebaseRegUser(
+      final firebaseAuth, BuildContext context, String imageUrl) async {
+    if (_formKey.currentState!.validate()) {
+      if (deviceId != '') {
+       _registerUser(context, imageUrl);
+    }
+  }
+
+
+      }
   RegistrationOptions(
     BuildContext context,
     final user,

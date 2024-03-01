@@ -10,6 +10,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
 import '../../../handlers/secure_handler.dart';
+import '../../../model/user/transactions/transactions_list.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
@@ -57,7 +58,7 @@ class _PaymentState extends State<Payment> {
 
   var withdrawableAmount = '0';
 
-  List<WithdrawalRequests> agentWithdrawals = [];
+  List<Transactions> userWithdrawals = [];
 
   String email = '';
 
@@ -80,8 +81,7 @@ class _PaymentState extends State<Payment> {
       url: AppStrings.getUserBalance,
     );
 
-    await _serviceProviderCubit.agentWithdrawalHistory(
-      agentId: agentId,
+    await _serviceProviderCubit.userWithdrawalHistory(
     );
   }
 
@@ -170,9 +170,9 @@ class _PaymentState extends State<Payment> {
             withdrawableAmount = state.balance.data?.balance.toString() ?? '';
 
             service.setWithdrawableBalance(withdrawableAmount);
-          } else if (state is AgentWithdrawalHistoryLoaded) {
-            agentWithdrawals =
-                state.requests.data?.withdrawalRequests?.reversed.toList() ?? [];
+          } else if (state is UserWithdrawalHistoryLoaded) {
+            userWithdrawals =
+                state.requests.data?.transactions?.reversed.toList() ?? [];
           }
         }, builder: (context, state) {
           return (state is AgentBalanceLoading ||
@@ -401,14 +401,14 @@ class _PaymentState extends State<Payment> {
                           const SizedBox(
                             height: 30,
                           ),
-                          if (agentWithdrawals.isNotEmpty) ...[
+                          if (userWithdrawals.isNotEmpty) ...[
                             ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: agentWithdrawals.length,
+                                itemCount: userWithdrawals.length,
                                 shrinkWrap: true,
                                 itemBuilder: ((context, index) {
-                                  return PaymentBox(
-                                    history: agentWithdrawals[index],
+                                  return PaymentBox.user(
+                                    userhistory: userWithdrawals[index], isUser: true,
                                   );
                                 }))
                           ] else ...[

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:petnity/extentions/custom_string_extension.dart';
 
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -79,7 +80,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allOrders.agent?.user?.username ?? '',
+                        allOrders.agent?.user?.username.toString().capitalizeFirstOfEach ?? '',
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(

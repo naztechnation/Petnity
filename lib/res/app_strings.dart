@@ -225,6 +225,8 @@ static String getUserNotifications =
 
   static String agentWithdrawalHistory =
       '${_baseUrl}user/get-agent-withdrawal-requests';
+static String userWithdrawalHistory =
+      '${_baseUrl}user/get-user-wallet-transactions';
 
   static String updatePackagePricing({required String packageId}) =>
       '${_baseUrl}service/update-package-price/$packageId';

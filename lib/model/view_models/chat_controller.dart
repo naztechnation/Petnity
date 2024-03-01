@@ -43,7 +43,7 @@ class MessageController extends BaseViewModel {
 
     _selectedKey = returnKey(orderId: orderId, receiverId: recieverId);
 
-    Modals.showToast(_selectedKey);
+     
 
     setViewState(ViewState.success);
 

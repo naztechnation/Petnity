@@ -201,11 +201,11 @@ class SignInScreen extends StatelessWidget {
                     TextEditView(
                       controller: _emailController,
                       validator: (value) {
-                        return Validator.validate(value, 'Email');
+                        return Validator.validate(value, 'Email/Username');
                       },
                       isDense: true,
-                      textViewTitle: 'Your Email',
-                      hintText: 'Enter your email',
+                      textViewTitle: 'Your Email/Username',
+                      hintText: 'Enter your email/username',
                       suffixIcon: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
@@ -371,14 +371,11 @@ class SignInScreen extends StatelessWidget {
       required BuildContext context,
       required String message,
       required bool isAgent}) async {
-    await firebaseUser.loginUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim());
+    // await firebaseUser.loginUserWithEmailAndPassword(
+    //     email: _emailController.text.trim(),
+    //     password: _passwordController.text.trim());
 
-    if (firebaseUser.status == Status.authenticated) {
-      Modals.showToast(message, messageType: MessageType.success);
-
-      StorageHandler.saveIsLoggedIn('true');
+    StorageHandler.saveIsLoggedIn('true');
 
       if (isAgent) {
         StorageHandler.saveIsUserType('service_provider');
@@ -390,11 +387,8 @@ class SignInScreen extends StatelessWidget {
 
         AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
       }
-    } else if (firebaseUser.status == Status.authenticateError) {
-      Modals.showToast(message, messageType: MessageType.error);
 
-      Modals.showToast(firebaseUser.message);
-    }
+    
   }
 
   resendCode(BuildContext ctx) {

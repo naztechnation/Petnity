@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:chat_bubbles/chat_bubbles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petnity/extentions/custom_string_extension.dart';
 import 'package:petnity/handlers/secure_handler.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 import '../../../blocs/chats/chat.dart';
-import '../../../blocs/user/user.dart';
 import '../../../model/view_models/chat_controller.dart';
 import '../../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../../../res/app_colors.dart';  

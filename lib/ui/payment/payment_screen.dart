@@ -290,8 +290,10 @@ class _PaymentState extends State<Payment> {
                                 itemCount: agentWithdrawals.length,
                                 shrinkWrap: true,
                                 itemBuilder: ((context, index) {
-                                  return PaymentBox(
-                                    history: agentWithdrawals[index],
+                                  return PaymentBox.agent(
+                                    history: agentWithdrawals[index], isUser: false,
+
+                                    
                                   );
                                 }))
                           ] else ...[
