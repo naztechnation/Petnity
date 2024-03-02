@@ -19,7 +19,7 @@ import '../../../../utils/navigator/page_navigator.dart';
 import '../../../landing_page/services/track_services/track_vet_services.dart';
 import '../../../notfications_pages/chat_pages/chat_page.dart';
 import '../../../video.dart';
-import '../../../widgets/modals.dart';
+
 
 class VideoCallSessionWidget extends StatefulWidget {
   final String buttonText;
@@ -53,8 +53,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
   @override
   Widget build(BuildContext context) {
     final services = Provider.of<UserViewModel>(context, listen: false);
-       final msgCntrl = Provider.of<MessageController>(context, listen: true);
-
+        
 
     return Card(
         child: Container(
@@ -168,7 +167,7 @@ class _VideoCallSessionWidgetState extends State<VideoCallSessionWidget> {
               SizedBox(
                 height: 10,
               ),
-              Row(
+         (widget.vetOrders.isRejected ?? false) ?  SizedBox.shrink() :   Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(

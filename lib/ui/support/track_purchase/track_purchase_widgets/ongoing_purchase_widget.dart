@@ -129,14 +129,19 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
             SizedBox(
               height: 20,
             ),
-            Text(
+         if(allOrders.isRejected!  || allOrders.isDelivered!)...[
+          SizedBox.shrink()
+         ] else...[   Text(
               'Contact Seller',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 15,
-            ),
-            Row(
+            ),],
+         if(allOrders.isRejected!  || allOrders.isDelivered!)...[
+          SizedBox.shrink()
+         ] else...[
+          Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -217,6 +222,7 @@ class _OngoingServiceWidgetState extends State<OngoingPurchaseWidget> {
                 ),
               ],
             )
+         ]  
           ],
         ),
       ),

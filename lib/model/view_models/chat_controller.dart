@@ -195,10 +195,7 @@ class MessageController extends BaseViewModel {
         if (snapshot != null) {
           var downloadUrl = await snapshot.ref.getDownloadURL();
 
-          // Navigator.pop(context);
-
-          Modals.showToast("Image uploading started");
-
+          
           sendChatMessages(
             orderId: orderId,
             receiverId: recieverId,
@@ -206,7 +203,7 @@ class MessageController extends BaseViewModel {
             message: downloadUrl,
             senderName: '',
           );
-          Modals.showToast("Image uploaded successfully");
+           
         } else {
           // Navigator.pop(context);
         }
@@ -216,37 +213,33 @@ class MessageController extends BaseViewModel {
 
       // setState(() {});
     } else {
-      // image is null
-      Modals.showToast('test: No Image Path Received');
+      
     }
   }
 
   ImagesPicker({
     ImageSource source = ImageSource.gallery,
   }) async {
-    // final _firebaseStorage = FirebaseStorage.instance;
-    print("This is the problem 1");
+      
     final imagePicker = ImagePicker();
     XFile? image;
     //Check Permissions
     await Permission.photos.request();
-    print("This is the problem 2");
+     
      var permissionStatus = await Permission.mediaLibrary.status;
 
-    print("This is the problem 3");
+     
 
     if (Platform.isAndroid && !permissionStatus.isGranted) {
-      print("This is the problem 4");
+       
       return;
     }
-    print("This is the problem 5");
-    // if (permissionStatus.isGranted) {
-    //Select Image
+   
     try {
       
         image = await imagePicker.pickImage(source: source);
       // .pickImage(source: source);
-      print("This is the problem 6");
+       
 
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: image!.path,
@@ -264,11 +257,10 @@ class MessageController extends BaseViewModel {
           ),
         ],
       );
-
-      print("This is the problem 6");
+ 
       var file = File(croppedFile!.path);
        
-      print("This is the problem 7");
+       
       if (image != null) {
          
         try {

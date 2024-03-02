@@ -138,14 +138,20 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
             SizedBox(
               height: 10,
             ),
-            Text(
+           if(allOrders.isRejected!  || allOrders.isCompleted!)...[
+              SizedBox.shrink()
+            ]else...[ Text(
               'Contact ${allOrders.package?.service?.serviceType?.name ?? ''}',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 15,
             ),
-            Row(
+            ],
+            if(allOrders.isRejected! || allOrders.isCompleted!)...[
+              SizedBox.shrink()
+            ]else...[
+               Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -226,6 +232,8 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                 ),
               ],
             )
+            ],
+           
           ],
         ),
       ),
