@@ -296,7 +296,7 @@ class SignInScreen extends StatelessWidget {
                           _loginUser(context);
                         },
                         color: AppColors.lightSecondary,
-                        title: 'authentication...',
+                        title: 'authenticating...',
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 2,

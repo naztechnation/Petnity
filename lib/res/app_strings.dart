@@ -9,7 +9,7 @@ class AppStrings {
   static const String satoshi = 'Satoshi-Variable';
 
   ///flutterwave api
-  static const String flutterwaveApiKey = " ";
+  static const String flutterwaveApiKey = "FLWPUBK_TEST-e05da4cb2c56c93873e1c010a42f2b32-X";
 
   ///app tokens
 

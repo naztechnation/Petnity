@@ -16,7 +16,7 @@ import '../../../res/app_routes.dart';
 import '../../../res/enum.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../../notfications_pages/notifications_session.dart';
-import '../../user/wallet/wallet_dashboard.dart';
+import '../../user/wallet/user_wallet.dart';
 
 class customDrawer extends StatefulWidget {
   final VoidCallback onLogOutPressesd;

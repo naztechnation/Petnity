@@ -106,7 +106,9 @@ class _PaymentState extends State<Payment> {
 
     if (response != null) {
       txId = response.transactionId ?? '';
-      print(txId);
+      
+     
+      
       if (txId != '') {
         creditWallet(
           txId: txId,
