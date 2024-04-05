@@ -56,7 +56,9 @@ class _GalleryRatingState extends State<GalleryRating> {
     userId = await StorageHandler.getUserId();
     _userCubit = context.read<UserCubit>();
     await _userCubit.viewModel.emptyGallery();
-    await _userCubit.getGallery(userId: widget.agentId);
+   
+    try {
+       await _userCubit.getGallery(userId: widget.agentId);
 
     if (_userCubit.viewModel.galleryStatus) {
       galleryList = _userCubit.viewModel.gallery;
@@ -73,6 +75,9 @@ class _GalleryRatingState extends State<GalleryRating> {
       reviewsList = _userCubit.viewModel.reviews;
     } else {
       reviewsList = [];
+    }
+    } catch (e) {
+      
     }
   }
 

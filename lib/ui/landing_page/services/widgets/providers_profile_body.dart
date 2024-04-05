@@ -306,7 +306,7 @@ username = await StorageHandler.getUserName();
             const SizedBox(
               height: 12,
             ),
-            CustomText(
+          if(widget.agents?.about != null)  CustomText(
               textAlign: TextAlign.start,
               maxLines: 4,
               text: '${widget.agents?.about}',
@@ -317,7 +317,7 @@ username = await StorageHandler.getUserName();
             const SizedBox(
               height: 20,
             ),
-            CustomText(
+          if(widget.agents?.gender != null)    CustomText(
               textAlign: TextAlign.start,
               maxLines: 2,
               text: '${widget.agents?.gender}'.toUpperCase(),

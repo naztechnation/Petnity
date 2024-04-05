@@ -86,7 +86,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<GetAgentsPackages> getAgentPackages(
       {required String agentId, required String serviceId}) async {
     final map = await Requests()
-        .get(AppStrings.getAgentPackagesUrl( serviceId), );
+        .get(AppStrings.getAgentPackagesUrl(serviceId), );
     return GetAgentsPackages.fromJson(map);
   }
 

@@ -17,7 +17,6 @@ import '../../../blocs/user/user.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/product/product.dart';
 import '../../../model/user_models/get_product_reviews.dart'; 
-import '../../../model/user_models/products_detail.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
@@ -125,23 +124,25 @@ class _ProductDetailState extends State<ProductDetail> {
 
     return BlocConsumer<UserCubit, UserStates>(listener: (context, state) {
       if (state is ProductDetailsLoaded) {
-        if (state.productDetails.status!) {
+        if (state.productDetails.status ?? false) {
           _products = state.productDetails.data?.product;
           totalAmount = double.parse(_products?.price.toString() ?? '0.0');
-        } else {}
+        } else {
+          Modals.showToast('Opps an error occured');
+        }
       } else if (state is GetProductReviewsLoaded) {
-        if (state.getAgentPayment.status!) {
+        if (state.getAgentPayment.status?? false) {
           reviews = state.getAgentPayment.data?.reviews ?? [];
         } else {}
       } else if (state is ProductOrderLoaded) {
-        if (state.createPaymentOrder.status!) {
+        if (state.createPaymentOrder.status?? false) {
           Modals.showToast(state.createPaymentOrder.message ?? '');
 
           // _handlePaymentInitialization(
           //     state.createPaymentOrder.shopOrder!.id.toString());
         } else {}
       } else if (state is ConfirmShoppingOrderLoaded) {
-        if (state.confirmPaymentOrder.status!) {
+        if (state.confirmPaymentOrder.status?? false) {
           Modals.showToast(state.confirmPaymentOrder.message ?? '');
         } else {}
       } else if (state is UserNetworkErrApiErr) {
@@ -149,7 +150,7 @@ class _ProductDetailState extends State<ProductDetail> {
       } else if (state is UserNetworkErr) {
         Modals.showToast(state.message ?? '');
       } else if (state is PostProductReviewsLoaded) {
-        if (state.postReview.status!) {
+        if (state.postReview.status?? false) {
           Modals.showToast(state.postReview.message ?? '');
           _userCubit.getProductReviews(productId: productId);
           Navigator.pop(context);

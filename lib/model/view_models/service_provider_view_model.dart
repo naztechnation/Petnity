@@ -42,6 +42,12 @@ class ServiceProviderViewModel extends BaseViewModel {
 
   }
 
+   reload(){
+    
+    setViewState(ViewState.success);
+
+  }
+
   setServiceProviderAge(String age) {
     _serviceProviderAge = age;
     setViewState(ViewState.success);

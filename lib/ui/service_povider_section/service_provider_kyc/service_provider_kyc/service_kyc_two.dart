@@ -25,7 +25,7 @@ class KycServiceScreenTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final serviceProvider =
-        Provider.of<ServiceProviderViewModel>(context, listen: false);
+        Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
@@ -76,6 +76,9 @@ class KycServiceScreenTwo extends StatelessWidget {
                 child: TextEditView(
                   controller: _serviceProviderNameController,
                   isDense: true,
+                  onChanged: (value) {
+                    serviceProvider.reload();
+                  },
                   labelText: 'input name',
                 ),
               ),

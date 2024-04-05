@@ -69,7 +69,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                 ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: ImageView.network(
-                      allOrders.agent?.picture,
+                      allOrders.agent?.picture ?? '',
                        height: 50,
                       width: 50,
                       fit: BoxFit.cover,

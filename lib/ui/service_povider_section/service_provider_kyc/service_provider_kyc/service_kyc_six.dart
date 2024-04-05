@@ -25,7 +25,7 @@ class KycServiceScreenSix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final serviceProfile = Provider.of<ServiceProviderViewModel>(context, listen: false);
+    final serviceProfile = Provider.of<ServiceProviderViewModel>(context, listen: true);
 
     return Scaffold(
       body: Container(
@@ -83,6 +83,9 @@ class KycServiceScreenSix extends StatelessWidget {
                   borderRadius: 22,
                   textInputAction: TextInputAction.done,
                   maxLength: 2000,
+                  onChanged: (value) {
+                    serviceProfile.reload();
+                  },
                 ),
               ),
               SizedBox(

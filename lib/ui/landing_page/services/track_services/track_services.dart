@@ -191,7 +191,7 @@ class _TrackServicesState extends State<TrackServices> {
       child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
         listener: (context, state) {
           if (state is AcceptOrderLoaded) {
-            if (state.order.status!) {
+            if (state.order.status ?? false) {
               Modals.showToast(state.order.message ?? '');
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
@@ -199,7 +199,7 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is AcceptCompletedOrderLoaded) {
-            if (state.order.status!) {
+            if (state.order.status?? false) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -207,7 +207,7 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is AcceptOngoingOrderLoaded) {
-            if (state.order.status!) {
+            if (state.order.status ?? false) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -215,7 +215,7 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is DeliveredShopOrderLoaded) {
-            if (state.order.status!) {
+            if (state.order.status?? false) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -223,7 +223,7 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is RejectOrderLoaded) {
-            if (state.order.status!) {
+            if (state.order.status?? false) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -231,7 +231,7 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is UserAcceptOrderDeliveredOrderLoaded) {
-            if (state.order.status!) {
+            if (state.order.status?? false) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.landingPage);
 

@@ -87,7 +87,11 @@ class _ServiceProviderState extends State<ServiceProvider> {
     setState(() {
       isLoading = true;
     });
-    await _userCubit.getServices(widget.agents?.sId ?? '');
+
+    
+  
+      try {
+          await _userCubit.getServices(widget.agents?.sId ?? '');
 
     service = _userCubit.viewModel.services?.data?.services;
     String constantString = widget.selectedServices;
@@ -108,6 +112,11 @@ class _ServiceProviderState extends State<ServiceProvider> {
     setState(() {
       isLoading = false;
     });
+      } catch (e) {
+         setState(() {
+      isLoading = false;
+    });
+      }
   }
 
   Future<bool> onBackPress() {

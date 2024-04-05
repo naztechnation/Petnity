@@ -8,6 +8,7 @@ import 'package:petnity/model/service_provider_models/create_shop_products_model
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/credit_wallet.dart';
 import 'package:petnity/model/user_models/medium_types.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/account_models/add_bank.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';
@@ -30,7 +31,10 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       required String levelAmount}) async {
     var payload = {"serviceTypeId": servicesId, 'levelsAmount': levelAmount};
     final map = await Requests()
-        .post(AppStrings.setServiceAmountUrl, body: json.encode(payload));
+        .post(AppStrings.setServiceAmountUrl,
+         body: json.encode(payload),
+          useApp: true,
+         );
     return ServiceAmount.fromJson(map);
   }
 
@@ -51,7 +55,9 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       'price': pricing,
     };
     final map = await Requests().post(AppStrings.createPackageUrl(servicesId),
-        body: json.encode(payload));
+        body: json.encode(payload),
+         useApp: true,
+        );
 
     return AuthData.fromJson(map);
   }
@@ -101,6 +107,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       required String accountName,
       required String accountNumber,
       required String bankName}) async {
+
+       
     var payload = {
       "bank": bankName,
       "bankCode": bankCode,
@@ -108,8 +116,8 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
       "accountNumber": accountNumber
     };
     final map = await Requests()
-        .post(AppStrings.updateAccountDetailsUrl, body: payload, useApp: false);
-
+        .post(AppStrings.updateAccountDetailsUrl, body: json.encode(payload), useApp: true);
+ 
     return AddBank.fromJson(map);
   }
 

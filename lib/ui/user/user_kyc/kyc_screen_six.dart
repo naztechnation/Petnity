@@ -24,7 +24,7 @@ class KycScreenSix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final petProfile = Provider.of<AccountViewModel>(context, listen: false);
+    final petProfile = Provider.of<AccountViewModel>(context, listen: true);
 
     return Scaffold(
       body: Container(
@@ -64,6 +64,9 @@ class KycScreenSix extends StatelessWidget {
                 borderRadius: 22,
                 textInputAction: TextInputAction.done,
                 maxLength: 2000,
+                 onChanged: (value) {
+                  petProfile.reload();
+                },
               ),
             ),
             SizedBox(

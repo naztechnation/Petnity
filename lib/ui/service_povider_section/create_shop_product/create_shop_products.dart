@@ -284,6 +284,7 @@ class _CreateShopProductsState extends State<CreateShopProducts> {
                           File(
                             image,
                           ),
+                          height: 130,
                           fit: BoxFit.cover),
                     ),
                   ),

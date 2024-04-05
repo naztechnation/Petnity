@@ -8,7 +8,6 @@ import '../../../../model/user_models/order.dart';
 import '../../../../model/user_models/shop_order.dart';
 import '../../../../model/user_models/vet_orders.dart';
 import '../../../../res/enum.dart';
-import '../../../widgets/modals.dart';
 import '../track_purchase_widgets/ongoing_purchase_widget.dart';
 
 class AllServices extends StatefulWidget {

@@ -84,7 +84,7 @@ class AppStrings {
   static String confirmPaymentUrl(String username, String agentId) =>
       '${_baseUrl}order/order-payment/$username/$agentId';
   static String getAgentPackagesUrl(String serviceId) =>
-      '${_baseUrl}user/get-agent-service-packages/$serviceId';
+      '${_baseUrl}user/get-agent-service-packages/66100220347e490035f9cfd1';
   static String selectPetTypeUrl = '${_baseUrl}auth/select-pet-types';
   static String selectServiceTypeUrl = '${_baseUrl}auth/select-service-types';
   static String petHealthStatusUrl({String? petId}) =>

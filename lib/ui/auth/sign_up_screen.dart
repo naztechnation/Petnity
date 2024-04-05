@@ -113,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 }
               } else if (state is AccountNetworkErr) {
                 if (state.message != null) {
-                  Modals.showToast(state.message!,
+                  Modals.showToast(state.message ?? 'Opps an error occured',
                       messageType: MessageType.error);
                 }
               }
@@ -421,7 +421,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
-            firebaseId: FirebaseAuth.instance.currentUser!.uid,
+            firebaseId: '',
             username: _usernameController.text.trim(),
             phoneNumber: _phoneController.text.trim(),
             email: _emailController.text.trim(),
@@ -518,7 +518,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         isLoading = false;
                       });
 
-                      _firebaseRegUser(firebaseAuth, context, imgUrl);
+                      _registerUser(context, imgUrl);
                     }, context),
                     const SizedBox(
                       height: 10,
@@ -546,7 +546,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         isLoading = false;
                       });
 
-                      _firebaseRegUser(firebaseAuth, context, imgUrl);
+                       _registerUser(context, imgUrl);
                     }, context),
                     const SizedBox(
                       height: 10,

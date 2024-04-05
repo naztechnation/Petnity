@@ -67,6 +67,10 @@ class AccountViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+  reload() async {
+    setViewState(ViewState.success);
+  }
+
    setAgentName(String agentName)async {
     _agentName  = agentName;
     setViewState(ViewState.success);

@@ -159,6 +159,12 @@ class _PaymentState extends State<Payment> {
             if (state.data.status ?? false) {
               Modals.showToast(state.data.message ?? '',
                   messageType: MessageType.success);
+                     _serviceProviderCubit.getAgentBalance(
+      url: AppStrings.getUserBalance,
+    );
+
+      _serviceProviderCubit.userWithdrawalHistory(
+    );
             } else if (state.data.error != null) {
               Modals.showToast(
                 state.data.error?.message ?? '',

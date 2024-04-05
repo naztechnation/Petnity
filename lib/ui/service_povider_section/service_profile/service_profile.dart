@@ -114,10 +114,10 @@ class _AgentProfileState extends State<AgentProfile> {
 
     _userCubit = context.read<UserCubit>();
    
-    await _userCubit.getServices(agentId);
-    agentServices = _userCubit.viewModel.services?.data?.services;
+   // await _userCubit.getServices(agentId);
+    // agentServices = _userCubit.viewModel.services?.data?.services;
 
-    vetId= _userCubit.viewModel.services?.data?.vetServices?[0].sId ?? '';
+    // vetId= _userCubit.viewModel.services?.data?.vetServices?[0].sId ?? '';
 
  setState(() {
       
@@ -150,11 +150,7 @@ class _AgentProfileState extends State<AgentProfile> {
         child: (isLoading || isLoading1) ?  LoadingPage(): Scaffold(
           body: BlocConsumer<UserCubit, UserStates>(
               listener: (context, state) {
-                  if (state is AgentProfileLoaded) {
-                agents = state.userData.data?.agent;
-                  services = agents?.services ?? [];
-
-                }
+                 
               },
               builder: (context, state) {
                 if (state is ServiceProviderListLoading) {
@@ -167,6 +163,12 @@ class _AgentProfileState extends State<AgentProfile> {
                       onRefresh: () => _userCubit.getAgentProfile(agentId),
                     ),
                   );
+                }else if (state is AgentProfileLoaded) {
+                agents = state.userData.data?.agent;
+                  services = agents?.services ?? [];
+
+                 
+
                 } else if (state is ServicesLoaded) {
                   if (state.services.status!) {
                     service = _userCubit.viewModel.servicesType;
@@ -238,7 +240,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                Row(
+                              if(agents?.city != null)  Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     ImageView.svg(AppImages.location),
@@ -272,7 +274,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                 const SizedBox(
                                   height: 12,
                                 ),
-                                Row(
+                              if(agents?.name != null)  Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(

@@ -24,7 +24,7 @@ class KycScreenTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final petProfile = Provider.of<AccountViewModel>(context, listen: false);
+    final petProfile = Provider.of<AccountViewModel>(context, listen: true);
 
     return Scaffold(
       backgroundColor: AppColors.lightPrimary,
@@ -72,6 +72,9 @@ class KycScreenTwo extends StatelessWidget {
               child: TextEditView(
                 controller: _petNameController,
                 isDense: true,
+                onChanged: (value) {
+                  petProfile.reload();
+                },
               ),
             ),
             const Spacer(),

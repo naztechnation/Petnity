@@ -142,6 +142,9 @@ class _WithdrawalState extends State<Withdrawal> {
               accountName = accountList.last.accountName ?? "";
               accountNumber = accountList.last.accountNumber.toString();
               bankName = accountList.last.bank ?? "";
+
+             
+
             }
           }
         } else if (state is CreateServiceNetworkErrApiErr) {
@@ -378,7 +381,7 @@ class _WithdrawalState extends State<Withdrawal> {
                           height: 15,
                         ),
                         Text(
-                          'You are yet to register any card',
+                          'You are yet to register any bank details',
                           style: TextStyle(fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(

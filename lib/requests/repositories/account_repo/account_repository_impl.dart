@@ -128,10 +128,8 @@ Future<CreateAgents> registerServiceProviderProfile(
     required String city,
     required String about,
     required String picture}) async {
-  final map = await Requests().post(
-      AppStrings.registerServiceProviderProfileUrl,
-      useApp: false,
-      body: {
+
+      var payload = {
         "dateOfBirth": dob,
         "name": name,
         "gender": gender,
@@ -140,7 +138,11 @@ Future<CreateAgents> registerServiceProviderProfile(
         "city": city,
         
         'picture': picture
-      });
+      };
+  final map = await Requests().post(
+      AppStrings.registerServiceProviderProfileUrl,
+      useApp: true,
+      body: json.encode(payload));
   return CreateAgents.fromJson(map);
 }
 
