@@ -138,7 +138,7 @@ class Requests {
     return map;
   }
 
-  Future<dynamic> patch(
+  Future<dynamic>   patch(
     String route, {
     Map<String, String>? headers,
     var body,

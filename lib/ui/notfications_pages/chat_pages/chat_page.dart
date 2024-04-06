@@ -251,7 +251,7 @@ class _ChatState extends State<Chat> {
                 msgCntrl.sendChatMessages(
                     orderId: widget.orderId,
                     receiverId: widget.agentId,
-                    message: msgCntrl.messageText,
+                    message: msgCntrl.messageText.trim(),
                     senderName: userType == 'user'
                         ? widget.customerName
                         : widget.agentName);

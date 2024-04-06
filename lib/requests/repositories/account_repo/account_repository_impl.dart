@@ -136,7 +136,6 @@ Future<CreateAgents> registerServiceProviderProfile(
         "about": about,
         "country": country,
         "city": city,
-        
         'picture': picture
       };
   final map = await Requests().post(

@@ -311,7 +311,7 @@ class _PurchaseState extends State<Purchase> {
                                           onTap: () {
                                             if (widget.ownerFirebaseId == '') {
                                               Modals.showToast(
-                                                  'Can\'t communicate with this agent at the moment. Please');
+                                                  'Can\'t communicate with this agent at the moment.');
                                             } else {
                               msgCntrl.updateSelectedKey(widget.orderId, widget.ownerNormalId);
 

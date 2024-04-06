@@ -225,8 +225,21 @@ class _ReviewState extends State<Review> {
                     ));
               });
             } else if (state is CreateOrderLoaded) {
-              Modals.showToast(state.createOrder.message ?? '',
+                if(state.createOrder.status ?? false){
+                    Modals.showToast(state.createOrder.message ?? '',
                   messageType: MessageType.success);
+
+
+                  Future.delayed(Duration(seconds: 2), () {
+                AppNavigator.pushAndReplacePage(context,
+                    page: PaymentSuccessScreen(
+                      txId: txId,
+                    ));
+              });
+                }else{
+                    Modals.showToast(state.createOrder.message ?? '',
+                  messageType: MessageType.error);
+                }
               // _handlePaymentInitialization(
               //     state.createOrder.order!.id.toString());
             }

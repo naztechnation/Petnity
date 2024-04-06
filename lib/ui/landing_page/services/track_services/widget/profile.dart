@@ -91,7 +91,7 @@ Widget serviceProfile(
                           onTap: () {
                             if (agentId == '') {
                               Modals.showToast(
-                                  'Can\'t communicate with this agent at the moment. Please');
+                                  'Can\'t communicate with this agent at the moment.');
                             } else {
                               
                               msgCntrl.updateSelectedKey(orderId, agentId);
@@ -177,20 +177,13 @@ Widget serviceProfile(
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (customerFireBaseId == '') {
-                              Modals.showToast(
-                                  'Can\'t communicate with this buyer at the moment. Please');
-                            } else {
-
-                           
-                                msgCntrl.updateSelectedKey(orderId, agentId);
+                            msgCntrl.updateSelectedKey(orderId, agentId);
                        
                               AppNavigator.pushAndStackPage(context,
                                   page: ChatPage(
                                       customerName: customerName,
                                       userImage: customerImage,
                                       orderId: orderId, agentId: agentId, agentName: agentName,));
-                            }
                           },
                           child: ImageView.svg(AppImages.messageBorder)),
                       const SizedBox(
