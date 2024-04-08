@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutterwave_standard/flutterwave.dart';
-import 'package:intl/intl.dart';
 import 'package:petnity/blocs/user/user_cubit.dart';
 import 'package:petnity/res/enum.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
@@ -132,39 +130,7 @@ class _ReviewState extends State<Review> {
     super.initState();
   }
 
-  _handlePaymentInitialization(String orderId) async {
-    final Customer customer = Customer(email: email);
-
-    final Flutterwave flutterwave = Flutterwave(
-        context: context,
-        publicKey: AppStrings.flutterwaveApiKey,
-        currency: 'NGN',
-        redirectUrl: 'https://lucacify.com',
-        txRef: uuid.v1(),
-        amount: widget.amount,
-        customer: customer,
-        paymentOptions: "card",
-        customization: Customization(
-          title: "Lucacify",
-          logo: AppImages.logo,
-        ),
-        isTestMode: true);
-    final ChargeResponse response = await flutterwave.charge();
-
-    if (response != null) {
-      txId = response.transactionId ?? '';
-      print(txId);
-      if (txId != '') {
-        String message = 'Payment Ref: ${response.txRef}';
-
-        _userCubit.confirmPayment(
-            orderId: orderId, username: widget.username, purchaseId: txId);
-      }
-    } else {
-      Modals.showToast('Unable to make payment Successfully.',
-          messageType: MessageType.error);
-    }
-  }
+  
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 import '../agent/agent.dart';
-import '../service_provider_models/vetservices_model.dart';
 import '../services/services.dart';
 import '../session_types/session_types.dart';
 import 'service_type.dart';

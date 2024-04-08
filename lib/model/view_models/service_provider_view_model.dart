@@ -191,9 +191,9 @@ class ServiceProviderViewModel extends BaseViewModel {
 
                   final image = await ImagePicker().pickImage(
                       source: ImageSource.camera,
-                      imageQuality: 80,
-                      maxHeight: 1000,
-                      maxWidth: 1000);
+                       imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
 
                        if( uploadType == UploadType.upload1){
                         _imageURl3 = File(image!.path);
@@ -218,9 +218,9 @@ class ServiceProviderViewModel extends BaseViewModel {
                   Navigator.pop(context);
                   final image = await ImagePicker().pickImage(
                       source: ImageSource.gallery,
-                      imageQuality: 80,
-                      maxHeight: 1000,
-                      maxWidth: 1000);
+                       imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
                      if( uploadType == UploadType.upload1){
                         _imageURl3 = File(image!.path);
                       }else if( uploadType == UploadType.photoId){

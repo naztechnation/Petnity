@@ -10,7 +10,6 @@ import '../../../../blocs/service_provider/service_provider.dart';
 import '../../../../model/user_models/session_types.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
-import '../../../../utils/app_utils.dart';
 import '../../../widgets/empty_widget.dart';
 import '../../../widgets/image_view.dart';
 import '../../../widgets/loading_page.dart';

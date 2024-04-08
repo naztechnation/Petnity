@@ -16,7 +16,6 @@ import '../../model/user_models/agent_services_lists.dart';
 import '../../model/user_models/create_order.dart';
 import '../../model/user_models/medium_types.dart';
 import '../../model/user_models/session_types.dart';
-import '../../model/user_models/vet_service.dart';
 import '../../model/user_models/withdrawal_history.dart';
 import '../../model/withdrawal/withdrawal.dart';
 

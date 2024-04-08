@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:petnity/res/app_colors.dart';
-import 'package:petnity/utils/navigator/page_navigator.dart';
-
-import '../../../../res/app_strings.dart';
-import '../../../widgets/button_view.dart';
-import '../../../widgets/custom_text.dart';
-import '../review_screen.dart';
+import 'package:flutter/material.dart'; 
 
 class ContactBottom extends StatefulWidget {
   final String buttonText;

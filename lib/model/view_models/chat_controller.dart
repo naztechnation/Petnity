@@ -237,8 +237,10 @@ class MessageController extends BaseViewModel {
    
     try {
       
-        image = await imagePicker.pickImage(source: source);
-      // .pickImage(source: source);
+        image = await imagePicker.pickImage(source: source,  imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
+       
        
 
       final croppedFile = await ImageCropper().cropImage(

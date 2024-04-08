@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/retry.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:retry/retry.dart';
 import 'package:path/path.dart';
 

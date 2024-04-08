@@ -22,7 +22,6 @@ import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
 import '../payment/payment_screen.dart';
 import '../widgets/custom_text.dart';
-import '../widgets/modals.dart';
 import 'create_shop_product/create_shop_products.dart';
 import 'service_catalogue.dart';
 import 'service_provider_kyc/service_provider_kyc/service_kyc_eight.dart';

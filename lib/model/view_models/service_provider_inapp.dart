@@ -3,9 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:http/http.dart' as http;
-import 'package:petnity/model/user_models/order_lists.dart';
-import 'package:petnity/ui/widgets/modals.dart';
+import 'package:http/http.dart' as http; 
 
 import '../../res/app_colors.dart';
 import '../../res/app_strings.dart';
@@ -202,9 +200,9 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
 
                   final image = await ImagePicker().pickImage(
                       source: ImageSource.camera,
-                      imageQuality: 80,
-                      maxHeight: 1000,
-                      maxWidth: 1000);
+                       imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
                   if (isProfile) {
                     _imageURl1 = File(image!.path);
                   } else {
@@ -227,9 +225,9 @@ class ServiceProviderInAppViewModel extends BaseViewModel {
                   Navigator.pop(context);
                   final image = await ImagePicker().pickImage(
                       source: ImageSource.gallery,
-                      imageQuality: 80,
-                      maxHeight: 1000,
-                      maxWidth: 1000);
+                       imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
                   if (isProfile) {
                     _imageURl1 = File(image!.path);
                   } else {

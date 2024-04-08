@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutterwave_standard/flutterwave.dart';
 import 'package:intl/intl.dart';
-import 'package:petnity/model/user_models/vet_service.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 

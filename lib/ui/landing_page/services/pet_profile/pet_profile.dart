@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/model/user_models/pets_profile.dart'; 
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_bio.dart';
 import 'package:petnity/ui/landing_page/services/pet_profile/widgets/pet_image_status.dart';
@@ -19,7 +18,6 @@ import '../../../widgets/back_button.dart';
 import '../../../widgets/image_view.dart';
 import '../../../widgets/modals.dart';
 
-import '../../../../model/user_models/pets_profile.dart' as pet;
 
 class PetProfile extends StatelessWidget {
   final bool isUser;

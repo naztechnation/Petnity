@@ -11,7 +11,6 @@ import '../../res/app_images.dart';
 import '../../res/app_strings.dart';
 import '../widgets/back_button.dart';
 import '../widgets/custom_text.dart';
-import 'chat_pages/chat_page.dart';
 import 'widgets/requests_content.dart';
 
 class SessionStatusScreen extends StatelessWidget {

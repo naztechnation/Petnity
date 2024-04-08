@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../model/view_models/user_view_model.dart';
 import '../../requests/repositories/user_repo/user_repository.dart';

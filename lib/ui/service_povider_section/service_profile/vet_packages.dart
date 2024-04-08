@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/model/user_models/vet_service.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../../../blocs/service_provider/service_provider.dart';
 import '../../../../../handlers/secure_handler.dart';

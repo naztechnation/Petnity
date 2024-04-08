@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -157,14 +156,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 shape: BoxShape.circle,
                               ),
                               child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                child: Stack(
                                   children: [
-                                    ImageView.svg(
-                                      AppImages.personIcon,
-                                      height: 70,
-                                      color: Colors.grey,
+                                    Align(
+                                      child: ImageView.svg(
+                                        AppImages.personIcon,
+                                        height: 70,
+                                        color: Colors.grey.shade400,
+                                      ),
                                     ),
+                                    Container(
+                                      width: 120,
+                                      height: 120,
+                                      decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.33),
+                                          shape: BoxShape.circle),
+                                    ),
+                                    Align(
+                                        alignment: Alignment.center,
+                                        child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(0.13),
+                                                shape: BoxShape.circle),
+                                            child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              color: Colors.white,
+                                            )))
                                   ],
                                 ),
                               ),
@@ -177,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         alignment: Alignment.center,
                         children: [
                           Container(
-                              width: 140,
+                              width: 130,
                               height: 130,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -252,6 +272,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding: const EdgeInsets.all(16.0),
                         child: ImageView.svg(
                           AppImages.messageIcon,
+                          height: 14,
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,
@@ -294,10 +315,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.all(16.0),
                           child: user.showPasswordStatus
                               ? Icon(
-                                  Icons.visibility_off,
+                                  Icons.visibility_off_outlined,
                                   size: 24,
                                 )
-                              : Icon(Icons.visibility, size: 24),
+                              : Icon(Icons.visibility_outlined, size: 24),
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,
@@ -358,7 +379,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: CustomText(
                           textAlign: TextAlign.center,
                           maxLines: 2,
-                          text: 'Create account',
+                          text: 'Create Account',
                           weight: FontWeight.w400,
                           size: 16,
                           fontFamily: AppStrings.interSans,
@@ -393,7 +414,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         name: AppRoutes.signInScreen);
                                   }),
                             TextSpan(
-                              text: '  in here',
+                              text: ' Here',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -414,10 +435,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ));
   }
 
-    _registerUser(BuildContext ctx, imageUrl) {
+  _registerUser(BuildContext ctx, imageUrl) {
     if (_formKey.currentState!.validate()) {
-
-   
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
@@ -432,16 +451,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  _firebaseRegUser(
-      final firebaseAuth, BuildContext context, String imageUrl) async {
-    if (_formKey.currentState!.validate()) {
-      if (deviceId != '') {
-       _registerUser(context, imageUrl);
-    }
-  }
-
-
-      }
   RegistrationOptions(
     BuildContext context,
     final user,
@@ -533,7 +542,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       StorageHandler.saveUserName(
                           _usernameController.text.trim());
 
-
                       user.setUserType(UserType.serviceProvider);
 
                       setState(() {
@@ -546,7 +554,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         isLoading = false;
                       });
 
-                       _registerUser(context, imgUrl);
+                      _registerUser(context, imgUrl);
                     }, context),
                     const SizedBox(
                       height: 10,

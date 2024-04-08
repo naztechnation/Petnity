@@ -210,9 +210,9 @@ class AccountViewModel extends BaseViewModel {
 
                   final image = await ImagePicker().pickImage(
                       source: ImageSource.camera,
-                      imageQuality: 80,
-                      maxHeight: 1000,
-                      maxWidth: 1000);
+                       imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
                   _imageURl = File(image!.path);
                   setViewState(ViewState.success);
                 },
@@ -228,9 +228,9 @@ class AccountViewModel extends BaseViewModel {
                   Navigator.pop(context);
                   final image = await ImagePicker().pickImage(
                       source: ImageSource.gallery,
-                      imageQuality: 80,
-                      maxHeight: 1000,
-                      maxWidth: 1000);
+                      imageQuality: 30,
+                      maxHeight: 500,
+                      maxWidth: 500);
                   _imageURl = File(image!.path);
                   setViewState(ViewState.success);
                 },

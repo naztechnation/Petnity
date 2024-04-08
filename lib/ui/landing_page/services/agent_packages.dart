@@ -12,7 +12,6 @@ import '../../../../res/app_constants.dart';
 import '../../../../res/app_strings.dart';
 import '../../../blocs/user/user_cubit.dart';
 import '../../../blocs/user/user_states.dart';
-import '../../../model/account_models/agents_packages.dart';
 import '../../../model/user_models/packages.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';

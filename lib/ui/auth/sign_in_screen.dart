@@ -233,10 +233,10 @@ class SignInScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(16.0),
                           child: user.showPasswordStatus
                               ? Icon(
-                                  Icons.visibility_off,
+                                  Icons.visibility_off_outlined,
                                   size: 24,
                                 )
-                              : Icon(Icons.visibility, size: 24),
+                              : Icon(Icons.visibility_outlined, size: 24),
                         ),
                       ),
                       fillColor: AppColors.lightPrimary,
@@ -327,17 +327,17 @@ class SignInScreen extends StatelessWidget {
                                 },
                             ),
                             TextSpan(
-                                text: '  Create Account',
+                                text: ' Create An Account',
                                 style:
-                                    TextStyle(color: AppColors.lightSecondary),
+                                    TextStyle(color: AppColors.lightSecondary, fontSize: 15, fontWeight: FontWeight.w600),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     AppNavigator.pushAndReplaceName(context,
                                         name: AppRoutes.signUpScreen);
                                   }),
                             TextSpan(
-                              text: '  in here',
-                              style: TextStyle(color: Colors.black),
+                              text: '  Here.',
+                              style: TextStyle(color: Colors.black, fontSize: 15),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   // Long Pressed.

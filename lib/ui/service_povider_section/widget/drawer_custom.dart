@@ -21,7 +21,6 @@ import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/account_repo/account_repository_impl.dart';
-import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_routes.dart';
 import '../../landing_page/services/services_lists.dart';

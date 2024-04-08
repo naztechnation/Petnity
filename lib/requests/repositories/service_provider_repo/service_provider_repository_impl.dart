@@ -8,7 +8,6 @@ import 'package:petnity/model/service_provider_models/create_shop_products_model
 import 'package:petnity/model/service_provider_models/create_vet_services.dart';
 import 'package:petnity/model/user_models/credit_wallet.dart';
 import 'package:petnity/model/user_models/medium_types.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 
 import '../../../model/account_models/add_bank.dart';
 import '../../../model/service_provider_models/get_vet_services.dart';

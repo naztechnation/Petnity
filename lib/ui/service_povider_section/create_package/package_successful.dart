@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
-import 'package:petnity/ui/user/landing_screen.dart';
 
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';

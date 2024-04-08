@@ -7,7 +7,6 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user.dart';
-import '../../../model/services/services.dart';
 import '../../../model/user_models/service_type.dart';
 import '../../../model/view_models/user_view_model.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';

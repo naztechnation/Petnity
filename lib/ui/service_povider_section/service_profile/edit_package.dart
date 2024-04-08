@@ -2,14 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/blocs/user/user_cubit.dart';
 import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../blocs/service_provider/service_provider.dart';
-import '../../../blocs/user/user_states.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/view_models/service_provider_inapp.dart';
 import '../../../res/app_colors.dart';

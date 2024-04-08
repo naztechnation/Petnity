@@ -15,7 +15,6 @@ import '../../../model/user/transactions/transactions_list.dart';
 import '../../../model/user_models/agent_services_lists.dart';
 import '../../../model/user_models/medium_types.dart';
 import '../../../model/user_models/session_types.dart';
-import '../../../model/user_models/vet_service.dart';
 import '../../../model/user_models/withdrawal_history.dart';
 import '../../../model/withdrawal/withdrawal.dart';
 

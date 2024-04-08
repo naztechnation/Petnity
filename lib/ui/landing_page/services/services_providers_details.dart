@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/model/user_models/service_provider_lists.dart';
 import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
