@@ -248,7 +248,7 @@ class _HomepageBarState extends State<HomepageBar> {
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
-      centerTitle: true,
+      centerTitle: false,
       title: Text(
         'Lucacify',
         style: TextStyle(
@@ -334,9 +334,9 @@ class _HomepageBarState extends State<HomepageBar> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomText(
-                                  text: 'Your services',
+                                  text: 'Your services'.toUpperCase(),
                                   weight: FontWeight.bold,
-                                  size: 17,
+                                  size: 16,
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -373,7 +373,7 @@ class _HomepageBarState extends State<HomepageBar> {
                             ),
                             CustomText(
                               size: 14,
-                              text: 'Create Service',
+                              text: 'Create Service Package',
                             ),
                             const SizedBox(
                               height: 15,
@@ -392,17 +392,32 @@ class _HomepageBarState extends State<HomepageBar> {
                       );
                     });
               },
-              child: ImageView.svg(
+              child: 
+                Card(
+                  elevation: 0.5,
+                  child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      ImageView.svg(
                 AppImages.addIcon,
                 height: 22,
-              )),
+              ),
+              const SizedBox(width: 7,),
+                      Text('Create package'),
+                    ],
+                  ),
+                ),)
+              
+              ),
         ),
         const SizedBox(
           width: 12,
         ),
         GestureDetector(
           onTap: () {
-            AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
+            AppNavigator.pushAndStackPage(context,
+             page: NotificationsScreen());
           },
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0),
