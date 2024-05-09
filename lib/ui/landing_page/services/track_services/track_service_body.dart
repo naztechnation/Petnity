@@ -346,30 +346,39 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                           textAlign: TextAlign.left,
                           maxLines: 2,
                           text:
-                              'Session Paid - NGN ${AppUtils.convertPrice(widget.amount)}',
+                              'Session Paid - ',
                           weight: FontWeight.w500,
                           size: 12,
                           color: Colors.black,
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.green.shade100),
-                        child: CustomText(
-                          textAlign: TextAlign.center,
+                      CustomText(
+                          textAlign: TextAlign.left,
                           maxLines: 2,
-                          text: widget.paymentId,
-                          weight: FontWeight.w600,
-                          size: 14,
+                          text:
+                              'NGN ${AppUtils.convertPrice(widget.amount)}',
+                          weight: FontWeight.w500,
+                          size: 12,
                           color: Colors.black,
                         ),
-                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.all(10),
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(20),
+                      //       color: Colors.green.shade100),
+                      //   child: CustomText(
+                      //     textAlign: TextAlign.center,
+                      //     maxLines: 2,
+                      //     text: widget.paymentId,
+                      //     weight: FontWeight.w600,
+                      //     size: 14,
+                      //     color: Colors.black,
+                      //   ),
+                      // ),
                     ]),
               ),
               const SizedBox(
-                height: 380,
+                height: 50,
               ),
             ],
           ),

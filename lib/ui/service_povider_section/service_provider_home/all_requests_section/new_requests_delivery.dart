@@ -145,7 +145,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
             if (serviceProvider.vetOnGoingOrdersList.isNotEmpty &&
             isVetServices.name == 'vets')   GestureDetector(
 
-              // 09113476374
+             
                 onTap: () {
                   setState(() {
                     changeVetPage(OngoingServicesType.vets);
@@ -165,7 +165,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Ongoing Dog Services',
+                    'Ongoing Vet Services',
                     style: TextStyle(
                       color: isVetServices.name == 'vets'
                           ? AppColors.lightSecondary
@@ -273,7 +273,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
         Container(
           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 1.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               GestureDetector(
                 onTap: () {
@@ -305,7 +305,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   ),
                 ),
               ),
-              GestureDetector(
+              const SizedBox(width: 10,),
+           if (serviceProvider.vetOrders.isNotEmpty)    GestureDetector(
                 onTap: () {
                   setState(() {
                     changePage(requestsType.vets);
@@ -325,7 +326,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Dog Services',
+                    'Vet Services',
                     style: TextStyle(
                       color: isServices.name == 'vets'
                           ? AppColors.lightSecondary
@@ -406,7 +407,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 })),
           ),
         ],
-        if (serviceProvider.availableServices.isEmpty &&
+        if (serviceProvider.vetOrders.isEmpty &&
             isServices.name == 'vets') ...[
           Container(
               height: 400,
@@ -431,7 +432,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                 ),
               ))),
         ] else ...[
-          Visibility(
+         Visibility(
             visible: isServices.name == 'vets',
             child: ListView.builder(
                 shrinkWrap: true,
