@@ -110,7 +110,8 @@ class _ServiceProviderPetDeliveryHomeBodyState
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              GestureDetector(
+              if (serviceProvider.onGoingOrdersList.isNotEmpty &&
+            isVetServices.name == 'services') GestureDetector(
                 onTap: () {
                   setState(() {
                     changeVetPage(OngoingServicesType.services);
@@ -130,7 +131,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Other Services',
+                    'Ongoing Services',
                     style: TextStyle(
                       color: isVetServices.name == 'services'
                           ? AppColors.lightSecondary
@@ -141,7 +142,10 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   ),
                 ),
               ),
-              GestureDetector(
+            if (serviceProvider.vetOnGoingOrdersList.isNotEmpty &&
+            isVetServices.name == 'vets')   GestureDetector(
+
+              // 09113476374
                 onTap: () {
                   setState(() {
                     changeVetPage(OngoingServicesType.vets);
@@ -161,7 +165,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Vet Services',
+                    'Ongoing Dog Services',
                     style: TextStyle(
                       color: isVetServices.name == 'vets'
                           ? AppColors.lightSecondary
@@ -291,7 +295,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Other Services',
+                    'All Services',
                     style: TextStyle(
                       color: isServices.name == 'services'
                           ? AppColors.lightSecondary
@@ -321,7 +325,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     ),
                   ),
                   child: Text(
-                    'Vet Services',
+                    'Dog Services',
                     style: TextStyle(
                       color: isServices.name == 'vets'
                           ? AppColors.lightSecondary

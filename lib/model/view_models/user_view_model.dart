@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:petnity/model/user_models/gallery_data.dart';
 
+import '../../handlers/secure_handler.dart';
 import '../../res/enum.dart';
 import '../account_models/agents_packages.dart';
 import '../agent/agent.dart' as agent;
@@ -26,6 +27,9 @@ class UserViewModel extends BaseViewModel {
 
   String _petPicture = '';
 
+  String _picture = '';
+
+
   PetProfileDetails? _petProfile;
 
   UserOrders? _userOrder;
@@ -46,6 +50,11 @@ class UserViewModel extends BaseViewModel {
   Future<void> setPetPicture({required String petPicture}) async {
     _petPicture = petPicture;
     setViewState(ViewState.success);
+  }
+
+  getUserImage()async{
+ _picture = await StorageHandler.getUserPicture();
+ setViewState(ViewState.success);
   }
 
   Future<void> setServicesTypeList({required List<ServiceType>? services}) async {
@@ -237,6 +246,8 @@ class UserViewModel extends BaseViewModel {
   String get petPicture => _petPicture;
   bool get galleryStatus => _galleryStatus;
   PetProfileDetails? get petDetails => _petProfile;
+  String get picture => _picture;
+
   List<ServiceType> get servicesItems => servicesResults();
   List<Pets> get servicesPetList => servicesPets();
 

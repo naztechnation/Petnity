@@ -254,7 +254,7 @@ class _HomepageBarState extends State<HomepageBar> {
         style: TextStyle(
             color: AppColors.lightSecondary,
             fontWeight: FontWeight.bold,
-            fontSize: 18),
+            fontSize: 14),
       ),
       actions: [
         BlocConsumer<AccountCubit, AccountStates>(

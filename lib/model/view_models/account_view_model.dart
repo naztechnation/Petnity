@@ -42,6 +42,7 @@ class AccountViewModel extends BaseViewModel {
   String _agentName = '';
   String _orderId = '';
   String _packageId = '';
+  String _picture = '';
 
   File? _imageURl;
 
@@ -65,6 +66,12 @@ class AccountViewModel extends BaseViewModel {
   getUsername() async {
     _username = await StorageHandler.getUserName();
     setViewState(ViewState.success);
+  }
+
+
+  getUserImage()async{
+ _picture = await StorageHandler.getUserPicture();
+ setViewState(ViewState.success);
   }
 
   reload() async {
@@ -350,6 +357,7 @@ class AccountViewModel extends BaseViewModel {
   String get petSize => _petSize;
   String get aboutPet => _aboutPet;
   String get petId => _petId;
+  String get picture => _picture;
   File? get imageURl => _imageURl;
   UserType get userType => _userType;
   int get selectedIndex => _selectedIndex;

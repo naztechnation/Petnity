@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_constants.dart';
 import 'package:petnity/res/app_images.dart';
@@ -25,6 +26,7 @@ import '../../../res/app_colors.dart';
 import '../../../res/app_routes.dart';
 import '../../landing_page/services/services_lists.dart';
 import '../../payment/payment_screen.dart';
+import '../../widgets/modals.dart';
 import '../service_profile/service_profile.dart';
 import '../service_provider_kyc/service_provider_kyc/service_kyc_eight.dart';
 
@@ -108,7 +110,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: false);
+    user.getUserImage();
 
+ 
     return  BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
               if (state is AccountLoaded) {
@@ -191,7 +195,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Center(
                           child: Card(
-                            elevation: 4,
+                            elevation: 1,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(80),
                             ),
@@ -207,8 +211,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.circular(60),
                                     child: ImageView.network(
-                                      picture,
-                                      //userProfile?.profile?.profileImage,
+                                      user.picture,
                                       height: 120,
                                       width: 120,
                                       fit: BoxFit.cover,
@@ -219,7 +222,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 10,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -244,8 +251,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             ImageView.svg(
                               AppImages.personIcon,
-                              width: 25,
-                              height: 25,
+                              width: 22,
+                              height: 22,
                             ),
                             const SizedBox(
                               width: 10,
@@ -253,14 +260,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             Text(
                               'Profile',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -276,8 +287,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             ImageView.svg(
                               AppImages.messageIcon,
-                              width: 25,
-                              height: 25,
+                              width: 22,
+                              height: 22,
                             ),
                             const SizedBox(
                               width: 10,
@@ -285,14 +296,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             Text(
                               'Notifications',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
+                    SizedBox(
+                        height: 10,
+                      ),
+                      Divider(),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -310,8 +325,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             ImageView.svg(
                               AppImages.supportIcon,
-                              width: 25,
-                              height: 25,
+                              width: 22,
+                              height: 22,
                             ),
                             const SizedBox(
                               width: 10,
@@ -319,14 +334,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             Text(
                               'Support',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -346,8 +365,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             ImageView.asset(
                               AppImages.walletIcon,
-                              width: 25,
-                              height: 25,
+                              width: 22,
+                              height: 22,
                             ),
                             const SizedBox(
                               width: 10,
@@ -355,14 +374,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             Text(
                               'Balance & Withdrawal',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -380,8 +403,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             ),
                             ImageView.svg(
                               AppImages.settingsIcon,
-                              width: 25,
-                              height: 25,
+                              width: 22,
+                              height: 22,
                             ),
                             const SizedBox(
                               width: 10,
@@ -389,14 +412,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             Text(
                               'Settings',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -517,13 +544,20 @@ class _CustomDrawerState extends State<CustomDrawer> {
                               ),
                             ),
                             Text(
-                              'Add other Services',
+                              'Create Packages',
                               style: TextStyle(
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
                         ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Divider(),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
@@ -531,26 +565,35 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 SizedBox(
                   height: screenSize(context).height * .1,
                 ),
-                ListTile(
-                  onTap: () {
+                GestureDetector(
+                   onTap: () {
                     _signOut(context);
                   },
-                  minLeadingWidth: 0,
-                  leading: ImageView.svg(
-                    AppImages.logoutIcon,
-                    width: 25,
-                    height: 25,
-                  ),
-                  title: Align(
-                    alignment: Alignment(-1.1, 0),
-                    child: Text(
-                      'Log out',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontFamily: AppStrings.interSans),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    ImageView.svg(
+                      AppImages.logoutIcon,
+                      width: 25,
+                      height: 25,
+                            color: Colors.red,
+                  
                     ),
-                  ),
+                    const SizedBox(width: 10,),
+                    Align(
+                      alignment: Alignment(-1.1, 0),
+                      child: Text(
+                        'Log out',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            color: Colors.red,
+                            fontSize: 16,
+                            fontFamily: AppStrings.interSans),
+                      ),
+                    ),
+                  ],),
                 ),
+                
               ],
             ),
           ),
