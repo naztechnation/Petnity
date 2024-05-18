@@ -295,8 +295,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<AuthData> deleteUser({required String username}) async {
-    final map = await Requests().patch(AppStrings.deleteUser(username),
+  Future<AuthData> deleteUser({required String email, required String password}) async {
+    final map = await Requests().patch(AppStrings.deleteUser,
+    body: {
+      'email': email,
+      'password': password,
+    },
         headers: {
           'Authorization': AppStrings.token,
           "Content-type": "application/json"

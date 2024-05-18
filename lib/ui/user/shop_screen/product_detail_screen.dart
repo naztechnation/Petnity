@@ -140,7 +140,10 @@ class _ProductDetailState extends State<ProductDetail> {
 
           // _handlePaymentInitialization(
           //     state.createPaymentOrder.shopOrder!.id.toString());
-        } else {}
+        } else {
+           Modals.showToast(state.createPaymentOrder.message ?? '');
+
+        }
       } else if (state is ConfirmShoppingOrderLoaded) {
         if (state.confirmPaymentOrder.status?? false) {
           Modals.showToast(state.confirmPaymentOrder.message ?? '');
@@ -325,37 +328,41 @@ class _ProductDetailState extends State<ProductDetail> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        RatingWidget(
-                          coloredStars: 4,
-                          size: 20,
-                        ),
+                        // RatingWidget(
+                        //   coloredStars: 4,
+                        //   size: 20,
+                        // ),
                         SizedBox(
                           width: 10,
                         ),
                         if (userType == 'user')
-                          ButtonView(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 5),
-                            expanded: false,
-                            borderRadius: 30,
-                            onPressed: () {
-                              Modals.showBottomSheetModal(context,
-                                  isDissmissible: true,
-                                  heightFactor: 1,
-                                  page: Ratings(
-                                      ctxt: context,
-                                      username: user.username,
-                                      agentName: _products?.agent?.name ?? '',
-                                      productId:
-                                          _products?.sId.toString() ?? ''));
-                            },
-                            child: Text(
-                              'Add Review',
-                              style: TextStyle(fontWeight: FontWeight.w300, color: Colors.white),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: ButtonView(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 2),
+                              expanded: false,
+                              borderRadius: 30,
+                              onPressed: () {
+                                Modals.showBottomSheetModal(context,
+                                    isDissmissible: true,
+                                    heightFactor: 1,
+                                    page: Ratings(
+                                        ctxt: context,
+                                        username: user.username,
+                                        agentName: _products?.agent?.name ?? '',
+                                        productId:
+                                            _products?.sId.toString() ?? ''));
+                              },
+                              child: Text(
+                                'Add Review',
+                                style: TextStyle(fontWeight: FontWeight.w300, color: Colors.white),
+                              ),
                             ),
                           ),
                       ],
@@ -372,9 +379,12 @@ class _ProductDetailState extends State<ProductDetail> {
                             fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Text(
-                      _products?.description ?? '',
-                      textAlign: TextAlign.justify,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        _products?.description ?? '',
+                        textAlign: TextAlign.justify,
+                      ),
                     ),
                     SizedBox(
                       height: 20,

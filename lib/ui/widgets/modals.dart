@@ -32,7 +32,7 @@ class Modals {
   static void showToast(String message, {MessageType? messageType}) {
     Fluttertoast.showToast(
         msg: message,
-        toastLength: Toast.LENGTH_SHORT,
+        toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,
         backgroundColor: messageType == MessageType.success

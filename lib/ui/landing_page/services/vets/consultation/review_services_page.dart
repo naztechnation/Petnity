@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_constants.dart';
+import 'package:petnity/ui/service_povider_section/landing_page.dart';
 import 'package:petnity/ui/widgets/back_button.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/utils/app_utils.dart';
+import 'package:petnity/utils/navigator/page_navigator.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../blocs/service_provider/service_provider.dart';
@@ -133,6 +135,8 @@ class _ReviewServicesPageState extends State<ReviewServicesPage> {
          }
         } else if (state is PublishServicesLoaded) {
           Modals.showToast(state.data.message ?? '');
+
+          AppNavigator.pushAndReplacePage(context, page: ServiceProviderLandingPage());
         }
       }, builder: (context, state) {
         return (state is PublishServicesLoading ||

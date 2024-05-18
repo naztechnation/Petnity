@@ -194,6 +194,8 @@ class _KycServiceEightState extends State<KycServiceEight> {
                                   vertical: 0.0, horizontal: 0),
                               child: ButtonView(
                                 onPressed: () {
+
+                                 // print(user.selectedServiceItems);
                                   
                                   _submit(context, user, userData);
                                 },

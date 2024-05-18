@@ -5,6 +5,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:petnity/model/view_models/user_view_model.dart';
 import 'package:petnity/res/app_strings.dart';
 import 'package:petnity/ui/widgets/image_view.dart';
+import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/services/services.dart';
@@ -57,6 +58,10 @@ class ServicesList extends StatelessWidget {
                           page: VetService());
                     } else if (masterItem.name == 'Vets' && isAgent) {
                       
+
+                      Modals.showToast(vetServiceId);
+
+                      Navigator.pop(context);
 
                       AppNavigator.pushAndStackPage(context,
                           page: VetPackages(serviceId: vetServiceId,));

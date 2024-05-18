@@ -70,9 +70,11 @@ class _VetBookingState extends State<VetBooking> {
     setState(() {
       isLoading = true;
     });
+ Modals.showToast(widget.serviceId);
 
 
     await _serviceProviderCubit.vetServices(agentId: widget.serviceId);
+           
     setState(() {
       isLoading = false;
     });
@@ -93,7 +95,7 @@ class _VetBookingState extends State<VetBooking> {
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: Text(
-            'Editing Pricing',
+            'Edit Pricing',
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w700,
@@ -113,6 +115,7 @@ class _VetBookingState extends State<VetBooking> {
             amount = vetServices?.data?.vetService?.price.toString() ?? '';
             _amountController.text = vetServices?.data?.vetService?.price.toString() ?? '';
             vetServiceId = vetServices?.data?.vetService?.sId.toString() ?? '';
+
 
             isLive = vetServices?.data?.vetService?.isLive ?? false;
           } else if (state is EditPackageLoaded) {

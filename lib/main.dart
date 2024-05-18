@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:petnity/fcm.dart';
 import 'package:provider/provider.dart';
 import 'handlers/secure_handler.dart';
 import 'model/view_models/chat_controller.dart';
@@ -16,101 +19,69 @@ import 'model/view_models/user_view_model.dart';
 import 'res/app_routes.dart';
 import 'res/app_strings.dart';
 
-
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await setupFlutterNotifications();
-  showFlutterNotification(message);
-}
-
-
-
-// Create a notification channel for Flutter Local Notifications
-AndroidNotificationChannel channel = const AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // title
-  description: 'This channel is used for important notifications.', // description
-  importance: Importance.high,
-);
-
-bool isFlutterLocalNotificationsInitialized = false;
-
-// Function to set up Flutter Local Notifications
-Future<void> setupFlutterNotifications() async {
-  if (isFlutterLocalNotificationsInitialized) {
-    return;
-  }
-
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
-
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-
-  isFlutterLocalNotificationsInitialized = true;
-}
-
-// Function to show Flutter Local Notification
-void showFlutterNotification(RemoteMessage message) {
-  RemoteNotification? notification = message.notification;
-  AndroidNotification? android = message.notification?.android;
-  if (notification != null && android != null && !kIsWeb) {
-    flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
-        android: AndroidNotificationDetails(
-          channel.id,
-          channel.name,
-          channelDescription: channel.description,
-          icon: '@drawable/launcher_icon',
-        ),
-      ),
-    );
+ 
+Future _firebaseBackgroundMessage(RemoteMessage message) async {
+  if (message.notification != null) {
+    
   }
 }
 
-
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
 Future<void> main() async {
-    WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
 
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
- 
-  _firebaseMessaging.getToken().then((token) async {
-    await StorageHandler.saveFireBaseToken(token.toString());
-
-  });
-
-  
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-  
-  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-    if (message.data != {}) {
-     
-      Future.delayed(Duration(seconds: 10), () {});
-      showFlutterNotification(message);
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    if (message.notification != null) {
+      
+    //  navigatorKey.currentState!.pushNamed(AppRoutes.message, arguments: message);
     }
   });
+
+  PushNotifications.init();
+  PushNotifications.localNotiInit();
+   
+  FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
+
+   
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    String payloadData = jsonEncode(message.data);
+    
+    if (message.notification != null) {
+      PushNotifications.showSimpleNotification(
+          title: message.notification!.title!,
+          body: message.notification!.body!,
+          payload: payloadData);
+    }
+  });
+
+ 
+  final RemoteMessage? message =
+      await FirebaseMessaging.instance.getInitialMessage();
+
+  if (message != null) {
+    Future.delayed(Duration(seconds: 1), () {
+
+      
+     // navigatorKey.currentState!.pushNamed(AppRoutes.message, arguments: message);
+    });
+  }
+  
+
+
+  
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AccountViewModel(), lazy: false),
-      ChangeNotifierProvider(create: (_) => ServiceProviderViewModel(), lazy: false),
+      ChangeNotifierProvider(
+          create: (_) => ServiceProviderViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => UserViewModel(), lazy: false),
-      ChangeNotifierProvider(create: (_) => FirebaseAuthProvider(), lazy: false),
-      ChangeNotifierProvider(create: (_) => ServiceProviderInAppViewModel(), lazy: false),
+      ChangeNotifierProvider(
+          create: (_) => FirebaseAuthProvider(), lazy: false),
+      ChangeNotifierProvider(
+          create: (_) => ServiceProviderInAppViewModel(), lazy: false),
       ChangeNotifierProvider(create: (_) => MessageController(), lazy: false),
-    ], 
+    ],
     child: const Lucacify(),
   ));
 }
@@ -127,12 +98,11 @@ class Lucacify extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
       themeMode: ThemeMode.light,
-      theme: ThemeData(fontFamily: AppStrings.satoshi, ),
+      theme: ThemeData(
+        fontFamily: AppStrings.satoshi,
+      ),
       routes: AppRoutes.routes,
-
-      
-       initialRoute: AppRoutes.splashScreen,
-
+      initialRoute: AppRoutes.splashScreen,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

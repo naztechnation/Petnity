@@ -47,10 +47,14 @@ class _SettingsState extends State<Settings> {
   late UserCubit _userCubit;
 
   String username = '';
+  String email = '';
+  String password = '';
 
   getUserDetails() async {
     userType = await StorageHandler.getUserType();
     username = await StorageHandler.getUserName();
+    email = await StorageHandler.getUserEmail();
+    password = await StorageHandler.getUserPassword();
     _userCubit = context.read<UserCubit>();
 
     setState(() {});
@@ -291,7 +295,7 @@ void deleteAccount(BuildContext context) async {
                                 onTap: () {
                                   // Modals.showToast(username);
 
-                                  contxt.read<UserCubit>().deleteUserAccount(username);
+                                  contxt.read<UserCubit>().deleteUserAccount(email: email, password: password);
                                 },
                                 child: Text(
                                   'Yes, proceed',
@@ -309,7 +313,7 @@ void deleteAccount(BuildContext context) async {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: Text('No, go back')))
+                                  child: Text('No, go back', style: TextStyle(color: Colors.white),)))
                         ],
                       ),
                     ]

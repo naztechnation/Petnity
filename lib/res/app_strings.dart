@@ -169,12 +169,12 @@ class AppStrings {
   static const String getFaq = '${_baseUrl}home/get-faqs';
 
   static String updateNumber(String username) =>
-      '${_baseUrl}users/change-email-and-phone/$username';
+      '${_baseUrl}user/change-email-and-phone/$username';
 
   static String privacy = '${_baseUrl}home/get-privacy-policy';
 
-  static String deleteUser(String username) =>
-      '${_baseUrl}users/delete-user/$username';
+  static String deleteUser  =
+      '${_baseUrl}user/deactivate-account';
 
   static String  reportBug = '${_baseUrl}user/create-bug-report';
 

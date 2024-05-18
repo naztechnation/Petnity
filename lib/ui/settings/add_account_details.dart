@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/res/app_colors.dart';
@@ -14,6 +15,7 @@ import '../../model/service_provider_models/account_details.dart';
 import '../../model/view_models/service_provider_inapp.dart';
 import '../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../res/app_images.dart';
+import '../../res/app_routes.dart';
 import '../../utils/navigator/page_navigator.dart';
 import '../../utils/validator.dart';
 import '../payment/withdrawal_page.dart';
@@ -32,7 +34,9 @@ class AddAccountDetails extends StatelessWidget {
           serviceProviderRepository: ServiceProviderRepositoryImpl(),
           viewModel: Provider.of<ServiceProviderInAppViewModel>(context,
               listen: false)),
-      child: AddAccount(isWithdraw: isWithdraw,),
+      child: AddAccount(
+        isWithdraw: isWithdraw,
+      ),
     );
   }
 }
@@ -58,7 +62,10 @@ class _AddAccountState extends State<AddAccount> {
   final TextEditingController bankNameController = TextEditingController();
 
   final TextEditingController searchBankController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final _formKey1 = GlobalKey<FormState>();
 
   late ServiceProviderCubit _userCubit;
 
@@ -69,8 +76,14 @@ class _AddAccountState extends State<AddAccount> {
   String agentId = "";
 
   String bankCode = "";
+  String email = "";
+  String password = "";
 
   getAgentId() async {
+    agentId = await StorageHandler.getUserId();
+    email = await StorageHandler.getUserEmail();
+    password = await StorageHandler.getUserPassword();
+
     agentId = await StorageHandler.getUserId();
     _userCubit = context.read<ServiceProviderCubit>();
 
@@ -85,12 +98,14 @@ class _AddAccountState extends State<AddAccount> {
 
   Future<bool> onBackPress() {
     if (isWithdraw) {
-      AppNavigator.pushAndReplacePage(context, page: WithdrawalPage(withdrawableAmount: amount,));
+      AppNavigator.pushAndReplacePage(context,
+          page: WithdrawalPage(
+            withdrawableAmount: amount,
+          ));
     } else {
       Navigator.pop(context);
     }
 
-    
     return Future.value(false);
   }
 
@@ -99,38 +114,40 @@ class _AddAccountState extends State<AddAccount> {
     final serviceProvider =
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
 
-        amount = serviceProvider.withdrawableBalance;
+    amount = serviceProvider.withdrawableBalance;
 
     return BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
       listener: (context, state) {
         if (state is UpdateAccountDetailsLoaded) {
           if (state.account.status!) {
             Modals.showToast(state.account.message ?? "");
-            Modals.showToast(state.account.data?.bankDetails?.accountName ?? "");
+            Modals.showToast(
+                state.account.data?.bankDetails?.accountName ?? "");
 
-
-            // Navigator.push(context, MaterialPageRoute(builder: (_) {
-            //   return UpdateSuccessfulScreen(
-            //       buttonText: 'Done',
-            //       onPressed: () {
-            //         AppNavigator.pushAndReplaceName(context,
-            //             name: AppRoutes.serviceProviderLandingPage);
-            //       },
-            //       successMessage: 'Your account details have been updated');
-            // }));
+            Navigator.push(context, MaterialPageRoute(builder: (_) {
+              return UpdateSuccessfulScreen(
+                  buttonText: 'Done',
+                  notetext:
+                      'You cannot edit this account till after 30 days from today.',
+                  onPressed: () {
+                    AppNavigator.pushAndReplaceName(context,
+                        name: AppRoutes.serviceProviderLandingPage);
+                  },
+                  successMessage: 'Your account details have been updated');
+            }));
           } else {
             Modals.showToast(state.account.message ?? "");
           }
         }
         if (state is AccountDetailsLoaded) {
           if (state.account.status!) {
-            accountList = state.account.data?.bankDetails?.reversed.toList() ?? [];
-
+            accountList =
+                state.account.data?.bankDetails?.reversed.toList() ?? [];
 
             if (accountList.isNotEmpty) {
               accountNameController.text = accountList[0].accountName ?? "";
               accountNumberController.text =
-                  accountList[0].accountNumber.toString() ;
+                  accountList[0].accountNumber.toString();
               bankNameController.text = accountList[0].bank ?? "";
             }
           }
@@ -159,7 +176,10 @@ class _AddAccountState extends State<AddAccount> {
                           onTap: () {
                             if (isWithdraw) {
                               AppNavigator.pushAndReplacePage(context,
-                                  page: WithdrawalPage(withdrawableAmount: serviceProvider.withdrawableBalance,));
+                                  page: WithdrawalPage(
+                                    withdrawableAmount:
+                                        serviceProvider.withdrawableBalance,
+                                  ));
                             } else {
                               Navigator.pop(context);
                             }
@@ -256,9 +276,13 @@ class _AddAccountState extends State<AddAccount> {
                                 processing:
                                     state is UpdateAccountDetailsLoading,
                                 onPressed: () {
-                                  _submit(context: context, agentId: agentId);
+                                  Modals.showDialogModal(context,
+                                      page: verifyUser());
                                 },
-                                child: Text('Update Account', style: TextStyle(color: Colors.white),),
+                                child: Text(
+                                  'Update Account',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ],
                           ),
@@ -266,6 +290,97 @@ class _AddAccountState extends State<AddAccount> {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+
+  verifyUser() {
+    return Container(
+      padding: EdgeInsets.all(15),
+      child: Form(
+        key: _formKey1,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Verify It's You!!!",
+              style: TextStyle(fontSize: 18),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            TextEditView(
+              isDense: true,
+              validator: (value) {
+                return Validator.validate(value, 'Email');
+              },
+              textViewTitle: 'Email Address',
+              hintText: 'Enter email',
+              fillColor: Colors.white,
+              borderColor: Colors.white,
+              controller: emailController,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            TextEditView(
+              isDense: true,
+              validator: (value) {
+                return Validator.validate(value, 'Password');
+              },
+              textViewTitle: 'Password',
+              keyboardType: TextInputType.number,
+              fillColor: Colors.white,
+              borderColor: Colors.white,
+              hintText: 'Enter password',
+              controller: passwordController,
+            ),
+            SizedBox(
+              height: 35,
+            ),
+            ButtonView(
+              borderRadius: 40,
+              onPressed: () {
+                if (_formKey1.currentState!.validate()) {
+                if (email.toLowerCase().trim() == emailController.text.toLowerCase().trim() && password.toLowerCase().trim() == passwordController.text.toLowerCase().trim()) {
+                  Modals.showToast('Authorization successful');
+              Navigator.pop(context);
+
+                   _submit(context: context, agentId: agentId);
+                } else {
+              Navigator.pop(context);
+
+                  Modals.showToast('Failed to authorize user');
+                  
+                }
+                }
+              },
+              child: Text(
+                'Authorize',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              height: 25,
+            ),
+        
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Close",
+                
+                style: TextStyle(
+                  fontSize: 15,
+                color: Colors.blue,
+                
+                
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -325,22 +440,22 @@ class _AddAccountState extends State<AddAccount> {
                 return ListTile(
                   leading: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
-                    child: 
-                    Container(
+                    child: Container(
                       height: 40,
                       width: 40,
                       child: ImageView.network(
                         user.filterBankList[index]['logo'],
-                      ),)
-                  ,),
+                      ),
+                    ),
+                  ),
                   subtitle: Text(user.filterBankList[index]['name']),
                   onTap: () {
                     Navigator.pop(context);
-                    
-                    setState(() {
 
+                    setState(() {
                       bankCode = user.filterBankList[index]['code'];
-                      bankNameController.text = user.filterBankList[index]['name'];
+                      bankNameController.text =
+                          user.filterBankList[index]['name'];
                     });
                   },
                 );

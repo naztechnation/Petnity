@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:petnity/requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import 'package:petnity/ui/widgets/text_edit_view.dart';
 import 'package:provider/provider.dart';
@@ -77,6 +79,8 @@ class _ReviewState extends State<Edit> {
   late ServiceProviderCubit _userCubit;
 
   final _amountController = TextEditingController();
+  final _durationController = TextEditingController();
+  final _descriptionController = TextEditingController();
 
   String email = '';
   String agentId = '';
@@ -182,7 +186,7 @@ class _ReviewState extends State<Edit> {
                                       ),
                                       borderRadius: 30,
                                       boxHeight: 8,
-                                      //readOnly: true,
+                                      readOnly: true,
                                       borderColor: Colors.white,
                                       filled: true,
                                       fillColor: Colors.white,
@@ -206,9 +210,7 @@ class _ReviewState extends State<Edit> {
                                       ),
                                     ),
                                     TextEditView(
-                                      controller: TextEditingController(
-                                        text: widget.packageDuration,
-                                      ),
+                                      controller: _durationController,
                                       borderRadius: 30,
                                       boxHeight: 8,
                                       //readOnly: true,
@@ -237,9 +239,7 @@ class _ReviewState extends State<Edit> {
                                 ),
                               ),
                               TextEditView(
-                                controller: TextEditingController(
-                                  text: widget.packageDescription,
-                                ),
+                                controller: _descriptionController,
                                 borderRadius: 30,
                                 //readOnly: true,
                                 boxHeight: 8,
@@ -258,7 +258,7 @@ class _ReviewState extends State<Edit> {
                                 child: CustomText(
                                   textAlign: TextAlign.center,
                                   maxLines: 2,
-                                  text: 'Price',
+                                  text: 'Price (NGN)',
                                   weight: FontWeight.w600,
                                   size: 14,
                                   fontFamily: AppStrings.montserrat,
@@ -276,6 +276,10 @@ class _ReviewState extends State<Edit> {
                                 fillColor: Colors.white,
                                 isDense: true,
                                 textViewTitle: 'Input New Price',
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  ThousandsSeparatorInputFormatter(),
+                                ],
                               ),
                               const SizedBox(
                                 height: 20,
@@ -333,5 +337,30 @@ class _ReviewState extends State<Edit> {
     print(inputTime);
 
     return inputTime;
+  }
+}
+
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  final NumberFormat _formatter = NumberFormat('#,###');
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue;
+    }
+
+    // Remove all non-digit characters
+    final intValue = int.tryParse(newValue.text.replaceAll(',', ''));
+    if (intValue == null) {
+      return oldValue;
+    }
+
+    final newText = _formatter.format(intValue);
+
+    return newValue.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
   }
 }

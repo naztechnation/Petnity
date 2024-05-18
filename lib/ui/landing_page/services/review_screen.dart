@@ -13,6 +13,7 @@ import '../../../blocs/user/user_states.dart';
 import '../../../handlers/secure_handler.dart';
 import '../../../model/view_models/account_view_model.dart';
 import '../../../model/view_models/user_view_model.dart';
+import '../../../notification.dart';
 import '../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../res/app_colors.dart';
 import '../../../res/app_constants.dart';
@@ -111,10 +112,16 @@ class _ReviewState extends State<Review> {
 
   String transactionId = '';
   String txId = '';
+  String username = '';
   var uuid = const Uuid();
 
   getEmail() async {
     email = await StorageHandler.getUserEmail();
+    username = await StorageHandler.getUserName();
+
+    setState(() {
+      
+    });
   }
 
   @override
@@ -184,6 +191,12 @@ class _ReviewState extends State<Review> {
               );
             } else if (state is ConfirmPaymentLoaded) {
               Modals.showToast(state.packages.message ?? '');
+
+               sendPushNotification(
+                                'ff9Xj5SeTFiHTZx_9KUwLx:APA91bGRz1f5bpMP2NFFAddvtHKR-sw79tWuIImRVoNdG2ND-MukdfDaLRIWqv1Qv1WSdOG77A4cywC1MWz079lWYRfNellhCmRZqyms_33AXyDi19EHt2oD95077GbOl6RijOQ0tPV4',
+                                'Customer Payment Recieved',
+                                'Hello, you have a pending order from ${username}. Login to Lucacify and attend to your order');
+
               Future.delayed(Duration(seconds: 2), () {
                 AppNavigator.pushAndReplacePage(context,
                     page: PaymentSuccessScreen(

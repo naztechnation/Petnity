@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../model/view_models/user_view_model.dart';
@@ -690,11 +692,11 @@ class UserCubit extends Cubit<UserStates> {
   }
 
 
-  Future<void> deleteUserAccount(String username) async {
+  Future<void> deleteUserAccount({required String email, required String password}) async {
     try {
       emit(DeleteUserLoading());
 
-      final user = await userRepository.deleteUser(username: username);
+      final user = await userRepository.deleteUser(email: email, password: password);
 
       emit(DeleteUserLoaded(user));
     } on ApiException catch (e) {

@@ -67,14 +67,21 @@ class _ServiceProviderLandingPageState
               : _selectedIndex == 1
                   ? simpleAppbar(
                       'Shop Products',
+                      centered: false,
                       GestureDetector(
                         onTap: () {
                           AppNavigator.pushAndStackPage(context,
                               page: CreateShopProducts());
                         },
-                        child: ImageView.svg(
-                          AppImages.addIcon,
-                          height: 20,
+                        child: Row(
+                          children: [
+                            ImageView.svg(
+                              AppImages.addIcon,
+                              height: 20,
+                            ),
+                            const SizedBox(width: 5,),
+                            Text('Add product', style: TextStyle(fontSize: 12),)
+                          ],
                         ),
                       ))
                   : _selectedIndex == 2
@@ -249,12 +256,13 @@ class _HomepageBarState extends State<HomepageBar> {
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       centerTitle: false,
+      
       title: Text(
         'Lucacify',
         style: TextStyle(
             color: AppColors.lightSecondary,
             fontWeight: FontWeight.bold,
-            fontSize: 14),
+            fontSize: 16),
       ),
       actions: [
         BlocConsumer<AccountCubit, AccountStates>(
@@ -439,11 +447,13 @@ class _HomepageBarState extends State<HomepageBar> {
 class simpleAppbar extends StatelessWidget {
   final Widget action;
   final String title;
-  simpleAppbar(this.title, this.action);
+  final bool centered;
+  simpleAppbar(this.title, this.action, {this.centered = true});
   @override
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
+      
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(
@@ -451,7 +461,7 @@ class simpleAppbar extends StatelessWidget {
         style: TextStyle(
             color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
       ),
-      centerTitle: true,
+      centerTitle: centered,
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),

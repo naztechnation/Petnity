@@ -244,14 +244,12 @@ class _ShopState extends State<Shop> {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        Expanded(
-                                          child: Text(
-                                            filteredProducts[index].name ?? '',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w700),
-                                          ),
+                                        Text(
+                                          filteredProducts[index].name ?? '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700),
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -260,9 +258,9 @@ class _ShopState extends State<Shop> {
                                                 filteredProducts[index]
                                                     .price) ??
                                             ''),
-                                        RatingWidget(
-                                          coloredStars: 3,
-                                        ),
+                                        // RatingWidget(
+                                        //   coloredStars: 3,
+                                        // ),
                                       ],
                                     ),
                                   );
