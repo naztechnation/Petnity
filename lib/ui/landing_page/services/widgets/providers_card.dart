@@ -279,7 +279,7 @@ class _ProvidersCardState extends State<ProvidersCard> {
                   child: ButtonView(
                     onPressed: () {
                       AppNavigator.pushAndStackPage(context,
-                          page: ServiceProviderProfile(agents: user.agents[widget.index],selectedServices: constantString, ));
+                          page: ServiceProviderProfile(agents: user.agents[widget.index],selectedServices: constantString, spToken: user.agents[widget.index].user?.deviceId.toString() ?? '',));
                     },
                     expanded: true,
                     borderRadius: 41,

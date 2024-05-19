@@ -440,7 +440,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ctx.read<AccountCubit>().registerUser(
             url: AppStrings.registerUrl,
             profileImage: imageUrl,
-            firebaseId: '',
+            firebaseId: deviceId,
             username: _usernameController.text.trim(),
             phoneNumber: _phoneController.text.trim(),
             email: _emailController.text.trim(),

@@ -56,15 +56,22 @@ class Modals {
           return AlertDialog(  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0), 
                   ),
-            title: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600), ),
+            title: Column(
+              children: [
+                Text(title,
+                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600), ),
+                const SizedBox(height: 10,),
+                Divider()
+              ],
+            ),
             content: Text(message),
             actions: [
               TextButton(
-                child: Text(buttonNoText),
+                child: Text(buttonNoText,  style: TextStyle( fontWeight: FontWeight.w600, color: Colors.red),),
                 onPressed: () => Navigator.pop(context, false),
               ),
               TextButton(
-                child: Text(buttonYesText),
+                child: Text(buttonYesText, style: TextStyle( fontWeight: FontWeight.w600, color: Colors.black),),
                 onPressed: (){
                   onTap();
                   Navigator.pop(context, false);

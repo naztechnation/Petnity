@@ -37,6 +37,7 @@ class TrackServicesBody extends StatefulWidget {
   final String customerPhone;
   final String customerFireBaseId;
   final String orderId;
+  final bool isRecievePayment;
 
   const TrackServicesBody(
       {super.key,
@@ -52,7 +53,7 @@ class TrackServicesBody extends StatefulWidget {
       required this.customerName,
        required this.customerImage, 
        required this.customerPhone,
-        required this.customerFireBaseId, required this.orderId});
+        required this.customerFireBaseId, required this.orderId, required this.isRecievePayment});
 
   @override
   State<TrackServicesBody> createState() => _TrackServicesBodyState();
@@ -377,8 +378,8 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                       // ),
                     ]),
               ),
-              const SizedBox(
-                height: 50,
+                SizedBox(
+                height: (widget.isRecievePayment) ? 450 : 220,
               ),
             ],
           ),

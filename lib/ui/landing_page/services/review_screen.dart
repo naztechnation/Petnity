@@ -30,6 +30,7 @@ import '../../widgets/modals.dart';
 import 'payment_success_screen.dart';
 
 class ReviewScreen extends StatelessWidget {
+  final String spToken;
   final String date1,
       date2,
       time1,
@@ -51,6 +52,7 @@ class ReviewScreen extends StatelessWidget {
     required this.username,
     required this.serverDate,
     required this.serverDate1,
+    required this.spToken
   });
 
   @override
@@ -69,6 +71,7 @@ class ReviewScreen extends StatelessWidget {
         username: username,
         serverDate: serverDate,
         serverDate1: serverDate1,
+        spToken: spToken,
       ),
     );
   }
@@ -84,6 +87,8 @@ class Review extends StatefulWidget {
       username,
       serverDate,
       serverDate1;
+  final String spToken;
+
   const Review({
     super.key,
     required this.date1,
@@ -95,6 +100,7 @@ class Review extends StatefulWidget {
     required this.username,
     required this.serverDate,
     required this.serverDate1,
+    required this.spToken
   });
 
   @override
@@ -192,23 +198,18 @@ class _ReviewState extends State<Review> {
             } else if (state is ConfirmPaymentLoaded) {
               Modals.showToast(state.packages.message ?? '');
 
-               sendPushNotification(
-                                'ff9Xj5SeTFiHTZx_9KUwLx:APA91bGRz1f5bpMP2NFFAddvtHKR-sw79tWuIImRVoNdG2ND-MukdfDaLRIWqv1Qv1WSdOG77A4cywC1MWz079lWYRfNellhCmRZqyms_33AXyDi19EHt2oD95077GbOl6RijOQ0tPV4',
-                                'Customer Payment Recieved',
-                                'Hello, you have a pending order from ${username}. Login to Lucacify and attend to your order');
-
-              Future.delayed(Duration(seconds: 2), () {
-                AppNavigator.pushAndReplacePage(context,
-                    page: PaymentSuccessScreen(
-                      txId: txId,
-                    ));
-              });
             } else if (state is CreateOrderLoaded) {
                 if(state.createOrder.status ?? false){
                     Modals.showToast(state.createOrder.message ?? '',
                   messageType: MessageType.success);
 
 
+               sendPushNotification(
+                                widget.spToken,
+                                'Customer Payment Recieved',
+                                'Hello, you have a pending order from ${username}. Login to Lucacify and attend to your order');
+
+              
                   Future.delayed(Duration(seconds: 2), () {
                 AppNavigator.pushAndReplacePage(context,
                     page: PaymentSuccessScreen(
@@ -544,12 +545,20 @@ class _ReviewState extends State<Review> {
                           borderColor: Colors.white,
                           borderRadius: 40,
                           onPressed: () {
-                            _userCubit.createOrder(
+
+            
+
+                           Modals.showAlertOptionDialog(context, title: 'Make Payment', message: 'Are  you sure you want send NGN$mainAmount for this service.',
+                           buttonNoText: 'Cancel',
+                           buttonYesText: 'Continue',
+                            onTap: (){
+                             _userCubit.createOrder(
                                 packageId: agent.packageId,
                                 fee: mainAmount,
                                 pickupTime: '${widget.serverDate}',
                                 dropOffTime: '${widget.serverDate1}',
                                 pickUpLocation: agent.location);
+                           });
                           },
                           child: CustomText(
                             textAlign: TextAlign.left,

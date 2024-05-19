@@ -28,11 +28,12 @@ import '../../widgets/loading_page.dart';
 class PackagesScreen extends StatelessWidget {
   final String serviceId;
   final String agentId;
+  final String spToken;
 
   const PackagesScreen({
     super.key,
     required this.serviceId,
-    required this.agentId,
+    required this.agentId, required this.spToken,
   });
 
   @override
@@ -44,6 +45,7 @@ class PackagesScreen extends StatelessWidget {
       child: PackagePage(
         serviceId: serviceId,
         agentId: agentId,
+        spToken: spToken,
       ),
     );
   }
@@ -52,25 +54,30 @@ class PackagesScreen extends StatelessWidget {
 class PackagePage extends StatefulWidget {
   final String serviceId;
   final String agentId;
+  final String spToken;
+
   const PackagePage(
-      {super.key, required this.serviceId, required this.agentId});
+      {super.key, required this.serviceId, required this.agentId, required this.spToken});
 
   @override
   State<PackagePage> createState() => _PackagesState(
         serviceId,
         agentId,
+        spToken
       );
 }
 
 class _PackagesState extends State<PackagePage> {
   final String serviceId;
   final String agentId;
+    final String spToken;
+
 
   List<Packages> packages = [];
 
   late UserCubit _userCubit;
 
-  _PackagesState(this.serviceId, this.agentId);
+  _PackagesState(this.serviceId, this.agentId, this.spToken);
 
   @override
   void initState() {
@@ -233,7 +240,7 @@ class _PackagesState extends State<PackagePage> {
                                       agent.setPackageId(
                                           packages[index].sId.toString());
                                       AppNavigator.pushAndStackPage(context,
-                                          page: SetLocationScreen());
+                                          page: SetLocationScreen(spToken: widget.spToken,));
                                     },
                                     child: Container(
                                         margin:

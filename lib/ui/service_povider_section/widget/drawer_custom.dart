@@ -567,7 +567,19 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ),
                 GestureDetector(
                    onTap: () {
-                    _signOut(context);
+                    Modals.showAlertOptionDialog(context,
+                                  title: "Log Out!!!",
+                                  buttonNoText: 'Cancel',
+                                  buttonYesText: 'Continue',
+                                  message:
+                                      "Are you sure you want to Logout this account?.",
+                                  onTap: () {
+                                  Navigator.pop(context);
+                  _signOut(context);
+          
+                   
+                              });
+                    
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

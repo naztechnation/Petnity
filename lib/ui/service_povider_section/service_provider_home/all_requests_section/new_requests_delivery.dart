@@ -385,7 +385,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
-                        'Your ongoing and new sessions would appear here',
+                        'No ongoing and new sessions are available for you at the moment.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w300),
@@ -522,142 +522,148 @@ class _ServiceProviderPetDeliveryHomeBodyState
       padding: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
-      child: ListTile(
-        leading: Container(
-          width: 55,
-          height: 50,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(20)),
-          child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: ImageView.network(
-                order.package?.service?.serviceType?.image,
-                fit: BoxFit.cover,
-              )),
-        ),
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    text:
-                        '${order.user?.username.toString().capitalizeFirstOfEach}',
-                    weight: FontWeight.bold,
-                  ),
-                  CustomText(
-                    text: '${order.package?.service?.serviceType?.name}',
-                    size: 12,
-                  ),
-                ],
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          servicesTypes(order),
+          ListTile(
+            leading: Container(
+              width: 55,
+              height: 50,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: ImageView.network(
+                    order.package?.service?.serviceType?.image,
+                    fit: BoxFit.cover,
+                  )),
             ),
-            CustomText(
-              text: order.isPaid! ? 'Paid' : 'Not Paid',
-              size: 12,
-              color: order.isPaid! ? Colors.green : Colors.red,
-              weight: FontWeight.bold,
-            ),
-          ],
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 6,
-            ),
-            CustomText(
-              text: 'Pick up time',
-              size: 12,
-              weight: FontWeight.w600,
-            ),
-            Row(
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ImageView.svg(
-                  AppImages.time,
-                  height: 16,
-                ),
-                const SizedBox(
-                  width: 6,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        text:
+                            '${order.user?.username.toString().capitalizeFirstOfEach}',
+                        weight: FontWeight.bold,
+                      ),
+                      CustomText(
+                        text: '${order.package?.service?.serviceType?.name}',
+                        size: 12,
+                      ),
+                    ],
+                  ),
                 ),
                 CustomText(
-                  text: userModel.formatDateTimeToAMPM(order.pickupTime),
-                  size: 10,
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                ImageView.svg(
-                  AppImages.calender,
-                  height: 16,
-                ),
-                const SizedBox(
-                  width: 6,
-                ),
-                Expanded(
-                  child: CustomText(
-                    text: AppUtils.formatComplexDateOnly(
-                        dateTime: order.pickupTime ?? ''),
-                    size: 10,
-                    maxLines: 2,
-                  ),
+                  text: order.isPaid! ? 'Paid' : 'Not Paid',
+                  size: 12,
+                  color: order.isPaid! ? Colors.green : Colors.red,
+                  weight: FontWeight.bold,
                 ),
               ],
-            )
-          ],
-        ),
-        trailing: Container(
-          width: screenSize(context).width * .2,
-          child: ButtonView(
-            onPressed: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (_) {
-              //   return ServiceRequest();
-              // }));
-
-              if (order.isPaid ?? false) {
-              AppNavigator.pushAndStackPage(context,
-                  page: TrackServicesScreen(
-                    agentName: order.agent?.user?.username ?? '',
-                    phone: order.agent?.user?.phoneNumber ?? '',
-                    serviceOffered:
-                        order.package?.service?.serviceType?.name ?? '',
-                    agentId: order.agent?.sId ?? '',
-                    sellerId: order.agent?.sId.toString() ?? '',
-                    startDate1: order.pickupTime ?? '0',
-                    startDate2: order.dropoffTime ?? '0',
-                    amount: order.fee.toString() ?? '',
-                    paymentId:  '',
-                    sellerImage: order.agent?.picture ?? '',
-                    isAcceptedService: order.isAccepted ?? false,
-                    isOngoingService: order.isOngoing ?? false,
-                    isCompletedService: order.isCompleted ?? false,
-                    orderId: order.sId.toString(),
-                    customerName: order.user?.username ?? '',
-                    customerFireBaseId: order.user?.firebaseId ?? '',
-                    customerImage: order.user?.profileImage ?? '',
-                    customerPhone: order.user?.phoneNumber ?? '',
-                    isRejected: order.isRejected ?? false,
-                    isUserMarkedService: order.userMarkedDelivered ?? false,
-                    isAgentMarkedService: order.agentMarkedDelivered ?? false,
-                  ));
-              }
-              else {
-              Modals.showToast('This Service has not been paid for.');
-               }
-            },
-            child: Text(
-              'view',
-              style: TextStyle(color: AppColors.lightSecondary),
             ),
-            borderRadius: 100,
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            color: AppColors.lightSecondary.withOpacity(0.5),
-            expanded: false,
-            borderColor: Colors.transparent,
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 6,
+                ),
+                CustomText(
+                  text: 'Pick up time',
+                  size: 12,
+                  weight: FontWeight.w600,
+                ),
+                Row(
+                  children: [
+                    ImageView.svg(
+                      AppImages.time,
+                      height: 16,
+                    ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    CustomText(
+                      text: userModel.formatDateTimeToAMPM(order.pickupTime),
+                      size: 10,
+                    ),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    ImageView.svg(
+                      AppImages.calender,
+                      height: 16,
+                    ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Expanded(
+                      child: CustomText(
+                        text: AppUtils.formatComplexDateOnly(
+                            dateTime: order.pickupTime ?? ''),
+                        size: 10,
+                        maxLines: 2,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+            trailing: Container(
+              width: screenSize(context).width * .2,
+              child: ButtonView(
+                onPressed: () {
+                  // Navigator.push(context, MaterialPageRoute(builder: (_) {
+                  //   return ServiceRequest();
+                  // }));
+          
+                  if (order.isPaid ?? false) {
+                  AppNavigator.pushAndStackPage(context,
+                      page: TrackServicesScreen(
+                        agentName: order.agent?.user?.username ?? '',
+                        phone: order.agent?.user?.phoneNumber ?? '',
+                        serviceOffered:
+                            order.package?.service?.serviceType?.name ?? '',
+                        agentId: order.agent?.sId ?? '',
+                        sellerId: order.agent?.sId.toString() ?? '',
+                        startDate1: order.pickupTime ?? '0',
+                        startDate2: order.dropoffTime ?? '0',
+                        amount: order.fee.toString() ?? '',
+                        paymentId:  '',
+                        sellerImage: order.agent?.picture ?? '',
+                        isAcceptedService: order.isAccepted ?? false,
+                        isOngoingService: order.isOngoing ?? false,
+                        isCompletedService: order.isCompleted ?? false,
+                        orderId: order.sId.toString(),
+                        customerName: order.user?.username ?? '',
+                        customerFireBaseId: order.user?.deviceId ?? '',
+                        customerImage: order.user?.profileImage ?? '',
+                        customerPhone: order.user?.phoneNumber ?? '',
+                        isRejected: order.isRejected ?? false,
+                        isUserMarkedService: order.userMarkedDelivered ?? false,
+                        isAgentMarkedService: order.agentMarkedDelivered ?? false, agentFireBaseId: order.agent?.user?.deviceId ?? '',
+                      ));
+                  }
+                  else {
+                  Modals.showToast('This Service has not been paid for.');
+                   }
+                },
+                child: Text(
+                  'view',
+                  style: TextStyle(color: AppColors.lightSecondary),
+                ),
+                borderRadius: 100,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                color: AppColors.lightSecondary.withOpacity(0.5),
+                expanded: false,
+                borderColor: Colors.transparent,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -944,5 +950,52 @@ class _ServiceProviderPetDeliveryHomeBodyState
     }
 
     return reverseIndicators;
+  }
+
+  servicesTypes( Orders order) {
+    if (order.isOngoing! &&
+        !order.isCompleted!) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
+        child: Text(
+          'Ongoing Service',
+          style: TextStyle(
+              color: AppColors.lightSecondary, fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      );
+    } else if (order.isCompleted!) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
+        child: Text(
+          'Completed Service',
+          style: TextStyle(color: Colors.green, fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      );
+    } else if (order.isRejected!) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
+        child: Text(
+          'Rejected Service',
+          style: TextStyle(color: Colors.red, fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      );
+    } else if (order.isPaid == true &&
+        order.isAccepted == false) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
+        child: Text(
+          'Awaiting Service',
+          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
+        child: Text(
+          'Not Accepted',
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      );
+    }
   }
 }

@@ -34,7 +34,6 @@ class _customDrawerState extends State<customDrawer> {
 
   getUsername() async {
     registeredPet = await StorageHandler.getUserPetState();
-   
 
     setState(() {
       if (registeredPet != '') {
@@ -64,10 +63,9 @@ class _customDrawerState extends State<customDrawer> {
 
   @override
   Widget build(BuildContext context) {
-   
     final user = Provider.of<AccountViewModel>(context, listen: false);
-    
-user.getUserImage();
+
+    user.getUserImage();
     return Drawer(
       child: Container(
         child: SingleChildScrollView(
@@ -75,7 +73,8 @@ user.getUserImage();
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: IconButton(
                     onPressed: () {
                       Navigator.pop(context);
@@ -124,7 +123,7 @@ user.getUserImage();
                       height: screenSize(context).height * .012,
                     ),
                     Divider(),
-          
+
                     ListTile(
                       onTap: () {
                         AppNavigator.pushAndStackPage(context, page: Profile());
@@ -139,11 +138,12 @@ user.getUserImage();
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-
                             fontFamily: AppStrings.interSans),
                       ),
                     ),
-                    Divider(height: 0,),
+                    Divider(
+                      height: 0,
+                    ),
                     ListTile(
                       onTap: () {
                         AppNavigator.pushAndStackPage(context,
@@ -159,12 +159,11 @@ user.getUserImage();
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-
                             fontFamily: AppStrings.interSans),
                       ),
                     ),
                     Divider(),
-          
+
                     ListTile(
                       onTap: () {
                         AppNavigator.pushAndStackPage(context,
@@ -180,12 +179,11 @@ user.getUserImage();
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-
                             fontFamily: AppStrings.interSans),
                       ),
                     ),
                     Divider(),
-          
+
                     // ListTile(
                     //   leading: ImageView.svg(
                     //     AppImages.cartIcon,
@@ -213,12 +211,11 @@ user.getUserImage();
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-
                             fontFamily: AppStrings.interSans),
                       ),
                     ),
                     Divider(),
-          
+
                     ListTile(
                       leading: ImageView.svg(
                         AppImages.settingsIcon,
@@ -234,15 +231,13 @@ user.getUserImage();
                         style: TextStyle(
                             fontWeight: FontWeight.w500,
                             fontSize: 15,
-
                             fontFamily: AppStrings.interSans),
                       ),
                     ),
                   ],
                 ),
               ),
-                    Divider(),
-
+              Divider(),
               SizedBox(
                 height: 30,
               ),
@@ -258,7 +253,7 @@ user.getUserImage();
                         expanded: false,
                         onPressed: () {
                           user.setUserType(UserType.user);
-          
+
                           AppNavigator.pushAndStackNamed(context,
                               name: AppRoutes.kycScreenOne);
                         },
@@ -268,28 +263,33 @@ user.getUserImage();
                         ),
                       ),
                     ),
-              SizedBox(
-                height: 60
-              ),
-
+              SizedBox(height: 60),
               GestureDetector(
-                   onTap: () {
-                     Navigator.pop(context);
-                  _signOut(context);
-          
-                  widget.onLogOutPressesd();
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                onTap: () {
+                  Modals.showAlertOptionDialog(context,
+                      title: "Log Out!!!",
+                      buttonNoText: 'Cancel',
+                      buttonYesText: 'Continue',
+                      message: "Are you sure you want to Logout this account?.",
+                      onTap: () {
+                    Navigator.pop(context);
+                    _signOut(context);
+
+                    widget.onLogOutPressesd();
+                  });
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     ImageView.svg(
                       AppImages.logoutIcon,
                       width: 25,
                       height: 25,
-                            color: Colors.red,
-                  
+                      color: Colors.red,
                     ),
-                    const SizedBox(width: 10,),
+                    const SizedBox(
+                      width: 10,
+                    ),
                     Align(
                       alignment: Alignment(-1.1, 0),
                       child: Text(
@@ -301,9 +301,9 @@ user.getUserImage();
                             fontFamily: AppStrings.interSans),
                       ),
                     ),
-                  ],),
+                  ],
                 ),
-             
+              ),
             ],
           ),
         ),

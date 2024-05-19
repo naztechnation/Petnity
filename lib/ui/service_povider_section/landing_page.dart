@@ -257,13 +257,7 @@ class _HomepageBarState extends State<HomepageBar> {
       iconTheme: IconThemeData(color: Colors.black),
       centerTitle: false,
       
-      title: Text(
-        'Lucacify',
-        style: TextStyle(
-            color: AppColors.lightSecondary,
-            fontWeight: FontWeight.bold,
-            fontSize: 16),
-      ),
+      
       actions: [
         BlocConsumer<AccountCubit, AccountStates>(
             listener: (context, state) {
@@ -376,6 +370,7 @@ class _HomepageBarState extends State<HomepageBar> {
                                 ),
                               ],
                             ),
+                            Divider(color: Colors.grey.shade300,),
                             const SizedBox(
                               height: 15,
                             ),
@@ -412,7 +407,7 @@ class _HomepageBarState extends State<HomepageBar> {
                 height: 22,
               ),
               const SizedBox(width: 7,),
-                      Text('Create package'),
+                      Text('Create Package'),
                     ],
                   ),
                 ),)

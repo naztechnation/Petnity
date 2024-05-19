@@ -38,9 +38,10 @@ import '../../widgets/profile_image.dart';
 
 class AgentProfileScreen extends StatelessWidget {
   final String? agentId;
+  final String? spToken;
   const AgentProfileScreen({
     super.key,
-    this.agentId,
+    this.agentId, this.spToken,
   });
 
   @override
@@ -51,6 +52,7 @@ class AgentProfileScreen extends StatelessWidget {
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child: AgentProfile(
         agentId: agentId,
+        spToken: spToken,
       ),
     );
   }
@@ -58,18 +60,27 @@ class AgentProfileScreen extends StatelessWidget {
 
 class AgentProfile extends StatefulWidget {
   final String? agentId;
+  final String? spToken;
+
 
   AgentProfile({
     super.key,
-    this.agentId,
+    this.agentId, this.spToken,
   });
 
   @override
-  State<AgentProfile> createState() => _AgentProfileState();
+  State<AgentProfile> createState() => _AgentProfileState(spToken: spToken);
 }
 
 class _AgentProfileState extends State<AgentProfile> {
+
+  final String? spToken; 
+
+
+  
   final AccountViewModel userViewModel = AccountViewModel();
+
+  _AgentProfileState({required this.spToken});
 
   Future<bool> onBackPress() {
     Navigator.pop(context);
@@ -523,7 +534,8 @@ class _AgentProfileState extends State<AgentProfile> {
                                                     services: agentServices,
                                                     isAgent: true,
                                                     agentId: agents?.sId ?? '',
-                                                    vetServiceId: '65945896b45cc82554bd0249',
+                                                    //TODO
+                                                    vetServiceId: '',
                                                   ),
                                           ],
                                         )),
@@ -570,7 +582,7 @@ class _AgentProfileState extends State<AgentProfile> {
   }
 }
 
-openServices(String services, BuildContext context) {
+openServices(String services, BuildContext context, String spToken) {
   switch (services) {
     case '':
       break;
@@ -581,6 +593,7 @@ openServices(String services, BuildContext context) {
                 Provider.of<AccountViewModel>(context, listen: false).serviceId,
             agentId:
                 Provider.of<AccountViewModel>(context, listen: false).agentId2,
+                 spToken: spToken,
           ));
 
       break;
@@ -592,7 +605,7 @@ openServices(String services, BuildContext context) {
             serviceId:
                 Provider.of<AccountViewModel>(context, listen: false).serviceId,
             agentId:
-                Provider.of<AccountViewModel>(context, listen: false).agentId2,
+                Provider.of<AccountViewModel>(context, listen: false).agentId2, spToken: spToken,
           ));
 
       break;

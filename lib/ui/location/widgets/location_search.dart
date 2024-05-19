@@ -18,8 +18,10 @@ import '../../widgets/text_edit_view.dart';
 
 class LocationSearch extends StatefulWidget {
   final void Function()? onPressed;
+  final String spToken;
 
-  const LocationSearch({Key? key, this.onPressed}) : super(key: key);
+
+  const LocationSearch({Key? key, this.onPressed, required this.spToken}) : super(key: key);
 
   @override
   State<LocationSearch> createState() => _LocationSearchState();
@@ -207,7 +209,7 @@ class _LocationSearchState extends State<LocationSearch> {
                     color: AppColors.lightSecondary,
                       onPressed: () {
                         AppNavigator.pushAndStackPage(context,
-                            page: ContactProvider());
+                            page: ContactProvider(spToken: widget.spToken,));
                         // print(user.location);
                       },
                       processing: false,

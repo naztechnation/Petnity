@@ -81,92 +81,101 @@ class _ServiceProviderPageState extends State<ServiceProviderPage> {
         Provider.of<ServiceProviderInAppViewModel>(context, listen: true);
     
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
-            listener: (context, state) {
-          if (state is CreateServiceNetworkErr) {
-            Modals.showToast(state.message ?? '');
-          } else if (state is CreateServiceNetworkErrApiErr) {
-            Modals.showToast(state.message ?? '');
-          } else if (state is AgentOrdersLoaded) {
-            orders = state.agentsOrderRequests.shopOrders ?? [];
-          } else if (state is AgentServicesListLoaded) {
-            availableServices = state.services.data?.orders ?? [];
-
-            
-          }
-        }, builder: (context, state) {
-          if (state is AgentOrdersLoading || state is AgentServicesListLoading) {
-            return Align(
-                child: ImageView.asset(
-              AppImages.loading,
-              height: 50,
-            ));
-          }else if (state is AgentServicesListLoaded) {
-            availableServices = state.services.data?.orders ?? [];
-
-             return Container(
-            // height: MediaQuery.of(context).size.height - kToolbarHeight,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    width: screenSize(context).width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            'Hi ${username.capitalizeFirstOfEach},',
-                            maxLines: 1,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: AppStrings.interSans),
+      backgroundColor: AppColors.scaffoldColor,
+      body: Container(
+        height: screenSize(context).height,
+        width: screenSize(context).width,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [AppColors.scaffoldColor, Colors.blue.shade50.withOpacity(0.1)],
+                begin: Alignment.topRight,
+                end: Alignment.topLeft)),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: BlocConsumer<ServiceProviderCubit, ServiceProviderState>(
+              listener: (context, state) {
+            if (state is CreateServiceNetworkErr) {
+              Modals.showToast(state.message ?? '');
+            } else if (state is CreateServiceNetworkErrApiErr) {
+              Modals.showToast(state.message ?? '');
+            } else if (state is AgentOrdersLoaded) {
+              orders = state.agentsOrderRequests.shopOrders ?? [];
+            } else if (state is AgentServicesListLoaded) {
+              availableServices = state.services.data?.orders ?? [];
+        
+              
+            }
+          }, builder: (context, state) {
+            if (state is AgentOrdersLoading || state is AgentServicesListLoading) {
+              return Align(
+                  child: ImageView.asset(
+                AppImages.loading,
+                height: 50,
+              ));
+            }else if (state is AgentServicesListLoaded) {
+              availableServices = state.services.data?.orders ?? [];
+        
+               return Container(
+              // height: MediaQuery.of(context).size.height - kToolbarHeight,
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: screenSize(context).width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              'Hi ${username.capitalizeFirstOfEach},',
+                              maxLines: 1,
+                              softWrap: true,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: AppStrings.interSans),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Text(
-                   serviceProvider.availableServices.isEmpty ? 'Lets get you started' : 'Your latest requests',
-                    style: TextStyle(
-                        fontFamily: AppStrings.interSans,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 22),
-                  ),
-                  // FilterSearchView(
-                  //   showFilter: false,
-                  //   controller: search,
-                  // ),
-                  // SizedBox(
-                  //   height: 10,
-                  // ),
-               ServiceProviderPetDeliveryHomeBody(serviceProviderCubit: _serviceProviderCubit,agentId: agentId,
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Text(
+                     serviceProvider.availableServices.isEmpty ? 'Lets get you started' : 'Your latest requests',
+                      style: TextStyle(
+                          fontFamily: AppStrings.interSans,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 22),
+                    ),
+                    // FilterSearchView(
+                    //   showFilter: false,
+                    //   controller: search,
+                    // ),
+                    // SizedBox(
+                    //   height: 10,
+                    // ),
+                 ServiceProviderPetDeliveryHomeBody(serviceProviderCubit: _serviceProviderCubit,agentId: agentId,
+                     
+                   ),
                    
-                 ),
-                 
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-          }
-
-         return Align(
-                child: ImageView.asset(
-              AppImages.loading,
-              height: 50,
-            ));
-        }),
+            );
+            }
+        
+           return Align(
+                  child: ImageView.asset(
+                AppImages.loading,
+                height: 50,
+              ));
+          }),
+        ),
       ),
     );
   }

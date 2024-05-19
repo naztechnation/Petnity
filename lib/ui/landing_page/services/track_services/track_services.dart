@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:petnity/ui/widgets/button_view.dart';
 import 'package:petnity/ui/widgets/loading_page.dart';
@@ -12,6 +13,7 @@ import '../../../../blocs/user/user.dart';
 import '../../../../handlers/secure_handler.dart';
 import '../../../../model/view_models/service_provider_inapp.dart';
 import '../../../../model/view_models/user_view_model.dart';
+import '../../../../notification.dart';
 import '../../../../requests/repositories/service_provider_repo/service_provider_repository_impl.dart';
 import '../../../../requests/repositories/user_repo/user_repository_impl.dart';
 import '../../../../res/app_colors.dart';
@@ -34,6 +36,7 @@ class TrackServicesScreen extends StatelessWidget {
   final String customerPhone;
   final String customerImage;
   final String customerFireBaseId;
+  final String agentFireBaseId;
 
   final String sellerId;
   final String startDate1;
@@ -68,7 +71,8 @@ class TrackServicesScreen extends StatelessWidget {
       required this.customerFireBaseId,
       required this.isRejected,
       required this.isUserMarkedService,
-      required this.isAgentMarkedService});
+      required this.isAgentMarkedService,
+      required this.agentFireBaseId});
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +101,7 @@ class TrackServicesScreen extends StatelessWidget {
         isRejected: isRejected,
         isUserMarkedService: isUserMarkedService,
         isAgentMarkedService: isAgentMarkedService,
+        agentFireBaseId: agentFireBaseId,
       ),
     );
   }
@@ -113,6 +118,7 @@ class TrackServices extends StatefulWidget {
   final String customerPhone;
   final String customerImage;
   final String customerFireBaseId;
+  final String agentFireBaseId;
 
   final String startDate1;
   final String startDate2;
@@ -147,7 +153,8 @@ class TrackServices extends StatefulWidget {
       required this.customerFireBaseId,
       required this.isRejected,
       required this.isUserMarkedService,
-      required this.isAgentMarkedService});
+      required this.isAgentMarkedService,
+      required this.agentFireBaseId});
 
   @override
   State<TrackServices> createState() => _TrackServicesState();
@@ -193,13 +200,28 @@ class _TrackServicesState extends State<TrackServices> {
           if (state is AcceptOrderLoaded) {
             if (state.order.status ?? false) {
               Modals.showToast(state.order.message ?? '');
+               sendPushNotification(
+
+                  // 'djF7yjsiTp6wiaoifOCJ0X:APA91bFVsVgZWtnSVuxX6AxxaDxuGbZ5OWL7NHnjwvFfro2bs8_pSBzlBqYiJFohgYjVuTCd0uhDExqGxuUlSz8_mfrHAo3ERLRHVIRkef8XlngGguyPqDYluL-y3lVZ2qRJo6UdApP5',
+                  widget.customerFireBaseId,
+                  'Service Accepted!!!.',
+                  'Hello, Your payment to ${widget.agentName} has been acknowleged. Once the services  starts you would be notified.');
+
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
             } else {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is AcceptCompletedOrderLoaded) {
-            if (state.order.status?? false) {
+            if (state.order.status ?? false) {
+
+               sendPushNotification(
+
+                   //'djF7yjsiTp6wiaoifOCJ0X:APA91bFVsVgZWtnSVuxX6AxxaDxuGbZ5OWL7NHnjwvFfro2bs8_pSBzlBqYiJFohgYjVuTCd0uhDExqGxuUlSz8_mfrHAo3ERLRHVIRkef8XlngGguyPqDYluL-y3lVZ2qRJo6UdApP5',
+                  widget.customerFireBaseId,
+                  'Service Completed!!!.',
+                  'Hello, The ${widget.serviceOffered} has been completed thanks for your patronage and we wish to serve you better.');
+
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -208,14 +230,22 @@ class _TrackServicesState extends State<TrackServices> {
             }
           } else if (state is AcceptOngoingOrderLoaded) {
             if (state.order.status ?? false) {
+              Modals.showToast(state.order.message ?? '');
+              sendPushNotification(
+
+                 //  'djF7yjsiTp6wiaoifOCJ0X:APA91bFVsVgZWtnSVuxX6AxxaDxuGbZ5OWL7NHnjwvFfro2bs8_pSBzlBqYiJFohgYjVuTCd0uhDExqGxuUlSz8_mfrHAo3ERLRHVIRkef8XlngGguyPqDYluL-y3lVZ2qRJo6UdApP5',
+                  widget.customerFireBaseId,
+                  'Service Ongoing Alert!!!.',
+                  'Hello, Your ${widget.serviceOffered} service has is currently ongoing.');
+
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
-              Modals.showToast(state.order.message ?? '');
+              
             } else {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is DeliveredShopOrderLoaded) {
-            if (state.order.status?? false) {
+            if (state.order.status ?? false) {
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -223,7 +253,15 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is RejectOrderLoaded) {
-            if (state.order.status?? false) {
+            if (state.order.status ?? false) {
+
+              sendPushNotification(
+
+                  // 'djF7yjsiTp6wiaoifOCJ0X:APA91bFVsVgZWtnSVuxX6AxxaDxuGbZ5OWL7NHnjwvFfro2bs8_pSBzlBqYiJFohgYjVuTCd0uhDExqGxuUlSz8_mfrHAo3ERLRHVIRkef8XlngGguyPqDYluL-y3lVZ2qRJo6UdApP5',
+                  widget.customerFireBaseId,
+                  'Service Rejected!!!.',
+                  'Hello, The ${widget.serviceOffered} service that you paid for has been rejected by the service provider and your payment reversed to your wallet.');
+
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.serviceProviderLandingPage);
               Modals.showToast(state.order.message ?? '');
@@ -231,7 +269,12 @@ class _TrackServicesState extends State<TrackServices> {
               Modals.showToast(state.order.message ?? '');
             }
           } else if (state is UserAcceptOrderDeliveredOrderLoaded) {
-            if (state.order.status?? false) {
+            if (state.order.status ?? false) {
+              sendPushNotification(
+                  widget.agentFireBaseId,
+                  'Service Completion Acknowleged.',
+                  'Hello, Your Services to ${username} has been acknowleged. Go to service area to accept your payment.');
+
               AppNavigator.pushAndReplaceName(context,
                   name: AppRoutes.landingPage);
 
@@ -354,7 +397,13 @@ class _TrackServicesState extends State<TrackServices> {
                                 customerName: widget.customerName,
                                 customerImage: widget.customerImage,
                                 customerPhone: widget.customerPhone,
-                                customerFireBaseId: widget.customerFireBaseId, orderId: widget.orderId,
+                                customerFireBaseId: widget.customerFireBaseId,
+                                orderId: widget.orderId,
+                                isRecievePayment: widget.isAcceptedService &&
+                          widget.isOngoingService &&
+                          !widget.isCompletedService &&
+                          widget.isUserMarkedService &&
+                          !widget.isAgentMarkedService,
                               )
                             ],
                           )),
@@ -398,10 +447,18 @@ class _TrackServicesState extends State<TrackServices> {
                           child: ButtonView(
                             borderRadius: 30,
                             onPressed: () {
-                              userMarkAsDelivered(
-                                  ctx: context,
-                                  username: username,
-                                  orderId: widget.orderId);
+                              Modals.showAlertOptionDialog(context,
+                                  title: "Release Payment",
+                                  buttonNoText: 'Cancel',
+                                  buttonYesText: 'Continue',
+                                  message:
+                                      "Are you sure you want to release this payment to ${widget.agentName}. Once this process is completed it can't be reversed.",
+                                  onTap: () {
+                                userMarkAsDelivered(
+                                    ctx: context,
+                                    username: username,
+                                    orderId: widget.orderId);
+                              });
                             },
                             child: CustomText(
                               textAlign: TextAlign.center,
@@ -498,11 +555,19 @@ class _TrackServicesState extends State<TrackServices> {
                                 ButtonView(
                                   borderRadius: 30,
                                   onPressed: () {
-                                    markAccepted(
-                                      ctx: context,
-                                      agentId: widget.agentId,
-                                      orderId: widget.orderId,
-                                    );
+                                    Modals.showAlertOptionDialog(context,
+                                        title: "Accept Order",
+                                        buttonNoText: 'Cancel',
+                                        buttonYesText: 'Continue',
+                                        message:
+                                            "Are you sure you want to accept this order? Once this happens this user authomatically recieves a notification of your acknowledgement.",
+                                        onTap: () {
+                                      markAccepted(
+                                        ctx: context,
+                                        agentId: widget.agentId,
+                                        orderId: widget.orderId,
+                                      );
+                                    });
                                   },
                                   child: CustomText(
                                     textAlign: TextAlign.center,
@@ -522,7 +587,7 @@ class _TrackServicesState extends State<TrackServices> {
                                     Modals.showAlertOptionDialog(context,
                                         title: 'Warning!!!',
                                         message:
-                                            'Are you sure you want to reject this service as this action cannot be reversed once completed.',
+                                            "Are you sure you want to reject this service? This action cannot be reversed once completed, and the customer's payment will be returned to their wallet.",
                                         onTap: () {
                                       rejectUserOrder(
                                         ctx: context,
@@ -560,11 +625,19 @@ class _TrackServicesState extends State<TrackServices> {
                               borderRadius: 30,
                               processing: state is AgentOrdersLoading,
                               onPressed: () {
-                                markOngoingAccepted(
-                                  ctx: context,
-                                  agentId: widget.agentId,
-                                  orderId: widget.orderId,
-                                );
+                                Modals.showAlertOptionDialog(context,
+                                    title: "Mark Order As Ongoing",
+                                    buttonNoText: 'Cancel',
+                                    buttonYesText: 'Continue',
+                                    message:
+                                        "Are you sure you want to mark this order as ongoing? Once this happens this user authomatically recieves a notification of your acknowledgement.",
+                                    onTap: () {
+                                  markOngoingAccepted(
+                                    ctx: context,
+                                    agentId: widget.agentId,
+                                    orderId: widget.orderId,
+                                  );
+                                });
                               },
                               child: CustomText(
                                 textAlign: TextAlign.center,
@@ -578,30 +651,29 @@ class _TrackServicesState extends State<TrackServices> {
                             ),
                           ),
                         ),
+                      ] else if (widget.isAcceptedService &&
+                          widget.isOngoingService &&
+                          widget.isCompletedService &&
+                          widget.isAgentMarkedService &&
+                          widget.isUserMarkedService) ...[
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.only(
+                                  bottom: 50, top: 50, left: 20, right: 20),
+                              child: Center(
+                                child: CustomText(
+                                  text: 'Service Completed',
+                                  color: AppColors.lightSecondary,
+                                  size: 14,
+                                  weight: FontWeight.w700,
+                                ),
+                              )),
+                        )
                       ]
-                     else if (widget.isAcceptedService &&
-                        widget.isOngoingService &&
-                        widget.isCompletedService &&
-                        widget.isAgentMarkedService &&
-                        widget.isUserMarkedService) ...[
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(
-                                bottom: 50, top: 50, left: 20, right: 20),
-                            child: Center(
-                              child: CustomText(
-                                text: 'Service Completed',
-                                color: AppColors.lightSecondary,
-                                size: 14,
-                                weight: FontWeight.w700,
-                              ),
-                            )),
-                      )
-                    ]
                       //     widget.isOngoingService &&
                       //     !widget.isCompletedService) ...[
                       //   Positioned(
@@ -632,7 +704,7 @@ class _TrackServicesState extends State<TrackServices> {
                       //       ),
                       //     ),
                       //   ),
-                      // ] 
+                      // ]
                       else if (widget.isAcceptedService &&
                           widget.isOngoingService &&
                           !widget.isCompletedService &&
@@ -651,14 +723,21 @@ class _TrackServicesState extends State<TrackServices> {
                               children: [
                                 ButtonView(
                                   borderRadius: 30,
-                                    processing: state is AgentOrdersLoading,
-
+                                  processing: state is AgentOrdersLoading,
                                   onPressed: () {
-                                     markCompletedAccepted(
-                                  ctx: context,
-                                  agentId: widget.agentId,
-                                  orderId: widget.orderId,
-                                );
+                                    Modals.showAlertOptionDialog(context,
+                                        title: "Mark Order As Completed",
+                                        buttonNoText: 'Cancel',
+                                        buttonYesText: 'Continue',
+                                        message:
+                                            "Are you sure you want to mark this order as COMPLETED? Make sure that this user has recieved their order/services before continuing with this action else you would be penalized.",
+                                        onTap: () {
+                                      markCompletedAccepted(
+                                        ctx: context,
+                                        agentId: widget.agentId,
+                                        orderId: widget.orderId,
+                                      );
+                                    });
                                   },
                                   child: CustomText(
                                     textAlign: TextAlign.center,
@@ -678,22 +757,35 @@ class _TrackServicesState extends State<TrackServices> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      InkWell(
-                                        child: CustomText(
-                                          text: 'Report owner',
-                                          color: Colors.red,
-                                          size: 12,
-                                          weight: FontWeight.bold,
-                                        ),
-                                      )
+                                      // InkWell(
+                                      //   child: CustomText(
+                                      //     text: 'Report owner',
+                                      //     color: Colors.red,
+                                      //     size: 12,
+                                      //     weight: FontWeight.bold,
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ),
-                                CustomText(
-                                  text: 'Why service charge?',
-                                  size: 12,
-                                  weight: FontWeight.bold,
-                                  color: AppColors.lightSecondary,
+                                GestureDetector(
+                                  onTap: () {
+                                     Modals.showAlertOptionDialog(context,
+                                        title: "Why service charge?",
+                                        buttonNoText: '',
+                                        buttonYesText: 'Continue',
+                                        message:
+                                            "Any Service charge placed on your payment is so we would serve you better.",
+                                        onTap: () {
+                                     // Navigator.pop(context);
+                                    });
+                                  },
+                                  child: CustomText(
+                                    text: 'Why service charge?',
+                                    size: 12,
+                                    weight: FontWeight.bold,
+                                    color: AppColors.lightSecondary,
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -721,9 +813,9 @@ class _TrackServicesState extends State<TrackServices> {
                                 ),
                                 CustomText(
                                   text:
-                                      '• Process would be tagged as completed when buyer receives payment.',
+                                      '• Customer has marked this service as completed. Payment would be released for withdrawal immediately you click on *Recieve Payment*',
                                   size: 12,
-                                  maxLines: 2,
+                                  maxLines: 5,
                                   weight: FontWeight.w400,
                                   color: Colors.black,
                                 ),
@@ -732,7 +824,7 @@ class _TrackServicesState extends State<TrackServices> {
                                 ),
                                 CustomText(
                                   text:
-                                      '• Payment would be released for withdrawal immediately user flags service completed.',
+                                      '• Your withdrawal might take about 24 hours or less to reflect on your wallet.',
                                   size: 12,
                                   maxLines: 2,
                                   weight: FontWeight.w400,
@@ -804,8 +896,6 @@ class _TrackServicesState extends State<TrackServices> {
         .read<ServiceProviderCubit>()
         .markCompleteAgentOrder(agentId: agentId, orderId: orderId);
   }
-
-  
 
   userMarkAsDelivered({
     required BuildContext ctx,

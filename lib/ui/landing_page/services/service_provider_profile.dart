@@ -33,10 +33,11 @@ import 'widgets/providers_profile_body.dart';
 class ServiceProviderProfile extends StatelessWidget {
   final agent.Agent? agents;
   final String selectedServices;
+  final String spToken;
   ServiceProviderProfile({
     super.key,
     this.agents,
-    required this.selectedServices,
+    required this.selectedServices, required this.spToken,
   });
 
   @override
@@ -46,7 +47,7 @@ class ServiceProviderProfile extends StatelessWidget {
           userRepository: UserRepositoryImpl(),
           viewModel: Provider.of<UserViewModel>(context, listen: false)),
       child:
-          ServiceProvider(agents: agents, selectedServices: selectedServices),
+          ServiceProvider(agents: agents, selectedServices: selectedServices, spToken: spToken,),
     );
   }
 }
@@ -54,11 +55,12 @@ class ServiceProviderProfile extends StatelessWidget {
 class ServiceProvider extends StatefulWidget {
   final agent.Agent? agents;
   final String selectedServices;
+  final String spToken;
 
   ServiceProvider({
     super.key,
     this.agents,
-    required this.selectedServices,
+    required this.selectedServices, required this.spToken,
   });
 
   @override
@@ -405,7 +407,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
         AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: serviceId,
-              agentId: widget.agents?.sId.toString() ?? '',
+              agentId: widget.agents?.sId.toString() ?? '', spToken: widget.spToken,
             ));
 
         break;
@@ -415,6 +417,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
                   .agentId2,
+                   spToken: widget.spToken,
             ));
         break;
       case 'dog sitters':
@@ -422,7 +425,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
             page: PackagesScreen(
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+                  .agentId2, spToken: widget.spToken,
             ));
 
         break;
@@ -431,7 +434,7 @@ class _ServiceProviderState extends State<ServiceProvider> {
             page: PackagesScreen(
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+                  .agentId2, spToken: widget.spToken,
             ));
         break;
       case 'vets':
@@ -455,7 +458,7 @@ AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+                  .agentId2, spToken: widget.spToken,
             ));
         break;
       case 'pet breeders':
@@ -463,7 +466,7 @@ AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+                  .agentId2, spToken: widget.spToken,
             ));
         break;
       case 'pet sellers':
@@ -475,7 +478,7 @@ AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+                  .agentId2, spToken: widget.spToken,
             ));
         break;
       case 'pet care givers':
@@ -483,7 +486,7 @@ AppNavigator.pushAndStackPage(context,
             page: PackagesScreen(
               serviceId: serviceId,
               agentId: Provider.of<AccountViewModel>(context, listen: false)
-                  .agentId2,
+                  .agentId2, spToken: widget.spToken,
             ));
         break;
 

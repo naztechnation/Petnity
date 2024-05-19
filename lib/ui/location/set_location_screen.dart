@@ -13,11 +13,14 @@ import 'widgets/location_search.dart';
 import 'widgets/map_view.dart';
 
 class SetLocationScreen extends StatefulWidget {
-  const SetLocationScreen({Key? key})
+
+  final String spToken;
+
+  const SetLocationScreen({Key? key, required this.spToken})
       : scale = false,
         super(key: key);
 
-  const SetLocationScreen.scale({Key? key})
+  const SetLocationScreen.scale({Key? key, required this.spToken})
       : scale = true,
         super(key: key);
 
@@ -77,13 +80,13 @@ class _SetLocationScreenState extends State<SetLocationScreen> {
             ),
             bottomNavigationBar: Builder(builder: (_) {
               if (!widget.scale) {
-                return const LocationSearch();
+                return   LocationSearch(spToken: widget.spToken,);
               }
               return const SizedBox.shrink();
             }),
             bottomSheet: Builder(builder: (_) {
               if (widget.scale) {
-                return const LocationSearch();
+                return   LocationSearch(spToken: widget.spToken);
               }
               return const SizedBox.shrink();
             }),

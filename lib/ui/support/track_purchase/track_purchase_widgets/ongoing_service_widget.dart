@@ -218,12 +218,12 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             customerName: allOrders.user?.username ?? '',
                             customerPhone: allOrders.user?.phoneNumber ?? '',
                             customerImage: allOrders.user?.profileImage ?? '',
-                            customerFireBaseId: allOrders.user?.firebaseId ?? '',
+                            customerFireBaseId: allOrders.user?.deviceId ?? '',
                             isRejected: allOrders.isRejected ?? false,
                             isUserMarkedService:
                                 allOrders.userMarkedDelivered ?? false,
                             isAgentMarkedService:
-                                allOrders.agentMarkedDelivered ?? false,
+                                allOrders.agentMarkedDelivered ?? false, agentFireBaseId: allOrders.agent?.user?.deviceId ?? '',
                           ));
                     },
                     child: Text(widget.label, style: TextStyle(color: Colors.white, fontSize: 13),),

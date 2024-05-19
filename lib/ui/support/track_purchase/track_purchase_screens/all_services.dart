@@ -200,7 +200,7 @@ class _AllServicesState extends State<AllServices> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
-          'Ongoing Services',
+          'Ongoing Service',
           style: TextStyle(
               color: AppColors.lightSecondary, fontWeight: FontWeight.w700),
         ),
@@ -209,7 +209,7 @@ class _AllServicesState extends State<AllServices> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
-          'Completed Services',
+          'Completed Service',
           style: TextStyle(color: Colors.green, fontWeight: FontWeight.w700),
         ),
       );
@@ -217,7 +217,7 @@ class _AllServicesState extends State<AllServices> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
-          'Rejected Services',
+          'Rejected Service',
           style: TextStyle(color: Colors.red, fontWeight: FontWeight.w700),
         ),
       );
@@ -226,7 +226,7 @@ class _AllServicesState extends State<AllServices> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
         child: Text(
-          'Awaiting Services',
+          'Awaiting Service',
           style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w700),
         ),
       );
