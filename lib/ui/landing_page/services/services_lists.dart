@@ -59,7 +59,7 @@ class ServicesList extends StatelessWidget {
                     } else if (masterItem.name == 'Vets' && isAgent) {
                       
 
-                      Modals.showToast(vetServiceId);
+                       
 
                       Navigator.pop(context);
 

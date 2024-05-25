@@ -274,10 +274,7 @@ class UserRepositoryImpl implements UserRepository {
   }) async {
     final map = await Requests().patch(
       AppStrings.updateNumber(username),
-      headers: {
-        'Authorization': AppStrings.token,
-        "Content-type": "application/json"
-      },
+       
       body: {
         "email": email,
         "phone_number": number,
@@ -296,15 +293,15 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<AuthData> deleteUser({required String email, required String password}) async {
-    final map = await Requests().patch(AppStrings.deleteUser,
-    body: {
+
+    var payload = {
       'email': email,
       'password': password,
-    },
-        headers: {
-          'Authorization': AppStrings.token,
-          "Content-type": "application/json"
-        });
+    };
+    final map = await Requests().post(AppStrings.deleteUser,
+    body: json.encode(payload),
+   // useApp: false
+       );
     return AuthData.fromJson(map);
   }
 

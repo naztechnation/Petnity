@@ -20,31 +20,19 @@ import '../widgets/image_view.dart';
 import '../widgets/modals.dart';
 import 'add_account_details.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen();
+ 
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<UserCubit>(
-      create: (BuildContext context) => UserCubit(
-          userRepository: UserRepositoryImpl(),
-          viewModel: Provider.of<UserViewModel>(context, listen: false)),
-      child: Settings(),
-    );
-  }
-}
-
-class Settings extends StatefulWidget {
+class SettingsScreen extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends State<SettingsScreen> {
   bool switchValue1 = false;
   bool switchValue2 = false;
   String userType = '';
 
-  late UserCubit _userCubit;
+  //late UserCubit _userCubit;
 
   String username = '';
   String email = '';
@@ -55,7 +43,7 @@ class _SettingsState extends State<Settings> {
     username = await StorageHandler.getUserName();
     email = await StorageHandler.getUserEmail();
     password = await StorageHandler.getUserPassword();
-    _userCubit = context.read<UserCubit>();
+    //_userCubit = context.read<UserCubit>();
 
     setState(() {});
   }
@@ -101,7 +89,7 @@ void deleteAccount(BuildContext context) async {
       child: Scaffold(
         backgroundColor: AppColors.lightBackground,
         bottomNavigationBar: Container(
-          height: 40,
+          height: 100,
           child: Center(
             child: InkWell(
               onTap: () => _showBottom(context),
@@ -258,9 +246,9 @@ void deleteAccount(BuildContext context) async {
             if (state is DeleteUserLoaded) {
               if (state.deleteUserData.status ?? false) {
                 Modals.showToast(state.deleteUserData.message ?? '');
-                deleteAccount(context,);
+                _signOut(context,);
               } else {
-                Modals.showToast('Account not deleted');
+                Modals.showToast(state.deleteUserData.message ?? '');
               }
             } else if (state is UserNetworkErrApiErr) {
               Modals.showToast(state.message ?? '');
@@ -293,7 +281,8 @@ void deleteAccount(BuildContext context) async {
                             child: Center(
                               child: InkWell(
                                 onTap: () {
-                                  // Modals.showToast(username);
+                                   
+                                   
 
                                   contxt.read<UserCubit>().deleteUserAccount(email: email, password: password);
                                 },

@@ -18,7 +18,7 @@ import '../../model/agent/agent.dart';
 import '../../model/user_models/service_type.dart';
 import '../../model/view_models/account_view_model.dart';
 import '../../model/view_models/user_view_model.dart';
-import '../../requests/repositories/account_repo/account_repository_impl.dart'; 
+import '../../requests/repositories/account_repo/account_repository_impl.dart';
 import '../landing_page/services/services_lists.dart';
 import '../payment/payment_screen.dart';
 import '../widgets/custom_text.dart';
@@ -79,8 +79,13 @@ class _ServiceProviderLandingPageState
                               AppImages.addIcon,
                               height: 20,
                             ),
-                            const SizedBox(width: 5,),
-                            Text('Add product', style: TextStyle(fontSize: 12),)
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'Add product',
+                              style: TextStyle(fontSize: 12),
+                            )
                           ],
                         ),
                       ))
@@ -229,12 +234,11 @@ class _HomepageBarState extends State<HomepageBar> {
     email = await StorageHandler.getUserEmail();
     password = await StorageHandler.getUserPassword();
 
-
     _userCubit = context.read<AccountCubit>();
 
     try {
       await _userCubit.loginUser(password: password, email: email);
-     // await _userCubit.getAgentProfile(agentId);
+      // await _userCubit.getAgentProfile(agentId);
     } catch (e) {}
   }
 
@@ -245,8 +249,6 @@ class _HomepageBarState extends State<HomepageBar> {
     super.initState();
   }
 
-   
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserViewModel>(context, listen: false);
@@ -256,61 +258,50 @@ class _HomepageBarState extends State<HomepageBar> {
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       centerTitle: false,
-      
-      
       actions: [
         BlocConsumer<AccountCubit, AccountStates>(
-            listener: (context, state) {
-              if (state is AccountLoaded) {
-                if (state.userData.status ?? false) {
-                
-                  if (state.userData.data?.user == null) {
-                    if (state.userData.data?.agent?.user?.isAgent ?? false) {
-                      StorageHandler.saveIsUserType('service_provider');
-                      StorageHandler.saveUserToken(state.userData.data?.token);
+          listener: (context, state) {
+            if (state is AccountLoaded) {
+              if (state.userData.status ?? false) {
+                if (state.userData.data?.user == null) {
+                  if (state.userData.data?.agent?.user?.isAgent ?? false) {
+                    StorageHandler.saveIsUserType('service_provider');
+                    StorageHandler.saveUserToken(state.userData.data?.token);
 
-                      StorageHandler.saveAgentId(
-                          state.userData.data?.agent?.sId);
-                      StorageHandler.saveUserId(
-                          state.userData.data?.agent?.user?.sId.toString());
+                    StorageHandler.saveAgentId(state.userData.data?.agent?.sId);
+                    StorageHandler.saveUserId(
+                        state.userData.data?.agent?.user?.sId.toString());
 
-                      StorageHandler.saveEmail(
-                          state.userData.data?.agent?.user?.email.toString());
-                      StorageHandler.saveUserPhone(state
-                          .userData.data?.agent?.user?.phoneNumber
-                          .toString());
-                      StorageHandler.saveUserPicture(state
-                          .userData.data?.agent?.user?.profileImage
-                          .toString());
+                    StorageHandler.saveEmail(
+                        state.userData.data?.agent?.user?.email.toString());
+                    StorageHandler.saveUserPhone(state
+                        .userData.data?.agent?.user?.phoneNumber
+                        .toString());
+                    StorageHandler.saveUserPicture(state
+                        .userData.data?.agent?.user?.profileImage
+                        .toString());
 
-                      StorageHandler.saveUserName(state
-                          .userData.data?.agent?.user?.username
-                          .toString());
+                    StorageHandler.saveUserName(
+                        state.userData.data?.agent?.user?.username.toString());
 
-                      user.setServicesTypeList(services: state
-                          .userData.data?.agent?.services ?? []) ; 
+                    user.setServicesTypeList(
+                        services: state.userData.data?.agent?.services ?? []);
 
-                      if (state.userData.data?.agent?.user?.hasPets ?? false) {
-                        StorageHandler.saveUserPetState('true');
-                      } else {
-                        StorageHandler.saveUserPetState('');
-                      }
-
-                      
+                    if (state.userData.data?.agent?.user?.hasPets ?? false) {
+                      StorageHandler.saveUserPetState('true');
+                    } else {
+                      StorageHandler.saveUserPetState('');
                     }
-                  } 
-                } 
-              } else if (state is AccountApiErr) {
-                if (state.message != null) {
-                  
-                }
-              } else if (state is AccountNetworkErr) {
-                if (state.message != null) {
-                 
+                  }
                 }
               }
-            },
-            builder: (context, state) => GestureDetector(
+            } else if (state is AccountApiErr) {
+              if (state.message != null) {}
+            } else if (state is AccountNetworkErr) {
+              if (state.message != null) {}
+            }
+          },
+          builder: (context, state) => GestureDetector(
               onTap: () {
                 showModalBottomSheet(
                     shape: RoundedRectangleBorder(
@@ -370,7 +361,9 @@ class _HomepageBarState extends State<HomepageBar> {
                                 ),
                               ],
                             ),
-                            Divider(color: Colors.grey.shade300,),
+                            Divider(
+                              color: Colors.grey.shade300,
+                            ),
                             const SizedBox(
                               height: 15,
                             ),
@@ -387,40 +380,39 @@ class _HomepageBarState extends State<HomepageBar> {
                                     AppImages.loading,
                                     height: 50,
                                   ))
-                                : ServicesList(vetServiceId: '',
-                                    
+                                : ServicesList(
+                                    vetServiceId: '',
                                   ),
                           ],
                         )),
                       );
                     });
               },
-              child: 
-                Card(
-                  elevation: 0.5,
-                  child: Padding(
+              child: Card(
+                elevation: 0.5,
+                child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       ImageView.svg(
-                AppImages.addIcon,
-                height: 22,
-              ),
-              const SizedBox(width: 7,),
+                        AppImages.addIcon,
+                        height: 22,
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
                       Text('Create Package'),
                     ],
                   ),
-                ),)
-              
-              ),
+                ),
+              )),
         ),
         const SizedBox(
           width: 12,
         ),
         GestureDetector(
           onTap: () {
-            AppNavigator.pushAndStackPage(context,
-             page: NotificationsScreen());
+            AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
           },
           child: Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -434,9 +426,7 @@ class _HomepageBarState extends State<HomepageBar> {
         ),
       ],
     );
-  
   }
-  
 }
 
 class simpleAppbar extends StatelessWidget {
@@ -448,7 +438,6 @@ class simpleAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 0,
-      
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
       title: Text(

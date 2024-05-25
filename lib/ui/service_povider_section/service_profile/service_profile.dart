@@ -106,7 +106,7 @@ class _AgentProfileState extends State<AgentProfile> {
   String password = '';
   bool isLoading = true;
   bool isLoading1 = true;
-  String vetId = '';
+  String _vetServicesId = '';
    BuildContext? contexting;
 
   getAgentId() async {
@@ -128,7 +128,9 @@ class _AgentProfileState extends State<AgentProfile> {
     await _userCubit.getServices(agentId);
     // agentServices = _userCubit.viewModel.services?.data?.services;
 
-   //  vetId= _userCubit.viewModel.services?.data?.vetServices?[0].sId ?? '';
+     _vetServicesId= _userCubit.viewModel.services?.data?.vetServices?[0].sId ?? '';
+
+      
 
  setState(() {
       
@@ -535,7 +537,7 @@ class _AgentProfileState extends State<AgentProfile> {
                                                     isAgent: true,
                                                     agentId: agents?.sId ?? '',
                                                     //TODO
-                                                    vetServiceId: '',
+                                                    vetServiceId: _vetServicesId,
                                                   ),
                                           ],
                                         )),
