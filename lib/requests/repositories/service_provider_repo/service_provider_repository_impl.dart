@@ -418,8 +418,19 @@ class ServiceProviderRepositoryImpl implements ServiceProviderRepository {
   Future<AuthData> editPackagePricing(
       {required String agentId,
       required String packageId,
-      required String price}) async {
-    var payload = {'price': price};
+      required String price,
+      required String name,
+      required String description,
+      required String duration,
+      
+      }) async {
+    var payload = {
+      'price': price,
+      'name': name,
+      'description': description,
+      'duration': duration,
+      
+      };
     final map = await Requests().patch(
       AppStrings.updatePackagePricing(
         packageId: packageId,

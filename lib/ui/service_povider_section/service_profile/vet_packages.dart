@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../blocs/service_provider/service_provider.dart';
@@ -70,8 +72,7 @@ class _VetBookingState extends State<VetBooking> {
     setState(() {
       isLoading = true;
     });
- Modals.showToast(widget.serviceId);
-
+  
 
     await _serviceProviderCubit.vetServices(agentId: widget.serviceId);
            
@@ -113,7 +114,8 @@ class _VetBookingState extends State<VetBooking> {
             vetServices = state.vetService;
 
             amount = vetServices?.data?.vetService?.price.toString() ?? '';
-            _amountController.text = vetServices?.data?.vetService?.price.toString() ?? '';
+
+            _amountController.text = AppUtils.convertPrice(vetServices?.data?.vetService?.price.toString() ?? '');
             vetServiceId = vetServices?.data?.vetService?.sId.toString() ?? '';
 
 
@@ -198,9 +200,9 @@ class _VetBookingState extends State<VetBooking> {
                                                         child:
                                                         ///TODO
                                                             ImageView.network(
-                                                          // vetServices
-                                                          //         ?.data?.vetService
-                                                          //         ?.serviceType.image
+                                                          vetServices
+                                                                  ?.data?.vetService
+                                                                  ?.serviceType?.image ??
                                                               ''    
                                                                ,
                                                           fit: BoxFit.cover,
@@ -212,7 +214,7 @@ class _VetBookingState extends State<VetBooking> {
                                                 ),
                                                 CustomText(
                                                   text:
-                                                      'Service Amount: NGN ${AppUtils.convertPrice(vetServices?.data?.vetService?.price ?? '0')}',
+                                                      'Service Amount: NGN ${AppUtils.convertPrice(vetServices?.data?.vetService?.price ?? '0')}'.toUpperCase(),
                                                   size: 13,
                                                   weight: FontWeight.w600,
                                                   color:
@@ -320,6 +322,10 @@ class _VetBookingState extends State<VetBooking> {
                                             controller: _amountController,
                                             borderRadius: 20,
                                             readOnly: false,
+                                              inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    ThousandsSeparatorInputFormatter(),
+                                  ],
                                             boxHeight: 8,
                                             keyboardType: TextInputType.number,
                                             borderColor: Colors.white,
@@ -416,4 +422,32 @@ class _VetBookingState extends State<VetBooking> {
       ],
     );
   }
+}
+
+class ThousandsSeparatorInputFormatter extends TextInputFormatter {
+  final NumberFormat _formatter = NumberFormat('#,###');
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue;
+    }
+
+    // Remove all non-digit characters
+    final intValue = int.tryParse(newValue.text.replaceAll(',', ''));
+    if (intValue == null) {
+      return oldValue;
+    }
+
+    final newText = _formatter.format(intValue);
+
+    return newValue.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newText.length),
+    );
+  }
+
+
+ 
 }

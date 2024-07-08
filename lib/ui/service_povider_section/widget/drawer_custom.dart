@@ -61,12 +61,15 @@ class _CustomDrawerState extends State<CustomDrawer> {
   Agent? agents;
   String password = '';
   String email = '';
+  String deviceId= '';
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      await StorageHandler.clearCache();
+
       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } catch (e) {
       print("Error signing out: $e");
@@ -78,12 +81,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
     agentId = await StorageHandler.getAgentId();
      email = await StorageHandler.getUserEmail();
     password = await StorageHandler.getUserPassword();
+    deviceId = await StorageHandler.getFirebaseToken();
 
 
       _userCubit = context.read<AccountCubit>();
 
     try {
-      await _userCubit.loginUser(password: password, email: email);
+      await _userCubit.loginUser(password: password, email: email, deviceId: deviceId);
      // await _userCubit.getAgentProfile(agentId);
     } catch (e) {}
   }

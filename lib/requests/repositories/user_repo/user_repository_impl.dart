@@ -300,7 +300,7 @@ class UserRepositoryImpl implements UserRepository {
     };
     final map = await Requests().post(AppStrings.deleteUser,
     body: json.encode(payload),
-   // useApp: false
+   //useApp: false
        );
     return AuthData.fromJson(map);
   }

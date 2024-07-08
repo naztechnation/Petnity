@@ -24,13 +24,34 @@ import '../widgets/text_edit_view.dart';
 import 'forgot_password.dart';
 import 'otp_screen.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   SignInScreen({super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+
   final _passwordController = TextEditingController();
 
   final _emailController = TextEditingController();
+
+  String deviceId = '';
+
+  getToken() async {
+    deviceId = await StorageHandler.getFirebaseToken();
+
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    getToken();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +79,9 @@ class SignInScreen extends StatelessWidget {
             listener: (context, state) {
               if (state is AccountLoaded) {
                 if (state.userData.status ?? false) {
-                  StorageHandler.saveUserPassword(_passwordController.text.trim());
+                  StorageHandler.saveUserPassword(
+                      _passwordController.text.trim());
+                  StorageHandler.saveIsLoggedIn('true');
 
                   if (state.userData.data?.user == null) {
                     if (state.userData.data?.agent?.user?.isAgent ?? false) {
@@ -328,8 +351,10 @@ class SignInScreen extends StatelessWidget {
                             ),
                             TextSpan(
                                 text: ' Create An Account',
-                                style:
-                                    TextStyle(color: AppColors.lightSecondary, fontSize: 15, fontWeight: FontWeight.w600),
+                                style: TextStyle(
+                                    color: AppColors.lightSecondary,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     AppNavigator.pushAndReplaceName(context,
@@ -337,7 +362,8 @@ class SignInScreen extends StatelessWidget {
                                   }),
                             TextSpan(
                               text: '  Here.',
-                              style: TextStyle(color: Colors.black, fontSize: 15),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 15),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   // Long Pressed.
@@ -361,7 +387,8 @@ class SignInScreen extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       ctx.read<AccountCubit>().loginUser(
           email: _emailController.text.trim(),
-          password: _passwordController.text.trim());
+          password: _passwordController.text.trim(),
+          deviceId: deviceId);
       FocusScope.of(ctx).unfocus();
     }
   }
@@ -371,24 +398,16 @@ class SignInScreen extends StatelessWidget {
       required BuildContext context,
       required String message,
       required bool isAgent}) async {
-    // await firebaseUser.loginUserWithEmailAndPassword(
-    //     email: _emailController.text.trim(),
-    //     password: _passwordController.text.trim());
+    if (isAgent) {
+      StorageHandler.saveIsUserType('service_provider');
 
-    StorageHandler.saveIsLoggedIn('true');
+      AppNavigator.pushAndReplaceName(context,
+          name: AppRoutes.serviceProviderLandingPage);
+    } else {
+      StorageHandler.saveIsUserType('user');
 
-      if (isAgent) {
-        StorageHandler.saveIsUserType('service_provider');
-
-        AppNavigator.pushAndReplaceName(context,
-            name: AppRoutes.serviceProviderLandingPage);
-      } else {
-        StorageHandler.saveIsUserType('user');
-
-        AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
-      }
-
-    
+      AppNavigator.pushAndStackNamed(context, name: AppRoutes.landingPage);
+    }
   }
 
   resendCode(BuildContext ctx) {

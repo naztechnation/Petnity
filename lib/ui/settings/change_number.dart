@@ -61,6 +61,8 @@ class _ChangeNumberScreenState extends State<ChangeNumberScreen> {
   Future<void> _signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      await StorageHandler.clearCache();
+
       AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } catch (e) {
       print("Error signing out: $e");

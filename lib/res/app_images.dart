@@ -48,6 +48,8 @@ class AppImages {
   static const prescribe = '${_baseUrl}prescribe.png';
   static const treat = '${_baseUrl}treat.png';
   static const dogGirl = '${_baseUrl}dog_girl.png';
+  static const avatarIcon = '${_baseUrl}avatar.png';
+
 
   /// Svg images
   static const _svgBaseUrl = '${_baseUrl}svgs/';

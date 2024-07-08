@@ -98,7 +98,7 @@ class TextEditView extends StatelessWidget {
           //   color: Colors.black,
           // ),
           SizedBox(
-            height: boxHeight,
+            height: 8,
           ),
           TextFormField(
             controller: controller,

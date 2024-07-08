@@ -76,8 +76,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         top: screenSize(context).height * 0.04,
         right: 20,
         child: GestureDetector(
-          onTap: () => AppNavigator.pushAndReplaceName(context,
-              name: AppRoutes.signUpScreen),
+          onTap: () {
+AppNavigator.pushAndReplaceName(context,
+              name: AppRoutes.signUpScreen);
+          } ,
           child: CustomText(
             maxLines: 1,
             text: 'SKIP',

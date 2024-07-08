@@ -8,6 +8,7 @@ import 'package:petnity/ui/widgets/image_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/view_models/account_view_model.dart';
+import '../../../res/app_images.dart';
 import '../../../utils/navigator/page_navigator.dart';
 import '../services/services_providers_details.dart';
 
@@ -82,12 +83,26 @@ Widget Item(BuildContext context, Color color, String title, String image,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-         ClipRRect(borderRadius: BorderRadius.circular(30),
-          child: SizedBox(
-            height: 40,
-            width: 40,
-            child: ImageView.network(image, fit: BoxFit.cover,)),
-         ),
+         ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Hero(
+                  tag: 'profilePicture',
+                  child: Image.network(
+                    image,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return ImageView.asset(AppImages.appLogo,
+                          fit: BoxFit.cover);
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const ImageView.asset(AppImages.appLogo,
+                          fit: BoxFit.cover);
+                    },
+                  ),
+                )),
           const SizedBox(width: 15),
           Expanded(
             child: Text(

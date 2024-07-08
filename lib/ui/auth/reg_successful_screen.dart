@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:petnity/handlers/secure_handler.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/res/enum.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class RegSuccessful extends StatelessWidget {
   Future<void> _signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      await StorageHandler.clearCache();
        AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } catch (e) {
       print("Error signing out: $e");

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../handlers/secure_handler.dart';
 import '../../../../model/view_models/account_view_model.dart';
 import '../../../../res/app_colors.dart';
 import '../../../../res/app_constants.dart';
@@ -133,6 +134,8 @@ class KycServiceScreenTwelve extends StatelessWidget {
   Future<void> _signOut(BuildContext context) async {
     try {
       await _auth.signOut();
+      await StorageHandler.clearCache();
+
        AppNavigator.pushAndReplaceName(context, name: AppRoutes.signInScreen);
     } catch (e) {
       print("Error signing out: $e");

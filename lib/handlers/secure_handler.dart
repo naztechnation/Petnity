@@ -218,6 +218,6 @@ class StorageHandler {
  
 
   static Future<void> clearCache() async {
-    await storage.deleteAll();
+    await storage.delete(key:'LOGGEDIN');
   }
 }

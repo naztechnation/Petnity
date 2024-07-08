@@ -112,7 +112,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   }
                   
                    else if (state is UserNetworkErrApiErr) {
-                  } else if (state is UserNetworkErr) {}
+                  } else if (state is UserNetworkErr) {
+                    
+                  }
                 },
                 builder: (context, state) => Container(
                   height: screenSize(context).height * .9,

@@ -23,6 +23,7 @@ abstract class AccountRepository {
   Future<AuthData> loginUser({
     required String email,
     required String password,
+    required String deviceId,
   });
   Future<AuthData> logoutUser({
     required String username,

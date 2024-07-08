@@ -51,10 +51,9 @@ Future<void> sendPushNotification(String userToken, String title, String body) a
       'to': '/topic/$topic',
     };
 
-    // Encode the notification as JSON
+    
     String jsonBody = json.encode(notification);
-
-    // Sending POST request to FCM
+ 
     try {
       final response = await http.post(
         Uri.parse(fcmUrl),

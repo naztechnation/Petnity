@@ -25,8 +25,10 @@ class _MyListState extends State<DurationContent> {
             '2 weeks',
             '1 month',
             '1 month & 2 weeks',
-            '2 months',
-            '2 months and 2 weeks',
+           
+            '2 months & 2 weeks',
+            '3 months & 2 weeks',
+             '2 months',
             '6 months',
             '3 months',
           ];
@@ -43,7 +45,7 @@ class _MyListState extends State<DurationContent> {
             },
             child: Container(
               width: 105,
-                height: 60,
+                
                 margin: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
 
               decoration: BoxDecoration(

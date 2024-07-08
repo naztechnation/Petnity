@@ -104,6 +104,7 @@ class _AgentProfileState extends State<AgentProfile> {
   String userType = '';
   String email = '';
   String password = '';
+  String deviceId= '';
   bool isLoading = true;
   bool isLoading1 = true;
   String _vetServicesId = '';
@@ -117,6 +118,7 @@ class _AgentProfileState extends State<AgentProfile> {
     userType = await StorageHandler.getUserType();
     email = await StorageHandler.getUserEmail();
     password = await StorageHandler.getUserPassword();
+    deviceId = await StorageHandler.getFirebaseToken();
     if (userType == 'user') {
       agentId = widget.agentId ?? '';
     } else {
@@ -567,6 +569,7 @@ class _AgentProfileState extends State<AgentProfile> {
       ctx.read<AccountCubit>().loginUser(
             email: email,
             password: password,
+            deviceId: deviceId,
           );
       FocusScope.of(ctx).unfocus();
    

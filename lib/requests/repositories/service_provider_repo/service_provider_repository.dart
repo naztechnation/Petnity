@@ -54,7 +54,12 @@ abstract class ServiceProviderRepository {
     Future<CreateWithrawal> agentCreateWithdrawal({required String amount,}); 
     Future<WithrawalHistory> agentWithdrawalHistory({required String agentId,}); 
     Future<UserTransactionList> userWithdrawalHistory(); 
-    Future<AuthData> editPackagePricing({required String agentId,required String packageId,required String price,}); 
+    Future<AuthData> editPackagePricing({required String agentId,
+    required String packageId,required String price,
+    required String name,
+      required String description,
+      required String duration,
+    }); 
     Future<AuthData> editVetPackagePricing({required String agentId,required String serviceId,required String price,}); 
     Future<CreditedWallet> creditWallet({required String txId,}); 
     Future<VetMediumTypes> getMediumTypes(); 

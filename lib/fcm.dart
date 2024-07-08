@@ -26,9 +26,9 @@ class PushNotifications {
 
     await StorageHandler.saveFireBaseToken(token.toString());
 
-    print(token);
+   // print(token);
 
-      sendPushNotification(token ??'','Lucacify','Welcome on board');
+    //  sendPushNotification(token ??'','Lucacify','Welcome on board');
     
   }
 

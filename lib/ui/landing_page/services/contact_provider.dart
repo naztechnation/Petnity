@@ -244,7 +244,7 @@ class _ContactProviderState extends State<ContactProvider> {
     DateTime startDate = DateTime.parse(startDateString);
     DateTime endDate = DateTime.parse(endDateString);
 
-    if (startDate.isBefore(endDate)) {
+    if (startDate.isBefore(endDate) || areDatesSame(startDate, endDate)) {
       DateTime combinedDateTime = DateTime(
         selectedDate.year,
         selectedDate.month,
@@ -284,4 +284,10 @@ class _ContactProviderState extends State<ContactProvider> {
           'Make sure your Pick up date is before your Drop off date');
     } else {}
   }
+
+  bool areDatesSame(DateTime date1, DateTime date2) {
+  return date1.year == date2.year &&
+         date1.month == date2.month &&
+         date1.day == date2.day;
+}
 }

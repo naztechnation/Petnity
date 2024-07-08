@@ -42,8 +42,9 @@ class AccountRepositoryImpl implements AccountRepository {
   Future<AuthData> loginUser({
     required String email,
     required String password,
+    required String deviceId,
   }) async {
-    var payload = {'emailOrUsername': email, 'password': password};
+    var payload = {'emailOrUsername': email, 'password': password, 'deviceId': deviceId};
     final map = await Requests()
         .post(AppStrings.loginUrl, body: json.encode(payload),);
     return AuthData.fromJson(map);

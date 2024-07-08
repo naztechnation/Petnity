@@ -224,6 +224,7 @@ class _HomepageBarState extends State<HomepageBar> {
   String password = '';
   String email = '';
   String agentId = "";
+  String deviceId= "";
 
   List<ServiceType> services = [];
 
@@ -233,11 +234,12 @@ class _HomepageBarState extends State<HomepageBar> {
     agentId = await StorageHandler.getAgentId();
     email = await StorageHandler.getUserEmail();
     password = await StorageHandler.getUserPassword();
+    deviceId = await StorageHandler.getFirebaseToken();
 
     _userCubit = context.read<AccountCubit>();
 
     try {
-      await _userCubit.loginUser(password: password, email: email);
+      await _userCubit.loginUser(password: password, email: email, deviceId: deviceId);
       // await _userCubit.getAgentProfile(agentId);
     } catch (e) {}
   }
@@ -257,9 +259,8 @@ class _HomepageBarState extends State<HomepageBar> {
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
-      centerTitle: false,
-      actions: [
-        BlocConsumer<AccountCubit, AccountStates>(
+      centerTitle: true,
+      title:  BlocConsumer<AccountCubit, AccountStates>(
           listener: (context, state) {
             if (state is AccountLoaded) {
               if (state.userData.status ?? false) {
@@ -391,26 +392,30 @@ class _HomepageBarState extends State<HomepageBar> {
               child: Card(
                 elevation: 0.5,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      ImageView.svg(
-                        AppImages.addIcon,
-                        height: 22,
-                      ),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Text('Create Package'),
-                    ],
+                  padding: const EdgeInsets.all(8),
+                  child: SizedBox(
+                    width: MediaQuery.sizeOf(context).width *0.45,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImageView.svg(
+                          AppImages.addIcon,
+                          height: 22,
+                        ),
+                        const SizedBox(
+                          width: 7,
+                        ),
+                        Text('Create Package'),
+                      ],
+                    ),
                   ),
                 ),
               )),
         ),
-        const SizedBox(
-          width: 12,
-        ),
-        GestureDetector(
+         
+     
+      actions: [
+          GestureDetector(
           onTap: () {
             AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
           },

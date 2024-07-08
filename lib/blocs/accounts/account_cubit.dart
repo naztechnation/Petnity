@@ -107,12 +107,15 @@ class AccountCubit extends Cubit<AccountStates> {
   }
 
   Future<void> loginUser(
-      {required String password, required String email}) async {
+      {required String password,
+       required String email,
+      required String deviceId
+       }) async {
     try {
       emit(AccountLoading());
 
       final userData = await accountRepository.loginUser(
-          email: email, password: password);
+          email: email, password: password, deviceId: deviceId);
 
       // await viewModel.setUser(userData);
       emit(AccountLoaded(userData));

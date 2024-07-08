@@ -882,7 +882,11 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
   Future<void> editPackage(
       {required String agentId,
       required String price,
-      required String packageId}) async {
+      required String packageId,
+      required String name,
+      required String description,
+      required String duration,
+      }) async {
     try {
       emit(EditPackageLoading());
 
@@ -890,6 +894,10 @@ class ServiceProviderCubit extends Cubit<ServiceProviderState> {
         agentId: agentId,
         packageId: packageId,
         price: price,
+        name: name,
+        description: description,
+        duration: duration,
+        
       );
 
       emit(EditPackageLoaded(edit));

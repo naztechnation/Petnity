@@ -49,12 +49,13 @@ class _LandingScreenState extends State<LandingScreen> {
     password = await StorageHandler.getUserPassword();
   }
 
-
-   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> _signOut() async {
     try {
       await _auth.signOut();
+      await StorageHandler.clearCache();
+
       print("User signed out successfully.");
     } catch (e) {
       print("Error signing out: $e");
@@ -82,7 +83,7 @@ class _LandingScreenState extends State<LandingScreen> {
               if (state.userData.status!) {
                 Modals.showToast(state.userData.message!,
                     messageType: MessageType.success);
-                _signOut();  
+                _signOut();
                 user.deleteUser();
                 AppNavigator.pushAndReplaceName(context,
                     name: AppRoutes.signInScreen);
@@ -136,7 +137,7 @@ class _LandingScreenState extends State<LandingScreen> {
                                         child: NotificationIcon(
                                           icon: ImageView.svg(
                                             AppImages.bell,
-                                             height: 25,
+                                            height: 25,
                                           ),
                                           nun_of_notifications: 5,
                                         ),
@@ -153,7 +154,8 @@ class _LandingScreenState extends State<LandingScreen> {
                                                 '',
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    color: AppColors.lightSecondary),
+                                                    color: AppColors
+                                                        .lightSecondary),
                                               ),
                                             ),
                                           ))
@@ -244,8 +246,6 @@ class _LandingScreenState extends State<LandingScreen> {
                 ),
         ));
   }
-
-  
 }
 
 class Page2 extends StatelessWidget {
@@ -275,7 +275,7 @@ class HomepageAppbar extends StatelessWidget {
       elevation: 0,
       backgroundColor: AppColors.lightBackground,
       iconTheme: IconThemeData(color: Colors.black),
-       title: Text(
+      title: Text(
         'Lucacify',
         style: TextStyle(
             fontFamily: AppStrings.interSans,
@@ -288,32 +288,44 @@ class HomepageAppbar extends StatelessWidget {
             AppNavigator.pushAndStackPage(context, page: NotificationsScreen());
           },
           child: NotificationIcon(
-              icon: ImageView.svg(AppImages.notificationIcon, color: AppColors.lightSecondary,height: 25,),
+              icon: ImageView.svg(
+                AppImages.notificationIcon,
+                color: AppColors.lightSecondary,
+                height: 25,
+              ),
               nun_of_notifications: 5),
         ),
         const SizedBox(
           width: 10,
         ),
         GestureDetector(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(65),
-            child: ImageView.network(
-              user.petPicture,
-              width: 50.0,
-              height: 50.0,
-              scale: 1,
-              fit: BoxFit.cover,
-               placeholder: AppImages.person,
-            ),
-          ),
-          onTap: () {
-             AppNavigator.pushAndStackPage(
-            context,
-            page: PetProfile(),
-          );
-           // Modals.showToast(user.petPicture);
-          }
-        ),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: Hero(
+                  tag: 'profilePicture',
+                  child: Image.network(
+                    user.petPicture,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return ImageView.asset(AppImages.avatarIcon,
+                          fit: BoxFit.cover);
+                    },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const ImageView.asset(AppImages.avatarIcon,
+                          fit: BoxFit.cover);
+                    },
+                  ),
+                )),
+            onTap: () {
+              AppNavigator.pushAndStackPage(
+                context,
+                page: PetProfile(),
+              );
+              // Modals.showToast(user.petPicture);
+            }),
         const SizedBox(
           width: 12,
         ),

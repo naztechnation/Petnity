@@ -329,7 +329,6 @@ class _AddAccountState extends State<AddAccount> {
                 return Validator.validate(value, 'Password');
               },
               textViewTitle: 'Password',
-              keyboardType: TextInputType.number,
               fillColor: Colors.white,
               borderColor: Colors.white,
               hintText: 'Enter password',

@@ -229,7 +229,7 @@ static String userWithdrawalHistory =
       '${_baseUrl}user/get-user-wallet-transactions';
 
   static String updatePackagePricing({required String packageId}) =>
-      '${_baseUrl}service/update-package-price/$packageId';
+      '${_baseUrl}service/update-package/$packageId';
 
   static String updateVetPackagePricing({required String serviceId}) =>
       '${_baseUrl}service/update-vet-service-price/$serviceId';
