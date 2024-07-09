@@ -42,7 +42,7 @@ class TrackServicesScreen extends StatelessWidget {
   final String startDate1;
   final String startDate2;
   final String amount;
-  final String paymentId;
+  final String paymentIds;
   final bool isAcceptedService;
   final bool isOngoingService;
   final bool isCompletedService;
@@ -59,7 +59,7 @@ class TrackServicesScreen extends StatelessWidget {
       required this.startDate1,
       required this.startDate2,
       required this.amount,
-      required this.paymentId,
+      required this.paymentIds,
       required this.sellerImage,
       required this.isAcceptedService,
       required this.isOngoingService,
@@ -88,7 +88,7 @@ class TrackServicesScreen extends StatelessWidget {
         startDate1: startDate1,
         startDate2: startDate2,
         amount: amount,
-        paymentId: paymentId,
+        paymentIds: paymentIds,
         sellerPhoto: sellerImage,
         isAcceptedService: isAcceptedService,
         isOngoingService: isOngoingService,
@@ -123,7 +123,7 @@ class TrackServices extends StatefulWidget {
   final String startDate1;
   final String startDate2;
   final String amount;
-  final String paymentId;
+  final String paymentIds;
   final bool isAcceptedService;
   final bool isOngoingService;
   final bool isCompletedService;
@@ -141,7 +141,7 @@ class TrackServices extends StatefulWidget {
       required this.startDate1,
       required this.startDate2,
       required this.amount,
-      required this.paymentId,
+      required this.paymentIds,
       required this.sellerPhoto,
       required this.isAcceptedService,
       required this.isOngoingService,
@@ -391,7 +391,7 @@ class _TrackServicesState extends State<TrackServices> {
                                 startDate1: widget.startDate1,
                                 startDate2: widget.startDate2,
                                 amount: widget.amount,
-                                paymentId: widget.paymentId,
+                                paymentId: widget.paymentIds,
                                 sellerPhoto: widget.sellerPhoto,
                                 sessionStatus: sessionStatus,
                                 customerName: widget.customerName,

@@ -13,16 +13,26 @@ import '../../utils/exceptions.dart';
 import 'headers.dart';
 
 class Requests {
-  Future<dynamic> get(String route, {Map<String, String>? headers,}) async {
+  Future<dynamic> get(
+    String route, {
+    Map<String, String>? headers,
+  }) async {
     late dynamic map;
-    debugPrint(route);
-    final client = RetryClient(http.Client());
-    try {
-      await client
-          .get(Uri.parse(route), headers:  await formDataHeader())
-          .then((response) {
-        map = json.decode(RequestHandler.handleServerError(response));
-      });
+  debugPrint(route);
+  final client = RetryClient(http.Client());
+  const timeoutDuration = Duration(seconds: 15);
+
+  try {
+    await client
+        .get(Uri.parse(route), headers: await formDataHeader())
+        .timeout(timeoutDuration)
+        .then((response) {
+      map = json.decode(RequestHandler.handleServerError(response));
+    });
+  } on TimeoutException catch (e) {
+    
+   throw NetworkException('Request time out');
+  
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
     } on HandshakeException {
@@ -47,7 +57,7 @@ class Requests {
     try {
       if (files != null) {
         final request = http.MultipartRequest('POST', Uri.parse(route));
-        request.headers.addAll( await formDataHeader());
+        request.headers.addAll(await formDataHeader());
         request.fields.addAll(body as Map<String, String>);
         files.forEach((key, value) async {
           request.files.add(await http.MultipartFile.fromPath(
@@ -60,22 +70,33 @@ class Requests {
             ? await retryOption.retry(() => request.send())
             : await retry(
                 () => request.send(),
+                maxAttempts: 2,
+                maxDelay: Duration(seconds: 15),
                 retryIf: (e) => e is SocketException || e is TimeoutException,
               );
         map = json
             .decode(await RequestHandler.handleStreamedServerError(response));
       } else {
         final client = RetryClient(http.Client());
-        await client
-            .post(
-          Uri.parse(route),
-          body: body,
-          headers: headers ?? await formDataHeader(useApp),
-        )
-            .then((response) {
-          map = json.decode(RequestHandler.handleServerError(response));
+        const timeoutDuration = Duration(seconds: 15);
+
+        try {
+          await client
+              .post(
+                Uri.parse(route),
+                body: body,
+                headers: headers ?? await formDataHeader(useApp),
+              )
+              .timeout(timeoutDuration)
+              .then((response) {
+            map = json.decode(RequestHandler.handleServerError(response));
+          });
+        } on TimeoutException catch (e) {
+           throw NetworkException('Request time out');
+
+        } finally {
           client.close();
-        });
+        }
       }
     } on SocketException {
       throw NetworkException(AppStrings.networkErrorMessage);
@@ -137,17 +158,15 @@ class Requests {
     return map;
   }
 
-  Future<dynamic>   patch(
+  Future<dynamic> patch(
     String route, {
     Map<String, String>? headers,
     var body,
     Map<String, File>? files,
-      bool useApp = true,
-
+    bool useApp = true,
     Encoding? encoding,
   }) async {
     debugPrint(route);
-
 
     late dynamic map;
     try {

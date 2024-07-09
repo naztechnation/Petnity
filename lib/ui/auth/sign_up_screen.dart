@@ -513,6 +513,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     userTypes('User', () async {
                       Navigator.pop(context);
+      FocusScope.of(context).unfocus();
+
                       user.setUserType(UserType.user);
                       StorageHandler.saveUserName(
                           _usernameController.text.trim());
@@ -538,6 +540,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     userTypes('Service Provider', () async {
                       Navigator.pop(context);
+      FocusScope.of(context).unfocus();
 
                       StorageHandler.saveUserName(
                           _usernameController.text.trim());

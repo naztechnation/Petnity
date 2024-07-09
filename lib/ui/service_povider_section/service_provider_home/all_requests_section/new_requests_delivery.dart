@@ -632,7 +632,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
                         startDate1: order.pickupTime ?? '0',
                         startDate2: order.dropoffTime ?? '0',
                         amount: order.fee.toString() ?? '',
-                        paymentId:  '',
+                        paymentIds:  order.purchaseId ?? '',
                         sellerImage: order.agent?.picture ?? '',
                         isAcceptedService: order.isAccepted ?? false,
                         isOngoingService: order.isOngoing ?? false,
@@ -889,7 +889,7 @@ class _ServiceProviderPetDeliveryHomeBodyState
           width: screenSize(context).width * .2,
           child: ButtonView(
             onPressed: () {
-              // if (order.isPaid ?? false) {
+               if (order.isPaid ?? false) {
               Navigator.push(context, MaterialPageRoute(builder: (_) {
                 return PurchaseRequest(
                   agentName: '${order.product?.agent?.name}',
@@ -910,9 +910,9 @@ class _ServiceProviderPetDeliveryHomeBodyState
                   ownerNormalId: order.product?.agent?.sId.toString() ?? '',
                 );
               }));
-              // } else {
+               } else {
               Modals.showToast('This product has not been paid for.');
-              // }
+               }
             },
             child: Text(
               'view',
@@ -985,6 +985,15 @@ class _ServiceProviderPetDeliveryHomeBodyState
         padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
         child: Text(
           'Awaiting Service',
+          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w500, fontSize: 13),
+        ),
+      );
+    } else if (order.isPaid == true &&
+        order.isAccepted == true) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 18),
+        child: Text(
+          'Accepted',
           style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w500, fontSize: 13),
         ),
       );

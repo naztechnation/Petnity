@@ -232,7 +232,7 @@ class _OngoingDeliveryWidgetState extends State<OngoingDeliveryWidget> {
                               startDate1: widget.services.pickupTime ?? '0',
                               startDate2: widget.services.dropoffTime ?? '0',
                               amount: widget.services.fee.toString() ?? '',
-                              paymentId:  '',
+                              paymentIds:  widget.services.purchaseId ?? '',
                               sellerImage: widget.services.agent?.picture ?? '',
                               isAcceptedService:
                                   widget.services.isAccepted ?? false,

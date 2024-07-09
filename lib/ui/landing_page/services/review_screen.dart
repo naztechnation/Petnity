@@ -41,19 +41,18 @@ class ReviewScreen extends StatelessWidget {
       serverDate,
       serverDate1;
 
-  const ReviewScreen({
-    super.key,
-    required this.date1,
-    required this.date2,
-    required this.time1,
-    required this.time2,
-    required this.amount,
-    required this.orderId,
-    required this.username,
-    required this.serverDate,
-    required this.serverDate1,
-    required this.spToken
-  });
+  const ReviewScreen(
+      {super.key,
+      required this.date1,
+      required this.date2,
+      required this.time1,
+      required this.time2,
+      required this.amount,
+      required this.orderId,
+      required this.username,
+      required this.serverDate,
+      required this.serverDate1,
+      required this.spToken});
 
   @override
   Widget build(BuildContext context) {
@@ -89,19 +88,18 @@ class Review extends StatefulWidget {
       serverDate1;
   final String spToken;
 
-  const Review({
-    super.key,
-    required this.date1,
-    required this.date2,
-    required this.time1,
-    required this.time2,
-    required this.amount,
-    required this.orderId,
-    required this.username,
-    required this.serverDate,
-    required this.serverDate1,
-    required this.spToken
-  });
+  const Review(
+      {super.key,
+      required this.date1,
+      required this.date2,
+      required this.time1,
+      required this.time2,
+      required this.amount,
+      required this.orderId,
+      required this.username,
+      required this.serverDate,
+      required this.serverDate1,
+      required this.spToken});
 
   @override
   State<Review> createState() => _ReviewState();
@@ -125,9 +123,7 @@ class _ReviewState extends State<Review> {
     email = await StorageHandler.getUserEmail();
     username = await StorageHandler.getUserName();
 
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -142,8 +138,6 @@ class _ReviewState extends State<Review> {
 
     super.initState();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -197,29 +191,27 @@ class _ReviewState extends State<Review> {
               );
             } else if (state is ConfirmPaymentLoaded) {
               Modals.showToast(state.packages.message ?? '');
-
             } else if (state is CreateOrderLoaded) {
-                if(state.createOrder.status ?? false){
-                    Modals.showToast(state.createOrder.message ?? '',
-                  messageType: MessageType.success);
+              if (state.createOrder.status ?? false) {
+                Modals.showToast(state.createOrder.message ?? '',
+                    messageType: MessageType.success);
 
+                sendPushNotification(
+                    widget.spToken,
+                    'Customer Payment Recieved',
+                    'Hello, you have a pending order from ${username}. Login to Lucacify and attend to your order');
 
-               sendPushNotification(
-                                widget.spToken,
-                                'Customer Payment Recieved',
-                                'Hello, you have a pending order from ${username}. Login to Lucacify and attend to your order');
-
-              
-                  Future.delayed(Duration(seconds: 2), () {
-                AppNavigator.pushAndReplacePage(context,
-                    page: PaymentSuccessScreen(
-                      txId: txId,
-                    ));
-              });
-                }else{
-                    Modals.showToast(state.createOrder.message ?? '',
-                  messageType: MessageType.error);
-                }
+                Future.delayed(Duration(seconds: 1), () {
+                  AppNavigator.pushAndReplacePage(context,
+                      page: PaymentSuccessScreen(
+                        txId: state.createOrder.data?.order?.purchaseId ?? '',
+                        amount: mainAmount,
+                      ));
+                });
+              } else {
+                Modals.showToast(state.createOrder.message ?? '',
+                    messageType: MessageType.error);
+              }
               // _handlePaymentInitialization(
               //     state.createOrder.order!.id.toString());
             }
@@ -467,7 +459,7 @@ class _ReviewState extends State<Review> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Text('Bargain Info'),
-                                               const SizedBox(
+                                              const SizedBox(
                                                 height: 10,
                                               ),
                                               Divider(),
@@ -485,7 +477,8 @@ class _ReviewState extends State<Review> {
                                                 controller:
                                                     bargainAmountController,
                                                 isDense: true,
-                                                keyboardType: TextInputType.number,
+                                                keyboardType:
+                                                    TextInputType.number,
                                                 hintText: 'Enter bargain fee',
                                               ),
                                               const SizedBox(
@@ -493,11 +486,17 @@ class _ReviewState extends State<Review> {
                                               ),
                                               ButtonView(
                                                 onPressed: () {
-                                                  Navigator.pop(context);
+                                                 
                                                   setState(() {
-                                                    mainAmount =
+
+                                                   if(bargainAmountController.text.isNotEmpty){
+                                                     Navigator.pop(context);
+                                                     mainAmount =
                                                         bargainAmountController
                                                             .text;
+                                                   }else{
+                                                    Modals.showToast('bargain amount required');
+                                                   }
                                                   });
                                                 },
                                                 child: Text(
@@ -545,20 +544,19 @@ class _ReviewState extends State<Review> {
                           borderColor: Colors.white,
                           borderRadius: 40,
                           onPressed: () {
-
-            
-
-                           Modals.showAlertOptionDialog(context, title: 'Make Payment', message: 'Are  you sure you want send NGN$mainAmount for this service.',
-                           buttonNoText: 'Cancel',
-                           buttonYesText: 'Continue',
-                            onTap: (){
-                             _userCubit.createOrder(
-                                packageId: agent.packageId,
-                                fee: mainAmount,
-                                pickupTime: '${widget.serverDate}',
-                                dropOffTime: '${widget.serverDate1}',
-                                pickUpLocation: agent.location);
-                           });
+                            Modals.showAlertOptionDialog(context,
+                                title: 'Make Payment',
+                                message:
+                                    'Are  you sure you want send NGN$mainAmount for this service.',
+                                buttonNoText: 'Cancel',
+                                buttonYesText: 'Continue', onTap: () {
+                              _userCubit.createOrder(
+                                  packageId: agent.packageId,
+                                  fee: mainAmount,
+                                  pickupTime: '${widget.serverDate}',
+                                  dropOffTime: '${widget.serverDate1}',
+                                  pickUpLocation: agent.location);
+                            });
                           },
                           child: CustomText(
                             textAlign: TextAlign.left,

@@ -230,6 +230,15 @@ class _AllServicesState extends State<AllServices> {
           style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w700),
         ),
       );
+    } else if (widget.allOrders[index].isPaid == true &&
+        widget.allOrders[index].isAccepted == true) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
+        child: Text(
+          'Awaiting Service',
+          style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w700),
+        ),
+      );
     } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),

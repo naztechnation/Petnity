@@ -85,23 +85,20 @@ Widget Item(BuildContext context, Color color, String title, String image,
         children: [
          ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: Hero(
-                  tag: 'profilePicture',
-                  child: Image.network(
-                    image,
-                    width: 40,
-                    height: 40,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return ImageView.asset(AppImages.appLogo,
-                          fit: BoxFit.cover);
-                    },
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return const ImageView.asset(AppImages.appLogo,
-                          fit: BoxFit.cover);
-                    },
-                  ),
+                child: Image.network(
+                  image,
+                  width: 40,
+                  height: 40,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return ImageView.asset(AppImages.appLogo,
+                        fit: BoxFit.cover);
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const ImageView.asset(AppImages.appLogo,
+                        fit: BoxFit.cover);
+                  },
                 )),
           const SizedBox(width: 15),
           Expanded(

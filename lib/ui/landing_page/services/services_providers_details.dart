@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:petnity/ui/widgets/modals.dart';
 import 'package:provider/provider.dart';
 
 import '../../../blocs/user/user_cubit.dart';
@@ -16,7 +15,6 @@ import '../../widgets/custom_text.dart';
 import '../../widgets/empty_widget.dart';
 import '../../widgets/filter_search_section.dart';
 import '../../widgets/loading_page.dart';
-import 'widgets/bottomsheet_content.dart';
 import 'widgets/providers_card.dart';
 
 class ServiceProvidersDetails extends StatelessWidget {
@@ -79,15 +77,30 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
 
   late UserCubit _userCubit;
 
+  final TextEditingController _searchController = TextEditingController();
+
+
   @override
   void initState() {
     _userCubit = context.read<UserCubit>();
+ 
     _userCubit.getServiceProviderList(serviceId: widget.serviceId);
     super.initState();
   }
 
+ 
+
+ @override
+void dispose() {
+  _searchController.dispose();
+  super.dispose();
+}
+
+
   @override
   Widget build(BuildContext context) {
+    final user1 = Provider.of<UserViewModel>(context, listen: true);
+
     
     return Scaffold(
         body: BlocConsumer<UserCubit, UserStates>(
@@ -140,18 +153,23 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: FilterSearchView(
                         hintText: 'Search ${widget.petProvider}',
+                        controller: _searchController,
+                        onChanged: (value) {
+                            user1.filterAgents(query: value);
+                          },
+                        showFilter: false,
                         onFilterTap: () {
-                          Modals.showBottomSheetModal(
-                            context,
-                            isDissmissible: true,
-                            page: BottomSheetContent(
-                                addressSpinnerItems: addressSpinnerItems,
-                                age: age,
-                                gender: gender,
-                                animals: animals),
-                            borderRadius: 30,
-                            heightFactor: 1.5,
-                          );
+                          // Modals.showBottomSheetModal(
+                          //   context,
+                          //   isDissmissible: true,
+                          //   page: BottomSheetContent(
+                          //       addressSpinnerItems: addressSpinnerItems,
+                          //       age: age,
+                          //       gender: gender,
+                          //       animals: animals),
+                          //   borderRadius: 30,
+                          //   heightFactor: 1.5,
+                          // );
                         },
                       ),
                     ),
@@ -169,9 +187,11 @@ class _ServiceProvidersScreenState extends State<ServiceProvidersScreen> {
                                 );
                               }))
                     ]else ...[
-                      SizedBox(
-                        height: MediaQuery.sizeOf(context).height * 0.6,
-                        child: Align(child: Text('No Agents Available for this service')))
+                      Expanded(
+                        child: SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.6,
+                          child: Align(child: Text('No Agents Available for this service'))),
+                      )
                     ]
                   ]));
             }));

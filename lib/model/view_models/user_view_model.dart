@@ -17,8 +17,12 @@ import 'base_viewmodel.dart';
 
 class UserViewModel extends BaseViewModel {
   List<ServiceType>? _servicesType = [];
+
+List<ServiceType> filteredServicesLists = [];
+
   List<Packages> _packages = [];
   List<agent.Agent> _agents = [];
+  List<agent.Agent> filteredAgentLists = [];
   List<Reviews> _reviews = [];
   List<GalleryElements> _gallery = [];
   List<Orders> _ordersList = [];
@@ -52,6 +56,27 @@ class UserViewModel extends BaseViewModel {
     setViewState(ViewState.success);
   }
 
+  void filterServices({required String query}) {
+    
+       
+      filteredServicesLists = _servicesType!.where((service) {
+        return service.name.toString().toLowerCase().contains(query);
+      }).toList();
+ setViewState(ViewState.success);
+
+     
+  }
+  void filterAgents({required String query}) {
+    
+       
+      filteredAgentLists = _agents!.where((agent) {
+        return agent.name.toString().toLowerCase().contains(query);
+      }).toList();
+ setViewState(ViewState.success);
+
+     
+  }
+
   getUserImage()async{
  _picture = await StorageHandler.getUserPicture();
  setViewState(ViewState.success);
@@ -59,6 +84,7 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setServicesTypeList({required List<ServiceType>? services}) async {
     _servicesType = services;
+    filteredServicesLists = services ?? [];
     setViewState(ViewState.success);
   }
 
@@ -69,6 +95,8 @@ class UserViewModel extends BaseViewModel {
 
   Future<void> setAgentDetails({required List<agent.Agent> agents}) async {
     _agents = agents;
+    filteredAgentLists = agents ?? [];
+
     setViewState(ViewState.success);
   }
 
@@ -236,9 +264,11 @@ class UserViewModel extends BaseViewModel {
     return _remainingHours / _totalHours;
   }
 
-  List<ServiceType> get servicesType => _servicesType ?? [];
+  List<ServiceType> get servicesType => filteredServicesLists ;
   GetServices? get services => _services;
-  List<agent.Agent> get agents => _agents;
+  
+  ///ooooooo
+  List<agent.Agent> get agents => filteredAgentLists;
   List<Packages> get packages => _packages;
   List<Reviews> get reviews => _reviews;
   List<GalleryElements> get gallery => _gallery;

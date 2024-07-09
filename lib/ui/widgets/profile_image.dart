@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
-
-import '../../res/app_images.dart';
+ 
 import 'image_view.dart';
 
 class ProfileImage extends StatelessWidget {

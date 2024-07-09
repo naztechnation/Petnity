@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:petnity/res/app_colors.dart';
 import 'package:petnity/res/app_images.dart';
 import 'package:petnity/ui/user/landing_screen.dart';
-import 'package:petnity/ui/widgets/image_view.dart';
-import 'package:provider/provider.dart';
-
-import '../../../model/view_models/account_view_model.dart';
+import 'package:petnity/ui/widgets/image_view.dart'; 
 import '../../../res/app_constants.dart';
 import '../../../res/app_strings.dart';
 import '../../../utils/app_utils.dart';
@@ -18,7 +15,8 @@ import '../../widgets/custom_text.dart';
 
 class PaymentSuccessScreen extends StatelessWidget {
   final String txId;
-  const PaymentSuccessScreen({super.key, required this.txId});
+  final String amount;
+  const PaymentSuccessScreen({super.key, required this.txId, required this.amount});
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +70,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                           textAlign: TextAlign.justify,
                           maxLines: 3,
                           text:
-                              'your  transaction for payment off NGN ${AppUtils.convertPrice(Provider.of<AccountViewModel>(context, listen: false).servicePrice)} successful. click on button below to track session',
+                              'your  transaction for payment off NGN ${AppUtils.convertPrice(amount)} successful. click on button below to track session',
                           weight: FontWeight.w500,
                           size: 16,
                           color: Colors.black,
@@ -140,7 +138,7 @@ class PaymentSuccessScreen extends StatelessWidget {
                       textAlign: TextAlign.left,
                       maxLines: 2,
                       text:
-                          'If session is rejected, funds would be refunded back to your card.',
+                          'If session is rejected, funds would be refunded back to your wallet.',
                       weight: FontWeight.w500,
                       size: 14,
                       color: Colors.black,

@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:petnity/fcm.dart';
 import 'package:provider/provider.dart';
-import 'handlers/secure_handler.dart';
 import 'model/view_models/chat_controller.dart';
 import 'model/view_models/firebase_auth_viewmodel.dart';
 import 'model/view_models/service_provider_inapp.dart';

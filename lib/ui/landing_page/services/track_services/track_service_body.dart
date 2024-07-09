@@ -339,44 +339,64 @@ class _TrackServicesBodyState extends State<TrackServicesBody> {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30)),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CustomText(
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          text:
-                              'Session Paid - ',
-                          weight: FontWeight.w500,
-                          size: 12,
-                          color: Colors.black,
+                child: Column(
+                  children: [
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: CustomText(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              text:
+                                  'Session Paid - ',
+                              weight: FontWeight.w500,
+                              size: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                          CustomText(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              text:
+                                  'NGN ${AppUtils.convertPrice(widget.amount)}',
+                              weight: FontWeight.w500,
+                              size: 12,
+                              color: Colors.black,
+                            ),
+                          
+                        ]),
+                        const SizedBox(height: 15,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomText(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              text:
+                                  'Payment Id -',
+                              weight: FontWeight.w500,
+                              size: 12,
+                              color: Colors.black,
+                            ),
+                            Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.green.shade100),
+                                child: CustomText(
+                                  textAlign: TextAlign.center,
+                                  maxLines: 2,
+                                  text: widget.paymentId,
+                                  weight: FontWeight.w600,
+                                  size: 14,
+                                  color: Colors.black,
+                                ),
+                              ),
+                          ],
                         ),
-                      ),
-                      CustomText(
-                          textAlign: TextAlign.left,
-                          maxLines: 2,
-                          text:
-                              'NGN ${AppUtils.convertPrice(widget.amount)}',
-                          weight: FontWeight.w500,
-                          size: 12,
-                          color: Colors.black,
-                        ),
-                      // Container(
-                      //   padding: const EdgeInsets.all(10),
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: BorderRadius.circular(20),
-                      //       color: Colors.green.shade100),
-                      //   child: CustomText(
-                      //     textAlign: TextAlign.center,
-                      //     maxLines: 2,
-                      //     text: widget.paymentId,
-                      //     weight: FontWeight.w600,
-                      //     size: 14,
-                      //     color: Colors.black,
-                      //   ),
-                      // ),
-                    ]),
+                  ],
+                ),
               ),
                 SizedBox(
                 height: (widget.isRecievePayment) ? 450 : 220,

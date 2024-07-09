@@ -209,7 +209,7 @@ class _OngoingServiceWidgetState extends State<OngoingServiceWidget> {
                             startDate1: allOrders.pickupTime ?? '0',
                             startDate2: allOrders.dropoffTime ?? '0',
                             amount: allOrders.fee.toString() ?? '',
-                            paymentId:  '',
+                            paymentIds:  allOrders.purchaseId ?? '',
                             sellerImage: allOrders.agent?.picture ?? '',
                             isAcceptedService: allOrders.isAccepted ?? false,
                             isOngoingService: allOrders.isOngoing ?? false,

@@ -41,7 +41,7 @@ class HomePageScreen extends StatefulWidget {
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-  final TextEditingController search = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   List<ServiceType> service = [];
 
@@ -60,7 +60,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
         isPetRegistered = true;
       });
     }
- 
   }
 
   bool isLoading = false;
@@ -73,7 +72,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
     });
     await _userCubit.getServiceTypes();
 
-   await _userCubit.getPetProfile(username);
+    await _userCubit.getPetProfile(username);
     setState(() {
       isLoading = false;
     });
@@ -81,15 +80,19 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   @override
   void initState() {
+     
     getUsername();
     getServicesTypes();
 
     super.initState();
   }
 
+  
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<AccountViewModel>(context, listen: true);
+    final user1 = Provider.of<UserViewModel>(context, listen: true);
 
     return (isLoading)
         ? Scaffold(
@@ -108,13 +111,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   if (state is ServicesLoaded) {
                     if (state.services.status!) {
                       service = _userCubit.viewModel.servicesType;
+                      
                     } else {}
-                  }
-                  
-                   else if (state is UserNetworkErrApiErr) {
-                  } else if (state is UserNetworkErr) {
-                    
-                  }
+                  } else if (state is UserNetworkErrApiErr) {
+                  } else if (state is UserNetworkErr) {}
                 },
                 builder: (context, state) => Container(
                   height: screenSize(context).height * .9,
@@ -151,8 +151,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       '${user.address.capitalizeFirstOfEach}',
                                       style: TextStyle(
                                           fontSize: 14,
-                                          color:
-                                              Colors.black.withOpacity(0.7),
+                                          color: Colors.black.withOpacity(0.7),
                                           fontFamily: AppStrings.interSans),
                                     )
                                   ],
@@ -173,7 +172,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         ),
                         FilterSearchView(
                           showFilter: false,
-                          controller: search,
+                          hintText: 'Search services',
+                          controller: _searchController,
+                          onChanged: (value) {
+                            user1.filterServices(query: value);
+                          },
                         ),
                         SizedBox(
                           height: 30,
@@ -263,13 +266,18 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           name: AppRoutes.kycScreenOne);
                     }
                   },
-                  child: Text((isPetRegistered) ? 'Shop now' : 'Begin Now', style: TextStyle(color: Colors.white),),
+                  child: Text(
+                    (isPetRegistered) ? 'Shop now' : 'Begin Now',
+                    style: TextStyle(color: Colors.white),
+                  ),
                   expanded: false,
                 ),
               ],
             ),
           ),
-          Expanded(child: SizedBox(width: 130, child: ImageView.asset(AppImages.playingCat)))
+          Expanded(
+              child: SizedBox(
+                  width: 130, child: ImageView.asset(AppImages.playingCat)))
         ],
       ),
     );

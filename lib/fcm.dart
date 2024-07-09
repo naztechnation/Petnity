@@ -3,7 +3,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 
 import 'handlers/secure_handler.dart';
-import 'notification.dart';
 
 
 class PushNotifications {

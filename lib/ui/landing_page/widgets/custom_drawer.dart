@@ -109,36 +109,33 @@ class _customDrawerState extends State<customDrawer> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             80),
-                                                    child: Hero(
-                                                      tag: 'profilePicture',
-                                                      child: Image.network(
-                                                        user.picture,
-                                                        fit: BoxFit.cover,
-                                                        width: 120,
-                            height: 120,
-                                                        errorBuilder: (context,
-                                                            error, stackTrace) {
-                                                          return   ImageView
-                                                              .asset(
-                                                              AppImages
-                                                                  .avatarIcon,
-                                                              fit:
-                                                                  BoxFit.cover);
-                                                        },
-                                                        loadingBuilder: (context,
-                                                            child,
-                                                            loadingProgress) {
-                                                          if (loadingProgress ==
-                                                              null)
-                                                            return child;
-                                                          return const ImageView
-                                                              .asset(
-                                                              AppImages
-                                                                  .avatarIcon,
-                                                              fit:
-                                                                  BoxFit.cover);
-                                                        },
-                                                      ),
+                                                    child: Image.network(
+                                                      user.picture,
+                                                      fit: BoxFit.cover,
+                                                      width: 120,
+                                                                                height: 120,
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return   ImageView
+                                                            .asset(
+                                                            AppImages
+                                                                .avatarIcon,
+                                                            fit:
+                                                                BoxFit.cover);
+                                                      },
+                                                      loadingBuilder: (context,
+                                                          child,
+                                                          loadingProgress) {
+                                                        if (loadingProgress ==
+                                                            null)
+                                                          return child;
+                                                        return const ImageView
+                                                            .asset(
+                                                            AppImages
+                                                                .avatarIcon,
+                                                            fit:
+                                                                BoxFit.cover);
+                                                      },
                                                     )),
                             ),
                           ),

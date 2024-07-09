@@ -241,53 +241,74 @@ class _ContactProviderState extends State<ContactProvider> {
   }
 
   void checkDatesValidity(String startDateString, String endDateString, agent) {
-    DateTime startDate = DateTime.parse(startDateString);
-    DateTime endDate = DateTime.parse(endDateString);
+  DateTime startDate = DateTime.parse(startDateString);
+  DateTime endDate = DateTime.parse(endDateString);
 
-    if (startDate.isBefore(endDate) || areDatesSame(startDate, endDate)) {
-      DateTime combinedDateTime = DateTime(
-        selectedDate.year,
-        selectedDate.month,
-        selectedDate.day,
-        selectedTime.hour,
-        selectedTime.minute,
-      );
+  if (startDate.isBefore(endDate) || (areDatesSame(startDate, endDate) && isEndTimeAfterStartTime(selectedDate, selectedTime, selectedDate1, selectedTime1))) {
+    DateTime combinedDateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
 
-      String formattedDateTime =
-          DateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(combinedDateTime);
+    String formattedDateTime =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(combinedDateTime);
 
-      DateTime combinedDateTime1 = DateTime(
-        selectedDate1.year,
-        selectedDate1.month,
-        selectedDate1.day,
-        selectedTime1.hour,
-        selectedTime1.minute,
-      );
+    DateTime combinedDateTime1 = DateTime(
+      selectedDate1.year,
+      selectedDate1.month,
+      selectedDate1.day,
+      selectedTime1.hour,
+      selectedTime1.minute,
+    );
 
-      String formattedDateTime1 =
-          DateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(combinedDateTime1);
-      AppNavigator.pushAndStackPage(context,
-          page: ReviewScreen(
-            date1: selectedDate.toString().split(' ').first,
-            date2: selectedDate1.toString().split(' ').first,
-            time1: selectedTimeMain1,
-            time2: selectedTimeMain2,
-            amount: agent.servicePrice,
-            orderId: agent.orderId,
-            username: agent.username,
-            serverDate: formattedDateTime,
-            serverDate1: formattedDateTime1,
-            spToken: widget.spToken,
-          ));
-    } else if (startDate.isAfter(endDate)) {
-      Modals.showToast(
-          'Make sure your Pick up date is before your Drop off date');
-    } else {}
+    String formattedDateTime1 =
+        DateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(combinedDateTime1);
+
+    AppNavigator.pushAndStackPage(context,
+        page: ReviewScreen(
+          date1: selectedDate.toString().split(' ').first,
+          date2: selectedDate1.toString().split(' ').first,
+          time1: selectedTimeMain1,
+          time2: selectedTimeMain2,
+          amount: agent.servicePrice,
+          orderId: agent.orderId,
+          username: agent.username,
+          serverDate: formattedDateTime,
+          serverDate1: formattedDateTime1,
+          spToken: widget.spToken,
+        ));
+  } else if (startDate.isAfter(endDate) || (areDatesSame(startDate, endDate) && !isEndTimeAfterStartTime(selectedDate, selectedTime, selectedDate1, selectedTime1))) {
+    Modals.showToast(
+        'Make sure your Pick up date is before your Drop off date and the end time is after the start time.');
   }
+}
 
-  bool areDatesSame(DateTime date1, DateTime date2) {
+bool areDatesSame(DateTime date1, DateTime date2) {
   return date1.year == date2.year &&
          date1.month == date2.month &&
          date1.day == date2.day;
+}
+
+bool isEndTimeAfterStartTime(DateTime startDate, TimeOfDay startTime, DateTime endDate, TimeOfDay endTime) {
+  DateTime startDateTime = DateTime(
+    startDate.year,
+    startDate.month,
+    startDate.day,
+    startTime.hour,
+    startTime.minute,
+  );
+
+  DateTime endDateTime = DateTime(
+    endDate.year,
+    endDate.month,
+    endDate.day,
+    endTime.hour,
+    endTime.minute,
+  );
+
+  return endDateTime.isAfter(startDateTime);
 }
 }
